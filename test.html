@@ -151,44 +151,76 @@
     scene.add(beltGroup);
 
     // ========== 设备生成 ==========
+    // 设备外壳为「底部开口」的腔体（四面壁 + 顶板 + 四角立柱），
+    // 这样机械臂可以从下方把数据包放进去、再原路取出来。
     function createDevice(x, label, colorHex) {
       const group = new THREE.Group();
       group.position.set(x, 0, 0);
 
-      const baseGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.3, 32);
-      const baseMat = new THREE.MeshStandardMaterial({ color: 0x4a5568, metalness: 0.5 });
-      const base = new THREE.Mesh(baseGeo, baseMat);
-      base.position.y = 4.5;
-      base.castShadow = true;
-      group.add(base);
+      const frameMat = new THREE.MeshStandardMaterial({ color: 0x4a5568, metalness: 0.5, roughness: 0.5 });
 
-      const boxGeo = new THREE.BoxGeometry(2, 2, 2);
+      // 四角立柱（中间留空，供机械臂上下取件）
+      const legGeo = new THREE.BoxGeometry(0.22, 4.5, 0.22);
+      for (const sx of [-0.85, 0.85]) {
+        for (const sz of [-0.85, 0.85]) {
+          const leg = new THREE.Mesh(legGeo, frameMat);
+          leg.position.set(sx, 2.25, sz);
+          leg.castShadow = true;
+          group.add(leg);
+        }
+      }
+
+      const boxGeo = new THREE.BoxGeometry(2, 2.4, 2);
       const texture = createTextTexture(label, colorHex);
-      const boxMat = new THREE.MeshStandardMaterial({ 
-        map: texture, 
+      const boxMat = new THREE.MeshStandardMaterial({
+        map: texture,
         transparent: true,
         opacity: 0.6,
         emissive: new THREE.Color(colorHex).multiplyScalar(0.4),
         metalness: 0.2,
         roughness: 0.3
       });
-      const box = new THREE.Mesh(boxGeo, boxMat);
-      box.position.y = 5.5;
-      box.castShadow = true;
-      box.receiveShadow = true;
-      group.add(box);
+      const sideMat = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(colorHex).multiplyScalar(0.35),
+        transparent: true,
+        opacity: 0.55,
+        emissive: new THREE.Color(colorHex).multiplyScalar(0.15),
+        metalness: 0.2,
+        roughness: 0.3
+      });
+
+      // 前 / 后壁（带标签）
+      for (const sz of [0.94, -0.94]) {
+        const panel = new THREE.Mesh(new THREE.BoxGeometry(2, 2.4, 0.12), boxMat);
+        panel.position.set(0, 5.7, sz);
+        panel.castShadow = true;
+        panel.receiveShadow = true;
+        group.add(panel);
+      }
+      // 左 / 右壁
+      for (const sx of [-0.94, 0.94]) {
+        const panel = new THREE.Mesh(new THREE.BoxGeometry(0.12, 2.4, 1.88), sideMat);
+        panel.position.set(sx, 5.7, 0);
+        panel.castShadow = true;
+        group.add(panel);
+      }
+      // 顶板（下方完全开口）
+      const topPanel = new THREE.Mesh(new THREE.BoxGeometry(2, 0.12, 1.88), sideMat);
+      topPanel.position.set(0, 6.84, 0);
+      topPanel.castShadow = true;
+      group.add(topPanel);
 
       const edges = new THREE.EdgesGeometry(boxGeo);
       const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: colorHex, linewidth: 2 }));
-      line.position.y = 5.5;
+      line.position.y = 5.7;
       group.add(line);
 
       const lightGeo = new THREE.SphereGeometry(0.15, 16, 16);
       const lightMat = new THREE.MeshStandardMaterial({ color: 0x27ae60, emissive: 0x27ae60, emissiveIntensity: 1 });
       const light = new THREE.Mesh(lightGeo, lightMat);
-      light.position.set(0, 6.8, 0);
+      light.position.set(0, 7.25, 0);
       group.add(light);
-      
+
       group.userData = { light, boxMat };
       return group;
     }
@@ -203,6 +235,13 @@
     // ========== 机械臂 ==========
     const L1 = 1.8;
     const L2 = 1.5;
+
+    // ========== 关键高度常量 ==========
+    const BELT_TOP = 0.2;            // 传送带顶面高度
+    const PACKET_HALF = 0.5;         // 数据包半高
+    const PICK_Y = BELT_TOP + PACKET_HALF;  // 传送带上数据包中心高度 (0.7)
+    const MACH_Y = 5.7;              // 设备腔体内数据包中心高度
+    const ARM_BASE_Y = 2.5;          // 机械臂基座高度
 
     function createArm(x) {
       const group = new THREE.Group();
@@ -259,20 +298,54 @@
       shoulder.add(elbow);
       group.add(shoulder);
 
+      // 臂基座做成中空圆筒，让数据包能从基座中间的通道上下穿行
       const baseCyl = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.7, 0.8, 0.5, 32), 
-        new THREE.MeshStandardMaterial({ color: 0x34495e })
+        new THREE.CylinderGeometry(0.8, 0.85, 0.5, 32, 1, true),
+        new THREE.MeshStandardMaterial({ color: 0x34495e, side: THREE.DoubleSide })
       );
       baseCyl.position.y = -0.25;
       baseCyl.castShadow = true;
       group.add(baseCyl);
+      const baseRim = new THREE.Mesh(
+        new THREE.TorusGeometry(0.82, 0.07, 10, 32),
+        new THREE.MeshStandardMaterial({ color: 0x2c3e50, metalness: 0.6 })
+      );
+      baseRim.rotation.x = Math.PI / 2;
+      baseRim.position.y = 0.02;
+      group.add(baseRim);
 
-      group.userData = { 
-        shoulder, elbow, gripper, clawL, clawR, 
+      // 支撑立柱：让机械臂不再悬空（放在传送带外侧，不挡取件通道）
+      const colMat = new THREE.MeshStandardMaterial({ color: 0x4a5568, metalness: 0.5, roughness: 0.5 });
+      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 2.05, 20), colMat);
+      col.position.set(0, -1.475, -1.9);
+      col.castShadow = true;
+      group.add(col);
+      const colFoot = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.16, 1.1), colMat);
+      colFoot.position.set(0, -2.42, -1.9);
+      colFoot.castShadow = true;
+      group.add(colFoot);
+      const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 1.25), colMat);
+      bracket.position.set(0, -0.25, -1.3);
+      bracket.castShadow = true;
+      group.add(bracket);
+
+      // 预计算的 IK 目标点（相对臂基座）
+      const ikBelt = solveIK(0, PICK_Y - ARM_BASE_Y);        // 伸到传送带抓取
+      const ikMach = solveIK(0, MACH_Y - ARM_BASE_Y);        // 伸到设备腔体中心
+      const ikGrab = solveIK(0, MACH_Y - ARM_BASE_Y - 0.65); // 伸到设备腔体内取件位置
+      const ikIdle = solveIK(1, 2, L1, L2);                  // 待机姿态
+
+      group.userData = {
+        shoulder, elbow, gripper, clawL, clawR,
         state: 'idle', timer: 0,
-        currentT1: 0, currentT2: 0
+        currentT1: ikIdle.theta1, currentT2: ikIdle.theta2,
+        ikBelt, ikMach, ikGrab, ikIdle,
+        startT1: ikIdle.theta1, startT2: ikIdle.theta2,
+        stationIndex: 0,
+        attachFrom: null
       };
-      
+
+      group.rotation.y = 0;
       return group;
     }
 
@@ -309,7 +382,7 @@
       payload.castShadow = true;
       payload.receiveShadow = true;
       group.add(payload);
-      group.position.set(-16, 0.5, 0);
+      group.position.set(-16, PICK_Y, 0);
       return group;
     }
 
@@ -351,9 +424,12 @@
       arms.forEach(arm => {
         arm.userData.state = 'idle';
         arm.userData.timer = 0;
-        const ik = solveIK(1, 2, L1, L2);
+        arm.userData.attachFrom = null;
+        const ik = arm.userData.ikIdle;
         arm.userData.currentT1 = ik.theta1;
         arm.userData.currentT2 = ik.theta2;
+        arm.userData.startT1 = ik.theta1;
+        arm.userData.startT2 = ik.theta2;
         arm.userData.shoulder.rotation.z = ik.theta1;
         arm.userData.elbow.rotation.z = ik.theta2;
         arm.userData.clawL.position.y = 0.75;
@@ -363,6 +439,7 @@
       devices.forEach(d => {
         d.userData.light.material.color.setHex(0x27ae60);
         d.userData.light.material.emissive.setHex(0x27ae60);
+        d.userData.light.material.emissiveIntensity = 1;
       });
 
       updateHeadersUI([]);
@@ -412,25 +489,21 @@
         for (let i = 0; i < arms.length; i++) {
           const arm = arms[i];
           const armX = arm.position.x;
-          
-          if (!pData.processedStations.includes(i) && 
-              packetGroup.position.x >= armX - 0.4 && 
-              packetGroup.position.x <= armX + 0.4 && 
+
+          if (!pData.processedStations.includes(i) &&
+              packetGroup.position.x >= armX - 0.4 &&
+              packetGroup.position.x <= armX + 0.4 &&
               arm.userData.state === 'idle') {
-            
+
             packetGroup.position.x = armX;
-            pData.state = 'waiting_grab';
+            pData.state = 'grabbed';
             arm.userData.state = 'reaching_belt';
             arm.userData.timer = 0;
-            
-            const targetY = 0.5 - arm.position.y; 
-            const ikBelt = solveIK(0, targetY, L1, L2);
-            const ikMach = solveIK(0, 3.0, L1, L2); 
-            arm.userData.ikBelt = ikBelt;
-            arm.userData.ikMach = ikMach;
+            arm.userData.stationIndex = i;
+
             arm.userData.startT1 = arm.userData.currentT1;
             arm.userData.startT2 = arm.userData.currentT2;
-            
+
             pData.processedStations.push(i);
             break;
           }
@@ -447,23 +520,29 @@
             startBtn.textContent = '开始运行';
           }, 3000);
         }
-      } 
+      }
       else if (pData.state === 'in_machine') {
         pData.timer += dt;
         const payload = packetGroup.children[0];
-        payload.material.emissive = new THREE.Color(0xffaa00);
+        payload.material.emissive.setHex(0xffaa00);
         payload.material.emissiveIntensity = Math.sin(pData.timer * 20) > 0 ? 1 : 0;
+
+        const armIndex = Math.round(pData.targetX / 8) + 1;
+        const type = ['tcp', 'ip', 'eth'][armIndex];
+        const colorMap = { tcp: 0x3498db, ip: 0x2ecc71, eth: 0x9b59b6 };
+        const dev = devices[armIndex];
+        if (dev) {
+          dev.userData.light.material.color.setHex(colorMap[type]);
+          dev.userData.light.material.emissive.setHex(colorMap[type]);
+          dev.userData.light.material.emissiveIntensity = Math.sin(pData.timer * 20) > 0 ? 2.5 : 0.6;
+        }
 
         if (pData.timer >= 1.2) {
           payload.material.emissiveIntensity = 0;
-          
-          const armIndex = Math.round(pData.targetX / 8) + 1;
-          const type = ['tcp', 'ip', 'eth'][armIndex];
-          const colorMap = { tcp: 0x3498db, ip: 0x2ecc71, eth: 0x9b59b6 };
-          
+
           const header = new THREE.Mesh(
-            new THREE.BoxGeometry(0.6, 1.02, 1.02), 
-            new THREE.MeshStandardMaterial({ 
+            new THREE.BoxGeometry(0.6, 1.02, 1.02),
+            new THREE.MeshStandardMaterial({
               color: colorMap[type], metalness: 0.3, roughness: 0.4,
               emissive: new THREE.Color(colorMap[type]).multiplyScalar(0.3)
             })
@@ -471,26 +550,14 @@
           header.position.x = -0.8 - pData.headers.length * 0.6;
           header.castShadow = true;
           packetGroup.add(header);
-          
+
           pData.headers.push(type);
           updateHeadersUI(pData.headers);
+          statusEl.textContent = `状态: 已封装 ${pData.headers.length}/3 层，等待机械臂取出`;
 
-          pData.state = 'dropping';
+          // 封装完成 → 等待机械臂来把数据包取回传送带
+          pData.state = 'ready_to_take';
           pData.timer = 0;
-          pData.startY = packetGroup.position.y;
-          pData.endY = 0.5;
-        }
-      } 
-      else if (pData.state === 'dropping') {
-        pData.timer += dt;
-        const t = Math.min(1, pData.timer / 0.4);
-        const ease = t * t;
-        packetGroup.position.y = THREE.MathUtils.lerp(pData.startY, pData.endY, ease);
-
-        if (t >= 1) {
-          pData.state = 'moving';
-          packetGroup.position.y = 0.5;
-          packetGroup.position.x += 1.2; 
         }
       }
     }
@@ -501,85 +568,153 @@
       if (aData.state === 'idle') return;
 
       aData.timer += dt;
+      const pData = packetGroup ? packetGroup.userData : null;
 
-      if (aData.state === 'reaching_belt') {
-        const t = Math.min(1, aData.timer / 0.4);
-        const ease = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-        
-        aData.currentT1 = THREE.MathUtils.lerp(aData.startT1, aData.ikBelt.theta1, ease);
-        aData.currentT2 = THREE.MathUtils.lerp(aData.startT2, aData.ikBelt.theta2, ease);
+      // 关节插值（带缓动）
+      const lerpIK = (fromT1, fromT2, toT1, toT2, t) => {
+        const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        aData.currentT1 = THREE.MathUtils.lerp(fromT1, toT1, ease);
+        aData.currentT2 = THREE.MathUtils.lerp(fromT2, toT2, ease);
         aData.shoulder.rotation.z = aData.currentT1;
         aData.elbow.rotation.z = aData.currentT2;
+      };
 
-        if (t >= 1) {
-          aData.state = 'grabbing';
-          aData.timer = 0;
-        }
-      } 
-      else if (aData.state === 'grabbing') {
-        const t = Math.min(1, aData.timer / 0.2);
-        
+      // 数据包跟随夹爪
+      const followPacket = () => {
+        if (!packetGroup) return;
+        const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
+        packetGroup.position.set(pos.x, pos.y, 0);
+      };
+
+      const closeClaws = (t) => {
         aData.clawL.position.y = THREE.MathUtils.lerp(0.75, 0.52, t);
         aData.clawR.position.y = THREE.MathUtils.lerp(-0.75, -0.52, t);
+      };
 
-        if (t >= 1) {
-          aData.state = 'lifting';
-          aData.timer = 0;
-          if (packetGroup) {
-            packetGroup.userData.state = 'lifting';
-          }
-        }
-      } 
-      else if (aData.state === 'lifting') {
-        const t = Math.min(1, aData.timer / 0.5);
-        const ease = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-        
-        aData.currentT1 = THREE.MathUtils.lerp(aData.ikBelt.theta1, aData.ikMach.theta1, ease);
-        aData.currentT2 = THREE.MathUtils.lerp(aData.ikBelt.theta2, aData.ikMach.theta2, ease);
-        aData.shoulder.rotation.z = aData.currentT1;
-        aData.elbow.rotation.z = aData.currentT2;
-
-        if (packetGroup) {
-          const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
-          packetGroup.position.set(pos.x, pos.y, 0);
-        }
-
-        if (t >= 1) {
-          aData.state = 'releasing';
-          aData.timer = 0;
-        }
-      } 
-      else if (aData.state === 'releasing') {
-        const t = Math.min(1, aData.timer / 0.2);
-        
+      const openClaws = (t) => {
         aData.clawL.position.y = THREE.MathUtils.lerp(0.52, 0.75, t);
         aData.clawR.position.y = THREE.MathUtils.lerp(-0.52, -0.75, t);
+      };
 
-        if (t >= 1) {
-          aData.state = 'returning';
-          aData.timer = 0;
-          
-          if (packetGroup) {
-            packetGroup.position.set(arm.position.x, 5.5, 0);
-            packetGroup.userData.state = 'in_machine';
-            packetGroup.userData.timer = 0;
-            packetGroup.userData.targetX = arm.position.x;
-          }
+      switch (aData.state) {
+        // ① 伸向传送带
+        case 'reaching_belt': {
+          const t = Math.min(1, aData.timer / 0.4);
+          lerpIK(aData.startT1, aData.startT2, aData.ikBelt.theta1, aData.ikBelt.theta2, t);
+          if (t >= 1) { aData.state = 'grabbing'; aData.timer = 0; }
+          break;
         }
-      } 
-      else if (aData.state === 'returning') {
-        const t = Math.min(1, aData.timer / 0.4);
-        const ease = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-        
-        const idleIK = solveIK(1, 2, L1, L2);
-        aData.currentT1 = THREE.MathUtils.lerp(aData.ikMach.theta1, idleIK.theta1, ease);
-        aData.currentT2 = THREE.MathUtils.lerp(aData.ikMach.theta2, idleIK.theta2, ease);
-        aData.shoulder.rotation.z = aData.currentT1;
-        aData.elbow.rotation.z = aData.currentT2;
-
-        if (t >= 1) {
-          aData.state = 'idle';
-          aData.timer = 0;
+        // ② 夹紧传送带上的数据包
+        case 'grabbing': {
+          const t = Math.min(1, aData.timer / 0.2);
+          closeClaws(t);
+          followPacket();
+          if (t >= 1) { aData.state = 'lifting'; aData.timer = 0; }
+          break;
+        }
+        // ③ 抬起送入设备
+        case 'lifting': {
+          const t = Math.min(1, aData.timer / 0.5);
+          lerpIK(aData.ikBelt.theta1, aData.ikBelt.theta2, aData.ikMach.theta1, aData.ikMach.theta2, t);
+          followPacket();
+          if (t >= 1) { aData.state = 'releasing'; aData.timer = 0; }
+          break;
+        }
+        // ④ 松爪，把数据包放进设备腔体
+        case 'releasing': {
+          const t = Math.min(1, aData.timer / 0.2);
+          openClaws(t);
+          if (t >= 1) {
+            if (packetGroup) {
+              packetGroup.position.set(arm.position.x, MACH_Y, 0);
+              packetGroup.userData.state = 'in_machine';
+              packetGroup.userData.timer = 0;
+              packetGroup.userData.targetX = arm.position.x;
+            }
+            aData.state = 'holding';
+            aData.timer = 0;
+          }
+          break;
+        }
+        // ⑤ 原地待命，等设备封装完成
+        case 'holding': {
+          if (pData && pData.state === 'ready_to_take') {
+            aData.state = 'descending';
+            aData.timer = 0;
+          }
+          break;
+        }
+        // ⑥ 下探到腔体内，准备取件
+        case 'descending': {
+          const t = Math.min(1, aData.timer / 0.3);
+          lerpIK(aData.ikMach.theta1, aData.ikMach.theta2, aData.ikGrab.theta1, aData.ikGrab.theta2, t);
+          if (t >= 1) {
+            aData.state = 'gripping';
+            aData.timer = 0;
+            aData.attachFrom = packetGroup ? packetGroup.position.clone() : null;
+          }
+          break;
+        }
+        // ⑦ 夹紧封装好的数据包
+        case 'gripping': {
+          const t = Math.min(1, aData.timer / 0.2);
+          closeClaws(t);
+          if (packetGroup && aData.attachFrom) {
+            const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
+            packetGroup.position.lerpVectors(aData.attachFrom, pos, t);
+          }
+          if (t >= 1) { aData.state = 'lifting_out'; aData.timer = 0; }
+          break;
+        }
+        // ⑧ 从设备中把数据包取出
+        case 'lifting_out': {
+          const t = Math.min(1, aData.timer / 0.4);
+          lerpIK(aData.ikGrab.theta1, aData.ikGrab.theta2, aData.ikMach.theta1, aData.ikMach.theta2, t);
+          followPacket();
+          if (t >= 1) { aData.state = 'transporting'; aData.timer = 0; }
+          break;
+        }
+        // ⑨ 搬运回传送带
+        case 'transporting': {
+          const t = Math.min(1, aData.timer / 0.5);
+          lerpIK(aData.ikMach.theta1, aData.ikMach.theta2, aData.ikBelt.theta1, aData.ikBelt.theta2, t);
+          followPacket();
+          if (t >= 1) { aData.state = 'placing'; aData.timer = 0; }
+          break;
+        }
+        // ⑩ 放到传送带上并松爪
+        case 'placing': {
+          const t = Math.min(1, aData.timer / 0.2);
+          openClaws(t);
+          followPacket();
+          if (t >= 1) {
+            if (packetGroup) {
+              packetGroup.position.set(arm.position.x, PICK_Y, 0);
+              packetGroup.userData.state = 'moving';
+              packetGroup.userData.timer = 0;
+              const payload = packetGroup.children[0];
+              if (payload && payload.material) {
+                payload.material.emissive.setHex(0x000000);
+                payload.material.emissiveIntensity = 0;
+              }
+            }
+            const dev = devices[aData.stationIndex];
+            if (dev) {
+              dev.userData.light.material.color.setHex(0x27ae60);
+              dev.userData.light.material.emissive.setHex(0x27ae60);
+              dev.userData.light.material.emissiveIntensity = 1;
+            }
+            aData.state = 'returning';
+            aData.timer = 0;
+          }
+          break;
+        }
+        // ⑪ 回到待机位
+        case 'returning': {
+          const t = Math.min(1, aData.timer / 0.4);
+          lerpIK(aData.ikBelt.theta1, aData.ikBelt.theta2, aData.ikIdle.theta1, aData.ikIdle.theta2, t);
+          if (t >= 1) { aData.state = 'idle'; aData.timer = 0; }
+          break;
         }
       }
     }

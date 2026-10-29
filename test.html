@@ -242,20 +242,22 @@
     const PICK_Y = BELT_TOP + PACKET_HALF;  // 传送带上数据包中心高度 (0.85)
     const MACH_Y = 5.7;              // 设备腔体内数据包中心高度
     const ARM_BASE_Y = 3.0;          // 机械臂基座高度（抬高，避开 IK 奇异点）
-    const CLAW_OPEN = 0.42;          // 夹爪张开角度（弧度）
-    const GRIP_X = 0.53;             // 夹持中心相对腕部的偏置（腕关节恒定竖直 → 世界 +x）
+    const ARM_X_OFFSET = -1.6;       // 基座相对工位后移，让小臂从斜后方进给，不穿过数据包
+    const CLAW_OPEN = 0.15;          // 钳口张开角（绕竖直销轴，弧度）
+    const GRIP_X = 0.75;             // 夹持中心相对腕部的水平偏置（数据包中心在腕部前方）
     const WRIST_ANGLE = 0;           // 期望的夹爪世界朝向（0 = 竖直）
 
     // 机械臂的目标点（腕部原点在机械臂局部坐标系中的位置，x 相对基座）
     const TGT = {
-      belt: { x: -GRIP_X, y: PICK_Y - ARM_BASE_Y },   // 夹持中心对准传送带上的数据包
-      mach: { x: -GRIP_X, y: MACH_Y - ARM_BASE_Y },   // 夹持中心对准设备腔体中心
-      idle: { x: 1 - GRIP_X, y: 1.6 }                // 待机姿态
+      belt: { x: -GRIP_X - ARM_X_OFFSET, y: PICK_Y - ARM_BASE_Y },   // 夹持中心对准传送带上的数据包
+      mach: { x: -GRIP_X - ARM_X_OFFSET, y: MACH_Y - ARM_BASE_Y },   // 夹持中心对准设备腔体中心
+      idle: { x: 1 - GRIP_X - ARM_X_OFFSET, y: 1.6 }                 // 待机姿态
     };
 
     function createArm(x) {
       const group = new THREE.Group();
-      group.position.set(x, ARM_BASE_Y, 0);
+      // 基座比工位靠后一点：机械臂从斜后方进给，小臂不会横穿数据包
+      group.position.set(x + ARM_X_OFFSET, ARM_BASE_Y, 0);
 
       const shoulder = new THREE.Group();
       const arm1 = new THREE.Mesh(
@@ -291,65 +293,58 @@
       baseGrip.rotation.z = Math.PI / 2;
       gripper.add(baseGrip);
 
-      // ---- 铰链式夹爪：两根手指绕腕部两侧的销轴旋转 ----
-      const HINGE_Y = 0.17;   // 铰链轴离腕部中心的距离
-      const PIN_R = 0.11;     // 销轴半径
-      const PIN_LEN = 1.18;   // 销轴长度（略宽于数据包，前后都露出）
-      const BAR_LEN = 0.86;   // 手指长度
-      const BAR_T = 0.15;     // 手指厚度
-      const BAR_OFF = 0.40;   // 手指相对铰链的高度偏移（闭合时正好压在数据包上下表面）
-      const BAR_X = 0.53;     // 手指相对铰链的前后偏移
+      // ---- 铰链式夹爪：两片「钳口」绕腕部两侧的竖直销轴旋转，夹住数据包的左右侧面 ----
+      // 为什么不用「上下夹爪」：数据包是放在传送带上的，下手指要伸到数据包底面以下，
+      // 必然插进传送带。改成左右钳口后，钳口底边始终高于带面，且闭合间隙正好 = 数据包宽度。
+      const JAW_Z = 0.75;       // 销轴到夹持中面的距离
+      const JAW_T = 0.14;       // 钳口厚度
+      const JAW_H = 0.5;        // 钳口高度（数据包高度的中间一半）
+      const JAW_LEN = 1.0;      // 钳口长度（沿 x，正好覆盖数据包宽度）
+      const JAW_X0 = 0.25;      // 钳口起点（数据包背面所在处）
+      const PIN_R = 0.09;       // 销轴半径
+      const PIN_LEN = 0.62;     // 销轴长度
 
-      // 上手指：pivot 组负责绕 z 轴（销轴）旋转
-      const clawPivotL = new THREE.Group();
-      clawPivotL.position.set(0, HINGE_Y, 0);
-      // 连接臂：从销轴根部连到手指，保证与机械臂连成一体
-      const postL = new THREE.Mesh(
-        new THREE.BoxGeometry(0.13, 0.62, 0.86),
-        new THREE.MeshStandardMaterial({ color: 0x7f8c8d, metalness: 0.75 })
-      );
-      postL.position.set(0.10, 0.31, 0);
-      postL.castShadow = true;
-      clawPivotL.add(postL);
-      const clawL = new THREE.Mesh(
-        new THREE.BoxGeometry(BAR_LEN, BAR_T, 1.12),
-        new THREE.MeshStandardMaterial({ color: 0x95a5a6, metalness: 0.8 })
-      );
-      clawL.position.set(BAR_X, BAR_OFF, 0);
-      clawL.castShadow = true;
-      clawPivotL.add(clawL);
-      gripper.add(clawPivotL);
-
-      // 下手指（镜像）
-      const clawPivotR = new THREE.Group();
-      clawPivotR.position.set(0, -HINGE_Y, 0);
-      const postR = new THREE.Mesh(
-        new THREE.BoxGeometry(0.13, 0.62, 0.86),
-        new THREE.MeshStandardMaterial({ color: 0x7f8c8d, metalness: 0.75 })
-      );
-      postR.position.set(0.10, -0.31, 0);
-      postR.castShadow = true;
-      clawPivotR.add(postR);
-      const clawR = new THREE.Mesh(
-        new THREE.BoxGeometry(BAR_LEN, BAR_T, 1.12),
-        new THREE.MeshStandardMaterial({ color: 0x95a5a6, metalness: 0.8 })
-      );
-      clawR.position.set(BAR_X, -BAR_OFF, 0);
-      clawR.castShadow = true;
-      clawPivotR.add(clawR);
-      gripper.add(clawPivotR);
-
-      // 销轴（固定不转，就是手指的旋转轴，视觉上把手指和腕部连起来）
       const pinMat = new THREE.MeshStandardMaterial({ color: 0x34495e, metalness: 0.85, roughness: 0.25 });
-      for (const sy of [1, -1]) {
+      const jawMat = new THREE.MeshStandardMaterial({ color: 0x95a5a6, metalness: 0.8 });
+      const armMat = new THREE.MeshStandardMaterial({ color: 0x7f8c8d, metalness: 0.75 });
+
+      // 横梁：把腕部和两个销轴连成一体（钳口因此不会「飘」在机械臂外面）
+      const crossBar = new THREE.Mesh(
+        new THREE.BoxGeometry(0.2, 0.24, JAW_Z * 2),
+        new THREE.MeshStandardMaterial({ color: 0x718096, metalness: 0.7 })
+      );
+      crossBar.castShadow = true;
+      gripper.add(crossBar);
+
+      // 销轴（固定不转，就是钳口的旋转轴）
+      for (const sz of [1, -1]) {
         const pin = new THREE.Mesh(
           new THREE.CylinderGeometry(PIN_R, PIN_R, PIN_LEN, 16),
           pinMat
         );
-        pin.rotation.x = Math.PI / 2;   // 圆柱默认沿 y 轴，转成沿 z 轴
-        pin.position.set(0, sy * HINGE_Y, 0);
+        pin.position.set(0, 0, sz * JAW_Z);
         pin.castShadow = true;
         gripper.add(pin);
+      }
+
+      // 两片钳口（+z / -z），pivot 组绕竖直 y 轴旋转
+      const clawPivotL = new THREE.Group();   // +z 侧
+      clawPivotL.position.set(0, 0, JAW_Z);
+      const clawPivotR = new THREE.Group();   // -z 侧
+      clawPivotR.position.set(0, 0, -JAW_Z);
+
+      for (const [pivot, sz] of [[clawPivotL, 1], [clawPivotR, -1]]) {
+        // 连接臂：从销轴根部连到钳口，保证与机械臂连成一体
+        const link = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.2, 0.2), armMat);
+        link.position.set(0.18, 0, -sz * 0.16);
+        link.castShadow = true;
+        pivot.add(link);
+        // 钳口：闭合时内表面正好贴住数据包侧面（略微压入 3mm，避免共面闪烁）
+        const jaw = new THREE.Mesh(new THREE.BoxGeometry(JAW_LEN, JAW_H, JAW_T), jawMat);
+        jaw.position.set(JAW_X0 + JAW_LEN / 2, 0, -sz * (JAW_Z - PACKET_HALF + 0.003 + JAW_T / 2));
+        jaw.castShadow = true;
+        pivot.add(jaw);
+        gripper.add(pivot);
       }
 
       elbow.add(wrist);
@@ -391,7 +386,8 @@
       const ikIdle = solveIK(TGT.idle.x, TGT.idle.y, L1, L2);
 
       group.userData = {
-        shoulder, elbow, wrist, gripper, clawL, clawR, clawPivotL, clawPivotR,
+        shoulder, elbow, wrist, gripper, clawPivotL, clawPivotR,
+        stationX: x,              // 所属工位（设备）的世界坐标，基座是往后偏的
         state: 'idle', timer: 0,
         currentT1: ikIdle.theta1, currentT2: ikIdle.theta2,
         // cur / from：当前与起始的笛卡尔目标（腕部原点，机械臂局部坐标）
@@ -400,9 +396,9 @@
         stationIndex: 0
       };
 
-      // 初始张开
-      clawPivotL.rotation.z = CLAW_OPEN;
-      clawPivotR.rotation.z = -CLAW_OPEN;
+      // 初始张开（绕竖直销轴）
+      clawPivotL.rotation.y = -CLAW_OPEN;
+      clawPivotR.rotation.y = CLAW_OPEN;
 
       group.rotation.y = 0;
       return group;
@@ -495,8 +491,8 @@
         aData.shoulder.rotation.z = ik.theta1;
         aData.elbow.rotation.z = ik.theta2;
         aData.wrist.rotation.z = -(ik.theta1 + ik.theta2) + WRIST_ANGLE;
-        aData.clawPivotL.rotation.z = CLAW_OPEN;
-        aData.clawPivotR.rotation.z = -CLAW_OPEN;
+        aData.clawPivotL.rotation.y = -CLAW_OPEN;
+        aData.clawPivotR.rotation.y = CLAW_OPEN;
       });
 
       devices.forEach(d => {
@@ -546,7 +542,8 @@
     // 让机械臂开始抓取数据包
     function startGrab(arm, idx) {
       const pData = packetGroup.userData;
-      packetGroup.position.x = arm.position.x;
+      // 数据包停在工位中心（不是基座位置，基座是往后偏的）
+      packetGroup.position.x = arm.userData.stationX;
       pData.state = 'grabbed';
       arm.userData.state = 'reaching_belt';
       arm.userData.timer = 0;
@@ -567,7 +564,7 @@
 
         if (nextIdx >= 0) {
           const arm = arms[nextIdx];
-          const armX = arm.position.x;
+          const armX = arm.userData.stationX;   // 工位（设备）中心，不是基座
           if (packetGroup.position.x >= armX - 0.4) {
             if (arm.userData.state === 'idle') {
               startGrab(arm, nextIdx);
@@ -623,14 +620,16 @@
         if (pData.timer >= 1.2) {
           payload.material.emissiveIntensity = 0;
 
+          // 封装层：叠在数据包顶部（左右两侧被钳口占用，后方是机械臂，
+          // 只有顶部空着；叠在顶部也保证它完全落在设备腔体内）
           const header = new THREE.Mesh(
-            new THREE.BoxGeometry(0.6, 1.02, 1.02),
+            new THREE.BoxGeometry(0.98, 0.12, 0.98),
             new THREE.MeshStandardMaterial({
               color: colorMap[type], metalness: 0.3, roughness: 0.4,
               emissive: new THREE.Color(colorMap[type]).multiplyScalar(0.3)
             })
           );
-          header.position.x = -0.8 - pData.headers.length * 0.6;
+          header.position.y = PACKET_HALF + 0.06 + pData.headers.length * 0.12;
           header.castShadow = true;
           packetGroup.add(header);
 
@@ -700,15 +699,15 @@
         setPacketPos(c.x, c.y);
       };
 
-      // 爪子绕腕部销轴旋转：张开 / 夹紧
+      // 钳口绕腕部竖直销轴旋转：张开 / 夹紧
       const closeClaws = (t) => {
-        aData.clawPivotL.rotation.z = THREE.MathUtils.lerp(CLAW_OPEN, 0, t);
-        aData.clawPivotR.rotation.z = THREE.MathUtils.lerp(-CLAW_OPEN, 0, t);
+        aData.clawPivotL.rotation.y = THREE.MathUtils.lerp(-CLAW_OPEN, 0, t);
+        aData.clawPivotR.rotation.y = THREE.MathUtils.lerp(CLAW_OPEN, 0, t);
       };
 
       const openClaws = (t) => {
-        aData.clawPivotL.rotation.z = THREE.MathUtils.lerp(0, CLAW_OPEN, t);
-        aData.clawPivotR.rotation.z = THREE.MathUtils.lerp(0, -CLAW_OPEN, t);
+        aData.clawPivotL.rotation.y = THREE.MathUtils.lerp(0, -CLAW_OPEN, t);
+        aData.clawPivotR.rotation.y = THREE.MathUtils.lerp(0, CLAW_OPEN, t);
       };
 
       switch (aData.state) {
@@ -745,7 +744,7 @@
               packetGroup.position.set(c.x, c.y, 0);
               packetGroup.userData.state = 'in_machine';
               packetGroup.userData.timer = 0;
-              packetGroup.userData.targetX = arm.position.x;
+              packetGroup.userData.targetX = arm.userData.stationX;
             }
             aData.state = 'holding';
             aData.timer = 0;

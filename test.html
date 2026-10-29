@@ -336,12 +336,13 @@
       for (const [pivot, sz] of [[clawPivotL, 1], [clawPivotR, -1]]) {
         // 连接臂：从销轴根部连到钳口，保证与机械臂连成一体
         const link = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.2, 0.2), armMat);
-        link.position.set(0.18, 0, -sz * 0.16);
+        link.position.set(0.18, 0, -sz * 0.10);
         link.castShadow = true;
         pivot.add(link);
         // 钳口：闭合时内表面正好贴住数据包侧面（略微压入 3mm，避免共面闪烁）
+        // 销轴在 z = ±JAW_Z，钳口中心 = 销轴 - (数据包半宽 - 压入量 + 半个钳口厚)
         const jaw = new THREE.Mesh(new THREE.BoxGeometry(JAW_LEN, JAW_H, JAW_T), jawMat);
-        jaw.position.set(JAW_X0 + JAW_LEN / 2, 0, -sz * (JAW_Z - PACKET_HALF + 0.003 + JAW_T / 2));
+        jaw.position.set(JAW_X0 + JAW_LEN / 2, 0, -sz * (JAW_Z - (PACKET_HALF - 0.003 + JAW_T / 2)));
         jaw.castShadow = true;
         pivot.add(jaw);
         gripper.add(pivot);

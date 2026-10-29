@@ -276,20 +276,22 @@
       baseGrip.rotation.z = Math.PI / 2;
       gripper.add(baseGrip);
 
+      // 夹爪：加宽到 z=1.1 并外移到 x=0.55，
+      // 这样爪子会露出在数据包外侧，能清楚看到"抓住"的动作
       const clawL = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 0.12, 0.2), 
+        new THREE.BoxGeometry(0.55, 0.14, 1.1),
         new THREE.MeshStandardMaterial({ color: 0x95a5a6, metalness: 0.8 })
       );
-      clawL.position.set(0.2, 0.75, 0); 
+      clawL.position.set(0.55, 0.82, 0);
       clawL.rotation.z = Math.PI / 4;
       clawL.castShadow = true;
       gripper.add(clawL);
 
       const clawR = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 0.12, 0.2), 
+        new THREE.BoxGeometry(0.55, 0.14, 1.1),
         new THREE.MeshStandardMaterial({ color: 0x95a5a6, metalness: 0.8 })
       );
-      clawR.position.set(0.2, -0.75, 0);
+      clawR.position.set(0.55, -0.82, 0);
       clawR.rotation.z = -Math.PI / 4;
       clawR.castShadow = true;
       gripper.add(clawR);
@@ -362,11 +364,14 @@
       return { theta1, theta2 };
     }
 
+    // 注意：必须返回真正的 Vector3（含 z），
+    // 否则后续 lerpVectors / copy 会把 z 变成 NaN，导致物体整个不渲染（看起来"消失"）
     function getArmEndPos(arm, t1, t2) {
-      return {
-        x: arm.position.x + L1 * Math.cos(t1) + L2 * Math.cos(t1 + t2),
-        y: arm.position.y + L1 * Math.sin(t1) + L2 * Math.sin(t1 + t2)
-      };
+      return new THREE.Vector3(
+        arm.position.x + L1 * Math.cos(t1) + L2 * Math.cos(t1 + t2),
+        arm.position.y + L1 * Math.sin(t1) + L2 * Math.sin(t1 + t2),
+        0
+      );
     }
 
     // ========== 数据包 ==========
@@ -432,8 +437,8 @@
         arm.userData.startT2 = ik.theta2;
         arm.userData.shoulder.rotation.z = ik.theta1;
         arm.userData.elbow.rotation.z = ik.theta2;
-        arm.userData.clawL.position.y = 0.75;
-        arm.userData.clawR.position.y = -0.75;
+        arm.userData.clawL.position.y = 0.82;
+        arm.userData.clawR.position.y = -0.82;
       });
 
       devices.forEach(d => {
@@ -579,21 +584,31 @@
         aData.elbow.rotation.z = aData.currentT2;
       };
 
-      // 数据包跟随夹爪
+      // 数据包跟随夹爪（统一在这里设置位置，杜绝 NaN 坐标）
+      const setPacketPos = (x, y) => {
+        if (!packetGroup || !isFinite(x) || !isFinite(y)) return;
+        // 自愈：万一坐标已被污染成 NaN，先复位再赋值
+        if (!isFinite(packetGroup.position.x) || !isFinite(packetGroup.position.y)) {
+          packetGroup.position.set(arm.position.x, PICK_Y, 0);
+        }
+        packetGroup.position.set(x, y, 0);
+      };
+
       const followPacket = () => {
         if (!packetGroup) return;
         const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
-        packetGroup.position.set(pos.x, pos.y, 0);
+        setPacketPos(pos.x, pos.y);
       };
 
+      // 爪子闭合到刚好夹住 1x1x1 的数据包两侧
       const closeClaws = (t) => {
-        aData.clawL.position.y = THREE.MathUtils.lerp(0.75, 0.52, t);
-        aData.clawR.position.y = THREE.MathUtils.lerp(-0.75, -0.52, t);
+        aData.clawL.position.y = THREE.MathUtils.lerp(0.82, 0.56, t);
+        aData.clawR.position.y = THREE.MathUtils.lerp(-0.82, -0.56, t);
       };
 
       const openClaws = (t) => {
-        aData.clawL.position.y = THREE.MathUtils.lerp(0.52, 0.75, t);
-        aData.clawR.position.y = THREE.MathUtils.lerp(-0.52, -0.75, t);
+        aData.clawL.position.y = THREE.MathUtils.lerp(0.56, 0.82, t);
+        aData.clawR.position.y = THREE.MathUtils.lerp(-0.56, -0.82, t);
       };
 
       switch (aData.state) {
@@ -661,7 +676,9 @@
           closeClaws(t);
           if (packetGroup && aData.attachFrom) {
             const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
-            packetGroup.position.lerpVectors(aData.attachFrom, pos, t);
+            const x = THREE.MathUtils.lerp(aData.attachFrom.x, pos.x, t);
+            const y = THREE.MathUtils.lerp(aData.attachFrom.y, pos.y, t);
+            setPacketPos(x, y);
           }
           if (t >= 1) { aData.state = 'lifting_out'; aData.timer = 0; }
           break;

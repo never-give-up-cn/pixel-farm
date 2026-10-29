@@ -119,7 +119,7 @@
     const beltGroup = new THREE.Group();
     const beltMat = new THREE.MeshStandardMaterial({ color: 0x2d3748, roughness: 0.8 });
     const belt = new THREE.Mesh(new THREE.BoxGeometry(34, 0.4, 2.5), beltMat);
-    belt.position.y = 0;
+    belt.position.y = 0.15;          // 顶面 0.35，给夹爪下指留出净空
     belt.receiveShadow = true;
     beltGroup.add(belt);
 
@@ -127,7 +127,7 @@
     const beltTextures = [];
     for (let i = -16; i <= 16; i += 1) {
       const line = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.42, 2.5), new THREE.MeshStandardMaterial({ color: 0x1a202c }));
-      line.position.set(i, 0.01, 0);
+      line.position.set(i, 0.16, 0);
       beltGroup.add(line);
       beltTextures.push(line);
     }
@@ -135,15 +135,15 @@
     const rollGeo = new THREE.CylinderGeometry(0.6, 0.6, 2.6, 32);
     rollGeo.rotateX(Math.PI / 2);
     const rollMat = new THREE.MeshStandardMaterial({ color: 0x718096, metalness: 0.6, roughness: 0.3 });
-    const rollL = new THREE.Mesh(rollGeo, rollMat); rollL.position.set(-17, 0.3, 0); rollL.castShadow = true; beltGroup.add(rollL);
-    const rollR = new THREE.Mesh(rollGeo, rollMat); rollR.position.set(17, 0.3, 0); rollR.castShadow = true; beltGroup.add(rollR);
+    const rollL = new THREE.Mesh(rollGeo, rollMat); rollL.position.set(-17, 0.45, 0); rollL.castShadow = true; beltGroup.add(rollL);
+    const rollR = new THREE.Mesh(rollGeo, rollMat); rollR.position.set(17, 0.45, 0); rollR.castShadow = true; beltGroup.add(rollR);
 
-    const legGeo = new THREE.BoxGeometry(0.4, 1.5, 0.4);
+    const legGeo = new THREE.BoxGeometry(0.4, 1.45, 0.4);
     const legMat = new THREE.MeshStandardMaterial({ color: 0x4a5568 });
     for (let i = -1; i <= 1; i += 2) {
       for (let j = -1; j <= 1; j += 2) {
         const leg = new THREE.Mesh(legGeo, legMat);
-        leg.position.set(i * 15, -0.75, j * 1);
+        leg.position.set(i * 15, -0.775, j * 1);
         leg.castShadow = true;
         beltGroup.add(leg);
       }
@@ -159,12 +159,12 @@
 
       const frameMat = new THREE.MeshStandardMaterial({ color: 0x4a5568, metalness: 0.5, roughness: 0.5 });
 
-      // 四角立柱（中间留空，供机械臂上下取件）
-      const legGeo = new THREE.BoxGeometry(0.22, 4.5, 0.22);
+      // 四角立柱（中间留空，供机械臂上下取件；腔体下沿 5.0，高于机械臂肘部轨迹）
+      const legGeo = new THREE.BoxGeometry(0.22, 5.0, 0.22);
       for (const sx of [-0.85, 0.85]) {
         for (const sz of [-0.85, 0.85]) {
           const leg = new THREE.Mesh(legGeo, frameMat);
-          leg.position.set(sx, 2.25, sz);
+          leg.position.set(sx, 2.5, sz);
           leg.castShadow = true;
           group.add(leg);
         }
@@ -192,7 +192,7 @@
       // 前 / 后壁（带标签）
       for (const sz of [0.94, -0.94]) {
         const panel = new THREE.Mesh(new THREE.BoxGeometry(2, 2.4, 0.12), boxMat);
-        panel.position.set(0, 5.7, sz);
+        panel.position.set(0, 6.2, sz);
         panel.castShadow = true;
         panel.receiveShadow = true;
         group.add(panel);
@@ -200,25 +200,25 @@
       // 左 / 右壁
       for (const sx of [-0.94, 0.94]) {
         const panel = new THREE.Mesh(new THREE.BoxGeometry(0.12, 2.4, 1.88), sideMat);
-        panel.position.set(sx, 5.7, 0);
+        panel.position.set(sx, 6.2, 0);
         panel.castShadow = true;
         group.add(panel);
       }
       // 顶板（下方完全开口）
       const topPanel = new THREE.Mesh(new THREE.BoxGeometry(2, 0.12, 1.88), sideMat);
-      topPanel.position.set(0, 6.84, 0);
+      topPanel.position.set(0, 7.34, 0);
       topPanel.castShadow = true;
       group.add(topPanel);
 
       const edges = new THREE.EdgesGeometry(boxGeo);
       const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: colorHex, linewidth: 2 }));
-      line.position.y = 5.7;
+      line.position.y = 6.2;
       group.add(line);
 
       const lightGeo = new THREE.SphereGeometry(0.15, 16, 16);
       const lightMat = new THREE.MeshStandardMaterial({ color: 0x27ae60, emissive: 0x27ae60, emissiveIntensity: 1 });
       const light = new THREE.Mesh(lightGeo, lightMat);
-      light.position.set(0, 7.25, 0);
+      light.position.set(0, 7.8, 0);
       group.add(light);
 
       group.userData = { light, boxMat };
@@ -236,17 +236,26 @@
     const L1 = 1.8;
     const L2 = 1.5;
 
-    // ========== 关键高度常量 ==========
-    const BELT_TOP = 0.2;            // 传送带顶面高度
+    // ========== 关键几何常量 ==========
+    const BELT_TOP = 0.35;           // 传送带顶面高度
     const PACKET_HALF = 0.5;         // 数据包半高
-    const PICK_Y = BELT_TOP + PACKET_HALF;  // 传送带上数据包中心高度 (0.7)
+    const PICK_Y = BELT_TOP + PACKET_HALF;  // 传送带上数据包中心高度 (0.85)
     const MACH_Y = 5.7;              // 设备腔体内数据包中心高度
-    const ARM_BASE_Y = 2.5;          // 机械臂基座高度
+    const ARM_BASE_Y = 3.0;          // 机械臂基座高度（抬高，避开 IK 奇异点）
     const CLAW_OPEN = 0.42;          // 夹爪张开角度（弧度）
+    const GRIP_X = 0.53;             // 夹持中心相对腕部的偏置（腕关节恒定竖直 → 世界 +x）
+    const WRIST_ANGLE = 0;           // 期望的夹爪世界朝向（0 = 竖直）
+
+    // 机械臂的目标点（腕部原点在机械臂局部坐标系中的位置，x 相对基座）
+    const TGT = {
+      belt: { x: -GRIP_X, y: PICK_Y - ARM_BASE_Y },   // 夹持中心对准传送带上的数据包
+      mach: { x: -GRIP_X, y: MACH_Y - ARM_BASE_Y },   // 夹持中心对准设备腔体中心
+      idle: { x: 1 - GRIP_X, y: 1.6 }                // 待机姿态
+    };
 
     function createArm(x) {
       const group = new THREE.Group();
-      group.position.set(x, 2.5, 0);
+      group.position.set(x, ARM_BASE_Y, 0);
 
       const shoulder = new THREE.Group();
       const arm1 = new THREE.Mesh(
@@ -267,8 +276,12 @@
       arm2.castShadow = true;
       elbow.add(arm2);
 
+      // 腕关节：抵消肩/肘的旋转，让夹爪始终保持期望的世界朝向（竖直）
+      const wrist = new THREE.Group();
+      wrist.position.x = L2;
+
       const gripper = new THREE.Group();
-      gripper.position.x = L2;
+      wrist.add(gripper);
 
       // 腕部（连接臂杆与夹爪）
       const baseGrip = new THREE.Mesh(
@@ -339,7 +352,7 @@
         gripper.add(pin);
       }
 
-      elbow.add(gripper);
+      elbow.add(wrist);
       shoulder.add(elbow);
       group.add(shoulder);
 
@@ -361,35 +374,30 @@
 
       // 支撑立柱：让机械臂不再悬空（放在传送带外侧，不挡取件通道）
       const colMat = new THREE.MeshStandardMaterial({ color: 0x4a5568, metalness: 0.5, roughness: 0.5 });
-      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 2.05, 20), colMat);
-      col.position.set(0, -1.475, -1.9);
+      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 2.75, 20), colMat);
+      col.position.set(0, -1.625, -1.5);
       col.castShadow = true;
       group.add(col);
       const colFoot = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.16, 1.1), colMat);
-      colFoot.position.set(0, -2.42, -1.9);
+      colFoot.position.set(0, -2.92, -1.5);
       colFoot.castShadow = true;
       group.add(colFoot);
-      const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 1.25), colMat);
-      bracket.position.set(0, -0.25, -1.3);
+      const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 1.2), colMat);
+      bracket.position.set(0, -0.25, -1.2);
       bracket.castShadow = true;
       group.add(bracket);
 
-      // 预计算的 IK 目标点（相对臂基座）
-      // 注意：solveIK 必须传满 (tx, ty, l1, l2)，漏传 l1/l2 会算出 NaN，
-      // NaN 一旦写进 rotation.z，整条机械臂会直接不渲染（"消失"）
-      const ikBelt = solveIK(0, PICK_Y - ARM_BASE_Y, L1, L2);        // 伸到传送带抓取
-      const ikMach = solveIK(0, MACH_Y - ARM_BASE_Y, L1, L2);        // 伸到设备腔体中心
-      const ikGrab = solveIK(0, MACH_Y - ARM_BASE_Y - 0.65, L1, L2); // 伸到设备腔体内取件位置
-      const ikIdle = solveIK(1, 2, L1, L2);                          // 待机姿态
+      // 初始姿态（待机位）
+      const ikIdle = solveIK(TGT.idle.x, TGT.idle.y, L1, L2);
 
       group.userData = {
-        shoulder, elbow, gripper, clawL, clawR, clawPivotL, clawPivotR,
+        shoulder, elbow, wrist, gripper, clawL, clawR, clawPivotL, clawPivotR,
         state: 'idle', timer: 0,
         currentT1: ikIdle.theta1, currentT2: ikIdle.theta2,
-        ikBelt, ikMach, ikGrab, ikIdle,
-        startT1: ikIdle.theta1, startT2: ikIdle.theta2,
-        stationIndex: 0,
-        attachFrom: null
+        // cur / from：当前与起始的笛卡尔目标（腕部原点，机械臂局部坐标）
+        cur: { x: TGT.idle.x, y: TGT.idle.y },
+        from: { x: TGT.idle.x, y: TGT.idle.y },
+        stationIndex: 0
       };
 
       // 初始张开
@@ -413,10 +421,10 @@
       return { theta1, theta2 };
     }
 
-    // 注意：必须返回真正的 Vector3（含 z），
-    // 否则后续 lerpVectors / copy 会把 z 变成 NaN，导致物体整个不渲染（看起来"消失"）
+    // 复用临时向量，避免每帧 new Vector3 造成 GC 压力
+    const _endPos = new THREE.Vector3();
     function getArmEndPos(arm, t1, t2) {
-      return new THREE.Vector3(
+      return _endPos.set(
         arm.position.x + L1 * Math.cos(t1) + L2 * Math.cos(t1 + t2),
         arm.position.y + L1 * Math.sin(t1) + L2 * Math.sin(t1 + t2),
         0
@@ -476,18 +484,19 @@
       };
 
       arms.forEach(arm => {
-        arm.userData.state = 'idle';
-        arm.userData.timer = 0;
-        arm.userData.attachFrom = null;
-        const ik = arm.userData.ikIdle;
-        arm.userData.currentT1 = ik.theta1;
-        arm.userData.currentT2 = ik.theta2;
-        arm.userData.startT1 = ik.theta1;
-        arm.userData.startT2 = ik.theta2;
-        arm.userData.shoulder.rotation.z = ik.theta1;
-        arm.userData.elbow.rotation.z = ik.theta2;
-        arm.userData.clawPivotL.rotation.z = CLAW_OPEN;
-        arm.userData.clawPivotR.rotation.z = -CLAW_OPEN;
+        const aData = arm.userData;
+        aData.state = 'idle';
+        aData.timer = 0;
+        aData.cur = { x: TGT.idle.x, y: TGT.idle.y };
+        aData.from = { x: TGT.idle.x, y: TGT.idle.y };
+        const ik = solveIK(TGT.idle.x, TGT.idle.y, L1, L2);
+        aData.currentT1 = ik.theta1;
+        aData.currentT2 = ik.theta2;
+        aData.shoulder.rotation.z = ik.theta1;
+        aData.elbow.rotation.z = ik.theta2;
+        aData.wrist.rotation.z = -(ik.theta1 + ik.theta2) + WRIST_ANGLE;
+        aData.clawPivotL.rotation.z = CLAW_OPEN;
+        aData.clawPivotR.rotation.z = -CLAW_OPEN;
       });
 
       devices.forEach(d => {
@@ -534,33 +543,46 @@
     }
 
     // ========== 游戏逻辑 ==========
+    // 让机械臂开始抓取数据包
+    function startGrab(arm, idx) {
+      const pData = packetGroup.userData;
+      packetGroup.position.x = arm.position.x;
+      pData.state = 'grabbed';
+      arm.userData.state = 'reaching_belt';
+      arm.userData.timer = 0;
+      arm.userData.stationIndex = idx;
+      arm.userData.from = { x: arm.userData.cur.x, y: arm.userData.cur.y };
+      pData.processedStations.push(idx);
+    }
+
     function updateGame(dt) {
       const pData = packetGroup.userData;
 
       if (pData.state === 'moving') {
-        packetGroup.position.x += pData.speed * dt;
-
+        // 找出下一个尚未处理的工位
+        let nextIdx = -1;
         for (let i = 0; i < arms.length; i++) {
-          const arm = arms[i];
+          if (!pData.processedStations.includes(i)) { nextIdx = i; break; }
+        }
+
+        if (nextIdx >= 0) {
+          const arm = arms[nextIdx];
           const armX = arm.position.x;
-
-          if (!pData.processedStations.includes(i) &&
-              packetGroup.position.x >= armX - 0.4 &&
-              packetGroup.position.x <= armX + 0.4 &&
-              arm.userData.state === 'idle') {
-
-            packetGroup.position.x = armX;
-            pData.state = 'grabbed';
-            arm.userData.state = 'reaching_belt';
-            arm.userData.timer = 0;
-            arm.userData.stationIndex = i;
-
-            arm.userData.startT1 = arm.userData.currentT1;
-            arm.userData.startT2 = arm.userData.currentT2;
-
-            pData.processedStations.push(i);
-            break;
+          if (packetGroup.position.x >= armX - 0.4) {
+            if (arm.userData.state === 'idle') {
+              startGrab(arm, nextIdx);
+            } else {
+              // 机械臂正忙 → 停在站前等待，绝不漏封直接穿过去
+              packetGroup.position.x = armX - 0.4;
+              pData.state = 'waiting_station';
+              pData.waitStation = nextIdx;
+              statusEl.textContent = '状态: 等待工位空闲...';
+            }
+          } else {
+            packetGroup.position.x += pData.speed * dt;
           }
+        } else {
+          packetGroup.position.x += pData.speed * dt;
         }
 
         if (packetGroup.position.x > 16) {
@@ -573,6 +595,13 @@
             statusEl.textContent = '状态: 等待开始';
             startBtn.textContent = '开始运行';
           }, 3000);
+        }
+      }
+      else if (pData.state === 'waiting_station') {
+        // 等待指定工位空闲
+        const arm = arms[pData.waitStation];
+        if (arm && arm.userData.state === 'idle') {
+          startGrab(arm, pData.waitStation);
         }
       }
       else if (pData.state === 'in_machine') {
@@ -624,20 +653,35 @@
       aData.timer += dt;
       const pData = packetGroup ? packetGroup.userData : null;
 
-      // 关节插值（带缓动）
-      const lerpIK = (fromT1, fromT2, toT1, toT2, t) => {
+      // 笛卡尔直线插值 + 实时解 IK：
+      // 末端沿直线运动，不会因为关节角插值而走圆弧蹭到设备壁
+      const moveTo = (from, to, t) => {
         const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        const n1 = THREE.MathUtils.lerp(fromT1, toT1, ease);
-        const n2 = THREE.MathUtils.lerp(fromT2, toT2, ease);
-        // 保险：NaN 写进 rotation 会让整条臂停止渲染（看起来"消失"），这里直接跳过该帧
-        if (!isFinite(n1) || !isFinite(n2)) {
-          console.warn('[IK] 非法关节角，已跳过本帧', { fromT1, fromT2, toT1, toT2 });
+        const tx = THREE.MathUtils.lerp(from.x, to.x, ease);
+        const ty = THREE.MathUtils.lerp(from.y, to.y, ease);
+        const ik = solveIK(tx, ty, L1, L2);
+        // 保险：NaN 写进 rotation 会让整条臂停止渲染（看起来"消失"）
+        if (!isFinite(ik.theta1) || !isFinite(ik.theta2)) {
+          console.warn('[IK] 目标不可达，跳过本帧', tx, ty);
           return;
         }
-        aData.currentT1 = n1;
-        aData.currentT2 = n2;
-        aData.shoulder.rotation.z = aData.currentT1;
-        aData.elbow.rotation.z = aData.currentT2;
+        aData.currentT1 = ik.theta1;
+        aData.currentT2 = ik.theta2;
+        aData.shoulder.rotation.z = ik.theta1;
+        aData.elbow.rotation.z = ik.theta2;
+        // 腕关节反向补偿 → 夹爪世界朝向恒为 WRIST_ANGLE（竖直）
+        aData.wrist.rotation.z = -(ik.theta1 + ik.theta2) + WRIST_ANGLE;
+        aData.cur = { x: tx, y: ty };
+      };
+
+      // 夹持中心（数据包中心）：腕部原点 + 沿夹爪朝向的固定偏置
+      const clampCenter = () => {
+        const end = getArmEndPos(arm, aData.currentT1, aData.currentT2);
+        const ang = aData.currentT1 + aData.currentT2 + aData.wrist.rotation.z; // === WRIST_ANGLE
+        return {
+          x: end.x + GRIP_X * Math.cos(ang),
+          y: end.y + GRIP_X * Math.sin(ang)
+        };
       };
 
       // 数据包跟随夹爪（统一在这里设置位置，杜绝 NaN 坐标）
@@ -652,8 +696,8 @@
 
       const followPacket = () => {
         if (!packetGroup) return;
-        const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
-        setPacketPos(pos.x, pos.y);
+        const c = clampCenter();
+        setPacketPos(c.x, c.y);
       };
 
       // 爪子绕腕部销轴旋转：张开 / 夹紧
@@ -668,14 +712,14 @@
       };
 
       switch (aData.state) {
-        // ① 伸向传送带
+        // ① 伸向传送带（直线下降到数据包位置）
         case 'reaching_belt': {
           const t = Math.min(1, aData.timer / 0.4);
-          lerpIK(aData.startT1, aData.startT2, aData.ikBelt.theta1, aData.ikBelt.theta2, t);
+          moveTo(aData.from, TGT.belt, t);
           if (t >= 1) { aData.state = 'grabbing'; aData.timer = 0; }
           break;
         }
-        // ② 夹紧传送带上的数据包
+        // ② 夹紧传送带上的数据包（数据包不动，手指合拢）
         case 'grabbing': {
           const t = Math.min(1, aData.timer / 0.2);
           closeClaws(t);
@@ -683,21 +727,22 @@
           if (t >= 1) { aData.state = 'lifting'; aData.timer = 0; }
           break;
         }
-        // ③ 抬起送入设备
+        // ③ 竖直抬起送入设备（直线上升，从腔体下开口进入）
         case 'lifting': {
-          const t = Math.min(1, aData.timer / 0.5);
-          lerpIK(aData.ikBelt.theta1, aData.ikBelt.theta2, aData.ikMach.theta1, aData.ikMach.theta2, t);
+          const t = Math.min(1, aData.timer / 0.6);
+          moveTo(TGT.belt, TGT.mach, t);
           followPacket();
           if (t >= 1) { aData.state = 'releasing'; aData.timer = 0; }
           break;
         }
-        // ④ 松爪，把数据包放进设备腔体
+        // ④ 松爪，把数据包放进设备腔体（数据包停在夹持中心 = 腔体中心）
         case 'releasing': {
           const t = Math.min(1, aData.timer / 0.2);
           openClaws(t);
           if (t >= 1) {
             if (packetGroup) {
-              packetGroup.position.set(arm.position.x, MACH_Y, 0);
+              const c = clampCenter();
+              packetGroup.position.set(c.x, c.y, 0);
               packetGroup.userData.state = 'in_machine';
               packetGroup.userData.timer = 0;
               packetGroup.userData.targetX = arm.position.x;
@@ -710,59 +755,40 @@
         // ⑤ 原地待命，等设备封装完成
         case 'holding': {
           if (pData && pData.state === 'ready_to_take') {
-            aData.state = 'descending';
-            aData.timer = 0;
-          }
-          break;
-        }
-        // ⑥ 下探到腔体内，准备取件
-        case 'descending': {
-          const t = Math.min(1, aData.timer / 0.3);
-          lerpIK(aData.ikMach.theta1, aData.ikMach.theta2, aData.ikGrab.theta1, aData.ikGrab.theta2, t);
-          if (t >= 1) {
             aData.state = 'gripping';
             aData.timer = 0;
-            aData.attachFrom = packetGroup ? packetGroup.position.clone() : null;
+          } else if (!pData || (pData.state !== 'in_machine' && pData.state !== 'grabbed')) {
+            // 数据包已不在腔体 → 复位，避免卡死
+            aData.state = 'returning';
+            aData.timer = 0;
+            aData.from = { x: aData.cur.x, y: aData.cur.y };
           }
           break;
         }
-        // ⑦ 夹紧封装好的数据包
+        // ⑥ 夹紧封装好的数据包（手指合拢，数据包完全不动）
         case 'gripping': {
-          const t = Math.min(1, aData.timer / 0.2);
+          const t = Math.min(1, aData.timer / 0.25);
           closeClaws(t);
-          if (packetGroup && aData.attachFrom) {
-            const pos = getArmEndPos(arm, aData.currentT1, aData.currentT2);
-            const x = THREE.MathUtils.lerp(aData.attachFrom.x, pos.x, t);
-            const y = THREE.MathUtils.lerp(aData.attachFrom.y, pos.y, t);
-            setPacketPos(x, y);
-          }
           if (t >= 1) { aData.state = 'lifting_out'; aData.timer = 0; }
           break;
         }
-        // ⑧ 从设备中把数据包取出
+        // ⑦ 从设备腔体中垂直取出（数据包从下开口退出）
         case 'lifting_out': {
-          const t = Math.min(1, aData.timer / 0.4);
-          lerpIK(aData.ikGrab.theta1, aData.ikGrab.theta2, aData.ikMach.theta1, aData.ikMach.theta2, t);
-          followPacket();
-          if (t >= 1) { aData.state = 'transporting'; aData.timer = 0; }
-          break;
-        }
-        // ⑨ 搬运回传送带
-        case 'transporting': {
-          const t = Math.min(1, aData.timer / 0.5);
-          lerpIK(aData.ikMach.theta1, aData.ikMach.theta2, aData.ikBelt.theta1, aData.ikBelt.theta2, t);
+          const t = Math.min(1, aData.timer / 0.6);
+          moveTo(TGT.mach, TGT.belt, t);
           followPacket();
           if (t >= 1) { aData.state = 'placing'; aData.timer = 0; }
           break;
         }
-        // ⑩ 放到传送带上并松爪
+        // ⑧ 放到传送带上并松爪
         case 'placing': {
           const t = Math.min(1, aData.timer / 0.2);
           openClaws(t);
           followPacket();
           if (t >= 1) {
             if (packetGroup) {
-              packetGroup.position.set(arm.position.x, PICK_Y, 0);
+              const c = clampCenter();
+              packetGroup.position.set(c.x, c.y, 0);
               packetGroup.userData.state = 'moving';
               packetGroup.userData.timer = 0;
               const payload = packetGroup.children[0];
@@ -779,13 +805,14 @@
             }
             aData.state = 'returning';
             aData.timer = 0;
+            aData.from = { x: aData.cur.x, y: aData.cur.y };
           }
           break;
         }
-        // ⑪ 回到待机位
+        // ⑨ 回到待机位
         case 'returning': {
           const t = Math.min(1, aData.timer / 0.4);
-          lerpIK(aData.ikBelt.theta1, aData.ikBelt.theta2, aData.ikIdle.theta1, aData.ikIdle.theta2, t);
+          moveTo(aData.from, TGT.idle, t);
           if (t >= 1) { aData.state = 'idle'; aData.timer = 0; }
           break;
         }

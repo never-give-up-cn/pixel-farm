@@ -332,10 +332,12 @@
       group.add(bracket);
 
       // 预计算的 IK 目标点（相对臂基座）
-      const ikBelt = solveIK(0, PICK_Y - ARM_BASE_Y);        // 伸到传送带抓取
-      const ikMach = solveIK(0, MACH_Y - ARM_BASE_Y);        // 伸到设备腔体中心
-      const ikGrab = solveIK(0, MACH_Y - ARM_BASE_Y - 0.65); // 伸到设备腔体内取件位置
-      const ikIdle = solveIK(1, 2, L1, L2);                  // 待机姿态
+      // 注意：solveIK 必须传满 (tx, ty, l1, l2)，漏传 l1/l2 会算出 NaN，
+      // NaN 一旦写进 rotation.z，整条机械臂会直接不渲染（"消失"）
+      const ikBelt = solveIK(0, PICK_Y - ARM_BASE_Y, L1, L2);        // 伸到传送带抓取
+      const ikMach = solveIK(0, MACH_Y - ARM_BASE_Y, L1, L2);        // 伸到设备腔体中心
+      const ikGrab = solveIK(0, MACH_Y - ARM_BASE_Y - 0.65, L1, L2); // 伸到设备腔体内取件位置
+      const ikIdle = solveIK(1, 2, L1, L2);                          // 待机姿态
 
       group.userData = {
         shoulder, elbow, gripper, clawL, clawR,
@@ -578,8 +580,15 @@
       // 关节插值（带缓动）
       const lerpIK = (fromT1, fromT2, toT1, toT2, t) => {
         const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        aData.currentT1 = THREE.MathUtils.lerp(fromT1, toT1, ease);
-        aData.currentT2 = THREE.MathUtils.lerp(fromT2, toT2, ease);
+        const n1 = THREE.MathUtils.lerp(fromT1, toT1, ease);
+        const n2 = THREE.MathUtils.lerp(fromT2, toT2, ease);
+        // 保险：NaN 写进 rotation 会让整条臂停止渲染（看起来"消失"），这里直接跳过该帧
+        if (!isFinite(n1) || !isFinite(n2)) {
+          console.warn('[IK] 非法关节角，已跳过本帧', { fromT1, fromT2, toT1, toT2 });
+          return;
+        }
+        aData.currentT1 = n1;
+        aData.currentT2 = n2;
         aData.shoulder.rotation.z = aData.currentT1;
         aData.elbow.rotation.z = aData.currentT2;
       };

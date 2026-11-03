@@ -321,7 +321,7 @@ function fitCanvas(){
   canvas.style.width  = Math.round(VIEW_W * finalScale) + 'px';
   canvas.style.height = Math.round(VIEW_H * finalScale) + 'px';
 }
-window.addEventListener('resize', fitCanvas);
+window.addEventListener('resize', ()=>{ fitCanvas(); layoutToasts(); });
 fitCanvas();
 
 /* --- 单个瓦片绘制 --- */
@@ -685,6 +685,13 @@ function addResource(res, n){ resources[res] = (resources[res] || 0) + n; }
 
 /* --- 提示条：屏幕底部，1.5 秒淡出，多条向上排 --- */
 const toastBox = document.getElementById('toasts');
+/* 把提示条锚定到画布下沿（而不是视口底部，避免掉进黑边） */
+function layoutToasts(){
+  if(!toastBox) return;
+  const r = canvas.getBoundingClientRect();
+  toastBox.style.left = (r.left + r.width / 2) + 'px';
+  toastBox.style.bottom = Math.max(12, window.innerHeight - (r.top + r.height) + 16) + 'px';
+}
 function toast(msg){
   if(!toastBox) return;
   const el = document.createElement('div');
@@ -974,6 +981,7 @@ player.y = SPAWN.y*TILE + TILE/2;
 cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
 cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
 updateStats();
+layoutToasts();
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */

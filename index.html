@@ -54,8 +54,8 @@ const CONFIG = {
   CHAR_POS_Y: 0.5,
 
   /* 缩放 */
-  INTEGER_SCALE: true,      // true = 只用整数倍缩放（像素最锐利）
-  MIN_SCALE: 1,
+  INTEGER_SCALE: true,      // true = 放大时只用整数倍（像素最锐利）
+  MIN_SCALE: 0.25,          // 最小缩放比（窗口小于逻辑分辨率时按比例缩小，不裁切）
 
   /* 配色 */
   COLORS: {

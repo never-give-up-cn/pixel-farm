@@ -40,7 +40,7 @@ let html=fs.readFileSync(base+'/index.html','utf8');
 html=html.replace('DEBUG_HOOK: false','DEBUG_HOOK: true');
 html=html.replace('<script>','<script>'+pre+'</script>\n<script>').replace('</body>','<script>'+post+'</script></body>');
 fs.writeFileSync(base+'/_p.html',html);
-execFileSync(chrome,['--headless=new','--disable-gpu','--window-size=1000,620','--force-device-scale-factor=1','--user-data-dir='+dir,'--virtual-time-budget=4200','--screenshot='+base+'/_shot.png','file:///E:/IdeaProjects/%E7%89%A9%E7%90%86%E6%A8%A1%E6%8B%9F/_p.html']);
+execFileSync(chrome,['--headless=new','--disable-gpu','--window-size=1000,620','--force-device-scale-factor=1','--user-data-dir='+dir,'--virtual-time-budget=2900','--screenshot='+base+'/_shot.png','file:///E:/IdeaProjects/%E7%89%A9%E7%90%86%E6%A8%A1%E6%8B%9F/_p.html']);
 const out=execFileSync(chrome,['--headless=new','--disable-gpu','--window-size=1000,620','--force-device-scale-factor=1','--user-data-dir='+dir,'--virtual-time-budget=4200','--dump-dom','file:///E:/IdeaProjects/%E7%89%A9%E7%90%86%E6%A8%A1%E6%8B%9F/_p.html'],{encoding:'utf8',maxBuffer:1<<26});
 const m=out.match(/id="__OUT">([\s\S]*?)<\/div>/);
 if(m){const o=JSON.parse(m[1].replace(/&quot;/g,'"').replace(/&amp;/g,'&'));

@@ -17,11 +17,20 @@
     background:#141922;
     box-shadow:0 0 0 2px #000,0 0 40px rgba(0,0,0,.6);
   }
+  /* 右上角信息面板（不随画布缩放，保持文字清晰） */
+  #stats{
+    position:fixed;right:10px;top:10px;z-index:10;
+    font:12px/1.7 Consolas,"Courier New",monospace;color:#cfe3ff;
+    background:rgba(8,10,16,.74);border:2px solid #3d4a63;padding:6px 10px;
+    white-space:pre;pointer-events:none;
+  }
+  #stats b{color:#ffd76a}
 </style>
 </head>
 <body>
 
 <canvas id="game"></canvas>
+<div id="stats"></div>
 
 <script>
 'use strict';
@@ -39,28 +48,55 @@ const CONFIG = {
   TILE: 32,                 // 每格像素
   MAP_W: 64,                // 地图宽（格）
   MAP_H: 64,                // 地图高（格）
+  SEED: 20240613,           // 随机种子（同种子 → 同一张地图）
+
+  /* 地图生成 */
+  GEN: {
+    FARM_W: 12,             // 中央空地宽（格）
+    FARM_H: 12,             // 中央空地高（格）
+    HOUSE_W: 3, HOUSE_H: 2, // 小屋尺寸（格）
+    SHOP_W: 2,  SHOP_H: 2,  // 商店摊尺寸（格）
+    WATER_LEVEL: 0.66,      // 噪声高于此值 → 水
+    NOISE_FREQ: 0.11,       // 水体噪声频率（大团块）
+    NOISE_FREQ2: 0.045,     // 水体噪声频率（大尺度）
+    DIRT_PATCHES: 7,        // 泥土斑块数量
+    TREE_CHANCE: 0.075,     // 草地长树概率
+    ROCK_CHANCE: 0.05,      // 草地出石概率
+    FLOWER_CHANCE: 0.06     // 草地开花概率
+  },
+
+  /* 玩家 */
+  PLAYER: {
+    SPEED: 78,              // 步行速度（像素/秒）
+    RUN_MULT: 1.6,          // 奔跑倍率（Shift）
+    BODY_W: 16,             // 体型宽
+    BODY_H: 24,             // 体型高
+    BOX_W: 12,              // 碰撞盒宽（脚部）
+    BOX_H: 16,              // 碰撞盒高（脚部）
+    ANIM_FPS: 8             // 走路摆腿帧率
+  },
+
+  /* 摄像机 */
+  CAMERA: { SMOOTH: 7 },    // 跟随缓动（越大越跟手）
 
   /* 主循环 */
   TARGET_FPS: 60,           // 逻辑帧率（固定步长）
   MAX_FRAME_TIME: 0.25,     // 单帧最大时间（防止切后台后补帧爆炸）
   MAX_STEPS: 5,             // 单帧最多追几步
-  FPS_INTERVAL: 0.25,       // FPS 刷新间隔（秒）
+  FPS_INTERVAL: 0.25,       // FPS / 面板刷新间隔（秒）
 
-  /* 占位小人 */
-  CHAR_W: 16,               // 精灵宽（像素）
-  CHAR_H: 24,               // 精灵高（像素）
-  CHAR_SCALE: 2,            // 精灵整数放大倍数
-  CHAR_POS_X: 0.5,          // 屏幕归一化位置（0~1）
-  CHAR_POS_Y: 0.5,
+  /* 调试 */
+  GRID_OVERLAY: true,       // 叠加网格线
+  GRID_COLOR: 'rgba(255,255,255,0.09)',
+  LOG_EVERY: 60,            // 每 N 帧在控制台打印一次瓦片统计
 
   /* 缩放 */
   INTEGER_SCALE: true,      // true = 放大时只用整数倍（像素最锐利）
   MIN_SCALE: 0.25,          // 最小缩放比（窗口小于逻辑分辨率时按比例缩小，不裁切）
 
-  /* 配色 */
+  /* HUD / 精灵配色 */
   COLORS: {
-    bg:        '#141922',   // 画布背景（深色）
-    grid:      '#1b2231',   // 网格线
+    bg:        '#141922',
     hudBg:     'rgba(8,10,16,0.72)',
     hudBorder: '#3d4a63',
     hudText:   '#cfe3ff',
@@ -73,215 +109,607 @@ const CONFIG = {
     shirtDark: '#2f63a8',
     pants:     '#3a4a5a',
     shoe:      '#26262e'
+  },
+
+  /* 瓦片配色 */
+  TILE_COLORS: {
+    grass:       '#6fb04c', grassDot: '#5d9c42', grassDot2: '#82c05a',
+    dirt:        '#7d4d2b', dirtLine: '#6a4023', dirtLine2: '#8a5a33',
+    water:       '#3f7fc4', waterLight: '#4f95da', waterDark: '#2f6ba8',
+    treeTrunk:   '#5b3a1d', treeTrunkDark: '#7d5426',
+    treeLeaf:    '#2f8234', treeLeafLight: '#3d9a3f', treeLeafTop: '#54b34f',
+    rock:        '#9aa1a9', rockLight: '#c6ccd2', rockDark: '#63696f',
+    flowerStem:  '#3f8f3a', flowerCenter: '#fff8d0',
+    flowers:     ['#ffe066', '#ff9ec7', '#b39dff'],
+    houseWall:   '#d9b382', houseWallDark: '#c39a67', houseWallLine: '#b78d5c',
+    houseRoof:   '#c05a32', houseRoofLight: '#d9713f', houseRoofDark: '#8a4a2a',
+    houseDoor:   '#7d4a22', houseDoorDark: '#5b3a1d', houseKnob: '#e2c14a',
+    houseWindow: '#8fd0f0', houseWindowFrame: '#5b3a1d',
+    houseChimney:'#7d4a22',
+    shopPost:    '#7d5426', shopCounter: '#a97a3f', shopCounterDark: '#6d4522',
+    shopCanopyA: '#d94f3d', shopCanopyB: '#f0f0f0', shopCanopyDark: '#b03a2c',
+    shopSign:    '#7d5426', shopSignText: '#e2c14a',
+    shopGoods1:  '#e04430', shopGoods2: '#e08a2a', shopGoods3: '#c8a05c', shopGoods4: '#8fd06a'
   }
 };
 
 /* === 2.世界 === */
-/* 固定步长：逻辑每步恒为 1/60 秒，与显示器刷新率无关 */
-const FIXED_DT = 1 / CONFIG.TARGET_FPS;
+const T = {GRASS:0, DIRT:1, WATER:2, TREE:3, ROCK:4, FLOWER:5, HOUSE:6, SHOP:7};
+const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店'];
 
-/* 3×5 点阵字库（像素风 HUD 文字，缩放后依然锐利） */
-const FONT = {
-  '0':['111','101','101','101','111'],
-  '1':['010','110','010','010','111'],
-  '2':['111','001','111','100','111'],
-  '3':['111','001','111','001','111'],
-  '4':['101','101','111','001','001'],
-  '5':['111','100','111','001','111'],
-  '6':['111','100','111','101','111'],
-  '7':['111','001','010','010','010'],
-  '8':['111','101','111','101','111'],
-  '9':['111','101','111','001','111'],
-  'F':['111','100','111','100','100'],
-  'P':['110','101','110','100','100'],
-  'S':['111','100','111','001','111'],
-  'V':['101','101','101','101','010'],
-  'v':['101','101','101','101','010'],
-  '.':['000','000','000','000','010'],
-  '-':['000','000','111','000','000'],
-  ' ':['000','000','000','000','000']
-};
-const GLYPH_W = 3, GLYPH_H = 5;
+const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
+const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
+let map = new Uint8Array(MAP_W * MAP_H);
 
-/* 占位小人：16×24 字符画（每格 1 像素，运行时用 fillRect 拼出） */
-const SPRITE = [
-  '.....hhhhhh.....',
-  '....hhhhhhhh....',
-  '...hhhhhhhhhh...',
-  '...hh......hh...',
-  '...hh......hh...',
-  '...ssssssssss...',
-  '...ssssssssss...',
-  '...ss.ee..ee.ss.',
-  '...ssssssssss...',
-  '....ssssssss....',
-  '.....ssssss.....',
-  '....bbbbbbbb....',
-  '...bbbbbbbbbb...',
-  '..bbbbbbbbbbbb..',
-  '..bbbbbbbbbbbb..',
-  '..sbbbbbbbbbbs..',
-  '..sbbbbbbbbbbs..',
-  '...bbbbbbbbbb...',
-  '....pppppppp....',
-  '....pp....pp....',
-  '....pp....pp....',
-  '....ss....ss....',
-  '....ss....ss....',
-  '................'
-];
-const SPRITE_PALETTE = {
-  h: CONFIG.COLORS.hair,
-  s: CONFIG.COLORS.skin,
-  e: CONFIG.COLORS.eye,
-  b: CONFIG.COLORS.shirt,
-  p: CONFIG.COLORS.pants,
-  d: CONFIG.COLORS.shoe
+/* 中央空地 + 建筑位置（全部由 CONFIG 推导） */
+const FARM = {
+  x: Math.floor((MAP_W - CONFIG.GEN.FARM_W) / 2),
+  y: Math.floor((MAP_H - CONFIG.GEN.FARM_H) / 2),
+  w: CONFIG.GEN.FARM_W, h: CONFIG.GEN.FARM_H
 };
+const HOUSE_POS = {x:FARM.x + 1, y:FARM.y, w:CONFIG.GEN.HOUSE_W, h:CONFIG.GEN.HOUSE_H};
+const SHOP_POS  = {x:FARM.x + FARM.w - 1 - CONFIG.GEN.SHOP_W, y:FARM.y, w:CONFIG.GEN.SHOP_W, h:CONFIG.GEN.SHOP_H};
+const SPAWN = {x:FARM.x + Math.floor(FARM.w/2), y:FARM.y + Math.floor(FARM.h/2) + 2};
+
+const inFarm = (x,y)=> x>=FARM.x && x<FARM.x+FARM.w && y>=FARM.y && y<FARM.y+FARM.h;
+const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
+const lerp  = (a,b,t)=> a+(b-a)*t;
+
+/* --- 带种子的伪随机 --- */
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hashSeed(x,y,s){
+  let n = Math.imul(x|0, 374761393) + Math.imul(y|0, 668265263) + Math.imul(s|0, 1442695041);
+  n = Math.imul(n ^ (n>>>13), 1274126177);
+  return ((n ^ (n>>>16)) >>>0) / 4294967296;
+}
+function hash2(x,y){ return hashSeed(x,y,0); }
+
+/* --- 平滑值噪声（用于成片的水塘） --- */
+function valueNoise(x,y,freq,seed){
+  const fx = x*freq, fy = y*freq;
+  const x0 = Math.floor(fx), y0 = Math.floor(fy);
+  const tx = fx-x0, ty = fy-y0;
+  const sx = tx*tx*(3-2*tx), sy = ty*ty*(3-2*ty);
+  const a = lerp(hashSeed(x0,y0,seed),   hashSeed(x0+1,y0,seed),   sx);
+  const b = lerp(hashSeed(x0,y0+1,seed), hashSeed(x0+1,y0+1,seed), sx);
+  return lerp(a,b,sy);
+}
+function fbm(x,y,seed){
+  return valueNoise(x,y,CONFIG.GEN.NOISE_FREQ,  seed)  * 0.65 +
+         valueNoise(x,y,CONFIG.GEN.NOISE_FREQ2, seed+1) * 0.35;
+}
+
+/* --- 地图生成 --- */
+function genMap(seed){
+  const rnd = mulberry32(seed);
+  map.fill(T.GRASS);
+
+  /* 1) 外围一圈水：天然边界 */
+  for(let x=0;x<MAP_W;x++){ map[x] = T.WATER; map[(MAP_H-1)*MAP_W+x] = T.WATER; }
+  for(let y=0;y<MAP_H;y++){ map[y*MAP_W] = T.WATER; map[y*MAP_W+MAP_W-1] = T.WATER; }
+
+  /* 2) 噪声水塘（成片分布），中央空地除外 */
+  for(let y=1;y<MAP_H-1;y++) for(let x=1;x<MAP_W-1;x++){
+    if(inFarm(x,y)) continue;
+    if(fbm(x,y,seed) > CONFIG.GEN.WATER_LEVEL) map[y*MAP_W+x] = T.WATER;
+  }
+
+  /* 3) 泥土斑块 */
+  for(let k=0;k<CONFIG.GEN.DIRT_PATCHES;k++){
+    const w = 2 + ((rnd()*3)|0), h = 2 + ((rnd()*2)|0);
+    const px = 2 + ((rnd()*(MAP_W-w-4))|0), py = 2 + ((rnd()*(MAP_H-h-4))|0);
+    for(let y=py;y<py+h;y++) for(let x=px;x<px+w;x++){
+      if(inFarm(x,y)) continue;
+      if(map[y*MAP_W+x] === T.GRASS) map[y*MAP_W+x] = T.DIRT;
+    }
+  }
+
+  /* 4) 中央 12×12 强制空地（纯草地，无任何随机物件） */
+  for(let y=FARM.y;y<FARM.y+FARM.h;y++)
+    for(let x=FARM.x;x<FARM.x+FARM.w;x++) map[y*MAP_W+x] = T.GRASS;
+
+  /* 5) 树 / 岩石 / 野花（只在草地上，且避开空地） */
+  for(let y=1;y<MAP_H-1;y++) for(let x=1;x<MAP_W-1;x++){
+    if(inFarm(x,y)) continue;
+    const i = y*MAP_W+x;
+    if(map[i] !== T.GRASS) continue;
+    const r = rnd();
+    if(r < CONFIG.GEN.TREE_CHANCE) map[i] = T.TREE;
+    else if(r < CONFIG.GEN.TREE_CHANCE + CONFIG.GEN.ROCK_CHANCE) map[i] = T.ROCK;
+    else if(r < CONFIG.GEN.TREE_CHANCE + CONFIG.GEN.ROCK_CHANCE + CONFIG.GEN.FLOWER_CHANCE) map[i] = T.FLOWER;
+  }
+
+  /* 6) 建筑（小屋 1 间 + 商店摊 1 个，放在空地内上缘） */
+  for(let y=HOUSE_POS.y;y<HOUSE_POS.y+HOUSE_POS.h;y++)
+    for(let x=HOUSE_POS.x;x<HOUSE_POS.x+HOUSE_POS.w;x++) map[y*MAP_W+x] = T.HOUSE;
+  for(let y=SHOP_POS.y;y<SHOP_POS.y+SHOP_POS.h;y++)
+    for(let x=SHOP_POS.x;x<SHOP_POS.x+SHOP_POS.w;x++) map[y*MAP_W+x] = T.SHOP;
+
+  const cnt = [0,0,0,0,0,0,0,0];
+  for(let i=0;i<map.length;i++) cnt[map[i]]++;
+  let farmWild = 0;
+  for(let y=FARM.y;y<FARM.y+FARM.h;y++) for(let x=FARM.x;x<FARM.x+FARM.w;x++){
+    const t = map[y*MAP_W+x];
+    if(t===T.TREE||t===T.ROCK||t===T.FLOWER) farmWild++;
+  }
+  console.log('[map] seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
+    ' water=' + cnt[T.WATER] + ' tree=' + cnt[T.TREE] + ' rock=' + cnt[T.ROCK] +
+    ' flower=' + cnt[T.FLOWER] + ' house=' + cnt[T.HOUSE] + ' shop=' + cnt[T.SHOP] +
+    ' | farm ' + FARM.w + 'x' + FARM.h + ' wild-in-farm=' + farmWild);
+  return cnt;
+}
 
 /* === 3.渲染 === */
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', {alpha:false});
-canvas.width  = CONFIG.VIEW_W;
-canvas.height = CONFIG.VIEW_H;
+canvas.width  = VIEW_W;
+canvas.height = VIEW_H;
 ctx.imageSmoothingEnabled = false;
 
 /* 等比缩放并居中：整数倍优先（像素锐利），窗口再小也不会变形/溢出 */
 function fitCanvas(){
-  const scale = Math.min(window.innerWidth / CONFIG.VIEW_W,
-                         window.innerHeight / CONFIG.VIEW_H);
+  const scale = Math.min(window.innerWidth / VIEW_W, window.innerHeight / VIEW_H);
   const s = CONFIG.INTEGER_SCALE && scale >= 1 ? Math.floor(scale) : scale;
   const finalScale = Math.max(CONFIG.MIN_SCALE, s);
-  canvas.style.width  = Math.round(CONFIG.VIEW_W  * finalScale) + 'px';
-  canvas.style.height = Math.round(CONFIG.VIEW_H * finalScale) + 'px';
+  canvas.style.width  = Math.round(VIEW_W * finalScale) + 'px';
+  canvas.style.height = Math.round(VIEW_H * finalScale) + 'px';
 }
 window.addEventListener('resize', fitCanvas);
 fitCanvas();
 
-/* --- 4.玩家 --- */
-const player = {
-  x: CONFIG.VIEW_W * CONFIG.CHAR_POS_X,
-  y: CONFIG.VIEW_H * CONFIG.CHAR_POS_Y
-};
+/* --- 单个瓦片绘制 --- */
+function drawTree(g,x,y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.treeTrunk;     g.fillRect(x+13, y+18, 6, 14);
+  g.fillStyle = C.treeTrunkDark; g.fillRect(x+14, y+19, 2, 13);
+  g.fillStyle = C.treeLeaf;      g.fillRect(x+6,  y+8,  20, 14);
+  g.fillStyle = C.treeLeaf;      g.fillRect(x+9,  y+4,  14, 18);
+  g.fillStyle = C.treeLeafLight; g.fillRect(x+8,  y+7,  16, 12);
+  g.fillStyle = C.treeLeafTop;   g.fillRect(x+11, y+5,  9,  7);
+}
+function drawRock(g,x,y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.rockDark;  g.fillRect(x+6,  y+16, 20, 13);
+  g.fillStyle = C.rock;      g.fillRect(x+9,  y+11, 14, 11);
+  g.fillStyle = C.rockLight; g.fillRect(x+11, y+9,   9,  6);
+  g.fillStyle = C.rockDark;  g.fillRect(x+19, y+18,  7,  9);
+}
+function drawFlower(g,x,y,v){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.flowerStem; g.fillRect(x+15, y+19, 2, 9);
+  g.fillStyle = C.flowers[v % C.flowers.length];
+  g.fillRect(x+12, y+16, 7, 5); g.fillRect(x+14, y+13, 3, 8);
+  g.fillStyle = C.flowerCenter; g.fillRect(x+15, y+16, 2, 3);
+}
+function drawHouse(g,px,py){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.houseWall;     g.fillRect(px+6,  py+22, 84, 40);
+  g.fillStyle = C.houseWallLine; g.fillRect(px+6,  py+36, 84, 1);
+  g.fillRect(px+6, py+48, 84, 1);
+  g.fillStyle = C.houseWallDark; g.fillRect(px+6,  py+58, 84, 4);
+  g.fillStyle = C.houseDoor;     g.fillRect(px+38, py+34, 20, 28);
+  g.fillStyle = C.houseDoorDark; g.fillRect(px+38, py+34, 3, 28);
+  g.fillStyle = C.houseKnob;     g.fillRect(px+53, py+46, 3, 3);
+  g.fillStyle = C.houseWindowFrame; g.fillRect(px+14, py+30, 18, 16);
+  g.fillStyle = C.houseWindow;      g.fillRect(px+16, py+32, 14, 12);
+  g.fillStyle = C.houseWindowFrame; g.fillRect(px+22, py+32, 2, 12);
+  g.fillRect(px+16, py+37, 14, 2);
+  g.fillStyle = C.houseRoof;     g.fillRect(px+2,  py+2,  92, 22);
+  g.fillStyle = C.houseRoofLight;g.fillRect(px+10, py+4,  76, 9);
+  g.fillStyle = C.houseRoofDark; g.fillRect(px+2,  py+20, 92, 4);
+  g.fillStyle = C.houseChimney;  g.fillRect(px+66, py-6,  10, 12);
+}
+function drawShop(g,px,py){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.shopPost;        g.fillRect(px+3,  py+18, 6, 42);
+  g.fillRect(px+55, py+18, 6, 42);
+  g.fillStyle = C.shopCounter;     g.fillRect(px+1,  py+34, 62, 26);
+  g.fillStyle = C.shopCounterDark; g.fillRect(px+1,  py+34, 62, 4);
+  g.fillRect(px+1, py+52, 62, 8);
+  g.fillStyle = C.shopGoods1; g.fillRect(px+8,  py+27, 9, 7);
+  g.fillStyle = C.shopGoods2; g.fillRect(px+19, py+27, 9, 7);
+  g.fillStyle = C.shopGoods3; g.fillRect(px+30, py+27, 9, 7);
+  g.fillStyle = C.shopGoods4; g.fillRect(px+41, py+27, 9, 7);
+  for(let k=0;k<5;k++){
+    g.fillStyle = k%2 ? C.shopCanopyA : C.shopCanopyB;
+    g.fillRect(px+1+k*12, py+4, 12, 14);
+  }
+  g.fillStyle = C.shopCanopyDark; g.fillRect(px+1, py+16, 62, 4);
+  g.fillStyle = C.shopSign;      g.fillRect(px+16, py+19, 32, 10);
+  g.fillStyle = C.shopSignText;  g.fillRect(px+20, py+22, 24, 3);
+}
 
-/* --- 5.系统 --- */
-let fps = 0, frameCount = 0, fpsTimer = 0;
-let firstRenderDone = false;
-const renderLog = {ground:false, objects:false, player:false, ui:false};
-
-/* 点阵文字绘制：每个字形 3×5 像素，scale 为整数放大倍数 */
-function drawText(g, text, x, y, scale, color){
-  g.fillStyle = color;
-  let cx = x;
-  for(const raw of String(text)){
-    const ch = raw.toUpperCase();
-    const glyph = FONT[ch] || FONT[raw] || FONT[' '];
-    for(let r=0;r<GLYPH_H;r++){
-      const row = glyph[r];
-      for(let c=0;c<GLYPH_W;c++){
-        if(row[c] === '1') g.fillRect(cx + c*scale, y + r*scale, scale, scale);
+/* 地面层：草地 / 泥土 / 水
+ * 注意：树/岩石/野花/建筑所在格也铺草地底色（物件画在其上），避免出现黑块 */
+function drawGround(g,x0,y0,x1,y1){
+  const C = CONFIG.TILE_COLORS;
+  for(let ty=y0;ty<=y1;ty++){
+    for(let tx=x0;tx<=x1;tx++){
+      const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
+      const t = map[ty*MAP_W+tx];
+      if(t === T.DIRT){
+        g.fillStyle = C.dirt; g.fillRect(x,y,TILE,TILE);
+        g.fillStyle = C.dirtLine;
+        g.fillRect(x+1, y+5,  TILE-2, 4);
+        g.fillRect(x+1, y+15, TILE-2, 4);
+        g.fillRect(x+1, y+25, TILE-2, 4);
+        g.fillStyle = C.dirtLine2; g.fillRect(x+1, y+2, TILE-2, 2);
+      } else if(t === T.WATER){
+        g.fillStyle = C.water; g.fillRect(x,y,TILE,TILE);
+        const ph = ((animTime*3)|0) + tx*3 + ty*5;
+        g.fillStyle = C.waterLight;
+        g.fillRect(x + 3 + (ph % 7),      y + 8,  9, 2);
+        g.fillRect(x + 14 - ((ph*2) % 7), y + 21, 8, 2);
+        g.fillStyle = C.waterDark;
+        g.fillRect(x + 2 + ((ph*3) % 9),   y + 28, 6, 1);
+      } else {
+        /* 草地（含树/石/花/建筑所在格的地基） */
+        g.fillStyle = C.grass; g.fillRect(x,y,TILE,TILE);
+        const h1 = hash2(tx,ty), h2 = hash2(ty*7+3, tx*11+5), h3 = hash2(tx*13+1, ty*17+2);
+        g.fillStyle = C.grassDot;  g.fillRect(x + ((h1*28)|0), y + ((h2*28)|0), 2, 2);
+        g.fillStyle = C.grassDot2; g.fillRect(x + ((h2*26)|0), y + ((h3*27)|0), 2, 2);
+        g.fillStyle = C.grassDot;  g.fillRect(x + ((h3*25)|0), y + ((h1*29)|0), 3, 1);
       }
     }
-    cx += (GLYPH_W + 1) * scale;
   }
-  return cx;
 }
 
-/* --- 6.UI --- */
-/* 分层渲染：drawGround → drawObjects → drawPlayer → drawUI（顺序固定） */
-function drawGround(g){
-  if(!renderLog.ground){ renderLog.ground = true; console.log('[render] 1/4 drawGround'); }
-  g.fillStyle = CONFIG.COLORS.bg;
-  g.fillRect(0, 0, CONFIG.VIEW_W, CONFIG.VIEW_H);
-  /* 均匀网格（仅作参照，不是地图） */
-  g.fillStyle = CONFIG.COLORS.grid;
-  for(let x=0;x<CONFIG.VIEW_W;x+=CONFIG.TILE) g.fillRect(x, 0, 1, CONFIG.VIEW_H);
-  for(let y=0;y<CONFIG.VIEW_H;y+=CONFIG.TILE) g.fillRect(0, y, CONFIG.VIEW_W, 1);
+/* 物件层：树 / 岩石 / 野花（建筑单独绘制，可跨格） */
+function drawObjects(g,x0,y0,x1,y1){
+  for(let ty=y0;ty<=y1;ty++){
+    for(let tx=x0;tx<=x1;tx++){
+      const t = map[ty*MAP_W+tx];
+      if(t===T.TREE || t===T.ROCK || t===T.FLOWER){
+        const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
+        if(t===T.TREE) drawTree(g,x,y);
+        else if(t===T.ROCK) drawRock(g,x,y);
+        else drawFlower(g,x,y,(hash2(tx,ty)*3)|0);
+      }
+    }
+  }
 }
 
-function drawObjects(g){
-  if(!renderLog.objects){ renderLog.objects = true; console.log('[render] 2/4 drawObjects'); }
-  /* 本轮为空占位：后续放地图物件 */
+/* 建筑层：整栋绘制（跨 3×2 / 2×2 格） */
+function drawBuildings(g){
+  const hx = HOUSE_POS.x*TILE - cam.x, hy = HOUSE_POS.y*TILE - cam.y;
+  if(hx < VIEW_W && hx + HOUSE_POS.w*TILE > 0 && hy < VIEW_H && hy + HOUSE_POS.h*TILE > 0) drawHouse(g,hx,hy);
+  const sx = SHOP_POS.x*TILE - cam.x, sy = SHOP_POS.y*TILE - cam.y;
+  if(sx < VIEW_W && sx + SHOP_POS.w*TILE > 0 && sy < VIEW_H && sy + SHOP_POS.h*TILE > 0) drawShop(g,sx,sy);
 }
 
+/* --- 4.玩家 --- */
+/* 站立帧（正面朝下）；第 18~22 行是腿部，走路帧替换为 LEGS_* */
+const SPRITE_BASE = [
+  '.....hhhhhh.....','....hhhhhhhh....','...hhhhhhhhhh...',
+  '...hh......hh...','...hh......hh...','...ssssssssss...',
+  '...ssssssssss...','...ss.ee..ee.ss.','...ssssssssss...',
+  '....ssssssss....','.....ssssss.....','....bbbbbbbb....',
+  '...bbbbbbbbbb...','..bbbbbbbbbbbb..','..bbbbbbbbbbbb..',
+  '..sbbbbbbbbbbs..','..sbbbbbbbbbbs..','...bbbbbbbbbb...',
+  '....pppppppp....','....pp....pp....','....pp....pp....',
+  '....ss....ss....','....ss....ss....','................'
+];
+/* 正面走路：一腿迈出 */
+const LEGS_FRONT = [
+  '....pppppppp....','...ppp.....pp...','...pp...........',
+  '...ss...........','................'
+];
+/* 侧面走路：一腿在前、一腿在后 */
+const LEGS_SIDE = [
+  '....pppppppp....','..ppp......pp...','..pp........pp..',
+  '..ss........ss..','................'
+];
+const SPRITE_PALETTE = {
+  h:CONFIG.COLORS.hair, s:CONFIG.COLORS.skin, e:CONFIG.COLORS.eye,
+  b:CONFIG.COLORS.shirt, p:CONFIG.COLORS.pants, d:CONFIG.COLORS.shoe
+};
+/* 朝向：0=下 1=左 2=右 3=上 */
+const DIR_NAMES = ['下','左','右','上'];
+function eyeRow(dir){
+  const r = new Array(CONFIG.PLAYER.BODY_W).fill('.');
+  for(let c=3;c<=12;c++) r[c] = 's';
+  if(dir === 0){ r[6]='e'; r[7]='e'; r[10]='e'; r[11]='e'; }
+  else if(dir === 1){ r[5]='e'; r[6]='e'; }
+  else if(dir === 2){ r[9]='e'; r[10]='e'; }
+  return r;
+}
+/* 程序化生成 4 方向 × 2 帧 */
+function buildFrames(){
+  const frames = [];
+  for(let dir=0; dir<4; dir++){
+    frames[dir] = [];
+    for(let step=0; step<2; step++){
+      const rows = SPRITE_BASE.map(r=>r.split(''));
+      if(step === 1){
+        const legs = (dir===1 || dir===2) ? LEGS_SIDE : LEGS_FRONT;
+        for(let i=0;i<legs.length;i++) rows[18+i] = legs[i].split('');
+      }
+      if(dir === 3){                       /* 背面：后脑勺，无五官 */
+        rows[5] = '...hhhhhhhhhh...'.split('');
+        rows[6] = '...hhhhhhhhhh...'.split('');
+        rows[7] = '...hhhhhhhhhh...'.split('');
+        rows[8] = '...hhhhhhhhhh...'.split('');
+      } else {
+        rows[7] = eyeRow(dir);
+      }
+      frames[dir][step] = rows;
+    }
+  }
+  return frames;
+}
+const FRAMES = buildFrames();
+
+const player = {
+  x: SPAWN.x*TILE + TILE/2, y: SPAWN.y*TILE + TILE/2,   /* 精灵中心（浮点） */
+  vx: 0, vy: 0,                                          /* 速度 */
+  dir: 0,                                                /* 朝向 0=下 1=左 2=右 3=上 */
+  animT: 0, frame: 0,                                    /* 动画：帧号 + 计时 */
+  moving: false
+};
 function drawPlayer(g){
-  if(!renderLog.player){ renderLog.player = true; console.log('[render] 3/4 drawPlayer'); }
-  const s = CONFIG.CHAR_SCALE;
-  const w = CONFIG.CHAR_W * s, h = CONFIG.CHAR_H * s;
-  const ox = Math.round(player.x - w/2);
-  const oy = Math.round(player.y - h/2);
-
-  /* 地面阴影 */
+  const s = CONFIG.PLAYER.BODY_W, h = CONFIG.PLAYER.BODY_H;
+  const rows = FRAMES[player.dir][player.frame];
+  const ox = Math.round(player.x - cam.x - s/2);
+  const oy = Math.round(player.y - cam.y - h/2);
+  /* 影子 */
   g.fillStyle = CONFIG.COLORS.shadow;
-  g.fillRect(ox + Math.round(3*s), oy + h - Math.round(1*s), Math.round(10*s), Math.round(2*s));
-
-  /* 逐行合并同色像素，用 fillRect 拼出小人 */
-  for(let r=0;r<CONFIG.CHAR_H;r++){
-    const row = SPRITE[r] || '';
+  g.fillRect(ox + 2, oy + h - 2, s - 4, 2);
+  /* 逐行合并同色段后 fillRect */
+  for(let r=0;r<h;r++){
+    const row = rows[r] || [];
     let c = 0;
-    while(c < CONFIG.CHAR_W){
+    while(c < s){
       const ch = row[c];
       if(!ch || ch === '.'){ c++; continue; }
       let run = 1;
-      while(c + run < CONFIG.CHAR_W && row[c+run] === ch) run++;
+      while(c + run < s && row[c+run] === ch) run++;
       g.fillStyle = SPRITE_PALETTE[ch] || CONFIG.COLORS.skin;
-      g.fillRect(ox + c*s, oy + r*s, run*s, s);
+      g.fillRect(ox + c, oy + r, run, 1);
       c += run;
     }
   }
 }
 
-function drawUI(g){
-  if(!renderLog.ui){ renderLog.ui = true; console.log('[render] 4/4 drawUI'); }
-  const scale = 2;
-  const lineW = 13 * scale;          // "FPS 000" 的点阵宽度
-  const pad = 6;
-  const boxW = lineW + pad*2;
-  const boxH = GLYPH_H*scale*2 + pad*2 + 4;
+/* === 5.系统 === */
+/* --- 碰撞 --- */
+function isSolid(tx,ty){
+  if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) return true;   /* 地图外 = 实心 */
+  const t = map[ty*MAP_W+tx];
+  return t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP;
+}
+/* 碰撞盒（脚部）：相对精灵中心下移 (BODY_H - BOX_H)/2 */
+const BOX_OFF_Y = (CONFIG.PLAYER.BODY_H - CONFIG.PLAYER.BOX_H) / 2;
+function boxHitsSolid(cx, cy){
+  const hw = CONFIG.PLAYER.BOX_W/2, hh = CONFIG.PLAYER.BOX_H/2;
+  const x0 = Math.floor((cx - hw) / TILE);
+  const x1 = Math.floor((cx + hw - 0.001) / TILE);
+  const y0 = Math.floor((cy - hh) / TILE);
+  const y1 = Math.floor((cy + hh - 0.001) / TILE);
+  for(let ty=y0;ty<=y1;ty++)
+    for(let tx=x0;tx<=x1;tx++)
+      if(isSolid(tx,ty)) return true;
+  return false;
+}
+/* 分轴移动：先 X 再 Y；某轴被挡则该轴位移作废 → 天然沿墙滑动 */
+function movePlayer(dx, dy){
+  const by = player.y + BOX_OFF_Y;
+  if(!boxHitsSolid(player.x + dx, by)) player.x += dx;
+  if(!boxHitsSolid(player.x, by + dy)) player.y += dy;
+}
+/* 脱困：若当前位置与实心格重叠（例如存档落在障碍里）则向 8 个方向逐像素找最近的空位 */
+function unstickPlayer(){
+  const by = player.y + BOX_OFF_Y;
+  for(let r=1;r<=TILE;r++){
+    const offs=[[-r,0],[r,0],[0,-r],[0,r],[-r,-r],[r,-r],[-r,r],[r,r]];
+    for(let i=0;i<offs.length;i++){
+      if(!boxHitsSolid(player.x + offs[i][0], by + offs[i][1])){
+        player.x += offs[i][0]; player.y += offs[i][1];
+        return true;
+      }
+    }
+  }
+  return false;
+}
+function updatePlayer(dt){
+  /* 兜底：位置与实心格重叠时先脱困（静止时也要处理，否则会被永久卡住） */
+  if(boxHitsSolid(player.x, player.y + BOX_OFF_Y)) unstickPlayer();
 
-  g.fillStyle = CONFIG.COLORS.hudBg;
-  g.fillRect(8, 8, boxW, boxH);
+  let ix = 0, iy = 0;
+  if(keys['a'] || keys['arrowleft'])  ix -= 1;
+  if(keys['d'] || keys['arrowright']) ix += 1;
+  if(keys['w'] || keys['arrowup'])    iy -= 1;
+  if(keys['s'] || keys['arrowdown'])  iy += 1;
+
+  const moving = (ix !== 0 || iy !== 0);
+  player.moving = moving;
+  if(moving){
+    /* 对角线归一化：斜向速度与直线一致，不加速 */
+    const len = Math.hypot(ix, iy) || 1;
+    ix /= len; iy /= len;
+    const running = !!keys['shift'];
+    const sp = CONFIG.PLAYER.SPEED * (running ? CONFIG.PLAYER.RUN_MULT : 1);
+    player.vx = ix * sp; player.vy = iy * sp;
+    /* 朝向：两轴同按时以最后按下的轴为准 */
+    if(ix !== 0 && iy !== 0) player.dir = lastAxis === 'x' ? (ix<0?1:2) : (iy<0?3:0);
+    else if(ix !== 0) player.dir = ix<0 ? 1 : 2;
+    else player.dir = iy<0 ? 3 : 0;
+    movePlayer(player.vx * dt, player.vy * dt);
+    /* 摆腿动画：时间驱动帧切换 */
+    player.animT += dt;
+    const interval = 1 / CONFIG.PLAYER.ANIM_FPS;
+    if(player.animT >= interval){ player.animT -= interval; player.frame ^= 1; }
+  } else {
+    player.vx = 0; player.vy = 0;
+    player.frame = 0;         /* 静止回到站立帧 */
+    player.animT = 0;
+  }
+}
+
+/* --- 摄像机：跟随玩家（轻微缓动）+ 边界钳制 --- */
+const cam = {x:0, y:0};
+function updateCamera(dt){
+  const tx = player.x - VIEW_W/2, ty = player.y - VIEW_H/2;
+  const k = 1 - Math.exp(-CONFIG.CAMERA.SMOOTH * dt);
+  cam.x += (tx - cam.x) * k;
+  cam.y += (ty - cam.y) * k;
+  const maxX = MAP_W*TILE - VIEW_W, maxY = MAP_H*TILE - VIEW_H;
+  cam.x = clamp(cam.x, 0, maxX);
+  cam.y = clamp(cam.y, 0, maxY);
+}
+
+/* --- 输入 --- */
+const keys = {};
+let lastAxis = 'x';
+window.addEventListener('keydown', e=>{
+  const k = e.key.toLowerCase();
+  if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(k)) e.preventDefault();
+  keys[k] = true;
+  if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
+  else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+});
+window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
+
+/* --- 鼠标 → 指向的瓦片（换算与 CSS 缩放无关） --- */
+const mouse = {x:0, y:0, inside:false};
+const hover = {tx:-1, ty:-1};
+function toLogical(e){
+  const r = canvas.getBoundingClientRect();
+  return {x:(e.clientX - r.left) * (VIEW_W / r.width),
+          y:(e.clientY - r.top)  * (VIEW_H / r.height)};
+}
+canvas.addEventListener('mousemove', e=>{
+  const p = toLogical(e);
+  mouse.x = p.x; mouse.y = p.y; mouse.inside = true;
+  hover.tx = Math.floor((cam.x + p.x) / TILE);
+  hover.ty = Math.floor((cam.y + p.y) / TILE);
+});
+canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
+
+/* === 6.UI === */
+/* 3×5 点阵字库（像素风 HUD 文字，缩放后依然锐利） */
+const FONT = {
+  '0':['111','101','101','101','111'],'1':['010','110','010','010','111'],
+  '2':['111','001','111','100','111'],'3':['111','001','111','001','111'],
+  '4':['101','101','111','001','001'],'5':['111','100','111','001','111'],
+  '6':['111','100','111','101','111'],'7':['111','001','010','010','010'],
+  '8':['111','101','111','101','111'],'9':['111','101','111','001','111'],
+  'F':['111','100','111','100','100'],'P':['110','101','110','100','100'],
+  'S':['111','100','111','001','111'],'V':['101','101','101','101','010'],
+  'v':['101','101','101','101','010'],
+  'H':['101','101','111','101','101'],
+  'Z':['111','001','010','100','111'],'.':['000','000','000','000','010'],
+  '-':['000','000','111','000','000'],' ':['000','000','000','000','000']
+};
+const GLYPH_W = 3, GLYPH_H = 5;
+function drawText(g, text, x, y, scale, color){
+  g.fillStyle = color;
+  let cx = x;
+  for(const raw of String(text)){
+    const glyph = FONT[raw.toUpperCase()] || FONT[raw] || FONT[' '];
+    for(let r=0;r<GLYPH_H;r++){
+      const row = glyph[r];
+      for(let c=0;c<GLYPH_W;c++)
+        if(row[c] === '1') g.fillRect(cx + c*scale, y + r*scale, scale, scale);
+    }
+    cx += (GLYPH_W + 1) * scale;
+  }
+  return cx;
+}
+function drawUI(g){
+  /* 鼠标指向的瓦片高亮（半透明白框） */
+  if(hover.tx >= 0 && hover.ty >= 0 && hover.tx < MAP_W && hover.ty < MAP_H){
+    const hx = hover.tx*TILE - cam.x, hy = hover.ty*TILE - cam.y;
+    g.strokeStyle = 'rgba(255,255,255,0.55)';
+    g.lineWidth = 2;
+    g.strokeRect(hx + 1, hy + 1, TILE - 2, TILE - 2);
+  }
+  /* FPS + 版本 */
+  const scale = 2, pad = 6;
+  const lineW = 13 * scale;
+  const boxW = lineW + pad*2, boxH = GLYPH_H*scale*2 + pad*2 + 4;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, 8, boxW, boxH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, 8, boxW, 1); g.fillRect(8, 8+boxH-1, boxW, 1);
-  g.fillRect(8, 8, 1, boxH); g.fillRect(8+boxW-1, 8, 1, boxH);
-
-  const fpsText = 'FPS ' + String(Math.round(fps)).padStart(2,' ');
-  drawText(g, fpsText, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
-  const verText = CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ';
-  drawText(g, verText, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+  g.fillRect(8, 8, 1, boxH);   g.fillRect(8+boxW-1, 8, 1, boxH);
+  drawText(g, 'FPS ' + String(Math.round(fps)).padStart(2,' '), 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
+  drawText(g, CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ', 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+}
+const statsEl = document.getElementById('stats');
+function updateStats(){
+  const t = (hover.tx>=0 && hover.ty>=0 && hover.tx<MAP_W && hover.ty<MAP_H)
+            ? TILE_NAMES[map[hover.ty*MAP_W+hover.tx]] : '-';
+  const spd = Math.round(Math.hypot(player.vx, player.vy));
+  statsEl.innerHTML =
+    '玩家 <b>' + player.x.toFixed(1) + ', ' + player.y.toFixed(1) + '</b>  格 ' +
+    Math.floor(player.x/TILE) + ',' + Math.floor(player.y/TILE) + '\n' +
+    '朝向 <b>' + DIR_NAMES[player.dir] + '</b>　速度 <b>' + spd + '</b> px/s　帧 ' + player.frame + '\n' +
+    '光标 <b>' + hover.tx + ',' + hover.ty + '</b> ' + t + '\n' +
+    '绘制瓦片 <b>' + visibleCount + '</b> / ' + (MAP_W*MAP_H) +
+    ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)\n' +
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑';
 }
 
 /* === 7.存档 === */
 /* 本轮不做存档 */
 
-function update(dt){
-  /* 本轮不做游戏逻辑；dt 为固定步长（恒 1/60 秒） */
-}
-
 /* === 8.主循环 === */
+const FIXED_DT = 1 / CONFIG.TARGET_FPS;
 let accumulator = 0;
 let lastTime = performance.now();
+let firstRenderDone = false;
+const renderLog = {ground:false, objects:false, player:false, ui:false};
+let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCount = 0;
 
+function update(dt){
+  animTime += dt;
+  updatePlayer(dt);
+  updateCamera(dt);
+}
 function render(){
   ctx.imageSmoothingEnabled = false;
-  drawGround(ctx);
-  drawObjects(ctx);
+  /* 视锥裁剪：只绘制可见范围内的瓦片 */
+  const x0 = Math.max(0, Math.floor(cam.x / TILE));
+  const x1 = Math.min(MAP_W-1, Math.floor((cam.x + VIEW_W - 1) / TILE));
+  const y0 = Math.max(0, Math.floor(cam.y / TILE));
+  const y1 = Math.min(MAP_H-1, Math.floor((cam.y + VIEW_H - 1) / TILE));
+  visibleCount = (x1-x0+1) * (y1-y0+1);
+
+  if(!renderLog.ground){ renderLog.ground = true; console.log('[render] 1/4 drawGround'); }
+  if(!renderLog.objects){ renderLog.objects = true; console.log('[render] 2/4 drawObjects'); }
+  if(!renderLog.player){ renderLog.player = true; console.log('[render] 3/4 drawPlayer'); }
+  if(!renderLog.ui){ renderLog.ui = true; console.log('[render] 4/4 drawUI'); }
+
+  drawGround(ctx, x0, y0, x1, y1);
+  drawObjects(ctx, x0, y0, x1, y1);
+  drawBuildings(ctx);
   drawPlayer(ctx);
   drawUI(ctx);
+
+  /* 网格线叠加 */
+  if(CONFIG.GRID_OVERLAY){
+    ctx.fillStyle = CONFIG.GRID_COLOR;
+    for(let tx=x0;tx<=x1+1;tx++) ctx.fillRect(Math.round(tx*TILE - cam.x), 0, 1, VIEW_H);
+    for(let ty=y0;ty<=y1+1;ty++) ctx.fillRect(0, Math.round(ty*TILE - cam.y), VIEW_W, 1);
+  }
   if(!firstRenderDone){
     firstRenderDone = true;
     console.log('[render] 顺序确认: drawGround -> drawObjects -> drawPlayer -> drawUI');
   }
 }
-
 function loop(now){
-  /* delta time（真实帧间隔） */
   let frameTime = (now - lastTime) / 1000;
   lastTime = now;
   if(frameTime < 0) frameTime = 0;
   if(frameTime > CONFIG.MAX_FRAME_TIME) frameTime = CONFIG.MAX_FRAME_TIME;
 
-  /* 固定步长累加器：逻辑恒定 60Hz */
   accumulator += frameTime;
   let steps = 0;
   while(accumulator >= FIXED_DT && steps < CONFIG.MAX_STEPS){
@@ -289,22 +717,32 @@ function loop(now){
     accumulator -= FIXED_DT;
     steps++;
   }
-  if(steps === CONFIG.MAX_STEPS) accumulator = 0;   /* 追不上就丢弃，避免螺旋死亡 */
+  if(steps === CONFIG.MAX_STEPS) accumulator = 0;
 
   render();
 
-  /* FPS 统计 */
-  frameCount++;
+  frameCount++; frameNo++;
   fpsTimer += frameTime;
   if(fpsTimer >= CONFIG.FPS_INTERVAL){
     fps = frameCount / fpsTimer;
-    frameCount = 0;
-    fpsTimer = 0;
+    frameCount = 0; fpsTimer = 0;
+    updateStats();
   }
-
+  if(CONFIG.LOG_EVERY > 0 && frameNo % CONFIG.LOG_EVERY === 0){
+    console.log('[map] tiles drawn ' + visibleCount + ' / ' + (MAP_W*MAP_H) +
+      ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)  player(' +
+      player.x.toFixed(0) + ',' + player.y.toFixed(0) + ')  seed ' + CONFIG.SEED);
+  }
   requestAnimationFrame(loop);
 }
 
+/* --- 启动 --- */
+genMap(CONFIG.SEED);
+player.x = SPAWN.x*TILE + TILE/2;
+player.y = SPAWN.y*TILE + TILE/2;
+cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
+cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+updateStats();
 requestAnimationFrame(loop);
 </script>
 </body>

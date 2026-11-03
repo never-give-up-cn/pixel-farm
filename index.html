@@ -103,6 +103,53 @@ const CONFIG = {
   /* 摄像机 */
   CAMERA: { SMOOTH: 7 },    // 跟随缓动（越大越跟手）
 
+  /* 时间：1 游戏日 = 现实 DAY_MINUTES 分钟；6:00 天亮 → 20:00 入夜 → 2:00 强制结束一天 */
+  DAY_MINUTES: 6,           // 1 游戏日 = 现实 6 分钟
+  DAY_START_HOUR: 6,        // 天亮
+  DAY_END_HOUR: 2,          // 强制结束（次日）
+  DAY_END_HOLD: 1.2,        // 停在 2:00 多久再翻到次日 6:00（现实秒）
+  SKY_SMOOTH: 3,            // 昼夜色平滑系数（越大越快，越小越柔）
+
+  /* 季节 */
+  SEASONS: ['春','夏','秋','冬'],
+  DAYS_PER_SEASON: 7,       // 每季几天
+  SEASON_TINT: {            // 地面色调（覆盖在地面上，越大越明显）
+    '春': {c:'#7fd05a', a:0.10},
+    '夏': {c:'#2f8f22', a:0.18},
+    '秋': {c:'#c8862f', a:0.22},
+    '冬': {c:'#e8f1fb', a:0.40}
+  },
+
+  /* 昼夜染色关键帧：h=一天中的小时，c=叠加色，a=透明度，v=暗角强度 */
+  SKY: [
+    {h:0.0,  c:'#081432', a:0.55, v:1.00},   /* 深夜 */
+    {h:4.5,  c:'#0d1c40', a:0.52, v:0.92},
+    {h:6.0,  c:'#ff9a4d', a:0.30, v:0.45},   /* 清晨暖橙 */
+    {h:8.0,  c:'#ffc98a', a:0.10, v:0.12},
+    {h:11.0, c:'#ffffff', a:0.00, v:0.00},   /* 白天透明 */
+    {h:16.0, c:'#ffffff', a:0.00, v:0.00},
+    {h:17.5, c:'#ff9a4d', a:0.22, v:0.25},   /* 黄昏橙 */
+    {h:19.0, c:'#e0503a', a:0.40, v:0.60},   /* 黄昏橙红 */
+    {h:20.5, c:'#101f4a', a:0.55, v:0.95},   /* 入夜深蓝 */
+    {h:24.0, c:'#081432', a:0.55, v:1.00}
+  ],
+
+  /* 夜间暗角（以玩家为中心的径向渐变） */
+  VIGNETTE: { DAY_R: 760, NIGHT_R: 240, NIGHT_A: 0.55 },
+
+  /* 天气：每天早晨随机（带权重）；本轮只做画面与音效，不影响玩法 */
+  WEATHER: [
+    { id:'sun',  name:'晴', icon:'☀', w:6 },
+    { id:'rain', name:'雨', icon:'🌧', w:3 },
+    { id:'snow', name:'雪', icon:'❄', w:1 }
+  ],
+  WEATHER_FX: { RAIN_COUNT: 130, SNOW_COUNT: 90, RAIN_SPEED: 560, SNOW_SPEED: 42 },
+  RAIN_TICK_MIN: 0.30,      // 雨声滴答间隔（现实秒，随机下限）
+  RAIN_TICK_MAX: 0.85,
+
+  /* 暂停（后续背包打开时用；为 true 时时间/天气/角色全部冻结） */
+  PAUSE_KEY: 'p',
+
   /* 工具表：数字键 1~5 切换
    * accepts  可作用的地块类型；to  作用后变成的地块；out  产出资源
    * cost     体力消耗（本轮不做体力，先留 0）；sfx  音效频率（每个工具音高不同） */
@@ -461,6 +508,16 @@ function drawObjects(g,x0,y0,x1,y1){
   }
 }
 
+/* 季节层：给地面叠一层季节色调（冬偏冷白），只影响地面，不影响物件 */
+function drawSeasonOverlay(g,x0,y0,x1,y1){
+  const st = CONFIG.SEASON_TINT[seasonName()];
+  if(!st || st.a <= 0) return;
+  g.globalAlpha = st.a;
+  g.fillStyle = st.c;
+  g.fillRect(x0*TILE - cam.x, y0*TILE - cam.y, (x1-x0+1)*TILE, (y1-y0+1)*TILE);
+  g.globalAlpha = 1;
+}
+
 /* 建筑层：整栋绘制（跨 3×2 / 2×2 格） */
 function drawBuildings(g){
   const hx = HOUSE_POS.x*TILE - cam.x, hy = HOUSE_POS.y*TILE - cam.y;
@@ -734,6 +791,157 @@ function useTool(tx,ty){
   return true;
 }
 
+/* --- 时间系统：每 tick 推进；6:00 天亮 → 20:00 入夜 → 2:00 强制结束一天 --- */
+const clock = {day:1, min:0, hold:0};          /* min = 从 6:00 起经过的游戏分钟 */
+const DAY_SPAN_MIN = (24 - CONFIG.DAY_START_HOUR + CONFIG.DAY_END_HOUR) * 60;  /* 6:00→次日2:00 = 1200 分 */
+const GAME_MIN_PER_SEC = DAY_SPAN_MIN / (CONFIG.DAY_MINUTES * 60);             /* 每现实秒推进多少游戏分钟 */
+function clockHM(){
+  const total = CONFIG.DAY_START_HOUR * 60 + clock.min;
+  const h = Math.floor(total / 60) % 24, m = Math.floor(total % 60);
+  return {h:h, m:m, s:String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0')};
+}
+function skyHour(){ return (CONFIG.DAY_START_HOUR + clock.min / 60) % 24; }
+function seasonName(){
+  const i = Math.floor((clock.day - 1) / CONFIG.DAYS_PER_SEASON) % CONFIG.SEASONS.length;
+  return CONFIG.SEASONS[i];
+}
+function updateClock(dt){
+  if(clock.hold > 0){                          /* 停在 2:00，等 hold 结束再翻到次日 6:00 */
+    clock.hold -= dt;
+    if(clock.hold <= 0){
+      clock.hold = 0; clock.day++; clock.min = 0;
+      rollWeather();
+      console.log('[time] 第 ' + clock.day + ' 天 ' + clockHM().s + ' · ' + seasonName() + ' · ' + weather.name);
+    }
+    return;
+  }
+  clock.min += dt * GAME_MIN_PER_SEC;
+  if(clock.min >= DAY_SPAN_MIN){
+    clock.min = DAY_SPAN_MIN;                  /* 停在 02:00 */
+    clock.hold = CONFIG.DAY_END_HOLD;
+    console.log('[time] 第 ' + clock.day + ' 天结束（' + clockHM().s + '）→ 次日 06:00');
+  }
+}
+
+/* --- 天气：每天早晨随机（带权重） --- */
+let weather = CONFIG.WEATHER[0];
+function rollWeather(){
+  let total = 0;
+  for(const w of CONFIG.WEATHER) total += w.w;
+  let r = Math.random() * total;
+  let picked = CONFIG.WEATHER[CONFIG.WEATHER.length-1];
+  for(const w of CONFIG.WEATHER){ r -= w.w; if(r < 0){ picked = w; break; } }
+  weather = picked;
+  spawnParticles();
+  console.log('[weather] 第 ' + clock.day + ' 天天气：' + weather.name);
+}
+
+/* --- 天气粒子（画在画布坐标系里，随画布缩放自动对齐） --- */
+let fxParticles = [];
+let rainTimer = 0;
+function newParticle(init){
+  const rain = weather.id === 'rain';
+  return {
+    x: Math.random() * VIEW_W,
+    y: init ? Math.random() * VIEW_H : -8 - Math.random() * (VIEW_H * 0.4),
+    vx: rain ? -CONFIG.WEATHER_FX.RAIN_SPEED * 0.30 : (Math.random() * 26 - 13),
+    vy: rain ? CONFIG.WEATHER_FX.RAIN_SPEED : CONFIG.WEATHER_FX.SNOW_SPEED * (0.6 + Math.random() * 0.8),
+    len: rain ? 9 + Math.random() * 8 : 0,
+    r: 1 + Math.random() * 1.7,
+    a: 0.45 + Math.random() * 0.5
+  };
+}
+function spawnParticles(){
+  fxParticles = [];
+  const n = weather.id === 'rain'  ? CONFIG.WEATHER_FX.RAIN_COUNT
+          : weather.id === 'snow'  ? CONFIG.WEATHER_FX.SNOW_COUNT : 0;
+  for(let i=0;i<n;i++) fxParticles.push(newParticle(true));
+}
+function updateWeather(dt){
+  if(weather.id === 'rain'){                   /* 滴答声 */
+    rainTimer -= dt;
+    if(rainTimer <= 0){
+      rainTimer = CONFIG.RAIN_TICK_MIN + Math.random() * (CONFIG.RAIN_TICK_MAX - CONFIG.RAIN_TICK_MIN);
+      playSfx(2200 + Math.random() * 1500, 'square', 0.035, CONFIG.AUDIO.VOLUME * 0.30);
+    }
+  }
+  for(const p of fxParticles){
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    if(p.y > VIEW_H + 12){ p.y = -12; p.x = Math.random() * VIEW_W; }
+    if(p.x < -14) p.x = VIEW_W + 12;
+    if(p.x > VIEW_W + 14) p.x = -12;
+  }
+}
+function drawWeather(g){
+  if(!fxParticles.length) return;
+  if(weather.id === 'rain'){
+    g.strokeStyle = 'rgba(175,210,255,0.55)';
+    g.lineWidth = 1;
+    for(const p of fxParticles){
+      g.beginPath();
+      g.moveTo(p.x, p.y);
+      g.lineTo(p.x + p.vx * 0.024, p.y + p.len);
+      g.stroke();
+    }
+  }else if(weather.id === 'snow'){
+    for(const p of fxParticles){
+      g.fillStyle = 'rgba(255,255,255,' + p.a.toFixed(2) + ')';
+      g.fillRect(p.x | 0, p.y | 0, (p.r * 2) | 0, (p.r * 2) | 0);
+    }
+  }
+}
+
+/* --- 昼夜染色 + 夜间暗角 --- */
+function hexToRgb(h){
+  let s = String(h).replace('#','');
+  if(s.length === 3) s = s[0]+s[0]+s[1]+s[1]+s[2]+s[2];
+  const n = parseInt(s, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+function skyAt(h){
+  const K = CONFIG.SKY;
+  let i = 0;
+  while(i < K.length - 2 && K[i+1].h <= h) i++;
+  const a = K[i], b = K[i+1];
+  const t = Math.min(1, Math.max(0, (h - a.h) / Math.max(1e-6, b.h - a.h)));
+  const ca = hexToRgb(a.c), cb = hexToRgb(b.c);
+  return {
+    r: ca[0] + (cb[0]-ca[0])*t,  g: ca[1] + (cb[1]-ca[1])*t,  b: ca[2] + (cb[2]-ca[2])*t,
+    a: a.a + (b.a - a.a) * t,   v: a.v + (b.v - a.v) * t
+  };
+}
+const sky = {cur:{r:8,g:20,b:50,a:0.55,v:1}};
+function updateSky(dt){
+  const t = skyAt(skyHour());
+  const k = 1 - Math.exp(-CONFIG.SKY_SMOOTH * dt);   /* 平滑过渡，杜绝闪变 */
+  const c = sky.cur;
+  c.r += (t.r - c.r) * k; c.g += (t.g - c.g) * k; c.b += (t.b - c.b) * k;
+  c.a += (t.a - c.a) * k; c.v += (t.v - c.v) * k;
+}
+function drawAtmosphere(g){
+  const c = sky.cur;
+  if(c.a > 0.002){                                /* 整体染色 */
+    g.fillStyle = 'rgb(' + (c.r|0) + ',' + (c.g|0) + ',' + (c.b|0) + ')';
+    g.globalAlpha = c.a;
+    g.fillRect(0, 0, VIEW_W, VIEW_H);
+    g.globalAlpha = 1;
+  }
+  if(c.v > 0.002){                                /* 夜间暗角：以玩家为中心 */
+    const px = player.x - cam.x, py = player.y - cam.y;
+    const R = CONFIG.VIGNETTE.DAY_R + (CONFIG.VIGNETTE.NIGHT_R - CONFIG.VIGNETTE.DAY_R) * c.v;
+    const A = CONFIG.VIGNETTE.NIGHT_A * c.v;
+    const grd = g.createRadialGradient(px, py, R * 0.32, px, py, R);
+    grd.addColorStop(0, 'rgba(0,0,0,0)');
+    grd.addColorStop(1, 'rgba(0,0,0,' + A.toFixed(3) + ')');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, VIEW_W, VIEW_H);
+  }
+}
+
+/* --- 暂停：所有系统（时间/天气/角色/摄像机）一起冻结 --- */
+let paused = false;
+function setPaused(v){ paused = !!v; }
+
 /* --- 输入 --- */
 const keys = {};
 let lastAxis = 'x';
@@ -748,6 +956,7 @@ window.addEventListener('keydown', e=>{
     player.tool = Number(k) - 1;
     ensureAudio();                 /* 键盘也算一次用户交互，解锁音频 */
   }
+  if(k === CONFIG.PAUSE_KEY) setPaused(!paused);   /* 暂停/恢复 */
 });
 window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
 window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
@@ -855,6 +1064,25 @@ function drawUI(g){
     rx += iconWs[i] + 4 + String(resList[i].n).length*(GLYPH_W+1)*scale + 12;
   }
 
+  /* 左上角：季节 · 第几天 · 时刻 · 天气 */
+  const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
+  const dB = ' ' + weather.name;
+  g.font = '13px ' + FONT_CJK;   const wA = g.measureText(dA).width;
+  g.font = '15px ' + FONT_EMOJI; const wI = g.measureText(weather.icon).width;
+  g.font = '13px ' + FONT_CJK;   const wB = g.measureText(dB).width;
+  const dW = Math.ceil(wA + wI + wB) + 16, dH = 24, dY = rowY + rowH + 6;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(8, dY, dW, 1); g.fillRect(8, dY+dH-1, dW, 1);
+  g.fillRect(8, dY, 1, dH); g.fillRect(8+dW-1, dY, 1, dH);
+  g.textBaseline = 'top';
+  g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText(dA, 16, dY + 5);
+  g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText(weather.icon, 16 + wA, dY + 4);
+  g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText(dB, 16 + wA + wI, dY + 5);
+
   /* 右下角：当前工具（图标 + 名称 + 快捷键） */
   const tool = CONFIG.TOOLS[player.tool];
   g.font = '20px ' + FONT_EMOJI; const iw = g.measureText(tool.icon).width;
@@ -891,7 +1119,9 @@ function updateStats(){
                          : ' ' + t.key + ' ' + t.icon + t.name)).join('　') + '\n' +
     '资源 ' + CONFIG.RESOURCES.ORDER.map(r =>
         CONFIG.RESOURCES.ICON[r] + ' ' + CONFIG.RESOURCES.NAME[r] + ' <b>' + (resources[r]||0) + '</b>').join('　') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用';
+    '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
+        CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用 · P 暂停';
 }
 
 /* === 7.存档 === */
@@ -906,9 +1136,13 @@ const renderLog = {ground:false, objects:false, player:false, ui:false};
 let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCount = 0;
 
 function update(dt){
+  if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   animTime += dt;
+  updateClock(dt);                   /* 时间推进 */
+  updateWeather(dt);                 /* 天气粒子 + 雨声 */
   updatePlayer(dt);
   updateCamera(dt);
+  updateSky(dt);                     /* 昼夜色平滑过渡 */
 }
 function render(){
   ctx.imageSmoothingEnabled = false;
@@ -925,9 +1159,12 @@ function render(){
   if(!renderLog.ui){ renderLog.ui = true; console.log('[render] 4/4 drawUI'); }
 
   drawGround(ctx, x0, y0, x1, y1);
+  drawSeasonOverlay(ctx, x0, y0, x1, y1);
   drawObjects(ctx, x0, y0, x1, y1);
   drawBuildings(ctx);
   drawPlayer(ctx);
+  drawWeather(ctx);
+  drawAtmosphere(ctx);
   drawUI(ctx);
 
   /* 网格线叠加 */
@@ -978,13 +1215,18 @@ genMap(CONFIG.SEED);
 player.x = SPAWN.x*TILE + TILE/2;
 player.y = SPAWN.y*TILE + TILE/2;
 cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
-cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+cam.y = clamp(player.y - VIEW_H/2, 0, MAP_W*TILE - VIEW_H);
+rollWeather();                         /* 第 1 天早晨的天气 */
+const sky0 = skyAt(skyHour());
+sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
 layoutToasts();
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
-if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources, layoutToasts};
+if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources, layoutToasts,
+  clock, sky, weather, fxParticles, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
+  updateClock, updateWeather, updateSky, rollWeather, spawnParticles};
 </script>
 </body>
 </html>

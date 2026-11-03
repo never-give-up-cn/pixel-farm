@@ -25,18 +25,42 @@
     white-space:pre;pointer-events:none;
   }
   #stats b{color:#ffd76a}
+  /* 屏幕底部提示条：多条同时出现时向上排（容器底边固定，新增的一条排在最下） */
+  #toasts{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:20;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    pointer-events:none;
+  }
+  .toast{
+    background:rgba(8,10,16,.88);border:2px solid #3d4a63;color:#e8f0ff;
+    font:13px/1.4 Consolas,"Microsoft YaHei","PingFang SC",monospace;
+    padding:5px 14px;box-shadow:0 3px 0 rgba(0,0,0,.45);
+    white-space:nowrap;animation:toastFade 1.5s ease-out forwards;
+  }
+  @keyframes toastFade{
+    0%  {opacity:0;transform:translateY(8px)}
+    12% {opacity:1;transform:translateY(0)}
+    70% {opacity:1;transform:translateY(0)}
+    100%{opacity:0;transform:translateY(-6px)}
+  }
 </style>
 </head>
 <body>
 
 <canvas id="game"></canvas>
 <div id="stats"></div>
+<div id="toasts"></div>
 
 <script>
 'use strict';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
+
+/* 地块类型（放在 CONFIG 之前：工具表要引用它们） */
+const T = {GRASS:0, DIRT:1, WATER:2, TREE:3, ROCK:4, FLOWER:5, HOUSE:6, SHOP:7,
+           TILLED:8, WATERED:9, BARE:10};
+
 const CONFIG = {
   VERSION: 'v0.1',          // 版本号（显示在左上角）
 
@@ -73,11 +97,44 @@ const CONFIG = {
     BODY_H: 24,             // 体型高
     BOX_W: 12,              // 碰撞盒宽（脚部）
     BOX_H: 16,              // 碰撞盒高（脚部）
-    ANIM_FPS: 8             // 走路摆腿帧率
+    ANIM_FPS: 8,            // 走路摆腿帧率
+    START_TOOL: 0           // 初始工具（CONFIG.TOOLS 下标）
   },
 
   /* 摄像机 */
   CAMERA: { SMOOTH: 7 },    // 跟随缓动（越大越跟手）
+
+  /* 工具表：数字键 1~5 切换
+   * accepts  可作用的地块类型；to  作用后变成的地块；out  产出资源
+   * cost     体力消耗（本轮不做体力，先留 0）；sfx  音效频率（每个工具音高不同） */
+  TOOLS: [
+    { id:'hoe',    name:'锄头', icon:'🔨', key:'1', accepts:[T.GRASS, T.DIRT],    to:T.TILLED,  out:null,               cost:0, msg:'开垦了一块地',   sfx:196 },
+    { id:'can',    name:'水壶', icon:'💧', key:'2', accepts:[T.TILLED],            to:T.WATERED, out:null,               cost:0, msg:'浇好了水',       sfx:784 },
+    { id:'axe',    name:'斧头', icon:'🪓', key:'3', accepts:[T.TREE],              to:T.GRASS,   out:{res:'wood', n:2},  cost:0, msg:'砍倒了一棵树',   sfx:294 },
+    { id:'pick',   name:'镐',   icon:'⛏️', key:'4', accepts:[T.ROCK],              to:T.DIRT,    out:{res:'stone',n:2},  cost:0, msg:'敲碎了一块岩石', sfx:147 },
+    { id:'sickle', name:'镰刀', icon:'🌾', key:'5', accepts:[T.FLOWER, T.GRASS],   to:T.BARE,    out:null,               cost:0, msg:'清理了地面',     sfx:988 }
+  ],
+
+  /* 临时资源计数（只计数，本轮不做背包；第 7 轮替换为背包系统） */
+  RESOURCES: {
+    ORDER: ['wood','stone'],
+    NAME:  { wood:'木材', stone:'石材' },
+    ICON:  { wood:'🪵', stone:'🪨' }
+  },
+
+  /* 工具交互 */
+  INTERACT: {
+    RANGE_TILES: 1.8,       // 作用距离上限（玩家中心 → 目标格中心，格）
+    TOAST_TIME: 1.5,        // 提示条停留时间（秒）
+    TOAST_MAX: 6            // 同时最多显示几条（超出淘汰最旧的）
+  },
+
+  /* 音效（Web Audio 实时合成，零音频文件） */
+  AUDIO: {
+    VOLUME: 0.16,           // 音量
+    TYPE: 'square',         // 波形
+    DUR: 0.12               // 单音时长（秒）
+  },
 
   /* 主循环 */
   TARGET_FPS: 60,           // 逻辑帧率（固定步长）
@@ -115,6 +172,9 @@ const CONFIG = {
   TILE_COLORS: {
     grass:       '#6fb04c', grassDot: '#5d9c42', grassDot2: '#82c05a',
     dirt:        '#7d4d2b', dirtLine: '#6a4023', dirtLine2: '#8a5a33',
+    tilled:      '#6a4023', tilledLine: '#54331a', tilledRidge: '#7a4d2c',
+    watered:     '#4b3118', wateredLine: '#3d2712', wateredSheen: '#4f8fc4',
+    bare:        '#a89a70', bareDot: '#8d8158', bareStone: '#7e7450',
     water:       '#3f7fc4', waterLight: '#4f95da', waterDark: '#2f6ba8',
     treeTrunk:   '#5b3a1d', treeTrunkDark: '#7d5426',
     treeLeaf:    '#2f8234', treeLeafLight: '#3d9a3f', treeLeafTop: '#54b34f',
@@ -134,8 +194,7 @@ const CONFIG = {
 };
 
 /* === 2.世界 === */
-const T = {GRASS:0, DIRT:1, WATER:2, TREE:3, ROCK:4, FLOWER:5, HOUSE:6, SHOP:7};
-const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店'];
+const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店','耕地','已浇水','空地'];
 
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
@@ -341,6 +400,32 @@ function drawGround(g,x0,y0,x1,y1){
         g.fillRect(x+1, y+15, TILE-2, 4);
         g.fillRect(x+1, y+25, TILE-2, 4);
         g.fillStyle = C.dirtLine2; g.fillRect(x+1, y+2, TILE-2, 2);
+      } else if(t === T.TILLED){                       /* 耕地：横向犁沟 */
+        g.fillStyle = C.tilled; g.fillRect(x,y,TILE,TILE);
+        g.fillStyle = C.tilledRidge;
+        g.fillRect(x+1, y+4,  TILE-2, 3);
+        g.fillRect(x+1, y+13, TILE-2, 3);
+        g.fillRect(x+1, y+22, TILE-2, 3);
+        g.fillStyle = C.tilledLine;
+        g.fillRect(x+1, y+8,  TILE-2, 2);
+        g.fillRect(x+1, y+17, TILE-2, 2);
+        g.fillRect(x+1, y+26, TILE-2, 2);
+      } else if(t === T.WATERED){                     /* 已浇水：湿土 + 反光 */
+        g.fillStyle = C.watered; g.fillRect(x,y,TILE,TILE);
+        g.fillStyle = C.tilledRidge;
+        g.fillRect(x+1, y+4,  TILE-2, 3);
+        g.fillRect(x+1, y+13, TILE-2, 3);
+        g.fillRect(x+1, y+22, TILE-2, 3);
+        g.fillStyle = C.wateredSheen;
+        g.fillRect(x + 4 + ((hash2(tx,ty)*8)|0), y+9,  7, 2);
+        g.fillRect(x + 18 - ((hash2(ty,tx)*7)|0), y+24, 6, 2);
+      } else if(t === T.BARE){                         /* 空地：浅色裸土 */
+        g.fillStyle = C.bare; g.fillRect(x,y,TILE,TILE);
+        g.fillStyle = C.bareDot;
+        g.fillRect(x + ((hash2(tx,ty)*26)|0), y + ((hash2(ty,tx)*26)|0), 3, 2);
+        g.fillRect(x + ((hash2(tx*3+1,ty)*24)|0), y + ((hash2(tx,ty*5+2)*24)|0), 2, 2);
+        g.fillStyle = C.bareStone;
+        g.fillRect(x + 6 + ((hash2(tx*7,ty*3)*18)|0), y + 20, 3, 3);
       } else if(t === T.WATER){
         g.fillStyle = C.water; g.fillRect(x,y,TILE,TILE);
         const ph = ((animTime*3)|0) + tx*3 + ty*5;
@@ -451,7 +536,8 @@ const player = {
   vx: 0, vy: 0,                                          /* 速度 */
   dir: 0,                                                /* 朝向 0=下 1=左 2=右 3=上 */
   animT: 0, frame: 0,                                    /* 动画：帧号 + 计时 */
-  moving: false
+  moving: false,
+  tool: CONFIG.PLAYER.START_TOOL                         /* 当前工具（CONFIG.TOOLS 下标） */
 };
 function drawPlayer(g){
   const s = CONFIG.PLAYER.BODY_W, h = CONFIG.PLAYER.BODY_H;
@@ -564,6 +650,83 @@ function updateCamera(dt){
   cam.y = clamp(cam.y, 0, maxY);
 }
 
+/* --- 音效：Web Audio 实时合成（浏览器要求先有用户交互才允许播放） --- */
+let actx = null;
+function ensureAudio(){
+  try{
+    if(!actx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      actx = new AC();
+    }
+    if(actx.state === 'suspended') actx.resume();
+    return actx;
+  }catch(err){ return null; }
+}
+function playSfx(freq, type, dur, vol){
+  const ac = ensureAudio();
+  if(!ac) return false;
+  const t0 = ac.currentTime;
+  const osc = ac.createOscillator(), gain = ac.createGain();
+  osc.type = type || CONFIG.AUDIO.TYPE;
+  osc.frequency.setValueAtTime(freq, t0);
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  osc.connect(gain); gain.connect(ac.destination);
+  osc.start(t0); osc.stop(t0 + dur + 0.02);
+  return true;
+}
+
+/* --- 临时资源计数（本轮不做背包，第 7 轮替换） --- */
+const resources = {wood:0, stone:0};
+function addResource(res, n){ resources[res] = (resources[res] || 0) + n; }
+
+/* --- 提示条：屏幕底部，1.5 秒淡出，多条向上排 --- */
+const toastBox = document.getElementById('toasts');
+function toast(msg){
+  if(!toastBox) return;
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  el.style.animationDuration = CONFIG.INTERACT.TOAST_TIME + 's';
+  toastBox.appendChild(el);                       /* 新的一条排在最下面，旧的被顶上去 */
+  while(toastBox.children.length > CONFIG.INTERACT.TOAST_MAX)
+    toastBox.removeChild(toastBox.firstChild);
+  setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },
+             CONFIG.INTERACT.TOAST_TIME * 1000);
+}
+
+/* --- 工具使用：距离判定 → 适用性判定 → 改地块 + 产出 + 音效 + 提示 --- */
+function tileCenterDist(tx,ty){
+  const dx = (tx+0.5)*TILE - player.x, dy = (ty+0.5)*TILE - player.y;
+  return Math.hypot(dx, dy) / TILE;               /* 单位：格 */
+}
+function useTool(tx,ty){
+  const tool = CONFIG.TOOLS[player.tool];
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
+  if(tileCenterDist(tx,ty) > CONFIG.INTERACT.RANGE_TILES){
+    toast('太远了，走近一点再试试');
+    playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  const i = ty*MAP_W + tx, t = map[i];
+  if(tool.accepts.indexOf(t) < 0){
+    toast(tool.name + '不能用在' + TILE_NAMES[t] + '上');
+    playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  map[i] = tool.to;
+  if(tool.out){
+    addResource(tool.out.res, tool.out.n);
+    toast('获得 ' + CONFIG.RESOURCES.NAME[tool.out.res] + ' ×' + tool.out.n);
+  }else{
+    toast(tool.msg);
+  }
+  playSfx(tool.sfx, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+
 /* --- 输入 --- */
 const keys = {};
 let lastAxis = 'x';
@@ -573,6 +736,11 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+  /* 数字键 1~5 切换工具 */
+  if(k >= '1' && k <= String(CONFIG.TOOLS.length)){
+    player.tool = Number(k) - 1;
+    ensureAudio();                 /* 键盘也算一次用户交互，解锁音频 */
+  }
 });
 window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
 window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
@@ -592,6 +760,16 @@ canvas.addEventListener('mousemove', e=>{
   hover.ty = Math.floor((cam.y + p.y) / TILE);
 });
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
+/* 左键 = 使用当前工具（这次点击同时作为音频解锁的用户交互） */
+canvas.addEventListener('mousedown', e=>{
+  if(e.button !== 0) return;
+  ensureAudio();
+  const p = toLogical(e);
+  const tx = Math.floor((cam.x + p.x) / TILE);
+  const ty = Math.floor((cam.y + p.y) / TILE);
+  useTool(tx, ty);
+});
+canvas.addEventListener('contextmenu', e=> e.preventDefault());
 
 /* === 6.UI === */
 /* 3×5 点阵字库（像素风 HUD 文字，缩放后依然锐利） */
@@ -609,6 +787,9 @@ const FONT = {
   '-':['000','000','111','000','000'],' ':['000','000','000','000','000']
 };
 const GLYPH_W = 3, GLYPH_H = 5;
+/* HUD 用到的系统字体（emoji / 中文；不引入任何外部字体文件） */
+const FONT_EMOJI = '"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+const FONT_CJK   = '"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif';
 function drawText(g, text, x, y, scale, color){
   g.fillStyle = color;
   let cx = x;
@@ -644,6 +825,47 @@ function drawUI(g){
   g.fillRect(8, 8, 1, boxH);   g.fillRect(8+boxW-1, 8, 1, boxH);
   drawText(g, l1, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
   drawText(g, l2, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+
+  /* 左上角：临时资源计数（本轮不做背包） */
+  const R = CONFIG.RESOURCES;
+  g.textBaseline = 'top'; g.textAlign = 'left';
+  g.font = '15px ' + FONT_EMOJI;
+  const resList = R.ORDER.map(r => ({icon:R.ICON[r], n:resources[r] || 0}));
+  const iconWs = resList.map(it => g.measureText(it.icon).width);
+  let rowW = 0;
+  for(let i=0;i<resList.length;i++)
+    rowW += iconWs[i] + 4 + String(resList[i].n).length*(GLYPH_W+1)*scale + 12;
+  const rowH = 24, rowY = 8 + boxH + 6;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, rowY, rowW, rowH);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(8, rowY, rowW, 1); g.fillRect(8, rowY+rowH-1, rowW, 1);
+  g.fillRect(8, rowY, 1, rowH); g.fillRect(8+rowW-1, rowY, 1, rowH);
+  let rx = 8 + 8;
+  for(let i=0;i<resList.length;i++){
+    g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudText;
+    g.fillText(resList[i].icon, rx, rowY + 4);
+    drawText(g, String(resList[i].n), rx + iconWs[i] + 4, rowY + 7, scale, CONFIG.COLORS.hudAccent);
+    rx += iconWs[i] + 4 + String(resList[i].n).length*(GLYPH_W+1)*scale + 12;
+  }
+
+  /* 右下角：当前工具（图标 + 名称 + 快捷键） */
+  const tool = CONFIG.TOOLS[player.tool];
+  g.font = '20px ' + FONT_EMOJI; const iw = g.measureText(tool.icon).width;
+  g.font = '14px ' + FONT_CJK;   const nw = g.measureText(tool.name).width;
+  g.font = '12px ' + FONT_CJK;   const kw = g.measureText('(' + tool.key + ')').width;
+  const tbW = Math.ceil(iw + nw + kw + 30), tbH = 32;
+  const tbX = VIEW_W - tbW - 10, tbY = VIEW_H - tbH - 10;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(tbX, tbY, tbW, tbH);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(tbX, tbY, tbW, 1); g.fillRect(tbX, tbY+tbH-1, tbW, 1);
+  g.fillRect(tbX, tbY, 1, tbH); g.fillRect(tbX+tbW-1, tbY, 1, tbH);
+  g.textBaseline = 'top';
+  g.font = '20px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText(tool.icon, tbX + 8, tbY + 6);
+  g.font = '14px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText(tool.name, tbX + 8 + iw + 4, tbY + 9);
+  g.font = '12px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillText('(' + tool.key + ')', tbX + 8 + iw + 4 + nw + 3, tbY + 10);
 }
 const statsEl = document.getElementById('stats');
 function updateStats(){
@@ -657,7 +879,12 @@ function updateStats(){
     '光标 <b>' + hover.tx + ',' + hover.ty + '</b> ' + t + '\n' +
     '绘制瓦片 <b>' + visibleCount + '</b> / ' + (MAP_W*MAP_H) +
     ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑';
+    '工具 ' + CONFIG.TOOLS.map((t,i)=>
+        (i===player.tool ? '<b>[' + t.key + ']' + t.icon + t.name + '</b>'
+                         : ' ' + t.key + ' ' + t.icon + t.name)).join('　') + '\n' +
+    '资源 ' + CONFIG.RESOURCES.ORDER.map(r =>
+        CONFIG.RESOURCES.ICON[r] + ' ' + CONFIG.RESOURCES.NAME[r] + ' <b>' + (resources[r]||0) + '</b>').join('　') + '\n' +
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用';
 }
 
 /* === 7.存档 === */

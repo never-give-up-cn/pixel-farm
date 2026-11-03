@@ -243,7 +243,7 @@ function genMap(seed){
     if(obj[i]===OB.NONE&&ground[i]===T.GRASS&&rnd()<0.4) obj[i]=OB.FLOWER;
   }
   // 出生点清理
-  const sx=CX-3, sy=CY+2;
+  const sx=CX-3, sy=CY-4;
   obj[sy*MW+sx]=OB.NONE; ground[sy*MW+sx]=T.GRASS;
 }
 
@@ -1029,54 +1029,66 @@ function drawPlayer(g){
   else { g.fillStyle='#5a3a22'; g.fillRect(x+3,y+3,10,2); }
 }
 /* --- 天空 / 昼夜 --- */
-function skyTint(){
+// 色彩层（白天为 0，清晨黄昏为暖色，夜晚为深蓝）
+const TINT_KEYS=[
+  {h:0.0, c:[20,26,66],   a:0.58},
+  {h:4.8, c:[22,28,70],   a:0.56},
+  {h:5.6, c:[80,70,125],  a:0.26},
+  {h:6.6, c:[255,185,115],a:0.13},
+  {h:8.0, c:[255,245,210],a:0.03},
+  {h:9.0, c:[255,255,255],a:0.00},
+  {h:16.0,c:[255,255,255],a:0.00},
+  {h:17.4,c:[255,180,110],a:0.13},
+  {h:18.6,c:[255,120,72], a:0.26},
+  {h:19.8,c:[115,72,120], a:0.40},
+  {h:21.0,c:[24,30,74],   a:0.56},
+  {h:24.0,c:[20,26,66],   a:0.58}
+];
+// 夜晚强度（决定视野/暗角）
+const NIGHT_KEYS=[
+  {h:0.0, a:1},{h:5.0, a:1},{h:6.2, a:0},{h:16.0, a:0},{h:19.2, a:1},{h:24.0, a:1}
+];
+function sampleTable(tab,h){
+  let a=tab[0], b=tab[tab.length-1];
+  if(h<=tab[0].h){a=b=tab[0];}
+  else if(h>=tab[tab.length-1].h){a=b=tab[tab.length-1];}
+  else { for(let i=0;i<tab.length-1;i++){ if(h>=tab[i].h&&h<=tab[i+1].h){ a=tab[i]; b=tab[i+1]; break; } } }
+  const t=(b.h===a.h)?0:(h-a.h)/(b.h-a.h);
+  const c = a.c ? [0,1,2].map(i=>Math.round(lerp(a.c[i],b.c[i],t))) : null;
+  return {c:c, a:lerp(a.a,b.a,t)};
+}
+function skyLayer(){
   const h=(6+state.time/60)%24;
-  const keysT=[
-    {h:0, c:[22,28,72], a:0.62},
-    {h:5, c:[24,30,74], a:0.60},
-    {h:6.5,c:[255,168,92], a:0.28},
-    {h:8, c:[255,214,150], a:0.08},
-    {h:9, c:[255,255,255], a:0.00},
-    {h:16,c:[255,240,200], a:0.00},
-    {h:17.5,c:[255,176,96],a:0.22},
-    {h:19,c:[255,110,72], a:0.38},
-    {h:20.5,c:[36,44,92],a:0.55},
-    {h:22,c:[22,28,72], a:0.62},
-    {h:24,c:[22,28,72], a:0.62}
-  ];
-  let a=keysT[0], b=keysT[keysT.length-1];
-  for(let i=0;i<keysT.length-1;i++){ if(h>=keysT[i].h&&h<=keysT[i+1].h){ a=keysT[i]; b=keysT[i+1]; break; } }
-  const t=(h-a.h)/Math.max(0.001,(b.h-a.h));
-  const c=[0,1,2].map(i=>Math.round(lerp(a.c[i],b.c[i],t)));
-  const al=lerp(a.a,b.a,t);
-  return {c:c, a:al};
+  const t=sampleTable(TINT_KEYS,h), n=sampleTable(NIGHT_KEYS,h);
+  return {c:t.c, a:t.a, night:n.a};
 }
 let nightCanvas=null;
 function drawNight(g){
-  const s=skyTint();
-  const dark=clamp(s.a/0.62,0,1);
-  if(dark<=0.01) return;
+  const s=skyLayer();
+  if(s.a<=0.005 && s.night<=0.02) return;
   if(!nightCanvas){ nightCanvas=document.createElement('canvas'); nightCanvas.width=CONFIG.VIEW_W; nightCanvas.height=CONFIG.VIEW_H; }
   const ng=nightCanvas.getContext('2d');
   ng.clearRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
   ng.globalCompositeOperation='source-over';
-  ng.fillStyle='rgba('+s.c[0]+','+s.c[1]+','+s.c[2]+','+dark*0.92+')';
+  ng.fillStyle='rgba('+s.c[0]+','+s.c[1]+','+s.c[2]+','+s.a.toFixed(3)+')';
   ng.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
-  // 玩家周围光晕
-  const px=player.x-cam.x, py=player.y-cam.y-12;
-  const rad=70+ (1-dark)*10;
-  ng.globalCompositeOperation='destination-out';
-  const grd=ng.createRadialGradient(px,py,10,px,py,rad);
-  grd.addColorStop(0,'rgba(0,0,0,1)');
-  grd.addColorStop(0.55,'rgba(0,0,0,'+(0.72*(1-dark*0.35))+')');
-  grd.addColorStop(1,'rgba(0,0,0,0)');
-  ng.fillStyle=grd; ng.beginPath(); ng.arc(px,py,rad,0,Math.PI*2); ng.fill();
-  // 暗角
-  ng.globalCompositeOperation='source-over';
-  const vg=ng.createRadialGradient(CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*0.32,CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*0.95);
-  vg.addColorStop(0,'rgba(0,0,0,0)');
-  vg.addColorStop(1,'rgba(0,0,0,'+(0.42*dark)+')');
-  ng.fillStyle=vg; ng.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  if(s.night>0.02){
+    // 玩家周围的光晕
+    const px=player.x-cam.x, py=player.y-cam.y-12;
+    const rad=62+(1-s.night)*46;
+    ng.globalCompositeOperation='destination-out';
+    const grd=ng.createRadialGradient(px,py,6,px,py,rad);
+    grd.addColorStop(0,'rgba(0,0,0,'+(0.55+0.45*s.night).toFixed(3)+')');
+    grd.addColorStop(0.5,'rgba(0,0,0,'+(0.35+0.35*s.night).toFixed(3)+')');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ng.fillStyle=grd; ng.beginPath(); ng.arc(px,py,rad,0,Math.PI*2); ng.fill();
+    // 暗角
+    ng.globalCompositeOperation='source-over';
+    const vg=ng.createRadialGradient(CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*0.30,CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*1.02);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(0,0,0,'+(0.52*s.night).toFixed(3)+')');
+    ng.fillStyle=vg; ng.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  }
   g.drawImage(nightCanvas,0,0);
 }
 function drawHighlight(g){
@@ -1184,7 +1196,7 @@ function update(dt){
 function newGame(){
   genMap(20240613);
   state.day=1; state.time=0; state.gold=CONFIG.START_GOLD;
-  player.x=(CX-3)*TS+TS/2; player.y=(CY+2)*TS+TS/2; player.dir=0;
+  player.x=(CX-3)*TS+TS/2; player.y=(CY-4)*TS+TS/2; player.dir=0;
   player.stamina=CONFIG.STAMINA_MAX; player.water=CONFIG.CAN_CAP; player.sel=0;
   player.inv=new Array(CONFIG.INV_SLOTS).fill(null);
   player.inv[0]={id:'hoe',count:1};

@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>像素农场 · Pixel Farm</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0e1116;overflow:hidden;
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Courier New",monospace;
+  color:#f4e6c6;-webkit-font-smoothing:none}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+canvas#game{image-rendering:pixelated;image-rendering:crisp-edges;display:block;
+  background:#7cb85c;box-shadow:0 0 0 3px #000,0 0 40px rgba(0,0,0,.65)}
+#ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+.pane{background:rgba(26,20,14,.84);border:3px solid #55402a;box-shadow:inset 0 0 0 2px #150f09,3px 3px 0 rgba(0,0,0,.45);padding:6px 10px}
+#topLeft{position:absolute;left:10px;top:10px;font-size:13px;line-height:1.75;white-space:nowrap}
+#topLeft b{color:#ffd76a}
+#topRight{position:absolute;right:10px;top:10px;font-size:11px;line-height:1.65;opacity:.9;text-align:right;pointer-events:auto}
+#stamWrap{position:absolute;left:10px;bottom:12px;width:186px;height:20px;background:#241a10;
+  border:3px solid #55402a;box-shadow:inset 0 0 0 2px #150f09}
+#stamFill{height:100%;width:100%;background:linear-gradient(#8ede5a,#4fa832)}
+#stamText{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;
+  text-shadow:1px 1px 0 #000;letter-spacing:1px}
+#stamWrap.low #stamFill{background:linear-gradient(#ff6b5e,#c02a1f);animation:blink .55s steps(2,end) infinite}
+@keyframes blink{50%{opacity:.3}}
+#hotbar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:4px;pointer-events:auto}
+.slot{width:42px;height:42px;background:rgba(30,24,16,.86);border:3px solid #55402a;box-shadow:inset 0 0 0 2px #150f09;
+  position:relative;cursor:pointer}
+.slot.sel{border-color:#ffd76a;background:rgba(92,72,32,.92);box-shadow:inset 0 0 0 2px #2a1e0c,0 0 9px rgba(255,215,106,.5)}
+.slot canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);image-rendering:pixelated}
+.slot .cnt{position:absolute;right:2px;bottom:-1px;font-size:12px;color:#fff;text-shadow:1px 1px 0 #000,0 0 3px #000}
+.slot .key{position:absolute;left:1px;top:-1px;font-size:10px;color:#b9a37a;text-shadow:1px 1px 0 #000}
+#toasts{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;
+  gap:4px;align-items:center;pointer-events:none}
+.toast{background:rgba(18,14,9,.92);border:2px solid #6b5233;padding:3px 12px;font-size:13px;white-space:nowrap;
+  box-shadow:2px 2px 0 rgba(0,0,0,.4);animation:tin .18s ease-out}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+#overlay{position:fixed;inset:0;background:rgba(8,10,14,.74);display:none;align-items:center;justify-content:center;z-index:20}
+#overlay.on{display:flex}
+.panel{background:#3b2c1c;border:4px solid #241a10;box-shadow:inset 0 0 0 3px #5d472c,0 8px 34px rgba(0,0,0,.65);
+  padding:14px 16px;color:#f4e6c6;max-height:88vh;overflow:auto}
+.panel h2{margin:0 0 10px;font-size:18px;color:#ffd76a;text-shadow:2px 2px 0 #241a10}
+.panel h3{margin:10px 0 6px;font-size:14px;color:#e8c98a}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+button{font-family:inherit;font-size:13px;background:#6b5233;color:#fff2d0;border:2px solid #241a10;
+  box-shadow:inset 0 0 0 2px #8a6c45;padding:3px 10px;cursor:pointer}
+button:hover:not(:disabled){background:#8a6c45}
+button:active:not(:disabled){box-shadow:inset 0 0 0 2px #241a10}
+button:disabled{opacity:.35;cursor:not-allowed}
+.row{display:flex;align-items:center;gap:8px;padding:4px;border-bottom:1px solid #4c3a24;font-size:13px}
+.row .nm{flex:1}
+.row .own{color:#a9c98a;min-width:48px;text-align:right}
+.row .pr{color:#ffd76a;min-width:64px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(6,44px);gap:4px;margin:4px 0}
+.islot{width:44px;height:44px;background:#2c2115;border:2px solid #55402a;box-shadow:inset 0 0 0 2px #1a1209;
+  position:relative;cursor:pointer}
+.islot:hover{border-color:#ffd76a}
+.islot canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);image-rendering:pixelated}
+.islot .cnt{position:absolute;right:2px;bottom:-1px;font-size:12px;color:#fff;text-shadow:1px 1px 0 #000,0 0 3px #000}
+#held{position:fixed;z-index:40;pointer-events:none;display:none;width:36px;height:36px}
+#held canvas{image-rendering:pixelated;width:36px;height:36px}
+#fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:30;transition:opacity .45s}
+.hint{font-size:12px;color:#c9b48a;margin-top:9px;line-height:1.7}
+.tip{font-size:11px;color:#9d8b68}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="game"></canvas></div>
+
+<div id="ui">
+  <div class="pane" id="topLeft">
+    <div>📅 第 <span id="uDate">1</span> 年 <span id="uSeason">春</span> · 第 <span id="uDay">1</span> 日</div>
+    <div>🕐 <span id="uTime">06:00</span>　<span id="uWeather">☀️ 晴</span></div>
+    <div>💰 <b id="uGold">150</b> G</div>
+  </div>
+
+  <div class="pane" id="topRight">
+    WASD / 方向键 移动<br>
+    Shift 奔跑（耗体力）· 左键 使用/交互<br>
+    右键 移除·取消·水边右键补水<br>
+    1-8 快捷栏 · Tab/I 背包 · E 交互<br>
+    M 静音 · K 存档 · L 读档 · Esc 暂停
+  </div>
+
+  <div id="stamWrap"><div id="stamFill"></div><div id="stamText">体力 100/100</div></div>
+  <div id="hotbar"></div>
+  <div id="toasts"></div>
+</div>
+
+<div id="overlay"><div class="panel" id="panel"></div></div>
+<div id="held"></div>
+<div id="fade"></div>
+
+<script>
+'use strict';
+/* =========================================================================
+ *  像素农场 Pixel Farm —— 单文件像素风种田沙盒
+ *  所有图形均由 Canvas 程序化绘制，无任何外部资源请求
+ * ========================================================================= */
+
+/* ------------------------------ 可调参数 ------------------------------ */
+const CONFIG = {
+  MAP_W: 64,            // 地图宽（格）
+  MAP_H: 64,            // 地图高（格）
+  TILE: 32,             // 每格像素
+  VIEW_W: 640,          // 逻辑分辨率宽
+  VIEW_H: 360,          // 逻辑分辨率高
+  DAY_SECONDS: 360,     // 一个游戏日 = 现实 6 分钟（秒）
+  DAY_MINUTES: 1200,    // 每日可玩时长：6:00 -> 次日 2:00（20 小时 = 1200 分钟）
+  SEASON_DAYS: 7,       // 每季天数
+  STAMINA_MAX: 100,     // 体力上限
+  STAMINA_MULT: 1.0,    // 体力消耗倍率
+  CROP_SPEED: 1.0,      // 作物生长速度倍率（每“天”生长点数）
+  START_GOLD: 150,      // 初始金币
+  WALK_SPEED: 78,       // 步行速度（像素/秒）
+  RUN_SPEED: 134,       // 奔跑速度
+  RUN_DRAIN: 4,         // 奔跑每秒消耗体力
+  SNOW_MULT: 0.6,       // 雪天移动速度倍率
+  PATH_MULT: 1.35,      // 石板路移动速度倍率
+  CAN_CAP: 20,          // 水壶容量
+  INV_SLOTS: 24,        // 背包格数
+  HOTBAR_SLOTS: 8,      // 快捷栏格数
+  STACK_MAX: 99,        // 单格堆叠上限
+  SAVE_KEY: 'pixelfarm_save_v1'
+};
+/* --------------------------------------------------------------------- */
+
+/* ============================ 基础工具 ============================ */
+const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
+const lerp = (a,b,t)=> a+(b-a)*t;
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function hash2(x,y){let n=(x|0)*374761393+(y|0)*668265263;n=(n^(n>>13));n=Math.imul(n,1274126177);return ((n^(n>>16))>>>0)/4294967296;}
+
+/* ============================ 数据表 ============================ */
+const T = {GRASS:0, TILLED:1, WATER:2, PATH:3};
+const OB = {NONE:0, TREE:1, ROCK:2, BUSH:3, FLOWER:4, FENCE:5, CHEST:6, HOUSE:7, SHOP:8};
+const SEASONS = ['春','夏','秋','冬'];
+const WEATHER = {
+  sunny:{name:'晴', icon:'☀️'},
+  rain: {name:'雨', icon:'🌧️'},
+  snow: {name:'雪', icon:'❄️'}
+};
+const CROP_KEYS = ['radish','potato','tomato','pumpkin'];
+const CROPS = {
+  radish : {name:'萝卜', days:3, season:0, sell:30,  seed:10, color:'#e2564c', leaf:'#5ec25e', eat:15},
+  potato : {name:'土豆', days:5, season:0, sell:55,  seed:20, color:'#c8a05c', leaf:'#6fc06a', eat:25},
+  tomato : {name:'番茄', days:6, season:1, sell:45,  seed:30, color:'#e04430', leaf:'#4fb04a', eat:20, regrow:true},
+  pumpkin: {name:'南瓜', days:8, season:2, sell:120, seed:50, color:'#e08a2a', leaf:'#4fa04a', eat:45}
+};
+const ITEMS = {
+  hoe    : {name:'锄头',   k:'tool',  icon:'hoe',    desc:'开垦草地 → 耕地（-3 体力）'},
+  can    : {name:'水壶',   k:'tool',  icon:'can',    desc:'浇水（-1 体力，容量20；右键水边补水）'},
+  axe    : {name:'斧头',   k:'tool',  icon:'axe',    desc:'砍树得木材（-4 体力）'},
+  pick   : {name:'镐',     k:'tool',  icon:'pick',   desc:'敲石得石材（-4 体力）'},
+  sickle : {name:'镰刀',   k:'tool',  icon:'sickle', desc:'割草 / 收获作物（-1 体力）'},
+  wood   : {name:'木材',   k:'mat',   icon:'wood',   sell:10, desc:'可出售 / 制作建材'},
+  stone  : {name:'石材',   k:'mat',   icon:'stone',  sell:14, desc:'可出售 / 制作建材'},
+  fiber  : {name:'纤维',   k:'mat',   icon:'fiber',  sell:5,  desc:'割草所得'},
+  seed_radish : {name:'萝卜种子', k:'seed', icon:'seed_r', crop:'radish'},
+  seed_potato : {name:'土豆种子', k:'seed', icon:'seed_p', crop:'potato'},
+  seed_tomato : {name:'番茄种子', k:'seed', icon:'seed_t', crop:'tomato'},
+  seed_pumpkin: {name:'南瓜种子', k:'seed', icon:'seed_k', crop:'pumpkin'},
+  radish : {name:'萝卜', k:'crop', icon:'radish',  crop:'radish',  eat:15},
+  potato : {name:'土豆', k:'crop', icon:'potato',  crop:'potato',  eat:25},
+  tomato : {name:'番茄', k:'crop', icon:'tomato',  crop:'tomato',  eat:20},
+  pumpkin: {name:'南瓜', k:'crop', icon:'pumpkin', crop:'pumpkin', eat:45},
+  fence  : {name:'木栅栏', k:'place', icon:'fence', place:'fence', desc:'放置木栅栏（阻挡移动）'},
+  chest  : {name:'木箱',   k:'place', icon:'chest', place:'chest', desc:'放置储物木箱'},
+  path   : {name:'石板路', k:'place', icon:'path',  place:'path',  desc:'铺设石板路（加速行走）'}
+};
+const SHOP_BUY = [
+  ['seed_radish',10],['seed_potato',20],['seed_tomato',30],['seed_pumpkin',50],
+  ['axe',70],['pick',80],['sickle',60]
+];
+const CRAFT = [
+  {id:'fence', cost:{wood:2}},
+  {id:'chest', cost:{wood:5, stone:2}},
+  {id:'path',  cost:{stone:1}}
+];
+
+/* ============================ 世界 ============================ */
+const MW = CONFIG.MAP_W, MH = CONFIG.MAP_H, TS = CONFIG.TILE, N = MW*MH;
+let ground = new Uint8Array(N);
+let obj    = new Uint8Array(N);
+let objHp  = new Uint8Array(N);
+let cropType   = new Uint8Array(N);   // 0=无，1..4=作物索引+1
+let cropGrowth = new Uint8Array(N);   // 十分之一天
+let cropWater  = new Uint8Array(N);
+let cropDead   = new Uint8Array(N);
+let chests = {};                      // tileIndex -> [slot x24]
+
+const CX = Math.floor(MW/2), CY = Math.floor(MH/2);
+const HOUSE = {x:CX-4, y:CY-9, w:3, h:2};
+const SHOPT = {x:CX,   y:CY-9, w:2, h:2};
+const FARM  = {x:CX-6, y:CY-1, w:12, h:12};   // 中央 12x12 可开垦空地
+
+/* ============================ 状态 ============================ */
+const state = {
+  day:1, time:0, weather:'sunny', gold:CONFIG.START_GOLD, priceMul:{},
+  muted:false, sleeping:false
+};
+const player = {
+  x:(CX-3)*TS+TS/2, y:(CY+2)*TS+TS/2, dir:0,
+  stamina:CONFIG.STAMINA_MAX, water:CONFIG.CAN_CAP, sel:0,
+  inv:new Array(CONFIG.INV_SLOTS).fill(null),
+  moving:false, frame:0, animT:0
+};
+const cam = {x:0,y:0};
+
+/* ============================ 声音 ============================ */
+const Sound = {
+  ac:null, muted:false,
+  init(){
+    if(!this.ac){ try{ this.ac = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ this.ac=null; } }
+    if(this.ac && this.ac.state==='suspended') this.ac.resume();
+  },
+  tone(f,dur,type,vol,slideTo){
+    if(this.muted||!this.ac) return;
+    try{
+      const t=this.ac.currentTime, o=this.ac.createOscillator(), g=this.ac.createGain();
+      o.type=type||'square'; o.frequency.setValueAtTime(f,t);
+      if(slideTo) o.frequency.exponentialRampToValueAtTime(Math.max(30,slideTo), t+dur);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(vol||0.05,t+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g); g.connect(this.ac.destination); o.start(t); o.stop(t+dur+0.02);
+    }catch(e){}
+  },
+  noise(dur,vol,lp){
+    if(this.muted||!this.ac) return;
+    try{
+      const sr=this.ac.sampleRate, len=Math.floor(sr*dur), buf=this.ac.createBuffer(1,len,sr), d=buf.getChannelData(0);
+      for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
+      const src=this.ac.createBufferSource(); src.buffer=buf;
+      const f=this.ac.createBiquadFilter(); f.type='lowpass'; f.frequency.value=lp||900;
+      const g=this.ac.createGain(); g.gain.value=vol||0.09;
+      src.connect(f); f.connect(g); g.connect(this.ac.destination); src.start();
+    }catch(e){}
+  },
+  hoe(){ this.noise(0.18,0.13,700); this.tone(150,0.12,'square',0.045,70); },
+  water(){ this.tone(760,0.09,'sine',0.035,420); },
+  chop(){ this.noise(0.14,0.15,1100); this.tone(210,0.09,'square',0.05,120); },
+  mine(){ this.noise(0.13,0.14,1500); this.tone(320,0.08,'square',0.04,180); },
+  harvest(){ this.tone(620,0.08,'square',0.05,940); setTimeout(()=>this.tone(880,0.1,'square',0.05,1180),80); },
+  pickup(){ this.tone(880,0.07,'square',0.045,1250); },
+  click(){ this.tone(520,0.045,'square',0.035); },
+  coin(){ this.tone(980,0.06,'square',0.045,1320); setTimeout(()=>this.tone(1320,0.09,'square',0.04),60); },
+  sleep(){ this.tone(300,0.5,'sine',0.05,120); },
+  error(){ this.tone(180,0.12,'square',0.045,120); }
+};
+function sfx(n){ if(Sound) { if(n==='hoe')Sound.hoe(); else if(n==='water')Sound.water(); else if(n==='chop')Sound.chop();
+  else if(n==='mine')Sound.mine(); else if(n==='harvest')Sound.harvest(); else if(n==='pickup')Sound.pickup();
+  else if(n==='click')Sound.click(); else if(n==='coin')Sound.coin(); else if(n==='sleep')Sound.sleep(); else Sound.error(); } }
+
+/* ============================ 提示条 ============================ */
+const toasts = document.getElementById('toasts');
+function toast(msg){
+  const d=document.createElement('div');
+  d.className='toast'; d.textContent=msg;
+  toasts.appendChild(d);
+  while(toasts.children.length>4) toasts.removeChild(toasts.firstChild);
+  setTimeout(()=>{ d.style.transition='opacity .4s'; d.style.opacity='0'; setTimeout(()=>d.remove(),420); },1900);
+}
+
+/* ============================ 季节 / 天气 ============================ */
+function seasonIdx(){ return Math.floor((state.day-1)/CONFIG.SEASON_DAYS)%4; }
+function seasonDay(){ return (state.day-1)%CONFIG.SEASON_DAYS+1; }
+function yearNo(){ return Math.floor((state.day-1)/(CONFIG.SEASON_DAYS*4))+1; }
+function rollWeather(){
+  const s=seasonIdx(); const r=Math.random();
+  if(s===3){ state.weather = r<0.45?'snow':(r<0.58?'rain':'sunny'); }
+  else if(s===1){ state.weather = r<0.42?'rain':(r<0.48?'snow':'sunny'); }
+  else { state.weather = r<0.30?'rain':'sunny'; }
+}
+function rollPrices(){
+  state.priceMul={};
+  const ids=Object.keys(ITEMS).filter(id=>ITEMS[id].sell||ITEMS[id].k==='crop');
+  for(const id of ids) state.priceMul[id]=0.90+Math.random()*0.20;
+}
+
+/* ============================ 地图生成 ============================ */
+function inFarm(tx,ty){ return tx>=FARM.x&&tx<FARM.x+FARM.w&&ty>=FARM.y&&ty<FARM.y+FARM.h; }
+function inRect(tx,ty,r){ return tx>=r.x&&tx<r.x+r.w&&ty>=r.y&&ty<r.y+r.h; }
+
+function genMap(seed){
+  const rnd = mulberry32(seed||12345);
+  ground.fill(T.GRASS); obj.fill(OB.NONE); objHp.fill(0);
+  cropType.fill(0); cropGrowth.fill(0); cropWater.fill(0); cropDead.fill(0);
+  chests={};
+
+  // 水塘：农场东侧 + 西南角
+  const pond=(cx,cy,rx,ry)=>{
+    for(let ty=cy-ry;ty<=cy+ry;ty++)for(let tx=cx-rx;tx<=cx+rx;tx++){
+      if(tx<1||ty<1||tx>=MW-1||ty>=MH-1) continue;
+      const n=hash2(tx,ty);
+      const d=((tx-cx)/rx)**2+((ty-cy)/ry)**2;
+      if(d < 0.75 + n*0.45) ground[ty*MW+tx]=T.WATER;
+    }
+  };
+  pond(CX+11, CY+3, 4, 4);
+  pond(8, 50, 4, 3);
+  pond(MW-10, 8, 3, 3);
+
+  // 建筑
+  for(let ty=HOUSE.y;ty<HOUSE.y+HOUSE.h;ty++)for(let tx=HOUSE.x;tx<HOUSE.x+HOUSE.w;tx++){ obj[ty*MW+tx]=OB.HOUSE; objHp[ty*MW+tx]=1; }
+  for(let ty=SHOPT.y;ty<SHOPT.y+SHOPT.h;ty++)for(let tx=SHOPT.x;tx<SHOPT.x+SHOPT.w;tx++){ obj[ty*MW+tx]=OB.SHOP; objHp[ty*MW+tx]=1; }
+  // 通往农场的石板路
+  for(let ty=HOUSE.y+HOUSE.h;ty<=FARM.y-1;ty++) ground[ty*MW+(HOUSE.x+1)]=T.PATH;
+  for(let ty=SHOPT.y+SHOPT.h;ty<=FARM.y-1;ty++) ground[ty*MW+(SHOPT.x+1)]=T.PATH;
+  for(let tx=HOUSE.x+1;tx<=SHOPT.x+1;tx++) ground[(FARM.y-3)*MW+tx]=T.PATH;
+
+  // 树 / 石 / 杂草 / 野花
+  const tryPlace=(tx,ty,type)=>{
+    if(tx<1||ty<1||tx>=MW-1||ty>=MH-1) return false;
+    if(inFarm(tx,ty)) return false;
+    if(inRect(tx,ty,HOUSE)||inRect(tx,ty,SHOPT)) return false;
+    const i=ty*MW+tx;
+    if(ground[i]!==T.GRASS) return false;
+    if(obj[i]!==OB.NONE) return false;
+    obj[i]=type; objHp[i]= type===OB.TREE?3:(type===OB.ROCK?3:1);
+    return true;
+  };
+  for(let k=0;k<420;k++){
+    const tx=1+Math.floor(rnd()*(MW-2)), ty=1+Math.floor(rnd()*(MH-2));
+    if(rnd()<0.55) tryPlace(tx,ty,OB.TREE); else if(rnd()<0.5) tryPlace(tx,ty,OB.ROCK);
+  }
+  for(let k=0;k<260;k++){
+    const tx=1+Math.floor(rnd()*(MW-2)), ty=1+Math.floor(rnd()*(MH-2));
+    const i=ty*MW+tx;
+    if(inFarm(tx,ty)) { if(obj[i]===OB.NONE&&ground[i]===T.GRASS&&rnd()<0.35) obj[i]=OB.FLOWER; continue; }
+    if(obj[i]===OB.NONE&&ground[i]===T.GRASS&&rnd()<0.45) obj[i]=OB.BUSH;
+  }
+  for(let k=0;k<200;k++){
+    const tx=1+Math.floor(rnd()*(MW-2)), ty=1+Math.floor(rnd()*(MH-2));
+    const i=ty*MW+tx;
+    if(obj[i]===OB.NONE&&ground[i]===T.GRASS&&rnd()<0.4) obj[i]=OB.FLOWER;
+  }
+  // 出生点清理
+  const sx=CX-3, sy=CY-4;
+  obj[sy*MW+sx]=OB.NONE; ground[sy*MW+sx]=T.GRASS;
+}
+
+/* ============================ 背包辅助 ============================ */
+function invCount(id){ let n=0; for(const s of player.inv) if(s&&s.id===id) n+=s.count; return n; }
+function hasSpace(id){
+  for(const s of player.inv) if(s&&s.id===id&&s.count<CONFIG.STACK_MAX) return true;
+  for(const s of player.inv) if(!s) return true;
+  return false;
+}
+function giveItem(id,n){
+  if(n<=0) return false;
+  if(!hasSpace(id)){ toast('背包已满！'); return false; }
+  let left=n;
+  for(const s of player.inv){ if(s&&s.id===id&&s.count<CONFIG.STACK_MAX){ const c=Math.min(CONFIG.STACK_MAX-s.count,left); s.count+=c; left-=c; if(!left)break; } }
+  for(let i=0;i<player.inv.length&&left>0;i++){ if(!player.inv[i]){ player.inv[i]={id:id,count:left}; left=0; } }
+  refreshHotbar(); return true;
+}
+function takeItem(id,n){
+  let left=n;
+  for(let i=0;i<player.inv.length&&left>0;i++){
+    const s=player.inv[i];
+    if(s&&s.id===id){ const c=Math.min(s.count,left); s.count-=c; left-=c; if(s.count<=0) player.inv[i]=null; }
+  }
+  refreshHotbar();
+}
+function removeOneSlot(i){ const s=player.inv[i]; if(!s)return; s.count--; if(s.count<=0) player.inv[i]=null; refreshHotbar(); }
+
+/* ============================ 体力 ============================ */
+function costStamina(n){
+  const c=n*CONFIG.STAMINA_MULT;
+  if(player.stamina < c){ toast('体力不足！'); sfx('error'); return false; }
+  player.stamina-=c; return true;
+}
+
+/* ============================ 时间 ============================ */
+function clockString(){
+  let m=Math.floor(state.time);
+  let h=6+Math.floor(m/60); m=m%60;
+  if(h>=24) h-=24;
+  return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+}
+
+/* ============================ 一天的推进 ============================ */
+function nextDay(){
+  const oldSeason=seasonIdx();
+  state.day++;
+  const newSeason=seasonIdx();
+  // 生长结算（只结算前一天浇过水的作物）
+  for(let i=0;i<N;i++){
+    if(cropType[i] && !cropDead[i]){
+      if(cropWater[i]) cropGrowth[i]=Math.min(250, cropGrowth[i]+Math.round(10*CONFIG.CROP_SPEED));
+      cropWater[i]=0;
+    }
+  }
+  // 换季：非当季作物枯萎
+  if(newSeason!==oldSeason){
+    for(let i=0;i<N;i++){
+      if(cropType[i]&&!cropDead[i]){
+        const c=CROPS[CROP_KEYS[cropType[i]-1]];
+        if(c.season!==newSeason){ cropDead[i]=1; }
+      }
+    }
+  }
+  state.time=0;
+  state.weather='sunny'; rollWeather(); rollPrices();
+  if(state.weather==='rain'){ for(let i=0;i<N;i++) if(cropType[i]) cropWater[i]=1; }
+  player.stamina=CONFIG.STAMINA_MAX;
+  player.water=CONFIG.CAN_CAP;
+  player.x=(CX-3)*TS+TS/2; player.y=(HOUSE.y+HOUSE.h)*TS+TS/2;
+  player.inv[0]=player.inv[0]||{id:'hoe',count:1};
+  saveGame(true);
+}
+
+/* ============================ 存档 ============================ */
+function b64enc(arr){ let s=''; for(let i=0;i<arr.length;i+=4096) s+=String.fromCharCode.apply(null,Array.prototype.slice.call(arr,i,i+4096)); return btoa(s); }
+function b64dec(str){ const bin=atob(str), a=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); return a; }
+function saveGame(silent){
+  try{
+    const data={
+      v:1, day:state.day, time:state.time, weather:state.weather, gold:state.gold, priceMul:state.priceMul,
+      p:{x:player.x,y:player.y,dir:player.dir,st:player.stamina,w:player.water,sel:player.sel,inv:player.inv},
+      ground:b64enc(ground), obj:b64enc(obj), objHp:b64enc(objHp),
+      cropType:b64enc(cropType), cropGrowth:b64enc(cropGrowth), cropWater:b64enc(cropWater), cropDead:b64enc(cropDead),
+      chests:chests
+    };
+    localStorage.setItem(CONFIG.SAVE_KEY, JSON.stringify(data));
+    if(!silent){ toast('游戏已保存'); sfx('pickup'); }
+  }catch(e){ if(!silent) toast('保存失败：'+e.message); }
+}
+function loadGame(){
+  try{
+    const raw=localStorage.getItem(CONFIG.SAVE_KEY); if(!raw) return false;
+    const d=JSON.parse(raw); if(!d||d.v!==1) return false;
+    state.day=d.day; state.time=d.time; state.weather=d.weather; state.gold=d.gold; state.priceMul=d.priceMul||{};
+    ground=b64dec(d.ground); obj=b64dec(d.obj); objHp=b64dec(d.objHp);
+    cropType=b64dec(d.cropType); cropGrowth=b64dec(d.cropGrowth); cropWater=b64dec(d.cropWater); cropDead=b64dec(d.cropDead);
+    chests=d.chests||{};
+    player.x=d.p.x; player.y=d.p.y; player.dir=d.p.dir; player.stamina=d.p.st; player.water=d.p.w; player.sel=d.p.sel||0;
+    player.inv=d.p.inv||player.inv;
+    while(player.inv.length<CONFIG.INV_SLOTS) player.inv.push(null);
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ============================ 界面（DOM） ============================ */
+const $ = id=>document.getElementById(id);
+const ui = {
+  date:$('uDate'), season:$('uSeason'), day:$('uDay'), time:$('uTime'), weather:$('uWeather'), gold:$('uGold'),
+  stamWrap:$('stamWrap'), stamFill:$('stamFill'), stamText:$('stamText'),
+  hotbar:$('hotbar'), overlay:$('overlay'), panel:$('panel'), held:$('held'), fade:$('fade')
+};
+const hotbarSlots=[];
+for(let i=0;i<CONFIG.HOTBAR_SLOTS;i++){
+  const d=document.createElement('div'); d.className='slot';
+  const c=document.createElement('canvas'); c.width=32; c.height=32;
+  const t=document.createElement('div'); t.className='cnt';
+  const k=document.createElement('div'); k.className='key'; k.textContent=(i+1);
+  d.appendChild(c); d.appendChild(t); d.appendChild(k);
+  d.onclick=()=>{ player.sel=i; sfx('click'); refreshHotbar(); };
+  d.title='';
+  ui.hotbar.appendChild(d);
+  hotbarSlots.push({el:d,canvas:c,cnt:t});
+}
+function refreshHotbar(){
+  for(let i=0;i<hotbarSlots.length;i++){
+    const s=player.inv[i], h=hotbarSlots[i];
+    h.el.classList.toggle('sel', i===player.sel);
+    const g=h.canvas.getContext('2d');
+    g.clearRect(0,0,32,32);
+    if(s){ drawIcon(g, ITEMS[s.id].icon, 32); h.cnt.textContent = s.count>1? s.count : ''; h.el.title = ITEMS[s.id].name+' ×'+s.count+'　'+(ITEMS[s.id].desc||''); }
+    else { h.cnt.textContent=''; h.el.title=''; }
+  }
+}
+let lastHUD={};
+function updateHUD(){
+  const d=String(yearNo()), s=SEASONS[seasonIdx()], dd=String(seasonDay()), t=clockString();
+  const w=WEATHER[state.weather].icon+' '+WEATHER[state.weather].name, g=String(state.gold);
+  if(lastHUD.d!==d){ui.date.textContent=d;lastHUD.d=d;}
+  if(lastHUD.s!==s){ui.season.textContent=s;lastHUD.s=s;}
+  if(lastHUD.dd!==dd){ui.day.textContent=dd;lastHUD.dd=dd;}
+  if(lastHUD.t!==t){ui.time.textContent=t;lastHUD.t=t;}
+  if(lastHUD.w!==w){ui.weather.textContent=w;lastHUD.w=w;}
+  if(lastHUD.g!==g){ui.gold.textContent=g;lastHUD.g=g;}
+  const st=Math.max(0,Math.round(player.stamina));
+  const pct=clamp(st/CONFIG.STAMINA_MAX*100,0,100);
+  ui.stamFill.style.width=pct+'%';
+  ui.stamText.textContent='体力 '+st+'/'+CONFIG.STAMINA_MAX+'　水 '+player.water+'/'+CONFIG.CAN_CAP;
+  ui.stamWrap.classList.toggle('low', st<20);
+}
+
+/* ============================ 图标绘制 ============================ */
+function drawIcon(g,id,size){
+  g.clearRect(0,0,size,size);
+  const u=size/16;
+  const px=(x,y,w,h,c)=>{ g.fillStyle=c; g.fillRect(Math.round(x*u),Math.round(y*u),Math.max(1,Math.round(w*u)),Math.max(1,Math.round(h*u))); };
+  switch(id){
+    case 'hoe':   px(2,12,10,2,'#8a5a2b'); px(9,3,3,10,'#a97a3f'); px(8,1,7,3,'#c8ccd2'); break;
+    case 'can':   px(3,6,9,8,'#8f9aa3'); px(11,8,4,2,'#8f9aa3'); px(4,10,7,4,'#4aa3e0'); px(2,4,2,6,'#6f7a83'); break;
+    case 'axe':   px(7,3,2,12,'#a97a3f'); px(4,2,6,6,'#b9c3cb'); px(3,3,2,5,'#e6ecf2'); break;
+    case 'pick':  px(7,2,2,13,'#a97a3f'); px(2,2,12,3,'#b9c3cb'); px(1,4,2,2,'#e6ecf2'); px(13,4,2,2,'#e6ecf2'); break;
+    case 'sickle':px(2,11,7,2,'#a97a3f'); px(8,5,5,2,'#dbe1e7'); px(12,6,3,3,'#dbe1e7'); px(11,9,2,3,'#dbe1e7'); break;
+    case 'wood':  px(2,6,11,6,'#8a5a2b'); px(2,6,11,2,'#a97a3f'); px(13,6,3,6,'#c9a06a'); px(14,7,1,4,'#8a5a2b'); break;
+    case 'stone': px(4,7,9,6,'#8d949c'); px(6,4,5,4,'#a9b0b8'); px(5,8,3,2,'#c6ccd2'); break;
+    case 'fiber': px(3,10,2,5,'#5fbf5f'); px(6,7,2,8,'#7fd07f'); px(9,9,2,6,'#5fbf5f'); px(12,11,2,4,'#7fd07f'); break;
+    case 'seed_r': case 'seed_p': case 'seed_t': case 'seed_k': {
+      px(4,5,8,10,'#c9a06a'); px(3,3,10,2,'#8a5a2b');
+      const c = id==='seed_r'?'#e2564c': id==='seed_p'?'#c8a05c': id==='seed_t'?'#e04430':'#e08a2a';
+      px(6,9,2,2,c); px(9,11,2,2,c); break; }
+    case 'radish':px(5,7,7,6,'#e2564c'); px(6,12,5,2,'#c43f36'); px(7,3,3,5,'#5ec25e'); px(4,5,3,2,'#5ec25e'); break;
+    case 'potato':px(4,7,9,7,'#c8a05c'); px(5,8,2,2,'#8a6a3a'); px(9,11,2,2,'#8a6a3a'); px(6,5,5,2,'#6fc06a'); break;
+    case 'tomato':px(4,7,9,8,'#e04430'); px(7,3,3,4,'#4fb04a'); px(3,4,3,2,'#4fb04a'); px(10,4,3,2,'#4fb04a'); break;
+    case 'pumpkin':px(3,6,11,8,'#e08a2a'); px(6,6,1,8,'#b56a1c'); px(10,6,1,8,'#b56a1c'); px(7,2,3,4,'#4fa04a'); break;
+    case 'fence': px(2,4,3,10,'#a97a3f'); px(11,4,3,10,'#a97a3f'); px(2,8,12,2,'#8a5a2b'); break;
+    case 'chest': px(3,4,11,3,'#8a5a2b'); px(3,7,11,7,'#a97a3f'); px(7,8,3,4,'#e2c14a'); break;
+    case 'path':  px(2,9,5,4,'#9a9186'); px(8,8,5,5,'#b0a79b'); px(5,4,5,4,'#8d857b'); break;
+  }
+}
+
+/* ============================ 面板：背包 / 商店 / 木箱 ============================ */
+let held=null;         // {kind:'inv'|'chest', index, id, count}
+let chestCtx=null;     // {index, arr}
+let overlayMode=null;  // 'inv' | 'shop' | 'chest' | 'pause'
+let shopTab='buy';
+
+function overlayOpen(){ return overlayMode!==null; }
+function closeOverlay(){
+  overlayMode=null; ui.overlay.classList.remove('on'); ui.panel.innerHTML='';
+  if(held){ // 放回原处
+    const arr = held.kind==='inv'? player.inv : (chestCtx? chestCtx.arr:null);
+    if(arr && !arr[held.index]) arr[held.index]={id:held.id,count:held.count};
+  }
+  held=null; ui.held.style.display='none';
+}
+function openOverlay(mode){ overlayMode=mode; ui.overlay.classList.add('on'); }
+
+function slotHTML(kind,i){
+  const arr = kind==='inv'? player.inv : (chestCtx? chestCtx.arr:[]);
+  const d=document.createElement('div'); d.className='islot';
+  const c=document.createElement('canvas'); c.width=32; c.height=32;
+  const t=document.createElement('div'); t.className='cnt';
+  d.appendChild(c); d.appendChild(t);
+  const st=arr[i];
+  if(st){ drawIcon(c.getContext('2d'), ITEMS[st.id].icon, 32); t.textContent=st.count>1?st.count:''; d.title=ITEMS[st.id].name; }
+  d.addEventListener('mousedown',e=>{ e.preventDefault(); e.stopPropagation(); slotAction(kind,i,e); });
+  d.addEventListener('contextmenu',e=>{ e.preventDefault(); e.stopPropagation(); discardSlot(kind,i); });
+  return d;
+}
+function slotAction(kind,i,e){
+  const arr = kind==='inv'? player.inv : (chestCtx? chestCtx.arr:null);
+  if(!arr) return;
+  if(held){
+    const srcArr = held.kind==='inv'? player.inv : (chestCtx? chestCtx.arr:null);
+    const src=srcArr[held.index];
+    const dst=arr[i];
+    if(src && dst && src.id===dst.id){
+      const c=Math.min(CONFIG.STACK_MAX-dst.count, src.count);
+      dst.count+=c; src.count-=c; if(src.count<=0) srcArr[held.index]=null;
+    } else {
+      arr[i]=src; srcArr[held.index]=dst;
+    }
+    held=null; ui.held.style.display='none';
+  } else {
+    if(!arr[i]) return;
+    held={kind:kind,index:i,id:arr[i].id,count:arr[i].count};
+    arr[i]=null;
+    const hc=document.createElement('canvas'); hc.width=32; hc.height=32;
+    drawIcon(hc.getContext('2d'), ITEMS[held.id].icon, 32);
+    ui.held.innerHTML=''; ui.held.appendChild(hc);
+    ui.held.style.display='block';
+    moveHeld(e.clientX,e.clientY);
+  }
+  refreshHotbar(); renderPanel();
+}
+function discardSlot(kind,i){
+  const arr = kind==='inv'? player.inv : (chestCtx? chestCtx.arr:null);
+  if(!arr||!arr[i]) return;
+  const id=arr[i].id;
+  arr[i].count--; if(arr[i].count<=0) arr[i]=null;
+  toast('丢弃了 1 个 '+ITEMS[id].name);
+  refreshHotbar(); renderPanel();
+}
+function moveHeld(x,y){ ui.held.style.left=(x-18)+'px'; ui.held.style.top=(y-18)+'px'; }
+
+/* ---- 背包面板 ---- */
+function openInventory(){
+  if(overlayMode==='inv'){ closeOverlay(); return; }
+  openOverlay('inv'); renderPanel();
+}
+function renderPanel(){
+  if(!overlayMode) return;
+  const p=ui.panel; p.innerHTML='';
+  if(overlayMode==='inv'){
+    const h=document.createElement('h2'); h.textContent='背包'; p.appendChild(h);
+    const g=document.createElement('div'); g.className='grid';
+    for(let i=0;i<CONFIG.INV_SLOTS;i++) g.appendChild(slotHTML('inv',i));
+    p.appendChild(g);
+    const tip=document.createElement('div'); tip.className='hint';
+    tip.innerHTML='左键拾取 / 放置，右键丢弃 1 个。<br>快捷栏 = 背包前 8 格（按 1-8 选择），拖拽可把物品移到快捷栏。<br>材料（木/石/纤维）可到商店出售，作物可直接吃掉恢复体力。';
+    p.appendChild(tip);
+    const b=document.createElement('button'); b.textContent='关闭 (Tab)'; b.onclick=closeOverlay; p.appendChild(b);
+  }
+  else if(overlayMode==='chest'){
+    const h=document.createElement('h2'); h.textContent='木箱'; p.appendChild(h);
+    const h3=document.createElement('h3'); h3.textContent='箱内'; p.appendChild(h3);
+    const g=document.createElement('div'); g.className='grid';
+    for(let i=0;i<CONFIG.INV_SLOTS;i++) g.appendChild(slotHTML('chest',i));
+    p.appendChild(g);
+    const h4=document.createElement('h3'); h4.textContent='我的背包'; p.appendChild(h4);
+    const g2=document.createElement('div'); g2.className='grid';
+    for(let i=0;i<CONFIG.INV_SLOTS;i++) g2.appendChild(slotHTML('inv',i));
+    p.appendChild(g2);
+    const b=document.createElement('button'); b.textContent='关闭 (Esc)'; b.onclick=closeOverlay; p.appendChild(b);
+  }
+  else if(overlayMode==='shop'){ renderShop(); }
+  else if(overlayMode==='pause'){
+    const h=document.createElement('h2'); h.textContent='暂停'; p.appendChild(h);
+    const d=document.createElement('div'); d.className='hint';
+    d.innerHTML='WASD / 方向键：移动　Shift：奔跑（消耗体力）<br>'+
+      '鼠标左键：对光标所指格使用手持道具；右键：移除 / 取消 / 在水边给水壶补水<br>'+
+      '1-8：选择快捷栏　Tab / I：背包　E：交互（睡觉 / 商店 / 木箱）　Esc：关闭面板 / 暂停<br>'+
+      'M：静音　K：存档　L：读档<br><br>'+
+      '玩法：砍树采石 → 攒材料 → 锄地 → 播种 → 每天浇水 → 睡觉 → 收获 → 卖钱 → 买种子 / 升级工具 → 扩大农场';
+    p.appendChild(d);
+    const b=document.createElement('button'); b.textContent='继续游戏'; b.onclick=closeOverlay; p.appendChild(b);
+  }
+}
+
+/* ---- 商店 ---- */
+function priceOf(id){
+  const def=ITEMS[id]; let base=def.sell||0;
+  if(def.k==='crop'){ const c=CROPS[def.crop]; base=c.sell; base*= (c.season===seasonIdx()?1.15:0.85); }
+  const mul=state.priceMul[id]||1;
+  return Math.max(1,Math.round(base*mul));
+}
+function renderShop(){
+  const p=ui.panel; p.innerHTML='';
+  const h=document.createElement('h2'); h.textContent='集市摊位'; p.appendChild(h);
+  const tabs=document.createElement('div'); tabs.className='tabs';
+  [['buy','购买'],['sell','出售'],['craft','制作']].forEach(([k,t])=>{
+    const b=document.createElement('button'); b.textContent=t;
+    if(k===shopTab){ b.style.outline='2px solid #ffd76a'; b.style.outlineOffset='1px'; }
+    b.onclick=()=>{ shopTab=k; sfx('click'); renderShop(); };
+    tabs.appendChild(b);
+  });
+  p.appendChild(tabs);
+  const list=document.createElement('div'); list.style.minWidth='380px';
+  p.appendChild(list);
+
+  if(shopTab==='buy'){
+    SHOP_BUY.forEach(([id,price])=>{
+      const row=document.createElement('div'); row.className='row';
+      const nm=document.createElement('span'); nm.className='nm';
+      nm.innerHTML=ITEMS[id].name+(ITEMS[id].k==='seed'?'<span class="tip">（'+SEASONS[CROPS[ITEMS[id].crop].season]+'季作物）</span>':'');
+      const pr=document.createElement('span'); pr.className='pr'; pr.textContent=price+' G';
+      const b1=document.createElement('button'); b1.textContent='买 1';
+      b1.onclick=()=>buyItem(id,price,1);
+      const b5=document.createElement('button'); b5.textContent='买 5';
+      b5.onclick=()=>buyItem(id,price,5);
+      row.appendChild(nm); row.appendChild(pr); row.appendChild(b1); row.appendChild(b5);
+      list.appendChild(row);
+    });
+  } else if(shopTab==='sell'){
+    const sellIds=Object.keys(ITEMS).filter(id=> (ITEMS[id].sell||ITEMS[id].k==='crop'));
+    let any=false;
+    sellIds.forEach(id=>{
+      const n=invCount(id); if(n<=0) return; any=true;
+      const row=document.createElement('div'); row.className='row';
+      const nm=document.createElement('span'); nm.className='nm'; nm.textContent=ITEMS[id].name;
+      const ow=document.createElement('span'); ow.className='own'; ow.textContent='拥有 '+n;
+      const pr=document.createElement('span'); pr.className='pr'; pr.textContent=priceOf(id)+' G/个';
+      const b=document.createElement('button'); b.textContent='全部卖出';
+      b.onclick=()=>sellItem(id,n);
+      row.appendChild(nm); row.appendChild(ow); row.appendChild(pr); row.appendChild(b);
+      list.appendChild(row);
+    });
+    if(!any){ const e=document.createElement('div'); e.className='hint'; e.textContent='背包里没有可出售的物品。'; list.appendChild(e); }
+  } else {
+    CRAFT.forEach(cr=>{
+      const row=document.createElement('div'); row.className='row';
+      const nm=document.createElement('span'); nm.className='nm'; nm.textContent=ITEMS[cr.id].name;
+      const costTxt=Object.keys(cr.cost).map(k=>ITEMS[k].name+'×'+cr.cost[k]).join(' + ');
+      const pr=document.createElement('span'); pr.className='pr'; pr.style.color='#c9b48a'; pr.textContent=costTxt;
+      const b=document.createElement('button'); b.textContent='制作';
+      let ok=true; for(const k in cr.cost) if(invCount(k)<cr.cost[k]) ok=false;
+      b.disabled=!ok;
+      b.onclick=()=>craftItem(cr);
+      row.appendChild(nm); row.appendChild(pr); row.appendChild(b);
+      list.appendChild(row);
+    });
+  }
+  const tip=document.createElement('div'); tip.className='hint';
+  tip.textContent='种子价格固定；作物收购价随季节与每日行情浮动（当前季节的作物更值钱）。材料与纤维同样可以卖钱。';
+  p.appendChild(tip);
+  const b=document.createElement('button'); b.textContent='关闭 (Esc)'; b.onclick=closeOverlay; p.appendChild(b);
+}
+function buyItem(id,price,n){
+  const cost=price*n;
+  if(state.gold<cost){ toast('金币不够'); sfx('error'); return; }
+  if(!hasSpace(id)){ toast('背包已满！'); return; }
+  state.gold-=cost; giveItem(id,n);
+  toast('购买 '+ITEMS[id].name+' ×'+n+'（-'+cost+'G）'); sfx('coin'); renderShop();
+}
+function sellItem(id,n){
+  const have=invCount(id); if(have<=0) return;
+  const p=priceOf(id), total=p*have;
+  state.gold+=total; takeItem(id,have);
+  toast('卖出 '+ITEMS[id].name+' ×'+have+'（+'+total+'G）'); sfx('coin'); renderShop();
+}
+function craftItem(cr){
+  for(const k in cr.cost) if(invCount(k)<cr.cost[k]){ toast('材料不足'); sfx('error'); return; }
+  if(!hasSpace(cr.id)){ toast('背包已满！'); return; }
+  for(const k in cr.cost) takeItem(k,cr.cost[k]);
+  giveItem(cr.id,1);
+  toast('制作了 '+ITEMS[cr.id].name); sfx('pickup'); renderShop();
+}
+
+/* ============================ 交互 ============================ */
+function nearWater(tx,ty){
+  const dirs=[[0,0],[1,0],[-1,0],[0,1],[0,-1]];
+  for(const d of dirs){ const x=tx+d[0], y=ty+d[1]; if(x<0||y<0||x>=MW||y>=MH) continue; if(ground[y*MW+x]===T.WATER) return true; }
+  return false;
+}
+function solid(tx,ty){
+  if(tx<0||ty<0||tx>=MW||ty>=MH) return true;
+  const i=ty*MW+tx;
+  if(ground[i]===T.WATER) return true;
+  const o=obj[i];
+  return o===OB.TREE||o===OB.ROCK||o===OB.HOUSE||o===OB.SHOP||o===OB.FENCE||o===OB.CHEST;
+}
+function canMove(nx,ny){
+  const x0=Math.floor((nx-6)/TS), x1=Math.floor((nx+6-0.01)/TS);
+  const y0=Math.floor((ny-9)/TS), y1=Math.floor((ny-0.01)/TS);
+  for(let ty=y0;ty<=y1;ty++) for(let tx=x0;tx<=x1;tx++) if(solid(tx,ty)) return false;
+  return true;
+}
+function facingTile(){
+  const tx=Math.floor(player.x/TS), ty=Math.floor(player.y/TS);
+  if(player.dir===0) return [tx,ty+1];
+  if(player.dir===1) return [tx-1,ty];
+  if(player.dir===2) return [tx+1,ty];
+  return [tx,ty-1];
+}
+function inRange(tx,ty){
+  const px=Math.floor(player.x/TS), py=Math.floor(player.y/TS);
+  return Math.abs(tx-px)<=2 && Math.abs(ty-py)<=2;
+}
+
+/* --- 左键 --- */
+function leftClick(tx,ty){
+  if(tx<0||ty<0||tx>=MW||ty>=MH) return;
+  const i=ty*MW+tx;
+  if(obj[i]===OB.HOUSE){ sleep(); return; }
+  if(obj[i]===OB.SHOP){ openShop(); return; }
+  if(obj[i]===OB.CHEST){ openChest(i); return; }
+  const st=player.inv[player.sel];
+  if(!st){ toast('这个快捷栏格子是空的'); sfx('error'); return; }
+  const def=ITEMS[st.id];
+  if(def.k==='tool'){ useTool(st.id,tx,ty,i); }
+  else if(def.k==='seed'){ plantSeed(st.id,tx,ty,i); }
+  else if(def.k==='place'){ placeItem(def,tx,ty,i); }
+  else if(def.k==='crop'){ eatCrop(st.id); }
+  else { toast(def.name+' 是材料，去商店出售或制作'); }
+}
+function useTool(tool,tx,ty,i){
+  if(!inRange(tx,ty)){ toast('太远了，走近一点'); sfx('error'); return; }
+  if(tool==='hoe'){
+    if(ground[i]===T.GRASS){
+      if(!costStamina(3)) return;
+      ground[i]=T.TILLED; sfx('hoe'); toast('开垦了一块土地');
+    } else if(ground[i]===T.TILLED){ toast('这里已经是耕地了'); }
+    else if(ground[i]===T.WATER){ toast('水里不能锄地'); }
+    else { toast('石板路上不能锄地'); }
+  }
+  else if(tool==='can'){
+    if(ground[i]===T.WATER){ player.water=CONFIG.CAN_CAP; toast('水壶装满了'); sfx('pickup'); return; }
+    if(cropType[i]||ground[i]===T.TILLED){
+      if(player.water<=0){ toast('水壶空了，去水边右键补水'); sfx('error'); return; }
+      if(!costStamina(1)) return;
+      player.water--; cropWater[i]=1; sfx('water');
+      if(cropType[i]&&!cropDead[i]) toast('浇了水');
+    } else toast('这里不用浇水');
+  }
+  else if(tool==='axe'){
+    if(obj[i]===OB.TREE){
+      if(!costStamina(4)) return;
+      objHp[i]--; sfx('chop');
+      if(objHp[i]<=0){ obj[i]=OB.NONE; giveItem('wood',1); toast('获得 木材 ×1'); sfx('pickup'); }
+      else toast('咔嚓！还差 '+(3-objHp[i])+' 下');
+    } else toast('这里没有树');
+  }
+  else if(tool==='pick'){
+    if(obj[i]===OB.ROCK){
+      if(!costStamina(4)) return;
+      objHp[i]--; sfx('mine');
+      if(objHp[i]<=0){ obj[i]=OB.NONE; giveItem('stone',1); toast('获得 石材 ×1'); sfx('pickup'); }
+      else toast('叮！还差 '+(3-objHp[i])+' 下');
+    } else toast('这里没有石头');
+  }
+  else if(tool==='sickle'){
+    if(cropType[i]){
+      if(cropDead[i]){ toast('作物已经枯萎了'); return; }
+      harvest(i);
+    } else if(obj[i]===OB.BUSH){
+      if(!costStamina(1)) return;
+      obj[i]=OB.NONE; giveItem('fiber',1); sfx('harvest'); toast('割到 纤维 ×1');
+    } else if(obj[i]===OB.FLOWER){ obj[i]=OB.NONE; sfx('harvest'); }
+    else toast('这里没什么可割');
+  }
+}
+function plantSeed(id,tx,ty,i){
+  if(!inRange(tx,ty)){ toast('太远了'); sfx('error'); return; }
+  if(ground[i]!==T.TILLED){ toast('要先用锄头开垦'); sfx('error'); return; }
+  if(cropType[i]){ toast('这里已经种了东西'); sfx('error'); return; }
+  const s=seasonIdx();
+  if(s===3){ toast('冬季土地无法种植'); sfx('error'); return; }
+  const c=CROPS[ITEMS[id].crop];
+  if(c.season!==s){ toast(c.name+'只能在'+SEASONS[c.season]+'季种植'); sfx('error'); return; }
+  cropType[i]=1+CROP_KEYS.indexOf(ITEMS[id].crop);
+  cropGrowth[i]=0; cropDead[i]=0; cropWater[i]=(state.weather==='rain')?1:0;
+  removeOneSlot(player.sel);
+  toast('播下了 '+c.name+'（'+c.days+' 天成熟，记得每天浇水）'); sfx('pickup');
+}
+function harvest(i){
+  const key=CROP_KEYS[cropType[i]-1];
+  const c=CROPS[key];
+  const need=c.days*10;
+  if(cropGrowth[i]<need){ toast(c.name+'还没成熟（还需 '+(Math.ceil((need-cropGrowth[i])/10))+' 天）'); sfx('error'); return; }
+  if(!hasSpace(key)){ toast('背包已满！'); sfx('error'); return; }
+  if(!costStamina(1)) return;
+  giveItem(key,1); sfx('harvest');
+  if(c.regrow){ cropGrowth[i]=Math.floor(need*0.5); toast('收获 '+c.name+' ×1（还会再结果）'); }
+  else { cropType[i]=0; cropGrowth[i]=0; toast('收获 '+c.name+' ×1'); }
+}
+function placeItem(def,tx,ty,i){
+  if(!inRange(tx,ty)){ toast('太远了'); sfx('error'); return; }
+  if(ground[i]===T.WATER){ toast('水里不能建造'); sfx('error'); return; }
+  if(cropType[i]){ toast('这里有作物'); sfx('error'); return; }
+  if(def.place==='path'){
+    if(ground[i]===T.PATH){ toast('这里已经是石板路了'); return; }
+    if(obj[i]!==OB.NONE&&obj[i]!==OB.BUSH&&obj[i]!==OB.FLOWER){ toast('这里已经有东西了'); sfx('error'); return; }
+    obj[i]=OB.NONE; ground[i]=T.PATH; removeOneSlot(player.sel); toast('铺好了石板路（走得更快）'); sfx('pickup'); return;
+  }
+  if(obj[i]!==OB.NONE&&obj[i]!==OB.BUSH&&obj[i]!==OB.FLOWER){ toast('这里已经有东西了'); sfx('error'); return; }
+  if(def.place==='fence'){ obj[i]=OB.FENCE; }
+  else if(def.place==='chest'){ obj[i]=OB.CHEST; chests[i]=new Array(CONFIG.INV_SLOTS).fill(null); }
+  removeOneSlot(player.sel);
+  toast('放置了 '+def.name); sfx('pickup');
+}
+function eatCrop(id){
+  const def=ITEMS[id]; const v=def.eat||10;
+  if(player.stamina>=CONFIG.STAMINA_MAX){ toast('体力已经满了'); sfx('error'); return; }
+  player.stamina=Math.min(CONFIG.STAMINA_MAX, player.stamina+v);
+  removeOneSlot(player.sel);
+  toast('吃掉 '+def.name+'，体力 +'+v); sfx('pickup');
+}
+/* --- 右键 --- */
+function rightClick(tx,ty){
+  if(tx<0||ty<0||tx>=MW||ty>=MH) return;
+  const i=ty*MW+tx;
+  const st=player.inv[player.sel];
+  if(st && st.id==='can'){
+    if(ground[i]===T.WATER || nearWater(Math.floor(player.x/TS),Math.floor(player.y/TS))){
+      player.water=CONFIG.CAN_CAP; toast('水壶装满了（'+CONFIG.CAN_CAP+'）'); sfx('pickup'); return;
+    }
+  }
+  if(cropType[i]){ cropType[i]=0; cropGrowth[i]=0; cropDead[i]=0; toast('移除了作物'); return; }
+  if(obj[i]===OB.FENCE){ obj[i]=OB.NONE; giveItem('fence',1); toast('拆下了木栅栏'); return; }
+  if(obj[i]===OB.CHEST){
+    if(chests[i]&&chests[i].some(s=>s)){ toast('箱子里还有东西，先清空'); sfx('error'); return; }
+    obj[i]=OB.NONE; delete chests[i]; giveItem('chest',1); toast('收起了木箱'); return;
+  }
+  if(ground[i]===T.PATH){ ground[i]=T.GRASS; giveItem('path',1); toast('拆掉了石板路'); return; }
+  if(ground[i]===T.TILLED){ ground[i]=T.GRASS; toast('取消了耕地'); return; }
+  if(obj[i]===OB.BUSH){ obj[i]=OB.NONE; giveItem('fiber',1); toast('清除了杂草'); return; }
+  if(obj[i]===OB.FLOWER){ obj[i]=OB.NONE; toast('摘掉了野花'); return; }
+  toast('这里没有可以移除的东西');
+}
+
+/* --- 交互：睡觉 / 商店 / 木箱 --- */
+function openShop(){ if(overlayMode==='shop'){ closeOverlay(); return; } openOverlay('shop'); renderPanel(); sfx('click'); }
+function openChest(i){
+  if(!chests[i]) chests[i]=new Array(CONFIG.INV_SLOTS).fill(null);
+  chestCtx={index:i, arr:chests[i]};
+  openOverlay('chest'); renderPanel(); sfx('click');
+}
+function sleep(){
+  if(state.sleeping) return;
+  state.sleeping=true;
+  ui.fade.style.opacity='1';
+  sfx('sleep');
+  setTimeout(()=>{
+    nextDay();
+    toast('第 '+yearNo()+' 年 '+SEASONS[seasonIdx()]+'季 第 '+seasonDay()+' 日 · '+WEATHER[state.weather].name);
+    setTimeout(()=>{ ui.fade.style.opacity='0'; state.sleeping=false; },260);
+  },520);
+}
+function interact(){
+  const [fx,fy]=facingTile();
+  const i=fy*MW+fx;
+  if(obj[i]===OB.HOUSE){ sleep(); return; }
+  if(obj[i]===OB.SHOP){ openShop(); return; }
+  if(obj[i]===OB.CHEST){ openChest(i); return; }
+  const px=Math.floor(player.x/TS), py=Math.floor(player.y/TS);
+  const pi=py*MW+px;
+  if(obj[pi]===OB.HOUSE){ sleep(); return; }
+  if(obj[pi]===OB.SHOP){ openShop(); return; }
+  if(obj[pi]===OB.CHEST){ openChest(pi); return; }
+  toast('前面没有可交互的东西');
+}
+
+/* ============================ 输入 ============================ */
+const keys={};
+const mouse={x:0,y:0,inside:false,has:false};
+document.addEventListener('keydown',e=>{
+  Sound.init();
+  const k=e.key.toLowerCase();
+  if(['tab','arrowup','arrowdown','arrowleft','arrowright',' ','/'].includes(k) && k!=='/') e.preventDefault();
+  if(k==='tab'){ e.preventDefault(); openInventory(); return; }
+  if(k==='i'){ e.preventDefault(); openInventory(); return; }
+  if(k==='escape'){ if(overlayMode) closeOverlay(); else { openOverlay('pause'); renderPanel(); } return; }
+  if(k==='e'){ if(!overlayMode) interact(); return; }
+  if(k==='m'){ Sound.muted=!Sound.muted; state.muted=Sound.muted; toast(Sound.muted?'已静音':'已开启声音'); return; }
+  if(k==='k'){ saveGame(false); return; }
+  if(k==='l'){ if(loadGame()){ refreshHotbar(); toast('已读取存档'); } else toast('没有存档'); return; }
+  if(k>='1'&&k<='8'){ player.sel=parseInt(k,10)-1; refreshHotbar(); sfx('click'); return; }
+  keys[k]=true;
+  if(k===' ') keys['shift']=true;
+});
+document.addEventListener('keyup',e=>{ const k=e.key.toLowerCase(); keys[k]=false; if(k===' ') keys['shift']=false; });
+window.addEventListener('blur',()=>{ for(const k in keys) keys[k]=false; });
+
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+canvas.width=CONFIG.VIEW_W; canvas.height=CONFIG.VIEW_H;
+
+function toLogical(e){
+  const r=canvas.getBoundingClientRect();
+  return {x:(e.clientX-r.left)*(CONFIG.VIEW_W/r.width), y:(e.clientY-r.top)*(CONFIG.VIEW_H/r.height)};
+}
+canvas.addEventListener('mousemove',e=>{ const p=toLogical(e); mouse.x=p.x; mouse.y=p.y; mouse.inside=true; mouse.has=true; });
+canvas.addEventListener('mouseleave',()=>{ mouse.inside=false; });
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('mousedown',e=>{
+  Sound.init();
+  if(overlayOpen()) return;
+  const p=toLogical(e);
+  const wx=cam.x+p.x, wy=cam.y+p.y;
+  const tx=Math.floor(wx/TS), ty=Math.floor(wy/TS);
+  if(e.button===0){ leftClick(tx,ty); }
+  else if(e.button===2){ rightClick(tx,ty); }
+});
+document.addEventListener('mousemove',e=>{ if(held) moveHeld(e.clientX,e.clientY); });
+
+function resize(){
+  const s=Math.max(1, Math.floor(Math.min(window.innerWidth/CONFIG.VIEW_W, window.innerHeight/CONFIG.VIEW_H)));
+  canvas.style.width=(CONFIG.VIEW_W*s)+'px';
+  canvas.style.height=(CONFIG.VIEW_H*s)+'px';
+}
+window.addEventListener('resize',resize); resize();
+
+/* ============================ 绘制 ============================ */
+// 草地花纹预生成（16 种）
+const grassPat=[];
+for(let v=0;v<16;v++){
+  const arr=[];
+  for(let k=0;k<4;k++){
+    const rx=hash2(v,k*3)*26|0, ry=hash2(v*5,k*7+2)*26|0;
+    arr.push([rx,ry,2,2, hash2(v+k,k)>0.5?'#5d9c42':'#82c05a']);
+  }
+  grassPat.push(arr);
+}
+function drawTile(g,tx,ty){
+  const i=ty*MW+tx, x=tx*TS-cam.x, y=ty*TS-cam.y, gt=ground[i];
+  if(gt===T.GRASS){
+    g.fillStyle='#6fb04c'; g.fillRect(x,y,TS,TS);
+    const pat=grassPat[(tx*7+ty*13)&15];
+    for(const p of pat){ g.fillStyle=p[4]; g.fillRect(x+p[0],y+p[1],p[2],p[3]); }
+  } else if(gt===T.TILLED){
+    g.fillStyle='#7d4d2b'; g.fillRect(x,y,TS,TS);
+    g.fillStyle='#6a4023';
+    for(let k=0;k<4;k++) g.fillRect(x+1,y+4+k*8,TS-2,4);
+    g.fillStyle='#8a5a33'; g.fillRect(x+1,y+1,TS-2,2);
+  } else if(gt===T.WATER){
+    g.fillStyle='#3f7fc4'; g.fillRect(x,y,TS,TS);
+    g.fillStyle='#4f95da';
+    const ph=((Math.floor(state.time/8)+tx*3+ty*5)%4);
+    g.fillRect(x+3+ph*4,y+8,8,2); g.fillRect(x+18-ph*3,y+20,7,2);
+  } else if(gt===T.PATH){
+    g.fillStyle='#a49a8c'; g.fillRect(x,y,TS,TS);
+    g.fillStyle='#b8ae9f'; g.fillRect(x+1,y+2,13,12); g.fillRect(x+17,y+16,13,12);
+    g.fillStyle='#8d8478'; g.fillRect(x+4,y+18,12,10); g.fillRect(x+19,y+3,11,10);
+  }
+}
+function drawTree(g,x,y,v){
+  g.fillStyle='#5b3a1d'; g.fillRect(x+12,y+18,9,14);
+  g.fillStyle='#6d4522'; g.fillRect(x+13,y+19,4,13);
+  g.fillStyle='#256b2a'; g.fillRect(x+6,y+8,21,14); g.fillRect(x+9,y+4,15,20);
+  g.fillStyle='#2f8234'; g.fillRect(x+8,y+7,17,13);
+  g.fillStyle='#3d9a3f'; g.fillRect(x+10,y+5,11,9);
+  g.fillStyle='#54b34f'; g.fillRect(x+11,y+4,5,4);
+  if(v===1){ g.fillStyle='#2f8234'; g.fillRect(x+4,y+12,5,5); }
+  if(v===2){ g.fillStyle='#54b34f'; g.fillRect(x+21,y+10,4,4); }
+}
+function drawRock(g,x,y,v){
+  g.fillStyle='#7f868e'; g.fillRect(x+7,y+14,18,13);
+  g.fillStyle='#9aa1a9'; g.fillRect(x+9,y+11,13,9);
+  g.fillStyle='#b6bcc2'; g.fillRect(x+11,y+10,7,4);
+  g.fillStyle='#63696f'; g.fillRect(x+7,y+22,18,4);
+  if(v===1){ g.fillStyle='#b6bcc2'; g.fillRect(x+19,y+18,4,3); }
+}
+function drawBush(g,x,y){
+  g.fillStyle='#3f8f3a'; g.fillRect(x+8,y+16,3,10); g.fillRect(x+15,y+13,3,13); g.fillRect(x+21,y+17,3,9);
+  g.fillStyle='#59b04f'; g.fillRect(x+6,y+20,4,6); g.fillRect(x+13,y+17,4,8); g.fillRect(x+19,y+21,4,5);
+}
+function drawFlower(g,x,y,v){
+  const cols=['#ffe066','#ff9ec7','#b39dff','#fff'];
+  g.fillStyle='#3f8f3a'; g.fillRect(x+15,y+19,2,9);
+  g.fillStyle=cols[v%cols.length];
+  g.fillRect(x+13,y+16,6,4); g.fillRect(x+15,y+14,2,8);
+  g.fillStyle='#fff8d0'; g.fillRect(x+15,y+16,2,3);
+}
+function drawFence(g,x,y){
+  g.fillStyle='#a97a3f'; g.fillRect(x+6,y+12,4,16); g.fillRect(x+22,y+12,4,16);
+  g.fillStyle='#8a5a2b'; g.fillRect(x+4,y+17,24,3); g.fillRect(x+4,y+24,24,3);
+}
+function drawChestObj(g,x,y){
+  g.fillStyle='#7d5426'; g.fillRect(x+6,y+14,20,14);
+  g.fillStyle='#a97a3f'; g.fillRect(x+6,y+10,20,8);
+  g.fillStyle='#e2c14a'; g.fillRect(x+14,y+17,4,5);
+  g.fillStyle='#5b3a1d'; g.fillRect(x+6,y+18,20,2);
+}
+function drawCrop(g,tx,ty){
+  const i=ty*MW+tx;
+  const key=CROP_KEYS[cropType[i]-1]; const c=CROPS[key];
+  const x=tx*TS-cam.x+16, y=ty*TS-cam.y+26;
+  const dead=cropDead[i];
+  const need=c.days*10, gv=cropGrowth[i];
+  let stage = gv>=need?3 : gv>=need*0.5?2 : gv>=need*0.25?1:0;
+  if(dead){ g.fillStyle='#8a7a55'; g.fillRect(x-1,y-8,2,9); g.fillRect(x-4,y-6,3,2); g.fillRect(x+2,y-9,3,2); return; }
+  if(stage===0){ g.fillStyle='#5a3a1c'; g.fillRect(x-2,y-3,4,3); g.fillStyle='#c8a05c'; g.fillRect(x-1,y-3,2,2); return; }
+  const lc = dead?'#8a7a55':c.leaf;
+  g.fillStyle=lc; g.fillRect(x-1,y-9,2,10);
+  if(stage>=1){ g.fillStyle=lc; g.fillRect(x-6,y-9,5,3); g.fillRect(x+2,y-11,5,3); }
+  if(stage>=2){ g.fillStyle=lc; g.fillRect(x-9,y-13,7,4); g.fillRect(x+3,y-15,7,4); g.fillRect(x-8,y-4,7,3); g.fillRect(x+2,y-5,7,3); }
+  if(stage>=3){
+    g.fillStyle=c.color;
+    g.fillRect(x-5,y-8,10,9);
+    g.fillStyle='#00000022'; g.fillRect(x-5,y-3,10,2);
+    g.fillStyle=c.leaf; g.fillRect(x-2,y-12,4,3);
+  }
+}
+function drawHouse(g){
+  const x=HOUSE.x*TS-cam.x, y=HOUSE.y*TS-cam.y;
+  g.fillStyle='#8a4a2a'; g.fillRect(x+4,y+18,88,10);
+  g.fillStyle='#a8542f'; g.fillRect(x+8,y+18,80,8);
+  g.fillStyle='#c05a32'; g.fillRect(x+2,y+8,92,12);
+  g.fillStyle='#d9713f'; g.fillRect(x+14,y+9,68,6);
+  g.fillStyle='#8a4a2a'; g.fillRect(x+2,y+19,92,3);
+  // 墙
+  g.fillStyle='#d9b382'; g.fillRect(x+10,y+28,76,32);
+  g.fillStyle='#c39a67'; g.fillRect(x+10,y+28,76,3);
+  for(let k=0;k<4;k++){ g.fillStyle='#c39a67'; g.fillRect(x+10,y+36+k*7,76,1); }
+  // 门
+  g.fillStyle='#7d4a22'; g.fillRect(x+38,y+40,20,20);
+  g.fillStyle='#5b3a1d'; g.fillRect(x+38,y+40,3,20);
+  g.fillStyle='#e2c14a'; g.fillRect(x+53,y+48,3,3);
+  // 窗
+  g.fillStyle='#5b3a1d'; g.fillRect(x+16,y+34,16,14);
+  g.fillStyle='#8fd0f0'; g.fillRect(x+18,y+36,12,10);
+  g.fillStyle='#5b3a1d'; g.fillRect(x+18,y+36,12,1); g.fillRect(x+18,y+46,12,1);
+  g.fillStyle='#5b3a1d'; g.fillRect(x+64,y+34,16,14);
+  g.fillStyle='#8fd0f0'; g.fillRect(x+66,y+36,12,10);
+  // 烟囱
+  g.fillStyle='#7d4a22'; g.fillRect(x+66,y-2,9,12);
+}
+function drawShop(g){
+  const x=SHOPT.x*TS-cam.x, y=SHOPT.y*TS-cam.y;
+  // 摊位支柱
+  g.fillStyle='#7d5426'; g.fillRect(x+4,y+26,6,34); g.fillRect(x+54,y+26,6,34);
+  // 柜台
+  g.fillStyle='#a97a3f'; g.fillRect(x+2,y+38,60,22);
+  g.fillStyle='#8a5a2b'; g.fillRect(x+2,y+38,60,3);
+  g.fillStyle='#6d4522'; g.fillRect(x+2,y+52,60,8);
+  // 货物
+  g.fillStyle='#e04430'; g.fillRect(x+8,y+30,8,8);
+  g.fillStyle='#e08a2a'; g.fillRect(x+18,y+30,8,8);
+  g.fillStyle='#c8a05c'; g.fillRect(x+28,y+30,8,8);
+  g.fillStyle='#8fd06a'; g.fillRect(x+38,y+30,8,8);
+  // 遮阳棚
+  for(let k=0;k<5;k++){
+    g.fillStyle = k%2? '#f0f0f0':'#d94f3d';
+    g.fillRect(x+2+k*12, y+12, 12, 12);
+  }
+  g.fillStyle='#b03a2c'; g.fillRect(x+2,y+22,60,4);
+  // 招牌
+  g.fillStyle='#7d5426'; g.fillRect(x+14,y+2,36,12);
+  g.fillStyle='#e2c14a'; g.fillRect(x+18,y+5,28,3); g.fillRect(x+18,y+10,20,3);
+}
+function drawPlayer(g){
+  const x=Math.round(player.x-cam.x-8), y=Math.round(player.y-cam.y-24);
+  g.fillStyle='rgba(0,0,0,.25)'; g.fillRect(x+3,y+22,11,2);
+  // 腿
+  g.fillStyle='#3a4a5a';
+  if(player.moving&&player.frame===1){ g.fillRect(x+5,y+18,3,6); g.fillRect(x+8,y+16,3,8); }
+  else { g.fillRect(x+4,y+17,3,7); g.fillRect(x+9,y+17,3,7); }
+  // 身体
+  g.fillStyle='#3f7fd0'; g.fillRect(x+3,y+10,10,8);
+  g.fillStyle='#2f63a8'; g.fillRect(x+3,y+16,10,2);
+  // 手臂
+  g.fillStyle='#f2c39a'; g.fillRect(x+1,y+11,2,6); g.fillRect(x+13,y+11,2,6);
+  g.fillStyle='#3f7fd0'; g.fillRect(x+1,y+11,2,3); g.fillRect(x+13,y+11,2,3);
+  // 头
+  g.fillStyle='#f2c39a'; g.fillRect(x+4,y+2,8,7);
+  g.fillStyle='#5a3a22'; g.fillRect(x+3,y+0,10,3);
+  g.fillStyle='#6d4522'; g.fillRect(x+3,y+0,10,1);
+  // 眼睛
+  g.fillStyle='#2b2b2b';
+  if(player.dir===0){ g.fillRect(x+5,y+5,1,2); g.fillRect(x+10,y+5,1,2); }
+  else if(player.dir===1){ g.fillRect(x+4,y+5,1,2); }
+  else if(player.dir===2){ g.fillRect(x+11,y+5,1,2); }
+  else { g.fillStyle='#5a3a22'; g.fillRect(x+3,y+3,10,2); }
+}
+/* --- 天空 / 昼夜 --- */
+// 色彩层（白天为 0，清晨黄昏为暖色，夜晚为深蓝）
+const TINT_KEYS=[
+  {h:0.0, c:[20,26,66],   a:0.58},
+  {h:4.8, c:[22,28,70],   a:0.56},
+  {h:5.6, c:[80,70,125],  a:0.26},
+  {h:6.6, c:[255,185,115],a:0.13},
+  {h:8.0, c:[255,245,210],a:0.03},
+  {h:9.0, c:[255,255,255],a:0.00},
+  {h:16.0,c:[255,255,255],a:0.00},
+  {h:17.4,c:[255,180,110],a:0.13},
+  {h:18.6,c:[255,120,72], a:0.26},
+  {h:19.8,c:[115,72,120], a:0.40},
+  {h:21.0,c:[24,30,74],   a:0.56},
+  {h:24.0,c:[20,26,66],   a:0.58}
+];
+// 夜晚强度（决定视野/暗角）
+const NIGHT_KEYS=[
+  {h:0.0, a:1},{h:5.0, a:1},{h:6.2, a:0},{h:16.0, a:0},{h:19.2, a:1},{h:24.0, a:1}
+];
+function sampleTable(tab,h){
+  let a=tab[0], b=tab[tab.length-1];
+  if(h<=tab[0].h){a=b=tab[0];}
+  else if(h>=tab[tab.length-1].h){a=b=tab[tab.length-1];}
+  else { for(let i=0;i<tab.length-1;i++){ if(h>=tab[i].h&&h<=tab[i+1].h){ a=tab[i]; b=tab[i+1]; break; } } }
+  const t=(b.h===a.h)?0:(h-a.h)/(b.h-a.h);
+  const c = a.c ? [0,1,2].map(i=>Math.round(lerp(a.c[i],b.c[i],t))) : null;
+  return {c:c, a:lerp(a.a,b.a,t)};
+}
+function skyLayer(){
+  const h=(6+state.time/60)%24;
+  const t=sampleTable(TINT_KEYS,h), n=sampleTable(NIGHT_KEYS,h);
+  return {c:t.c, a:t.a, night:n.a};
+}
+let nightCanvas=null;
+function drawNight(g){
+  const s=skyLayer();
+  if(s.a<=0.005 && s.night<=0.02) return;
+  if(!nightCanvas){ nightCanvas=document.createElement('canvas'); nightCanvas.width=CONFIG.VIEW_W; nightCanvas.height=CONFIG.VIEW_H; }
+  const ng=nightCanvas.getContext('2d');
+  ng.clearRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  ng.globalCompositeOperation='source-over';
+  ng.fillStyle='rgba('+s.c[0]+','+s.c[1]+','+s.c[2]+','+s.a.toFixed(3)+')';
+  ng.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  if(s.night>0.02){
+    // 玩家周围的光晕
+    const px=player.x-cam.x, py=player.y-cam.y-12;
+    const rad=62+(1-s.night)*46;
+    ng.globalCompositeOperation='destination-out';
+    const grd=ng.createRadialGradient(px,py,6,px,py,rad);
+    grd.addColorStop(0,'rgba(0,0,0,'+(0.55+0.45*s.night).toFixed(3)+')');
+    grd.addColorStop(0.5,'rgba(0,0,0,'+(0.35+0.35*s.night).toFixed(3)+')');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ng.fillStyle=grd; ng.beginPath(); ng.arc(px,py,rad,0,Math.PI*2); ng.fill();
+    // 暗角
+    ng.globalCompositeOperation='source-over';
+    const vg=ng.createRadialGradient(CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*0.30,CONFIG.VIEW_W/2,CONFIG.VIEW_H/2,CONFIG.VIEW_H*1.02);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(0,0,0,'+(0.52*s.night).toFixed(3)+')');
+    ng.fillStyle=vg; ng.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  }
+  g.drawImage(nightCanvas,0,0);
+}
+function drawHighlight(g){
+  const tx=Math.floor((cam.x+mouse.x)/TS), ty=Math.floor((cam.y+mouse.y)/TS);
+  if(!mouse.has){ return; }
+  if(tx<0||ty<0||tx>=MW||ty>=MH) return;
+  const x=tx*TS-cam.x, y=ty*TS-cam.y;
+  const pulse=0.55+0.25*Math.sin(performance.now()/220);
+  g.strokeStyle='rgba(255,240,160,'+pulse.toFixed(2)+')'; g.lineWidth=2;
+  g.strokeRect(x+1,y+1,TS-2,TS-2);
+  const [fx,fy]=facingTile();
+  if(fx!==tx||fy!==ty){
+    const fx2=fx*TS-cam.x, fy2=fy*TS-cam.y;
+    g.strokeStyle='rgba(255,255,255,.25)'; g.lineWidth=1;
+    g.strokeRect(fx2+1.5,fy2+1.5,TS-3,TS-3);
+  }
+}
+function drawWeatherFX(g){
+  if(state.weather==='rain'){
+    g.fillStyle='rgba(180,205,240,.55)';
+    const t=performance.now()/26;
+    for(let k=0;k<70;k++){
+      const sx=(k*97+((t*7)%400))%CONFIG.VIEW_W;
+      const sy=(k*53+t*13)%CONFIG.VIEW_H;
+      g.fillRect(sx,sy,1,6);
+    }
+    g.fillStyle='rgba(60,90,140,.18)'; g.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  } else if(state.weather==='snow'){
+    g.fillStyle='rgba(255,255,255,.85)';
+    const t=performance.now()/40;
+    for(let k=0;k<55;k++){
+      const sx=(k*89+Math.sin(t+k)*14+CONFIG.VIEW_W)%CONFIG.VIEW_W;
+      const sy=(k*61+t*0.9)%CONFIG.VIEW_H;
+      g.fillRect(sx,sy,2,2);
+    }
+  }
+}
+function render(){
+  const g=ctx;
+  g.imageSmoothingEnabled=false;
+  g.fillStyle='#20301c'; g.fillRect(0,0,CONFIG.VIEW_W,CONFIG.VIEW_H);
+  const x0=Math.max(0,Math.floor(cam.x/TS)), x1=Math.min(MW-1,Math.floor((cam.x+CONFIG.VIEW_W)/TS));
+  const y0=Math.max(0,Math.floor(cam.y/TS)), y1=Math.min(MH-1,Math.floor((cam.y+CONFIG.VIEW_H)/TS));
+  for(let ty=y0;ty<=y1;ty++) for(let tx=x0;tx<=x1;tx++) drawTile(g,tx,ty);
+  for(let ty=y0;ty<=y1;ty++) for(let tx=x0;tx<=x1;tx++){
+    const i=ty*MW+tx;
+    if(cropType[i]) drawCrop(g,tx,ty);
+  }
+  for(let ty=y0;ty<=y1;ty++) for(let tx=x0;tx<=x1;tx++){
+    const i=ty*MW+tx, o=obj[i];
+    if(o===OB.NONE||o===OB.HOUSE||o===OB.SHOP) continue;
+    const x=tx*TS-cam.x, y=ty*TS-cam.y;
+    if(o===OB.TREE) drawTree(g,x,y,(tx*3+ty*5)%3);
+    else if(o===OB.ROCK) drawRock(g,x,y,(tx*7+ty*3)%3);
+    else if(o===OB.BUSH) drawBush(g,x,y);
+    else if(o===OB.FLOWER) drawFlower(g,x,y,(tx+ty)%4);
+    else if(o===OB.FENCE) drawFence(g,x,y);
+    else if(o===OB.CHEST) drawChestObj(g,x,y);
+  }
+  if(HOUSE.x*TS-cam.x+96>0 && HOUSE.x*TS-cam.x<CONFIG.VIEW_W) drawHouse(g);
+  if(SHOPT.x*TS-cam.x+64>0 && SHOPT.x*TS-cam.x<CONFIG.VIEW_W) drawShop(g);
+  drawPlayer(g);
+  drawNight(g);
+  drawWeatherFX(g);
+  drawHighlight(g);
+}
+
+/* ============================ 更新 ============================ */
+function update(dt){
+  if(overlayOpen()||state.sleeping) return;
+  // 时间推进
+  state.time+=dt*(CONFIG.DAY_MINUTES/CONFIG.DAY_SECONDS);
+  if(state.time>=CONFIG.DAY_MINUTES){ state.time=CONFIG.DAY_MINUTES; sleep(); return; }
+  // 移动
+  let dx=0,dy=0;
+  if(keys['w']||keys['arrowup']) dy-=1;
+  if(keys['s']||keys['arrowdown']) dy+=1;
+  if(keys['a']||keys['arrowleft']) dx-=1;
+  if(keys['d']||keys['arrowright']) dx+=1;
+  const moving = (dx!==0||dy!==0);
+  if(moving){
+    if(dy<0) player.dir=3; else if(dy>0) player.dir=0; else if(dx<0) player.dir=1; else if(dx>0) player.dir=2;
+  }
+  const running = moving && (keys['shift']) && player.stamina>0;
+  if(running) player.stamina=Math.max(0, player.stamina-CONFIG.RUN_DRAIN*dt*CONFIG.STAMINA_MULT);
+  let sp = running?CONFIG.RUN_SPEED:CONFIG.WALK_SPEED;
+  if(state.weather==='snow') sp*=CONFIG.SNOW_MULT;
+  const pt=Math.floor(player.y/TS)*MW+Math.floor(player.x/TS);
+  if(ground[pt]===T.PATH) sp*=CONFIG.PATH_MULT;
+  if(moving){
+    const len=Math.hypot(dx,dy)||1;
+    const mx=dx/len*sp*dt, my=dy/len*sp*dt;
+    if(canMove(player.x+mx,player.y)) player.x+=mx; else player.dir = dx<0?1:2;
+    if(canMove(player.x,player.y+my)) player.y+=my; else player.dir = dy<0?3:0;
+    player.moving=true;
+    player.animT+=dt;
+    if(player.animT>0.16){ player.animT=0; player.frame=player.frame?0:1; }
+  } else { player.moving=false; player.animT=0; player.frame=0; }
+  // 摄像机
+  cam.x=clamp(player.x-CONFIG.VIEW_W/2, 0, MW*TS-CONFIG.VIEW_W);
+  cam.y=clamp(player.y-CONFIG.VIEW_H/2, 0, MH*TS-CONFIG.VIEW_H);
+}
+
+/* ============================ 启动 ============================ */
+function newGame(){
+  genMap(20240613);
+  state.day=1; state.time=0; state.gold=CONFIG.START_GOLD;
+  player.x=(CX-3)*TS+TS/2; player.y=(CY-4)*TS+TS/2; player.dir=0;
+  player.stamina=CONFIG.STAMINA_MAX; player.water=CONFIG.CAN_CAP; player.sel=0;
+  player.inv=new Array(CONFIG.INV_SLOTS).fill(null);
+  player.inv[0]={id:'hoe',count:1};
+  player.inv[1]={id:'can',count:1};
+  rollWeather(); rollPrices();
+  cam.x=clamp(player.x-CONFIG.VIEW_W/2,0,MW*TS-CONFIG.VIEW_W);
+  cam.y=clamp(player.y-CONFIG.VIEW_H/2,0,MH*TS-CONFIG.VIEW_H);
+}
+(function boot(){
+  if(!loadGame()){
+    newGame();
+    toast('欢迎来到像素农场！按 H 查看玩法说明');
+  } else {
+    toast('已恢复上次的农场（第 '+yearNo()+' 年 '+SEASONS[seasonIdx()]+'季）');
+  }
+  refreshHotbar(); updateHUD();
+})();
+
+let last=performance.now();
+function loop(ts){
+  const dt=Math.min(0.05,(ts-last)/1000); last=ts;
+  update(dt);
+  render();
+  updateHUD();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+<script>setTimeout(function(){state.time=300; openShop();},60);</script></body>
+</html>

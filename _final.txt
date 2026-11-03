@@ -1,0 +1,63 @@
+PASS | boot: no errors | 
+PASS | boot: day=1 | 1
+PASS | boot: gold | 150
+PASS | boot: hoe+can in inv
+PASS | boot: stamina full | 100
+PASS | boot: water full
+PASS | map: trees | 217
+PASS | map: rocks | 90
+PASS | map: water | 99
+PASS | map: flowers+bush | 64/92
+PASS | map: house tiles | 6
+PASS | map: shop tiles | 4
+PASS | map: path | 14
+PASS | map: central 12x12 tillable | blocked=0
+PASS | farm: found tillable tile
+PASS | hoe: tilled | 1
+PASS | hoe: stamina -3 | 97
+PASS | seed: planted | 1
+PASS | seed: consumed | 2
+PASS | can: watered
+PASS | can: consumed 1 | 19
+PASS | can: stamina -1 | 96
+PASS | growth: +1 day after watering | 10
+PASS | nextDay: day=2
+PASS | nextDay: stamina restored
+PASS | nextDay: watered flag cleared | sunny
+PASS | growth: paused without water | 10
+PASS | harvest: got radish | 1
+PASS | harvest: tile cleared
+PASS | axe: tree felled | 0
+PASS | axe: got wood | 1
+PASS | axe: stamina -12 | 87
+PASS | pick: rock broken | 0
+PASS | pick: got stone | 1
+PASS | shop: buy seed | 5
+PASS | shop: gold deducted | 850
+PASS | shop: sell crop | 955
+PASS | shop: price calc | 35
+PASS | craft: fence | 9
+PASS | place: fence on tilled | 5
+PASS | remove: fence back | 1
+PASS | place: chest | 6
+PASS | chest: storage created
+PASS | rightclick: cancel tilling | 0
+PASS | season: winter reached | day26
+PASS | season: winter weather valid | sunny
+PASS | winter: planting blocked | 0
+PASS | season: crop survives in season
+PASS | season: radish withers in summer | 1
+PASS | season: dead crop not harvestable | no radish gained
+PASS | tomato: harvested | 1
+PASS | tomato: regrows | 30
+PASS | eat: stamina restored | 55
+PASS | range: distant interaction refused | no sleep triggered
+PASS | save: load ok
+PASS | save: gold restored | 777
+PASS | save: day restored | 5
+PASS | save: time restored | 123
+PASS | save: inv restored | 9
+PASS | save: map restored | 1
+PASS | final: no console errors | 
+---ERRORS---
+

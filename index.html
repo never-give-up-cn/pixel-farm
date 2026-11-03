@@ -150,22 +150,47 @@ const CONFIG = {
   /* 暂停（后续背包打开时用；为 true 时时间/天气/角色全部冻结） */
   PAUSE_KEY: 'p',
 
-  /* 工具表：数字键 1~5 切换
+  /* 工具表：数字键 1~9 切换
+   * kind     'tool'=普通工具；'seed'=种子
    * accepts  可作用的地块类型；to  作用后变成的地块；out  产出资源
-   * cost     体力消耗（本轮不做体力，先留 0）；sfx  音效频率（每个工具音高不同） */
+   * cost     体力消耗（本轮不做体力，先留 0）；sfx  音效频率（每个工具音高不同）
+   * crop     kind='seed' 时对应的作物 id */
   TOOLS: [
-    { id:'hoe',    name:'锄头', icon:'🔨', key:'1', accepts:[T.GRASS, T.DIRT],    to:T.TILLED,  out:null,               cost:0, msg:'开垦了一块地',   sfx:196 },
-    { id:'can',    name:'水壶', icon:'💧', key:'2', accepts:[T.TILLED],            to:T.WATERED, out:null,               cost:0, msg:'浇好了水',       sfx:784 },
-    { id:'axe',    name:'斧头', icon:'🪓', key:'3', accepts:[T.TREE],              to:T.GRASS,   out:{res:'wood', n:2},  cost:0, msg:'砍倒了一棵树',   sfx:294 },
-    { id:'pick',   name:'镐',   icon:'⛏️', key:'4', accepts:[T.ROCK],              to:T.DIRT,    out:{res:'stone',n:2},  cost:0, msg:'敲碎了一块岩石', sfx:147 },
-    { id:'sickle', name:'镰刀', icon:'🌾', key:'5', accepts:[T.FLOWER, T.GRASS],   to:T.BARE,    out:null,               cost:0, msg:'清理了地面',     sfx:988 }
+    { id:'hoe',    kind:'tool', name:'锄头', icon:'🔨', key:'1', accepts:[T.GRASS, T.DIRT],    to:T.TILLED,  out:null,               cost:0, msg:'开垦了一块地',   sfx:196 },
+    { id:'can',    kind:'tool', name:'水壶', icon:'💧', key:'2', accepts:[T.TILLED, T.WATERED], to:T.WATERED, out:null,             cost:0, msg:'浇好了水',       sfx:784 },
+    { id:'axe',    kind:'tool', name:'斧头', icon:'🪓', key:'3', accepts:[T.TREE],              to:T.GRASS,   out:{res:'wood', n:2},  cost:0, msg:'砍倒了一棵树',   sfx:294 },
+    { id:'pick',   kind:'tool', name:'镐',   icon:'⛏️', key:'4', accepts:[T.ROCK],              to:T.DIRT,    out:{res:'stone',n:2},  cost:0, msg:'敲碎了一块岩石', sfx:147 },
+    { id:'sickle', kind:'tool', name:'镰刀', icon:'🌾', key:'5', accepts:[T.FLOWER, T.GRASS],   to:T.BARE,    out:null,               cost:0, msg:'清理了地面',     sfx:988 },
+    { id:'seed_radish',  kind:'seed', crop:'radish',  name:'萝卜种子', icon:'🥕', key:'6', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了萝卜', sfx:523 },
+    { id:'seed_potato',  kind:'seed', crop:'potato',  name:'土豆种子', icon:'🥔', key:'7', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了土豆', sfx:494 },
+    { id:'seed_tomato',  kind:'seed', crop:'tomato',  name:'番茄种子', icon:'🍅', key:'8', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了番茄', sfx:587 },
+    { id:'seed_pumpkin', kind:'seed', crop:'pumpkin', name:'南瓜种子', icon:'🎃', key:'9', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了南瓜', sfx:392 }
   ],
+
+  /* 作物表：每季一种；days=需要浇水的生长天数；regrow=收获后再次成熟需要的天数（0=不再结果）
+   * seedCost/sell 本轮只用不上（还没有商店/背包），先把数据备好 */
+  CROPS: [
+    { id:'radish',  name:'萝卜', icon:'🥕', season:'春', days:3, seedCost:10, sell:35,  regrow:0, ripe:'#e0556b', unripe:'#d8b0a8', leaf:'#4aa03c' },
+    { id:'potato',  name:'土豆', icon:'🥔', season:'春', days:5, seedCost:20, sell:60,  regrow:0, ripe:'#b98a4b', unripe:'#c9b58c', leaf:'#3f9440' },
+    { id:'tomato',  name:'番茄', icon:'🍅', season:'夏', days:6, seedCost:30, sell:45,  regrow:2, ripe:'#e03a24', unripe:'#c9d17a', leaf:'#2f8f34' },
+    { id:'pumpkin', name:'南瓜', icon:'🎃', season:'秋', days:8, seedCost:40, sell:120, regrow:0, ripe:'#e07a1f', unripe:'#b8bf72', leaf:'#3a8c32' }
+  ],
+
+  /* 作物视觉：4 个阶段的株高（像素）与叶片大小 */
+  CROP_ART: {
+    STAGE_H:  [5, 10, 15, 20],      /* 阶段 0~3 的株高 */
+    LEAF_W:  [3, 6, 9, 12],         /* 叶片宽度 */
+    DEAD_COLOR:'#9c8340', DEAD_LEAF:'#a8913f', DEAD_STEM:'#7a6234'
+  },
+
+  /* 水壶：容量有限，站在水边右键补满 */
+  WATER_CAN: { CAPACITY:20, REFILL_RANGE:1.8 },
 
   /* 临时资源计数（只计数，本轮不做背包；第 7 轮替换为背包系统） */
   RESOURCES: {
-    ORDER: ['wood','stone'],
-    NAME:  { wood:'木材', stone:'石材' },
-    ICON:  { wood:'🌲', stone:'⛰️' }   /* 用旧版 emoji，Win10 的 Segoe UI Emoji 也能显示 */
+    ORDER: ['wood','stone','radish','potato','tomato','pumpkin'],
+    NAME:  { wood:'木材', stone:'石材', radish:'萝卜', potato:'土豆', tomato:'番茄', pumpkin:'南瓜' },
+    ICON:  { wood:'🌲', stone:'⛰️', radish:'🥕', potato:'🥔', tomato:'🍅', pumpkin:'🎃' }
   },
 
   /* 工具交互 */
@@ -246,6 +271,10 @@ const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','�
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
 let map = new Uint8Array(MAP_W * MAP_H);
+/* 作物层：每格最多一株作物；null = 空地
+ * 记录字段：type 作物 id / stage 视觉阶段 0~3 / grown 累计生长天数（浇过水的天数）
+ *           watered 当天是否浇过水 / mature 是否成熟 / dead 是否枯萎 */
+let crops = new Array(MAP_W * MAP_H).fill(null);
 
 /* 中央空地 + 建筑位置（全部由 CONFIG 推导） */
 const FARM = {
@@ -296,6 +325,7 @@ function fbm(x,y,seed){
 function genMap(seed){
   const rnd = mulberry32(seed);
   map.fill(T.GRASS);
+  crops.fill(null);
 
   /* 1) 外围一圈水：天然边界 */
   for(let x=0;x<MAP_W;x++){ map[x] = T.WATER; map[(MAP_H-1)*MAP_W+x] = T.WATER; }
@@ -516,6 +546,81 @@ function drawSeasonOverlay(g,x0,y0,x1,y1){
   g.fillStyle = st.c;
   g.fillRect(x0*TILE - cam.x, y0*TILE - cam.y, (x1-x0+1)*TILE, (y1-y0+1)*TILE);
   g.globalAlpha = 1;
+}
+
+/* --- 作物层：4 个视觉阶段（株高/叶片递增）+ 结果期果实 + 枯萎形态 --- */
+function mixHex(a,b,t){
+  const A = hexToRgb(a), B = hexToRgb(b);
+  const c = [0,1,2].map(i => Math.round(A[i] + (B[i]-A[i]) * t));
+  return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+}
+function drawCrop(g,x,y,crop){
+  const A = CONFIG.CROP_ART, def = cropDef(crop.type);
+  const baseY = y + TILE - 7;                       /* 地表基线 */
+  const cx = x + TILE/2;
+  if(crop.dead){                                   /* 枯萎：褐茎 + 下垂黄叶 */
+    g.fillStyle = A.DEAD_STEM; g.fillRect(cx-1, baseY-6, 3, 6);
+    g.fillStyle = A.DEAD_LEAF;
+    g.fillRect(cx-6, baseY-5, 6, 3);
+    g.fillRect(cx+1, baseY-2, 5, 3);
+    g.fillStyle = '#6b5730'; g.fillRect(cx-3, baseY-1, 6, 2);
+    return;
+  }
+  const stage = crop.stage;
+  const h = A.STAGE_H[stage], lw = A.LEAF_W[stage];
+  g.fillStyle = def.leaf;                          /* 茎 */
+  g.fillRect(cx-1, baseY-h, 3, h);
+  g.fillStyle = def.leaf;                          /* 叶 */
+  g.fillRect(cx-lw, baseY-h+1, lw, 3);
+  g.fillRect(cx+1, baseY-h+Math.max(2, h>>1), lw, 3);
+  if(stage >= 2){                                  /* 嫩叶高光 */
+    g.fillStyle = mixHex(def.leaf, '#d8e86a', 0.35);
+    g.fillRect(cx-lw+1, baseY-h+2, Math.max(1, lw-2), 2);
+  }
+  if(stage >= 3){                                  /* 结果期：果实 */
+    const ripe = ripeness(crop);
+    const col = mixHex(def.unripe, def.ripe, ripe);
+    if(crop.type === 'radish'){                    /* 根菜：露出土面的红萝卜 */
+      const r = 3 + Math.round(3*ripe);
+      g.fillStyle = col; g.fillRect(cx-r, baseY-r+1, r*2, r+2);
+      g.fillStyle = mixHex(col, '#ffffff', 0.35);
+      g.fillRect(cx-r+1, baseY-r+2, 2, 2);
+    }else if(crop.type === 'potato'){              /* 土豆：土里的褐色块 */
+      const r = 4 + Math.round(2*ripe);
+      g.fillStyle = col; g.fillRect(cx-r, baseY-r, r*2, r+1);
+      g.fillStyle = mixHex(col, '#000000', 0.25);
+      g.fillRect(cx-r+2, baseY-1, 3, 2);
+    }else if(crop.type === 'tomato'){              /* 番茄：挂在茎上的红果 */
+      const r = 3 + Math.round(3*ripe);
+      const fx = cx + (ripe > 0.5 ? 5 : -5), fy = baseY - h + 6;
+      g.fillStyle = col;
+      g.beginPath(); g.arc(fx, fy, r, 0, Math.PI*2); g.fill();
+      g.fillStyle = mixHex(col, '#ffffff', 0.4);
+      g.fillRect(fx-1, fy-r+1, 2, 2);
+    }else{                                          /* 南瓜：地上的大果子 */
+      const r = 5 + Math.round(4*ripe);
+      g.fillStyle = col;
+      g.beginPath(); g.arc(cx, baseY-r+2, r, 0, Math.PI*2); g.fill();
+      g.fillStyle = mixHex(col, '#000000', 0.22);
+      g.fillRect(cx-1, baseY-r, 3, 4);
+      g.fillStyle = mixHex(col, '#ffffff', 0.3);
+      g.fillRect(cx-r+2, baseY-r+1, 3, 2);
+    }
+  }
+  if(crop.mature){                                 /* 成熟：果实旁闪一下金光 */
+    const bob = ((animTime*10)|0) % 6;
+    g.fillStyle = 'rgba(255,215,106,' + (0.9 - bob*0.12).toFixed(2) + ')';
+    g.fillRect(cx + 7, baseY - h - 5 + bob, 2, 2);
+  }
+}
+function drawCrops(g,x0,y0,x1,y1){
+  for(let ty=y0;ty<=y1;ty++){
+    for(let tx=x0;tx<=x1;tx++){
+      const c = crops[ty*MAP_W+tx];
+      if(!c) continue;
+      drawCrop(g, tx*TILE - cam.x, ty*TILE - cam.y, c);
+    }
+  }
 }
 
 /* 建筑层：整栋绘制（跨 3×2 / 2×2 格） */
@@ -766,6 +871,121 @@ function tileCenterDist(tx,ty){
   const dx = (tx+0.5)*TILE - player.x, dy = (ty+0.5)*TILE - player.y;
   return Math.hypot(dx, dy) / TILE;               /* 单位：格 */
 }
+
+/* --- 作物系统：播种 → 浇水 → 生长 → 收获 --- */
+let canWater = CONFIG.WATER_CAN.CAPACITY;          /* 水壶剩余容量 */
+function cropDef(type){ return CONFIG.CROPS.find(c => c.id === type); }
+function cropAt(tx,ty){ return crops[ty*MAP_W+tx]; }
+/* 视觉阶段 = 已生长的天数（封顶 3），每次浇水+1 */
+function cropStage(c){ return Math.min(3, c.grown); }
+/* 成熟度 0~1：长周期作物在结果期逐渐变红 */
+function ripeness(c){
+  const def = cropDef(c.type);
+  if(c.mature) return 1;
+  const start = Math.max(0, def.days - 3);
+  return clamp((c.grown - start) / Math.max(1, def.days - start), 0, 1);
+}
+function sowCrop(tx,ty,type){
+  const def = cropDef(type);
+  const season = seasonName();
+  if(season === '冬'){ toast('土地休眠了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(def.season !== season){ toast(def.name + '只能在' + def.season + '季种'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  const i = ty*MAP_W+tx;
+  if(map[i] !== T.TILLED){ toast('先用锄头把这块地开垦了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  crops[i] = {type:type, stage:0, grown:0, watered:false, mature:false, dead:false};
+  toast('播下了' + def.name);
+  playSfx(def.sfx || 523, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function waterTile(tx,ty){
+  const i = ty*MAP_W+tx;
+  if(canWater <= 0){ toast('水壶空了，去水边右键补水'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(map[i] === T.WATERED){ toast('今天已经浇过水了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(map[i] !== T.TILLED){ toast('这里不能浇水'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  canWater--;
+  map[i] = T.WATERED;                       /* 视觉变深色 */
+  const c = crops[i];
+  if(c) c.watered = true;
+  toast('浇好了水（壶里还剩 ' + canWater + '）');
+  playSfx(784, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function harvestCrop(tx,ty){
+  const i = ty*MAP_W+tx;
+  const c = crops[i];
+  const def = cropDef(c.type);
+  addResource(c.type, 1);
+  if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
+    c.grown = def.days - def.regrow;
+    c.stage = 3; c.mature = false; c.watered = false;
+    toast('收获 ' + def.name + ' ×1（还能再结）');
+  }else{
+    crops[i] = null;
+    if(map[i] === T.WATERED) map[i] = T.TILLED;   /* 收获后地块变回耕地 */
+    toast('收获 ' + def.name + ' ×1');
+  }
+  playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function clearDeadCrop(tx,ty){
+  const i = ty*MAP_W+tx;
+  const def = cropDef(crops[i].type);
+  crops[i] = null;
+  if(map[i] === T.WATERED) map[i] = T.TILLED;
+  toast('清理了枯萎的' + def.name);
+  playSfx(988, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 附近有没有水（站在水边右键补水） */
+function findWaterNear(){
+  const px = Math.floor(player.x/TILE), py = Math.floor(player.y/TILE);
+  const R = Math.ceil(CONFIG.WATER_CAN.REFILL_RANGE);
+  for(let ty=py-R; ty<=py+R; ty++) for(let tx=px-R; tx<=px+R; tx++){
+    if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) continue;
+    if(map[ty*MAP_W+tx] !== T.WATER) continue;
+    if(tileCenterDist(tx,ty) <= CONFIG.WATER_CAN.REFILL_RANGE) return {tx:tx, ty:ty};
+  }
+  return null;
+}
+function refillCan(){
+  if(canWater >= CONFIG.WATER_CAN.CAPACITY){ toast('水壶是满的'); return false; }
+  if(!findWaterNear()){ toast('附近没有水源'); playSfx(140,'sawtooth',0.09,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  canWater = CONFIG.WATER_CAN.CAPACITY;
+  toast('水壶补满了（' + canWater + '）');
+  playSfx(880, 'sine', 0.12, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 每天 6:00 结算：浇过水才生长；换季时非当季作物枯萎；浇水状态重置 */
+function settleDay(){
+  const newSeason = seasonName();          /* 此刻 clock.day 已经是新的一天 */
+  let grew = 0, matured = 0, withered = 0, wateredTiles = 0;
+  for(let i=0;i<crops.length;i++){
+    const c = crops[i];
+    if(!c || c.dead) continue;
+    const def = cropDef(c.type);
+    if(def.season !== newSeason){          /* 换季 → 非当季作物枯萎 */
+      c.dead = true; c.stage = 0; withered++;
+      continue;
+    }
+    if(map[i] === T.WATERED){              /* 当天浇过水 → 生长一天 */
+      c.grown++;
+      if(c.grown >= def.days) c.mature = true;
+      grew++;
+    }
+    c.stage = cropStage(c);
+    if(c.mature) matured++;
+  }
+  for(let i=0;i<map.length;i++){           /* 浇水状态每天重置 */
+    if(map[i] === T.WATERED){ map[i] = T.TILLED; wateredTiles++; }
+  }
+  for(let i=0;i<crops.length;i++){ if(crops[i]) crops[i].watered = false; }
+  if(withered) toast('换季了，' + withered + ' 株作物枯萎了');
+  if(matured)  toast('有 ' + matured + ' 株作物成熟了');
+  console.log('[settle] 第 ' + clock.day + ' 天结算：生长 ' + grew + ' 株，成熟 ' + matured +
+              ' 株，枯萎 ' + withered + ' 株，重置浇水 ' + wateredTiles + ' 格');
+  return {grew:grew, matured:matured, withered:withered};
+}
+
 function useTool(tx,ty){
   const tool = CONFIG.TOOLS[player.tool];
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
@@ -775,6 +995,32 @@ function useTool(tx,ty){
     return false;
   }
   const i = ty*MAP_W + tx, t = map[i];
+  const crop = crops[i];
+
+  /* 1. 地里有作物 */
+  if(crop){
+    if(tool.id === 'can') return waterTile(tx,ty);           /* 照常浇水 */
+    if(crop.dead){
+      if(tool.id === 'sickle') return clearDeadCrop(tx,ty);
+      toast('作物已经枯萎了，用镰刀清理');
+      playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+      return false;
+    }
+    if(crop.mature) return harvestCrop(tx,ty);                /* 成熟即可收获 */
+    if(tool.kind === 'seed'){ toast('这里已经种了东西'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+    if(tool.id === 'sickle'){ toast('还没长好，再等几天'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+    toast('这块地里还有没熟的作物');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+
+  /* 2. 种子：只能种在耕地上 */
+  if(tool.kind === 'seed') return sowCrop(tx,ty,tool.crop);
+
+  /* 3. 水壶 */
+  if(tool.id === 'can') return waterTile(tx,ty);
+
+  /* 4. 普通工具：按地块类型处理 */
   if(tool.accepts.indexOf(t) < 0){
     toast(tool.name + '不能用在' + TILE_NAMES[t] + '上');
     playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
@@ -810,6 +1056,7 @@ function updateClock(dt){
     clock.hold -= dt;
     if(clock.hold <= 0){
       clock.hold = 0; clock.day++; clock.min = 0;
+      settleDay();                            /* 每天 6:00 结算：生长 / 枯萎 / 浇水重置 */
       rollWeather();
       console.log('[time] 第 ' + clock.day + ' 天 ' + clockHM().s + ' · ' + seasonName() + ' · ' + weather.name);
     }
@@ -951,7 +1198,7 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
-  /* 数字键 1~5 切换工具 */
+  /* 数字键 1~9 切换工具（1~5 工具，6~9 种子） */
   if(k >= '1' && k <= String(CONFIG.TOOLS.length)){
     player.tool = Number(k) - 1;
     ensureAudio();                 /* 键盘也算一次用户交互，解锁音频 */
@@ -976,8 +1223,9 @@ canvas.addEventListener('mousemove', e=>{
   hover.ty = Math.floor((cam.y + p.y) / TILE);
 });
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
-/* 左键 = 使用当前工具（这次点击同时作为音频解锁的用户交互） */
+/* 左键 = 使用当前工具（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
+  if(e.button === 2){ ensureAudio(); refillCan(); return; }
   if(e.button !== 0) return;
   ensureAudio();
   const p = toLogical(e);
@@ -1083,12 +1331,14 @@ function drawUI(g){
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
 
-  /* 右下角：当前工具（图标 + 名称 + 快捷键） */
+  /* 右下角：当前工具（图标 + 名称 + 快捷键 + 水壶余量） */
   const tool = CONFIG.TOOLS[player.tool];
+  const waterTxt = (tool.id === 'can') ? '💧' + canWater + '/' + CONFIG.WATER_CAN.CAPACITY : '';
   g.font = '20px ' + FONT_EMOJI; const iw = g.measureText(tool.icon).width;
   g.font = '14px ' + FONT_CJK;   const nw = g.measureText(tool.name).width;
   g.font = '12px ' + FONT_CJK;   const kw = g.measureText('(' + tool.key + ')').width;
-  const tbW = Math.ceil(iw + nw + kw + 30), tbH = 32;
+  g.font = '12px ' + FONT_EMOJI; const ww = waterTxt ? g.measureText(waterTxt).width : 0;
+  const tbW = Math.ceil(iw + nw + kw + ww + 34), tbH = 32;
   const tbX = VIEW_W - tbW - 10, tbY = VIEW_H - tbH - 10;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(tbX, tbY, tbW, tbH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
@@ -1101,27 +1351,70 @@ function drawUI(g){
   g.fillText(tool.name, tbX + 8 + iw + 4, tbY + 9);
   g.font = '12px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillText('(' + tool.key + ')', tbX + 8 + iw + 4 + nw + 3, tbY + 10);
+  if(waterTxt){
+    g.font = '12px ' + FONT_EMOJI;
+    g.fillStyle = canWater > 0 ? CONFIG.COLORS.hudText : '#ff8a7a';
+    g.fillText(waterTxt, tbX + 8 + iw + 4 + nw + 3 + kw + 4, tbY + 10);
+  }
+
+  /* 左下角：种子栏（6~9），当前选中的高亮 */
+  const seeds = CONFIG.TOOLS.filter(t => t.kind === 'seed');
+  g.font = '18px ' + FONT_EMOJI;
+  let sw = 0;
+  for(const s of seeds) sw += g.measureText(s.icon).width + 26;
+  const sbW = Math.ceil(sw) + 12, sbH = 30, sbX = 10, sbY = VIEW_H - sbH - 10;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(sbX, sbY, sbW, sbH);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(sbX, sbY, sbW, 1); g.fillRect(sbX, sbY+sbH-1, sbW, 1);
+  g.fillRect(sbX, sbY, 1, sbH); g.fillRect(sbX+sbW-1, sbY, 1, sbH);
+  let sx = sbX + 6;
+  for(const s of seeds){
+    const on = (CONFIG.TOOLS[player.tool] === s);
+    g.font = '18px ' + FONT_EMOJI;
+    const iw2 = g.measureText(s.icon).width;
+    if(on){
+      g.fillStyle = 'rgba(255,215,106,0.20)';
+      g.fillRect(sx-3, sbY+3, iw2+16, sbH-6);
+    }
+    g.fillStyle = on ? CONFIG.COLORS.hudAccent : CONFIG.COLORS.hudText;
+    g.fillText(s.icon, sx, sbY + 6);
+    g.font = '11px ' + FONT_CJK;
+    g.fillStyle = on ? CONFIG.COLORS.hudAccent : CONFIG.COLORS.hudBorder;
+    g.fillText(s.key, sx + iw2 + 2, sbY + 9);
+    sx += iw2 + 26;
+  }
 }
 const statsEl = document.getElementById('stats');
 function updateStats(){
-  const t = (hover.tx>=0 && hover.ty>=0 && hover.tx<MAP_W && hover.ty<MAP_H)
-            ? TILE_NAMES[map[hover.ty*MAP_W+hover.tx]] : '-';
+  const inMap = (hover.tx>=0 && hover.ty>=0 && hover.tx<MAP_W && hover.ty<MAP_H);
+  const t = inMap ? TILE_NAMES[map[hover.ty*MAP_W+hover.tx]] : '-';
+  const hc = inMap ? crops[hover.ty*MAP_W+hover.tx] : null;
+  let cropInfo = '';
+  if(hc){
+    const d = cropDef(hc.type);
+    cropInfo = '　' + d.icon + d.name + ' 阶段' + hc.stage + ' 生长' + hc.grown + '/' + d.days +
+               (hc.dead ? ' <b>已枯萎</b>' : (hc.mature ? ' <b>已成熟</b>' : ''));
+  }
   const spd = Math.round(Math.hypot(player.vx, player.vy));
   statsEl.innerHTML =
     '玩家 <b>' + player.x.toFixed(1) + ', ' + player.y.toFixed(1) + '</b>  格 ' +
     Math.floor(player.x/TILE) + ',' + Math.floor(player.y/TILE) + '\n' +
     '朝向 <b>' + DIR_NAMES[player.dir] + '</b>　速度 <b>' + spd + '</b> px/s　帧 ' + player.frame + '\n' +
-    '光标 <b>' + hover.tx + ',' + hover.ty + '</b> ' + t + '\n' +
+    '光标 <b>' + hover.tx + ',' + hover.ty + '</b> ' + t + cropInfo + '\n' +
     '绘制瓦片 <b>' + visibleCount + '</b> / ' + (MAP_W*MAP_H) +
     ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)\n' +
     '工具 ' + CONFIG.TOOLS.map((t,i)=>
         (i===player.tool ? '<b>[' + t.key + ']' + t.icon + t.name + '</b>'
                          : ' ' + t.key + ' ' + t.icon + t.name)).join('　') + '\n' +
+    '水壶 <b>' + canWater + '</b>/' + CONFIG.WATER_CAN.CAPACITY + '　右键站在水边补水\n' +
+    '作物 ' + CONFIG.CROPS.map(c =>
+        c.icon + c.name + '(' + c.season + c.days + '天' + (c.regrow ? '可再收' : '') + ')' +
+        ' 种' + c.seedCost + '/售' + c.sell).join('　') + '\n' +
     '资源 ' + CONFIG.RESOURCES.ORDER.map(r =>
         CONFIG.RESOURCES.ICON[r] + ' ' + CONFIG.RESOURCES.NAME[r] + ' <b>' + (resources[r]||0) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用 · P 暂停';
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用 · 右键补水 · P 暂停';
 }
 
 /* === 7.存档 === */
@@ -1160,6 +1453,7 @@ function render(){
 
   drawGround(ctx, x0, y0, x1, y1);
   drawSeasonOverlay(ctx, x0, y0, x1, y1);
+  drawCrops(ctx, x0, y0, x1, y1);
   drawObjects(ctx, x0, y0, x1, y1);
   drawBuildings(ctx);
   drawPlayer(ctx);
@@ -1228,7 +1522,11 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
   updateClock, updateWeather, updateSky, rollWeather, spawnParticles,
   get weather(){ return weather; }, set weather(v){ weather = v; },
-  get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; }};
+  get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
+  get crops(){ return crops; }, set crops(v){ crops = v; },
+  get canWater(){ return canWater; }, set canWater(v){ canWater = v; },
+  sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
+  cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T};
 </script>
 </body>
 </html>

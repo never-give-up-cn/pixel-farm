@@ -1227,7 +1227,8 @@ requestAnimationFrame(loop);
 if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
   updateClock, updateWeather, updateSky, rollWeather, spawnParticles,
-  get weather(){ return weather; }, get fxParticles(){ return fxParticles; }};
+  get weather(){ return weather; }, set weather(v){ weather = v; },
+  get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; }};
 </script>
 </body>
 </html>

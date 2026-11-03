@@ -1,0 +1,12 @@
+<script>
+setTimeout(function(){
+  const out=[];
+  const c=document.getElementById('game'), g=c.getContext('2d');
+  [0,60,300,420,660,690,720,780,900,1100].forEach(function(t){
+    state.time=t; render();
+    const d=g.getImageData(40,300,1,1).data;
+    out.push(t+' -> rgb('+d[0]+','+d[1]+','+d[2]+')');
+  });
+  document.title=out.join(' | ');
+},400);
+</script>

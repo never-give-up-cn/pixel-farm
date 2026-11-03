@@ -999,14 +999,14 @@ function useTool(tx,ty){
 
   /* 1. 地里有作物 */
   if(crop){
-    if(tool.id === 'can') return waterTile(tx,ty);           /* 照常浇水 */
     if(crop.dead){
       if(tool.id === 'sickle') return clearDeadCrop(tx,ty);
       toast('作物已经枯萎了，用镰刀清理');
       playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
       return false;
     }
-    if(crop.mature) return harvestCrop(tx,ty);                /* 成熟即可收获 */
+    if(crop.mature) return harvestCrop(tx,ty);                /* 成熟了：点一下就收 */
+    if(tool.id === 'can') return waterTile(tx,ty);             /* 没熟：照常浇水 */
     if(tool.kind === 'seed'){ toast('这里已经种了东西'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
     if(tool.id === 'sickle'){ toast('还没长好，再等几天'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
     toast('这块地里还有没熟的作物');

@@ -633,14 +633,17 @@ function drawUI(g){
   }
   /* FPS + 版本 */
   const scale = 2, pad = 6;
-  const lineW = 13 * scale;
+  const l1 = 'FPS ' + String(Math.round(fps)).padStart(2,' ');
+  const l2 = CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ';
+  const charW = (GLYPH_W + 1) * scale;                 /* 每个字形占位（含 1px 字距） */
+  const lineW = Math.max(l1.length, l2.length) * charW;
   const boxW = lineW + pad*2, boxH = GLYPH_H*scale*2 + pad*2 + 4;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, 8, boxW, boxH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, 8, boxW, 1); g.fillRect(8, 8+boxH-1, boxW, 1);
   g.fillRect(8, 8, 1, boxH);   g.fillRect(8+boxW-1, 8, 1, boxH);
-  drawText(g, 'FPS ' + String(Math.round(fps)).padStart(2,' '), 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
-  drawText(g, CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ', 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+  drawText(g, l1, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
+  drawText(g, l2, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
 }
 const statsEl = document.getElementById('stats');
 function updateStats(){

@@ -38,8 +38,7 @@
     white-space:nowrap;animation:toastFade 1.5s ease-out forwards;
   }
   @keyframes toastFade{
-    0%  {opacity:0;transform:translateY(8px)}
-    12% {opacity:1;transform:translateY(0)}
+    0%  {opacity:1;transform:translateY(0)}
     70% {opacity:1;transform:translateY(0)}
     100%{opacity:0;transform:translateY(-6px)}
   }
@@ -985,7 +984,7 @@ layoutToasts();
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
-if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources};
+if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources, layoutToasts};
 </script>
 </body>
 </html>

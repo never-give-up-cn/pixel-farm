@@ -146,6 +146,7 @@ const CONFIG = {
   GRID_OVERLAY: true,       // 叠加网格线
   GRID_COLOR: 'rgba(255,255,255,0.09)',
   LOG_EVERY: 60,            // 每 N 帧在控制台打印一次瓦片统计
+  DEBUG_HOOK: false,        // true = 暴露 window.__game（仅调试用）
 
   /* 缩放 */
   INTEGER_SCALE: true,      // true = 放大时只用整数倍（像素最锐利）
@@ -974,6 +975,9 @@ cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
 cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
 updateStats();
 requestAnimationFrame(loop);
+
+/* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
+if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources};
 </script>
 </body>
 </html>

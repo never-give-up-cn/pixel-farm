@@ -244,14 +244,10 @@
   .tab:hover{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
   #packGrid .cell,#chestGrid .cell,#chestInv .cell{transition:background .12s ease,border-color .12s ease,transform .07s ease}
   #packGrid .cell:active,#chestGrid .cell:active,#chestInv .cell:active{transform:translateY(1px)}
-  /* 总音量开关（窗口右下角，避开左上角 HUD 和底部快捷栏） */
-  #sndBtn{
-    position:fixed;right:10px;bottom:10px;z-index:30;width:34px;height:34px;padding:0;
-    background:rgba(8,10,16,.82);border:2px solid #3d4a63;border-radius:8px;
-    color:#cfe3ff;font:16px/1 "Segoe UI Emoji",Consolas,monospace;cursor:pointer;
-  }
+  /* 总音量开关：系统菜单里的一个整行按钮（不再浮在主画面上） */
+  #sndBtn{width:100%;text-align:left;font-family:inherit}
   #sndBtn:hover{border-color:#ffd76a;color:#ffd76a;background:rgba(22,28,44,.92)}
-  #sndBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.8}
+  #sndBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.85}
   /* 新手引导提示条（窗口顶部居中，不挡画布点击） */
   #tut{
     position:fixed;z-index:28;display:none;top:14px;left:50%;transform:translateX(-50%);
@@ -275,8 +271,6 @@
 <canvas id="game"></canvas>
 <div id="stats"></div>
 <div id="toasts"></div>
-<!-- 总音量开关（M）：点一下静音 / 取消 -->
-<button id="sndBtn" title="声音开关（M）">🔊</button>
 <!-- 新手引导提示条（第 1 天早晨出现） -->
 <div id="tut"></div>
 
@@ -350,6 +344,8 @@
       <button class="mbtn" id="btnSave">保存游戏</button>
       <button class="mbtn" id="btnLoad">读取存档</button>
       <button class="mbtn danger" id="btnWipe">删除存档</button>
+      <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
+      <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
     <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
@@ -1911,7 +1907,7 @@ function updateCamera(dt){
 /* --- 音效：Web Audio 实时合成（浏览器要求先有用户交互才允许播放） --- */
 let actx = null;
 let audioMuted = CONFIG.AUDIO.MUTE_START;   /* 总音量开关：true = 全部静音 */
-const sndBtn = document.getElementById('sndBtn');   /* 右下角的声音开关按钮 */
+const sndBtn = document.getElementById('sndBtn');   /* 系统菜单里的总音量开关按钮 */
 function ensureAudio(){
   try{
     if(!actx){
@@ -2046,7 +2042,7 @@ function stopRainAmbience(){
 function setMuted(m, silent){
   audioMuted = !!m;
   if(sndBtn){
-    sndBtn.textContent = audioMuted ? '🔇' : '🔊';
+    sndBtn.textContent = audioMuted ? '🔇 声音：关（M）' : '🔊 声音：开（M）';
     if(sndBtn.classList) sndBtn.classList.toggle('off', audioMuted);
   }
   if(audioMuted) stopRainAmbience();

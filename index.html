@@ -165,6 +165,52 @@
   .srow .btn.off:hover{border-color:#2c3a4e;color:#7f92ad}
   .sempty{padding:16px 6px;color:#8fa3bd;text-align:center}
   #shopFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
+  /* 启动菜单（本地有存档时：继续 / 新游戏） */
+  #start{
+    position:fixed;inset:0;z-index:80;display:none;
+    align-items:center;justify-content:center;background:rgba(4,6,10,.80);
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #start.open{display:flex}
+  #startPanel{
+    background:#12161f;border:2px solid #3d4a63;padding:20px 24px 16px;min-width:380px;
+    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);text-align:center;
+  }
+  #startTitle{font-size:22px;color:#ffd76a;letter-spacing:3px}
+  #startSub{font-size:11px;color:#8fa3bd;margin:2px 0 14px}
+  #startInfo{
+    font-size:12px;color:#cfe3ff;margin-bottom:8px;white-space:pre-line;text-align:left;
+    background:#1a2130;border:1px solid #2c3a4e;padding:8px 10px;
+  }
+  #startWarn{font-size:12px;color:#ffb08a;margin-bottom:10px;white-space:pre-line;text-align:left}
+  #startBtns,#startBtns2{display:flex;gap:10px;justify-content:center;margin-top:8px}
+  #startConfirm{display:none;margin-top:14px;padding-top:10px;border-top:1px solid #2c3a4e}
+  #startConfirm.open{display:block}
+  #confirmText{font-size:12px;color:#ffb08a;margin-bottom:6px}
+  #startFoot{font-size:11px;color:#7f92ad;margin-top:14px}
+  .mbtn{
+    background:#243050;border:2px solid #3d4a63;color:#cfe3ff;
+    font:13px/1 Consolas,"Microsoft YaHei",monospace;padding:9px 18px;cursor:pointer;
+  }
+  .mbtn:hover{border-color:#ffd76a;color:#ffd76a}
+  .mbtn.danger:hover{border-color:#ff9a8a;color:#ff9a8a}
+  /* 系统菜单（Esc）：保存 / 读档 */
+  #sys{
+    position:fixed;inset:0;z-index:46;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #sys.open{display:flex}
+  #sysMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #sysPanel{
+    position:relative;background:#12161f;border:2px solid #3d4a63;padding:14px 16px 12px;width:330px;
+    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+  }
+  #sysHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
+  #sysInfo{font-size:11px;color:#8fa3bd;margin-bottom:10px;white-space:pre-line}
+  #sysBtns{display:flex;flex-direction:column;gap:8px}
+  #sysBtns .mbtn{width:100%}
+  #sysFoot{margin-top:10px;font-size:11px;color:#8fa3bd}
 </style>
 </head>
 <body>
@@ -208,6 +254,44 @@
     </div>
     <div id="shopBody"></div>
     <div id="shopFoot">Esc 关闭 · 走到商店摊附近按 E 打开</div>
+  </div>
+</div>
+
+<!-- 启动菜单：本地有存档时显示「继续 / 新游戏」 -->
+<div id="start">
+  <div id="startPanel">
+    <div id="startTitle">像素农场</div>
+    <div id="startSub">P I X E L &nbsp; F A R M</div>
+    <div id="startInfo"></div>
+    <div id="startWarn"></div>
+    <div id="startBtns">
+      <button class="mbtn" id="btnContinue">继续游戏</button>
+      <button class="mbtn" id="btnNew">新游戏</button>
+    </div>
+    <div id="startConfirm">
+      <div id="confirmText">确定要删除旧存档，从头开始吗？</div>
+      <div id="startBtns2">
+        <button class="mbtn danger" id="btnNewYes">确定删除并重开</button>
+        <button class="mbtn" id="btnNewNo">取消</button>
+      </div>
+    </div>
+    <div id="startFoot">存档保存在浏览器本地（localStorage），刷新页面不会丢</div>
+  </div>
+</div>
+
+<!-- 系统菜单（Esc）：保存 / 读档 / 删档 -->
+<div id="sys">
+  <div id="sysMask"></div>
+  <div id="sysPanel">
+    <div id="sysHead">系统菜单</div>
+    <div id="sysInfo"></div>
+    <div id="sysBtns">
+      <button class="mbtn" id="btnSave">保存游戏</button>
+      <button class="mbtn" id="btnLoad">读取存档</button>
+      <button class="mbtn danger" id="btnWipe">删除存档</button>
+      <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
+    </div>
+    <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
   </div>
 </div>
 
@@ -389,6 +473,18 @@ const CONFIG = {
       { id:'path',      name:'石板路', cost:{stone:2},          overlay:true },
       { id:'sprinkler', name:'洒水器', cost:{wood:5, stone:5} }
     ]
+  },
+
+  /* 存档（第 11 轮）：localStorage 单档位，刷新页面不丢进度
+   * KEY      localStorage 键名
+   * VERSION  存档版本号；与存档里的 v 对不上时，标题界面会提示并可选择重置
+   * AUTO_*   自动存档的时机 */
+  SAVE: {
+    KEY: 'farm_save_v1',
+    VERSION: 1,
+    AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
+    AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
+    MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
   },
 
   /* 物品定义表（背包 / 快捷栏的唯一数据源）
@@ -2072,6 +2168,8 @@ function rollToNextMorning(faint){
   sleepFx.day = clock.day;
   console.log('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
+  /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
+  if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
 }
 /* 睡觉流程推进（接管整个 update） */
 function updateSleepFx(dt){
@@ -2241,8 +2339,11 @@ window.addEventListener('keydown', e=>{
   if(k === 'escape'){
     if(chestOpen){ toggleChest(false); return; }
     if(shopOpen){ toggleShop(false); return; }
-    if(packOpen) togglePack(false);
-    if(buildMode) toggleBuild(false);
+    if(packOpen){ togglePack(false); return; }
+    if(sysOpen){ toggleSys(false); return; }
+    if(startMenuOpen) return;                 /* 标题界面必须选一个才能进游戏 */
+    if(buildMode){ toggleBuild(false); return; }
+    toggleSys(true);                          /* 其它情况：打开系统菜单（保存/读档） */
     return;
   }
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
@@ -3053,51 +3154,294 @@ function updateStats(){
     '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · E 睡觉/商店 · P 暂停';
 }
 
+/* --- 启动菜单（本地有存档时：继续 / 新游戏） --- */
+const startEl      = document.getElementById('start');
+const startInfo    = document.getElementById('startInfo');
+const startWarn    = document.getElementById('startWarn');
+const startBtns    = document.getElementById('startBtns');
+const startConfirm = document.getElementById('startConfirm');
+const confirmText  = document.getElementById('confirmText');
+const btnContinue  = document.getElementById('btnContinue');
+const btnNew       = document.getElementById('btnNew');
+const btnNewYes    = document.getElementById('btnNewYes');
+const btnNewNo     = document.getElementById('btnNewNo');
+let startMenuOpen = false;    /* 标题界面开着时游戏完全冻结（时间不走） */
+let pendingSave = null;       /* 启动时读到的存档 */
+
+/* 存档时间戳 → 可读文本 */
+function fmtStamp(ts){
+  try{
+    const d = new Date(ts);
+    const p = n => String(n).padStart(2,'0');
+    return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()) + ' ' +
+           p(d.getHours()) + ':' + p(d.getMinutes());
+  }catch(e){ return '时间未知'; }
+}
+/* 存档摘要（标题界面显示） */
+function saveSummary(d){
+  if(!d) return '';
+  const days = (d.time && d.time.day) ? d.time.day : 1;
+  const season = CONFIG.SEASONS[Math.floor((days-1) / CONFIG.DAYS_PER_SEASON) % CONFIG.SEASONS.length];
+  const w = CONFIG.WEATHER.find(x=>x.id===d.weather);
+  const nc = Array.isArray(d.crops) ? d.crops.length : 0;
+  const nb = Array.isArray(d.buildings) ? d.buildings.length : 0;
+  const nd = (d.map && typeof d.map === 'object') ? Object.keys(d.map).length : 0;
+  return '存档：第 ' + days + ' 天（' + season + '季）· ' + (w ? w.name : '晴') + '\n' +
+         '金币 ' + (d.gold||0) + ' · 体力 ' + Math.ceil(d.stamina||0) + '/' + (d.staminaMax||0) +
+         ' · 作物 ' + nc + ' 株 · 建造物 ' + nb + ' 个\n' +
+         '地图改动 ' + nd + ' 格 · 保存于 ' + fmtStamp(d.at);
+}
+/* 打开标题界面 */
+function openStartMenu(d){
+  pendingSave = d;
+  startMenuOpen = true;
+  const vOK = saveVersionOK(d);
+  if(startInfo) startInfo.textContent = saveSummary(d);
+  if(startWarn) startWarn.textContent = vOK ? '' :
+    ('存档版本 v' + (d.v === undefined ? '?' : d.v) + ' 与当前版本 v' + CONFIG.SAVE.VERSION +
+     ' 不匹配，读取可能不完整。仍要继续吗？');
+  if(btnContinue) btnContinue.textContent = vOK ? '继续游戏' : '仍然尝试读取';
+  if(btnNew) btnNew.textContent = vOK ? '新游戏' : '删除旧存档并重开';
+  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
+  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
+  if(startEl) startEl.classList.add('open');
+}
+/* 关闭标题界面 */
+function closeStartMenu(){
+  startMenuOpen = false;
+  if(startEl) startEl.classList.remove('open');
+}
+/* 标题界面：二次确认（防误删存档） */
+function askNewGame(){
+  if(confirmText) confirmText.textContent =
+    '确定要删除旧存档，从头开始吗？\n（删掉就找不回来了）';
+  if(startBtns && startBtns.style) startBtns.style.display = 'none';
+  if(startConfirm && startConfirm.classList) startConfirm.classList.add('open');
+}
+function cancelNewGame(){
+  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
+  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
+}
+/* 标题界面：真的重开一局 */
+function doNewGame(){
+  newGame();
+  closeStartMenu();
+  sessionActive = true;
+  toast('新的一局开始了');
+}
+/* 标题界面：继续读档 */
+function doContinue(){
+  const d = pendingSave;
+  closeStartMenu();
+  sessionActive = true;
+  if(!d){ toast('没有存档，开了一局新的'); return; }
+  const ok = deserializeState(d);
+  if(ok) toast('欢迎回来 · 第 ' + clock.day + ' 天');
+  else{ newGame(); toast('存档读取失败，开了一局新的'); }
+}
+if(btnContinue) btnContinue.addEventListener('click', ()=>{ doContinue(); });
+if(btnNew) btnNew.addEventListener('click', ()=>{ askNewGame(); });
+if(btnNewYes) btnNewYes.addEventListener('click', ()=>{ doNewGame(); });
+if(btnNewNo)  btnNewNo .addEventListener('click', ()=>{ cancelNewGame(); });
+
+/* --- 系统菜单（Esc）：保存 / 读档 / 删档 --- */
+const sysEl    = document.getElementById('sys');
+const sysMask  = document.getElementById('sysMask');
+const sysInfo  = document.getElementById('sysInfo');
+const btnSave  = document.getElementById('btnSave');
+const btnLoad  = document.getElementById('btnLoad');
+const btnWipe  = document.getElementById('btnWipe');
+const btnClose = document.getElementById('btnClose');
+let sysOpen = false;          /* 系统菜单开着时游戏冻结 */
+let sysWipeArmed = false;     /* 删除存档要连点两次，防误触 */
+
+function toggleSys(on){
+  const want = (on === undefined) ? !sysOpen : !!on;
+  if(want === sysOpen) return;
+  sysOpen = want;
+  if(sysOpen){
+    if(packOpen) togglePack(false);
+    if(shopOpen) toggleShop(false);
+    if(chestOpen) toggleChest(false);
+    if(buildMode) toggleBuild(false);
+    sysWipeArmed = false;
+    if(sysInfo){
+      let raw = '';
+      try{ raw = window.localStorage.getItem(CONFIG.SAVE.KEY) || ''; }catch(e){ raw = ''; }
+      sysInfo.textContent = raw
+        ? ('上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(readSave()) + ' 天')
+        : '本地还没有存档';
+    }
+    if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
+    if(sysEl) sysEl.classList.add('open');
+  }else{
+    if(sysEl) sysEl.classList.remove('open');
+  }
+}
+/* 系统菜单里的"删除存档"：第一次只是警告，第二次才真删 */
+function sysWipe(){
+  if(!sysWipeArmed){
+    sysWipeArmed = true;
+    if(btnWipe) btnWipe.textContent = '真的要删？再点一次';
+    return false;
+  }
+  sysWipeArmed = false;
+  wipeSave();
+  if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
+  if(sysInfo) sysInfo.textContent = '本地还没有存档';
+  return true;
+}
+if(btnSave)  btnSave .addEventListener('click', ()=>{ saveGame('手动保存'); });
+if(btnLoad)  btnLoad .addEventListener('click', ()=>{ loadGame(); });
+if(btnWipe)  btnWipe .addEventListener('click', ()=>{ sysWipe(); });
+if(btnClose) btnClose.addEventListener('click', ()=>{ toggleSys(false); });
+if(sysMask)  sysMask .addEventListener('mousedown', e=>{ e.preventDefault(); toggleSys(false); });
+
 /* === 7.存档 === */
-/* 本轮不做存档，但把「序列化入口」留好：第 10 轮只要把下面两个函数
- * 接上 localStorage 就能存档/读档，不用再改数据结构。
- *   serializeState()  → 纯 JSON 的状态快照（可直接 JSON.stringify）
- *   deserializeState(d) → 用快照覆盖当前状态
- * 约定：背包/快捷栏存成 [{id,n}] 数组，null 表示空格；作物存成同样格式的对象数组。 */
+/* 浏览器本地存档：localStorage 单档位，键名 CONFIG.SAVE.KEY（farm_save_v1）
+ *
+ * 存档结构（版本 CONFIG.SAVE.VERSION）：
+ * {
+ *   v    : 1,                        // 存档版本号（对不上会提示并可选择重置）
+ *   at   : 1730000000000,            // 保存时刻（时间戳）
+ *   seed : 20240613,                 // 地图种子（读档时按它重新生成底图）
+ *   player : {x, y},                 // 位置
+ *   gold, stamina, staminaMax, canWater, canLevel, hotSel,
+ *   time  : {day, min, hold},        // 第几天 / 从 6:00 起过的分钟 / 2:00 停留计时
+ *   weather : 'sun',                 // 天气 id
+ *   map   : {"x,y": 地块类型},          // 只存与初始生成不同的格子（diff）
+ *   crops : [{x,y,type,stage,grown,watered,mature,dead}],   // 只存有作物的格
+ *   buildings : [{type,x,y,slots:[{id,n}]}],                 // 建造物（木箱带储物）
+ *   roads : ["x,y"],                 // 石板路（叠加层）
+ *   inv   : [{slot,id,n}]            // 背包（只存有物品的格）
+ * }
+ *
+ * 读档流程：按 seed 重新生成底图 → 叠加 map 的 diff → 还原其余状态。
+ * 底图 diff 是省体积的关键：整张 64×64 地图要 ~8KB，改 20 格只要几百字节。 */
+let baseMap = new Uint8Array(MAP_W*MAP_H);   /* 初始生成的底图（用来算 diff） */
+let lastSaveBytes = 0;                      /* 最近一次存档的字节数 */
+let sessionActive = false;                  /* 本次会话是否已开始（标题界面没选之前不覆盖旧档） */
+
+/* 把当前地图记成"底图" */
+function snapshotBaseMap(){ baseMap.set(map); }
+
+/* 地图 diff：只记录与底图不同的格子 */
+function mapDiff(){
+  const d = {};
+  for(let i=0;i<map.length;i++){
+    if(map[i] !== baseMap[i]) d[(i % MAP_W) + ',' + ((i / MAP_W) | 0)] = map[i];
+  }
+  return d;
+}
+/* 把 diff 叠回地图（读档时用） */
+function applyMapDiff(diff){
+  if(!diff || typeof diff !== 'object') return 0;
+  let n = 0;
+  for(const k in diff){
+    const p = k.split(',');
+    const x = +p[0], y = +p[1];
+    if(!(x >= 0 && y >= 0 && x < MAP_W && y < MAP_H)) continue;
+    map[y*MAP_W+x] = diff[k] | 0;
+    n++;
+  }
+  return n;
+}
+/* 背包面板里"拎在手上"的物品先放回背包，免得存档时丢东西 */
+function stowHeld(){
+  if(!held) return;
+  const h = held; held = null;
+  if(typeof h.from === 'number' && h.from >= 0 && h.from < inv.length && !inv[h.from])
+    inv[h.from] = {id:h.id, n:h.n};
+  else addItem(h.id, h.n);
+}
+/* 生成一份存档数据（纯 JSON 对象） */
 function serializeState(){
+  stowHeld();
+  const cs = [];
+  for(let i=0;i<crops.length;i++){
+    const c = crops[i];
+    if(!c) continue;
+    cs.push({x:(i % MAP_W), y:((i / MAP_W) | 0), type:c.type, stage:c.stage|0,
+             grown:c.grown|0, watered:!!c.watered, mature:!!c.mature, dead:!!c.dead});
+  }
+  const rs = [];
+  for(let i=0;i<roads.length;i++) if(roads[i]) rs.push((i % MAP_W) + ',' + ((i / MAP_W) | 0));
   return {
-    v: CONFIG.VERSION,
-    clock: {day: clock.day, min: clock.min, hold: clock.hold},
+    v: CONFIG.SAVE.VERSION,
+    at: Date.now(),
+    seed: CONFIG.SEED,
+    player: {x: player.x, y: player.y},
     gold: gold,
-    hotSel: hotSel,
-    canWater: canWater,
-    canLevel: canLevel,
     stamina: stamina,
     staminaMax: staminaMax,
-    /* 建造物：实体（栅栏/木箱/洒水器）+ 石板路叠加层 */
-    buildings: buildings.map(b => ({type:b.type, tx:b.tx, ty:b.ty, slots:b.slots || null})),
-    roads: Array.from(roads),
-    /* 背包：只存有物品的格 → [{slot, id, n}]；空位不占体积 */
-    inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
-    map: Array.from(map),
-    crops: crops.map(c => c ? {type:c.type, stage:c.stage, grown:c.grown,
-                               watered:c.watered, mature:c.mature, dead:c.dead} : null),
-    player: {x: player.x, y: player.y},
-    weather: weather.id
+    canWater: canWater,
+    canLevel: canLevel,
+    hotSel: hotSel,
+    time: {day: clock.day, min: clock.min, hold: clock.hold},
+    weather: weather.id,
+    map: mapDiff(),
+    crops: cs,
+    buildings: buildings.map(b => ({type:b.type, x:b.tx, y:b.ty,
+      slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null})),
+    roads: rs,
+    inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean)
   };
 }
+/* 读入一份存档数据（覆盖当前状态） */
 function deserializeState(d){
   if(!d || typeof d !== 'object') return false;
   try{
-    if(d.clock){ clock.day = d.clock.day; clock.min = d.clock.min; clock.hold = d.clock.hold || 0; }
+    /* 地图：按存档里的种子重新生成底图，再叠加 diff */
+    const seed = (typeof d.seed === 'number') ? d.seed : CONFIG.SEED;
+    genMap(seed);
+    snapshotBaseMap();
+    applyMapDiff(d.map);
+    /* 作物 */
+    crops.fill(null);
+    if(Array.isArray(d.crops))
+      for(const c of d.crops){
+        if(!c) continue;
+        const x = c.x|0, y = c.y|0;
+        if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
+        if(!cropDef(c.type)) continue;
+        crops[y*MAP_W+x] = {type:c.type, stage:c.stage|0, grown:c.grown|0,
+                            watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
+      }
+    /* 建造物 + 石板路 */
+    buildings = [];
+    buildIndex.fill(-1);
+    roads = new Uint8Array(MAP_W*MAP_H);
+    if(Array.isArray(d.buildings))
+      for(const b of d.buildings){
+        if(!b || !buildRecipe(b.type)) continue;
+        const x = b.x|0, y = b.y|0;
+        if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
+        const nb = {type:b.type, tx:x, ty:y};
+        if(b.type === 'chest'){
+          nb.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+          if(Array.isArray(b.slots))
+            for(let k=0;k<nb.slots.length && k<b.slots.length;k++){
+              const s = b.slots[k];
+              if(s && CONFIG.ITEMS[s.id]) nb.slots[k] = {id:s.id, n:s.n|0};
+            }
+        }
+        buildings.push(nb);
+        buildIndex[y*MAP_W+x] = buildings.length - 1;
+      }
+    if(Array.isArray(d.roads))
+      for(const k of d.roads){
+        const p = String(k).split(',');
+        const x = +p[0], y = +p[1];
+        if(x >= 0 && y >= 0 && x < MAP_W && y < MAP_H) roads[y*MAP_W+x] = 1;
+      }
+    /* 玩家 / 背包 / 时间 / 天气 */
+    if(d.player){ player.x = d.player.x; player.y = d.player.y; }
     if(typeof d.gold === 'number') gold = d.gold;
-    if(typeof d.hotSel === 'number') hotSel = clamp(d.hotSel, 0, CONFIG.INVENTORY.HOTBAR - 1);
-    if(typeof d.canLevel === 'number') canLevel = clamp(d.canLevel | 0, 0, CONFIG.SHOP.CAN_MAX_LEVEL);
-    if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, canCapacity());
     if(typeof d.staminaMax === 'number') staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
-    if(Array.isArray(d.map)) for(let i=0;i<d.map.length && i<map.length;i++) map[i] = d.map[i] | 0;
-    if(Array.isArray(d.crops))
-      for(let i=0;i<d.crops.length && i<crops.length;i++){
-        const c = d.crops[i];
-        crops[i] = c ? {type:c.type, stage:c.stage|0, grown:c.grown|0,
-                        watered:!!c.watered, mature:!!c.mature, dead:!!c.dead} : null;
-      }
+    if(typeof d.canLevel === 'number') canLevel = clamp(d.canLevel|0, 0, CONFIG.SHOP.CAN_MAX_LEVEL);
+    if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, canCapacity());
+    if(typeof d.hotSel === 'number') hotSel = clamp(d.hotSel, 0, CONFIG.INVENTORY.HOTBAR - 1);
     if(Array.isArray(d.inv)){
       inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
       for(const e of d.inv){
@@ -3107,29 +3451,19 @@ function deserializeState(d){
         inv[i] = {id:e.id, n:e.n|0};
       }
     }
-    if(d.player){ player.x = d.player.x; player.y = d.player.y; }
-    if(d.weather) weather = CONFIG.WEATHER.find(w=>w.id===d.weather) || weather;
-    /* 建造物 */
-    if(Array.isArray(d.buildings)){
-      buildings = [];
-      buildIndex.fill(-1);
-      for(const b of d.buildings){
-        if(!b || !buildRecipe(b.type)) continue;
-        const nb = {type:b.type, tx:b.tx|0, ty:b.ty|0};
-        if(b.type === 'chest'){
-          nb.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
-          if(Array.isArray(b.slots))
-            for(let k=0; k<nb.slots.length && k<b.slots.length; k++){
-              const s = b.slots[k];
-              if(s && CONFIG.ITEMS[s.id]) nb.slots[k] = {id:s.id, n:s.n|0};
-            }
-        }
-        buildings.push(nb);
-        buildIndex[nb.ty*MAP_W + nb.tx] = buildings.length - 1;
-      }
+    if(d.time){
+      clock.day = Math.max(1, d.time.day|0);
+      clock.min = Math.max(0, d.time.min|0);
+      clock.hold = Math.max(0, d.time.hold|0);
     }
-    if(Array.isArray(d.roads))
-      for(let i=0; i<roads.length && i<d.roads.length; i++) roads[i] = d.roads[i] ? 1 : 0;
+    if(d.weather) weather = CONFIG.WEATHER.find(w=>w.id===d.weather) || weather;
+    held = null;
+    /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
+    cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
+    cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+    const sky0 = skyAt(skyHour());
+    sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
+    spawnParticles();
     refreshPackGrid();
     updateStats();
     return true;
@@ -3137,6 +3471,88 @@ function deserializeState(d){
     console.warn('[save] 读档失败：', e);
     return false;
   }
+}
+
+/* --- localStorage 读写（隐私模式 / 禁用存储时会抛错，全部包 try） --- */
+function readSave(){
+  try{
+    const raw = window.localStorage.getItem(CONFIG.SAVE.KEY);
+    if(!raw) return null;
+    const d = JSON.parse(raw);
+    return (d && typeof d === 'object') ? d : null;
+  }catch(e){
+    console.warn('[save] 存档读取失败：', e);
+    return null;
+  }
+}
+function writeSave(d){
+  try{
+    window.localStorage.setItem(CONFIG.SAVE.KEY, JSON.stringify(d));
+    return true;
+  }catch(e){
+    console.warn('[save] 存档写入失败：', e);
+    return false;
+  }
+}
+function deleteSave(){
+  try{ window.localStorage.removeItem(CONFIG.SAVE.KEY); }catch(e){}
+}
+/* 有没有存档 */
+function hasSave(){ return !!readSave(); }
+/* 存档版本对不对得上 */
+function saveVersionOK(d){ return !!d && d.v === CONFIG.SAVE.VERSION; }
+/* 存档里存的是第几天 */
+function saveDay(d){ return (d && d.time) ? (d.time.day|0) : 1; }
+
+/* 存档（手动 / 自动都走这里） */
+function saveGame(reason){
+  const data = serializeState();
+  const raw = JSON.stringify(data);
+  lastSaveBytes = raw.length;
+  if(writeSave(data)){
+    console.log('[save] 已保存：第 ' + data.time.day + ' 天 · ' + (lastSaveBytes/1024).toFixed(1) + ' KB');
+    if(reason) toast('已保存（' + reason + '）');
+    return true;
+  }
+  toast('保存失败：浏览器可能禁用了本地存储');
+  return false;
+}
+/* 读档 */
+function loadGame(){
+  const d = readSave();
+  if(!d){ toast('没有存档'); return false; }
+  const ok = deserializeState(d);
+  toast(ok ? '已读取存档（第 ' + clock.day + ' 天）' : '存档读取失败');
+  return ok;
+}
+/* 删档 */
+function wipeSave(){
+  deleteSave();
+  toast('存档已删除');
+}
+/* 全新一局：删掉旧档、从头开始 */
+function newGame(){
+  deleteSave();
+  genMap(CONFIG.SEED);
+  snapshotBaseMap();
+  initInventory();
+  buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);
+  dropFx = [];
+  clock.day = 1; clock.min = 0; clock.hold = 0;
+  staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;
+  canLevel = 0; canWater = CONFIG.WATER_CAN.CAPACITY;
+  gold = CONFIG.INIT_GOLD; hotSel = 0;
+  sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;
+  paused = false;
+  player.x = SPAWN.x*TILE + TILE/2;
+  player.y = SPAWN.y*TILE + TILE/2;
+  cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
+  cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+  rollWeather();
+  const sky0 = skyAt(skyHour());
+  sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
+  refreshPackGrid();
+  updateStats();
 }
 
 /* === 8.主循环 === */
@@ -3149,6 +3565,8 @@ let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCou
 
 function update(dt){
   if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
+  if(startMenuOpen) return;           /* 标题界面：整个游戏冻结 */
+  if(sysOpen) return;                 /* 系统菜单：整个游戏冻结 */
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
@@ -3233,6 +3651,7 @@ function loop(now){
 
 /* --- 启动 --- */
 genMap(CONFIG.SEED);
+snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
 buildPackGrid();                       /* 造出背包面板的 24 个格子 */
 buildChestGrid();                      /* 造出木箱面板的格子（8 + 24） */
@@ -3245,6 +3664,20 @@ const sky0 = skyAt(skyHour());
 sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
 layoutToasts();
+
+/* 离开页面 / 刷新前自动存档（标题界面还开着时不动旧档） */
+window.addEventListener('beforeunload', ()=>{
+  if(CONFIG.SAVE.AUTO_UNLOAD && sessionActive) saveGame('离开前自动保存');
+});
+
+/* 本地有存档 → 标题界面（继续 / 新游戏）；没有 → 直接开新游戏 */
+const bootSave = readSave();
+if(bootSave){
+  openStartMenu(bootSave);
+  console.log('[save] 发现存档 v' + bootSave.v + '，等待玩家选择');
+}else{
+  sessionActive = true;
+}
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
@@ -3298,6 +3731,17 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   initInventory, selectHot, selectedItem, selectedSlot, hotbarRect,
   togglePack, packClick, packDropHeld, refreshPackGrid, buildPackGrid,
   serializeState, deserializeState,
+  /* 存档 */
+  get baseMap(){ return baseMap; },
+  get lastSaveBytes(){ return lastSaveBytes; },
+  get sessionActive(){ return sessionActive; }, set sessionActive(v){ sessionActive = v; },
+  get startMenuOpen(){ return startMenuOpen; }, set startMenuOpen(v){ startMenuOpen = v; },
+  get sysOpen(){ return sysOpen; }, set sysOpen(v){ toggleSys(v); },
+  snapshotBaseMap, mapDiff, applyMapDiff, stowHeld,
+  readSave, writeSave, deleteSave, hasSave, saveVersionOK, saveDay,
+  saveGame, loadGame, wipeSave, newGame, saveSummary, fmtStamp,
+  openStartMenu, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue,
+  toggleSys, sysWipe,
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
   cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse,
   SHOP_POS, FARM};

@@ -88,6 +88,54 @@
     transform:translate(-50%,-50%);font-size:26px;line-height:1;
     filter:drop-shadow(0 2px 3px rgba(0,0,0,.8));
   }
+  /* 商店面板（DOM 覆盖层；打开时游戏时间冻结） */
+  #shop{
+    position:fixed;inset:0;z-index:45;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #shop.open{display:flex}
+  #shopMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #shopPanel{
+    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
+    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);width:470px;
+  }
+  #shopHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
+  #shopHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
+  #shopGold{color:#ffd76a;font-size:14px;margin-left:10px;display:inline-block}
+  @keyframes goldBump{
+    0%  {transform:scale(1.45);color:#7ee08a}
+    60% {transform:scale(1.10);color:#7ee08a}
+    100%{transform:scale(1);color:#ffd76a}
+  }
+  #shopTabs{display:flex;gap:6px;margin-bottom:8px}
+  #shopTabs .tab{
+    background:#1a2130;border:2px solid #2c3a4e;color:#8fa3bd;
+    font:13px/1 Consolas,"Microsoft YaHei",monospace;padding:6px 18px;cursor:pointer;
+  }
+  #shopTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
+  #shopBody{max-height:330px;overflow-y:auto}
+  .srow{
+    display:flex;align-items:center;gap:8px;padding:5px 6px;
+    border-bottom:1px solid #232c3e;
+  }
+  .srow:hover{background:#1a2130}
+  .srow .ic{font-size:20px;width:26px;text-align:center;line-height:1}
+  .srow .nm{flex:1;color:#e8f0ff}
+  .srow .nm em{font-style:normal;color:#8fa3bd;font-size:11px;margin-left:6px}
+  .srow .pr{color:#ffd76a;min-width:52px;text-align:right;white-space:nowrap}
+  .srow .pr .up{color:#7ee08a;margin-left:3px}
+  .srow .pr .dn{color:#ff9a8a;margin-left:3px}
+  .srow .btn{
+    background:#243050;border:2px solid #3d4a63;color:#cfe3ff;
+    font:12px/1 Consolas,"Microsoft YaHei",monospace;padding:5px 10px;cursor:pointer;
+    white-space:nowrap;
+  }
+  .srow .btn:hover{border-color:#ffd76a;color:#ffd76a}
+  .srow .btn.off{opacity:.42;cursor:not-allowed;border-color:#2c3a4e;color:#7f92ad}
+  .srow .btn.off:hover{border-color:#2c3a4e;color:#7f92ad}
+  .sempty{padding:16px 6px;color:#8fa3bd;text-align:center}
+  #shopFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
 </style>
 </head>
 <body>
@@ -108,6 +156,20 @@
 <div id="packTip"></div>
 <div id="packHeld"></div>
 
+<!-- 商店面板：DOM 覆盖层，打开时游戏时间冻结 -->
+<div id="shop">
+  <div id="shopMask"></div>
+  <div id="shopPanel">
+    <div id="shopHead">商店 <span id="shopGold"></span></div>
+    <div id="shopTabs">
+      <button class="tab" data-tab="buy">购买</button>
+      <button class="tab" data-tab="sell">出售</button>
+    </div>
+    <div id="shopBody"></div>
+    <div id="shopFoot">Esc 关闭 · 走到商店摊附近按 E 打开</div>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -124,6 +186,9 @@ const CONFIG = {
   /* 逻辑分辨率（画布内部像素，与屏幕缩放无关） */
   VIEW_W: 960,
   VIEW_H: 540,
+
+  /* 初始金币 */
+  INIT_GOLD: 100,
 
   /* 世界 */
   TILE: 32,                 // 每格像素
@@ -212,12 +277,34 @@ const CONFIG = {
     SLOTS: 24,            // 背包格数
     HOTBAR: 8,            // 快捷栏格数（= 背包前 8 格，联动方案）
     STACK_MAX: 99,        // 默认最大堆叠数
-    START_GOLD: 0,        // 初始金币（金币是数字，不占格）
-    /* 初始物品（按顺序填入背包前几格；前 8 格即快捷栏） */
+    /* 初始物品（按顺序填入背包前几格；前 8 格即快捷栏）
+     * 第 8 轮起只送锄头和水壶：斧头/镐/镰刀改成商店里的商品（一次性购买） */
     START_LOADOUT: [
-      { id:'hoe', n:1 }, { id:'can', n:1 }, { id:'axe', n:1 }, { id:'pick', n:1 }, { id:'sickle', n:1 },
-      { id:'seed_radish', n:10 }, { id:'seed_potato', n:5 }, { id:'seed_tomato', n:5 },
-      { id:'seed_pumpkin', n:5 }
+      { id:'hoe', n:1 }, { id:'can', n:1 },
+      { id:'seed_radish', n:10 }, { id:'seed_potato', n:5 },
+      { id:'seed_tomato', n:5 }, { id:'seed_pumpkin', n:5 }
+    ]
+  },
+
+  /* 商店：站在商店摊 CONFIG.SHOP.RANGE 格内按 E 打开 */
+  SHOP: {
+    RANGE: 1.5,             // 交互距离（格）
+    PRICE_FLUCT: 0.15,      // 价格浮动 ±15%
+    SEASON_COEF: {          // 季节系数（乘在基础价上）
+      '春':1.00, '夏':1.05, '秋':1.10, '冬':0.90
+    },
+    GOLD_PULSE_MS: 450,     // 金币跳动动画时长（毫秒）
+    CAN_MAX_LEVEL: 2,       // 水壶最多扩容几次（20 → 30 → 40）
+    /* 可购买清单：种子随时可买；工具一次性（已拥有则置灰）；水壶扩容是升级项 */
+    BUY: [
+      { id:'seed_radish',  price:10 },
+      { id:'seed_potato',  price:20 },
+      { id:'seed_tomato',  price:30 },
+      { id:'seed_pumpkin', price:40 },
+      { id:'axe',          price:60 },
+      { id:'pick',         price:50 },
+      { id:'sickle',       price:40 },
+      { id:'can_upgrade',  price:80 }
     ]
   },
 
@@ -231,8 +318,8 @@ const CONFIG = {
    *   'currency' 金币：单独存数字，不占格
    * 显示名与图标在这里，TOOLS 表只管行为，避免两处各写一份 */
   ITEMS: {
-    wood:  { id:'wood',  name:'木材', icon:'🌲', stack:true,  max:99, kind:'material' },
-    stone: { id:'stone', name:'石材', icon:'⛰️', stack:true,  max:99, kind:'material' },
+    wood:  { id:'wood',  name:'木材', icon:'🌲', stack:true,  max:99, kind:'material', price:8 },
+    stone: { id:'stone', name:'石材', icon:'⛰️', stack:true,  max:99, kind:'material', price:12 },
     gold:  { id:'gold',  name:'金币', icon:'💰', stack:false, max:1,  kind:'currency' },
     hoe:   { id:'hoe',   name:'锄头', icon:'🔨', stack:false, max:1,  kind:'tool', tool:'hoe' },
     can:   { id:'can',   name:'水壶', icon:'💧', stack:false, max:1,  kind:'tool', tool:'can' },
@@ -281,8 +368,8 @@ const CONFIG = {
     DEAD_COLOR:'#9c8340', DEAD_LEAF:'#a8913f', DEAD_STEM:'#7a6234'
   },
 
-  /* 水壶：容量有限，站在水边右键补满 */
-  WATER_CAN: { CAPACITY:20, REFILL_RANGE:1.8 },
+  /* 水壶：容量有限，站在水边右键补满（商店可以扩容） */
+  WATER_CAN: { CAPACITY:20, MAX_CAPACITY:40, UPGRADE_STEP:10, REFILL_RANGE:1.8 },
 
   /* 工具交互 */
   INTERACT: {
@@ -823,8 +910,17 @@ function drawPlayer(g){
  * 金币（currency）单独存数字 gold，不占格
  * 三个核心 API：addItem / removeItem / countItem（+ canFit 预判能否放下） */
 let inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
-let gold = CONFIG.INVENTORY.START_GOLD;
+let gold = CONFIG.INIT_GOLD;
 let hotSel = 0;                       /* 快捷栏当前选中格（0~7） */
+let canLevel = 0;                     /* 水壶扩容等级：容量 = 20 + 等级×10 */
+let goldPulseAt = 0;                  /* 金币跳动动画起点（performance.now()） */
+let goldDelta = 0;                    /* 最近一次金币变动（用于飘字） */
+
+/* 当前水壶容量（商店扩容后变大） */
+function canCapacity(){
+  return Math.min(CONFIG.WATER_CAN.MAX_CAPACITY,
+                  CONFIG.WATER_CAN.CAPACITY + canLevel * CONFIG.WATER_CAN.UPGRADE_STEP);
+}
 
 function itemDef(id){ return CONFIG.ITEMS[id] || null; }
 function stackLimit(id){
@@ -917,9 +1013,19 @@ function selectedItem(){ const s = selectedSlot(); return s ? itemDef(s.id) : nu
 /* 初始物品 */
 function initInventory(){
   inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
-  gold = CONFIG.INVENTORY.START_GOLD;
+  gold = CONFIG.INIT_GOLD;
   hotSel = 0;
+  canLevel = 0;
   for(const e of CONFIG.INVENTORY.START_LOADOUT) addItem(e.id, e.n);
+}
+/* 商店给的东西：可堆叠的先并堆；工具（不可堆叠）优先塞进快捷栏的空位并自动选中，买完就能用 */
+function giveItem(id, n){
+  const d = itemDef(id);
+  if(d && d.stack) return addItem(id, n);
+  for(let i=0;i<CONFIG.INVENTORY.HOTBAR;i++){
+    if(!inv[i]){ inv[i] = {id:id, n:1}; hotSel = i; refreshPackGrid(); return 1; }
+  }
+  return addItem(id, n);
 }
 
 /* === 5.系统 === */
@@ -1160,9 +1266,9 @@ function findWaterNear(){
 }
 function refillCan(){
   if(countItem('can') <= 0){ toast('你没有水壶'); playSfx(140,'sawtooth',0.09,CONFIG.AUDIO.VOLUME*0.6); return false; }
-  if(canWater >= CONFIG.WATER_CAN.CAPACITY){ toast('水壶是满的'); return false; }
+  if(canWater >= canCapacity()){ toast('水壶是满的'); return false; }
   if(!findWaterNear()){ toast('附近没有水源'); playSfx(140,'sawtooth',0.09,CONFIG.AUDIO.VOLUME*0.6); return false; }
-  canWater = CONFIG.WATER_CAN.CAPACITY;
+  canWater = canCapacity();
   toast('水壶补满了（' + canWater + '）');
   playSfx(880, 'sine', 0.12, CONFIG.AUDIO.VOLUME);
   return true;
@@ -1263,6 +1369,125 @@ function useTool(tx,ty){
   playSfx(tool.sfx, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
   return true;
 }
+
+/* --- 商店系统：价格 / 买卖 / 水壶扩容 ---
+ * 价格 = 基础价 × 季节系数 × (1 ± PRICE_FLUCT)
+ *   基础价：种子/工具查 CONFIG.SHOP.BUY；作物查 CONFIG.CROPS.sell；材料查 CONFIG.ITEMS.price
+ *   季节系数：春 1.00 / 夏 1.05 / 秋 1.10 / 冬 0.90
+ *   浮动量：由「物品 id + 天数」哈希出来 → 同一天同一物品价格固定，隔天才变
+ * 卖出与买入共用同一个 priceOf()，面板上用 ↑ ↓ 标出当前价相对「基础价 × 季节系数」的涨跌 */
+function strHash(s){
+  let h = 2166136261;
+  for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0) / 4294967295;                 /* 0~1 */
+}
+/* 当前季节的价格系数 */
+function seasonCoef(){ return CONFIG.SHOP.SEASON_COEF[seasonName()] || 1; }
+/* 基础价（不含季节系数与浮动） */
+function basePrice(id){
+  const buy = CONFIG.SHOP.BUY.find(b => b.id === id);
+  if(buy) return buy.price;
+  const d = itemDef(id);
+  if(!d) return 0;
+  if(d.kind === 'crop'){ const c = cropDef(d.crop); return c ? c.sell : 0; }
+  if(d.kind === 'material') return d.price || 0;
+  return 0;
+}
+/* 当前价格（含季节系数与 ±15% 浮动） */
+function priceOf(id){
+  const b = basePrice(id);
+  if(b <= 0) return 0;
+  const f = (strHash(id + '@' + clock.day) * 2 - 1) * CONFIG.SHOP.PRICE_FLUCT;
+  return Math.max(1, Math.round(b * seasonCoef() * (1 + f)));
+}
+/* 浮动标记：当前价 vs 基础价 × 季节系数 */
+function priceTrend(id){
+  const b = basePrice(id);
+  if(b <= 0) return '=';
+  const mid = b * seasonCoef();
+  const p = priceOf(id);
+  if(p > mid) return '↑';
+  if(p < mid) return '↓';
+  return '=';
+}
+/* 能不能卖：只有收获的作物与材料能卖（种子/工具不回收） */
+function isSellable(id){
+  const d = itemDef(id);
+  if(!d) return false;
+  return d.kind === 'crop' || d.kind === 'material';
+}
+/* 工具是否已经拥有（一次性商品） */
+function toolOwned(id){
+  const d = itemDef(id);
+  if(!d || d.kind !== 'tool') return false;
+  return countItem(id) > 0;
+}
+/* 金币变动 + 跳动动画（动画用 performance.now()，商店打开、时间冻结时照样跳） */
+function changeGold(v){
+  gold += v;
+  goldDelta = v;
+  goldPulseAt = performance.now();
+  pulseShopGold();
+  return gold;
+}
+/* 买：扣钱 → 给东西（工具优先进快捷栏空位，买完就能用） */
+function buyItem(id){
+  if(id === 'can_upgrade') return upgradeCan();
+  const d = itemDef(id);
+  if(!d){ toast('商店不卖这个'); return false; }
+  if(toolOwned(id)){ toast('已经有' + d.name + '了'); return false; }
+  const price = priceOf(id);
+  if(gold < price){ toast('金币不够（还差 ' + (price - gold) + '）'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(!canFit(id, 1)){ toast('背包满了，装不下' + d.name); return false; }
+  changeGold(-price);
+  giveItem(id, 1);
+  toast('买下了' + d.name + '（-' + price + ' 💰）');
+  playSfx(880, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  renderShop();
+  return true;
+}
+/* 卖 n 个：先确认数量够，再从背包扣掉 → 加钱 */
+function sellItem(id, n){
+  const d = itemDef(id);
+  if(!d || !isSellable(id)){ toast('这个不能卖'); return false; }
+  if(n <= 0) return false;
+  if(countItem(id) < n){ toast('数量不够'); return false; }
+  const unit = priceOf(id), total = unit * n;
+  removeItem(id, n);
+  changeGold(total);
+  toast('卖出 ' + d.name + ' ×' + n + '（+' + total + ' 💰）');
+  playSfx(1046, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  renderShop();
+  return true;
+}
+/* 水壶扩容：20 → 30 → 40 */
+function upgradeCan(){
+  if(canLevel >= CONFIG.SHOP.CAN_MAX_LEVEL){ toast('水壶已经是最大容量了'); return false; }
+  const price = priceOf('can_upgrade');
+  if(gold < price){ toast('金币不够（还差 ' + (price - gold) + '）'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  changeGold(-price);
+  canLevel++;
+  canWater = canCapacity();
+  toast('水壶升级了！容量 ' + canCapacity());
+  playSfx(1174, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  renderShop();
+  return true;
+}
+/* 玩家到商店摊的最近距离（格） */
+function shopDist(){
+  let best = Infinity;
+  for(let ty=SHOP_POS.y; ty<SHOP_POS.y + SHOP_POS.h; ty++)
+    for(let tx=SHOP_POS.x; tx<SHOP_POS.x + SHOP_POS.w; tx++){
+      const dx = (tx + 0.5)*TILE - player.x, dy = (ty + 0.5)*TILE - player.y;
+      best = Math.min(best, Math.hypot(dx, dy) / TILE);
+    }
+  return best;
+}
+/* 是否站在商店摊的交互范围内 */
+function nearShop(){ return shopDist() <= CONFIG.SHOP.RANGE; }
 
 /* --- 时间系统：每 tick 推进；6:00 天亮 → 20:00 入夜 → 2:00 强制结束一天 --- */
 const clock = {day:1, min:0, hold:0};          /* min = 从 6:00 起经过的游戏分钟 */
@@ -1427,8 +1652,15 @@ window.addEventListener('keydown', e=>{
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
-  if(k === 'escape'){ if(packOpen) togglePack(false); return; }
+  if(k === 'escape'){
+    if(shopOpen){ toggleShop(false); return; }
+    if(packOpen) togglePack(false);
+    return;
+  }
+  if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
+  /* 商店：走到商店摊附近按 E 打开 */
+  if(k === 'e'){ if(!e.repeat) toggleShop(); ensureAudio(); return; }
   /* 数字键 1~8 选中快捷栏（= 背包前 8 格） */
   if(k >= '1' && k <= String(CONFIG.INVENTORY.HOTBAR)){
     selectHot(Number(k) - 1);
@@ -1456,7 +1688,7 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen) return;
+  if(packOpen || shopOpen) return;
   if(e.button === 2){ ensureAudio(); refillCan(); return; }
   if(e.button !== 0) return;
   ensureAudio();
@@ -1583,8 +1815,8 @@ function showPackTip(i, e){
   if(!d){ hidePackTip(); return; }
   let extra = '';
   if(d.kind === 'seed'){ const cd = cropDef(d.crop); extra = ' · ' + cd.season + '季 · ' + cd.days + '天'; }
-  else if(d.kind === 'crop'){ const cd = cropDef(d.crop); extra = ' · 售价 ' + cd.sell; }
-  else if(d.kind === 'material') extra = ' · 材料';
+  else if(d.kind === 'crop'){ extra = ' · 售价 ' + priceOf(d.id) + ' 💰'; }
+  else if(d.kind === 'material') extra = ' · 售价 ' + priceOf(d.id) + ' 💰';
   else if(d.kind === 'tool')     extra = ' · 工具';
   else if(d.kind === 'currency') extra = ' · 金币';
   if(packTip){
@@ -1613,6 +1845,7 @@ function togglePack(open){
   if(want === packOpen) return;
   packOpen = want;
   if(packOpen){
+    if(shopOpen) toggleShop(false);            /* 背包与商店互斥 */
     refreshPackGrid();
     if(packEl) packEl.classList.add('open');
   }else{
@@ -1626,6 +1859,155 @@ document.addEventListener('mousemove', e=>{
   if(!held || !packHeld) return;
   packHeld.style.left = e.clientX + 'px';
   packHeld.style.top  = e.clientY + 'px';
+});
+
+/* --- 商店面板（DOM 覆盖层；打开时游戏时间冻结） --- */
+const shopEl   = document.getElementById('shop');
+const shopMask = document.getElementById('shopMask');
+const shopTabs = document.getElementById('shopTabs');
+const shopBody = document.getElementById('shopBody');
+const shopGold = document.getElementById('shopGold');
+let shopOpen = false;          /* 商店是否打开（打开时 update() 整体冻结 → 时间停住） */
+let shopTab  = 'buy';          /* 当前页签：'buy' 购买 / 'sell' 出售 */
+
+/* 金币跳动：商店面板里的金币数字也弹一下 */
+function pulseShopGold(){
+  if(!shopGold || !shopGold.style) return;
+  shopGold.style.animation = 'none';
+  setTimeout(()=>{ if(shopGold && shopGold.style) shopGold.style.animation = ''; }, 20);
+  shopGold.style.animation = 'goldBump ' + CONFIG.SHOP.GOLD_PULSE_MS + 'ms ease-out';
+}
+/* 画一条商品行 */
+function shopRow(icon, name, sub, priceHtml, buttons){
+  const row = document.createElement('div');
+  row.className = 'srow';
+  const ic = document.createElement('span'); ic.className = 'ic'; ic.textContent = icon;
+  const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = name;
+  if(sub){
+    const em = document.createElement('em'); em.textContent = sub; nm.appendChild(em);
+  }
+  const pr = document.createElement('span'); pr.className = 'pr'; pr.innerHTML = priceHtml;
+  row.appendChild(ic); row.appendChild(nm); row.appendChild(pr);
+  for(const b of buttons){
+    const btn = document.createElement('button');
+    btn.className = 'btn' + (b.off ? ' off' : '');
+    btn.textContent = b.label;
+    btn.addEventListener('click', e=>{ e.preventDefault(); b.fn(); });
+    row.appendChild(btn);
+  }
+  return row;
+}
+/* 价格文字 + 浮动标记 */
+function priceHtml(id){
+  const t = priceTrend(id);
+  const cls = (t === '↑') ? 'up' : (t === '↓' ? 'dn' : '');
+  return priceOf(id) + ' 💰<span class="' + cls + '">' + t + '</span>';
+}
+/* 购买页签 */
+function renderShopBuy(){
+  if(!shopBody) return;
+  for(const entry of CONFIG.SHOP.BUY){
+    const id = entry.id;
+    const up = (id === 'can_upgrade');
+    const d = up ? null : itemDef(id);
+    if(!up && !d) continue;
+    const price = priceOf(id);
+    let name, sub, off = false, label = '购买', fn;
+    if(up){
+      const maxed = canLevel >= CONFIG.SHOP.CAN_MAX_LEVEL;
+      const next = Math.min(CONFIG.WATER_CAN.MAX_CAPACITY, canCapacity() + CONFIG.WATER_CAN.UPGRADE_STEP);
+      name = '水壶扩容 Lv' + canLevel + ' → Lv' + (canLevel + 1);
+      sub  = maxed ? '已满级' : ('容量 ' + canCapacity() + ' → ' + next);
+      off = maxed || (gold < price);
+      label = maxed ? '已满级' : (gold < price ? '金币不够' : '升级');
+      fn = ()=>{ shopBuyClick(id); };
+    }else{
+      const owned = toolOwned(id);
+      name = d.name;
+      sub  = d.kind === 'tool' ? '工具' : (d.kind === 'seed' ? '种子' : '');
+      off = owned || (gold < price);
+      label = owned ? '已拥有' : (gold < price ? '金币不够' : '购买');
+      fn = ()=>{ shopBuyClick(id); };
+    }
+    shopBody.appendChild(shopRow(d ? d.icon : '💧', name, sub, priceHtml(id),
+      [{label:label, off:off, fn:fn}]));
+  }
+}
+/* 出售页签：列出背包里所有可卖的物品 */
+function renderShopSell(){
+  if(!shopBody) return;
+  const ids = Object.keys(CONFIG.ITEMS).filter(id => isSellable(id) && countItem(id) > 0);
+  if(!ids.length){
+    const e = document.createElement('div');
+    e.className = 'sempty';
+    e.textContent = '背包里没有可以卖的东西（作物和材料才能卖）';
+    shopBody.appendChild(e);
+    return;
+  }
+  for(const id of ids){
+    const d = itemDef(id);
+    const n = countItem(id), unit = priceOf(id);
+    const total = unit * n;
+    const row = shopRow(d.icon, d.name + ' ×' + n, '', priceHtml(id) + '　共 ' + total + ' 💰', [
+      {label:'卖 1', off:false, fn:()=>{ sellItem(id, 1); }},
+      {label:'全卖', off:false, fn:()=>{ sellItem(id, n); }}
+    ]);
+    shopBody.appendChild(row);
+  }
+}
+/* 刷新商店面板 */
+function renderShop(){
+  if(shopGold) shopGold.textContent = '💰 ' + gold + ' 金币';
+  if(shopTabs && shopTabs.children){
+    for(const t of shopTabs.children){
+      const on = (t.getAttribute && t.getAttribute('data-tab') === shopTab);
+      t.className = 'tab' + (on ? ' on' : '');
+    }
+  }
+  if(!shopBody) return;
+  shopBody.innerHTML = '';
+  if(shopTab === 'buy') renderShopBuy();
+  else renderShopSell();
+}
+/* 点「购买」按钮：先挡掉买不了的情况（按钮虽然置灰，点一下也给提示） */
+function shopBuyClick(id){
+  if(id === 'can_upgrade'){
+    if(canLevel >= CONFIG.SHOP.CAN_MAX_LEVEL){ toast('水壶已经是最大容量了'); return false; }
+    const p = priceOf(id);
+    if(gold < p){ toast('金币不够（还差 ' + (p - gold) + '）'); return false; }
+    return upgradeCan();
+  }
+  const d = itemDef(id);
+  if(!d) return false;
+  if(toolOwned(id)){ toast('已经有' + d.name + '了'); return false; }
+  const p = priceOf(id);
+  if(gold < p){ toast('金币不够（还差 ' + (p - gold) + '）'); return false; }
+  if(!canFit(id, 1)){ toast('背包满了，装不下' + d.name); return false; }
+  return buyItem(id);
+}
+/* 开关商店 */
+function toggleShop(open){
+  const want = (open === undefined) ? !shopOpen : !!open;
+  if(want === shopOpen) return false;
+  if(want && !nearShop()){ toast('走近商店摊才能交易'); return false; }
+  shopOpen = want;
+  if(shopOpen){
+    if(packOpen) togglePack(false);            /* 背包与商店互斥 */
+    renderShop();
+    if(shopEl) shopEl.classList.add('open');
+  }else{
+    if(shopEl) shopEl.classList.remove('open');
+  }
+  return true;
+}
+if(shopMask) shopMask.addEventListener('mousedown', e=>{ e.preventDefault(); toggleShop(false); });
+if(shopTabs) shopTabs.addEventListener('click', e=>{
+  const t = e.target;
+  if(!t || !t.getAttribute) return;
+  const tab = t.getAttribute('data-tab');
+  if(!tab || tab === shopTab) return;
+  shopTab = tab;
+  renderShop();
 });
 
 /* 3×5 点阵字库（像素风 HUD 文字，缩放后依然锐利） */
@@ -1685,9 +2067,15 @@ function drawUI(g){
   /* 左上角：金币 + 背包提示（资源计数已全部移入背包） */
   g.textBaseline = 'top'; g.textAlign = 'left';
   g.font = '15px ' + FONT_EMOJI;  const goldIconW = g.measureText('💰').width;
-  g.font = '13px ' + FONT_CJK;    const goldTxt = '金币 ' + gold + '　[Tab] 背包 ' +
-                                                invUsed() + '/' + CONFIG.INVENTORY.SLOTS;
-  const goldTxtW = g.measureText(goldTxt).width;
+  /* 金币跳动：买卖后数字弹一下，并飘出 ±N（用 performance.now()，商店打开时照样动） */
+  const gp = performance.now() - goldPulseAt;
+  const pulse = (gp >= 0 && gp < CONFIG.SHOP.GOLD_PULSE_MS) ? gp / CONFIG.SHOP.GOLD_PULSE_MS : -1;
+  const goldPre = '金币 ', goldPost = '　[Tab] 背包 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS;
+  g.font = '13px ' + FONT_CJK;
+  const preW = g.measureText(goldPre).width;
+  const numW = g.measureText(String(gold)).width;
+  const postW = g.measureText(goldPost).width;
+  const goldTxtW = preW + numW + postW;
   const rowW = Math.ceil(goldIconW + 4 + goldTxtW) + 16, rowH = 24, rowY = 8 + boxH + 6;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, rowY, rowW, rowH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
@@ -1695,8 +2083,27 @@ function drawUI(g){
   g.fillRect(8, rowY, 1, rowH); g.fillRect(8+rowW-1, rowY, 1, rowH);
   g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
   g.fillText('💰', 16, rowY + 4);
+  const goldNumX = 16 + goldIconW + 4 + preW;
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
-  g.fillText(goldTxt, 16 + goldIconW + 4, rowY + 5);
+  g.fillText(goldPre, 16 + goldIconW + 4, rowY + 5);
+  /* 数字本体：跳动时放大并变色 */
+  g.save();
+  g.translate(goldNumX, rowY + 5);
+  if(pulse >= 0){
+    const s = 1 + 0.45 * Math.sin(Math.PI * pulse);
+    g.scale(s, s);
+    g.fillStyle = goldDelta >= 0 ? '#7ee08a' : '#ff9a8a';
+  }
+  g.fillText(String(gold), 0, 0);
+  g.restore();
+  g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText(goldPost, goldNumX + numW, rowY + 5);
+  /* 飘字：+N / -N 往上飘 */
+  if(pulse >= 0){
+    g.font = '12px ' + FONT_CJK;
+    g.fillStyle = goldDelta >= 0 ? 'rgba(126,224,138,0.95)' : 'rgba(255,154,138,0.95)';
+    g.fillText((goldDelta >= 0 ? '+' : '') + goldDelta, goldNumX, rowY + 5 - 8 - 16 * pulse);
+  }
 
   /* 左上角：季节 · 第几天 · 时刻 · 天气 */
   const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
@@ -1743,7 +2150,7 @@ function drawUI(g){
       if(d && d.id === 'can'){                    /* 水壶显示余量 */
         g.font = '11px ' + FONT_EMOJI;
         g.fillStyle = canWater > 0 ? CONFIG.COLORS.hudText : '#ff8a7a';
-        g.fillText(canWater + '/' + CONFIG.WATER_CAN.CAPACITY, x + 3, hb.y + hb.h - 14);
+        g.fillText(canWater + '/' + canCapacity(), x + 3, hb.y + hb.h - 14);
       }else if(s.n > 1){                          /* 数量 */
         drawText(g, String(s.n), x + hb.cell - 6 - String(s.n).length*(GLYPH_W+1)*2, hb.y + hb.h - 13, 2, CONFIG.COLORS.hudAccent);
       }
@@ -1758,6 +2165,21 @@ function drawUI(g){
     g.fillStyle = CONFIG.COLORS.hudText;
     g.fillText(cap, VIEW_W/2, hb.y - 22);
     g.textAlign = 'left';
+  }
+
+  /* 走到商店摊附近 → 提示按 E 交易 */
+  if(!shopOpen && nearShop()){
+    const sx = SHOP_POS.x*TILE - cam.x, sy = SHOP_POS.y*TILE - cam.y;
+    const sw = SHOP_POS.w*TILE;
+    const hint = '按 E 交易';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = sx + sw/2 - hw/2, hy = sy + SHOP_POS.h*TILE + 6;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
   }
 }
 
@@ -1789,7 +2211,7 @@ function updateStats(){
     '快捷栏 ' + CONFIG.INVENTORY.HOTBAR + ' 格（= 背包前 ' + CONFIG.INVENTORY.HOTBAR + ' 格）选中 <b>' +
         (hotSel + 1) + '</b>：' + (selectedItem() ? selectedItem().icon + selectedItem().name : '空') + '\n' +
     '背包 <b>' + invUsed() + '</b>/' + CONFIG.INVENTORY.SLOTS + ' 格　金币 <b>' + gold + '</b>\n' +
-    '水壶 <b>' + canWater + '</b>/' + CONFIG.WATER_CAN.CAPACITY + '　右键站在水边补水\n' +
+    '水壶 <b>' + canWater + '</b>/' + canCapacity() + '（Lv' + canLevel + '）　右键站在水边补水\n' +
     '作物 ' + CONFIG.CROPS.map(c =>
         c.icon + c.name + '(' + c.season + c.days + '天' + (c.regrow ? '可再收' : '') + ')' +
         ' 种' + c.seedCost + '/售' + c.sell).join('　') + '\n' +
@@ -1797,7 +2219,7 @@ function updateStats(){
         CONFIG.ITEMS[id].icon + ' ' + CONFIG.ITEMS[id].name + ' <b>' + countItem(id) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · P 暂停';
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · E 商店 · P 暂停';
 }
 
 /* === 7.存档 === */
@@ -1813,6 +2235,7 @@ function serializeState(){
     gold: gold,
     hotSel: hotSel,
     canWater: canWater,
+    canLevel: canLevel,
     /* 背包：只存有物品的格 → [{slot, id, n}]；空位不占体积 */
     inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
     map: Array.from(map),
@@ -1828,7 +2251,8 @@ function deserializeState(d){
     if(d.clock){ clock.day = d.clock.day; clock.min = d.clock.min; clock.hold = d.clock.hold || 0; }
     if(typeof d.gold === 'number') gold = d.gold;
     if(typeof d.hotSel === 'number') hotSel = clamp(d.hotSel, 0, CONFIG.INVENTORY.HOTBAR - 1);
-    if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, CONFIG.WATER_CAN.CAPACITY);
+    if(typeof d.canLevel === 'number') canLevel = clamp(d.canLevel | 0, 0, CONFIG.SHOP.CAN_MAX_LEVEL);
+    if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, canCapacity());
     if(Array.isArray(d.map)) for(let i=0;i<d.map.length && i<map.length;i++) map[i] = d.map[i] | 0;
     if(Array.isArray(d.crops))
       for(let i=0;i<d.crops.length && i<crops.length;i++){
@@ -1867,6 +2291,7 @@ let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCou
 function update(dt){
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
+  if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
@@ -1959,22 +2384,33 @@ requestAnimationFrame(loop);
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
 if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
-  updateClock, updateWeather, updateSky, rollWeather, spawnParticles,
+  updateClock, updateWeather, updateSky, rollWeather, spawnParticles, update,
   get weather(){ return weather; }, set weather(v){ weather = v; },
   get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
   get crops(){ return crops; }, set crops(v){ crops = v; },
   get canWater(){ return canWater; }, set canWater(v){ canWater = v; },
+  /* 商店 */
+  get shopOpen(){ return shopOpen; }, set shopOpen(v){ toggleShop(v); },
+  get shopTab(){ return shopTab; }, set shopTab(v){ shopTab = v; renderShop(); },
+  get canLevel(){ return canLevel; }, set canLevel(v){ canLevel = v; },
+  get goldDelta(){ return goldDelta; },
+  get goldPulseAt(){ return goldPulseAt; },
+  priceOf, basePrice, priceTrend, seasonCoef, isSellable, toolOwned,
+  buyItem, sellItem, upgradeCan, changeGold, nearShop, shopDist,
+  toggleShop, renderShop, shopBuyClick, giveItem, canCapacity,
   /* 背包 */
   get inv(){ return inv; }, set inv(v){ inv = v; },
   get gold(){ return gold; }, set gold(v){ gold = v; },
   get hotSel(){ return hotSel; }, set hotSel(v){ hotSel = v; },
   get packOpen(){ return packOpen; }, set packOpen(v){ togglePack(v); },
+  get held(){ return held; }, set held(v){ held = v; },
   addItem, removeItem, countItem, countSlots, canFit, addGold, spendGold,
   initInventory, selectHot, selectedItem, selectedSlot, hotbarRect,
   togglePack, packClick, packDropHeld, refreshPackGrid, buildPackGrid,
   serializeState, deserializeState,
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
-  cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse};
+  cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse,
+  SHOP_POS, FARM};
 </script>
 </body>
 </html>

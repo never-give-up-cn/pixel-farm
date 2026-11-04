@@ -1377,9 +1377,13 @@ function useTool(tx,ty){
  *   浮动量：由「物品 id + 天数」哈希出来 → 同一天同一物品价格固定，隔天才变
  * 卖出与买入共用同一个 priceOf()，面板上用 ↑ ↓ 标出当前价相对「基础价 × 季节系数」的涨跌 */
 function strHash(s){
-  let h = 2166136261;
-  for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return (h >>> 0) / 4294967295;                 /* 0~1 */
+  let h = 2166136261 >>> 0;
+  for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  /* 雪崩混淆：不然短字符串（只差一天）会挤在一堆，价格浮动就成不了「每天不同」 */
+  h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b) >>> 0;
+  h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35) >>> 0;
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967296;                 /* 0~1 */
 }
 /* 当前季节的价格系数 */
 function seasonCoef(){ return CONFIG.SHOP.SEASON_COEF[seasonName()] || 1; }
@@ -1441,7 +1445,9 @@ function buyItem(id){
   if(!canFit(id, 1)){ toast('背包满了，装不下' + d.name); return false; }
   changeGold(-price);
   giveItem(id, 1);
-  toast('买下了' + d.name + '（-' + price + ' 💰）');
+  const inHot = inv.findIndex(s => s && s.id === id) < CONFIG.INVENTORY.HOTBAR;
+  toast('买下了' + d.name + '（-' + price + ' 💰）' +
+        (inHot ? '' : '　快捷栏满了，放在背包里，拖到快捷栏就能用'));
   playSfx(880, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   refreshPackGrid();
   renderShop();

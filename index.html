@@ -57,23 +57,52 @@
   #packHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #packHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
   #packGrid{display:grid;grid-template-columns:repeat(6,42px);gap:5px}
-  #packGrid .cell{
+  #packGrid .cell,
+  #chestGrid .cell,
+  #chestInv .cell{
     position:relative;width:42px;height:42px;background:#1a2130;
     border:2px solid #2c3a4e;cursor:pointer;
   }
   #packGrid .cell.hot{border-color:#7a6a30}
-  #packGrid .cell:hover{background:#232c3e}
-  #packGrid .cell .ic{
+  #chestGrid .cell{border-color:#5a4526}
+  #packGrid .cell:hover,
+  #chestGrid .cell:hover,
+  #chestInv .cell:hover{background:#232c3e}
+  #packGrid .cell .ic,
+  #chestGrid .cell .ic,
+  #chestInv .cell .ic{
     position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);
     font-size:22px;line-height:1;
   }
-  #packGrid .cell .n{
+  #packGrid .cell .n,
+  #chestGrid .cell .n,
+  #chestInv .cell .n{
     position:absolute;right:2px;bottom:0px;font-size:11px;color:#ffd76a;
     text-shadow:0 0 3px #000;
   }
-  #packGrid .cell .k{
+  #packGrid .cell .k,
+  #chestGrid .cell .k,
+  #chestInv .cell .k{
     position:absolute;left:3px;top:0px;font-size:10px;color:#7f92ad;
   }
+  /* 木箱面板（复用背包的格子样式） */
+  #chest{
+    position:fixed;inset:0;z-index:44;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #chest.open{display:flex}
+  #chestMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #chestPanel{
+    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
+    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+  }
+  #chestHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
+  #chestHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
+  #chestGrid{display:grid;grid-template-columns:repeat(4,42px);gap:5px;margin-bottom:10px}
+  #chestSub{font-size:12px;color:#8fa3bd;margin-bottom:6px}
+  #chestInv{display:grid;grid-template-columns:repeat(6,42px);gap:5px}
+  #chestFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
   #packFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
   /* 物品名提示（跟随鼠标） */
   #packTip{
@@ -155,6 +184,18 @@
 </div>
 <div id="packTip"></div>
 <div id="packHeld"></div>
+
+<!-- 木箱面板：DOM 覆盖层，复用背包格子样式；打开时游戏时间冻结 -->
+<div id="chest">
+  <div id="chestMask"></div>
+  <div id="chestPanel">
+    <div id="chestHead">木箱 <span id="chestInfo"></span></div>
+    <div id="chestGrid"></div>
+    <div id="chestSub">背包（点一下存进木箱）</div>
+    <div id="chestInv"></div>
+    <div id="chestFoot">点木箱格 = 取回背包 · 点背包格 = 存入木箱 · Esc 关闭</div>
+  </div>
+</div>
 
 <!-- 商店面板：DOM 覆盖层，打开时游戏时间冻结 -->
 <div id="shop">
@@ -333,6 +374,23 @@ const CONFIG = {
     ]
   },
 
+  /* 建造：按 B 进入建造模式；左键放置（扣材料），右键拆除（返还 50% 材料）
+   * 配方：木栅栏(木3，挡路) / 木箱(木8，8 格储物) / 石板路(石2，叠加层，走上去更快) /
+   *       洒水器(木5+石5，每天早上自动浇周围 3×3) */
+  BUILD: {
+    RANGE: 5,                 // 建造交互距离（格）
+    REFUND: 0.5,              // 拆除返还比例
+    ROAD_MULT: 1.3,           // 石板路上的移动速度倍率
+    CHEST_SLOTS: 8,           // 木箱储物格数
+    SPRINKLER_RANGE: 1,       // 洒水器覆盖半径（格）→ 3×3
+    RECIPES: [
+      { id:'fence',     name:'木栅栏', cost:{wood:3},           solid:true  },
+      { id:'chest',     name:'木箱',   cost:{wood:8},           solid:true  },
+      { id:'path',      name:'石板路', cost:{stone:2},          overlay:true },
+      { id:'sprinkler', name:'洒水器', cost:{wood:5, stone:5} }
+    ]
+  },
+
   /* 物品定义表（背包 / 快捷栏的唯一数据源）
    * stack=true 可堆叠；max 单格最大数量（默认 STACK_MAX=99）
    * kind 决定左键行为：
@@ -464,7 +522,13 @@ const CONFIG = {
     shopPost:    '#7d5426', shopCounter: '#a97a3f', shopCounterDark: '#6d4522',
     shopCanopyA: '#d94f3d', shopCanopyB: '#f0f0f0', shopCanopyDark: '#b03a2c',
     shopSign:    '#7d5426', shopSignText: '#e2c14a',
-    shopGoods1:  '#e04430', shopGoods2: '#e08a2a', shopGoods3: '#c8a05c', shopGoods4: '#8fd06a'
+    shopGoods1:  '#e04430', shopGoods2: '#e08a2a', shopGoods3: '#c8a05c', shopGoods4: '#8fd06a',
+    fencePost:   '#8a5a2b', fencePostDark:'#63401f', fenceRail:'#a9713a', fenceRailDark:'#7d4f24',
+    chestBody:   '#a9763f', chestBodyDark:'#7d5527', chestLid:'#c08b4e', chestLidDark:'#8a5f2c',
+    chestLock:   '#e2c14a',
+    sprinkPost:  '#7d8a99', sprinkHead:'#9fb0c0', sprinkHeadDark:'#6b7887', sprinkBase:'#5b6674',
+    dropWater:   '#7ec8ff', dropWaterLight:'#c8ecff',
+    roadStone:   '#b9b3a6', roadStoneDark:'#8d8779', roadStoneLight:'#d2ccbe'
   }
 };
 
@@ -1054,6 +1118,159 @@ function giveItem(id, n){
 }
 
 /* === 5.系统 === */
+/* --- 建造系统：栅栏 / 木箱 / 石板路 / 洒水器 ---
+ * 建造物有两种存法：
+ *   叠加层（石板路）→ roads[格] = 1，不动 map，下面的耕地照旧能用
+ *   实体（栅栏/木箱/洒水器）→ buildings 数组 + buildIndex 索引（格 → 下标）
+ * 建造模式：B 进入；Q/E 或滚轮换配方；左键放置（扣材料）；右键拆除（返还 50%） */
+let buildings = [];                                    /* {type, tx, ty, slots?} */
+let buildIndex = new Int32Array(MAP_W*MAP_H).fill(-1); /* 格 → buildings 下标（-1 = 没有） */
+let roads = new Uint8Array(MAP_W*MAP_H);              /* 石板路叠加层 */
+let buildMode = false;                                 /* 建造模式开关 */
+let buildSel  = 0;                                     /* 当前选中的配方下标 */
+let dropFx = [];                                       /* 洒水器水滴粒子（世界坐标） */
+
+/* 配方 */
+function buildRecipes(){ return CONFIG.BUILD.RECIPES; }
+function buildRecipe(id){ return CONFIG.BUILD.RECIPES.find(r => r.id === id) || null; }
+function curRecipe(){ return CONFIG.BUILD.RECIPES[buildSel] || CONFIG.BUILD.RECIPES[0]; }
+/* 材料够不够 */
+function canAfford(r){
+  if(!r) return false;
+  for(const id in r.cost) if(countItem(id) < r.cost[id]) return false;
+  return true;
+}
+/* 第一个缺的材料 id（够则 null） */
+function missingMat(r){
+  if(!r) return null;
+  for(const id in r.cost) if(countItem(id) < r.cost[id]) return id;
+  return null;
+}
+/* 这个格子能不能放这个建造物（返回空串 = 可以） */
+function buildGroundOK(tx,ty,r){
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return '超出地图';
+  const i = ty*MAP_W + tx, t = map[i];
+  if(t === T.WATER) return '水里不能建';
+  if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
+  if(r.overlay) return '';            /* 石板路是叠加层：耕地 / 作物上都铺 */
+  if(t === T.TILLED || t === T.WATERED) return '耕地不能建';
+  if(crops[i]) return '这里种着东西';
+  if(buildIndex[i] >= 0) return '这里已经有东西了';
+  return '';
+}
+/* 够不够得着（建造距离） */
+function buildRangeOK(tx,ty){ return tileCenterDist(tx,ty) <= CONFIG.BUILD.RANGE; }
+/* 预览：能不能放（ok=false 时 reason 说明原因） */
+function buildPreview(tx,ty,r){
+  r = r || curRecipe();
+  if(!r) return {ok:false, reason:'没有可建造的东西'};
+  if(!buildRangeOK(tx,ty)) return {ok:false, reason:'太远了，走近一点'};
+  const g = buildGroundOK(tx,ty,r);
+  if(g) return {ok:false, reason:g};
+  const miss = missingMat(r);
+  if(miss) return {ok:false, reason:'材料不足（还差' + itemDef(miss).name + '）'};
+  return {ok:true, reason:''};
+}
+/* 放置 */
+function placeBuilding(tx,ty){
+  const r = curRecipe();
+  const p = buildPreview(tx,ty,r);
+  if(!p.ok){
+    toast(p.reason);
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  for(const id in r.cost) removeItem(id, r.cost[id]);
+  if(r.overlay){
+    roads[ty*MAP_W+tx] = 1;
+  }else{
+    const b = {type:r.id, tx:tx, ty:ty};
+    if(r.id === 'chest') b.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+    buildings.push(b);
+    buildIndex[ty*MAP_W+tx] = buildings.length - 1;
+  }
+  toast('造好了' + r.name);
+  playSfx(660, 'square', 0.12, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 拆除（返还 50% 材料） */
+function demolishAt(tx,ty){
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
+  const i = ty*MAP_W + tx;
+  /* 石板路是叠加层，单独拆 */
+  if(roads[i]){
+    roads[i] = 0;
+    const back = Math.floor(buildRecipe('path').cost.stone * CONFIG.BUILD.REFUND);
+    if(back > 0) addItem('stone', back);
+    toast('拆掉了石板路（返还石材×' + back + '）');
+    playSfx(220, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return true;
+  }
+  const bi = buildIndex[i];
+  if(bi < 0){
+    toast('这里没有可以拆的东西');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  const b = buildings[bi], r = buildRecipe(b.type);
+  if(b.type === 'chest' && b.slots && b.slots.some(s => s)){
+    toast('木箱里有东西，先清空再拆');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  let back = '';
+  for(const id in r.cost){
+    const n = Math.floor(r.cost[id] * CONFIG.BUILD.REFUND);
+    if(n > 0){ addItem(id, n); back += itemDef(id).name + '×' + n + ' '; }
+  }
+  buildings.splice(bi, 1);
+  buildIndex.fill(-1);                     /* 重建索引（下标会整体前移） */
+  for(let k=0; k<buildings.length; k++) buildIndex[buildings[k].ty*MAP_W + buildings[k].tx] = k;
+  toast('拆掉了' + r.name + (back ? '（返还 ' + back.trim() + '）' : ''));
+  playSfx(220, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+  return true;
+}
+/* 这一格上有什么建造物 */
+function buildingAt(tx,ty){
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return null;
+  const bi = buildIndex[ty*MAP_W+tx];
+  return bi >= 0 ? buildings[bi] : null;
+}
+/* 进入 / 退出建造模式 */
+function toggleBuild(on){
+  const want = (on === undefined) ? !buildMode : !!on;
+  if(want === buildMode) return;
+  buildMode = want;
+  if(buildMode){
+    if(packOpen) togglePack(false);
+    if(shopOpen) toggleShop(false);
+    if(chestOpen) toggleChest(false);
+    toast('建造模式：Q/E 换配方 · 左键放置 · 右键拆除 · B 退出');
+  }
+  playSfx(520, 'square', 0.08, CONFIG.AUDIO.VOLUME);
+}
+/* 换配方（dir = +1 下一个 / -1 上一个） */
+function cycleBuild(dir){
+  const n = CONFIG.BUILD.RECIPES.length;
+  if(!n) return;
+  buildSel = (buildSel + (dir >= 0 ? 1 : -1) + n) % n;
+  const r = curRecipe();
+  toast('选中：' + r.name + '（' + costText(r) + '）');
+}
+/* 配方的材料文字：木材×3 石材×5 */
+function costText(r){
+  let s = '';
+  for(const id in r.cost) s += itemDef(id).name + '×' + r.cost[id] + ' ';
+  return s.trim();
+}
+/* 石板路：脚下那一格是不是路 */
+function roadUnderPlayer(){
+  const tx = Math.floor(player.x / TILE);
+  const ty = Math.floor((player.y + BOX_OFF_Y + CONFIG.PLAYER.BOX_H/2) / TILE);
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
+  return roads[ty*MAP_W+tx] === 1;
+}
+
 /* --- 体力：干活消耗，睡觉恢复；为 0 时干不了活 --- */
 let stamina = CONFIG.STAMINA.MAX;      /* 当前体力（可为小数：奔跑按秒扣） */
 let staminaMax = CONFIG.STAMINA.MAX;   /* 当前体力上限（昏睡后会被扣 20%） */
@@ -1080,8 +1297,16 @@ function exhaustedGlow(){
 /* --- 碰撞 --- */
 function isSolid(tx,ty){
   if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) return true;   /* 地图外 = 实心 */
-  const t = map[ty*MAP_W+tx];
-  return t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP;
+  const i = ty*MAP_W+tx;
+  const t = map[i];
+  if(t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP) return true;
+  /* 建造物：栅栏和木箱挡路，洒水器可以踩过去 */
+  const bi = buildIndex[i];
+  if(bi >= 0){
+    const r = buildRecipe(buildings[bi].type);
+    if(r && r.solid) return true;
+  }
+  return false;
 }
 /* 碰撞盒（脚部）：相对精灵中心下移 (BODY_H - BOX_H)/2 */
 const BOX_OFF_Y = (CONFIG.PLAYER.BODY_H - CONFIG.PLAYER.BOX_H) / 2;
@@ -1135,7 +1360,10 @@ function updatePlayer(dt){
     /* 体力为 0 时跑不动（自动禁用奔跑） */
     const running = !!keys['shift'] && stamina > 0;
     if(running) stamina = Math.max(0, stamina - CONFIG.STAMINA.RUN_PER_SEC * dt);
-    const sp = CONFIG.PLAYER.SPEED * (running ? CONFIG.PLAYER.RUN_MULT : 1);
+    /* 石板路：踩上去速度 ×1.3 */
+    const road = roadUnderPlayer();
+    const sp = CONFIG.PLAYER.SPEED * (road ? CONFIG.BUILD.ROAD_MULT : 1) *
+               (running ? CONFIG.PLAYER.RUN_MULT : 1);
     player.vx = ix * sp; player.vy = iy * sp;
     /* 朝向：两轴同按时以最后按下的轴为准 */
     if(ix !== 0 && iy !== 0) player.dir = lastAxis === 'x' ? (ix<0?1:2) : (iy<0?3:0);
@@ -1350,11 +1578,68 @@ function settleDay(){
     if(map[i] === T.WATERED){ map[i] = T.TILLED; wateredTiles++; }
   }
   for(let i=0;i<crops.length;i++){ if(crops[i]) crops[i].watered = false; }
+  /* 洒水器：重置之后自动浇周围 3×3（今天浇 → 明天长） */
+  const sprinkled = applySprinklers();
   if(withered) toast('换季了，' + withered + ' 株作物枯萎了');
   if(matured)  toast('有 ' + matured + ' 株作物成熟了');
   console.log('[settle] 第 ' + clock.day + ' 天结算：生长 ' + grew + ' 株，成熟 ' + matured +
-              ' 株，枯萎 ' + withered + ' 株，重置浇水 ' + wateredTiles + ' 格');
-  return {grew:grew, matured:matured, withered:withered};
+              ' 株，枯萎 ' + withered + ' 株，重置浇水 ' + wateredTiles + ' 格' +
+              (sprinkled ? '，洒水器浇了 ' + sprinkled + ' 格' : ''));
+  return {grew:grew, matured:matured, withered:withered, sprinkled:sprinkled};
+}
+
+/* --- 洒水器：每天早上自动浇周围 3×3 --- */
+function applySprinklers(){
+  let n = 0;
+  const R = CONFIG.BUILD.SPRINKLER_RANGE;
+  for(const b of buildings){
+    if(b.type !== 'sprinkler') continue;
+    for(let dy=-R; dy<=R; dy++){
+      for(let dx=-R; dx<=R; dx++){
+        const tx = b.tx+dx, ty = b.ty+dy;
+        if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) continue;
+        const i = ty*MAP_W+tx;
+        if(map[i] !== T.TILLED && map[i] !== T.WATERED) continue;
+        map[i] = T.WATERED;
+        if(crops[i]) crops[i].watered = true;
+        spawnDrops(tx,ty);
+        n++;
+      }
+    }
+  }
+  if(n) toast('洒水器浇了 ' + n + ' 格地');
+  return n;
+}
+/* 洒水器的小水滴（世界坐标，往下掉） */
+function spawnDrops(tx,ty){
+  for(let k=0; k<3; k++){
+    dropFx.push({
+      x:(tx + 0.5)*TILE + (Math.random() - 0.5)*18,
+      y:(ty + 0.25)*TILE + Math.random()*10,
+      vy: 16 + Math.random()*26,
+      life: 0.9, max: 0.9
+    });
+  }
+}
+function updateDropFx(dt){
+  for(let i=dropFx.length-1; i>=0; i--){
+    const p = dropFx[i];
+    p.y += p.vy * dt;
+    p.life -= dt;
+    if(p.life <= 0) dropFx.splice(i,1);
+  }
+}
+function drawDropFx(g){
+  const C = CONFIG.TILE_COLORS;
+  for(const p of dropFx){
+    const a = clamp(p.life / p.max, 0, 1);
+    g.fillStyle = C.dropWater;
+    g.globalAlpha = a;
+    g.fillRect((p.x - cam.x) | 0, (p.y - cam.y) | 0, 2, 3);
+    g.fillStyle = C.dropWaterLight;
+    g.fillRect((p.x - cam.x) | 0, (p.y - cam.y) | 0, 1, 1);
+    g.globalAlpha = 1;
+  }
 }
 
 /* --- 工具使用：当前选中物品 → 工具行为 → 适用性判定 → 改地块 + 产出 + 音效 + 提示 --- */

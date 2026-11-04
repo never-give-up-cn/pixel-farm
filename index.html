@@ -42,6 +42,52 @@
     70% {opacity:1;transform:translateY(0)}
     100%{opacity:0;transform:translateY(-6px)}
   }
+  /* 背包面板（DOM 覆盖层；打开时游戏时间冻结） */
+  #pack{
+    position:fixed;inset:0;z-index:40;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #pack.open{display:flex}
+  #packMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #packPanel{
+    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
+    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+  }
+  #packHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
+  #packHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
+  #packGrid{display:grid;grid-template-columns:repeat(6,42px);gap:5px}
+  #packGrid .cell{
+    position:relative;width:42px;height:42px;background:#1a2130;
+    border:2px solid #2c3a4e;cursor:pointer;
+  }
+  #packGrid .cell.hot{border-color:#7a6a30}
+  #packGrid .cell:hover{background:#232c3e}
+  #packGrid .cell .ic{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);
+    font-size:22px;line-height:1;
+  }
+  #packGrid .cell .n{
+    position:absolute;right:2px;bottom:0px;font-size:11px;color:#ffd76a;
+    text-shadow:0 0 3px #000;
+  }
+  #packGrid .cell .k{
+    position:absolute;left:3px;top:0px;font-size:10px;color:#7f92ad;
+  }
+  #packFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
+  /* 物品名提示（跟随鼠标） */
+  #packTip{
+    position:fixed;z-index:60;display:none;pointer-events:none;
+    background:rgba(8,10,16,.95);border:1px solid #3d4a63;color:#e8f0ff;
+    padding:3px 8px;font:12px/1.4 Consolas,"Microsoft YaHei",monospace;
+    white-space:nowrap;
+  }
+  /* 手上拿着的物品（跟随鼠标） */
+  #packHeld{
+    position:fixed;z-index:60;display:none;pointer-events:none;
+    transform:translate(-50%,-50%);font-size:26px;line-height:1;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.8));
+  }
 </style>
 </head>
 <body>
@@ -49,6 +95,18 @@
 <canvas id="game"></canvas>
 <div id="stats"></div>
 <div id="toasts"></div>
+
+<!-- 背包面板：DOM 覆盖层，打开时游戏时间冻结 -->
+<div id="pack">
+  <div id="packMask"></div>
+  <div id="packPanel">
+    <div id="packHead">背包 <span id="packInfo"></span></div>
+    <div id="packGrid"></div>
+    <div id="packFoot">点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭</div>
+  </div>
+</div>
+<div id="packTip"></div>
+<div id="packHeld"></div>
 
 <script>
 'use strict';
@@ -96,8 +154,7 @@ const CONFIG = {
     BODY_H: 24,             // 体型高
     BOX_W: 12,              // 碰撞盒宽（脚部）
     BOX_H: 16,              // 碰撞盒高（脚部）
-    ANIM_FPS: 8,            // 走路摆腿帧率
-    START_TOOL: 0           // 初始工具（CONFIG.TOOLS 下标）
+    ANIM_FPS: 8             // 走路摆腿帧率
   },
 
   /* 摄像机 */
@@ -147,28 +204,69 @@ const CONFIG = {
   RAIN_TICK_MIN: 0.30,      // 雨声滴答间隔（现实秒，随机下限）
   RAIN_TICK_MAX: 0.85,
 
-  /* 暂停（后续背包打开时用；为 true 时时间/天气/角色全部冻结） */
+  /* 暂停（为 true 时时间/天气/角色全部冻结） */
   PAUSE_KEY: 'p',
 
-  /* 工具表：数字键 1~9 切换
-   * kind     'tool'=普通工具；'seed'=种子
-   * accepts  可作用的地块类型；to  作用后变成的地块；out  产出资源
+  /* 背包 / 快捷栏 */
+  INVENTORY: {
+    SLOTS: 24,            // 背包格数
+    HOTBAR: 8,            // 快捷栏格数（= 背包前 8 格，联动方案）
+    STACK_MAX: 99,        // 默认最大堆叠数
+    START_GOLD: 0,        // 初始金币（金币是数字，不占格）
+    /* 初始物品（按顺序填入背包前几格；前 8 格即快捷栏） */
+    START_LOADOUT: [
+      { id:'hoe', n:1 }, { id:'can', n:1 }, { id:'axe', n:1 }, { id:'pick', n:1 }, { id:'sickle', n:1 },
+      { id:'seed_radish', n:10 }, { id:'seed_potato', n:5 }, { id:'seed_tomato', n:5 },
+      { id:'seed_pumpkin', n:5 }
+    ]
+  },
+
+  /* 物品定义表（背包 / 快捷栏的唯一数据源）
+   * stack=true 可堆叠；max 单格最大数量（默认 STACK_MAX=99）
+   * kind 决定左键行为：
+   *   'tool'     工具（tool = TOOLS 表里的 id）
+   *   'seed'     种子（crop = 作物 id）
+   *   'material' 材料（木材/石材）
+   *   'crop'     收获的作物（crop = 作物 id）
+   *   'currency' 金币：单独存数字，不占格
+   * 显示名与图标在这里，TOOLS 表只管行为，避免两处各写一份 */
+  ITEMS: {
+    wood:  { id:'wood',  name:'木材', icon:'🌲', stack:true,  max:99, kind:'material' },
+    stone: { id:'stone', name:'石材', icon:'⛰️', stack:true,  max:99, kind:'material' },
+    gold:  { id:'gold',  name:'金币', icon:'💰', stack:false, max:1,  kind:'currency' },
+    hoe:   { id:'hoe',   name:'锄头', icon:'🔨', stack:false, max:1,  kind:'tool', tool:'hoe' },
+    can:   { id:'can',   name:'水壶', icon:'💧', stack:false, max:1,  kind:'tool', tool:'can' },
+    axe:   { id:'axe',   name:'斧头', icon:'🪓', stack:false, max:1,  kind:'tool', tool:'axe' },
+    pick:  { id:'pick',  name:'镐',   icon:'⛏️', stack:false, max:1,  kind:'tool', tool:'pick' },
+    sickle:{ id:'sickle',name:'镰刀', icon:'🌾', stack:false, max:1,  kind:'tool', tool:'sickle' },
+    seed_radish:  { id:'seed_radish',  name:'萝卜种子', icon:'🥕', stack:true, max:99, kind:'seed', crop:'radish' },
+    seed_potato:  { id:'seed_potato',  name:'土豆种子', icon:'🥔', stack:true, max:99, kind:'seed', crop:'potato' },
+    seed_tomato:  { id:'seed_tomato',  name:'番茄种子', icon:'🍅', stack:true, max:99, kind:'seed', crop:'tomato' },
+    seed_pumpkin: { id:'seed_pumpkin', name:'南瓜种子', icon:'🎃', stack:true, max:99, kind:'seed', crop:'pumpkin' },
+    radish:  { id:'radish',  name:'萝卜', icon:'🥕', stack:true, max:99, kind:'crop', crop:'radish' },
+    potato:  { id:'potato',  name:'土豆', icon:'🥔', stack:true, max:99, kind:'crop', crop:'potato' },
+    tomato:  { id:'tomato',  name:'番茄', icon:'🍅', stack:true, max:99, kind:'crop', crop:'tomato' },
+    pumpkin: { id:'pumpkin', name:'南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin' }
+  },
+
+  /* 工具行为表：名字/图标在 ITEMS 表，这里只管「作用在什么地块、产出什么」
+   * accepts  可作用的地块类型；to  作用后变成的地块；out  产出物品 {item,n}
    * cost     体力消耗（本轮不做体力，先留 0）；sfx  音效频率（每个工具音高不同）
-   * crop     kind='seed' 时对应的作物 id */
+   * crop     种子对应的作物 id */
   TOOLS: [
-    { id:'hoe',    kind:'tool', name:'锄头', icon:'🔨', key:'1', accepts:[T.GRASS, T.DIRT],    to:T.TILLED,  out:null,               cost:0, msg:'开垦了一块地',   sfx:196 },
-    { id:'can',    kind:'tool', name:'水壶', icon:'💧', key:'2', accepts:[T.TILLED, T.WATERED], to:T.WATERED, out:null,             cost:0, msg:'浇好了水',       sfx:784 },
-    { id:'axe',    kind:'tool', name:'斧头', icon:'🪓', key:'3', accepts:[T.TREE],              to:T.GRASS,   out:{res:'wood', n:2},  cost:0, msg:'砍倒了一棵树',   sfx:294 },
-    { id:'pick',   kind:'tool', name:'镐',   icon:'⛏️', key:'4', accepts:[T.ROCK],              to:T.DIRT,    out:{res:'stone',n:2},  cost:0, msg:'敲碎了一块岩石', sfx:147 },
-    { id:'sickle', kind:'tool', name:'镰刀', icon:'🌾', key:'5', accepts:[T.FLOWER, T.GRASS],   to:T.BARE,    out:null,               cost:0, msg:'清理了地面',     sfx:988 },
-    { id:'seed_radish',  kind:'seed', crop:'radish',  name:'萝卜种子', icon:'🥕', key:'6', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了萝卜', sfx:523 },
-    { id:'seed_potato',  kind:'seed', crop:'potato',  name:'土豆种子', icon:'🥔', key:'7', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了土豆', sfx:494 },
-    { id:'seed_tomato',  kind:'seed', crop:'tomato',  name:'番茄种子', icon:'🍅', key:'8', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了番茄', sfx:587 },
-    { id:'seed_pumpkin', kind:'seed', crop:'pumpkin', name:'南瓜种子', icon:'🎃', key:'9', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了南瓜', sfx:392 }
+    { id:'hoe',    accepts:[T.GRASS, T.DIRT],     to:T.TILLED,  out:null,               cost:0, msg:'开垦了一块地',   sfx:196 },
+    { id:'can',    accepts:[T.TILLED, T.WATERED], to:T.WATERED, out:null,               cost:0, msg:'浇好了水',       sfx:784 },
+    { id:'axe',    accepts:[T.TREE],              to:T.GRASS,   out:{item:'wood', n:2}, cost:0, msg:'砍倒了一棵树',   sfx:294 },
+    { id:'pick',   accepts:[T.ROCK],              to:T.DIRT,    out:{item:'stone',n:2}, cost:0, msg:'敲碎了一块岩石', sfx:147 },
+    { id:'sickle', accepts:[T.FLOWER, T.GRASS],   to:T.BARE,    out:null,               cost:0, msg:'清理了地面',     sfx:988 },
+    { id:'seed_radish',  crop:'radish',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了萝卜', sfx:523 },
+    { id:'seed_potato',  crop:'potato',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了土豆', sfx:494 },
+    { id:'seed_tomato',  crop:'tomato',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了番茄', sfx:587 },
+    { id:'seed_pumpkin', crop:'pumpkin', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了南瓜', sfx:392 }
   ],
 
   /* 作物表：每季一种；days=需要浇水的生长天数；regrow=收获后再次成熟需要的天数（0=不再结果）
-   * seedCost/sell 本轮只用不上（还没有商店/背包），先把数据备好 */
+   * seedCost/sell 供第 10 轮商店用（seedCost 也已写进作物/种子的物品定义里） */
   CROPS: [
     { id:'radish',  name:'萝卜', icon:'🥕', season:'春', days:3, seedCost:10, sell:35,  regrow:0, ripe:'#e0556b', unripe:'#d8b0a8', leaf:'#4aa03c' },
     { id:'potato',  name:'土豆', icon:'🥔', season:'春', days:5, seedCost:20, sell:60,  regrow:0, ripe:'#b98a4b', unripe:'#c9b58c', leaf:'#3f9440' },
@@ -185,13 +283,6 @@ const CONFIG = {
 
   /* 水壶：容量有限，站在水边右键补满 */
   WATER_CAN: { CAPACITY:20, REFILL_RANGE:1.8 },
-
-  /* 临时资源计数（只计数，本轮不做背包；第 7 轮替换为背包系统） */
-  RESOURCES: {
-    ORDER: ['wood','stone','radish','potato','tomato','pumpkin'],
-    NAME:  { wood:'木材', stone:'石材', radish:'萝卜', potato:'土豆', tomato:'番茄', pumpkin:'南瓜' },
-    ICON:  { wood:'🌲', stone:'⛰️', radish:'🥕', potato:'🥔', tomato:'🍅', pumpkin:'🎃' }
-  },
 
   /* 工具交互 */
   INTERACT: {
@@ -698,8 +789,7 @@ const player = {
   vx: 0, vy: 0,                                          /* 速度 */
   dir: 0,                                                /* 朝向 0=下 1=左 2=右 3=上 */
   animT: 0, frame: 0,                                    /* 动画：帧号 + 计时 */
-  moving: false,
-  tool: CONFIG.PLAYER.START_TOOL                         /* 当前工具（CONFIG.TOOLS 下标） */
+  moving: false
 };
 function drawPlayer(g){
   const s = CONFIG.PLAYER.BODY_W, h = CONFIG.PLAYER.BODY_H;
@@ -723,6 +813,113 @@ function drawPlayer(g){
       c += run;
     }
   }
+}
+
+/* === 4.背包系统 === */
+/* 背包 24 格：inv[i] = null 或 {id, n}
+ *   id = CONFIG.ITEMS 的键，n = 数量
+ * 快捷栏 = 背包前 CONFIG.INVENTORY.HOTBAR 格（联动方案，不另开数组）
+ *   → 快捷栏第 i 格永远就是背包第 i 格，拖动物品会立刻反映到快捷栏
+ * 金币（currency）单独存数字 gold，不占格
+ * 三个核心 API：addItem / removeItem / countItem（+ canFit 预判能否放下） */
+let inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
+let gold = CONFIG.INVENTORY.START_GOLD;
+let hotSel = 0;                       /* 快捷栏当前选中格（0~7） */
+
+function itemDef(id){ return CONFIG.ITEMS[id] || null; }
+function stackLimit(id){
+  const d = itemDef(id);
+  return d ? (d.max || CONFIG.INVENTORY.STACK_MAX) : 1;
+}
+function invUsed(){ let n = 0; for(const s of inv) if(s) n++; return n; }
+function invFree(){ return CONFIG.INVENTORY.SLOTS - invUsed(); }
+
+/* 统计背包里某物品的数量（金币走数字） */
+function countItem(id){
+  if(id === 'gold') return gold;
+  let n = 0;
+  for(const s of inv) if(s && s.id === id) n += s.n;
+  return n;
+}
+/* 背包里某物品占了几格 */
+function countSlots(id){
+  let n = 0;
+  for(const s of inv) if(s && s.id === id) n++;
+  return n;
+}
+/* 能不能放下 n 个（只判断，不改动背包） */
+function canFit(id, n){
+  if(n <= 0) return true;
+  if(id === 'gold') return true;              /* 金币不占格 */
+  const d = itemDef(id);
+  if(!d) return false;
+  if(!d.stack) return invFree() >= n;         /* 不可堆叠 → 每件独占一格 */
+  const lim = stackLimit(id);
+  let room = 0;
+  for(const s of inv){
+    if(!s) room += lim;                       /* 空格子 */
+    else if(s.id === id) room += Math.max(0, lim - s.n);   /* 还能往这堆里塞多少 */
+  }
+  return room >= n;
+}
+/* 放入 n 个：先并进已有的堆，再填空位；返回实际放入的数量 */
+function addItem(id, n){
+  if(n <= 0) return 0;
+  if(id === 'gold'){ gold += n; return n; }
+  const d = itemDef(id);
+  if(!d) return 0;
+  const lim = stackLimit(id);
+  let left = n;
+  if(d.stack){
+    for(let i=0;i<inv.length && left>0;i++){
+      const s = inv[i];
+      if(s && s.id === id && s.n < lim){
+        const take = Math.min(lim - s.n, left);
+        s.n += take; left -= take;
+      }
+    }
+  }
+  for(let i=0;i<inv.length && left>0;i++){
+    if(inv[i]) continue;
+    const take = d.stack ? Math.min(lim, left) : 1;
+    inv[i] = {id:id, n:take};
+    left -= take;
+  }
+  return n - left;
+}
+/* 取出 n 个：数量不够就一个都不动（返回 false） */
+function removeItem(id, n){
+  if(n <= 0) return true;
+  if(id === 'gold'){ if(gold < n) return false; gold -= n; return true; }
+  if(countItem(id) < n) return false;
+  let left = n;
+  for(let i=0;i<inv.length && left>0;i++){
+    const s = inv[i];
+    if(!s || s.id !== id) continue;
+    const take = Math.min(s.n, left);
+    s.n -= take; left -= take;
+    if(s.n <= 0) inv[i] = null;
+  }
+  return true;
+}
+/* 金币：单独存数字 */
+function addGold(n){ gold += n; return gold; }
+function spendGold(n){ if(gold < n) return false; gold -= n; return true; }
+
+/* --- 快捷栏（= 背包前 8 格） --- */
+function selectHot(i){
+  if(i >= 0 && i < CONFIG.INVENTORY.HOTBAR){ hotSel = i; return true; }
+  return false;
+}
+function selectedSlot(){ return inv[hotSel] || null; }
+function selectedItem(){ const s = selectedSlot(); return s ? itemDef(s.id) : null; }
+
+/* 初始物品 */
+function initInventory(){
+  inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
+  gold = CONFIG.INVENTORY.START_GOLD;
+  hotSel = 0;
+  for(const e of CONFIG.INVENTORY.START_LOADOUT) addItem(e.id, e.n);
 }
 
 /* === 5.系统 === */
@@ -840,10 +1037,6 @@ function playSfx(freq, type, dur, vol){
   return true;
 }
 
-/* --- 临时资源计数（本轮不做背包，第 7 轮替换） --- */
-const resources = {wood:0, stone:0};
-function addResource(res, n){ resources[res] = (resources[res] || 0) + n; }
-
 /* --- 提示条：屏幕底部，1.5 秒淡出，多条向上排 --- */
 const toastBox = document.getElementById('toasts');
 /* 把提示条锚定到画布下沿（而不是视口底部，避免掉进黑边） */
@@ -885,16 +1078,28 @@ function ripeness(c){
   const start = Math.max(0, def.days - 3);
   return clamp((c.grown - start) / Math.max(1, def.days - start), 0, 1);
 }
-function sowCrop(tx,ty,type){
+function sowCrop(tx,ty,type,seedId){
   const def = cropDef(type);
+  const sid = seedId || ('seed_' + type);
   const season = seasonName();
   if(season === '冬'){ toast('土地休眠了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   if(def.season !== season){ toast(def.name + '只能在' + def.season + '季种'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   const i = ty*MAP_W+tx;
   if(map[i] !== T.TILLED){ toast('先用锄头把这块地开垦了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  /* 种子来自背包：播下要扣 1 颗，没种子就不能播 */
+  const slot = selectedSlot();
+  const have = (slot && slot.id === sid && slot.n > 0) ? true : (countItem(sid) > 0);
+  if(!have){ toast('没有' + def.name + '种子了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   crops[i] = {type:type, stage:0, grown:0, watered:false, mature:false, dead:false};
+  if(slot && slot.id === sid && slot.n > 0){        /* 优先扣当前选中的那一格 */
+    slot.n--;
+    if(slot.n <= 0) inv[hotSel] = null;
+  }else{
+    removeItem(sid, 1);
+  }
   toast('播下了' + def.name);
-  playSfx(def.sfx || 523, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  const seedTool = CONFIG.TOOLS.find(t => t.crop === type);
+  playSfx(seedTool ? seedTool.sfx : 523, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
   return true;
 }
 function waterTile(tx,ty){
@@ -914,7 +1119,13 @@ function harvestCrop(tx,ty){
   const i = ty*MAP_W+tx;
   const c = crops[i];
   const def = cropDef(c.type);
-  addResource(c.type, 1);
+  /* 背包放不下就不收：宁可留在地里，也不能让作物凭空消失 */
+  if(!canFit(c.type, 1)){
+    toast('背包满了，装不下' + def.name);
+    playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6);
+    return false;
+  }
+  addItem(c.type, 1);
   if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
     c.grown = def.days - def.regrow;
     c.stage = 3; c.mature = false; c.watered = false;
@@ -948,6 +1159,7 @@ function findWaterNear(){
   return null;
 }
 function refillCan(){
+  if(countItem('can') <= 0){ toast('你没有水壶'); playSfx(140,'sawtooth',0.09,CONFIG.AUDIO.VOLUME*0.6); return false; }
   if(canWater >= CONFIG.WATER_CAN.CAPACITY){ toast('水壶是满的'); return false; }
   if(!findWaterNear()){ toast('附近没有水源'); playSfx(140,'sawtooth',0.09,CONFIG.AUDIO.VOLUME*0.6); return false; }
   canWater = CONFIG.WATER_CAN.CAPACITY;
@@ -986,8 +1198,8 @@ function settleDay(){
   return {grew:grew, matured:matured, withered:withered};
 }
 
+/* --- 工具使用：当前选中物品 → 工具行为 → 适用性判定 → 改地块 + 产出 + 音效 + 提示 --- */
 function useTool(tx,ty){
-  const tool = CONFIG.TOOLS[player.tool];
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
   if(tileCenterDist(tx,ty) > CONFIG.INTERACT.RANGE_TILES){
     toast('太远了，走近一点再试试');
@@ -996,40 +1208,55 @@ function useTool(tx,ty){
   }
   const i = ty*MAP_W + tx, t = map[i];
   const crop = crops[i];
+  const slot = selectedSlot();
+  const item = slot ? itemDef(slot.id) : null;
+  const tool = item ? CONFIG.TOOLS.find(x => x.id === item.id) : null;
 
-  /* 1. 地里有作物 */
+  /* 1. 地里有作物：成熟的点一下就收（跟手上拿什么无关）；枯萎的要用镰刀 */
   if(crop){
     if(crop.dead){
-      if(tool.id === 'sickle') return clearDeadCrop(tx,ty);
+      if(tool && tool.id === 'sickle') return clearDeadCrop(tx,ty);
       toast('作物已经枯萎了，用镰刀清理');
       playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
       return false;
     }
-    if(crop.mature) return harvestCrop(tx,ty);                /* 成熟了：点一下就收 */
+    if(crop.mature) return harvestCrop(tx,ty);
+    if(!tool){ toast('这块地里还有没熟的作物'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
     if(tool.id === 'can') return waterTile(tx,ty);             /* 没熟：照常浇水 */
-    if(tool.kind === 'seed'){ toast('这里已经种了东西'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+    if(item.kind === 'seed'){ toast('这里已经种了东西'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
     if(tool.id === 'sickle'){ toast('还没长好，再等几天'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
     toast('这块地里还有没熟的作物');
     playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
 
-  /* 2. 种子：只能种在耕地上 */
-  if(tool.kind === 'seed') return sowCrop(tx,ty,tool.crop);
+  /* 2. 空地：必须有能用的物品 */
+  if(!item){ toast('这个格子是空的，先选个东西'); playSfx(110,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(item.kind === 'currency'){ toast('金币不能拿去用'); return false; }
+  if(!tool){ toast(item.name + '用不了'); playSfx(110,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
 
-  /* 3. 水壶 */
+  /* 3. 种子：只能种在耕地上（扣背包里的种子） */
+  if(item.kind === 'seed') return sowCrop(tx,ty,tool.crop,item.id);
+
+  /* 4. 水壶 */
   if(tool.id === 'can') return waterTile(tx,ty);
 
-  /* 4. 普通工具：按地块类型处理 */
+  /* 5. 普通工具：按地块类型处理 */
   if(tool.accepts.indexOf(t) < 0){
-    toast(tool.name + '不能用在' + TILE_NAMES[t] + '上');
+    toast(item.name + '不能用在' + TILE_NAMES[t] + '上');
+    playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  /* 背包放不下产出物 → 不动地块，物品不产生（树不会被白砍） */
+  if(tool.out && !canFit(tool.out.item, tool.out.n)){
+    toast('背包满了，装不下' + itemDef(tool.out.item).name);
     playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
   map[i] = tool.to;
   if(tool.out){
-    addResource(tool.out.res, tool.out.n);
-    toast('获得 ' + CONFIG.RESOURCES.NAME[tool.out.res] + ' ×' + tool.out.n);
+    addItem(tool.out.item, tool.out.n);
+    toast('获得 ' + itemDef(tool.out.item).name + ' ×' + tool.out.n);
   }else{
     toast(tool.msg);
   }
@@ -1194,14 +1421,18 @@ const keys = {};
 let lastAxis = 'x';
 window.addEventListener('keydown', e=>{
   const k = e.key.toLowerCase();
-  if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(k)) e.preventDefault();
+  if(['arrowleft','arrowright','arrowup','arrowdown',' ','tab'].includes(k)) e.preventDefault();
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
-  /* 数字键 1~9 切换工具（1~5 工具，6~9 种子） */
-  if(k >= '1' && k <= String(CONFIG.TOOLS.length)){
-    player.tool = Number(k) - 1;
-    ensureAudio();                 /* 键盘也算一次用户交互，解锁音频 */
+  /* 背包：Tab / I 打开，Esc 关闭 */
+  if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
+  if(k === 'escape'){ if(packOpen) togglePack(false); return; }
+  if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
+  /* 数字键 1~8 选中快捷栏（= 背包前 8 格） */
+  if(k >= '1' && k <= String(CONFIG.INVENTORY.HOTBAR)){
+    selectHot(Number(k) - 1);
+    ensureAudio();                   /* 键盘也算一次用户交互，解锁音频 */
   }
   if(k === CONFIG.PAUSE_KEY) setPaused(!paused);   /* 暂停/恢复 */
 });
@@ -1223,12 +1454,20 @@ canvas.addEventListener('mousemove', e=>{
   hover.ty = Math.floor((cam.y + p.y) / TILE);
 });
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
-/* 左键 = 使用当前工具（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
+/* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
+  if(packOpen) return;
   if(e.button === 2){ ensureAudio(); refillCan(); return; }
   if(e.button !== 0) return;
   ensureAudio();
   const p = toLogical(e);
+  /* 点在快捷栏上 → 选中那一格，不算使用工具 */
+  const hb = hotbarRect();
+  if(p.x >= hb.x - 6 && p.x <= hb.x + hb.w + 5 && p.y >= hb.y - 6 && p.y <= hb.y + hb.h + 5){
+    const idx = Math.floor((p.x - hb.x) / (hb.cell + hb.gap));
+    if(idx >= 0 && idx < CONFIG.INVENTORY.HOTBAR) selectHot(idx);
+    return;
+  }
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
   useTool(tx, ty);
@@ -1236,6 +1475,159 @@ canvas.addEventListener('mousedown', e=>{
 canvas.addEventListener('contextmenu', e=> e.preventDefault());
 
 /* === 6.UI === */
+/* --- 背包面板（DOM 覆盖层；打开时游戏时间冻结） --- */
+const packEl   = document.getElementById('pack');
+const packMask = document.getElementById('packMask');
+const packGrid = document.getElementById('packGrid');
+const packTip  = document.getElementById('packTip');
+const packHeld = document.getElementById('packHeld');
+const packInfo = document.getElementById('packInfo');
+let packOpen = false;          /* 背包是否打开（打开时 update() 整体冻结 → 时间停住） */
+let held = null;               /* 手上拿着的物品：{id, n, from}（from = 拿起时的格号） */
+
+/* 建 24 个格子（前 8 格 = 快捷栏，标 1~8） */
+function buildPackGrid(){
+  if(!packGrid || !packGrid.appendChild) return;
+  packGrid.innerHTML = '';
+  for(let i=0;i<CONFIG.INVENTORY.SLOTS;i++){
+    const cell = document.createElement('div');
+    cell.className = 'cell' + (i < CONFIG.INVENTORY.HOTBAR ? ' hot' : '');
+    cell.slotIndex = i;
+    cell.innerHTML = '<span class="k">' + (i < CONFIG.INVENTORY.HOTBAR ? (i+1) : '') + '</span>' +
+                     '<span class="ic"></span><span class="n"></span>';
+    cell.addEventListener('mousedown', e=>{ e.preventDefault(); packClick(i); });
+    cell.addEventListener('mouseenter', e=>{ showPackTip(i, e); });
+    cell.addEventListener('mousemove', e=>{ movePackTip(e); });
+    cell.addEventListener('mouseleave', ()=>{ hidePackTip(); });
+    packGrid.appendChild(cell);
+  }
+}
+/* 把背包状态刷到格子上 */
+function refreshPackGrid(){
+  if(packInfo) packInfo.textContent = '已用 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS +
+                                     ' 格　💰 ' + gold;
+  if(!packGrid || !packGrid.children) return;
+  const cells = packGrid.children;
+  for(let i=0;i<cells.length;i++){
+    const c = cells[i];
+    if(!c || typeof c.querySelector !== 'function') continue;
+    const s = inv[i], d = s ? itemDef(s.id) : null;
+    const ic = c.querySelector('.ic'), n = c.querySelector('.n');
+    if(ic) ic.textContent = d ? d.icon : '';
+    if(n)  n.textContent  = (s && s.n > 1) ? String(s.n) : '';
+  }
+}
+/* 把一件东西塞进背包：先并进同 id 的堆，再找空位；放不下返回 false（不吞） */
+function storeItem(entry){
+  const d = itemDef(entry.id);
+  if(!d) return false;
+  const lim = stackLimit(entry.id);
+  let left = entry.n;
+  if(d.stack){
+    for(let i=0;i<inv.length && left>0;i++){
+      const s = inv[i];
+      if(s && s.id === entry.id && s.n < lim){
+        const take = Math.min(lim - s.n, left);
+        s.n += take; left -= take;
+      }
+    }
+  }
+  for(let i=0;i<inv.length && left>0;i++){
+    if(inv[i]) continue;
+    const take = d.stack ? Math.min(lim, left) : 1;
+    inv[i] = {id:entry.id, n:take};
+    left -= take;
+  }
+  return left <= 0;
+}
+/* 点格子：空手 → 拾起；手里有东西 → 放下（目标格有东西就交换） */
+function packClick(i){
+  const s = inv[i];
+  if(held){
+    const back = s ? {id:s.id, n:s.n} : null;   /* 目标格原来那件，先存着 */
+    const from = held.from;
+    inv[i] = {id:held.id, n:held.n};             /* 手里的东西落到目标格 */
+    held = null;
+    if(back){
+      if(from !== i && !inv[from]){
+        inv[from] = back;                       /* 交换：原格放回原来那件 */
+      }else if(!storeItem(back)){
+        held = {id:back.id, n:back.n, from:i};  /* 实在没地方放 → 拿回手里，绝不丢 */
+      }
+    }
+  }else{
+    if(!s) return;
+    held = {id:s.id, n:s.n, from:i};
+    inv[i] = null;
+  }
+  refreshPackGrid();
+  updatePackHeld();
+}
+/* 面板外松手 / 关面板：手里的东西放回背包（绝不凭空消失） */
+function packDropHeld(){
+  if(!held) return;
+  if(!inv[held.from]){
+    inv[held.from] = {id:held.id, n:held.n};   /* 放回拿起时的原格 */
+    held = null;
+  }else if(storeItem({id:held.id, n:held.n})){
+    held = null;                               /* 原格被占 → 并到别的堆/空位 */
+  }
+  /* 实在没地方放 → 继续拿在手里（不丢） */
+  refreshPackGrid();
+  updatePackHeld();
+}
+/* 物品名提示 */
+function showPackTip(i, e){
+  const s = inv[i];
+  const d = s ? itemDef(s.id) : null;
+  if(!d){ hidePackTip(); return; }
+  let extra = '';
+  if(d.kind === 'seed'){ const cd = cropDef(d.crop); extra = ' · ' + cd.season + '季 · ' + cd.days + '天'; }
+  else if(d.kind === 'crop'){ const cd = cropDef(d.crop); extra = ' · 售价 ' + cd.sell; }
+  else if(d.kind === 'material') extra = ' · 材料';
+  else if(d.kind === 'tool')     extra = ' · 工具';
+  else if(d.kind === 'currency') extra = ' · 金币';
+  if(packTip){
+    packTip.textContent = d.name + ' ×' + s.n + extra;
+    packTip.style.display = 'block';
+    movePackTip(e);
+  }
+}
+function movePackTip(e){
+  if(!packTip || !packTip.style || packTip.style.display === 'none') return;
+  packTip.style.left = (e.clientX + 14) + 'px';
+  packTip.style.top  = (e.clientY + 16) + 'px';
+}
+function hidePackTip(){ if(packTip) packTip.style.display = 'none'; }
+/* 手上的物品跟随鼠标 */
+function updatePackHeld(){
+  if(!packHeld) return;
+  if(!held){ packHeld.style.display = 'none'; packHeld.textContent = ''; return; }
+  const d = itemDef(held.id);
+  packHeld.textContent = d ? d.icon + (held.n > 1 ? '×' + held.n : '') : '';
+  packHeld.style.display = 'block';
+}
+/* 开关背包 */
+function togglePack(open){
+  const want = (open === undefined) ? !packOpen : !!open;
+  if(want === packOpen) return;
+  packOpen = want;
+  if(packOpen){
+    refreshPackGrid();
+    if(packEl) packEl.classList.add('open');
+  }else{
+    if(packEl) packEl.classList.remove('open');
+    packDropHeld();                 /* 关面板时手上的东西放回背包 */
+    hidePackTip();
+  }
+}
+if(packMask) packMask.addEventListener('mousedown', e=>{ e.preventDefault(); packDropHeld(); });
+document.addEventListener('mousemove', e=>{
+  if(!held || !packHeld) return;
+  packHeld.style.left = e.clientX + 'px';
+  packHeld.style.top  = e.clientY + 'px';
+});
+
 /* 3×5 点阵字库（像素风 HUD 文字，缩放后依然锐利） */
 const FONT = {
   '0':['111','101','101','101','111'],'1':['010','110','010','010','111'],
@@ -1290,27 +1682,21 @@ function drawUI(g){
   drawText(g, l1, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
   drawText(g, l2, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
 
-  /* 左上角：临时资源计数（本轮不做背包） */
-  const R = CONFIG.RESOURCES;
+  /* 左上角：金币 + 背包提示（资源计数已全部移入背包） */
   g.textBaseline = 'top'; g.textAlign = 'left';
-  g.font = '15px ' + FONT_EMOJI;
-  const resList = R.ORDER.map(r => ({icon:R.ICON[r], n:resources[r] || 0}));
-  const iconWs = resList.map(it => g.measureText(it.icon).width);
-  let rowW = 0;
-  for(let i=0;i<resList.length;i++)
-    rowW += iconWs[i] + 4 + String(resList[i].n).length*(GLYPH_W+1)*scale + 12;
-  const rowH = 24, rowY = 8 + boxH + 6;
+  g.font = '15px ' + FONT_EMOJI;  const goldIconW = g.measureText('💰').width;
+  g.font = '13px ' + FONT_CJK;    const goldTxt = '金币 ' + gold + '　[Tab] 背包 ' +
+                                                invUsed() + '/' + CONFIG.INVENTORY.SLOTS;
+  const goldTxtW = g.measureText(goldTxt).width;
+  const rowW = Math.ceil(goldIconW + 4 + goldTxtW) + 16, rowH = 24, rowY = 8 + boxH + 6;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, rowY, rowW, rowH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, rowY, rowW, 1); g.fillRect(8, rowY+rowH-1, rowW, 1);
   g.fillRect(8, rowY, 1, rowH); g.fillRect(8+rowW-1, rowY, 1, rowH);
-  let rx = 8 + 8;
-  for(let i=0;i<resList.length;i++){
-    g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudText;
-    g.fillText(resList[i].icon, rx, rowY + 4);
-    drawText(g, String(resList[i].n), rx + iconWs[i] + 4, rowY + 7, scale, CONFIG.COLORS.hudAccent);
-    rx += iconWs[i] + 4 + String(resList[i].n).length*(GLYPH_W+1)*scale + 12;
-  }
+  g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText('💰', 16, rowY + 4);
+  g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText(goldTxt, 16 + goldIconW + 4, rowY + 5);
 
   /* 左上角：季节 · 第几天 · 时刻 · 天气 */
   const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
@@ -1331,58 +1717,55 @@ function drawUI(g){
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
 
-  /* 右下角：当前工具（图标 + 名称 + 快捷键 + 水壶余量） */
-  const tool = CONFIG.TOOLS[player.tool];
-  const waterTxt = (tool.id === 'can') ? '💧' + canWater + '/' + CONFIG.WATER_CAN.CAPACITY : '';
-  g.font = '20px ' + FONT_EMOJI; const iw = g.measureText(tool.icon).width;
-  g.font = '14px ' + FONT_CJK;   const nw = g.measureText(tool.name).width;
-  g.font = '12px ' + FONT_CJK;   const kw = g.measureText('(' + tool.key + ')').width;
-  g.font = '12px ' + FONT_EMOJI; const ww = waterTxt ? g.measureText(waterTxt).width : 0;
-  const tbW = Math.ceil(iw + nw + kw + ww + 34), tbH = 32;
-  const tbX = VIEW_W - tbW - 10, tbY = VIEW_H - tbH - 10;
-  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(tbX, tbY, tbW, tbH);
+  /* 底部中央：快捷栏 8 格（= 背包前 8 格），选中格高亮描边 */
+  const hb = hotbarRect();
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(hb.x - 6, hb.y - 6, hb.w + 12, hb.h + 12);
   g.fillStyle = CONFIG.COLORS.hudBorder;
-  g.fillRect(tbX, tbY, tbW, 1); g.fillRect(tbX, tbY+tbH-1, tbW, 1);
-  g.fillRect(tbX, tbY, 1, tbH); g.fillRect(tbX+tbW-1, tbY, 1, tbH);
-  g.textBaseline = 'top';
-  g.font = '20px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
-  g.fillText(tool.icon, tbX + 8, tbY + 6);
-  g.font = '14px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
-  g.fillText(tool.name, tbX + 8 + iw + 4, tbY + 9);
-  g.font = '12px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudBorder;
-  g.fillText('(' + tool.key + ')', tbX + 8 + iw + 4 + nw + 3, tbY + 10);
-  if(waterTxt){
-    g.font = '12px ' + FONT_EMOJI;
-    g.fillStyle = canWater > 0 ? CONFIG.COLORS.hudText : '#ff8a7a';
-    g.fillText(waterTxt, tbX + 8 + iw + 4 + nw + 3 + kw + 4, tbY + 10);
-  }
-
-  /* 左下角：种子栏（6~9），当前选中的高亮 */
-  const seeds = CONFIG.TOOLS.filter(t => t.kind === 'seed');
-  g.font = '18px ' + FONT_EMOJI;
-  let sw = 0;
-  for(const s of seeds) sw += g.measureText(s.icon).width + 26;
-  const sbW = Math.ceil(sw) + 12, sbH = 30, sbX = 10, sbY = VIEW_H - sbH - 10;
-  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(sbX, sbY, sbW, sbH);
-  g.fillStyle = CONFIG.COLORS.hudBorder;
-  g.fillRect(sbX, sbY, sbW, 1); g.fillRect(sbX, sbY+sbH-1, sbW, 1);
-  g.fillRect(sbX, sbY, 1, sbH); g.fillRect(sbX+sbW-1, sbY, 1, sbH);
-  let sx = sbX + 6;
-  for(const s of seeds){
-    const on = (CONFIG.TOOLS[player.tool] === s);
-    g.font = '18px ' + FONT_EMOJI;
-    const iw2 = g.measureText(s.icon).width;
-    if(on){
-      g.fillStyle = 'rgba(255,215,106,0.20)';
-      g.fillRect(sx-3, sbY+3, iw2+16, sbH-6);
-    }
-    g.fillStyle = on ? CONFIG.COLORS.hudAccent : CONFIG.COLORS.hudText;
-    g.fillText(s.icon, sx, sbY + 6);
-    g.font = '11px ' + FONT_CJK;
+  g.fillRect(hb.x - 6, hb.y - 6, hb.w + 12, 1); g.fillRect(hb.x - 6, hb.y + hb.h + 5, hb.w + 12, 1);
+  g.fillRect(hb.x - 6, hb.y - 6, 1, hb.h + 12); g.fillRect(hb.x + hb.w + 5, hb.y - 6, 1, hb.h + 12);
+  for(let i=0;i<CONFIG.INVENTORY.HOTBAR;i++){
+    const x = hb.x + i*(hb.cell + hb.gap);
+    const on = (i === hotSel);
+    const s = inv[i];
+    g.fillStyle = on ? 'rgba(255,215,106,0.18)' : 'rgba(12,16,24,0.85)';
+    g.fillRect(x, hb.y, hb.cell, hb.h);
     g.fillStyle = on ? CONFIG.COLORS.hudAccent : CONFIG.COLORS.hudBorder;
-    g.fillText(s.key, sx + iw2 + 2, sbY + 9);
-    sx += iw2 + 26;
+    g.fillRect(x, hb.y, hb.cell, 1); g.fillRect(x, hb.y + hb.h - 1, hb.cell, 1);
+    g.fillRect(x, hb.y, 1, hb.h); g.fillRect(x + hb.cell - 1, hb.y, 1, hb.h);
+    /* 快捷键编号 */
+    drawText(g, String(i + 1), x + 3, hb.y + 3, 1, on ? CONFIG.COLORS.hudAccent : '#63758f');
+    if(s){
+      const d = itemDef(s.id);
+      g.textBaseline = 'middle'; g.textAlign = 'center';
+      g.font = '24px ' + FONT_EMOJI;
+      g.fillText(d ? d.icon : '', x + hb.cell/2, hb.y + hb.h/2 - 1);
+      g.textBaseline = 'top'; g.textAlign = 'left';
+      if(d && d.id === 'can'){                    /* 水壶显示余量 */
+        g.font = '11px ' + FONT_EMOJI;
+        g.fillStyle = canWater > 0 ? CONFIG.COLORS.hudText : '#ff8a7a';
+        g.fillText(canWater + '/' + CONFIG.WATER_CAN.CAPACITY, x + 3, hb.y + hb.h - 14);
+      }else if(s.n > 1){                          /* 数量 */
+        drawText(g, String(s.n), x + hb.cell - 6 - String(s.n).length*(GLYPH_W+1)*2, hb.y + hb.h - 13, 2, CONFIG.COLORS.hudAccent);
+      }
+    }
   }
+  /* 快捷栏上方：当前选中物品 */
+  const selItem = selectedItem();
+  if(selItem){
+    let cap = selItem.name;
+    if(selItem.kind === 'seed'){ const cd = cropDef(selItem.crop); cap += '（' + cd.season + '季 · ' + cd.days + '天）'; }
+    g.font = '13px ' + FONT_CJK; g.textAlign = 'center'; g.textBaseline = 'top';
+    g.fillStyle = CONFIG.COLORS.hudText;
+    g.fillText(cap, VIEW_W/2, hb.y - 22);
+    g.textAlign = 'left';
+  }
+}
+
+/* 快捷栏在画布上的位置（绘制与点击判定共用一份） */
+function hotbarRect(){
+  const HOT = CONFIG.INVENTORY.HOTBAR, CELL = 44, GAP = 4;
+  const w = HOT*CELL + (HOT-1)*GAP;
+  return {x: Math.round((VIEW_W - w)/2), y: VIEW_H - CELL - 12, w: w, h: CELL, cell: CELL, gap: GAP};
 }
 const statsEl = document.getElementById('stats');
 function updateStats(){
@@ -1403,22 +1786,75 @@ function updateStats(){
     '光标 <b>' + hover.tx + ',' + hover.ty + '</b> ' + t + cropInfo + '\n' +
     '绘制瓦片 <b>' + visibleCount + '</b> / ' + (MAP_W*MAP_H) +
     ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)\n' +
-    '工具 ' + CONFIG.TOOLS.map((t,i)=>
-        (i===player.tool ? '<b>[' + t.key + ']' + t.icon + t.name + '</b>'
-                         : ' ' + t.key + ' ' + t.icon + t.name)).join('　') + '\n' +
+    '快捷栏 ' + CONFIG.INVENTORY.HOTBAR + ' 格（= 背包前 ' + CONFIG.INVENTORY.HOTBAR + ' 格）选中 <b>' +
+        (hotSel + 1) + '</b>：' + (selectedItem() ? selectedItem().icon + selectedItem().name : '空') + '\n' +
+    '背包 <b>' + invUsed() + '</b>/' + CONFIG.INVENTORY.SLOTS + ' 格　金币 <b>' + gold + '</b>\n' +
     '水壶 <b>' + canWater + '</b>/' + CONFIG.WATER_CAN.CAPACITY + '　右键站在水边补水\n' +
     '作物 ' + CONFIG.CROPS.map(c =>
         c.icon + c.name + '(' + c.season + c.days + '天' + (c.regrow ? '可再收' : '') + ')' +
         ' 种' + c.seedCost + '/售' + c.sell).join('　') + '\n' +
-    '资源 ' + CONFIG.RESOURCES.ORDER.map(r =>
-        CONFIG.RESOURCES.ICON[r] + ' ' + CONFIG.RESOURCES.NAME[r] + ' <b>' + (resources[r]||0) + '</b>').join('　') + '\n' +
+    '背包物品 ' + Object.keys(CONFIG.ITEMS).filter(id => countItem(id) > 0).map(id =>
+        CONFIG.ITEMS[id].icon + ' ' + CONFIG.ITEMS[id].name + ' <b>' + countItem(id) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键换工具 · 左键使用 · 右键补水 · P 暂停';
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · P 暂停';
 }
 
 /* === 7.存档 === */
-/* 本轮不做存档 */
+/* 本轮不做存档，但把「序列化入口」留好：第 10 轮只要把下面两个函数
+ * 接上 localStorage 就能存档/读档，不用再改数据结构。
+ *   serializeState()  → 纯 JSON 的状态快照（可直接 JSON.stringify）
+ *   deserializeState(d) → 用快照覆盖当前状态
+ * 约定：背包/快捷栏存成 [{id,n}] 数组，null 表示空格；作物存成同样格式的对象数组。 */
+function serializeState(){
+  return {
+    v: CONFIG.VERSION,
+    clock: {day: clock.day, min: clock.min, hold: clock.hold},
+    gold: gold,
+    hotSel: hotSel,
+    canWater: canWater,
+    /* 背包：只存有物品的格 → [{slot, id, n}]；空位不占体积 */
+    inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
+    map: Array.from(map),
+    crops: crops.map(c => c ? {type:c.type, stage:c.stage, grown:c.grown,
+                               watered:c.watered, mature:c.mature, dead:c.dead} : null),
+    player: {x: player.x, y: player.y},
+    weather: weather.id
+  };
+}
+function deserializeState(d){
+  if(!d || typeof d !== 'object') return false;
+  try{
+    if(d.clock){ clock.day = d.clock.day; clock.min = d.clock.min; clock.hold = d.clock.hold || 0; }
+    if(typeof d.gold === 'number') gold = d.gold;
+    if(typeof d.hotSel === 'number') hotSel = clamp(d.hotSel, 0, CONFIG.INVENTORY.HOTBAR - 1);
+    if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, CONFIG.WATER_CAN.CAPACITY);
+    if(Array.isArray(d.map)) for(let i=0;i<d.map.length && i<map.length;i++) map[i] = d.map[i] | 0;
+    if(Array.isArray(d.crops))
+      for(let i=0;i<d.crops.length && i<crops.length;i++){
+        const c = d.crops[i];
+        crops[i] = c ? {type:c.type, stage:c.stage|0, grown:c.grown|0,
+                        watered:!!c.watered, mature:!!c.mature, dead:!!c.dead} : null;
+      }
+    if(Array.isArray(d.inv)){
+      inv = new Array(CONFIG.INVENTORY.SLOTS).fill(null);
+      for(const e of d.inv){
+        if(!e || !CONFIG.ITEMS[e.id]) continue;
+        const i = (typeof e.slot === 'number') ? e.slot : inv.findIndex(s=>!s);
+        if(i < 0 || i >= inv.length) continue;
+        inv[i] = {id:e.id, n:e.n|0};
+      }
+    }
+    if(d.player){ player.x = d.player.x; player.y = d.player.y; }
+    if(d.weather) weather = CONFIG.WEATHER.find(w=>w.id===d.weather) || weather;
+    refreshPackGrid();
+    updateStats();
+    return true;
+  }catch(e){
+    console.warn('[save] 读档失败：', e);
+    return false;
+  }
+}
 
 /* === 8.主循环 === */
 const FIXED_DT = 1 / CONFIG.TARGET_FPS;
@@ -1430,6 +1866,7 @@ let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCou
 
 function update(dt){
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
+  if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
@@ -1506,6 +1943,8 @@ function loop(now){
 
 /* --- 启动 --- */
 genMap(CONFIG.SEED);
+initInventory();                       /* 初始背包 / 快捷栏 */
+buildPackGrid();                       /* 造出背包面板的 24 个格子 */
 player.x = SPAWN.x*TILE + TILE/2;
 player.y = SPAWN.y*TILE + TILE/2;
 cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -1518,15 +1957,24 @@ layoutToasts();
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
-if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, resources, layoutToasts,
+if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
   updateClock, updateWeather, updateSky, rollWeather, spawnParticles,
   get weather(){ return weather; }, set weather(v){ weather = v; },
   get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
   get crops(){ return crops; }, set crops(v){ crops = v; },
   get canWater(){ return canWater; }, set canWater(v){ canWater = v; },
+  /* 背包 */
+  get inv(){ return inv; }, set inv(v){ inv = v; },
+  get gold(){ return gold; }, set gold(v){ gold = v; },
+  get hotSel(){ return hotSel; }, set hotSel(v){ hotSel = v; },
+  get packOpen(){ return packOpen; }, set packOpen(v){ togglePack(v); },
+  addItem, removeItem, countItem, countSlots, canFit, addGold, spendGold,
+  initInventory, selectHot, selectedItem, selectedSlot, hotbarRect,
+  togglePack, packClick, packDropHeld, refreshPackGrid, buildPackGrid,
+  serializeState, deserializeState,
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
-  cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T};
+  cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse};
 </script>
 </body>
 </html>

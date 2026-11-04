@@ -1605,6 +1605,7 @@ function nearHouse(){ return houseDist() <= CONFIG.SLEEP.RANGE; }
 function startSleep(faint){
   if(sleepFx.phase !== 'none') return false;
   sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
+  dayRolled = false;                 /* 本次睡觉要自己翻天（上一轮的标记不能继承） */
   toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
   return true;
 }
@@ -2475,6 +2476,8 @@ function serializeState(){
     hotSel: hotSel,
     canWater: canWater,
     canLevel: canLevel,
+    stamina: stamina,
+    staminaMax: staminaMax,
     /* 背包：只存有物品的格 → [{slot, id, n}]；空位不占体积 */
     inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
     map: Array.from(map),
@@ -2492,6 +2495,8 @@ function deserializeState(d){
     if(typeof d.hotSel === 'number') hotSel = clamp(d.hotSel, 0, CONFIG.INVENTORY.HOTBAR - 1);
     if(typeof d.canLevel === 'number') canLevel = clamp(d.canLevel | 0, 0, CONFIG.SHOP.CAN_MAX_LEVEL);
     if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, canCapacity());
+    if(typeof d.staminaMax === 'number') staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX);
+    if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
     if(Array.isArray(d.map)) for(let i=0;i<d.map.length && i<map.length;i++) map[i] = d.map[i] | 0;
     if(Array.isArray(d.crops))
       for(let i=0;i<d.crops.length && i<crops.length;i++){

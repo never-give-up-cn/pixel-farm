@@ -190,6 +190,31 @@ const CONFIG = {
   /* 初始金币 */
   INIT_GOLD: 100,
 
+  /* 体力：干活掉体力，睡觉回满；为 0 时干不了活（只能走路） */
+  STAMINA: {
+    MAX: 100,               // 体力上限
+    LOW: 20,                // 低于这个值体力条变红闪烁
+    RUN_PER_SEC: 2,         // 奔跑：每秒消耗
+    TOOL_COST: {            // 各动作消耗（简报给的：锄地3 浇水1 砍树4 敲石4 收获1 奔跑2/秒）
+      hoe: 3,               // 锄地
+      can: 1,               // 浇水
+      axe: 4,               // 砍树
+      pick: 4,              // 敲石
+      sickle: 2,            // 清理枯萎作物（简报未列，取 2）
+      harvest: 1            // 收获
+    }
+  },
+
+  /* 睡觉：走到小屋 CONFIG.SLEEP.RANGE 格内按 E */
+  SLEEP: {
+    RANGE: 1.5,             // 交互距离（格）
+    FADE_OUT: 0.8,          // 淡出（秒）
+    HOLD: 0.8,              // 全黑停留（秒）
+    FADE_IN: 0.8,           // 淡入（秒）
+    TITLE: 2.2,             // 「第 N 天」标题停留（秒）
+    FAINT_PENALTY: 0.2      // 强制昏睡惩罚：次日体力上限 -20%
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 64,                // 地图宽（格）
@@ -1029,6 +1054,29 @@ function giveItem(id, n){
 }
 
 /* === 5.系统 === */
+/* --- 体力：干活消耗，睡觉恢复；为 0 时干不了活 --- */
+let stamina = CONFIG.STAMINA.MAX;      /* 当前体力（可为小数：奔跑按秒扣） */
+let staminaMax = CONFIG.STAMINA.MAX;   /* 当前体力上限（昏睡后会被扣 20%） */
+/* 某个动作消耗多少体力 */
+function staminaCost(id){ return CONFIG.STAMINA.TOOL_COST[id] || 0; }
+/* 扣体力：体力为 0 时任何消耗体力的动作都做不了 */
+function payStamina(cost){
+  if(cost <= 0) return true;
+  if(stamina <= 0){
+    toast('体力不足');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  stamina = Math.max(0, stamina - cost);
+  return true;
+}
+/* 体力耗尽时的视觉暗角强度（0~1，画暗角用） */
+function exhaustedGlow(){
+  if(stamina > 0) return 0;
+  const t = performance.now() / 1000;
+  return 0.55 + 0.45 * Math.sin(t * 3.2);      /* 缓慢呼吸感的红晕 */
+}
+
 /* --- 碰撞 --- */
 function isSolid(tx,ty){
   if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) return true;   /* 地图外 = 实心 */
@@ -1084,7 +1132,9 @@ function updatePlayer(dt){
     /* 对角线归一化：斜向速度与直线一致，不加速 */
     const len = Math.hypot(ix, iy) || 1;
     ix /= len; iy /= len;
-    const running = !!keys['shift'];
+    /* 体力为 0 时跑不动（自动禁用奔跑） */
+    const running = !!keys['shift'] && stamina > 0;
+    if(running) stamina = Math.max(0, stamina - CONFIG.STAMINA.RUN_PER_SEC * dt);
     const sp = CONFIG.PLAYER.SPEED * (running ? CONFIG.PLAYER.RUN_MULT : 1);
     player.vx = ix * sp; player.vy = iy * sp;
     /* 朝向：两轴同按时以最后按下的轴为准 */
@@ -1213,6 +1263,7 @@ function waterTile(tx,ty){
   if(canWater <= 0){ toast('水壶空了，去水边右键补水'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   if(map[i] === T.WATERED){ toast('今天已经浇过水了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   if(map[i] !== T.TILLED){ toast('这里不能浇水'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(!payStamina(staminaCost('can'))) return false;   /* 浇水消耗 1 点体力 */
   canWater--;
   map[i] = T.WATERED;                       /* 视觉变深色 */
   const c = crops[i];
@@ -1231,6 +1282,7 @@ function harvestCrop(tx,ty){
     playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6);
     return false;
   }
+  if(!payStamina(staminaCost('harvest'))) return false;   /* 收获消耗 1 点体力 */
   addItem(c.type, 1);
   if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
     c.grown = def.days - def.regrow;
@@ -1247,6 +1299,7 @@ function harvestCrop(tx,ty){
 function clearDeadCrop(tx,ty){
   const i = ty*MAP_W+tx;
   const def = cropDef(crops[i].type);
+  if(!payStamina(staminaCost('sickle'))) return false;
   crops[i] = null;
   if(map[i] === T.WATERED) map[i] = T.TILLED;
   toast('清理了枯萎的' + def.name);
@@ -1359,6 +1412,8 @@ function useTool(tx,ty){
     playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
+  /* 体力不够就别动这块地（不消耗体力、不改地块） */
+  if(!payStamina(staminaCost(tool.id))) return false;
   map[i] = tool.to;
   if(tool.out){
     addItem(tool.out.item, tool.out.n);

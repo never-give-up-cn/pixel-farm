@@ -729,6 +729,66 @@ function drawShop(g,px,py){
   g.fillStyle = C.shopSignText;  g.fillRect(px+20, py+22, 24, 3);
 }
 
+/* --- 建造物：木栅栏 / 木箱 / 洒水器 --- */
+function drawFence(g,x,y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.fencePost;     g.fillRect(x+4,  y+9, 5, 23);
+  g.fillRect(x+23, y+9, 5, 23);
+  g.fillStyle = C.fencePostDark; g.fillRect(x+4,  y+9, 2, 23);
+  g.fillRect(x+23, y+9, 2, 23);
+  g.fillStyle = C.fenceRail;     g.fillRect(x+2, y+12, 28, 4);
+  g.fillRect(x+2, y+22, 28, 4);
+  g.fillStyle = C.fenceRailDark; g.fillRect(x+2, y+15, 28, 1);
+  g.fillRect(x+2, y+25, 28, 1);
+}
+function drawChest(g,x,y,open){
+  const C = CONFIG.TILE_COLORS;
+  const lidY = open ? y+3 : y+8;
+  g.fillStyle = C.chestBodyDark; g.fillRect(x+4, y+16, 24, 15);
+  g.fillStyle = C.chestBody;     g.fillRect(x+5, y+17, 22, 13);
+  g.fillStyle = C.chestLidDark;  g.fillRect(x+2, lidY, 28, 8);
+  g.fillStyle = C.chestLid;      g.fillRect(x+3, lidY+1, 26, 6);
+  g.fillStyle = C.chestLock;     g.fillRect(x+14, y+15, 4, 5);
+  g.fillStyle = C.chestBodyDark; g.fillRect(x+5, y+28, 22, 2);
+}
+function drawSprinkler(g,x,y,t){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.sprinkBase; g.fillRect(x+7, y+27, 18, 4);
+  g.fillStyle = C.sprinkPost; g.fillRect(x+14, y+15, 4, 13);
+  const a = t * 1.8;
+  const dx = Math.cos(a) * 9, dy = Math.sin(a) * 4;
+  g.fillStyle = C.sprinkHeadDark; g.fillRect(x+12+dx, y+12+dy, 8, 5);
+  g.fillStyle = C.sprinkHead;     g.fillRect(x+13+dx, y+11+dy, 6, 3);
+  g.fillStyle = C.dropWater;      g.fillRect(x+4+dx, y+17+dy, 2, 2);
+  g.fillRect(x+22+dx, y+17+dy, 2, 2);
+}
+function drawBuilding(g,b,x,y){
+  if(b.type === 'fence')     drawFence(g,x,y);
+  else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
+  else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
+}
+/* 石板路：半透明地铺在地面上（底下是耕地也照样能看见犁沟） */
+function drawRoadTile(g,x,y){
+  const C = CONFIG.TILE_COLORS;
+  const sl = [[1,1],[17,1],[1,17],[17,17]];
+  for(const s of sl){
+    g.globalAlpha = 0.60; g.fillStyle = C.roadStone;
+    g.fillRect(x+s[0], y+s[1], 14, 14);
+    g.globalAlpha = 0.80; g.fillStyle = C.roadStoneLight;
+    g.fillRect(x+s[0], y+s[1], 14, 2);
+    g.globalAlpha = 0.55; g.fillStyle = C.roadStoneDark;
+    g.fillRect(x+s[0], y+s[1]+12, 14, 2);
+  }
+  g.globalAlpha = 1;
+}
+function drawRoads(g,x0,y0,x1,y1){
+  for(let ty=y0;ty<=y1;ty++)
+    for(let tx=x0;tx<=x1;tx++){
+      if(!roads[ty*MAP_W+tx]) continue;
+      drawRoadTile(g, tx*TILE - cam.x, ty*TILE - cam.y);
+    }
+}
+
 /* 地面层：草地 / 泥土 / 水
  * 注意：树/岩石/野花/建筑所在格也铺草地底色（物件画在其上），避免出现黑块 */
 function drawGround(g,x0,y0,x1,y1){
@@ -896,6 +956,101 @@ function drawBuildings(g){
   if(hx < VIEW_W && hx + HOUSE_POS.w*TILE > 0 && hy < VIEW_H && hy + HOUSE_POS.h*TILE > 0) drawHouse(g,hx,hy);
   const sx = SHOP_POS.x*TILE - cam.x, sy = SHOP_POS.y*TILE - cam.y;
   if(sx < VIEW_W && sx + SHOP_POS.w*TILE > 0 && sy < VIEW_H && sy + SHOP_POS.h*TILE > 0) drawShop(g,sx,sy);
+}
+
+/* --- 按 Y 排序的实体层：小屋 / 商店 / 建造物 / 玩家 ---
+ * 排序键 = 脚底的 Y：站在后面的东西先画，站在前面的东西压在上面 */
+function drawEntities(g){
+  const list = [];
+  list.push({y:(HOUSE_POS.y + HOUSE_POS.h)*TILE, f:()=>drawHouse(g, HOUSE_POS.x*TILE-cam.x, HOUSE_POS.y*TILE-cam.y)});
+  list.push({y:(SHOP_POS.y + SHOP_POS.h)*TILE,  f:()=>drawShop(g, SHOP_POS.x*TILE-cam.x, SHOP_POS.y*TILE-cam.y)});
+  for(const b of buildings){
+    const bx = b.tx*TILE - cam.x, by = b.ty*TILE - cam.y;
+    if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
+    list.push({y:b.ty*TILE + TILE, f:()=>drawBuilding(g,b,bx,by)});
+  }
+  list.push({y:player.y + BOX_OFF_Y + CONFIG.PLAYER.BOX_H/2, f:()=>drawPlayer(g)});
+  list.sort((a,b)=>a.y - b.y);
+  for(const e of list) e.f();
+}
+
+/* --- 建造预览：能放 = 绿色，放不了 = 红色 --- */
+function drawBuildPreview(g){
+  if(!buildMode) return;
+  if(hover.tx < 0 || hover.ty < 0) return;
+  const r = curRecipe();
+  if(!r) return;
+  const tx = hover.tx, ty = hover.ty;
+  const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
+  const p = buildPreview(tx,ty,r);
+  g.globalAlpha = 0.40;
+  g.fillStyle = p.ok ? 'rgba(90,230,120,0.75)' : 'rgba(240,90,80,0.75)';
+  g.fillRect(x+1, y+1, TILE-2, TILE-2);
+  g.globalAlpha = 0.62;
+  if(r.overlay) drawRoadTile(g,x,y);
+  else if(r.id === 'fence')     drawFence(g,x,y);
+  else if(r.id === 'chest')     drawChest(g,x,y,false);
+  else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
+  g.globalAlpha = 1;
+  g.strokeStyle = p.ok ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
+  g.lineWidth = 2;
+  g.strokeRect(x+1, y+1, TILE-2, TILE-2);
+}
+/* 建造面板里的 14×14 小图标 */
+function drawBuildIcon(g,id,x,y){
+  const C = CONFIG.TILE_COLORS;
+  if(id === 'fence'){
+    g.fillStyle = C.fencePost; g.fillRect(x+1, y+2, 3, 11); g.fillRect(x+10, y+2, 3, 11);
+    g.fillStyle = C.fenceRail; g.fillRect(x, y+4, 14, 2); g.fillRect(x, y+8, 14, 2);
+  }else if(id === 'chest'){
+    g.fillStyle = C.chestLid;  g.fillRect(x, y+2, 14, 4);
+    g.fillStyle = C.chestBody; g.fillRect(x+1, y+6, 12, 7);
+    g.fillStyle = C.chestLock; g.fillRect(x+6, y+6, 2, 3);
+  }else if(id === 'path'){
+    g.fillStyle = C.roadStone;     g.fillRect(x, y+2, 6, 5); g.fillRect(x+8, y+2, 6, 5);
+    g.fillRect(x, y+9, 6, 5); g.fillRect(x+8, y+9, 6, 5);
+    g.fillStyle = C.roadStoneDark; g.fillRect(x+6, y+2, 2, 5); g.fillRect(x, y+7, 6, 2);
+  }else if(id === 'sprinkler'){
+    g.fillStyle = C.sprinkPost; g.fillRect(x+6, y+6, 2, 7);
+    g.fillStyle = C.sprinkHead; g.fillRect(x+2, y+3, 10, 3);
+    g.fillStyle = C.dropWater;  g.fillRect(x+1, y+9, 2, 2); g.fillRect(x+11, y+9, 2, 2);
+  }
+}
+/* 建造面板（左侧）：配方 + 材料够不够 */
+function drawBuildPanel(g, y0){
+  const R = CONFIG.BUILD.RECIPES;
+  const rowH = 24, w = 214, headH = 22, footH = 20;
+  const h = headH + R.length*rowH + footH;
+  const x = 8;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(x, y0, w, h);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(x, y0, w, 1); g.fillRect(x, y0+h-1, w, 1);
+  g.fillRect(x, y0, 1, h); g.fillRect(x+w-1, y0, 1, h);
+  g.textBaseline = 'top'; g.textAlign = 'left';
+  g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText('建造模式', x+8, y0+5);
+  g.font = '11px ' + FONT_CJK; g.fillStyle = '#8fa3bd';
+  g.fillText('B 退出', x+w-44, y0+6);
+  for(let i=0; i<R.length; i++){
+    const r = R[i], ry = y0 + headH + i*rowH;
+    if(i === buildSel){
+      g.fillStyle = 'rgba(255,215,106,0.14)'; g.fillRect(x+4, ry, w-8, rowH-2);
+    }
+    drawBuildIcon(g, r.id, x+9, ry+4);
+    g.font = '13px ' + FONT_CJK;
+    g.fillStyle = (i === buildSel) ? CONFIG.COLORS.hudAccent : CONFIG.COLORS.hudText;
+    g.fillText(r.name, x+29, ry+5);
+    let cx = x+92;
+    g.font = '12px ' + FONT_CJK;
+    for(const id in r.cost){
+      const have = countItem(id), need = r.cost[id];
+      g.fillStyle = have >= need ? '#7ee08a' : '#ff9a8a';
+      g.fillText(itemDef(id).name + ' ' + have + '/' + need, cx, ry+6);
+      cx += 56;
+    }
+  }
+  g.font = '11px ' + FONT_CJK; g.fillStyle = '#8fa3bd';
+  g.fillText('Q/E 或滚轮换配方 · 左键放置 · 右键拆除', x+8, y0 + headH + R.length*rowH + 4);
 }
 
 /* --- 4.玩家 --- */
@@ -2084,17 +2239,29 @@ window.addEventListener('keydown', e=>{
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(chestOpen){ toggleChest(false); return; }
     if(shopOpen){ toggleShop(false); return; }
     if(packOpen) togglePack(false);
+    if(buildMode) toggleBuild(false);
     return;
   }
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
+  if(chestOpen) return;             /* 木箱打开时其它按键一律忽略 */
   if(sleepFx.phase !== 'none') return;   /* 睡觉/昏睡中：其它按键一律忽略 */
-  /* E：上下文交互 —— 小屋旁睡觉，商店摊旁交易 */
+  /* B：进出建造模式 */
+  if(k === 'b'){ if(!e.repeat) toggleBuild(); ensureAudio(); return; }
+  /* 建造模式：E / Q 换配方（E 优先级最高，会顶掉「按 E 睡觉/交易」） */
+  if(buildMode && (k === 'e' || k === 'q')){
+    if(!e.repeat) cycleBuild(k === 'e' ? 1 : -1);
+    ensureAudio(); return;
+  }
+  /* E：上下文交互 —— 小屋旁睡觉，木箱旁开箱，商店摊旁交易 */
   if(k === 'e'){
     if(!e.repeat){
+      const c = chestNear();
       if(nearHouse()) startSleep(false);
+      else if(c){ openChest = c; toggleChest(true); }
       else if(nearShop()) toggleShop();
       else{
         /* 都不是 → 提示靠近最近的那个（小屋 / 商店） */
@@ -2131,11 +2298,21 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen) return;
+  if(packOpen || shopOpen || chestOpen) return;
+  const p = toLogical(e);
+  const tx = Math.floor((cam.x + p.x) / TILE);
+  const ty = Math.floor((cam.y + p.y) / TILE);
+  /* 建造模式：左键放置 / 右键拆除 */
+  if(buildMode){
+    ensureAudio();
+    if(e.button === 2){ demolishAt(tx,ty); return; }
+    if(e.button !== 0) return;
+    placeBuilding(tx,ty);
+    return;
+  }
   if(e.button === 2){ ensureAudio(); refillCan(); return; }
   if(e.button !== 0) return;
   ensureAudio();
-  const p = toLogical(e);
   /* 点在快捷栏上 → 选中那一格，不算使用工具 */
   const hb = hotbarRect();
   if(p.x >= hb.x - 6 && p.x <= hb.x + hb.w + 5 && p.y >= hb.y - 6 && p.y <= hb.y + hb.h + 5){
@@ -2143,11 +2320,15 @@ canvas.addEventListener('mousedown', e=>{
     if(idx >= 0 && idx < CONFIG.INVENTORY.HOTBAR) selectHot(idx);
     return;
   }
-  const tx = Math.floor((cam.x + p.x) / TILE);
-  const ty = Math.floor((cam.y + p.y) / TILE);
   useTool(tx, ty);
 });
 canvas.addEventListener('contextmenu', e=> e.preventDefault());
+/* 建造模式：滚轮换配方 */
+canvas.addEventListener('wheel', e=>{
+  if(!buildMode) return;
+  e.preventDefault();
+  cycleBuild(e.deltaY > 0 ? 1 : -1);
+}, {passive:false});
 
 /* === 6.UI === */
 /* --- 背包面板（DOM 覆盖层；打开时游戏时间冻结） --- */
@@ -2303,6 +2484,126 @@ document.addEventListener('mousemove', e=>{
   packHeld.style.left = e.clientX + 'px';
   packHeld.style.top  = e.clientY + 'px';
 });
+
+/* --- 木箱面板（复用背包格子样式；打开时游戏时间冻结） --- */
+const chestEl   = document.getElementById('chest');
+const chestMask = document.getElementById('chestMask');
+const chestGrid = document.getElementById('chestGrid');
+const chestInv  = document.getElementById('chestInv');
+const chestInfo = document.getElementById('chestInfo');
+let chestOpen = false;          /* 木箱面板是否打开 */
+let openChest = null;           /* 当前打开的木箱（buildings 里的那一条） */
+/* 造木箱格子 + 背包格子 */
+function buildChestGrid(){
+  if(chestGrid && chestGrid.appendChild){
+    chestGrid.innerHTML = '';
+    for(let i=0; i<CONFIG.BUILD.CHEST_SLOTS; i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.innerHTML = '<span class="k"></span><span class="ic"></span><span class="n"></span>';
+      cell.addEventListener('mousedown', e=>{ e.preventDefault(); chestClick(i); });
+      chestGrid.appendChild(cell);
+    }
+  }
+  if(chestInv && chestInv.appendChild){
+    chestInv.innerHTML = '';
+    for(let i=0; i<CONFIG.INVENTORY.SLOTS; i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.innerHTML = '<span class="k"></span><span class="ic"></span><span class="n"></span>';
+      cell.addEventListener('mousedown', e=>{ e.preventDefault(); chestInvClick(i); });
+      chestInv.appendChild(cell);
+    }
+  }
+}
+/* 把木箱和背包的内容刷到格子上 */
+function refreshChestGrid(){
+  if(chestInfo) chestInfo.textContent = openChest
+    ? ('已用 ' + chestUsed() + '/' + CONFIG.BUILD.CHEST_SLOTS + ' 格')
+    : '';
+  const fill = (grid, arr) => {
+    if(!grid || !grid.children) return;
+    const cells = grid.children;
+    for(let i=0; i<cells.length; i++){
+      const c = cells[i];
+      if(!c || typeof c.querySelector !== 'function') continue;
+      const s = arr ? arr[i] : null;
+      const d = s ? itemDef(s.id) : null;
+      const ic = c.querySelector('.ic'), n = c.querySelector('.n');
+      if(ic) ic.textContent = d ? d.icon : '';
+      if(n)  n.textContent  = (s && s.n > 1) ? String(s.n) : '';
+    }
+  };
+  fill(chestGrid, openChest ? openChest.slots : null);
+  fill(chestInv, inv);
+}
+function chestUsed(){
+  if(!openChest || !openChest.slots) return 0;
+  return openChest.slots.filter(s => s).length;
+}
+/* 附近最近的那个木箱 */
+function chestNear(){
+  let best = null, bd = Infinity;
+  for(const b of buildings){
+    if(b.type !== 'chest') continue;
+    const d = tileCenterDist(b.tx, b.ty);
+    if(d < bd){ bd = d; best = b; }
+  }
+  if(best && bd <= CONFIG.INTERACT.RANGE_TILES) return best;
+  return null;
+}
+/* 开关木箱面板 */
+function toggleChest(open){
+  const want = (open === undefined) ? !chestOpen : !!open;
+  if(want === chestOpen) return;
+  chestOpen = want;
+  if(chestOpen){
+    if(packOpen) togglePack(false);
+    if(shopOpen) toggleShop(false);
+    refreshChestGrid();
+    if(chestEl) chestEl.classList.add('open');
+  }else{
+    openChest = null;
+    if(chestEl) chestEl.classList.remove('open');
+  }
+}
+/* 点木箱格：把这堆东西取回背包（背包放不下就放不进去，东西不会消失） */
+function chestClick(i){
+  if(!openChest || !openChest.slots) return;
+  const s = openChest.slots[i];
+  if(!s) return;
+  if(!canFit(s.id, s.n)){ toast('背包放不下' + itemDef(s.id).name); return; }
+  addItem(s.id, s.n);
+  openChest.slots[i] = null;
+  refreshChestGrid();
+  updateStats();
+}
+/* 点背包格：把这堆东西存进木箱（木箱满了就存不进去，东西不会消失） */
+function chestInvClick(i){
+  if(!openChest || !openChest.slots) return;
+  const s = inv[i];
+  if(!s) return;
+  let slot = openChest.slots.findIndex(x => !x);
+  if(slot < 0){ toast('木箱满了'); return; }
+  const d = itemDef(s.id);
+  const lim = stackLimit(s.id);
+  if(d && d.stack && lim > 1){
+    /* 优先并进已有的同类堆 */
+    for(let k=0; k<openChest.slots.length; k++){
+      const c = openChest.slots[k];
+      if(c && c.id === s.id && c.n < lim){
+        const take = Math.min(lim - c.n, s.n);
+        c.n += take; s.n -= take;
+        if(s.n <= 0){ inv[i] = null; refreshChestGrid(); return; }
+      }
+    }
+  }
+  openChest.slots[slot] = {id:s.id, n:1};
+  s.n--;
+  if(s.n <= 0) inv[i] = null;
+  refreshChestGrid();
+  updateStats();
+}
 
 /* --- 商店面板（DOM 覆盖层；打开时游戏时间冻结） --- */
 const shopEl   = document.getElementById('shop');
@@ -2576,6 +2877,9 @@ function drawUI(g){
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
 
+  /* 建造模式：左侧配方面板 */
+  if(buildMode) drawBuildPanel(g, dY + dH + 6);
+
   /* 底部中央：快捷栏 8 格（= 背包前 8 格），选中格高亮描边 */
   const hb = hotbarRect();
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(hb.x - 6, hb.y - 6, hb.w + 12, hb.h + 12);
@@ -2763,6 +3067,9 @@ function serializeState(){
     canLevel: canLevel,
     stamina: stamina,
     staminaMax: staminaMax,
+    /* 建造物：实体（栅栏/木箱/洒水器）+ 石板路叠加层 */
+    buildings: buildings.map(b => ({type:b.type, tx:b.tx, ty:b.ty, slots:b.slots || null})),
+    roads: Array.from(roads),
     /* 背包：只存有物品的格 → [{slot, id, n}]；空位不占体积 */
     inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
     map: Array.from(map),
@@ -2800,6 +3107,27 @@ function deserializeState(d){
     }
     if(d.player){ player.x = d.player.x; player.y = d.player.y; }
     if(d.weather) weather = CONFIG.WEATHER.find(w=>w.id===d.weather) || weather;
+    /* 建造物 */
+    if(Array.isArray(d.buildings)){
+      buildings = [];
+      buildIndex.fill(-1);
+      for(const b of d.buildings){
+        if(!b || !buildRecipe(b.type)) continue;
+        const nb = {type:b.type, tx:b.tx|0, ty:b.ty|0};
+        if(b.type === 'chest'){
+          nb.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+          if(Array.isArray(b.slots))
+            for(let k=0; k<nb.slots.length && k<b.slots.length; k++){
+              const s = b.slots[k];
+              if(s && CONFIG.ITEMS[s.id]) nb.slots[k] = {id:s.id, n:s.n|0};
+            }
+        }
+        buildings.push(nb);
+        buildIndex[nb.ty*MAP_W + nb.tx] = buildings.length - 1;
+      }
+    }
+    if(Array.isArray(d.roads))
+      for(let i=0; i<roads.length && i<d.roads.length; i++) roads[i] = d.roads[i] ? 1 : 0;
     refreshPackGrid();
     updateStats();
     return true;
@@ -2822,12 +3150,14 @@ function update(dt){
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
+  if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
   updatePlayer(dt);
   updateCamera(dt);
   updateSky(dt);                     /* 昼夜色平滑过渡 */
+  updateDropFx(dt);                  /* 洒水器水滴 */
 }
 function render(){
   ctx.imageSmoothingEnabled = false;
@@ -2844,11 +3174,13 @@ function render(){
   if(!renderLog.ui){ renderLog.ui = true; console.log('[render] 4/4 drawUI'); }
 
   drawGround(ctx, x0, y0, x1, y1);
+  drawRoads(ctx, x0, y0, x1, y1);          /* 石板路（叠加层，在地面之上、季节染色之下） */
   drawSeasonOverlay(ctx, x0, y0, x1, y1);
   drawCrops(ctx, x0, y0, x1, y1);
   drawObjects(ctx, x0, y0, x1, y1);
-  drawBuildings(ctx);
-  drawPlayer(ctx);
+  drawBuildPreview(ctx);                   /* 建造预览（半透明幽灵） */
+  drawEntities(ctx);                       /* 按 Y 排序：小屋 / 商店 / 建造物 / 玩家 */
+  drawDropFx(ctx);                         /* 洒水器的小水滴 */
   drawWeather(ctx);
   drawAtmosphere(ctx);
   drawUI(ctx);
@@ -2901,6 +3233,7 @@ function loop(now){
 genMap(CONFIG.SEED);
 initInventory();                       /* 初始背包 / 快捷栏 */
 buildPackGrid();                       /* 造出背包面板的 24 个格子 */
+buildChestGrid();                      /* 造出木箱面板的格子（8 + 24） */
 player.x = SPAWN.x*TILE + TILE/2;
 player.y = SPAWN.y*TILE + TILE/2;
 cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -2927,6 +3260,22 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   payStamina, staminaCost, exhaustedGlow,
   startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha,
   nearHouse, houseDist, drawSleepFx, HOUSE_POS,
+  /* 建造 */
+  get buildings(){ return buildings; }, set buildings(v){ buildings = v; },
+  get roads(){ return roads; }, set roads(v){ roads = v; },
+  get buildIndex(){ return buildIndex; },
+  get buildMode(){ return buildMode; }, set buildMode(v){ buildMode = v; },
+  get buildSel(){ return buildSel; }, set buildSel(v){ buildSel = v; },
+  get chestOpen(){ return chestOpen; }, set chestOpen(v){ toggleChest(v); },
+  get openChest(){ return openChest; }, set openChest(v){ openChest = v; },
+  buildRecipes, buildRecipe, curRecipe, canAfford, missingMat,
+  buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt,
+  buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer,
+  applySprinklers, spawnDrops, updateDropFx, drawDropFx,
+  drawFence, drawChest, drawSprinkler, drawBuilding, drawRoads, drawRoadTile,
+  drawEntities, drawBuildPreview, drawBuildPanel, drawBuildIcon,
+  buildChestGrid, refreshChestGrid, chestUsed, chestNear, toggleChest,
+  chestClick, chestInvClick,
   /* 商店 */
   get shopOpen(){ return shopOpen; }, set shopOpen(v){ toggleShop(v); },
   get shopTab(){ return shopTab; }, set shopTab(v){ shopTab = v; renderShop(); },

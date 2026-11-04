@@ -1568,9 +1568,8 @@ function updateClock(dt){
   if(clock.hold > 0){                          /* 停在 2:00，等 hold 结束再翻到次日 6:00 */
     clock.hold -= dt;
     if(clock.hold <= 0){
-      clock.hold = 0; clock.day++; clock.min = 0;
-      settleDay();                            /* 每天 6:00 结算：生长 / 枯萎 / 浇水重置 */
-      rollWeather();
+      clock.hold = 0;
+      if(!dayRolled) rollToNextMorning(sleepFx.faint);
       console.log('[time] 第 ' + clock.day + ' 天 ' + clockHM().s + ' · ' + seasonName() + ' · ' + weather.name);
     }
     return;
@@ -1579,8 +1578,82 @@ function updateClock(dt){
   if(clock.min >= DAY_SPAN_MIN){
     clock.min = DAY_SPAN_MIN;                  /* 停在 02:00 */
     clock.hold = CONFIG.DAY_END_HOLD;
-    console.log('[time] 第 ' + clock.day + ' 天结束（' + clockHM().s + '）→ 次日 06:00');
+    dayRolled = false;
+    triggerFaint();                            /* 2:00 还没睡 → 强制昏睡 */
+    console.log('[time] 第 ' + clock.day + ' 天结束（' + clockHM().s + '）→ 昏睡');
   }
+}
+
+/* --- 睡觉 / 昏睡：淡出 → 推进一天 → 淡入 → 「第 N 天」 --- */
+const sleepFx = {phase:'none', t:0, faint:false, day:0};
+/* 这一次 2:00 有没有已经翻过天（时钟自己翻 / 睡觉流程翻，二选一，别翻两次） */
+let dayRolled = false;
+
+/* 到小屋的距离（格） */
+function houseDist(){
+  let best = Infinity;
+  for(let ty=HOUSE_POS.y; ty<HOUSE_POS.y + HOUSE_POS.h; ty++)
+    for(let tx=HOUSE_POS.x; tx<HOUSE_POS.x + HOUSE_POS.w; tx++){
+      const dx = (tx + 0.5)*TILE - player.x, dy = (ty + 0.5)*TILE - player.y;
+      best = Math.min(best, Math.hypot(dx, dy) / TILE);
+    }
+  return best;
+}
+function nearHouse(){ return houseDist() <= CONFIG.SLEEP.RANGE; }
+
+/* 开始睡觉（faint = true 是强制昏睡） */
+function startSleep(faint){
+  if(sleepFx.phase !== 'none') return false;
+  sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
+  toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
+  return true;
+}
+/* 2:00 强制昏睡 */
+function triggerFaint(){
+  if(sleepFx.phase !== 'none') return;
+  startSleep(true);
+}
+/* 翻到第二天早上：结算作物生长 → 重置浇水 → 恢复体力 */
+function rollToNextMorning(faint){
+  clock.day++; clock.min = 0; clock.hold = 0;
+  settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
+  rollWeather();
+  if(faint){
+    /* 惩罚方式选「体力」：次日体力上限扣 20%（不扣金币，避免误伤玩家资产） */
+    staminaMax = Math.round(CONFIG.STAMINA.MAX * (1 - CONFIG.SLEEP.FAINT_PENALTY));
+    toast('你昏睡过去了…… 次日体力上限 ' + staminaMax + '（-' +
+          Math.round(CONFIG.SLEEP.FAINT_PENALTY * 100) + '%）');
+  }else{
+    staminaMax = CONFIG.STAMINA.MAX;
+  }
+  stamina = staminaMax;
+  dayRolled = true;
+  sleepFx.day = clock.day;
+  console.log('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
+              (faint ? '（强制昏睡）' : '（正常睡觉）'));
+}
+/* 睡觉流程推进（接管整个 update） */
+function updateSleepFx(dt){
+  const S = CONFIG.SLEEP;
+  sleepFx.t += dt;
+  if(sleepFx.phase === 'out'){
+    if(sleepFx.t >= S.FADE_OUT){ sleepFx.phase = 'hold'; sleepFx.t = 0; }
+  }else if(sleepFx.phase === 'hold'){
+    if(!dayRolled) rollToNextMorning(sleepFx.faint);   /* 全黑时翻到次日 6:00 */
+    if(sleepFx.t >= S.HOLD){ sleepFx.phase = 'in'; sleepFx.t = 0; }
+  }else if(sleepFx.phase === 'in'){
+    if(sleepFx.t >= S.FADE_IN){ sleepFx.phase = 'title'; sleepFx.t = 0; }
+  }else if(sleepFx.phase === 'title'){
+    if(sleepFx.t >= S.TITLE){ sleepFx.phase = 'none'; sleepFx.t = 0; }
+  }
+}
+/* 睡觉时的全黑程度（0~1） */
+function sleepAlpha(){
+  const S = CONFIG.SLEEP;
+  if(sleepFx.phase === 'out')  return Math.min(1, sleepFx.t / S.FADE_OUT);
+  if(sleepFx.phase === 'hold') return 1;
+  if(sleepFx.phase === 'in')   return Math.max(0, 1 - sleepFx.t / S.FADE_IN);
+  return 0;
 }
 
 /* --- 天气：每天早晨随机（带权重） --- */
@@ -1696,6 +1769,17 @@ function drawAtmosphere(g){
     g.fillStyle = grd;
     g.fillRect(0, 0, VIEW_W, VIEW_H);
   }
+  /* 体力耗尽：再加一层淡红暗角（画在 UI 之前，不会盖住体力条） */
+  const eg = exhaustedGlow();
+  if(eg > 0){
+    const px = player.x - cam.x, py = player.y - cam.y;
+    const R = 520;
+    const grd = g.createRadialGradient(px, py, R * 0.34, px, py, R);
+    grd.addColorStop(0, 'rgba(0,0,0,0)');
+    grd.addColorStop(1, 'rgba(40,0,0,' + (0.16 + 0.22 * eg).toFixed(3) + ')');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, VIEW_W, VIEW_H);
+  }
 }
 
 /* --- 暂停：所有系统（时间/天气/角色/摄像机）一起冻结 --- */
@@ -1720,8 +1804,20 @@ window.addEventListener('keydown', e=>{
   }
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
-  /* 商店：走到商店摊附近按 E 打开 */
-  if(k === 'e'){ if(!e.repeat) toggleShop(); ensureAudio(); return; }
+  if(sleepFx.phase !== 'none') return;   /* 睡觉/昏睡中：其它按键一律忽略 */
+  /* E：上下文交互 —— 小屋旁睡觉，商店摊旁交易 */
+  if(k === 'e'){
+    if(!e.repeat){
+      if(nearHouse()) startSleep(false);
+      else if(nearShop()) toggleShop();
+      else{
+        /* 都不是 → 提示靠近最近的那个（小屋 / 商店） */
+        const dh = houseDist(), ds = shopDist();
+        toast(dh <= ds ? '走近小屋才能睡觉' : '走近商店摊才能交易');
+      }
+    }
+    ensureAudio(); return;
+  }
   /* 数字键 1~8 选中快捷栏（= 背包前 8 格） */
   if(k >= '1' && k <= String(CONFIG.INVENTORY.HOTBAR)){
     selectHot(Number(k) - 1);
@@ -2237,6 +2333,19 @@ function drawUI(g){
     g.textAlign = 'left';
   }
 
+  /* 走到小屋附近 → 提示按 E 睡觉 */
+  if(!shopOpen && sleepFx.phase === 'none' && nearHouse()){
+    const hx = HOUSE_POS.x*TILE - cam.x, hy = HOUSE_POS.y*TILE - cam.y;
+    const hint = '按 E 睡觉';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const px2 = hx + HOUSE_POS.w*TILE/2 - hw/2, py2 = hy + HOUSE_POS.h*TILE + 6;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(px2 - 6, py2 - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(px2 - 6, py2 - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, px2, py2);
+  }
   /* 走到商店摊附近 → 提示按 E 交易 */
   if(!shopOpen && nearShop()){
     const sx = SHOP_POS.x*TILE - cam.x, sy = SHOP_POS.y*TILE - cam.y;
@@ -2250,6 +2359,65 @@ function drawUI(g){
     g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, hy);
+  }
+
+  /* 左下角：体力条（低于 20 变红闪烁） */
+  const sbW = 116, sbH = 11, sbX = 14, sbY = VIEW_H - 26;
+  const low = stamina < CONFIG.STAMINA.LOW;
+  const blink = low ? (0.45 + 0.55 * Math.abs(Math.sin(performance.now() / 130))) : 1;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(sbX - 6, sbY - 19, sbW + 62, sbH + 25);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(sbX - 6, sbY - 19, sbW + 62, 1); g.fillRect(sbX - 6, sbY + sbH + 5, sbW + 62, 1);
+  g.fillRect(sbX - 6, sbY - 19, 1, sbH + 25); g.fillRect(sbX + sbW + 55, sbY - 19, 1, sbH + 25);
+  g.font = '13px ' + FONT_CJK; g.textAlign = 'left'; g.textBaseline = 'top';
+  g.fillStyle = low ? 'rgba(255,120,100,' + blink.toFixed(2) + ')' : CONFIG.COLORS.hudText;
+  g.fillText('体力', sbX, sbY - 16);
+  g.fillStyle = 'rgba(8,11,18,0.90)'; g.fillRect(sbX, sbY, sbW, sbH);
+  const ratio = staminaMax > 0 ? clamp(stamina / staminaMax, 0, 1) : 0;
+  g.fillStyle = low ? 'rgba(255,86,70,' + blink.toFixed(2) + ')' : '#7ee08a';
+  g.fillRect(sbX, sbY, Math.round(sbW * ratio), sbH);
+  g.fillStyle = CONFIG.COLORS.hudBorder;
+  g.fillRect(sbX, sbY, sbW, 1); g.fillRect(sbX, sbY + sbH - 1, sbW, 1);
+  g.fillRect(sbX, sbY, 1, sbH); g.fillRect(sbX + sbW - 1, sbY, 1, sbH);
+  g.fillStyle = low ? 'rgba(255,120,100,' + blink.toFixed(2) + ')' : CONFIG.COLORS.hudText;
+  g.fillText(Math.ceil(stamina) + '/' + staminaMax, sbX + sbW + 6, sbY - 1);
+
+  /* 体力耗尽：顶部提示该回家了 */
+  if(stamina <= 0){
+    const a = 0.55 + 0.45 * Math.sin(performance.now() / 220);
+    const hint = '体力耗尽 · 回小屋按 E 睡觉';
+    g.font = '14px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    g.fillStyle = 'rgba(8,10,16,0.75)';
+    g.fillRect(VIEW_W/2 - hw/2 - 8, 12, hw + 16, 24);
+    g.strokeStyle = 'rgba(255,110,90,0.8)';
+    g.strokeRect(VIEW_W/2 - hw/2 - 8, 12, hw + 16, 24);
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    g.fillStyle = 'rgba(255,130,110,' + clamp(a, 0.25, 1).toFixed(2) + ')';
+    g.fillText(hint, VIEW_W/2, 16);
+    g.textAlign = 'left';
+  }
+}
+
+/* 睡觉淡入淡出 + 「第 N 天」标题（画在最上层，连网格线一起盖住） */
+function drawSleepFx(g){
+  const a = sleepAlpha();
+  if(a > 0){
+    g.fillStyle = 'rgba(0,0,0,' + a.toFixed(3) + ')';
+    g.fillRect(0, 0, VIEW_W, VIEW_H);
+  }
+  if(sleepFx.phase === 'title'){
+    const S = CONFIG.SLEEP;
+    const k = Math.min(sleepFx.t / (S.TITLE * 0.30), (S.TITLE - sleepFx.t) / (S.TITLE * 0.35), 1);
+    const al = clamp(k, 0, 1);
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    g.font = '30px ' + FONT_CJK;
+    g.fillStyle = 'rgba(255,215,106,' + al.toFixed(2) + ')';
+    g.fillText('第 ' + clock.day + ' 天', VIEW_W/2, VIEW_H/2 - 34);
+    g.font = '14px ' + FONT_CJK;
+    g.fillStyle = 'rgba(207,227,255,' + al.toFixed(2) + ')';
+    g.fillText(seasonName() + '季 · ' + weather.name + ' · ' + clockHM().s, VIEW_W/2, VIEW_H/2 + 6);
+    g.textAlign = 'left'; g.textBaseline = 'top';
   }
 }
 
@@ -2281,6 +2449,7 @@ function updateStats(){
     '快捷栏 ' + CONFIG.INVENTORY.HOTBAR + ' 格（= 背包前 ' + CONFIG.INVENTORY.HOTBAR + ' 格）选中 <b>' +
         (hotSel + 1) + '</b>：' + (selectedItem() ? selectedItem().icon + selectedItem().name : '空') + '\n' +
     '背包 <b>' + invUsed() + '</b>/' + CONFIG.INVENTORY.SLOTS + ' 格　金币 <b>' + gold + '</b>\n' +
+    '体力 <b>' + Math.ceil(stamina) + '</b>/' + staminaMax + '（上限 ' + CONFIG.STAMINA.MAX + '）\n' +
     '水壶 <b>' + canWater + '</b>/' + canCapacity() + '（Lv' + canLevel + '）　右键站在水边补水\n' +
     '作物 ' + CONFIG.CROPS.map(c =>
         c.icon + c.name + '(' + c.season + c.days + '天' + (c.regrow ? '可再收' : '') + ')' +
@@ -2289,7 +2458,7 @@ function updateStats(){
         CONFIG.ITEMS[id].icon + ' ' + CONFIG.ITEMS[id].name + ' <b>' + countItem(id) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · E 商店 · P 暂停';
+    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · E 睡觉/商店 · P 暂停';
 }
 
 /* === 7.存档 === */
@@ -2359,6 +2528,7 @@ const renderLog = {ground:false, objects:false, player:false, ui:false};
 let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCount = 0;
 
 function update(dt){
+  if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
@@ -2403,6 +2573,7 @@ function render(){
     firstRenderDone = true;
     console.log('[render] 顺序确认: drawGround -> drawObjects -> drawPlayer -> drawUI');
   }
+  drawSleepFx(ctx);              /* 睡觉淡入淡出（盖住网格线） */
 }
 function loop(now){
   let frameTime = (now - lastTime) / 1000;
@@ -2459,6 +2630,13 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
   get crops(){ return crops; }, set crops(v){ crops = v; },
   get canWater(){ return canWater; }, set canWater(v){ canWater = v; },
+  /* 体力 / 睡觉 */
+  get stamina(){ return stamina; }, set stamina(v){ stamina = v; },
+  get staminaMax(){ return staminaMax; }, set staminaMax(v){ staminaMax = v; },
+  get sleepFx(){ return sleepFx; },
+  payStamina, staminaCost, exhaustedGlow,
+  startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha,
+  nearHouse, houseDist, drawSleepFx, HOUSE_POS,
   /* 商店 */
   get shopOpen(){ return shopOpen; }, set shopOpen(v){ toggleShop(v); },
   get shopTab(){ return shopTab; }, set shopTab(v){ shopTab = v; renderShop(); },

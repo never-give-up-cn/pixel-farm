@@ -160,7 +160,7 @@
 <div id="shop">
   <div id="shopMask"></div>
   <div id="shopPanel">
-    <div id="shopHead">商店 <span id="shopGold"></span></div>
+    <div id="shopHead">商店 <span id="shopSeason"></span><span id="shopGold"></span></div>
     <div id="shopTabs">
       <button class="tab" data-tab="buy">购买</button>
       <button class="tab" data-tab="sell">出售</button>
@@ -1873,6 +1873,7 @@ const shopMask = document.getElementById('shopMask');
 const shopTabs = document.getElementById('shopTabs');
 const shopBody = document.getElementById('shopBody');
 const shopGold = document.getElementById('shopGold');
+const shopSeason = document.getElementById('shopSeason');
 let shopOpen = false;          /* 商店是否打开（打开时 update() 整体冻结 → 时间停住） */
 let shopTab  = 'buy';          /* 当前页签：'buy' 购买 / 'sell' 出售 */
 
@@ -1930,7 +1931,9 @@ function renderShopBuy(){
     }else{
       const owned = toolOwned(id);
       name = d.name;
-      sub  = d.kind === 'tool' ? '工具' : (d.kind === 'seed' ? '种子' : '');
+      if(d.kind === 'tool')      sub = '工具 · 一次性';
+      else if(d.kind === 'seed'){ const cd = cropDef(d.crop); sub = cd.season + '季 · ' + cd.days + '天'; }
+      else sub = '';
       off = owned || (gold < price);
       label = owned ? '已拥有' : (gold < price ? '金币不够' : '购买');
       fn = ()=>{ shopBuyClick(id); };
@@ -1964,6 +1967,7 @@ function renderShopSell(){
 /* 刷新商店面板 */
 function renderShop(){
   if(shopGold) shopGold.textContent = '💰 ' + gold + ' 金币';
+  if(shopSeason) shopSeason.textContent = seasonName() + '季 价格 ×' + seasonCoef().toFixed(2) + '　';
   if(shopTabs && shopTabs.children){
     for(const t of shopTabs.children){
       const on = (t.getAttribute && t.getAttribute('data-tab') === shopTab);
@@ -2077,11 +2081,12 @@ function drawUI(g){
   const gp = performance.now() - goldPulseAt;
   const pulse = (gp >= 0 && gp < CONFIG.SHOP.GOLD_PULSE_MS) ? gp / CONFIG.SHOP.GOLD_PULSE_MS : -1;
   const goldPre = '金币 ', goldPost = '　[Tab] 背包 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS;
+  const DELTA_W = 34;                       /* 右侧预留飘字位 */
   g.font = '13px ' + FONT_CJK;
   const preW = g.measureText(goldPre).width;
   const numW = g.measureText(String(gold)).width;
   const postW = g.measureText(goldPost).width;
-  const goldTxtW = preW + numW + postW;
+  const goldTxtW = preW + numW + postW + DELTA_W;
   const rowW = Math.ceil(goldIconW + 4 + goldTxtW) + 16, rowH = 24, rowY = 8 + boxH + 6;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, rowY, rowW, rowH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
@@ -2104,11 +2109,15 @@ function drawUI(g){
   g.restore();
   g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(goldPost, goldNumX + numW, rowY + 5);
-  /* 飘字：+N / -N 往上飘 */
+  /* 飘字：+N / -N 在右侧往上飘 */
   if(pulse >= 0){
     g.font = '12px ' + FONT_CJK;
-    g.fillStyle = goldDelta >= 0 ? 'rgba(126,224,138,0.95)' : 'rgba(255,154,138,0.95)';
-    g.fillText((goldDelta >= 0 ? '+' : '') + goldDelta, goldNumX, rowY + 5 - 8 - 16 * pulse);
+    g.globalAlpha = Math.max(0, 1 - pulse * 0.8);
+    g.fillStyle = goldDelta >= 0 ? '#7ee08a' : '#ff9a8a';
+    g.textAlign = 'right';
+    g.fillText((goldDelta >= 0 ? '+' : '') + goldDelta, 8 + rowW - 8, rowY + 5 - 10 * pulse);
+    g.globalAlpha = 1;
+    g.textAlign = 'left';
   }
 
   /* 左上角：季节 · 第几天 · 时刻 · 天气 */
@@ -2390,7 +2399,7 @@ requestAnimationFrame(loop);
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
 if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
-  updateClock, updateWeather, updateSky, rollWeather, spawnParticles, update,
+  updateClock, updateWeather, updateSky, rollWeather, spawnParticles, update, render,
   get weather(){ return weather; }, set weather(v){ weather = v; },
   get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
   get crops(){ return crops; }, set crops(v){ crops = v; },

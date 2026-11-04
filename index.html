@@ -51,8 +51,7 @@
   #pack.open{display:flex}
   #packMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
   #packPanel{
-    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
-    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+    position:relative;padding:12px 14px 10px;
   }
   #packHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #packHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
@@ -94,8 +93,7 @@
   #chest.open{display:flex}
   #chestMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
   #chestPanel{
-    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
-    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+    position:relative;padding:12px 14px 10px;
   }
   #chestHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #chestHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
@@ -126,8 +124,7 @@
   #shop.open{display:flex}
   #shopMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
   #shopPanel{
-    position:relative;background:#12161f;border:2px solid #3d4a63;padding:12px 14px 10px;
-    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);width:470px;
+    position:relative;padding:12px 14px 10px;width:470px;
   }
   #shopHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #shopHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
@@ -173,8 +170,7 @@
   }
   #start.open{display:flex}
   #startPanel{
-    background:#12161f;border:2px solid #3d4a63;padding:20px 24px 16px;min-width:380px;
-    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);text-align:center;
+    padding:20px 24px 16px;min-width:380px;text-align:center;
   }
   #startTitle{font-size:22px;color:#ffd76a;letter-spacing:3px}
   #startSub{font-size:11px;color:#8fa3bd;margin:2px 0 14px}
@@ -185,7 +181,7 @@
   #startWarn{font-size:12px;color:#ffb08a;margin-bottom:10px;white-space:pre-line;text-align:left}
   #startBtns,#startBtns2{display:flex;gap:10px;justify-content:center;margin-top:8px}
   #startConfirm{display:none;margin-top:14px;padding-top:10px;border-top:1px solid #2c3a4e}
-  #startConfirm.open{display:block}
+  #startConfirm.open{display:block;animation:panelIn .18s ease-out}
   #confirmText{font-size:12px;color:#ffb08a;margin-bottom:6px}
   #startFoot{font-size:11px;color:#7f92ad;margin-top:14px}
   .mbtn{
@@ -203,14 +199,74 @@
   #sys.open{display:flex}
   #sysMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
   #sysPanel{
-    position:relative;background:#12161f;border:2px solid #3d4a63;padding:14px 16px 12px;width:330px;
-    box-shadow:0 0 0 2px #000,0 14px 40px rgba(0,0,0,.65);
+    position:relative;padding:14px 16px 12px;width:330px;
   }
   #sysHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #sysInfo{font-size:11px;color:#8fa3bd;margin-bottom:10px;white-space:pre-line}
   #sysBtns{display:flex;flex-direction:column;gap:8px}
   #sysBtns .mbtn{width:100%}
   #sysFoot{margin-top:10px;font-size:11px;color:#8fa3bd}
+
+  /* ---------- 第 12 轮：统一面板样式 + 开合动画 + 交互反馈 ---------- */
+  /* 所有弹窗面板共用：半透明深底 + 圆角 + 描边 + 内高光 */
+  .panel{
+    background:linear-gradient(180deg,rgba(30,38,58,.94),rgba(15,20,31,.95));
+    border:2px solid #46587a;border-radius:10px;
+    box-shadow:0 0 0 2px rgba(0,0,0,.75),0 16px 44px rgba(0,0,0,.70),
+               inset 0 1px 0 rgba(255,255,255,.07);
+  }
+  /* 开：200ms 缩放 + 淡入；关：淡出后由 JS 移除 .closing */
+  @keyframes panelIn{
+    0%  {opacity:0;transform:scale(.92) translateY(10px)}
+    100%{opacity:1;transform:scale(1) translateY(0)}
+  }
+  @keyframes panelOut{
+    0%  {opacity:1;transform:scale(1) translateY(0)}
+    100%{opacity:0;transform:scale(.94) translateY(6px)}
+  }
+  #pack.open  #packPanel,
+  #chest.open #chestPanel,
+  #shop.open  #shopPanel,
+  #start.open #startPanel,
+  #sys.open   #sysPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #pack.closing  #packPanel,
+  #chest.closing #chestPanel,
+  #shop.closing  #shopPanel,
+  #start.closing #startPanel,
+  #sys.closing   #sysPanel{animation:panelOut .2s ease-in forwards}
+  #pack.closing,#chest.closing,#shop.closing,#start.closing,#sys.closing{display:flex}
+  /* 按钮反馈：hover 变色 + 按下微微下沉 */
+  .mbtn,.tab,.srow .btn,#sndBtn{
+    transition:background .13s ease,border-color .13s ease,color .13s ease,
+               transform .07s ease,box-shadow .13s ease;
+  }
+  .mbtn:active,.tab:active,.srow .btn:active,#sndBtn:active{transform:translateY(1px)}
+  .tab:hover{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
+  #packGrid .cell,#chestGrid .cell,#chestInv .cell{transition:background .12s ease,border-color .12s ease,transform .07s ease}
+  #packGrid .cell:active,#chestGrid .cell:active,#chestInv .cell:active{transform:translateY(1px)}
+  /* 总音量开关（HUD 右上角） */
+  #sndBtn{
+    position:fixed;z-index:30;width:34px;height:34px;padding:0;
+    background:rgba(8,10,16,.82);border:2px solid #3d4a63;border-radius:8px;
+    color:#cfe3ff;font:16px/1 "Segoe UI Emoji",Consolas,monospace;cursor:pointer;
+  }
+  #sndBtn:hover{border-color:#ffd76a;color:#ffd76a;background:rgba(22,28,44,.92)}
+  #sndBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.8}
+  /* 新手引导提示条（画布顶部居中） */
+  #tut{
+    position:fixed;z-index:28;display:none;left:50%;transform:translateX(-50%);
+    max-width:440px;padding:10px 16px;border-radius:10px;
+    background:linear-gradient(180deg,rgba(40,44,30,.95),rgba(20,24,18,.95));
+    border:2px solid #ffd76a;color:#ffe9b0;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;
+    box-shadow:0 0 0 2px rgba(0,0,0,.7),0 10px 30px rgba(0,0,0,.6);
+    animation:tutIn .25s ease-out;
+  }
+  #tut.show{display:block}
+  @keyframes tutIn{
+    0%  {opacity:0;transform:translate(-50%,-10px)}
+    100%{opacity:1;transform:translate(-50%,0)}
+  }
 </style>
 </head>
 <body>
@@ -218,11 +274,15 @@
 <canvas id="game"></canvas>
 <div id="stats"></div>
 <div id="toasts"></div>
+<!-- 总音量开关（M）：点一下静音 / 取消 -->
+<button id="sndBtn" title="声音开关（M）">🔊</button>
+<!-- 新手引导提示条（第 1 天早晨出现） -->
+<div id="tut"></div>
 
 <!-- 背包面板：DOM 覆盖层，打开时游戏时间冻结 -->
 <div id="pack">
   <div id="packMask"></div>
-  <div id="packPanel">
+  <div id="packPanel" class="panel">
     <div id="packHead">背包 <span id="packInfo"></span></div>
     <div id="packGrid"></div>
     <div id="packFoot">点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭</div>
@@ -234,7 +294,7 @@
 <!-- 木箱面板：DOM 覆盖层，复用背包格子样式；打开时游戏时间冻结 -->
 <div id="chest">
   <div id="chestMask"></div>
-  <div id="chestPanel">
+  <div id="chestPanel" class="panel">
     <div id="chestHead">木箱 <span id="chestInfo"></span></div>
     <div id="chestGrid"></div>
     <div id="chestSub">背包（点一下存进木箱）</div>
@@ -246,7 +306,7 @@
 <!-- 商店面板：DOM 覆盖层，打开时游戏时间冻结 -->
 <div id="shop">
   <div id="shopMask"></div>
-  <div id="shopPanel">
+  <div id="shopPanel" class="panel">
     <div id="shopHead">商店 <span id="shopSeason"></span><span id="shopGold"></span></div>
     <div id="shopTabs">
       <button class="tab" data-tab="buy">购买</button>
@@ -259,7 +319,7 @@
 
 <!-- 启动菜单：本地有存档时显示「继续 / 新游戏」 -->
 <div id="start">
-  <div id="startPanel">
+  <div id="startPanel" class="panel">
     <div id="startTitle">像素农场</div>
     <div id="startSub">P I X E L &nbsp; F A R M</div>
     <div id="startInfo"></div>
@@ -282,7 +342,7 @@
 <!-- 系统菜单（Esc）：保存 / 读档 / 删档 -->
 <div id="sys">
   <div id="sysMask"></div>
-  <div id="sysPanel">
+  <div id="sysPanel" class="panel">
     <div id="sysHead">系统菜单</div>
     <div id="sysInfo"></div>
     <div id="sysBtns">
@@ -409,15 +469,20 @@ const CONFIG = {
   /* 夜间暗角（以玩家为中心的径向渐变） */
   VIGNETTE: { DAY_R: 760, NIGHT_R: 240, NIGHT_A: 0.55 },
 
-  /* 天气：每天早晨随机（带权重）；本轮只做画面与音效，不影响玩法 */
+  /* 天气：每天早晨随机（带权重）；只做画面与音效，不影响玩法
+   * 字段：id 内部 id / name 显示名 / icon 图标 / w 随机权重（越大越常见） */
   WEATHER: [
     { id:'sun',  name:'晴', icon:'☀', w:6 },
     { id:'rain', name:'雨', icon:'🌧', w:3 },
     { id:'snow', name:'雪', icon:'❄', w:1 }
   ],
-  WEATHER_FX: { RAIN_COUNT: 130, SNOW_COUNT: 90, RAIN_SPEED: 560, SNOW_SPEED: 42 },
-  RAIN_TICK_MIN: 0.30,      // 雨声滴答间隔（现实秒，随机下限）
-  RAIN_TICK_MAX: 0.85,
+  /* 天气粒子：数量 / 速度（像素每秒） */
+  WEATHER_FX: {
+    RAIN_COUNT: 130,        // 同屏雨滴数量
+    SNOW_COUNT: 90,         // 同屏雪花数量
+    RAIN_SPEED: 560,        // 雨滴下落速度
+    SNOW_SPEED: 42          // 雪花下落速度
+  },
 
   /* 暂停（为 true 时时间/天气/角色全部冻结） */
   PAUSE_KEY: 'p',
@@ -557,11 +622,56 @@ const CONFIG = {
     TOAST_MAX: 6            // 同时最多显示几条（超出淘汰最旧的）
   },
 
-  /* 音效（Web Audio 实时合成，零音频文件） */
+  /* 音效（Web Audio 实时合成，零音频文件）
+   * VOLUME   基础音量（所有音效以此为基准）
+   * TYPE     默认波形
+   * DUR      默认单音时长（秒）
+   * MUTE_KEY 静音快捷键（M）
+   * MUTE_START 首次进入游戏时是否默认静音 */
   AUDIO: {
-    VOLUME: 0.16,           // 音量
-    TYPE: 'square',         // 波形
-    DUR: 0.12               // 单音时长（秒）
+    VOLUME: 0.16,           // 基础音量（0~1）
+    TYPE: 'square',         // 默认波形
+    DUR: 0.12,              // 默认单音时长（秒）
+    MUTE_KEY: 'm',          // 静音 / 取消静音的快捷键
+    MUTE_START: false,      // 首次进入游戏时是否静音
+    /* 各音效参数：FREQ 基准频率 / JITTER 随机音高偏移 / DUR 时长 / VOL 相对基础音量的倍率 */
+    STEP:  { FREQ:190, JITTER:70, DUR:0.05, VOL:0.45, INTERVAL:0.32 }, // 走路脚步声（每次音高随机）
+    CLICK: { FREQ:660, DUR:0.05, VOL:0.55 },                              // UI 点击
+    COIN:  { BUY:[880,1320], SELL:[1046,1568], DUR:0.09, VOL:0.55 },     // 买卖金币声（两个连音）
+    SLEEP: { IN:520, OUT:300, DUR:0.5, VOL:0.60 },                       // 睡觉转场音（入睡 / 醒来）
+    RAIN:  { TICK_MIN:0.30, TICK_MAX:0.85, VOL:0.30,                     // 雨滴滴答
+             AMBIENT:true, AMBIENT_VOL:0.05 }                             // 雨声环境底噪开关
+  },
+
+  /* UI 打磨：统一面板样式 + 开合动画 */
+  UI: {
+    PANEL_ANIM_MS: 200,     // 面板开合动画时长（毫秒）
+    PANEL_RADIUS: 10,       // 面板圆角（像素）
+    SOUND_ON_CLICK: true    // 点击按钮是否播放 UI 音
+  },
+
+  /* 新手引导：第 1 天早晨依次弹出 3 条提示（移动 / 锄地播种 / 睡觉），完成即消失 */
+  TUTORIAL: {
+    ENABLED: true,          // 总开关
+    DAY: 1,                 // 只在这一天显示
+    MOVE_PX: 48,            // 累计走够多少像素算「学会移动」
+    TILL_COUNT: 1,          // 开垦几块地算「学会锄地」
+    SOW_COUNT: 1,           // 播下几株算「学会播种」
+    SHOW_MS: 0              // 提示条停留时间（毫秒；0 = 不自动消失）
+  },
+
+  /* 性能：静态地面预渲染到离屏 canvas + Y 排序 */
+  PERF: {
+    BAKE_GROUND: true,      // 把静态地面预渲染到离屏 canvas（只有改动的格子才重绘）
+    BAKE_MAX_SIDE: 2048,    // 离屏画布边长上限（像素）
+    Y_SORT: true,           // 作物 / 建造物 / 玩家按脚底 Y 排序
+    SHOW_MS: true           // HUD 上显示每帧渲染耗时
+  },
+
+  /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
+  BALANCE: {
+    EXPANSION_GOLD: 500,    // 扩建地标价（自检参照目标）
+    TARGET_DAYS: 7          // 预期天数上限：超过就要调高作物售价或压低种子价
   },
 
   /* 主循环 */
@@ -582,22 +692,22 @@ const CONFIG = {
 
   /* HUD / 精灵配色 */
   COLORS: {
-    bg:        '#141922',
-    hudBg:     'rgba(8,10,16,0.72)',
-    hudBorder: '#3d4a63',
-    hudText:   '#cfe3ff',
-    hudAccent: '#ffd76a',
-    shadow:    'rgba(0,0,0,0.40)',
-    hair:      '#4a3222',
-    skin:      '#f0c090',
-    eye:       '#20202a',
-    shirt:     '#3f7fd0',
-    shirtDark: '#2f63a8',
-    pants:     '#3a4a5a',
-    shoe:      '#26262e'
+    bg:        '#141922',           // 画布外的底色
+    hudBg:     'rgba(8,10,16,0.72)',// HUD 面板半透明底色
+    hudBorder: '#3d4a63',           // HUD 描边
+    hudText:   '#cfe3ff',           // HUD 正文
+    hudAccent: '#ffd76a',           // HUD 强调色（金币 / 标题）
+    shadow:    'rgba(0,0,0,0.40)',  // 投影
+    hair:      '#4a3222',           // 头发
+    skin:      '#f0c090',           // 皮肤
+    eye:       '#20202a',           // 眼睛
+    shirt:     '#3f7fd0',           // 上衣
+    shirtDark: '#2f63a8',           // 上衣暗部
+    pants:     '#3a4a5a',           // 裤子
+    shoe:      '#26262e'            // 鞋子
   },
 
-  /* 瓦片配色 */
+  /* 瓦片配色（按用途分组：草地 / 泥土 / 耕地 / 水 / 空地 / 树石花 / 房屋 / 建造物） */
   TILE_COLORS: {
     grass:       '#6fb04c', grassDot: '#5d9c42', grassDot2: '#82c05a',
     dirt:        '#7d4d2b', dirtLine: '#6a4023', dirtLine2: '#8a5a33',
@@ -1216,7 +1326,8 @@ const player = {
   vx: 0, vy: 0,                                          /* 速度 */
   dir: 0,                                                /* 朝向 0=下 1=左 2=右 3=上 */
   animT: 0, frame: 0,                                    /* 动画：帧号 + 计时 */
-  moving: false
+  moving: false,
+  stepT: 0                                               /* 脚步声计时（秒） */
 };
 function drawPlayer(g){
   const s = CONFIG.PLAYER.BODY_W, h = CONFIG.PLAYER.BODY_H;
@@ -1621,6 +1732,15 @@ function updatePlayer(dt){
     else if(ix !== 0) player.dir = ix<0 ? 1 : 2;
     else player.dir = iy<0 ? 3 : 0;
     movePlayer(player.vx * dt, player.vy * dt);
+    /* 脚步声：按固定间隔触发，每次音高随机；跑动时更快更响 */
+    player.stepT += dt;
+    const stepIv = CONFIG.AUDIO.STEP.INTERVAL / (running ? CONFIG.PLAYER.RUN_MULT : 1);
+    if(player.stepT >= stepIv){
+      player.stepT = 0;
+      playStep(running);
+    }
+    /* 新手引导：累计移动距离 */
+    tutMoved(Math.abs(player.vx*dt) + Math.abs(player.vy*dt));
     /* 摆腿动画：时间驱动帧切换 */
     player.animT += dt;
     const interval = 1 / CONFIG.PLAYER.ANIM_FPS;
@@ -1646,6 +1766,8 @@ function updateCamera(dt){
 
 /* --- 音效：Web Audio 实时合成（浏览器要求先有用户交互才允许播放） --- */
 let actx = null;
+let audioMuted = CONFIG.AUDIO.MUTE_START;   /* 总音量开关：true = 全部静音 */
+const sndBtn = document.getElementById('sndBtn');   /* 右下角的声音开关按钮 */
 function ensureAudio(){
   try{
     if(!actx){
@@ -1657,20 +1779,188 @@ function ensureAudio(){
     return actx;
   }catch(err){ return null; }
 }
+/* 基础单音 */
 function playSfx(freq, type, dur, vol){
+  if(audioMuted) return false;
   const ac = ensureAudio();
   if(!ac) return false;
-  const t0 = ac.currentTime;
-  const osc = ac.createOscillator(), gain = ac.createGain();
-  osc.type = type || CONFIG.AUDIO.TYPE;
-  osc.frequency.setValueAtTime(freq, t0);
-  gain.gain.setValueAtTime(0.0001, t0);
-  gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-  osc.connect(gain); gain.connect(ac.destination);
-  osc.start(t0); osc.stop(t0 + dur + 0.02);
+  try{
+    const t0 = ac.currentTime;
+    const osc = ac.createOscillator(), gain = ac.createGain();
+    osc.type = type || CONFIG.AUDIO.TYPE;
+    osc.frequency.setValueAtTime(freq, t0);
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.start(t0); osc.stop(t0 + dur + 0.02);
+    return true;
+  }catch(err){ return false; }
+}
+/* 连音（金币声：两个音先后响） */
+function playNotes(notes, type, dur, vol){
+  if(audioMuted || !notes || !notes.length) return false;
+  const ac = ensureAudio();
+  if(!ac) return false;
+  try{
+    notes.forEach((f,i)=>{
+      const t0 = ac.currentTime + i*dur;
+      const osc = ac.createOscillator(), gain = ac.createGain();
+      osc.type = type || 'triangle';
+      osc.frequency.setValueAtTime(f, t0);
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.start(t0); osc.stop(t0 + dur + 0.02);
+    });
+    return true;
+  }catch(err){ return false; }
+}
+/* UI 点击音 */
+function playClick(){
+  if(!CONFIG.UI.SOUND_ON_CLICK) return false;
+  const C = CONFIG.AUDIO.CLICK;
+  return playSfx(C.FREQ, 'square', C.DUR, CONFIG.AUDIO.VOLUME * C.VOL);
+}
+/* 买卖金币声 */
+function playCoin(isBuy){
+  const C = CONFIG.AUDIO.COIN;
+  return playNotes(isBuy ? C.BUY : C.SELL, 'triangle', C.DUR, CONFIG.AUDIO.VOLUME * C.VOL);
+}
+/* 走路脚步声（每次音高随机） */
+function playStep(running){
+  const S = CONFIG.AUDIO.STEP;
+  const f = S.FREQ + (Math.random()*2 - 1) * S.JITTER;
+  const iv = S.INTERVAL / (running ? CONFIG.PLAYER.RUN_MULT : 1);
+  return playSfx(f, 'triangle', S.DUR, CONFIG.AUDIO.VOLUME * S.VOL * (running ? 1.25 : 1));
+}
+/* 睡觉转场音：dir 'in' = 入睡（下滑），'out' = 醒来（上扬） */
+function playSleepSfx(dir){
+  const S = CONFIG.AUDIO.SLEEP;
+  if(audioMuted) return false;
+  const ac = ensureAudio();
+  if(!ac) return false;
+  try{
+    const t0 = ac.currentTime;
+    const f0 = dir === 'in' ? S.IN : S.OUT;
+    const f1 = dir === 'in' ? S.OUT * 0.55 : S.IN * 1.7;
+    const osc = ac.createOscillator(), gain = ac.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f0, t0);
+    osc.frequency.exponentialRampToValueAtTime(Math.max(40,f1), t0 + S.DUR);
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(CONFIG.AUDIO.VOLUME * S.VOL, t0 + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + S.DUR);
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.start(t0); osc.stop(t0 + S.DUR + 0.02);
+    return true;
+  }catch(err){ return false; }
+}
+/* --- 雨声环境底噪：白噪声 → 低通 → 音量；可在 CONFIG.AUDIO.RAIN.AMBIENT 关闭 --- */
+let rainAmbience = null;
+function makeNoiseBuffer(ac, seconds){
+  const len = Math.max(1, Math.floor(ac.sampleRate * seconds));
+  const buf = ac.createBuffer(1, len, ac.sampleRate);
+  const d = buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i] = (Math.random()*2 - 1) * 0.5;
+  return buf;
+}
+function startRainAmbience(){
+  if(!CONFIG.AUDIO.RAIN.AMBIENT || rainAmbience || audioMuted) return false;
+  const ac = ensureAudio();
+  if(!ac) return false;
+  try{
+    const src = ac.createBufferSource();
+    src.buffer = makeNoiseBuffer(ac, 2);
+    src.loop = true;
+    const filter = ac.createBiquadFilter();
+    filter.type = 'lowpass'; filter.frequency.value = 1500;
+    const gain = ac.createGain();
+    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.AUDIO.RAIN.AMBIENT_VOL;
+    src.connect(filter); filter.connect(gain); gain.connect(ac.destination);
+    src.start();
+    rainAmbience = {src:src, gain:gain, filter:filter};
+    return true;
+  }catch(err){ rainAmbience = null; return false; }
+}
+function stopRainAmbience(){
+  if(!rainAmbience) return false;
+  try{ rainAmbience.src.stop(); }catch(err){}
+  try{ rainAmbience.gain.disconnect(); }catch(err){}
+  rainAmbience = null;
   return true;
 }
+/* 静音开关（silent=true 时不弹提示条，读档恢复状态用） */
+function setMuted(m, silent){
+  audioMuted = !!m;
+  if(sndBtn){
+    sndBtn.textContent = audioMuted ? '🔇' : '🔊';
+    if(sndBtn.classList) sndBtn.classList.toggle('off', audioMuted);
+  }
+  if(audioMuted) stopRainAmbience();
+  else if(weather && weather.id === 'rain') startRainAmbience();
+  if(!silent) toast(audioMuted ? '🔇 已静音' : '🔊 声音已打开');
+  return audioMuted;
+}
+function toggleMute(){ return setMuted(!audioMuted); }
+/* 声音开关按钮 */
+if(sndBtn) sndBtn.addEventListener('click', ()=>{ toggleMute(); });
+/* --- UI 点击音：菜单按钮 / 页签按下时"哒"一声（商店的买卖用金币声，不重复） --- */
+const UI_CLICK_SEL = ['.mbtn', '.tab', '#sndBtn'];
+document.addEventListener('click', e=>{
+  if(!e || !e.target) return;
+  const t = e.target;
+  for(let i=0;i<UI_CLICK_SEL.length;i++){
+    const sel = UI_CLICK_SEL[i];
+    if((t.matches && t.matches(sel)) || (t.closest && t.closest(sel))){ playClick(); return; }
+  }
+});
+
+/* --- 新手引导：第 1 天早晨依次弹出 3 条提示（移动 / 锄地播种 / 睡觉），完成即消失 --- */
+const tutEl = document.getElementById('tut');
+const tut = {step:0, moved:0, tilled:0, sown:0, slept:false};   /* 进度（会存进存档） */
+/* 三步提示：done() 判断这一步是否完成 */
+const TUT_STEPS = [
+  {key:'move',  text:'① 用 W A S D 或方向键走动（按住 Shift 跑得更快）',
+   done:()=> tut.moved >= CONFIG.TUTORIAL.MOVE_PX},
+  {key:'till',  text:'② 左键用锄头开垦草地 → 再选中种子播下去 → 用水壶浇水',
+   done:()=> tut.tilled >= CONFIG.TUTORIAL.TILL_COUNT && tut.sown >= CONFIG.TUTORIAL.SOW_COUNT},
+  {key:'sleep', text:'③ 天黑前回到小屋按 E 睡觉，体力会回满、作物会生长',
+   done:()=> tut.slept}
+];
+/* 当前这一步要不要显示（配置关掉 / 不是第 1 天 / 已全部完成 → 不显示） */
+function tutActive(){
+  if(!CONFIG.TUTORIAL.ENABLED) return false;
+  if(tut.step >= TUT_STEPS.length) return false;
+  if(clock.day > CONFIG.TUTORIAL.DAY) return false;
+  return true;
+}
+/* 把当前提示写进 DOM */
+function updateTut(){
+  if(!tutEl) return;
+  if(!tutActive()){
+    if(tutEl.classList) tutEl.classList.remove('show');
+    tutEl.textContent = '';
+    return;
+  }
+  const s = TUT_STEPS[tut.step];
+  if(tutEl.textContent !== s.text) tutEl.textContent = s.text;
+  if(tutEl.classList) tutEl.classList.add('show');
+}
+/* 触发一次检查：当前这一步完成了就往下走一步（全部完成 → 提示消失，之后不再出现） */
+function tutCheck(){
+  if(!tutActive()){ updateTut(); return; }
+  if(TUT_STEPS[tut.step].done()){
+    tut.step++;
+    updateTut();
+  }
+}
+/* 教程相关的计数（由各动作调用） */
+function tutMoved(d){ tut.moved += d; tutCheck(); }
+function tutTilled(){ tut.tilled++; tutCheck(); }
+function tutSown(){ tut.sown++; tutCheck(); }
+function tutSlept(){ tut.slept = true; tutCheck(); }
 
 /* --- 提示条：屏幕底部，1.5 秒淡出，多条向上排 --- */
 const toastBox = document.getElementById('toasts');
@@ -1735,6 +2025,7 @@ function sowCrop(tx,ty,type,seedId){
   toast('播下了' + def.name);
   const seedTool = CONFIG.TOOLS.find(t => t.crop === type);
   playSfx(seedTool ? seedTool.sfx : 523, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  tutSown();                                /* 新手引导：完成"播种"这一步 */
   return true;
 }
 function waterTile(tx,ty){
@@ -1958,6 +2249,7 @@ function useTool(tx,ty){
     toast(tool.msg);
   }
   playSfx(tool.sfx, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
+  if(tool.to === T.TILLED) tutTilled();      /* 新手引导：完成"锄地"这一步 */
   return true;
 }
 
@@ -2143,6 +2435,8 @@ function startSleep(faint){
   sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
   dayRolled = false;                 /* 本次睡觉要自己翻天（上一轮的标记不能继承） */
   toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
+  tutSlept();                        /* 新手引导：完成"睡觉"这一步 */
+  playSleepSfx('in');                /* 入睡转场音 */
   return true;
 }
 /* 2:00 强制昏睡 */
@@ -2170,6 +2464,7 @@ function rollToNextMorning(faint){
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
+  updateTut();                         /* 过了第 1 天就把新手引导收起来 */
 }
 /* 睡觉流程推进（接管整个 update） */
 function updateSleepFx(dt){
@@ -2179,7 +2474,7 @@ function updateSleepFx(dt){
     if(sleepFx.t >= S.FADE_OUT){ sleepFx.phase = 'hold'; sleepFx.t = 0; }
   }else if(sleepFx.phase === 'hold'){
     if(!dayRolled) rollToNextMorning(sleepFx.faint);   /* 全黑时翻到次日 6:00 */
-    if(sleepFx.t >= S.HOLD){ sleepFx.phase = 'in'; sleepFx.t = 0; }
+    if(sleepFx.t >= S.HOLD){ sleepFx.phase = 'in'; sleepFx.t = 0; playSleepSfx('out'); }
   }else if(sleepFx.phase === 'in'){
     if(sleepFx.t >= S.FADE_IN){ sleepFx.phase = 'title'; sleepFx.t = 0; }
   }else if(sleepFx.phase === 'title'){
@@ -2334,6 +2629,11 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+  /* M：总音量开关（任何面板开着时都能按） */
+  if(k === CONFIG.AUDIO.MUTE_KEY){
+    if(!e.repeat) toggleMute();
+    return;
+  }
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
@@ -2432,6 +2732,26 @@ canvas.addEventListener('wheel', e=>{
 }, {passive:false});
 
 /* === 6.UI === */
+/* --- 面板开合动画：开 = 200ms 缩放淡入；关 = 先播淡出，动画结束才真正隐藏 --- */
+const panelTimers = new Map();       /* 面板 id → 关闭动画定时器 */
+function setPanelOpen(el, open){
+  if(!el || !el.classList) return;
+  const key = el.id || el;
+  if(panelTimers.has(key)){ clearTimeout(panelTimers.get(key)); panelTimers.delete(key); }
+  if(open){
+    el.classList.remove('closing');
+    el.classList.add('open');
+  }else{
+    /* 已经在关闭动画中就别重复触发 */
+    if(el.classList.contains('closing')) return;
+    el.classList.add('closing');
+    panelTimers.set(key, setTimeout(()=>{
+      el.classList.remove('closing');
+      el.classList.remove('open');
+      panelTimers.delete(key);
+    }, CONFIG.UI.PANEL_ANIM_MS));
+  }
+}
 /* --- 背包面板（DOM 覆盖层；打开时游戏时间冻结） --- */
 const packEl   = document.getElementById('pack');
 const packMask = document.getElementById('packMask');
@@ -2572,9 +2892,9 @@ function togglePack(open){
   if(packOpen){
     if(shopOpen) toggleShop(false);            /* 背包与商店互斥 */
     refreshPackGrid();
-    if(packEl) packEl.classList.add('open');
+    setPanelOpen(packEl, true);
   }else{
-    if(packEl) packEl.classList.remove('open');
+    setPanelOpen(packEl, false);
     packDropHeld();                 /* 关面板时手上的东西放回背包 */
     hidePackTip();
   }
@@ -2662,10 +2982,10 @@ function toggleChest(open){
     if(packOpen) togglePack(false);
     if(shopOpen) toggleShop(false);
     refreshChestGrid();
-    if(chestEl) chestEl.classList.add('open');
+    setPanelOpen(chestEl, true);
   }else{
     openChest = null;
-    if(chestEl) chestEl.classList.remove('open');
+    setPanelOpen(chestEl, false);
   }
 }
 /* 点木箱格：把这堆东西取回背包（背包放不下就放不进去，东西不会消失） */
@@ -2845,9 +3165,9 @@ function toggleShop(open){
   if(shopOpen){
     if(packOpen) togglePack(false);            /* 背包与商店互斥 */
     renderShop();
-    if(shopEl) shopEl.classList.add('open');
+    setPanelOpen(shopEl, true);
   }else{
-    if(shopEl) shopEl.classList.remove('open');
+    setPanelOpen(shopEl, false);
   }
   return true;
 }
@@ -3204,12 +3524,12 @@ function openStartMenu(d){
   if(btnNew) btnNew.textContent = vOK ? '新游戏' : '删除旧存档并重开';
   if(startBtns && startBtns.style) startBtns.style.display = 'flex';
   if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
-  if(startEl) startEl.classList.add('open');
+  setPanelOpen(startEl, true);
 }
 /* 关闭标题界面 */
 function closeStartMenu(){
   startMenuOpen = false;
-  if(startEl) startEl.classList.remove('open');
+  setPanelOpen(startEl, false);
 }
 /* 标题界面：二次确认（防误删存档） */
 function askNewGame(){
@@ -3273,9 +3593,9 @@ function toggleSys(on){
         : '本地还没有存档';
     }
     if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
-    if(sysEl) sysEl.classList.add('open');
+    setPanelOpen(sysEl, true);
   }else{
-    if(sysEl) sysEl.classList.remove('open');
+    setPanelOpen(sysEl, false);
   }
 }
 /* 系统菜单里的"删除存档"：第一次只是警告，第二次才真删 */
@@ -3384,7 +3704,11 @@ function serializeState(){
     buildings: buildings.map(b => ({type:b.type, x:b.tx, y:b.ty,
       slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null})),
     roads: rs,
-    inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean)
+    inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
+    /* 第 12 轮新增（可选字段，老存档没有也能读）：新手引导进度 + 静音状态 */
+    tut: {step:tut.step|0, moved:Math.round(tut.moved), tilled:tut.tilled|0,
+          sown:tut.sown|0, slept:!!tut.slept},
+    snd: audioMuted ? 1 : 0
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -3457,6 +3781,18 @@ function deserializeState(d){
       clock.hold = Math.max(0, d.time.hold|0);
     }
     if(d.weather) weather = CONFIG.WEATHER.find(w=>w.id===d.weather) || weather;
+    /* 新手引导进度（老存档没这个字段 → 回到第 1 步重来） */
+    if(d.tut && typeof d.tut === 'object'){
+      tut.step   = clamp(d.tut.step|0, 0, TUT_STEPS.length);
+      tut.moved  = Math.max(0, d.tut.moved|0);
+      tut.tilled = Math.max(0, d.tut.tilled|0);
+      tut.sown   = Math.max(0, d.tut.sown|0);
+      tut.slept  = !!d.tut.slept;
+    }else{
+      tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;
+    }
+    /* 静音状态（老存档没这个字段 → 保持当前设置） */
+    if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
     held = null;
     /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -3466,6 +3802,7 @@ function deserializeState(d){
     spawnParticles();
     refreshPackGrid();
     updateStats();
+    updateTut();
     return true;
   }catch(e){
     console.warn('[save] 读档失败：', e);
@@ -3544,6 +3881,7 @@ function newGame(){
   gold = CONFIG.INIT_GOLD; hotSel = 0;
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;
   paused = false;
+  tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;   /* 新游戏重置引导 */
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
   cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -3553,6 +3891,7 @@ function newGame(){
   sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
   refreshPackGrid();
   updateStats();
+  updateTut();
 }
 
 /* === 8.主循环 === */

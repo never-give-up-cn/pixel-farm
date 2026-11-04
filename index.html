@@ -2578,29 +2578,31 @@ function chestClick(i){
   refreshChestGrid();
   updateStats();
 }
-/* 点背包格：把这堆东西存进木箱（木箱满了就存不进去，东西不会消失） */
+/* 点背包格：把这堆东西存进木箱（木箱满了就只存一部分，剩下的留在背包，东西不会消失） */
 function chestInvClick(i){
   if(!openChest || !openChest.slots) return;
   const s = inv[i];
   if(!s) return;
-  let slot = openChest.slots.findIndex(x => !x);
-  if(slot < 0){ toast('木箱满了'); return; }
   const d = itemDef(s.id);
   const lim = stackLimit(s.id);
-  if(d && d.stack && lim > 1){
-    /* 优先并进已有的同类堆 */
-    for(let k=0; k<openChest.slots.length; k++){
-      const c = openChest.slots[k];
-      if(c && c.id === s.id && c.n < lim){
-        const take = Math.min(lim - c.n, s.n);
-        c.n += take; s.n -= take;
-        if(s.n <= 0){ inv[i] = null; refreshChestGrid(); return; }
-      }
+  let left = s.n;
+  /* 先并进已有的同类堆 */
+  for(let k=0; k<openChest.slots.length && left>0; k++){
+    const c = openChest.slots[k];
+    if(c && c.id === s.id && c.n < lim){
+      const take = Math.min(lim - c.n, left);
+      c.n += take; left -= take;
     }
   }
-  openChest.slots[slot] = {id:s.id, n:1};
-  s.n--;
-  if(s.n <= 0) inv[i] = null;
+  /* 再放进空格 */
+  for(let k=0; k<openChest.slots.length && left>0; k++){
+    if(openChest.slots[k]) continue;
+    const take = d && d.stack ? Math.min(lim, left) : 1;
+    openChest.slots[k] = {id:s.id, n:take};
+    left -= take;
+  }
+  if(left <= 0) inv[i] = null;         /* 全部存进去了 */
+  else s.n = left;                      /* 木箱装不下，剩下的留在背包 */
   refreshChestGrid();
   updateStats();
 }
@@ -3261,6 +3263,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha,
   nearHouse, houseDist, drawSleepFx, HOUSE_POS,
   /* 建造 */
+  get dropFx(){ return dropFx; },
   get buildings(){ return buildings; }, set buildings(v){ buildings = v; },
   get roads(){ return roads; }, set roads(v){ roads = v; },
   get buildIndex(){ return buildIndex; },

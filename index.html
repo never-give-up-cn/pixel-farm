@@ -244,17 +244,18 @@
   .tab:hover{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
   #packGrid .cell,#chestGrid .cell,#chestInv .cell{transition:background .12s ease,border-color .12s ease,transform .07s ease}
   #packGrid .cell:active,#chestGrid .cell:active,#chestInv .cell:active{transform:translateY(1px)}
-  /* 总音量开关（HUD 右上角） */
+  /* 总音量开关（窗口右下角，避开左上角 HUD 和底部快捷栏） */
   #sndBtn{
-    position:fixed;z-index:30;width:34px;height:34px;padding:0;
+    position:fixed;right:10px;bottom:10px;z-index:30;width:34px;height:34px;padding:0;
     background:rgba(8,10,16,.82);border:2px solid #3d4a63;border-radius:8px;
     color:#cfe3ff;font:16px/1 "Segoe UI Emoji",Consolas,monospace;cursor:pointer;
   }
   #sndBtn:hover{border-color:#ffd76a;color:#ffd76a;background:rgba(22,28,44,.92)}
   #sndBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.8}
-  /* 新手引导提示条（画布顶部居中） */
+  /* 新手引导提示条（窗口顶部居中，不挡画布点击） */
   #tut{
-    position:fixed;z-index:28;display:none;left:50%;transform:translateX(-50%);
+    position:fixed;z-index:28;display:none;top:14px;left:50%;transform:translateX(-50%);
+    pointer-events:none;
     max-width:440px;padding:10px 16px;border-radius:10px;
     background:linear-gradient(180deg,rgba(40,44,30,.95),rgba(20,24,18,.95));
     border:2px solid #ffd76a;color:#ffe9b0;

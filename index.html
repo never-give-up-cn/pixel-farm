@@ -863,7 +863,7 @@ const CONFIG = {
       },
       {
         id:'carpenter', name:'老木匠', icon:'🧑‍🔧', color:'#c98f5a',
-        like:['wood','pumpkin','seed_pumpkin'],                // 喜欢的木料和南瓜
+        like:['wood','pumpkin','seed_pumpkin','mushroom'],    // 喜欢的木料和南瓜（还有林子里的蘑菇）
         dislike:['tomato','seed_tomato'],                      // 不喜欢的番茄
         bday:{season:'夏', day:3},                              // 生日：夏 3 日
         sched:[   // 时刻表：按时段换位置（不在任何时段 = 回家了）
@@ -880,7 +880,7 @@ const CONFIG = {
       },
       {
         id:'girl', name:'邻家女孩', icon:'👧', color:'#e58fae',
-        like:['tomato','seed_tomato','radish'],                // 喜欢的番茄和萝卜
+        like:['tomato','seed_tomato','radish','wildflower','berry'],  // 喜欢的番茄、萝卜，和送她的野花 / 浆果
         dislike:['sickle','stone'],                            // 不喜欢的工具
         bday:{season:'秋', day:3},                              // 生日：秋 3 日
         sched:[   // 时刻表：按时段换位置（不在任何时段 = 回家了）
@@ -4315,7 +4315,9 @@ function serializeState(){
           sown:tut.sown|0, slept:!!tut.slept},
     snd: audioMuted ? 1 : 0,
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
-    npc: npcSerialize()
+    npc: npcSerialize(),
+    /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
+    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0}
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -4402,7 +4404,17 @@ function deserializeState(d){
     if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
     /* 居民状态（老存档没这个字段 → 当作"刚认识"，其余进度不受影响） */
     npcDeserialize(d.npc);
+    /* 图鉴（老存档没这个字段 → 图鉴为空；超出的位按 0 截断） */
+    dexResetState();
+    if(d.dex && typeof d.dex === 'object'){
+      const fMax = (1 << CONFIG.FISHING.LIST.length) - 1;
+      const gMax = (1 << CONFIG.GATHER.TYPES.length) - 1;
+      dexState.f = ((d.dex.f | 0) & fMax) >>> 0;
+      dexState.g = ((d.dex.g | 0) & gMax) >>> 0;
+    }
     held = null;
+    cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
+    refreshDexGrid();
     /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
@@ -4990,6 +5002,10 @@ function migrate(oldSave){
       /* v1 → v2：补上 npc 字段（没有就当作"刚认识"，其余进度全部保留） */
       if(!d.npc || typeof d.npc !== 'object') d.npc = {aff:{}, gift:{}, unl:{}, bd:-1, bu:0};
     }
+    if(v < 3){
+      /* v2 → v3：补上图鉴字段（没有就当作"还没钓到过 / 采到过"） */
+      if(!d.dex || typeof d.dex !== 'object') d.dex = {f:0, g:0};
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){
@@ -5528,6 +5544,16 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   npcStartGift, npcGiftPick, npcAddAff, npcUnlock, npcSyncUnlocks, npcDayStart,
   npcBuildDiscount, buildCost, npcShopBonusLeft,
   npcSerialize, npcDeserialize, npcResetState, migrate, migrateSave, drawNpc,
+  /* 第 14 轮：钓鱼 / 采集 / 图鉴 */
+  get dexState(){ return dexState; },
+  get fishing(){ return fishing; },
+  dexTotal, dexCollected, dexAllEntries, dexHas, dexUnlock, dexResetState,
+  fishingActive, fishDef, waterNearFishing, fishHourOK, fishEligible, fishCandidates,
+  fishPickWeighted, startFishing, updateFishing, fishingPress, fishingStartReel,
+  fishingResolveReel, fishingEscape, cancelFishing, drawFishing,
+  isGatherTile, gatherItemForTile: (t)=>GATHER_ITEM_BY_TILE[t] || null, gatherNear,
+  pickGather, clearGatherTiles, spawnGather, gatherDayStart, drawGathers,
+  GATHER_ITEM_BY_TILE,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

@@ -254,16 +254,18 @@
   #shop.open  #shopPanel,
   #start.open #startPanel,
   #sys.open   #sysPanel,
-  #npc.open   #npcPanel,
-  #animal.open #animalPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #npc.open   #npcPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #pack.closing  #packPanel,
   #chest.closing #chestPanel,
   #shop.closing  #shopPanel,
   #start.closing #startPanel,
   #sys.closing   #sysPanel,
-  #npc.closing   #npcPanel,
+  #npc.closing   #npcPanel{animation:panelOut .2s ease-in forwards}
+  #pack.closing,#chest.closing,#shop.closing,#start.closing,#sys.closing,#npc.closing{display:flex}
+  /* 第 15 轮：动物面板挂到同一套 panelIn / panelOut（只追加，不改上面的规则） */
+  #animal.open #animalPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #animal.closing #animalPanel{animation:panelOut .2s ease-in forwards}
-  #pack.closing,#chest.closing,#shop.closing,#start.closing,#sys.closing,#npc.closing,#animal.closing{display:flex}
+  #animal.closing{display:flex}
   /* ---------- 第 13 轮：NPC 对话面板（复用 .panel 视觉，不另起一套） ---------- */
   #npc{
     position:fixed;inset:0;z-index:45;display:none;
@@ -1049,15 +1051,15 @@ const CONFIG = {
     },
     /* 两种动物：成熟天数 / 每天产出 / 高品质版本 / 住的棚舍 */
     TYPES: [
-      { id:'chicken', name:'鸡', icon:'🐔', price:120, matureDays:2,
-        produce:'egg',  hqProduce:'egg_hq',  shelter:'coop' },
-      { id:'cow',     name:'牛', icon:'🐄', price:260, matureDays:4,
-        produce:'milk', hqProduce:'milk_hq', shelter:'barn' }
+      // 鸡：2 天成熟、每天一个蛋（好感够时出优质蛋）
+      { id:'chicken', name:'鸡', icon:'🐔', price:120, matureDays:2, produce:'egg',  hqProduce:'egg_hq',  shelter:'coop' },
+      // 牛：4 天成熟、每天一份奶（好感够时出优质奶）
+      { id:'cow',     name:'牛', icon:'🐄', price:260, matureDays:4, produce:'milk', hqProduce:'milk_hq', shelter:'barn' }
     ],
-    /* 棚舍：对应的建造配方 id + 最多住几只 */
+    /* 棚舍：对应的建造配方 id + 最多住几只（总容量 = 已建该类棚舍数量 × cap） */
     SHELTERS: {
-      coop: { id:'coop', name:'鸡舍', recipe:'coop', cap:4 },
-      barn: { id:'barn', name:'牛棚', recipe:'barn', cap:3 }
+      // 每座鸡舍住 4 只、每座牛棚住 3 头
+      coop: { id:'coop', name:'鸡舍', recipe:'coop', cap:4 }, barn: { id:'barn', name:'牛棚', recipe:'barn', cap:3 }
     }
   },
 
@@ -5877,7 +5879,7 @@ function animalRenderPanel(){
   const feedN = countItem(A.FEED_ITEM);
   if(animalIcon)        animalIcon.textContent = t.icon;
   if(animalName)        animalName.textContent = t.name + (a.mature ? '' : '（幼崽）');
-  if(animalShelterEl)   animalShelterEl.textContent = (sh ? sh.name : '棚舍') + ' ' + (a.home[0]+1) + ',' + (a.home[1]+1);
+  if(animalShelterEl)   animalShelterEl.textContent = sh ? sh.name : '棚舍';
   if(animalAffEl)       animalAffEl.textContent = '好感 ' + (a.aff | 0);
   if(animalBarFill)     animalBarFill.style.width = Math.round(clamp(a.aff, 0, A.AFF_MAX) / A.AFF_MAX * 100) + '%';
   if(animalInfo){
@@ -6113,7 +6115,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   get openChest(){ return openChest; }, set openChest(v){ openChest = v; },
   buildRecipes, buildRecipe, curRecipe, canAfford, missingMat,
   buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt,
-  buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer,
+  buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer, isSolid,
   applySprinklers, spawnDrops, updateDropFx, drawDropFx,
   drawFence, drawChest, drawSprinkler, drawBuilding, drawRoads, drawRoadTile,
   drawEntities, drawBuildPreview, drawBuildPanel, drawBuildIcon,

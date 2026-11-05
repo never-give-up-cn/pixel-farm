@@ -979,7 +979,11 @@ const CONFIG = {
       { id:'coop',      name:'鸡舍',   cost:{wood:12},          solid:true  },  // 住 4 只鸡
       { id:'barn',      name:'牛棚',   cost:{wood:20, stone:6}, solid:true  },  // 住 3 头牛
       /* 第 19 轮：加工台（把原料做成高价成品；可以放多台，各自独立工作） */
-      { id:'maker',     name:'加工台', cost:{wood:10, stone:5}, solid:true  }
+      { id:'maker',     name:'加工台', cost:{wood:10, stone:5}, solid:true  },
+      /* 第 20 轮：终局自动化 —— 铱质洒水器 / 稻草人 / 自动采集箱 */
+      { id:'irrigator', name:'铱质洒水器', cost:{stone:20}, gold:500 },       // 5×5 自动浇水；30% 概率额外长一阶段
+      { id:'scarecrow', name:'稻草人', cost:{wood:6, stone:2}, solid:true },   // 保护周围作物不被乌鸦破坏
+      { id:'autobox',   name:'自动采集箱', cost:{wood:8, stone:4}, solid:true } // 每天早上把附近棚舍的动物产出收进来
     ]
   },
 
@@ -989,7 +993,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 8,               // 存档版本号（第 19 轮 +1：加工台 job/out 随 buildings 存档；旧档由 migrate() 升级）
+    VERSION: 9,               // 存档版本号（第 20 轮 +1：end 字段存雇工 / 采集箱 / 乌鸦记录 / 结算标记）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1522,6 +1526,39 @@ const CONFIG = {
       {id:'woodcarving',    name:'木雕',     icon:'🗿', inputs:{wood:8},                  out:{id:'woodcarving', n:1},    hours:4, unlock:{type:'aff', npc:'carpenter', min:60}}
       // 木雕：木材 ×8（老木匠成为朋友后解锁）
     ]
+  },
+
+  /* ---------- 终局自动化 + 农场评级（第 20 轮）----------
+   * 后期把「每天重复劳动」交给设备与雇工；5 星评级给一条明确的收尾目标。
+   * 所有概率 / 数值都集中在这里，方便平衡调整与验收时临时改成 100%。 */
+  ENDGAME: {
+    IRRIGATION: {
+      RANGE: 2,              // 铱质洒水器覆盖半径（格）→ 5×5
+      CHANCE: 0.3            // 被铱质洒水器浇过的作物，当天多长 1 个阶段的概率
+    },
+    CROW: {
+      CHANCE: 0.08,          // 每天早上乌鸦事件出现的概率
+      RANGE: 5               // 稻草人保护半径（切比雪夫距离，格）
+    },
+    AUTOBOX: {
+      RANGE: 4,              // 采集箱到棚舍的最大距离（切比雪夫，格）
+      SLOTS: 8               // 采集箱格数（复用木箱面板的 8 格）
+    },
+    WORKER: {
+      COST: 3000,            // 一次性雇佣费（金币）
+      WAGE: 50               // 每天早上自动扣除的日薪
+    },
+    RATING: {
+      STARS: 5,              // 满星数
+      STAR_STEP: 20,         // 每 20 分升一星
+      EXPAND_PLOTS: 20,      // 每 20 格耕地折算 1 期扩建
+      CROP_TARGET: 4,        // 作物种类满分目标
+      ANIMAL_TARGET: 6,      // 动物数量满分目标
+      BUILD_TARGET: 12,      // 建筑数量满分目标
+      ACH_TARGET: 12,        // 成就数量满分目标
+      EXPAND_TARGET: 3,      // 扩建期数满分目标
+      WEIGHTS: { crop:25, animal:20, building:15, ach:30, expand:10 }   // 各项权重（合计 100）
+    }
   },
 
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
@@ -2574,13 +2611,15 @@ function canAfford(r){
   if(!r) return false;
   const c = buildCost(r);                       /* 老木匠打折后要多少 */
   for(const id in c) if(countItem(id) < c[id]) return false;
+  if(r.gold && gold < r.gold) return false;     /* 第 20 轮：配方可以额外要金币（铱质洒水器） */
   return true;
 }
-/* 第一个缺的材料 id（够则 null） */
+/* 第一个缺的材料 id（够则 null；金币不足返回 'gold'） */
 function missingMat(r){
   if(!r) return null;
   const c = buildCost(r);
   for(const id in c) if(countItem(id) < c[id]) return id;
+  if(r.gold && gold < r.gold) return 'gold';    /* 第 20 轮 */
   return null;
 }
 /* 这个格子能不能放这个建造物（返回空串 = 可以） */
@@ -2608,6 +2647,7 @@ function buildPreview(tx,ty,r){
   const g = buildGroundOK(tx,ty,r);
   if(g) return {ok:false, reason:g};
   const miss = missingMat(r);
+  if(miss === 'gold') return {ok:false, reason:'金币不足（还差 ' + (r.gold - gold) + '）'};
   if(miss) return {ok:false, reason:'材料不足（还差' + itemDef(miss).name + '）'};
   return {ok:true, reason:''};
 }
@@ -2622,15 +2662,18 @@ function placeBuilding(tx,ty){
   }
   const need = buildCost(r);                  /* 老木匠打折后的实际材料 */
   for(const id in need) removeItem(id, need[id]);
+  if(r.gold) changeGold(-r.gold);             /* 第 20 轮：铱质洒水器的金币造价 */
   if(r.overlay){
     roads[ty*MAP_W+tx] = 1;
   }else{
     const b = {type:r.id, tx:tx, ty:ty};
     if(r.id === 'chest') b.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+    if(r.id === 'autobox') b.slots = new Array(CONFIG.ENDGAME.AUTOBOX.SLOTS).fill(null);  /* 第 20 轮 */
     if(r.id === 'maker'){ b.job = null; b.out = []; }   /* 第 19 轮：加工台自己的活儿与产出槽 */
     buildings.push(b);
     buildIndex[ty*MAP_W+tx] = buildings.length - 1;
   }
+  ratingCheck();                              /* 第 20 轮：建筑数变化 → 重新评估星级 */
   statsBuild();                               /* 第 18 轮：建造统计 + 成就 */
   toast('造好了' + r.name);
   playSfx(660, 'square', 0.12, CONFIG.AUDIO.VOLUME);
@@ -2662,8 +2705,8 @@ function demolishAt(tx,ty){
     playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
-  if(b.type === 'chest' && b.slots && b.slots.some(s => s)){
-    toast('木箱里有东西，先清空再拆');
+  if((b.type === 'chest' || b.type === 'autobox') && b.slots && b.slots.some(s => s)){
+    toast((b.type === 'autobox' ? '采集箱' : '木箱') + '里有东西，先清空再拆');
     playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
@@ -2679,9 +2722,14 @@ function demolishAt(tx,ty){
     const n = Math.floor(rc[id] * CONFIG.BUILD.REFUND);
     if(n > 0){ addItem(id, n); back += itemDef(id).name + '×' + n + ' '; }
   }
+  if(r.gold){                                    /* 第 20 轮：金币造价也返还一半 */
+    const gy = Math.floor(r.gold * CONFIG.BUILD.REFUND);
+    if(gy > 0){ changeGold(gy); back += '金币×' + gy + ' '; }
+  }
   buildings.splice(bi, 1);
   buildIndex.fill(-1);                     /* 重建索引（下标会整体前移） */
   for(let k=0; k<buildings.length; k++) buildIndex[buildings[k].ty*MAP_W + buildings[k].tx] = k;
+  ratingCheck();                           /* 第 20 轮：建筑数变化 → 重新评估星级 */
   toast('拆掉了' + r.name + (back ? '（返还 ' + back.trim() + '）' : ''));
   playSfx(220, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
   return true;

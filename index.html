@@ -270,6 +270,17 @@
   #quest.open #questPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #quest.closing #questPanel{animation:panelOut .2s ease-in forwards}
   #quest.closing{display:flex}
+  /* 第 17 轮：日历面板挂到同一套 panelIn / panelOut（只追加，不改上面的规则） */
+  #cal.open #calPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #cal.closing #calPanel{animation:panelOut .2s ease-in forwards}
+  #cal.closing{display:flex}
+  /* 第 18 轮：成就墙 / 年度总结挂到同一套 panelIn / panelOut（只追加，不改上面的规则） */
+  #ach.open #achPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #ach.closing #achPanel{animation:panelOut .2s ease-in forwards}
+  #ach.closing{display:flex}
+  #annual.open #annualPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #annual.closing #annualPanel{animation:panelOut .2s ease-in forwards}
+  #annual.closing{display:flex}
   /* ---------- 第 13 轮：NPC 对话面板（复用 .panel 视觉，不另起一套） ---------- */
   #npc{
     position:fixed;inset:0;z-index:45;display:none;
@@ -351,6 +362,122 @@
   .qbar{height:5px;border-radius:3px;background:#1a2130;border:1px solid #2c3a4e;overflow:hidden;margin-top:4px}
   .qbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd05a,#ffd76a)}
   #questFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* ---------- 第 17 轮：日历面板（复用 .panel 视觉） ---------- */
+  #cal{
+    position:fixed;inset:0;z-index:47;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #cal.open{display:flex}
+  #calMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #calPanel{position:relative;width:470px;max-width:92vw;padding:12px 14px 10px}
+  #calHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #calIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #calTitle{font-size:15px;color:#ffd76a}
+  #calSub{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #calList{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:5px}
+  .crow{
+    display:flex;align-items:center;gap:8px;padding:6px 9px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+  }
+  .crow.today{border-color:#ffd76a;background:rgba(30,30,18,.62)}
+  .crow.fest{border-color:#e0a24a;background:rgba(46,32,14,.62)}
+  .crow .cday{width:74px;color:#e8f0ff;font-size:12px;white-space:nowrap}
+  .crow .cmeta{flex:1;color:#8fa3bd;font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .crow .cbadges{display:flex;gap:5px;flex-wrap:nowrap}
+  .crow .cbadge{
+    font-size:10.5px;color:#ffd76a;border:1px solid #4a3d22;border-radius:6px;
+    padding:0 5px;background:rgba(60,44,16,.5);white-space:nowrap;
+  }
+  .crow .cbadge.bday{color:#ffb08a;border-color:#4a2f22;background:rgba(60,26,16,.5)}
+  .crow .cbadge.fest{color:#ffe08a;border-color:#5a4422;background:rgba(78,52,14,.6)}
+  #calFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* 节日横幅：进入节日当天弹一次，只做视觉提示、不冻结世界 */
+  #festBanner{
+    position:fixed;left:50%;top:64px;transform:translate(-50%,-16px) scale(.96);
+    z-index:55;display:flex;align-items:center;gap:10px;
+    padding:9px 18px;border-radius:10px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(28,34,52,.94),rgba(14,18,28,.94));
+    border:1px solid #6b5a2a;box-shadow:0 6px 22px rgba(0,0,0,.45);
+    font:13px/1.5 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#ffe6a8;
+    opacity:0;transition:opacity .35s ease,transform .35s ease;
+  }
+  #festBanner.show{opacity:1;transform:translate(-50%,0) scale(1)}
+  #festBannerIcon{font:20px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #festBannerName{font-size:14px;color:#ffd76a}
+  #festBannerDesc{font-size:11.5px;color:#b9c8dd}
+  /* ---------- 第 18 轮：成就墙（复用 .panel 视觉，不另起一套） ---------- */
+  #ach{
+    position:fixed;inset:0;z-index:49;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #ach.open{display:flex}
+  #achMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #achPanel{position:relative;width:520px;max-width:94vw;padding:12px 14px 10px}
+  #achHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #achIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #achTitle{font-size:15px;color:#ffd76a}
+  #achProg{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #achStats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:4px 8px;margin-bottom:8px;
+    padding:7px 9px;border-radius:8px;background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+    font-size:11px;color:#8fa3bd;
+  }
+  #achTabs{display:flex;gap:6px;margin-bottom:8px}
+  #achTabs .tab{font-size:11.5px;padding:3px 10px}
+  #achList{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:5px}
+  .arow{
+    display:flex;align-items:center;gap:9px;padding:6px 9px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+  }
+  .arow .aico{font:17px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif;width:22px;text-align:center}
+  .arow .ainfo{flex:1;min-width:0}
+  .arow .aname{color:#e8f0ff;font-size:12.5px}
+  .arow .adesc{color:#8fa3bd;font-size:11px}
+  .arow .astat{font-size:11px;color:#7f92ad;white-space:nowrap}
+  .arow.on{border-color:#6b5a2a;background:rgba(34,28,10,.62)}
+  .arow.on .aname{color:#ffd76a}
+  .arow.off .aico{filter:grayscale(1);opacity:.45}
+  .arow.off .aname{color:#7f92ad}
+  #achFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* ---------- 第 18 轮：右上角成就解锁卡片（滑入 → 停留 → 滑出） ---------- */
+  #achCard{
+    position:fixed;right:14px;top:70px;z-index:54;
+    display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:10px;
+    pointer-events:none;transform:translateX(130%);opacity:0;
+    background:linear-gradient(180deg,rgba(40,34,16,.96),rgba(18,16,10,.96));
+    border:1px solid #6b5a2a;box-shadow:0 6px 22px rgba(0,0,0,.5);
+    font:13px/1.45 Consolas,"Microsoft YaHei","PingFang SC",monospace;
+    transition:transform .35s cubic-bezier(.2,.9,.3,1.1),opacity .35s ease;
+  }
+  #achCard.show{transform:translateX(0);opacity:1}
+  #achCardIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #achCardTitle{font-size:10.5px;color:#8fa3bd}
+  #achCardName{font-size:13.5px;color:#ffd76a}
+  #achCardDesc{font-size:11px;color:#b9c8dd}
+  /* ---------- 第 18 轮：年度总结（复用 .panel 视觉） ---------- */
+  #annual{
+    position:fixed;inset:0;z-index:50;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #annual.open{display:flex}
+  #annualMask{position:absolute;inset:0;background:rgba(4,6,10,.6)}
+  #annualPanel{position:relative;width:420px;max-width:92vw;padding:14px 16px 12px}
+  #annualHead{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  #annualIcon{font:24px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #annualTitle{font-size:16px;color:#ffd76a}
+  #annualSub{font-size:11px;color:#8fa3bd;margin-bottom:10px}
+  #annualBody{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+  .arline{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:7px 10px;border-radius:8px;background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+    font-size:12.5px;color:#e8f0ff;
+  }
+  .arline .arv{color:#ffd76a}
+  #annualBtns{display:flex;justify-content:flex-end}
+  #annualFoot{margin-top:8px;font-size:11px;color:#7f92ad}
   /* 送礼模式：背包面板要压到对话面板之上（否则会被对话的遮罩盖住点不到） */
   #pack.gift{z-index:48}
   /* 送礼模式：背包面板顶部提示条 */
@@ -470,6 +597,8 @@
       <button class="mbtn" id="btnSave">保存游戏</button>
       <button class="mbtn" id="btnLoad">读取存档</button>
       <button class="mbtn danger" id="btnWipe">删除存档</button>
+      <!-- 第 18 轮：成就墙入口 -->
+      <button class="mbtn" id="btnAch">🏆 成就墙</button>
       <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
       <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
@@ -536,6 +665,70 @@
   </div>
 </div>
 
+<!-- 日历（第 17 轮）：点 HUD 日期打开；复用 .panel 样式与开合动画，打开时世界冻结 -->
+<div id="cal">
+  <div id="calMask"></div>
+  <div id="calPanel" class="panel">
+    <div id="calHead">
+      <span id="calIcon">📅</span>
+      <span id="calTitle">日历</span>
+      <span id="calSub"></span>
+    </div>
+    <div id="calList"></div>
+    <div id="calFoot">未来 7 天 · 节日每季第 5 天 · 生日 🎂 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- 节日横幅：进入节日当天弹一次（不冻结世界、不挡操作） -->
+<div id="festBanner">
+  <span id="festBannerIcon"></span>
+  <span id="festBannerName"></span>
+  <span id="festBannerDesc"></span>
+</div>
+
+<!-- 成就墙（第 18 轮）：系统菜单里打开；复用 .panel 样式与开合动画，打开时世界冻结 -->
+<div id="ach">
+  <div id="achMask"></div>
+  <div id="achPanel" class="panel">
+    <div id="achHead">
+      <span id="achIcon">🏆</span>
+      <span id="achTitle">成就墙</span>
+      <span id="achProg">已解锁 0/0</span>
+    </div>
+    <div id="achStats"></div>
+    <div id="achTabs"></div>
+    <div id="achList"></div>
+    <div id="achFoot">已解锁彩色 · 未解锁灰色 · 滚动查看全部 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- 成就解锁卡片（第 18 轮）：右上角滑入 + 音效，不冻结世界、不挡操作 -->
+<div id="achCard">
+  <span id="achCardIcon">🏆</span>
+  <div id="achCardBody">
+    <div id="achCardTitle">成就解锁</div>
+    <div id="achCardName"></div>
+    <div id="achCardDesc"></div>
+  </div>
+</div>
+
+<!-- 年度总结（第 18 轮）：活过一整年时弹一次；打开时世界冻结 -->
+<div id="annual">
+  <div id="annualMask"></div>
+  <div id="annualPanel" class="panel">
+    <div id="annualHead">
+      <span id="annualIcon">🎊</span>
+      <span id="annualTitle">年度总结</span>
+    </div>
+    <div id="annualSub"></div>
+    <div id="annualBody"></div>
+    <div id="annualBtns">
+      <button class="mbtn" id="annualClose">开启新的一年（Esc）</button>
+    </div>
+    <div id="annualFoot">年度总结只在这一天弹出一次</div>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -546,7 +739,9 @@
 const T = {GRASS:0, DIRT:1, WATER:2, TREE:3, ROCK:4, FLOWER:5, HOUSE:6, SHOP:7,
            TILLED:8, WATERED:9, BARE:10,
            /* 第 14 轮：可采集物（长在草地上，走上去不挡路，按 E 采集） */
-           WILDFLOWER:11, MUSHROOM:12, BERRY:13};
+           WILDFLOWER:11, MUSHROOM:12, BERRY:13,
+           /* 第 17 轮：节日装饰（只出现在广场，跨天自动还原成 baseMap） */
+           FEST_BANNER:14, FEST_STALL:15, FEST_LANTERN:16};
 
 const CONFIG = {
   VERSION: 'v0.1',          // 版本号（显示在左上角）
@@ -737,7 +932,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 5,               // 存档版本号（第 16 轮 +1：新增 quest 委托 / 信誉字段；旧档由 migrate() 升级）
+    VERSION: 7,               // 存档版本号（第 18 轮 +1：新增 st 统计 / ach 成就；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1144,6 +1339,76 @@ const CONFIG = {
                  'seed_pumpkin','wood','stone','feed']
   },
 
+  /* 节日（第 17 轮）：每季第 5 天举办，效果只在当天生效 */
+  FESTIVAL: {
+    DAY: 5,                    // 每季第几天举办节日
+    SELL_MULT: 1.5,            // 秋 · 丰收节：作物售价倍率
+    GIFT_MULT: 3,              // 冬 · 雪夜灯会：送礼好感倍率
+    RIVALS: 3,                 // 夏 · 渔获赛：同场竞技的 NPC 数量
+    SUMMER_PRIZE: {id:'seed_pumpkin', n:3},   // 渔获赛第一名奖励（稀有种子）
+    BANNER_MS: 4500,           // 节日横幅停留多少毫秒
+    AMBIENT: true,             // 节日环境音总开关
+    AMBIENT_VOL: 0.035,        // 节日环境音音量（相对 CONFIG.AUDIO.VOLUME）
+    /* 广场：代码绘制的装饰区（7×3 格，农场正下方），只占未被玩家改动的原始地面 */
+    PLAZA: {x:29, y:39, w:7, h:3},
+    /* 四个节日：按春夏秋冬排序，id / 名字 / 图标 / 效果说明 / 环境音和弦 */
+    LIST: [
+      // 春 · 播种祭：当天播下的种子，当夜生长 +2 天
+      {id:'spring', name:'播种祭', icon:'🌱', effect:'当天播种的作物生长速度 ×2', amb:[392, 523]},
+      // 夏 · 渔获赛：当天钓到的鱼按总价值与 NPC 排名，第一名奖励稀有种子
+      {id:'summer', name:'渔获赛', icon:'🎣', effect:'当天钓到的鱼总价值排名第一 → 稀有种子', amb:[440, 554]},
+      // 秋 · 丰收节：当天卖作物 +50%，村民到广场摆集市
+      {id:'autumn', name:'丰收节', icon:'🌾', effect:'当天出售作物价格 ×1.5，广场出现集市', amb:[349, 466]},
+      // 冬 · 雪夜灯会：夜里广场亮灯，对话有特殊台词，送礼好感 ×3
+      {id:'winter', name:'雪夜灯会', icon:'🏮', effect:'夜里广场亮灯 · 送礼好感 ×3', amb:[330, 440]}
+    ],
+    /* 冬夜灯会 NPC 特殊台词（{name} 会替换成居民名字） */
+    WINTER_TALK: '{name}：灯会把雪地都照亮了，今晚别急着走呀。'
+  },
+
+  /* 成就（第 18 轮）：>=20 个，分 种植 / 经济 / 社交 / 探索 四类
+   * kind 说明：stat=累计统计达到 need；gold=当前存款；dailyGold=单日收入；
+   *           crops=收过的作物种类数；fishKinds=钓到的鱼的种类数；
+   *           gatherKinds=采到的采集物种类数；friends=达到「朋友」档的居民数；
+   *           year=活过一整年（第 41 天早晨） */
+  ACHIEVEMENT: {
+    CARD_MS: 2800,             // 右上角解锁卡片停留多久（毫秒）
+    CATS: [                     // 成就四分类（成就墙的页签）
+      {key:'farm',    name:'种植', icon:'🌱'},
+      {key:'gold',    name:'经济', icon:'💰'},
+      {key:'social',  name:'社交', icon:'💬'},
+      {key:'explore', name:'探索', icon:'🧭'}
+    ],
+    LIST: [
+      /* ---- 种植类 ---- */
+      {id:'harvest_first', cat:'farm',    icon:'🌾', name:'初次丰收', desc:'收获第 1 个作物',        kind:'stat', key:'hv', need:1},
+      {id:'harvest_10',    cat:'farm',    icon:'🌱', name:'小有收成', desc:'累计收获 10 个作物',     kind:'stat', key:'hv', need:10},
+      {id:'harvest_50',    cat:'farm',    icon:'🧺', name:'熟练农夫', desc:'累计收获 50 个作物',     kind:'stat', key:'hv', need:50},
+      {id:'harvest_100',   cat:'farm',    icon:'🏅', name:'百果归仓', desc:'累计收获 100 个作物',    kind:'stat', key:'hv', need:100},
+      {id:'crops_all',     cat:'farm',    icon:'🌈', name:'四季农人', desc:'萝卜 / 土豆 / 番茄 / 南瓜都收过', kind:'crops', need:4},
+      /* ---- 经济类 ---- */
+      {id:'sell_first',    cat:'gold',    icon:'💰', name:'第一桶金', desc:'第一次卖出东西',         kind:'stat', key:'gs', need:1},
+      {id:'gold_1000',     cat:'gold',    icon:'🏦', name:'千元户',   desc:'存款达到 1000 金币',     kind:'gold', need:1000},
+      {id:'day_income_500',cat:'gold',    icon:'📈', name:'日进斗金', desc:'单日收入达到 500 金币',  kind:'dailyGold', need:500},
+      {id:'income_5000',   cat:'gold',    icon:'💎', name:'家底殷实', desc:'累计收入达到 5000 金币', kind:'stat', key:'inc', need:5000},
+      {id:'build_10',      cat:'gold',    icon:'🔨', name:'建设者',   desc:'累计建造 10 次',         kind:'stat', key:'bd', need:10},
+      {id:'build_30',      cat:'gold',    icon:'🏗', name:'基建狂魔', desc:'累计建造 30 次',         kind:'stat', key:'bd', need:30},
+      /* ---- 社交类 ---- */
+      {id:'gift_first',    cat:'social',  icon:'🎁', name:'初次送礼', desc:'第一次给居民送礼',       kind:'stat', key:'gc', need:1},
+      {id:'gift_10',       cat:'social',  icon:'💝', name:'礼尚往来', desc:'累计送出 10 份礼物',     kind:'stat', key:'gc', need:10},
+      {id:'friend_first',  cat:'social',  icon:'🤝', name:'交个朋友', desc:'让 1 位居民的好感到「朋友」', kind:'friends', need:1},
+      {id:'friends_3',     cat:'social',  icon:'👫', name:'三人成友', desc:'3 位居民都成为朋友',     kind:'friends', need:3},
+      {id:'aff_150',       cat:'social',  icon:'⭐', name:'人气王',   desc:'好感度总和达到 150',     kind:'stat', key:'af', need:150},
+      /* ---- 探索类 ---- */
+      {id:'fish_first',    cat:'explore', icon:'🎣', name:'初次垂钓', desc:'钓到第 1 条鱼',          kind:'stat', key:'fs', need:1},
+      {id:'fish_8',        cat:'explore', icon:'🐟', name:'鱼类图鉴', desc:'钓到全部 8 种鱼',        kind:'fishKinds', need:8},
+      {id:'gather_all',    cat:'explore', icon:'🌼', name:'采集达人', desc:'集齐所有季节采集物',     kind:'gatherKinds', need:3},
+      {id:'sleep_10',      cat:'explore', icon:'😴', name:'安眠',     desc:'累计睡觉 10 次',         kind:'stat', key:'sl', need:10},
+      {id:'play_30',       cat:'explore', icon:'📅', name:'农场主',   desc:'游玩 30 天',             kind:'stat', key:'dy', need:30},
+      {id:'year_one',      cat:'explore', icon:'🎊', name:'活过一整年', desc:'度过完整的 40 天',     kind:'year', need:1}
+    ]
+  },
+
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
   BALANCE: {
     EXPANSION_GOLD: 500,    // 扩建地标价（自检参照目标）
@@ -1247,7 +1512,7 @@ const CONFIG = {
 
 /* === 2.世界 === */
 const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店','耕地','已浇水','空地',
-                    '野花丛','蘑菇','浆果'];
+                    '野花丛','蘑菇','浆果','节日彩旗','集市摊位','节日灯笼'];
 
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
@@ -1812,6 +2077,10 @@ function drawEntities(g, x0, y0, x1, y1){
         if(t === T.TREE)      list.push({y:ty*TILE + TILE, f:()=>drawTree(g, px, py)});
         else if(t === T.ROCK) list.push({y:ty*TILE + TILE, f:()=>drawRock(g, px, py)});
         else if(t === T.FLOWER) list.push({y:ty*TILE + TILE, f:()=>drawFlower(g, px, py, (hash2(tx,ty)*3)|0)});
+        /* 第 17 轮：节日装饰（走同一张 Y 排序表） */
+        else if(t === T.FEST_BANNER)  list.push({y:ty*TILE + TILE, f:()=>drawFestBanner(g, px, py)});
+        else if(t === T.FEST_STALL)   list.push({y:ty*TILE + TILE, f:()=>drawFestStall(g, px, py)});
+        else if(t === T.FEST_LANTERN) list.push({y:ty*TILE + TILE, f:()=>drawFestLantern(g, px, py)});
       }
     }
   }
@@ -2170,6 +2439,7 @@ function buildGroundOK(tx,ty,r){
   if(t === T.WATER) return '水里不能建';
   if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
   if(t === T.WILDFLOWER || t === T.MUSHROOM || t === T.BERRY) return '这里长着采集物，先采掉吧';
+  if(t === T.FEST_BANNER || t === T.FEST_STALL || t === T.FEST_LANTERN) return '节日装饰先别动';   /* 第 17 轮 */
   if(r.overlay) return '';            /* 石板路是叠加层：耕地 / 作物上都铺 */
   if(t === T.TILLED || t === T.WATERED) return '耕地不能建';
   if(crops[i]) return '这里种着东西';
@@ -2208,6 +2478,7 @@ function placeBuilding(tx,ty){
     buildings.push(b);
     buildIndex[ty*MAP_W+tx] = buildings.length - 1;
   }
+  statsBuild();                               /* 第 18 轮：建造统计 + 成就 */
   toast('造好了' + r.name);
   playSfx(660, 'square', 0.12, CONFIG.AUDIO.VOLUME);
   return true;
@@ -2692,6 +2963,7 @@ function sowCrop(tx,ty,type,seedId){
   const have = (slot && slot.id === sid && slot.n > 0) ? true : (countItem(sid) > 0);
   if(!have){ toast('没有' + def.name + '种子了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   crops[i] = {type:type, stage:0, grown:0, watered:false, mature:false, dead:false};
+  festivalOnSow(crops[i]);               /* 第 17 轮：春·播种祭当天播种 → 当晚 ×2 生长 */
   if(slot && slot.id === sid && slot.n > 0){        /* 优先扣当前选中的那一格 */
     slot.n--;
     if(slot.n <= 0) inv[hotSel] = null;
@@ -2731,6 +3003,7 @@ function harvestCrop(tx,ty){
   if(!payStamina(staminaCost('harvest'))) return false;   /* 收获消耗 1 点体力 */
   addItem(c.type, 1);
   questEmit('crop', {id:c.type, n:1});    /* 第 16 轮：委托总线（作物产出） */
+  statsHarvest(c.type);                   /* 第 18 轮：收获统计 + 作物种类 + 成就 */
   if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
     c.grown = def.days - def.regrow;
     c.stage = 3; c.mature = false; c.watered = false;
@@ -2786,10 +3059,11 @@ function settleDay(){
       continue;
     }
     if(map[i] === T.WATERED){              /* 当天浇过水 → 生长一天 */
-      c.grown++;
+      c.grown += festivalGrowInc(c);       /* 第 17 轮：春·播种祭当天播种的生长 ×2 */
       if(c.grown >= def.days) c.mature = true;
       grew++;
     }
+    if(c.fastDay) c.fastDay = 0;           /* 加速只作用于播种当晚 */
     c.stage = cropStage(c);
     if(c.mature) matured++;
   }
@@ -2996,6 +3270,7 @@ function toolOwned(id){
 /* 金币变动 + 跳动动画（动画用 performance.now()，商店打开、时间冻结时照样跳） */
 function changeGold(v){
   gold += v;
+  if(v > 0) statsIncome(v);          /* 第 18 轮：累计 / 单日收入统计 + 成就检查 */
   goldDelta = v;
   goldPulseAt = performance.now();
   pulseShopGold();
@@ -3034,11 +3309,14 @@ function sellItem(id, n){
     if(left > 0){ bonusN = Math.min(n, left); npcState.bonusUsed += bonusN; }
   }
   const mult = bonusN > 0 ? CONFIG.NPC.SHOP_BONUS.PRICE_MULT : 1;
-  const total = Math.round(unit * (n - bonusN) + unit * bonusN * mult);
+  const festMult = festivalSellMult(id);   /* 第 17 轮：秋·丰收节作物 ×1.5 */
+  const total = Math.round((unit * (n - bonusN) + unit * bonusN * mult) * festMult);
   removeItem(id, n);
   changeGold(total);
+  statsSell();                              /* 第 18 轮：卖出次数统计 + 成就 */
   toast('卖出 ' + d.name + ' ×' + n + '（+' + total + ' 💰' +
-        (bonusN > 0 ? '，老板娘加购 ' + bonusN + ' 件 ×' + mult : '') + '）');
+        (bonusN > 0 ? '，老板娘加购 ' + bonusN + ' 件 ×' + mult : '') +
+        (festMult > 1 ? '，丰收节 ×' + festMult : '') + '）');
   playSfx(1046, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   refreshPackGrid();
   renderShop();
@@ -3128,6 +3406,7 @@ function startSleep(faint){
   cancelFishing(true);               /* 钓鱼中跑去睡觉 → 静默收竿 */
   sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
   dayRolled = false;                 /* 本次睡觉要自己翻天（上一轮的标记不能继承） */
+  statsSleep();                      /* 第 18 轮：睡觉次数统计 + 成就 */
   toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
   tutSlept();                        /* 新手引导：完成"睡觉"这一步 */
   playSleepSfx('in');                /* 入睡转场音 */
@@ -3140,11 +3419,15 @@ function triggerFaint(){
 }
 /* 翻到第二天早上：结算作物生长 → 重置浇水 → 恢复体力 */
 function rollToNextMorning(faint){
+  const endedDay = clock.day;  /* 第 17 轮：先记下「刚过完的那一天」 */
   clock.day++; clock.min = 0; clock.hold = 0;
+  statsDayTick();              /* 第 18 轮：游玩天数 +1 / 年度总结基线 / 成就检查 */
+  festivalDayEnd(endedDay);    /* 第 17 轮：渔获赛排名结算 / 清掉昨天的广场装饰 */
   settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
   animalDayStart();            /* 第 15 轮：动物成长 / 好感 / 每日产出 */
   questDayStart();             /* 第 16 轮：委托过期 / 刷新新一天的委托 */
   rollWeather();
+  festivalDayStart();          /* 第 17 轮：今天要是节日 → 立装饰 / 环境音 / 横幅 */
   if(faint){
     /* 惩罚方式选「体力」：次日体力上限扣 20%（不扣金币，避免误伤玩家资产） */
     staminaMax = Math.round(CONFIG.STAMINA.MAX * (1 - CONFIG.SLEEP.FAINT_PENALTY));
@@ -3351,9 +3634,19 @@ window.addEventListener('keydown', e=>{
     if((k === 'e' || k === ' ') && !e.repeat){ questClosePanel(); ensureAudio(); }
     return;
   }
+  /* 日历：E / 空格 / Esc 关闭，其它键一律忽略（打开时世界冻结） */
+  if(calOpen && k !== 'escape'){
+    if((k === 'e' || k === ' ') && !e.repeat){ calClosePanel(); ensureAudio(); }
+    return;
+  }
+  /* 成就墙 / 年度总结：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
+  if((achOpen || annualOpen) && k !== 'escape') return;
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(annualOpen){ annualClosePanel(); return; }
+    if(achOpen){ achClosePanel(); return; }
+    if(calOpen){ calClosePanel(); return; }
     if(questOpen){ questClosePanel(); return; }
     if(animalOpen){ animalClosePanel(); return; }
     if(chestOpen){ toggleChest(false); return; }
@@ -3433,8 +3726,11 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen) return;
+  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
+     achOpen || annualOpen) return;
   const p = toLogical(e);
+  /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */
+  if(e.button === 0 && hitHudDate(p)){ ensureAudio(); toggleCalendar(); return; }
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
   /* 钓鱼中：左键 = 收杆/拉杆，右键 = 收竿 */
@@ -3966,9 +4262,13 @@ function renderShopSell(){
   }
   for(const id of ids){
     const d = itemDef(id);
-    const n = countItem(id), unit = priceOf(id);
+    const festMult = festivalSellMult(id);   /* 第 17 轮：丰收节面板价格也要跟着涨 */
+    const n = countItem(id), unit = Math.round(priceOf(id) * festMult);
     const total = unit * n;
-    const row = shopRow(d.icon, d.name + ' ×' + n, '', priceHtml(id) + '　共 ' + total + ' 💰', [
+    const priceTxt = festMult > 1
+      ? (unit + ' 💰<span class="up">×' + festMult + '</span>')
+      : priceHtml(id);
+    const row = shopRow(d.icon, d.name + ' ×' + n, '', priceTxt + '　共 ' + total + ' 💰', [
       {label:'卖 1', off:false, fn:()=>{ sellItem(id, 1); }},
       {label:'全卖', off:false, fn:()=>{ sellItem(id, n); }}
     ]);
@@ -4148,8 +4448,8 @@ function drawUI(g){
   g.font = '13px ' + FONT_CJK;   const wB = g.measureText(dB).width;
   g.font = '15px ' + FONT_EMOJI; const wE = bdNpc ? g.measureText('🎂').width : 0;
   g.font = '13px ' + FONT_CJK;   const wC = dC ? g.measureText(dC).width : 0;
-  const dW = Math.ceil(wA + wI + wB + wE + wC) + 16, dH = 24, dY = rowY + rowH + 6;
-  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
+  const dW = Math.ceil(wA + wI + wB + wE + wC) + 16 + 20, dH = 24, dY = rowY + rowH + 6;
+  hudDateRect = {x:8, y:dY, w:dW, h:dH};   /* 第 17 轮：这个区域可以点开日历 */  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, dY, dW, 1); g.fillRect(8, dY+dH-1, dW, 1);
   g.fillRect(8, dY, 1, dH); g.fillRect(8+dW-1, dY, 1, dH);
@@ -4166,6 +4466,9 @@ function drawUI(g){
     g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
     g.fillText(dC, 16 + wA + wI + wB + wE, dY + 5);
   }
+  /* 第 17 轮：日历入口（点这块区域打开） */
+  g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText('📅', 8 + dW - 22, dY + 4);
 
   /* 建造模式：左侧配方面板 */
   if(buildMode) drawBuildPanel(g, dY + dH + 6);
@@ -4505,6 +4808,7 @@ const sysInfo  = document.getElementById('sysInfo');
 const btnSave  = document.getElementById('btnSave');
 const btnLoad  = document.getElementById('btnLoad');
 const btnWipe  = document.getElementById('btnWipe');
+const btnAch   = document.getElementById('btnAch');   /* 第 18 轮：成就墙入口 */
 const btnClose = document.getElementById('btnClose');
 let sysOpen = false;          /* 系统菜单开着时游戏冻结 */
 let sysWipeArmed = false;     /* 删除存档要连点两次，防误触 */
@@ -4548,6 +4852,7 @@ function sysWipe(){
 if(btnSave)  btnSave .addEventListener('click', ()=>{ saveGame('手动保存'); });
 if(btnLoad)  btnLoad .addEventListener('click', ()=>{ loadGame(); });
 if(btnWipe)  btnWipe .addEventListener('click', ()=>{ sysWipe(); });
+if(btnAch)   btnAch  .addEventListener('click', ()=>{ achOpenPanel(); });
 if(btnClose) btnClose.addEventListener('click', ()=>{ toggleSys(false); });
 if(sysMask)  sysMask .addEventListener('mousedown', e=>{ e.preventDefault(); toggleSys(false); });
 
@@ -4615,8 +4920,10 @@ function serializeState(){
   for(let i=0;i<crops.length;i++){
     const c = crops[i];
     if(!c) continue;
-    cs.push({x:(i % MAP_W), y:((i / MAP_W) | 0), type:c.type, stage:c.stage|0,
-             grown:c.grown|0, watered:!!c.watered, mature:!!c.mature, dead:!!c.dead});
+    const c0 = {x:(i % MAP_W), y:((i / MAP_W) | 0), type:c.type, stage:c.stage|0,
+             grown:c.grown|0, watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
+    if(c.fastDay) c0.fast = c.fastDay | 0;      /* 第 17 轮：播种祭的加速标记（只有非 0 才写） */
+    cs.push(c0);
   }
   const rs = [];
   for(let i=0;i<roads.length;i++) if(roads[i]) rs.push((i % MAP_W) + ',' + ((i / MAP_W) | 0));
@@ -4650,7 +4957,12 @@ function serializeState(){
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
     /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
-    quest: questSerialize()
+    quest: questSerialize(),
+    /* 第 17 轮新增：节日（渔获赛积分 / 当天日期 / 已领奖标记 / 横幅已弹标记） */
+    fest: festivalSerialize(),
+    /* 第 18 轮新增：统计（16 个数字的紧凑数组）+ 成就（一个 32 位掩码） */
+    st: statsSerialize(),
+    ach: achSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -4670,8 +4982,10 @@ function deserializeState(d){
         const x = c.x|0, y = c.y|0;
         if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
         if(!cropDef(c.type)) continue;
-        crops[y*MAP_W+x] = {type:c.type, stage:c.stage|0, grown:c.grown|0,
+        const nc = {type:c.type, stage:c.stage|0, grown:c.grown|0,
                             watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
+        if(c.fast) nc.fastDay = Math.max(0, c.fast | 0);   /* 第 17 轮：播种祭加速标记 */
+        crops[y*MAP_W+x] = nc;
       }
     /* 建造物 + 石板路 */
     buildings = [];
@@ -4749,6 +5063,11 @@ function deserializeState(d){
     animalDeserialize(d.animals);
     /* 委托板（老存档没这个字段 → 按当天重新生成，信誉归零） */
     questDeserialize(d.quest);
+    /* 节日（老存档没这个字段 → 节日状态归零；若今天正是节日，效果 / 装饰立即续上） */
+    festivalDeserialize(d.fest);
+    /* 统计 / 成就（老存档没这两个字段 → 统计从 0 开始、成就未解锁；不报错） */
+    statsDeserialize(d.st);
+    achDeserialize(d.ach);
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     refreshDexGrid();
@@ -4851,6 +5170,9 @@ function newGame(){
   dexResetState();                              /* 新游戏：图鉴清空 */
   animalResetState();                           /* 新游戏：清空动物 */
   questResetState();                            /* 新游戏：清空委托 / 信誉 */
+  festivalResetState();                         /* 新游戏：清空节日状态 / 横幅 / 环境音 */
+  statsResetState();                            /* 第 18 轮：统计从 0 开始（第 1 天算 1 天） */
+  achResetState();                              /* 第 18 轮：成就全部重新解锁 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -4877,6 +5199,8 @@ let renderMs = 0;                  /* 最近一帧的渲染耗时（毫秒，滑
 function update(dt){
   if(npcOpen) updateNpcDialog(dt);   /* 打字机属于 UI：对话打开时字照常一个个蹦出来 */
   if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
+  /* 第 18 轮：年度总结在睡醒后弹（睡觉转场结束时再开面板，免得被黑屏盖住） */
+  if(annualPending && !startMenuOpen && !sysOpen){ const p = annualPending; annualPending = null; annualOpenPanel(p); }
   if(startMenuOpen) return;           /* 标题界面：整个游戏冻结 */
   if(sysOpen) return;                 /* 系统菜单：整个游戏冻结 */
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
@@ -4886,6 +5210,10 @@ function update(dt){
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
   if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */
   if(questOpen) return;              /* 委托板打开：同样整体冻结（时间停住） */
+  if(calOpen) return;                /* 日历打开：同样整体冻结（时间停住） */
+  if(achOpen) return;                /* 成就墙打开：同样整体冻结（时间停住） */
+  if(annualOpen) return;             /* 年度总结打开：同样整体冻结（时间停住） */
+  achTickCard(dt);                   /* 第 18 轮：解锁卡片计时（世界冻结时一并停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
@@ -5043,6 +5371,8 @@ function npcUnlockTierIdx(){
 }
 /* 时刻表：当前这个点在哪儿（null = 回家了，今天不见） */
 function npcSpot(d){
+  const fs = festivalNpcSpot(d);         /* 第 17 轮：秋·丰收节村民都去广场赶集 */
+  if(fs) return fs;
   const h = skyHour();
   for(const s of d.sched) if(h >= s.from && h < s.to) return s;
   return null;
@@ -5098,7 +5428,7 @@ function npcPickLines(d){
     used.push(k);
     out.push(pool[k]);
   }
-  return out;
+  return festivalDialogLines(d, out);    /* 第 17 轮：冬夜灯会特殊台词 */
 }
 function npcOpenDialog(d){
   if(!d || npcOpen) return false;
@@ -5231,7 +5561,8 @@ function npcGiftPick(i){
   if(d.dislike.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.DISLIKE; word = '不太喜欢'; }
   else if(d.like.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.LIKE; word = '很喜欢'; }
   const bday = npcIsBirthday(d);
-  const eff = bday ? delta * CONFIG.NPC.GIFT.BIRTHDAY_MULT : delta;
+  const eff = festivalGiftAff(bday ? delta * CONFIG.NPC.GIFT.BIRTHDAY_MULT : delta);   /* 第 17 轮：冬夜灯会 ×3 */
+  const festGift = festivalIs('winter');
   removeItem(id, 1);
   npcState.gift[d.id] = clock.day;          /* 记下"今天送过" → 跨天自动重置 */
   /* 收起背包，回到对话 */
@@ -5241,8 +5572,10 @@ function npcGiftPick(i){
   giftTarget = null;
   const it = itemDef(id);
   toast('把 ' + (it ? it.name : id) + ' 送给了 ' + d.name + '（' + word + '，好感 ' +
-        (eff >= 0 ? '+' : '') + eff + (bday ? '，生日 ×' + CONFIG.NPC.GIFT.BIRTHDAY_MULT : '') + '）');
+        (eff >= 0 ? '+' : '') + eff + (bday ? '，生日 ×' + CONFIG.NPC.GIFT.BIRTHDAY_MULT : '') +
+        (festGift ? '，灯会 ×' + CONFIG.FESTIVAL.GIFT_MULT : '') + '）');
   npcAddAff(d.id, eff);
+  statsGift();                              /* 第 18 轮：送礼次数统计 + 成就 */
   renderNpcDialog();
   return true;
 }
@@ -5250,8 +5583,10 @@ function npcGiftPick(i){
 function npcAddAff(id, delta){
   const d = npcDef(id);
   if(!d) return;
+  const aff0 = npcAff(id);
   const before = npcTierIdx(npcAff(id));
   npcState.aff[id] = clamp(npcAff(id) + delta, 0, CONFIG.NPC.AFF_MAX);
+  statsAff(npcAff(id) - aff0);          /* 第 18 轮：好感总和增量统计 + 成就 */
   const after = npcTierIdx(npcAff(id));
   if(after > before){
     const t = CONFIG.NPC.TIERS[after];
@@ -5363,6 +5698,16 @@ function migrate(oldSave){
       /* v4 → v5：补上委托板字段（没有就当作"今天还没接过委托"，信誉从 0 开始） */
       if(!d.quest || typeof d.quest !== 'object') d.quest = {r:0, d:0, i:0, o:[], a:[]};
     }
+    if(v < 6){
+      /* v5 → v6：补上节日字段（没有就当作"没在过节日 / 没领过奖 / 积分 0"） */
+      if(!d.fest || typeof d.fest !== 'object') d.fest = {p:0, d:0, c:0, b:0};
+    }
+    if(v < 7){
+      /* v6 → v7：补上统计 / 成就。统计从 0 开始（不追溯旧档历史行为，避免旧进度被误算成成就），
+       * 成就全部未解锁；之后的行为从现在起正常累计。 */
+      if(!Array.isArray(d.st) || d.st.length < 16) d.st = statsZeroArray();
+      if(!d.ach || typeof d.ach !== 'object') d.ach = {u:0};
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){
@@ -5457,6 +5802,7 @@ function dexUnlock(kind, idx){
   const e = dexAllEntries().find(x => x.kind === kind && x.idx === idx);
   toast('📖 图鉴新增：' + (e ? e.name : '？'));
   playSfx(1174, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  achCheck();                               /* 第 18 轮：鱼种 / 采集物集齐 → 成就 */
   return true;
 }
 
@@ -5575,8 +5921,10 @@ function fishingResolveReel(){
   }
   addItem(f.id, 1);
   questEmit('fish', {id:f.id, n:1});      /* 第 16 轮：委托总线（钓鱼产出） */
+  festivalAddFish(f);                     /* 第 17 轮：夏·渔获赛积分 */
   const idx = CONFIG.FISHING.LIST.indexOf(f);
   dexUnlock('fish', idx);
+  statsFish();                            /* 第 18 轮：钓鱼统计 + 鱼种成就 */
   toast('🎣 钓到了 ' + f.name + '！（稀有度 ' + f.rarity + '）');
   playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
   fishing.state = 'idle'; fishing.fish = null; fishing.t = 0;
@@ -6248,13 +6596,16 @@ function questMake(rng, kind){
   let target;
   if(kind === 'crop'){
     const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
-    target = questPick(rng, pool.length ? pool : A.CROP_POOL);
-  }else if(kind === 'fish'){
+    /* 冬天没有当季作物 → 换成材料委托，避免刷出做不完的委托 */
+    if(!pool.length) kind = 'material';
+    else target = questPick(rng, pool);
+  }
+  if(kind === 'fish'){
     const pool = A.FISH_POOL.filter(id => { const f = fishDef(id); return f && f.seasons.indexOf(season) >= 0; });
     target = questPick(rng, pool.length ? pool : A.FISH_POOL);
   }else if(kind === 'material'){
     target = questPick(rng, A.MATERIAL_POOL);
-  }else{
+  }else if(kind === 'talk'){
     target = questPick(rng, A.TALK_POOL);
   }
   const range = A.NEED[kind] || [1, 1];
@@ -6533,7 +6884,705 @@ questBus.on('fish',     d => questProgress('fish',     d && d.id, d && d.n));
 questBus.on('material', d => questProgress('material', d && d.id, d && d.n));
 questBus.on('talk',     d => questProgress('talk',     d && d.id, d && d.n));
 
-/* --- 启动 --- */
+/* === 18.节日 / 日历（第 17 轮） ===
+ * 四个节日按「春夏秋冬」每季第 5 天举办；效果全部由 festivalToday() 派生，
+ * 跨天自动复原。广场装饰写进 map（随 mapDiff 存档），次日用 baseMap 还原。 */
+let festivalState = {points:0, day:0, claimed:0, banner:0};
+let calOpen = false;
+let hudDateRect = {x:8, y:0, w:0, h:24};
+
+const calEl       = document.getElementById('cal');
+const calMaskEl   = document.getElementById('calMask');
+const calListEl   = document.getElementById('calList');
+const calSubEl    = document.getElementById('calSub');
+const festBannerEl = document.getElementById('festBanner');
+let festBannerTimer = null;
+
+/* --- 日期辅助 --- */
+function festSeasonIdx(day){
+  return Math.floor(((day | 0) - 1) / CONFIG.DAYS_PER_SEASON) % CONFIG.SEASONS.length;
+}
+function festDayInSeason(day){
+  return (((day | 0) - 1) % CONFIG.DAYS_PER_SEASON) + 1;
+}
+function festivalToday(day){
+  const abs = (day === undefined) ? clock.day : (day | 0);
+  if(festDayInSeason(abs) !== CONFIG.FESTIVAL.DAY) return null;
+  return CONFIG.FESTIVAL.LIST[festSeasonIdx(abs)] || null;
+}
+function festivalIs(id){ const f = festivalToday(); return !!f && f.id === id; }
+function festivalNight(){
+  const h = skyHour();
+  return h >= 18 || h < 5;
+}
+
+/* --- 广场装饰：只占「没被玩家改动过」的原始地面，恢复时直接回 baseMap --- */
+function festivalDecorList(f){
+  const P = CONFIG.FESTIVAL.PLAZA, out = [];
+  for(let i=0;i<4;i++) out.push({x:P.x + i*2, y:P.y, t:T.FEST_BANNER});
+  if(f.id === 'autumn'){
+    for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 1, t:T.FEST_STALL});
+  }else if(f.id === 'winter'){
+    for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 1, t:T.FEST_LANTERN});
+  }else if(f.id === 'summer'){
+    out.push({x:P.x + 1, y:P.y + 2, t:T.FEST_LANTERN});
+    out.push({x:P.x + 5, y:P.y + 2, t:T.FEST_LANTERN});
+  }
+  return out;
+}
+function festivalDecorFits(i){
+  const t = map[i];
+  if(t === T.FEST_BANNER || t === T.FEST_STALL || t === T.FEST_LANTERN) return true;
+  if(crops[i]) return false;
+  if(roads && roads[i]) return false;
+  if(typeof buildIndex !== 'undefined' && buildIndex[i] >= 0) return false;
+  if(t !== T.GRASS && t !== T.BARE && t !== T.FLOWER) return false;
+  return map[i] === baseMap[i];          /* 玩家锄过 / 铺过路的地不抢 */
+}
+function festivalPlaceDecor(f){
+  const list = festivalDecorList(f);
+  let placed = 0;
+  for(const d of list){
+    if(d.x < 0 || d.y < 0 || d.x >= MAP_W || d.y >= MAP_H) continue;
+    const i = d.y*MAP_W + d.x;
+    if(!festivalDecorFits(i)) continue;
+    if(map[i] !== d.t) setTile(i, d.t);
+    placed++;
+  }
+  return placed;
+}
+function festivalClearDecor(){
+  let cleared = 0;
+  for(let i=0;i<map.length;i++){
+    const t = map[i];
+    if(t === T.FEST_BANNER || t === T.FEST_STALL || t === T.FEST_LANTERN){
+      setTile(i, baseMap[i]);            /* 还原成原始地面（不残留） */
+      cleared++;
+    }
+  }
+  return cleared;
+}
+function festivalDecorCount(){
+  let n = 0;
+  for(let i=0;i<map.length;i++){
+    const t = map[i];
+    if(t === T.FEST_BANNER || t === T.FEST_STALL || t === T.FEST_LANTERN) n++;
+  }
+  return n;
+}
+
+/* --- 节日环境音（低音量和弦，四个节日各不同） --- */
+let festAmbience = null;
+function festivalStartAmbience(f){
+  if(!CONFIG.FESTIVAL.AMBIENT || festAmbience || audioMuted) return false;
+  const ac = audioCtx();
+  if(!ac) return false;
+  try{
+    const gain = ac.createGain();
+    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.FESTIVAL.AMBIENT_VOL;
+    gain.connect(ac.destination);
+    const oscs = [];
+    for(const fr of (f.amb || [392, 523])){
+      const o = ac.createOscillator(), g2 = ac.createGain();
+      o.type = 'sine'; o.frequency.value = fr; g2.gain.value = 0.5;
+      o.connect(g2); g2.connect(gain); o.start();
+      oscs.push(o);
+    }
+    festAmbience = {oscs:oscs, gain:gain};
+    return true;
+  }catch(err){ festAmbience = null; return false; }
+}
+function festivalStopAmbience(){
+  if(!festAmbience) return false;
+  try{ for(const o of festAmbience.oscs) o.stop(); }catch(err){}
+  try{ festAmbience.gain.disconnect(); }catch(err){}
+  festAmbience = null;
+  return true;
+}
+
+/* --- 横幅（进入节日当天弹一次） --- */
+function showFestivalBanner(f){
+  if(!festBannerEl || !f) return false;
+  const icon = document.getElementById('festBannerIcon');
+  const name = document.getElementById('festBannerName');
+  const desc = document.getElementById('festBannerDesc');
+  if(icon) icon.textContent = f.icon;
+  if(name) name.textContent = f.name;
+  if(desc) desc.textContent = f.effect;
+  festBannerEl.classList.add('show');
+  if(festBannerTimer) clearTimeout(festBannerTimer);
+  festBannerTimer = setTimeout(()=>{
+    if(festBannerEl) festBannerEl.classList.remove('show');
+    festBannerTimer = null;
+  }, CONFIG.FESTIVAL.BANNER_MS);
+  playNotes([523, 659, 784], 'triangle', 0.16, CONFIG.AUDIO.VOLUME * 0.8);
+  return true;
+}
+function hideFestivalBanner(){
+  if(festBannerEl) festBannerEl.classList.remove('show');
+  if(festBannerTimer){ clearTimeout(festBannerTimer); festBannerTimer = null; }
+}
+
+/* --- 每日开始 / 结束 --- */
+function festivalDayStart(){
+  const f = festivalToday();
+  festivalClearDecor();                  /* 先清掉昨天的（防止读档残留） */
+  if(!f){ festivalStopAmbience(); return null; }
+  festivalPlaceDecor(f);
+  festivalStartAmbience(f);
+  if(festivalIs('summer') && festivalState.day !== clock.day){
+    festivalState.day = clock.day;
+    festivalState.points = 0;            /* 新一届渔获赛，积分清零 */
+  }
+  if(festivalState.banner !== clock.day){
+    festivalState.banner = clock.day;
+    showFestivalBanner(f);
+  }
+  return f;
+}
+function festivalRivalScores(day){
+  const rng = mulberry32(((CONFIG.SEED >>> 0) ^ Math.imul(day | 0, 2246822519)) >>> 0);
+  const out = [];
+  for(let i=0;i<CONFIG.FESTIVAL.RIVALS;i++) out.push(60 + ((rng() * 220) | 0));
+  return out;
+}
+function festivalDayEnd(endedDay){
+  const f = festivalToday(endedDay);
+  if(f && f.id === 'summer' && festivalState.day === endedDay){
+    const rivals = festivalRivalScores(endedDay);
+    const best = Math.max.apply(null, rivals.concat([-1]));
+    const mine = festivalState.points | 0;
+    const first = mine > best;
+    if(first && festivalState.claimed !== endedDay){
+      const prize = CONFIG.FESTIVAL.SUMMER_PRIZE;
+      if(canFit(prize.id, prize.n)){
+        addItem(prize.id, prize.n);
+        const pd = itemDef(prize.id);
+        toast('🎣 渔获赛第一名！' + mine + ' 分（对手最高 ' + best + '）→ ' +
+              (pd ? pd.name : prize.id) + ' ×' + prize.n);
+      }else{
+        toast('🎣 渔获赛第一名！但背包满了，奖励没装下');
+      }
+      festivalState.claimed = endedDay;   /* 已领奖状态入档 */
+      playSfx(1319, 'triangle', 0.2, CONFIG.AUDIO.VOLUME);
+    }else if(!first){
+      const rank = 1 + rivals.filter(s => s >= mine).length;
+      toast('渔获赛结束：你 ' + mine + ' 分，排第 ' + rank + ' 名');
+    }
+  }
+  festivalClearDecor();
+  festivalStopAmbience();
+}
+
+/* --- 效果钩子（旧系统各只调一行） --- */
+function festivalOnSow(c){
+  if(c && festivalIs('spring')) c.fastDay = clock.day;
+}
+function festivalGrowInc(c){
+  return (c && c.fastDay === clock.day - 1) ? 2 : 1;
+}
+function festivalSellMult(id){
+  if(!festivalIs('autumn')) return 1;
+  const d = itemDef(id);
+  return (d && d.kind === 'crop') ? CONFIG.FESTIVAL.SELL_MULT : 1;
+}
+function festivalGiftAff(eff){
+  return festivalIs('winter') ? Math.round(eff * CONFIG.FESTIVAL.GIFT_MULT) : eff;
+}
+function festivalAddFish(f){
+  if(!festivalIs('summer') || !f) return 0;
+  if(festivalState.day !== clock.day){ festivalState.day = clock.day; festivalState.points = 0; }
+  const v = basePrice(f.id) | 0;
+  festivalState.points = (festivalState.points | 0) + v;
+  return v;
+}
+function festivalNpcSpot(d){
+  if(!festivalIs('autumn')) return null;
+  const idx = Math.max(0, CONFIG.NPC.LIST.indexOf(d));
+  const P = CONFIG.FESTIVAL.PLAZA;
+  return {x:P.x + 1 + (idx % 3) * 2, y:P.y, from:0, to:24};   /* 站在摊位后面当摊主 */
+}
+function festivalDialogLines(d, lines){
+  if(!festivalIs('winter')) return lines;
+  const tpl = CONFIG.FESTIVAL.WINTER_TALK || '';
+  const line = tpl.replace('{name}', d ? d.name : '居民');
+  if(line && lines.indexOf(line) < 0) lines.unshift(line);
+  return lines;
+}
+
+/* --- 存档 --- */
+function festivalSerialize(){
+  return {p: festivalState.points | 0, d: festivalState.day | 0,
+          c: festivalState.claimed | 0, b: festivalState.banner | 0};
+}
+function festivalDeserialize(o){
+  festivalState = {points:0, day:0, claimed:0, banner:0};
+  if(o && typeof o === 'object'){
+    festivalState.points  = Math.max(0, o.p | 0);
+    festivalState.day     = Math.max(0, o.d | 0);
+    festivalState.claimed = Math.max(0, o.c | 0);
+    festivalState.banner  = Math.max(0, o.b | 0);
+  }
+  /* 读档时若正在节日当天：装饰 / 环境音 / 余下效果直接续上 */
+  festivalDayStart();
+  return true;
+}
+function festivalResetState(){
+  festivalState = {points:0, day:0, claimed:0, banner:0};
+  hideFestivalBanner();
+  festivalStopAmbience();
+}
+
+/* --- 日历面板 --- */
+function calDayInfo(absDay){
+  const si = festSeasonIdx(absDay);
+  const season = CONFIG.SEASONS[si];
+  const din = festDayInSeason(absDay);
+  const f = (din === CONFIG.FESTIVAL.DAY) ? CONFIG.FESTIVAL.LIST[si] : null;
+  const yearLen = CONFIG.SEASONS.length * CONFIG.DAYS_PER_SEASON;
+  const dayInYear = ((absDay - 1) % yearLen) + 1;
+  const bdays = CONFIG.NPC.LIST.filter(n => npcBdayAbs(n) === dayInYear);
+  return {season:season, din:din, fest:f, bdays:bdays, dayInYear:dayInYear};
+}
+function renderCalendar(){
+  if(!calListEl) return;
+  if(calSubEl){
+    calSubEl.textContent = seasonName() + ' · 第 ' + clock.day + ' 天 · ' +
+                           ((clock.day - 1) % CONFIG.DAYS_PER_SEASON + 1) + '/' + CONFIG.DAYS_PER_SEASON;
+  }
+  calListEl.innerHTML = '';
+  for(let off=0; off<7; off++){
+    const abs = clock.day + off;
+    const info = calDayInfo(abs);
+    const row = document.createElement('div');
+    row.className = 'crow' + (off === 0 ? ' today' : '') + (info.fest ? ' fest' : '');
+    const day = document.createElement('div'); day.className = 'cday';
+    day.textContent = '第 ' + abs + ' 天';
+    const meta = document.createElement('div'); meta.className = 'cmeta';
+    meta.textContent = info.season + ' · 第 ' + info.din + ' 天' +
+      (off === 0 ? (' · ' + weather.icon + ' ' + weather.name) : '') +
+      (info.fest ? (' · ' + info.fest.name) : '');
+    const badges = document.createElement('div'); badges.className = 'cbadges';
+    if(info.fest){
+      const b = document.createElement('span'); b.className = 'cbadge fest';
+      b.textContent = info.fest.icon + ' ' + info.fest.name;
+      badges.appendChild(b);
+    }
+    for(const n of info.bdays){
+      const b = document.createElement('span'); b.className = 'cbadge bday';
+      b.textContent = '🎂 ' + n.name;
+      badges.appendChild(b);
+    }
+    row.appendChild(day); row.appendChild(meta); row.appendChild(badges);
+    calListEl.appendChild(row);
+  }
+}
+function calOpenPanel(){
+  if(calOpen) return false;
+  calOpen = true;
+  renderCalendar();
+  setPanelOpen(calEl, true);
+  playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function calClosePanel(){
+  if(!calOpen) return false;
+  calOpen = false;
+  setPanelOpen(calEl, false);
+  return true;
+}
+function toggleCalendar(v){
+  if(v === undefined) v = !calOpen;
+  return v ? calOpenPanel() : calClosePanel();
+}
+if(calMaskEl) calMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); calClosePanel(); });
+function hitHudDate(p){
+  if(!hudDateRect || hudDateRect.w <= 0) return false;
+  return p.x >= hudDateRect.x - 2 && p.x <= hudDateRect.x + hudDateRect.w + 2 &&
+         p.y >= hudDateRect.y - 2 && p.y <= hudDateRect.y + hudDateRect.h + 2;
+}
+
+/* --- 世界绘制：节日装饰（按脚点 Y 混进 drawEntities） --- */
+function drawFestBanner(g, x, y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.fencePostDark; g.fillRect(x + 4, y + 6, 2, 25); g.fillRect(x + 26, y + 6, 2, 25);
+  const cols = ['#e0556b', '#ffd76a', '#5ab0e0', '#7fd05a'];
+  for(let i=0;i<4;i++){
+    g.fillStyle = cols[i % cols.length];
+    g.beginPath();
+    g.moveTo(x + 6 + i*6, y + 7);
+    g.lineTo(x + 12 + i*6, y + 7);
+    g.lineTo(x + 9 + i*6, y + 16);
+    g.fill();
+  }
+  g.fillStyle = C.shopSign; g.fillRect(x + 9, y + 2, 14, 4);
+}
+function drawFestStall(g, x, y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.shopCounterDark; g.fillRect(x + 3, y + 14, 26, 15);
+  g.fillStyle = C.shopCounter;     g.fillRect(x + 4, y + 15, 24, 12);
+  const cols = ['#d8503f', '#f0cf7a'];
+  for(let i=0;i<4;i++){
+    g.fillStyle = cols[i % 2];
+    g.fillRect(x + 3 + i*7, y + 8, 7, 7);
+  }
+  g.fillStyle = C.shopSign; g.fillRect(x + 7, y + 2, 18, 5);
+  g.fillStyle = '#efe6cf'; g.fillRect(x + 8, y + 17, 6, 4); g.fillRect(x + 18, y + 18, 5, 3);
+}
+function drawFestLantern(g, x, y){
+  const night = festivalNight();
+  const C = CONFIG.TILE_COLORS;
+  if(night){
+    g.fillStyle = 'rgba(255,196,92,0.18)';
+    g.beginPath(); g.arc(x + 16, y + 12, 17, 0, Math.PI*2); g.fill();
+  }
+  g.fillStyle = C.fencePostDark; g.fillRect(x + 15, y + 14, 2, 17);
+  g.fillStyle = night ? '#ffcf6a' : '#d8a84e'; g.fillRect(x + 10, y + 4, 12, 11);
+  g.fillStyle = night ? '#fff2c8' : '#efd9a2'; g.fillRect(x + 12, y + 6, 8, 7);
+  g.fillStyle = '#7a4a22'; g.fillRect(x + 10, y + 3, 12, 2); g.fillRect(x + 10, y + 15, 12, 2);
+  if(night){
+    g.fillStyle = 'rgba(255,230,170,0.85)';
+    g.fillRect(x + 15, y + 9, 2, 4);
+  }
+}
+/* === 19.统计 / 成就 / 年度总结（第 18 轮） ===
+ * 统计字段全部是数字（存档里是一个 16 长度的数字数组），增量更新、不重算全量。
+ * 成就用一个 32 位掩码存（最多 32 个），解锁时右上角滑入卡片 + 音效，Esc 菜单里看成就墙。
+ * 年度总结由「游玩天数 / 日期」派生，只在这一年结束时弹一次（面板打开时世界冻结）。 */
+const YEAR_DAYS = CONFIG.DAYS_PER_SEASON * CONFIG.SEASONS.length;   /* 4 季 × 10 天 = 40 天 */
+
+/* st 数组布局（16 个数字）：
+ * 0 dy 游玩天数   1 hv 累计收获   2 fs 累计钓鱼   3 inc 累计收入   4 bd 建造次数
+ * 5 af 好感总和   6 sl 睡觉次数   7 gs 卖出次数   8 gc 送礼次数   9 cv 收过的作物（位掩码）
+ * 10 di 今日收入  11 dd 今日收入归属日
+ * 12 yh 本年基线-收获  13 yi 基线-收入  14 ya 基线-好感  15 yu 基线-已解锁成就数 */
+const STATS_KEYS = ['dy','hv','fs','inc','bd','af','sl','gs','gc','cv','di','dd','yh','yi','ya','yu'];
+function statsZeroArray(){ return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; }
+function statsZero(){
+  return {dy:0, hv:0, fs:0, inc:0, bd:0, af:0, sl:0, gs:0, gc:0, cv:0,
+          di:0, dd:0, yh:0, yi:0, ya:0, yu:0};
+}
+let statsState = statsZero();
+statsState.dy = 1;                    /* 第 1 天算 1 天（老档迁移 / 读老档时仍从 0 开始） */
+
+let achState = {unl:0};               /* 成就位掩码：第 i 位 = LIST[i] 已解锁 */
+let achQueue = [];                    /* 待播放的解锁卡片（同时解锁多个时排队） */
+let achCardT = 0, achCardGap = 0;     /* 卡片剩余停留时间 / 两张卡片之间的空隙 */
+let achOpen = false, achTab = 'all';
+let annualOpen = false, annualInfo = null, annualPending = null;
+
+const achEl        = document.getElementById('ach');
+const achMaskEl    = document.getElementById('achMask');
+const achListEl    = document.getElementById('achList');
+const achStatsEl   = document.getElementById('achStats');
+const achTabsEl    = document.getElementById('achTabs');
+const achProgEl    = document.getElementById('achProg');
+const achCard      = document.getElementById('achCard');
+const achCardIcon  = document.getElementById('achCardIcon');
+const achCardName  = document.getElementById('achCardName');
+const achCardDesc  = document.getElementById('achCardDesc');
+const annualEl     = document.getElementById('annual');
+const annualMaskEl = document.getElementById('annualMask');
+const annualTitleEl= document.getElementById('annualTitle');
+const annualSubEl  = document.getElementById('annualSub');
+const annualBodyEl = document.getElementById('annualBody');
+const annualCloseBtn = document.getElementById('annualClose');
+
+/* --- 统计：存档 / 读档 / 重置 --- */
+function statsSerialize(){
+  const out = [];
+  for(const k of STATS_KEYS) out.push(statsState[k] | 0);
+  return out;
+}
+function statsDeserialize(a){
+  const s = statsZero();
+  if(Array.isArray(a)){
+    for(let i=0;i<STATS_KEYS.length && i<a.length;i++){
+      const n = a[i];
+      s[STATS_KEYS[i]] = (typeof n === 'number' && isFinite(n) && n > 0) ? Math.floor(n) : 0;
+    }
+  }
+  statsState = s;
+  return statsState;
+}
+function statsResetState(){
+  statsState = statsZero();
+  statsState.dy = 1;                  /* 新游戏从第 1 天开始 */
+  annualPending = null;
+}
+function statsDailyIncome(){ return (statsState.dd === clock.day) ? (statsState.di | 0) : 0; }
+
+/* --- 统计增量钩子（由各系统在自己成功时调用一行） --- */
+function statsIncome(v){
+  if(!(v > 0)) return;
+  const n = Math.round(v);
+  if(statsState.dd !== clock.day){ statsState.dd = clock.day; statsState.di = 0; }
+  statsState.inc += n;
+  statsState.di += n;
+  achCheck();
+}
+function statsHarvest(type){
+  statsState.hv += 1;
+  const i = CONFIG.CROPS.findIndex(c => c.id === type);
+  if(i >= 0 && i < 31) statsState.cv = (statsState.cv | (1 << i)) >>> 0;
+  achCheck();
+}
+function statsFish(){ statsState.fs += 1; achCheck(); }
+function statsBuild(){ statsState.bd += 1; achCheck(); }
+function statsAff(delta){
+  if(!delta) return;
+  statsState.af = Math.max(0, statsState.af + (delta | 0));
+  achCheck();
+}
+function statsGift(){ statsState.gc += 1; achCheck(); }
+function statsSell(){ statsState.gs += 1; achCheck(); }
+function statsSleep(){ statsState.sl += 1; achCheck(); }
+function statsDayTick(){
+  statsState.dy += 1;
+  statsYearCheck();                   /* 跨年 → 记下年度总结、更新本年基线 */
+  achCheck();                         /* 「活过一整年」等按天数解锁的成就 */
+}
+
+/* --- 成就判定 --- */
+function achPopcount(x){
+  x = x >>> 0;
+  x = x - ((x >>> 1) & 0x55555555);
+  x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+  return (((x + (x >>> 4)) & 0x0f0f0f0f) * 0x01010101) >>> 24;
+}
+function achCount(){ return achPopcount(achState.unl); }
+function achHasUnlocked(i){ return i >= 0 && i < 32 && !!(achState.unl & (1 << i)); }
+function achFriends(){
+  let fi = CONFIG.NPC.TIERS.findIndex(t => t.key === 'friend');
+  if(fi < 0) fi = 2;
+  let n = 0;
+  for(const d of CONFIG.NPC.LIST) if(npcTierIdx(npcAff(d.id)) >= fi) n++;
+  return n;
+}
+function achValue(a){
+  switch(a.kind){
+    case 'stat':        return statsState[a.key] | 0;
+    case 'gold':        return gold | 0;
+    case 'dailyGold':   return statsDailyIncome();
+    case 'crops':       return achPopcount(statsState.cv);
+    case 'fishKinds':   return achPopcount(dexState.f);
+    case 'gatherKinds': return achPopcount(dexState.g);
+    case 'friends':     return achFriends();
+    case 'year':        return clock.day > YEAR_DAYS ? 1 : 0;
+  }
+  return 0;
+}
+function achCheck(){
+  const L = CONFIG.ACHIEVEMENT.LIST;
+  let n = 0;
+  for(let i=0;i<L.length;i++){
+    if(achHasUnlocked(i)) continue;
+    const a = L[i];
+    if(achValue(a) >= (a.need | 0) && achUnlock(i)) n++;
+  }
+  return n;
+}
+function achUnlock(i){
+  const a = CONFIG.ACHIEVEMENT.LIST[i];
+  if(!a || achHasUnlocked(i)) return false;
+  achState.unl = (achState.unl | (1 << i)) >>> 0;   /* 只解锁一次：位测试挡掉重复触发 */
+  achQueue.push(a);
+  achShowNextCard();
+  toast('🏆 成就解锁：' + a.name);
+  playSfx(1568, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);
+  setTimeout(()=>playSfx(2093, 'triangle', 0.14, CONFIG.AUDIO.VOLUME * 0.8), 110);
+  if(achOpen) achRenderWall();
+  return true;
+}
+
+/* --- 右上角解锁卡片（跟着世界一起冻结，不阻塞操作） --- */
+function achWorldFrozen(){
+  return !!(startMenuOpen || sysOpen || paused || npcOpen || packOpen || shopOpen || chestOpen ||
+            animalOpen || questOpen || calOpen || achOpen || annualOpen || sleepFx.phase !== 'none');
+}
+function achShowNextCard(){
+  if(!achCard || achCard.classList.contains('show')) return false;
+  if(achWorldFrozen()) return false;          /* 面板打开时先排队，世界恢复后再弹 */
+  const a = achQueue.shift();
+  if(!a) return false;
+  achCardT = 0;
+  if(achCardIcon) achCardIcon.textContent = a.icon;
+  if(achCardName) achCardName.textContent = a.name;
+  if(achCardDesc) achCardDesc.textContent = a.desc;
+  achCard.classList.add('show');
+  return true;
+}
+function achTickCard(dt){
+  if(achCard && achCard.classList.contains('show')){
+    achCardT += dt;
+    if(achCardT >= CONFIG.ACHIEVEMENT.CARD_MS / 1000){
+      achCard.classList.remove('show');
+      achCardT = 0;
+      achCardGap = 0.35;                      /* 两张卡片之间留一点空隙 */
+    }
+  }else if(achCardGap > 0){
+    achCardGap -= dt;
+    if(achCardGap <= 0) achShowNextCard();
+  }else if(achQueue.length && !achWorldFrozen()){
+    achShowNextCard();
+  }
+}
+
+/* --- 成就墙：5 个分类页签 + 可滚动列表 + 统计数据行 --- */
+function achBuildTabs(){
+  if(!achTabsEl || achTabsEl.__built) return;
+  achTabsEl.__built = true;
+  const list = [{key:'all', name:'全部', icon:'🏆'}].concat(CONFIG.ACHIEVEMENT.CATS);
+  for(const c of list){
+    const b = document.createElement('button');
+    b.className = 'tab';
+    b._atab = c.key;
+    b.textContent = c.icon + ' ' + c.name;
+    b.addEventListener('click', ()=>{ achTab = c.key; achRenderWall(); });
+    achTabsEl.appendChild(b);
+  }
+}
+function achRenderWall(){
+  const L = CONFIG.ACHIEVEMENT.LIST;
+  if(achProgEl) achProgEl.textContent = '已解锁 ' + achCount() + '/' + L.length;
+  if(achStatsEl){
+    achStatsEl.innerHTML = '';
+    const s = statsState;
+    const items = [['🌾 收获', s.hv], ['🎣 钓鱼', s.fs], ['💰 收入', s.inc], ['🔨 建造', s.bd],
+                   ['💬 好感', s.af], ['📅 天数', s.dy], ['😴 睡觉', s.sl], ['🏆 成就', achCount()]];
+    for(const it of items){
+      const d = document.createElement('div');
+      d.textContent = it[0] + ' ' + it[1];
+      achStatsEl.appendChild(d);
+    }
+  }
+  if(achTabsEl){
+    for(const b of achTabsEl.children) b.className = 'tab' + (b._atab === achTab ? ' on' : '');
+  }
+  if(achListEl){
+    achListEl.innerHTML = '';
+    for(let i=0;i<L.length;i++){
+      const a = L[i];
+      if(achTab !== 'all' && a.cat !== achTab) continue;
+      const on = achHasUnlocked(i);
+      const row = document.createElement('div');
+      row.className = 'arow ' + (on ? 'on' : 'off');
+      const ico = document.createElement('div'); ico.className = 'aico'; ico.textContent = a.icon;
+      const info = document.createElement('div'); info.className = 'ainfo';
+      const nm = document.createElement('div'); nm.className = 'aname'; nm.textContent = a.name;
+      const ds = document.createElement('div'); ds.className = 'adesc'; ds.textContent = a.desc;
+      info.appendChild(nm); info.appendChild(ds);
+      const st = document.createElement('div'); st.className = 'astat';
+      const v = achValue(a);
+      st.textContent = on ? '✓ 已解锁' : ('进度 ' + Math.min(v, a.need) + '/' + a.need);
+      row.appendChild(ico); row.appendChild(info); row.appendChild(st);
+      achListEl.appendChild(row);
+    }
+  }
+}
+function achOpenPanel(){
+  achBuildTabs();
+  if(achOpen) return true;
+  achOpen = true;
+  if(sysOpen) toggleSys(false);              /* 从系统菜单进来：先收起菜单 */
+  if(packOpen) togglePack(false);
+  if(shopOpen) toggleShop(false);
+  if(chestOpen) toggleChest(false);
+  achRenderWall();
+  setPanelOpen(achEl, true);
+  playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function achClosePanel(){
+  if(!achOpen) return false;
+  achOpen = false;
+  setPanelOpen(achEl, false);
+  return true;
+}
+function toggleAchPanel(v){
+  if(v === undefined) v = !achOpen;
+  return v ? achOpenPanel() : achClosePanel();
+}
+
+/* --- 年度总结：活过一整年（第 41 / 81 / … 天早晨）弹一次 --- */
+function statsYearCheck(){
+  if(clock.day <= 1 || (clock.day - 1) % YEAR_DAYS !== 0) return false;
+  const year = Math.floor((clock.day - 1) / YEAR_DAYS);
+  annualPending = {
+    year: year,
+    hv: Math.max(0, statsState.hv - statsState.yh),
+    inc: Math.max(0, statsState.inc - statsState.yi),
+    af: statsState.af - statsState.ya,
+    ach: Math.max(0, achCount() - statsState.yu)
+  };
+  statsState.yh = statsState.hv;
+  statsState.yi = statsState.inc;
+  statsState.ya = statsState.af;
+  statsState.yu = achCount();
+  return true;
+}
+function annualOpenPanel(info){
+  if(annualOpen || !info) return false;
+  annualOpen = true;
+  annualInfo = info;
+  if(annualTitleEl) annualTitleEl.textContent = '第 ' + info.year + ' 年 · 年度总结';
+  if(annualSubEl) annualSubEl.textContent = '你已经在这个农场生活了 ' + (info.year * YEAR_DAYS) + ' 天';
+  if(annualBodyEl){
+    annualBodyEl.innerHTML = '';
+    const rows = [
+      ['🌾 本年收成', String(info.hv) + ' 个'],
+      ['💰 本年收入', String(info.inc) + ' 金币'],
+      ['💬 本年好感', (info.af >= 0 ? '+' : '') + info.af],
+      ['🏆 本年成就', info.ach + ' 个（共 ' + achCount() + '/' + CONFIG.ACHIEVEMENT.LIST.length + '）']
+    ];
+    for(const r of rows){
+      const line = document.createElement('div'); line.className = 'arline';
+      const k = document.createElement('span'); k.textContent = r[0];
+      const v = document.createElement('span'); v.className = 'arv'; v.textContent = r[1];
+      line.appendChild(k); line.appendChild(v);
+      annualBodyEl.appendChild(line);
+    }
+  }
+  setPanelOpen(annualEl, true);
+  playSfx(784, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  setTimeout(()=>playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME), 140);
+  return true;
+}
+function annualClosePanel(){
+  if(!annualOpen) return false;
+  annualOpen = false;
+  setPanelOpen(annualEl, false);
+  return true;
+}
+
+/* --- 成就：存档 / 读档 / 重置 --- */
+function achSerialize(){ return {u: achState.unl >>> 0}; }
+function achDeserialize(d){
+  const max = (1 << CONFIG.ACHIEVEMENT.LIST.length) - 1;
+  const u = (d && typeof d === 'object' && typeof d.u === 'number') ? d.u : 0;
+  achState = {unl: (u & max) >>> 0};
+  achQueue = [];
+  achCardT = 0; achCardGap = 0;
+  if(achCard) achCard.classList.remove('show');
+  return achState;
+}
+function achResetState(){
+  achState = {unl:0};
+  achQueue = [];
+  achCardT = 0; achCardGap = 0;
+  achTab = 'all';
+  annualPending = null;
+  if(achCard) achCard.classList.remove('show');
+  if(achOpen) achClosePanel();
+  if(annualOpen) annualClosePanel();
+}
+
+/* --- 面板事件 --- */
+if(achMaskEl) achMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); achClosePanel(); });
+if(annualMaskEl) annualMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); annualClosePanel(); });
+if(annualCloseBtn) annualCloseBtn.addEventListener('click', ()=>annualClosePanel());
+achBuildTabs();
+
 genMap(CONFIG.SEED);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
@@ -6546,6 +7595,8 @@ cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
 cam.y = clamp(player.y - VIEW_H/2, 0, MAP_W*TILE - VIEW_H);
 rollWeather();                         /* 第 1 天早晨的天气 */
 questResetState();                     /* 第 16 轮：第 1 天的 3 个委托 */
+festivalResetState();                  /* 第 17 轮：节日状态归零 */
+festivalDayStart();                    /* 第 17 轮：开局若正撞上节日，装饰 / 横幅直接生效 */
 const sky0 = skyAt(skyHour());
 sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
@@ -6687,6 +7738,42 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   questSerialize, questDeserialize, questResetState,
   questRenderPanel, questOpenPanel, questClosePanel, toggleQuestPanel,
   questBoardDist, questBoardNear, drawQuestBoard, drawQuestTracker,
+  /* 第 17 轮：节日 / 日历 / 广场装饰 */
+  get festivalState(){ return festivalState; }, set festivalState(v){ festivalState = v; },
+  get calOpen(){ return calOpen; }, set calOpen(v){ if(v) calOpenPanel(); else calClosePanel(); },
+  get hudDateRect(){ return hudDateRect; },
+  get festAmbience(){ return festAmbience; },
+  FESTIVAL: CONFIG.FESTIVAL,
+  festSeasonIdx, festDayInSeason, festivalToday, festivalIs, festivalNight,
+  festivalDecorList, festivalDecorFits, festivalPlaceDecor, festivalClearDecor, festivalDecorCount,
+  festivalStartAmbience, festivalStopAmbience, festivalDayStart, festivalDayEnd,
+  festivalOnSow, festivalGrowInc, festivalSellMult, festivalGiftAff, festivalAddFish,
+  festivalNpcSpot, festivalDialogLines, festivalRivalScores,
+  festivalSerialize, festivalDeserialize, festivalResetState,
+  showFestivalBanner, hideFestivalBanner,
+  calDayInfo, renderCalendar, calOpenPanel, calClosePanel, toggleCalendar, hitHudDate,
+  drawFestBanner, drawFestStall, drawFestLantern,
+  /* 第 18 轮：统计 / 成就 / 年度总结 */
+  get statsState(){ return statsState; }, set statsState(v){ statsState = v; },
+  get achState(){ return achState; }, set achState(v){ achState = v; },
+  get achQueue(){ return achQueue; },
+  get achOpen(){ return achOpen; }, set achOpen(v){ if(v) achOpenPanel(); else achClosePanel(); },
+  get achTab(){ return achTab; }, set achTab(v){ achTab = v; achRenderWall(); },
+  get annualOpen(){ return annualOpen; },
+  set annualOpen(v){
+    if(!v){ annualClosePanel(); return; }
+    annualOpenPanel(annualInfo || {year:1, hv:0, inc:0, af:0, ach:0});
+  },
+  get annualInfo(){ return annualInfo; },
+  get annualPending(){ return annualPending; },
+  ACHIEVEMENT: CONFIG.ACHIEVEMENT, YEAR_DAYS, STATS_KEYS,
+  statsZero, statsZeroArray, statsSerialize, statsDeserialize, statsResetState, statsDailyIncome,
+  statsIncome, statsHarvest, statsFish, statsBuild, statsAff, statsGift, statsSell, statsSleep, statsDayTick,
+  achPopcount, achValue, achCheck, achUnlock, achHasUnlocked, achCount, achFriends,
+  achWorldFrozen, achTickCard, achShowNextCard,
+  achSerialize, achDeserialize, achResetState, achRenderWall, achBuildTabs,
+  achOpenPanel, achClosePanel, toggleAchPanel,
+  statsYearCheck, annualOpenPanel, annualClosePanel,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

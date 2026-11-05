@@ -4415,6 +4415,11 @@ function deserializeState(d){
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     refreshDexGrid();
+    /* 老存档（v2 及以前）地图上没有采集物：如果今天是刷新日，补一批（不弹提示） */
+    if(!map.some(isGatherTile)){
+      const sd = ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1;
+      if(sd % Math.max(1, CONFIG.GATHER.EVERY_DAYS) === 1) spawnGather(true);
+    }
     /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
@@ -5452,6 +5457,7 @@ if(bootSave){
   console.log('[save] 发现存档 v' + bootSave.v + '，等待玩家选择');
 }else{
   sessionActive = true;
+  spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */
   updateTut();                   /* 新玩家：第 1 天早晨弹出新手引导 */
 }
 requestAnimationFrame(loop);

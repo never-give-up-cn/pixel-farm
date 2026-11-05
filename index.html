@@ -228,13 +228,47 @@
   #chest.open #chestPanel,
   #shop.open  #shopPanel,
   #start.open #startPanel,
-  #sys.open   #sysPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #sys.open   #sysPanel,
+  #npc.open   #npcPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #pack.closing  #packPanel,
   #chest.closing #chestPanel,
   #shop.closing  #shopPanel,
   #start.closing #startPanel,
-  #sys.closing   #sysPanel{animation:panelOut .2s ease-in forwards}
-  #pack.closing,#chest.closing,#shop.closing,#start.closing,#sys.closing{display:flex}
+  #sys.closing   #sysPanel,
+  #npc.closing   #npcPanel{animation:panelOut .2s ease-in forwards}
+  #pack.closing,#chest.closing,#shop.closing,#start.closing,#sys.closing,#npc.closing{display:flex}
+  /* ---------- 第 13 轮：NPC 对话面板（复用 .panel 视觉，不另起一套） ---------- */
+  #npc{
+    position:fixed;inset:0;z-index:45;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #npc.open{display:flex}
+  #npcMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #npcPanel{position:relative;width:460px;max-width:92vw;padding:12px 14px 10px}
+  #npcHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #npcIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #npcName{font-size:15px;color:#ffd76a}
+  #npcTier{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px}
+  #npcAff{font-size:11px;color:#cfe3ff;margin-left:auto}
+  #npcBirthday{display:none;font-size:11px;color:#ffb08a;border:1px solid #7a4a3a;border-radius:6px;padding:1px 6px}
+  #npcBirthday.show{display:inline-block}
+  #npcBar{height:6px;border-radius:3px;background:#1a2130;border:1px solid #2c3a4e;overflow:hidden;margin-bottom:9px}
+  #npcBarFill{height:100%;width:0;background:linear-gradient(90deg,#7fd05a,#ffd76a)}
+  #npcText{
+    min-height:78px;padding:9px 11px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+    font-size:13px;line-height:1.8;color:#e8f0ff;white-space:pre-wrap;
+  }
+  #npcBtns{display:flex;gap:8px;margin-top:10px}
+  #npcBtns .mbtn{flex:1;white-space:nowrap;font-size:12px}
+  #npcBtns .mbtn.off{opacity:.45;cursor:not-allowed}
+  #npcFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* 送礼模式：背包面板要压到对话面板之上（否则会被对话的遮罩盖住点不到） */
+  #pack.gift{z-index:48}
+  /* 送礼模式：背包面板顶部提示条 */
+  #pack.gift #packHead{color:#ffd76a}
+  #pack.gift #packFoot{color:#ffd76a}
   /* 按钮反馈：hover 变色 + 按下微微下沉 */
   .mbtn,.tab,.srow .btn,#sndBtn{
     transition:background .13s ease,border-color .13s ease,color .13s ease,
@@ -349,6 +383,28 @@
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
     <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
+  </div>
+</div>
+
+<!-- NPC 对话面板（第 13 轮）：复用 .panel 样式与开合动画；打开时游戏时间冻结 -->
+<div id="npc">
+  <div id="npcMask"></div>
+  <div id="npcPanel" class="panel">
+    <div id="npcHead">
+      <span id="npcIcon">👩‍🍳</span>
+      <span id="npcName">杂货店老板娘</span>
+      <span id="npcTier">陌生</span>
+      <span id="npcAff">好感 0</span>
+      <span id="npcBirthday">🎂 生日</span>
+    </div>
+    <div id="npcBar"><div id="npcBarFill"></div></div>
+    <div id="npcText"></div>
+    <div id="npcBtns">
+      <button class="mbtn" id="npcNext">继续（E / 空格）</button>
+      <button class="mbtn" id="npcGift">送礼物</button>
+      <button class="mbtn" id="npcBye">告别</button>
+    </div>
+    <div id="npcFoot">E / 空格：没打完就整句显示，打完了就下一句 · Esc 结束对话</div>
   </div>
 </div>
 
@@ -544,7 +600,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 1,               // 存档版本号（和存档里的 v 对不上会提示）
+    VERSION: 2,               // 存档版本号（第 13 轮 +1：新增 npc 字段；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -698,6 +754,90 @@ const CONFIG = {
     BAKE_MAX_SIDE: 2048,    // 离屏画布边长上限（像素）
     Y_SORT: true,           // 作物 / 建造物 / 玩家按脚底 Y 排序
     SHOW_MS: true           // HUD 上显示每帧渲染耗时
+  },
+
+  /* ---------- NPC 系统（第 13 轮）：小镇居民 / 对话 / 送礼 / 好感度 ---------- */
+  NPC: {
+    RANGE: 1.5,             // 交互距离（格）：走近按 E 说话
+    AFF_MAX: 100,           // 好感度上限
+    /* 好感度分档（按顺序取第一个 min <= 当前好感度的档；升到新档立刻触发解锁） */
+    TIERS: [
+      {key:'stranger', name:'陌生', min:0},     // 刚认识
+      {key:'known',    name:'熟悉', min:25},    // 聊得来
+      {key:'friend',   name:'朋友', min:60},    // 解锁特权
+      {key:'best',     name:'挚友', min:85}     // 最好的朋友
+    ],
+    UNLOCK_TIER: 'friend',  // 「朋友」这一档触发解锁效果
+    GIFT: {                    // 送礼参数：好感增量 / 每天上限 / 生日倍率
+      LIKE: 30,             // 喜好物品的好感增量
+      NORMAL: 10,           // 普通物品的好感增量
+      DISLIKE: -15,         // 厌恶物品的好感增量（负数）
+      DAILY_MAX: 1,         // 每人每天最多送几次
+      BIRTHDAY_MULT: 2      // 生日当天送礼好感翻倍
+    },
+    TYPE_MS: 26,            // 打字机效果：每个字多少毫秒
+    GIFT_SEED: 'seed_pumpkin',   // 邻家女孩成为「朋友」时赠的稀有种子
+    GIFT_SEED_N: 2,             // 一次赠几颗
+    CARPENTER_DISCOUNT: 0.8,    // 老木匠成为「朋友」后建造材料打几折（向下取整，最少 1）
+    SHOP_BONUS: {                // 老板娘成为「朋友」后的每日加购
+      COUNT: 2,              // 每天额外收购几件作物
+      PRICE_MULT: 1.5        // 加购部分的收购价倍率
+    },
+    /* 三位居民：名字 / emoji 立绘 / 时刻表 / 喜好 / 厌恶 / 生日 / 台词池 */
+    LIST: [
+      {
+        id:'aunt', name:'杂货店老板娘', icon:'👩‍🍳', color:'#e8a45c',
+        like:['radish','potato','seed_radish','seed_potato'],   // 喜欢的收成和种子
+        dislike:['stone','pick'],                               // 不喜欢的硬通货
+        bday:{season:'春', day:3},                              // 生日：春 3 日
+        /* 时刻表：按时段换位置；不落在任何时段 = 回家了（不出现） */
+        sched:[   // 时刻表：按时段换位置（不在任何时段 = 回家了）
+          {from:6,  to:12, x:34, y:29},   // 早市：商店摊前
+          {from:12, to:18, x:36, y:31},   // 午后：田边
+          {from:18, to:21, x:30, y:29}    // 傍晚：小屋旁
+        ],
+        lines:{                                                  // 台词池：按好感档位分池
+          stranger:['今天的萝卜刚到的，水灵得很。','要买点什么？自己挑。','嗯？你是新来的 farm 主吧。'],   // 陌生
+          known:   ['又来啦？今天的天气不错。','你那块地收拾得挺像样的。','刚进了一批好种子，挑挑看。'],   // 熟悉
+          friend:  ['老主顾啦！我给你留了好的。','以后你来，我给你算便宜点。','生意做久了，就图个熟。'],   // 朋友
+          best:    ['你来啦？我把最好的都给你留着。','这镇上的人，我就看你顺眼。','慢慢挑，不着急。']      // 挚友
+        }
+      },
+      {
+        id:'carpenter', name:'老木匠', icon:'🧑‍🔧', color:'#c98f5a',
+        like:['wood','pumpkin','seed_pumpkin'],                // 喜欢的木料和南瓜
+        dislike:['tomato','seed_tomato'],                      // 不喜欢的番茄
+        bday:{season:'夏', day:3},                              // 生日：夏 3 日
+        sched:[   // 时刻表：按时段换位置（不在任何时段 = 回家了）
+          {from:6,  to:12, x:29, y:34},   // 早市：西边的棚子旁
+          {from:12, to:18, x:26, y:32},   // 午后：田的另一头
+          {from:18, to:21, x:28, y:31}    // 傍晚：家门口
+        ],
+        lines:{                                                  // 台词池：按好感档位分池
+          stranger:['要木头？自己砍。','我这手艺，一榔头下去就知道好坏。','……嗯？'],                            // 陌生
+          known:   ['你这木头堆得不错。','会做栅栏吗？照着图纸砍就行。','年轻人，手艺要练。'],                   // 熟悉
+          friend:  ['你的活儿我包了，材料算你便宜点。','给你个忠告：木头要顺着纹路砍。','我这把老锯，还能再干二十年。'],  // 朋友
+          best:    ['你想要什么，我给你打。','别人找我得排队，你不用。','木头这东西啊，认准了就别换。']           // 挚友
+        }
+      },
+      {
+        id:'girl', name:'邻家女孩', icon:'👧', color:'#e58fae',
+        like:['tomato','seed_tomato','radish'],                // 喜欢的番茄和萝卜
+        dislike:['sickle','stone'],                            // 不喜欢的工具
+        bday:{season:'秋', day:3},                              // 生日：秋 3 日
+        sched:[   // 时刻表：按时段换位置（不在任何时段 = 回家了）
+          {from:6,  to:12, x:31, y:30},   // 早市：小屋东边
+          {from:12, to:18, x:37, y:33},   // 午后：田边玩
+          {from:18, to:21, x:33, y:30}    // 傍晚：门口
+        ],
+        lines:{                                                  // 台词池：按好感档位分池
+          stranger:['你是新搬来的吗？','我家在那边，有空来玩。','……'],                                   // 陌生
+          known:   ['你的地里的东西长得比我快。','要不要我帮你？……啊，我在浇水。','我妈说不能白吃别人家的东西。'],  // 熟悉
+          friend:  ['我偷偷藏了些好种子给你！','你种的南瓜，我看着它长大的。','你人真好，下次我还来找你。'],      // 朋友
+          best:    ['我把最喜欢的种子都给你了！','你以后还会一直住在镇上吧？','有你在，乡下也不闷。']            // 挚友
+        }
+      }
+    ]
   },
 
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
@@ -1297,6 +1437,13 @@ function drawEntities(g, x0, y0, x1, y1){
     if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
     list.push({y:b.ty*TILE + TILE, f:()=>drawBuilding(g,b,bx,by)});
   }
+  /* NPC（居民）：按脚点 Y 混进同一张排序表（和玩家同一套约定：+12） */
+  for(const d of CONFIG.NPC.LIST){
+    const p = npcPos(d);
+    if(!p) continue;
+    if(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W || p.y - cam.y < -TILE || p.y - cam.y > VIEW_H) continue;
+    list.push({y:p.y + 12, f:()=>drawNpc(g, d, p.x, p.y)});
+  }
   /* 作物 + 地图物件（树 / 岩石 / 野花）按格子的 Y 混进同一张表 */
   if(CONFIG.PERF.Y_SORT && x0 !== undefined){
     for(let ty=y0;ty<=y1;ty++){
@@ -1385,8 +1532,9 @@ function drawBuildPanel(g, y0){
     g.fillText(r.name, x+29, ry+5);
     let cx = x+92;
     g.font = '12px ' + FONT_CJK;
-    for(const id in r.cost){
-      const have = countItem(id), need = r.cost[id];
+    const bc = buildCost(r);                    /* 老木匠打折后的显示价 */
+    for(const id in bc){
+      const have = countItem(id), need = bc[id];
       g.fillStyle = have >= need ? '#7ee08a' : '#ff9a8a';
       g.fillText(itemDef(id).name + ' ' + have + '/' + need, cx, ry+6);
       cx += 56;
@@ -1636,13 +1784,15 @@ function curRecipe(){ return CONFIG.BUILD.RECIPES[buildSel] || CONFIG.BUILD.RECI
 /* 材料够不够 */
 function canAfford(r){
   if(!r) return false;
-  for(const id in r.cost) if(countItem(id) < r.cost[id]) return false;
+  const c = buildCost(r);                       /* 老木匠打折后要多少 */
+  for(const id in c) if(countItem(id) < c[id]) return false;
   return true;
 }
 /* 第一个缺的材料 id（够则 null） */
 function missingMat(r){
   if(!r) return null;
-  for(const id in r.cost) if(countItem(id) < r.cost[id]) return id;
+  const c = buildCost(r);
+  for(const id in c) if(countItem(id) < c[id]) return id;
   return null;
 }
 /* 这个格子能不能放这个建造物（返回空串 = 可以） */
@@ -1679,7 +1829,8 @@ function placeBuilding(tx,ty){
     playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
-  for(const id in r.cost) removeItem(id, r.cost[id]);
+  const need = buildCost(r);                  /* 老木匠打折后的实际材料 */
+  for(const id in need) removeItem(id, need[id]);
   if(r.overlay){
     roads[ty*MAP_W+tx] = 1;
   }else{
@@ -1699,7 +1850,7 @@ function demolishAt(tx,ty){
   /* 石板路是叠加层，单独拆 */
   if(roads[i]){
     roads[i] = 0;
-    const back = Math.floor(buildRecipe('path').cost.stone * CONFIG.BUILD.REFUND);
+    const back = Math.floor(buildCost(buildRecipe('path')).stone * CONFIG.BUILD.REFUND);
     if(back > 0) addItem('stone', back);
     toast('拆掉了石板路（返还石材×' + back + '）');
     playSfx(220, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
@@ -1718,8 +1869,9 @@ function demolishAt(tx,ty){
     return false;
   }
   let back = '';
-  for(const id in r.cost){
-    const n = Math.floor(r.cost[id] * CONFIG.BUILD.REFUND);
+  const rc = buildCost(r);                       /* 按实际付过的（打折后的）材料返还 */
+  for(const id in rc){
+    const n = Math.floor(rc[id] * CONFIG.BUILD.REFUND);
     if(n > 0){ addItem(id, n); back += itemDef(id).name + '×' + n + ' '; }
   }
   buildings.splice(bi, 1);
@@ -1759,7 +1911,8 @@ function cycleBuild(dir){
 /* 配方的材料文字：木材×3 石材×5 */
 function costText(r){
   let s = '';
-  for(const id in r.cost) s += itemDef(id).name + '×' + r.cost[id] + ' ';
+  const c = buildCost(r);
+  for(const id in c) s += itemDef(id).name + '×' + c[id] + ' ';
   return s.trim();
 }
 /* 石板路：脚下那一格是不是路 */
@@ -2489,10 +2642,19 @@ function sellItem(id, n){
   if(!d || !isSellable(id)){ toast('这个不能卖'); return false; }
   if(n <= 0) return false;
   if(countItem(id) < n){ toast('数量不够'); return false; }
-  const unit = priceOf(id), total = unit * n;
+  const unit = priceOf(id);
+  /* 老板娘「朋友」特权：每天额外收购 N 件作物（按 PRICE_MULT 计价） */
+  let bonusN = 0;
+  if(d.kind === 'crop'){
+    const left = npcShopBonusLeft();
+    if(left > 0){ bonusN = Math.min(n, left); npcState.bonusUsed += bonusN; }
+  }
+  const mult = bonusN > 0 ? CONFIG.NPC.SHOP_BONUS.PRICE_MULT : 1;
+  const total = Math.round(unit * (n - bonusN) + unit * bonusN * mult);
   removeItem(id, n);
   changeGold(total);
-  toast('卖出 ' + d.name + ' ×' + n + '（+' + total + ' 💰）');
+  toast('卖出 ' + d.name + ' ×' + n + '（+' + total + ' 💰' +
+        (bonusN > 0 ? '，老板娘加购 ' + bonusN + ' 件 ×' + mult : '') + '）');
   playSfx(1046, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   refreshPackGrid();
   renderShop();
@@ -2612,6 +2774,7 @@ function rollToNextMorning(faint){
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
   updateTut();                         /* 过了第 1 天就把新手引导收起来 */
+  npcDayStart();                       /* 居民：新的天 → 今天谁过生日 */
 }
 /* 睡觉流程推进（接管整个 update） */
 function updateSleepFx(dt){
@@ -2785,12 +2948,18 @@ window.addEventListener('keydown', e=>{
     if(!e.repeat) toggleMute();
     return;
   }
+  /* NPC 对话中：E / 空格推进对话，其余键一律忽略（Esc 交给下面的分支统一处理） */
+  if(npcOpen && !packOpen && k !== 'escape'){
+    if(k === 'e' || k === ' '){ if(!e.repeat) npcAdvance(); ensureAudio(); }
+    return;
+  }
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
     if(chestOpen){ toggleChest(false); return; }
     if(shopOpen){ toggleShop(false); return; }
-    if(packOpen){ togglePack(false); return; }
+    if(packOpen){ togglePack(false); if(packMode === 'gift'){ packMode = 'normal'; giftTarget = null; refreshPackGrid(); } return; }
+    if(npcOpen){ npcCloseDialog(); return; }
     if(sysOpen){ toggleSys(false); return; }
     if(startMenuOpen) return;                 /* 标题界面必须选一个才能进游戏 */
     if(buildMode){ toggleBuild(false); return; }
@@ -2808,15 +2977,17 @@ window.addEventListener('keydown', e=>{
     if(!e.repeat) cycleBuild(k === 'e' ? 1 : -1);
     ensureAudio(); return;
   }
-  /* E：上下文交互 —— 小屋旁睡觉，木箱旁开箱，商店摊旁交易 */
+  /* E：上下文交互 —— 小屋旁睡觉，木箱旁开箱，商店摊旁交易，NPC 旁说话 */
   if(k === 'e'){
     if(!e.repeat){
       const c = chestNear();
-      if(nearHouse()) startSleep(false);
+      const n = npcNear();
+      if(n) npcOpenDialog(n);                    /* 人在旁边 → 先跟人说话 */
+      else if(nearHouse()) startSleep(false);
       else if(c){ openChest = c; toggleChest(true); }
       else if(nearShop()) toggleShop();
       else{
-        /* 都不是 → 提示靠近最近的那个（小屋 / 商店） */
+        /* 都不是 → 提示靠近最近的那个（小屋 / 商店 / 居民） */
         const dh = houseDist(), ds = shopDist();
         toast(dh <= ds ? '走近小屋才能睡觉' : '走近商店摊才能交易');
       }
@@ -2850,7 +3021,7 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen || chestOpen) return;
+  if(packOpen || shopOpen || chestOpen || npcOpen) return;
   const p = toLogical(e);
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
@@ -2910,6 +3081,7 @@ const packGrid = document.getElementById('packGrid');
 const packTip  = document.getElementById('packTip');
 const packHeld = document.getElementById('packHeld');
 const packInfo = document.getElementById('packInfo');
+const packFoot = document.getElementById('packFoot');
 let packOpen = false;          /* 背包是否打开（打开时 update() 整体冻结 → 时间停住） */
 let held = null;               /* 手上拿着的物品：{id, n, from}（from = 拿起时的格号） */
 
@@ -2932,8 +3104,17 @@ function buildPackGrid(){
 }
 /* 把背包状态刷到格子上 */
 function refreshPackGrid(){
-  if(packInfo) packInfo.textContent = '已用 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS +
-                                     ' 格　💰 ' + gold;
+  if(packInfo){
+    if(packMode === 'gift'){
+      const gd = npcDef(giftTarget);
+      packInfo.textContent = '给' + (gd ? gd.name : '对方') + '挑一件礼物（点一下就送出去）';
+    }else{
+      packInfo.textContent = '已用 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS + ' 格　💰 ' + gold;
+    }
+  }
+  if(packMode === 'gift' && packFoot){
+    packFoot.textContent = '点一格 = 把这件东西送出去 · Esc 取消（今天只能送一次）';
+  }
   if(!packGrid || !packGrid.children) return;
   const cells = packGrid.children;
   for(let i=0;i<cells.length;i++){
@@ -2970,6 +3151,7 @@ function storeItem(entry){
 }
 /* 点格子：空手 → 拾起；手里有东西 → 放下（目标格有东西就交换） */
 function packClick(i){
+  if(packMode === 'gift'){ npcGiftPick(i); return; }   /* 送礼模式：点一下 = 送出去 */
   const s = inv[i];
   if(held){
     const back = s ? {id:s.id, n:s.n} : null;   /* 目标格原来那件，先存着 */
@@ -3040,6 +3222,13 @@ function togglePack(open){
   const want = (open === undefined) ? !packOpen : !!open;
   if(want === packOpen) return;
   packOpen = want;
+  if(packMode === 'gift' && !packOpen){          /* 退出送礼模式 → 恢复正常背包 */
+    packMode = 'normal'; giftTarget = null;
+  }
+  if(!packOpen){
+    if(packEl) packEl.classList.remove('gift');
+    if(packFoot) packFoot.textContent = '点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭';
+  }
   if(packOpen){
     if(shopOpen) toggleShop(false);            /* 背包与商店互斥 */
     refreshPackGrid();
@@ -3279,7 +3468,11 @@ function renderShopSell(){
 /* 刷新商店面板 */
 function renderShop(){
   if(shopGold) shopGold.textContent = '💰 ' + gold + ' 金币';
-  if(shopSeason) shopSeason.textContent = seasonName() + '季 价格 ×' + seasonCoef().toFixed(2) + '　';
+  if(shopSeason){
+    const bonus = npcShopBonusLeft();
+    shopSeason.textContent = seasonName() + '季 价格 ×' + seasonCoef().toFixed(2) + '　' +
+      (bonus > 0 ? ('老板娘加购 ×' + CONFIG.NPC.SHOP_BONUS.PRICE_MULT + '（还剩 ' + bonus + ' 件）　') : '');
+  }
   if(shopTabs && shopTabs.children){
     for(const t of shopTabs.children){
       const on = (t.getAttribute && t.getAttribute('data-tab') === shopTab);
@@ -3432,13 +3625,17 @@ function drawUI(g){
     g.textAlign = 'left';
   }
 
-  /* 左上角：季节 · 第几天 · 时刻 · 天气 */
+  /* 左上角：季节 · 第几天 · 时刻 · 天气（今天有人过生日就带个 🎂） */
+  const bdNpc = npcBirthdayToday();
   const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
   const dB = ' ' + weather.name;
+  const dC = bdNpc ? (bdNpc.name + ' 生日') : '';
   g.font = '13px ' + FONT_CJK;   const wA = g.measureText(dA).width;
   g.font = '15px ' + FONT_EMOJI; const wI = g.measureText(weather.icon).width;
   g.font = '13px ' + FONT_CJK;   const wB = g.measureText(dB).width;
-  const dW = Math.ceil(wA + wI + wB) + 16, dH = 24, dY = rowY + rowH + 6;
+  g.font = '15px ' + FONT_EMOJI; const wE = bdNpc ? g.measureText('🎂').width : 0;
+  g.font = '13px ' + FONT_CJK;   const wC = dC ? g.measureText(dC).width : 0;
+  const dW = Math.ceil(wA + wI + wB + wE + wC) + 16, dH = 24, dY = rowY + rowH + 6;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, dY, dW, 1); g.fillRect(8, dY+dH-1, dW, 1);
@@ -3450,6 +3647,12 @@ function drawUI(g){
   g.fillText(weather.icon, 16 + wA, dY + 4);
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
+  if(bdNpc){
+    g.font = '15px ' + FONT_EMOJI; g.fillStyle = '#ffb08a';
+    g.fillText('🎂', 16 + wA + wI + wB, dY + 4);
+    g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+    g.fillText(dC, 16 + wA + wI + wB + wE, dY + 5);
+  }
 
   /* 建造模式：左侧配方面板 */
   if(buildMode) drawBuildPanel(g, dY + dH + 6);
@@ -3518,6 +3721,20 @@ function drawUI(g){
     g.font = '13px ' + FONT_CJK;
     const hw = g.measureText(hint).width;
     const hx = sx + sw/2 - hw/2, hy = sy + SHOP_POS.h*TILE + 6;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
+  }
+  /* 走到居民身边 → 提示按 E 交谈（对话打开时不再提示） */
+  const nn = npcNear();
+  if(nn && !npcOpen && !shopOpen){
+    const np = npcPos(nn);
+    const hint = '按 E 和 ' + nn.name + ' 说话';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = np.x - cam.x - hw/2, hy = np.y - cam.y - 40;
     g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
     g.strokeStyle = CONFIG.COLORS.hudBorder;
     g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
@@ -3660,10 +3877,12 @@ function saveSummary(d){
   const nc = Array.isArray(d.crops) ? d.crops.length : 0;
   const nb = Array.isArray(d.buildings) ? d.buildings.length : 0;
   const nd = (d.map && typeof d.map === 'object') ? Object.keys(d.map).length : 0;
+  const dv = (typeof d.v === 'number') ? d.v : 1;
+  const upg = dv < CONFIG.SAVE.VERSION ? ('　（存档 v' + dv + ' 会自动升级到 v' + CONFIG.SAVE.VERSION + '）') : '';
   return '存档：第 ' + days + ' 天（' + season + '季）· ' + (w ? w.name : '晴') + '\n' +
          '金币 ' + (d.gold||0) + ' · 体力 ' + Math.ceil(d.stamina||0) + '/' + (d.staminaMax||0) +
          ' · 作物 ' + nc + ' 株 · 建造物 ' + nb + ' 个\n' +
-         '地图改动 ' + nd + ' 格 · 保存于 ' + fmtStamp(d.at);
+         '地图改动 ' + nd + ' 格 · 保存于 ' + fmtStamp(d.at) + upg;
 }
 /* 打开标题界面 */
 function openStartMenu(d){
@@ -3672,8 +3891,8 @@ function openStartMenu(d){
   const vOK = saveVersionOK(d);
   if(startInfo) startInfo.textContent = saveSummary(d);
   if(startWarn) startWarn.textContent = vOK ? '' :
-    ('存档版本 v' + (d.v === undefined ? '?' : d.v) + ' 与当前版本 v' + CONFIG.SAVE.VERSION +
-     ' 不匹配，读取可能不完整。仍要继续吗？');
+    ('存档版本 v' + (d.v === undefined ? '?' : d.v) + ' 比当前版本 v' + CONFIG.SAVE.VERSION +
+     ' 还新，读取可能不完整。仍要继续吗？');
   if(btnContinue) btnContinue.textContent = vOK ? '继续游戏' : '仍然尝试读取';
   if(btnNew) btnNew.textContent = vOK ? '新游戏' : '删除旧存档并重开';
   if(startBtns && startBtns.style) startBtns.style.display = 'flex';
@@ -3705,11 +3924,13 @@ function doNewGame(){
 }
 /* 标题界面：继续读档 */
 function doContinue(){
-  const d = pendingSave;
+  const raw = pendingSave;
   closeStartMenu();
   sessionActive = true;
-  if(!d){ toast('没有存档，开了一局新的'); return; }
-  const ok = deserializeState(d);
+  if(!raw){ toast('没有存档，开了一局新的'); return; }
+  const r = migrateSave(raw);           /* v1 旧档在这里升级到 v2（进度无损） */
+  const ok = deserializeState(r.save);
+  if(r.degraded){ toast('存档升级失败，已按旧版本读取（居民数据可能缺失）'); return; }
   if(ok) toast('欢迎回来 · 第 ' + clock.day + ' 天');
   else{ newGame(); toast('存档读取失败，开了一局新的'); }
 }
@@ -3862,7 +4083,9 @@ function serializeState(){
     /* 第 12 轮新增（可选字段，老存档没有也能读）：新手引导进度 + 静音状态 */
     tut: {step:tut.step|0, moved:Math.round(tut.moved), tilled:tut.tilled|0,
           sown:tut.sown|0, slept:!!tut.slept},
-    snd: audioMuted ? 1 : 0
+    snd: audioMuted ? 1 : 0,
+    /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
+    npc: npcSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -3947,6 +4170,8 @@ function deserializeState(d){
     }
     /* 静音状态（老存档没这个字段 → 保持当前设置） */
     if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
+    /* 居民状态（老存档没这个字段 → 当作"刚认识"，其余进度不受影响） */
+    npcDeserialize(d.npc);
     held = null;
     /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -3990,8 +4215,8 @@ function deleteSave(){
 }
 /* 有没有存档 */
 function hasSave(){ return !!readSave(); }
-/* 存档版本对不对得上 */
-function saveVersionOK(d){ return !!d && d.v === CONFIG.SAVE.VERSION; }
+/* 存档版本对不对得上：旧版本会先 migrate() 升级，所以 ≤ 当前版本都算 OK；只有"更新版本"才不兼容 */
+function saveVersionOK(d){ return !!d && (d.v|0) <= CONFIG.SAVE.VERSION; }
 /* 存档里存的是第几天 */
 function saveDay(d){ return (d && d.time) ? (d.time.day|0) : 1; }
 
@@ -4010,10 +4235,12 @@ function saveGame(reason){
 }
 /* 读档 */
 function loadGame(){
-  const d = readSave();
-  if(!d){ toast('没有存档'); return false; }
-  const ok = deserializeState(d);
-  toast(ok ? '已读取存档（第 ' + clock.day + ' 天）' : '存档读取失败');
+  const raw = readSave();
+  if(!raw){ toast('没有存档'); return false; }
+  const r = migrateSave(raw);           /* 旧版本先迁移；迁移失败只降级，不清空进度 */
+  const ok = deserializeState(r.save);
+  if(r.degraded) toast('存档升级失败，已按旧版本读取（居民数据可能缺失）');
+  else toast(ok ? '已读取存档（第 ' + clock.day + ' 天）' : '存档读取失败');
   return ok;
 }
 /* 删档 */
@@ -4036,6 +4263,7 @@ function newGame(){
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;
   paused = false;
   tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;   /* 新游戏重置引导 */
+  npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
   cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -4058,10 +4286,12 @@ let animTime = 0, fps = 0, frameCount = 0, fpsTimer = 0, frameNo = 0, visibleCou
 let renderMs = 0;                  /* 最近一帧的渲染耗时（毫秒，滑动平均） */
 
 function update(dt){
+  if(npcOpen) updateNpcDialog(dt);   /* 打字机属于 UI：对话打开时字照常一个个蹦出来 */
   if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
   if(startMenuOpen) return;           /* 标题界面：整个游戏冻结 */
   if(sysOpen) return;                 /* 系统菜单：整个游戏冻结 */
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
+  if(npcOpen) return;                 /* NPC 对话：整个游戏冻结（时间停住） */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
@@ -4146,6 +4376,425 @@ function loop(now){
       player.x.toFixed(0) + ',' + player.y.toFixed(0) + ')  seed ' + CONFIG.SEED);
   }
   requestAnimationFrame(loop);
+}
+
+/* === 9.NPC系统 === */
+/* 小镇上有三位居民：白天按各自的时刻表出现在固定点（到点就换地方，夜里回家消失）。
+ * 走近 1.5 格按 E 说话：打字机逐字显示，E / 空格推进（没打完就整句显示，打完了就下一句）。
+ * 好感度 0~100 分 4 档，升到「朋友」档立刻解锁各自的小福利；每人每天最多送一次礼。
+ * 本轮新增的存档字段 npc（紧凑结构）；存档版本 v1 → v2 由 migrate() 负责无损升级。 */
+
+/* --- 运行时状态（会被写进存档） --- */
+const npcState = {
+  aff:    {},   /* id → 好感度 0~100 */
+  gift:   {},   /* id → 上次送礼时的天数（跨天自动失效 → 实现"每天一次"） */
+  unlock: {},   /* id → 1 = 已经发过「朋友」档的解锁福利 */
+  bonusDay: -1, /* 老板娘加购计数所属的天 */
+  bonusUsed: 0  /* 老板娘当天已加购的件数 */
+};
+/* 把 NPC 状态复位（新游戏 / 读档前） */
+function npcResetState(){
+  npcState.aff = {}; npcState.gift = {}; npcState.unlock = {};
+  npcState.bonusDay = -1; npcState.bonusUsed = 0;
+  for(const d of CONFIG.NPC.LIST){
+    npcState.aff[d.id] = 0;
+    npcState.gift[d.id] = -1;
+    npcState.unlock[d.id] = 0;
+  }
+}
+npcResetState();
+
+/* --- DOM（对话面板复用 .panel 样式） --- */
+const npcEl      = document.getElementById('npc');
+const npcMask    = document.getElementById('npcMask');
+const npcIcon    = document.getElementById('npcIcon');
+const npcName    = document.getElementById('npcName');
+const npcTierEl  = document.getElementById('npcTier');
+const npcAffEl   = document.getElementById('npcAff');
+const npcBdayEl  = document.getElementById('npcBirthday');
+const npcBarFill = document.getElementById('npcBarFill');
+const npcTextEl  = document.getElementById('npcText');
+const npcNextBtn = document.getElementById('npcNext');
+const npcGiftBtn = document.getElementById('npcGift');
+const npcByeBtn  = document.getElementById('npcBye');
+const npcFootEl  = document.getElementById('npcFoot');
+let npcOpen = false;              /* 对话是否打开（打开时世界时间冻结） */
+let packMode = 'normal';          /* 背包模式：normal 正常 / gift 送礼选择 */
+let giftTarget = null;            /* 送礼模式的目标 NPC id */
+const npcDlg = {id:null, lines:[], idx:0, shown:0, typing:false};
+let npcLastText = '';             /* 打字机：上一次写进 DOM 的文本（避免每帧重写） */
+
+/* --- 基础查询 --- */
+function npcDef(id){ for(const d of CONFIG.NPC.LIST) if(d.id === id) return d; return null; }
+function npcAff(id){ return clamp(npcState.aff[id] | 0, 0, CONFIG.NPC.AFF_MAX); }
+function npcTierOf(aff){
+  let t = CONFIG.NPC.TIERS[0];
+  for(const x of CONFIG.NPC.TIERS) if(aff >= x.min) t = x;
+  return t;
+}
+function npcTierIdx(aff){ return CONFIG.NPC.TIERS.indexOf(npcTierOf(aff)); }
+function npcTierName(id){ return npcTierOf(npcAff(id)).name; }
+function npcUnlockTierIdx(){
+  const i = CONFIG.NPC.TIERS.findIndex(t => t.key === CONFIG.NPC.UNLOCK_TIER);
+  return i < 0 ? CONFIG.NPC.TIERS.length - 1 : i;
+}
+/* 时刻表：当前这个点在哪儿（null = 回家了，今天不见） */
+function npcSpot(d){
+  const h = skyHour();
+  for(const s of d.sched) if(h >= s.from && h < s.to) return s;
+  return null;
+}
+function npcPos(d){
+  const s = npcSpot(d);
+  if(!s) return null;
+  return {x:(s.x + 0.5)*TILE, y:(s.y + 0.5)*TILE, tx:s.x, ty:s.y};
+}
+/* 玩家与 NPC 的距离（格） */
+function npcDist(d){
+  const p = npcPos(d);
+  if(!p) return Infinity;
+  return Math.hypot(p.x - player.x, p.y - player.y) / TILE;
+}
+/* 现在站在旁边的那个 NPC（没有就 null） */
+function npcNear(){
+  let best = null, bd = CONFIG.NPC.RANGE;
+  for(const d of CONFIG.NPC.LIST){
+    const dist = npcDist(d);
+    if(dist <= bd){ bd = dist; best = d; }
+  }
+  return best;
+}
+/* 生日：每季一次（season + 季内第几天 → 一年里的第几天） */
+function npcBdayAbs(d){
+  const si = Math.max(0, CONFIG.SEASONS.indexOf(d.bday.season));
+  return si * CONFIG.DAYS_PER_SEASON + (d.bday.day | 0);
+}
+function npcIsBirthday(d){
+  const yearLen = CONFIG.SEASONS.length * CONFIG.DAYS_PER_SEASON;
+  const dayInYear = ((clock.day - 1) % yearLen) + 1;
+  return dayInYear === npcBdayAbs(d);
+}
+/* 今天是谁的生日（没有就 null） */
+function npcBirthdayToday(){
+  for(const d of CONFIG.NPC.LIST) if(npcIsBirthday(d)) return d;
+  return null;
+}
+/* 每天的送礼上限：记录的是"送出去那天是第几天"，跨天自然失效 */
+function npcGiftedToday(id){ return (npcState.gift[id] | 0) === clock.day; }
+
+/* --- 对话 --- */
+/* 按当前好感档位随机挑 2~3 句（不重复） */
+function npcPickLines(d){
+  const tier = npcTierOf(npcAff(d.id));
+  const pool = (d.lines && d.lines[tier.key]) || (d.lines && d.lines.stranger) || ['……'];
+  const n = Math.min(pool.length, 2 + ((Math.random()*2) | 0));
+  const out = [], used = [];
+  for(let i=0;i<n;i++){
+    let k = (Math.random()*pool.length) | 0, guard = 0;
+    while(used.indexOf(k) >= 0 && guard++ < 8) k = (Math.random()*pool.length) | 0;
+    used.push(k);
+    out.push(pool[k]);
+  }
+  return out;
+}
+function npcOpenDialog(d){
+  if(!d || npcOpen) return false;
+  npcDlg.id = d.id;
+  npcDlg.lines = npcPickLines(d);
+  npcDlg.idx = 0; npcDlg.shown = 0; npcDlg.typing = true;
+  npcOpen = true;
+  npcLastText = '';
+  renderNpcDialog();
+  setPanelOpen(npcEl, true);
+  playSfx(560, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function npcCloseDialog(){
+  if(!npcOpen) return false;
+  npcOpen = false;
+  npcDlg.id = null; npcDlg.lines = []; npcDlg.typing = false;
+  if(packMode === 'gift'){ packMode = 'normal'; giftTarget = null; }
+  if(packEl) packEl.classList.remove('gift');
+  setPanelOpen(npcEl, false);
+  return true;
+}
+/* E / 空格：没打完 → 整句显示；打完了 → 下一句；说完了 → 结束对话 */
+function npcAdvance(){
+  if(!npcOpen) return false;
+  const t = npcDlg.lines[npcDlg.idx] || '';
+  if(npcDlg.typing){
+    npcDlg.shown = t.length; npcDlg.typing = false;
+    renderNpcDialog();
+    return true;
+  }
+  if(npcDlg.idx < npcDlg.lines.length - 1){
+    npcDlg.idx++; npcDlg.shown = 0; npcDlg.typing = true;
+    renderNpcDialog();
+    return true;
+  }
+  npcCloseDialog();                 /* 说完了再按 E → 结束对话 */
+  return true;
+}
+/* 打字机推进（UI 动画：对话打开时世界时间冻结，但字还在一个个蹦出来） */
+function updateNpcDialog(dt){
+  if(!npcOpen || !npcDlg.typing) return;
+  const t = npcDlg.lines[npcDlg.idx] || '';
+  npcDlg.shown += dt * 1000 / Math.max(1, CONFIG.NPC.TYPE_MS);
+  if(npcDlg.shown >= t.length){
+    npcDlg.shown = t.length;
+    npcDlg.typing = false;
+    renderNpcDialog();
+  }else{
+    npcUpdateText();
+  }
+}
+/* 只更新正文（打字过程中每帧调用，避免整块 DOM 重刷） */
+function npcUpdateText(){
+  if(!npcTextEl) return;
+  const t = npcDlg.lines[npcDlg.idx] || '';
+  const s = npcDlg.typing ? t.slice(0, Math.floor(npcDlg.shown)) : t;
+  if(s !== npcLastText){ npcTextEl.textContent = s; npcLastText = s; }
+}
+/* 刷新整个对话面板 */
+function renderNpcDialog(){
+  const d = npcDef(npcDlg.id);
+  if(!d) return;
+  const aff = npcAff(d.id);
+  const tier = npcTierOf(aff);
+  if(npcIcon)   npcIcon.textContent   = d.icon;
+  if(npcName)   npcName.textContent   = d.name;
+  if(npcTierEl) npcTierEl.textContent = tier.name;
+  if(npcAffEl)  npcAffEl.textContent  = '好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX;
+  if(npcBarFill) npcBarFill.style.width = (aff / CONFIG.NPC.AFF_MAX * 100).toFixed(1) + '%';
+  const isB = npcIsBirthday(d);
+  if(npcBdayEl){
+    npcBdayEl.textContent = '🎂 生日 · 送礼 ×' + CONFIG.NPC.GIFT.BIRTHDAY_MULT;
+    npcBdayEl.classList.toggle('show', isB);
+  }
+  npcUpdateText();
+  const more = npcDlg.idx < npcDlg.lines.length - 1;
+  const done = !npcDlg.typing && !more;
+  if(npcNextBtn){
+    npcNextBtn.textContent = npcDlg.typing ? '跳过（E）' : (more ? '继续（E）' : '结束（E）');
+    npcNextBtn.classList.remove('off');
+    npcNextBtn.disabled = false;
+  }
+  const gifted = npcGiftedToday(d.id);
+  if(npcGiftBtn){
+    npcGiftBtn.textContent = gifted ? '今天已送过礼' : '送礼物';
+    npcGiftBtn.classList.toggle('off', !done || gifted);
+    npcGiftBtn.disabled = !done || gifted;      /* 说完了才能送 */
+  }
+  if(npcFootEl){
+    npcFootEl.textContent = done
+      ? '说完了 · E / 空格 结束对话　·　可以送礼物提升好感（每人每天一次）'
+      : 'E / 空格：没打完就整句显示，打完了就下一句 · Esc 结束对话';
+  }
+}
+if(npcNextBtn) npcNextBtn.addEventListener('click', ()=>{ npcAdvance(); ensureAudio(); });
+if(npcByeBtn)  npcByeBtn .addEventListener('click', ()=>{ npcCloseDialog(); ensureAudio(); });
+if(npcGiftBtn) npcGiftBtn.addEventListener('click', ()=>{ npcStartGift(); ensureAudio(); });
+if(npcMask)   npcMask  .addEventListener('mousedown', e=>{ e.preventDefault(); npcCloseDialog(); });
+
+/* --- 送礼 --- */
+function npcStartGift(){
+  const d = npcDef(giftTarget || npcDlg.id);
+  if(!d) return false;
+  if(npcGiftedToday(d.id)){ toast(d.name + '：今天已经收过礼物啦，明天再来吧'); return false; }
+  giftTarget = d.id;
+  packMode = 'gift';
+  togglePack(true);
+  if(packEl) packEl.classList.add('gift');
+  refreshPackGrid();
+  toast('给 ' + d.name + ' 挑一件礼物（点一下格子就送出去）');
+  return true;
+}
+/* 在背包里点一格 = 把这件东西送出去 */
+function npcGiftPick(i){
+  const s = inv[i];
+  const d = npcDef(giftTarget);
+  if(!d || !s) return false;
+  if(npcGiftedToday(d.id)){ toast('今天已经送过礼了'); return false; }
+  const id = s.id;
+  const idef = itemDef(id);
+  if(idef && idef.kind === 'tool'){        /* 工具是吃饭的家伙，别送出去 */
+    toast(idef.name + '还是自己留着用吧（工具不能送）');
+    return false;
+  }
+  let delta = CONFIG.NPC.GIFT.NORMAL, word = '收了';
+  if(d.dislike.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.DISLIKE; word = '不太喜欢'; }
+  else if(d.like.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.LIKE; word = '很喜欢'; }
+  const bday = npcIsBirthday(d);
+  const eff = bday ? delta * CONFIG.NPC.GIFT.BIRTHDAY_MULT : delta;
+  removeItem(id, 1);
+  npcState.gift[d.id] = clock.day;          /* 记下"今天送过" → 跨天自动重置 */
+  /* 收起背包，回到对话 */
+  packMode = 'normal';
+  if(packEl) packEl.classList.remove('gift');
+  togglePack(false);
+  giftTarget = null;
+  const it = itemDef(id);
+  toast('把 ' + (it ? it.name : id) + ' 送给了 ' + d.name + '（' + word + '，好感 ' +
+        (eff >= 0 ? '+' : '') + eff + (bday ? '，生日 ×' + CONFIG.NPC.GIFT.BIRTHDAY_MULT : '') + '）');
+  npcAddAff(d.id, eff);
+  renderNpcDialog();
+  return true;
+}
+/* 好感度变化 + 跨档提示 + 解锁 */
+function npcAddAff(id, delta){
+  const d = npcDef(id);
+  if(!d) return;
+  const before = npcTierIdx(npcAff(id));
+  npcState.aff[id] = clamp(npcAff(id) + delta, 0, CONFIG.NPC.AFF_MAX);
+  const after = npcTierIdx(npcAff(id));
+  if(after > before){
+    const t = CONFIG.NPC.TIERS[after];
+    toast(d.name + ' 对你的好感升到「' + t.name + '」！');
+    playSfx(988, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+    if(after >= npcUnlockTierIdx()) npcUnlock(d);
+  }
+}
+/* 「朋友」档的解锁福利 */
+function npcUnlock(d){
+  if(!d || npcState.unlock[d.id]) return false;
+  if(d.id === 'carpenter'){
+    npcState.unlock[d.id] = 1;
+    toast('老木匠答应给你打折的建造配方（材料 ' + Math.round(CONFIG.NPC.CARPENTER_DISCOUNT*100) + '%）');
+  }else if(d.id === 'aunt'){
+    npcState.unlock[d.id] = 1;
+    toast('老板娘答应每天多收购 ' + CONFIG.NPC.SHOP_BONUS.COUNT + ' 件作物（' +
+          CONFIG.NPC.SHOP_BONUS.PRICE_MULT + ' 倍价）');
+  }else if(d.id === 'girl'){
+    const sid = CONFIG.NPC.GIFT_SEED, n = CONFIG.NPC.GIFT_SEED_N;
+    if(!canFit(sid, n)){
+      toast('邻家女孩想送你稀有种子，可背包满了……先卖点东西再来');
+      return false;                            /* 背包没位就不算解锁，等有空再来 */
+    }
+    addItem(sid, n);
+    npcState.unlock[d.id] = 1;
+    const it = itemDef(sid);
+    toast('邻家女孩送了你 ' + n + ' 颗' + (it ? it.name : sid) + '！');
+  }else{
+    npcState.unlock[d.id] = 1;
+  }
+  return true;
+}
+/* 读档后补发解锁（老档里好感度够但没发过福利的） */
+function npcSyncUnlocks(){
+  for(const d of CONFIG.NPC.LIST){
+    if(npcTierIdx(npcAff(d.id)) >= npcUnlockTierIdx() && !npcState.unlock[d.id]) npcUnlock(d);
+  }
+}
+/* 新的一天：生日提示 */
+function npcDayStart(){
+  const b = npcBirthdayToday();
+  if(b) toast('🎂 今天是 ' + b.name + ' 的生日！送礼物好感翻倍');
+}
+
+/* --- 解锁特权：老木匠的建造折扣 --- */
+function npcBuildDiscount(){ return npcState.unlock['carpenter'] ? CONFIG.NPC.CARPENTER_DISCOUNT : 1; }
+/* 当前生效的建造材料价（老木匠打折后） */
+function buildCost(r){
+  const k = npcBuildDiscount();
+  if(!r || k >= 1) return (r ? r.cost : {});
+  const out = {};
+  for(const id in r.cost) out[id] = Math.max(1, Math.floor(r.cost[id] * k));
+  return out;
+}
+/* --- 解锁特权：老板娘的每日加购 --- */
+function npcShopBonusLeft(){
+  if(!npcState.unlock['aunt']) return 0;
+  if(npcState.bonusDay !== clock.day){ npcState.bonusDay = clock.day; npcState.bonusUsed = 0; }
+  return Math.max(0, CONFIG.NPC.SHOP_BONUS.COUNT - npcState.bonusUsed);
+}
+
+/* --- 存档（紧凑结构） --- */
+function npcSerialize(){
+  const aff = {}, gift = {}, unl = {};
+  for(const d of CONFIG.NPC.LIST){
+    aff[d.id]  = npcAff(d.id);
+    gift[d.id] = (npcState.gift[d.id] | 0);
+    unl[d.id]  = npcState.unlock[d.id] ? 1 : 0;
+  }
+  return {aff:aff, gift:gift, unl:unl, bd:npcState.bonusDay, bu:npcState.bonusUsed};
+}
+function npcDeserialize(o){
+  npcResetState();
+  if(!o || typeof o !== 'object') return false;
+  for(const d of CONFIG.NPC.LIST){
+    const a = o.aff ? o.aff[d.id] : undefined;
+    if(typeof a === 'number') npcState.aff[d.id] = clamp(a | 0, 0, CONFIG.NPC.AFF_MAX);
+    const g = o.gift ? o.gift[d.id] : undefined;
+    if(typeof g === 'number') npcState.gift[d.id] = Math.max(0, g | 0);
+    const u = o.unl ? o.unl[d.id] : undefined;
+    if(u) npcState.unlock[d.id] = 1;
+  }
+  if(typeof o.bd === 'number') npcState.bonusDay = o.bd | 0;
+  if(typeof o.bu === 'number') npcState.bonusUsed = Math.max(0, o.bu | 0);
+  npcSyncUnlocks();
+  return true;
+}
+
+/* --- 存档迁移：v1 → v2（第 13 轮新增 npc 字段） --- */
+function migrate(oldSave){
+  if(!oldSave || typeof oldSave !== 'object') return null;
+  try{
+    const d = JSON.parse(JSON.stringify(oldSave));   /* 复制一份，不动原对象 */
+    const v = (typeof d.v === 'number') ? d.v : 1;
+    if(v < 2){
+      /* v1 → v2：补上 npc 字段（没有就当作"刚认识"，其余进度全部保留） */
+      if(!d.npc || typeof d.npc !== 'object') d.npc = {aff:{}, gift:{}, unl:{}, bd:-1, bu:0};
+    }
+    d.v = CONFIG.SAVE.VERSION;
+    return d;
+  }catch(e){
+    console.warn('[save] 存档迁移失败：', e);
+    return null;
+  }
+}
+/* 迁移 + 兜底：迁移失败不退化成"新游戏"，只降级成"仅保留核心数据" */
+function migrateSave(raw){
+  const d = migrate(raw);
+  if(d) return {save:d, degraded:false};
+  return {save:raw, degraded:true};
+}
+
+/* --- 画 NPC（emoji 立绘 + 身体 + 名字 + 靠近时的 E 提示） --- */
+function drawNpc(g, d, px, py){
+  const ox = Math.round(px - cam.x - 8);
+  const oy = Math.round(py - cam.y - 12);     /* 身体顶端（和玩家同一套脚点约定） */
+  const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
+  /* 影子 */
+  g.fillStyle = CONFIG.COLORS.shadow;
+  g.fillRect(ox + 2, oy + 22, 12, 2);
+  /* 身体 */
+  g.fillStyle = d.color;
+  g.fillRect(ox + 3, oy + 12, 10, 12);
+  g.fillStyle = 'rgba(0,0,0,.18)';
+  g.fillRect(ox + 3, oy + 12, 10, 3);
+  /* 头（emoji 立绘） */
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  g.font = '16px ' + FONT_EMOJI;
+  g.fillText(d.icon, ox + 8, oy + 12);
+  /* 名字 */
+  g.font = '11px ' + FONT_CJK;
+  const nw = g.measureText(d.name).width;
+  g.fillStyle = 'rgba(8,10,16,.72)';
+  g.fillRect(ox + 8 - nw/2 - 3, oy + 25, nw + 6, 13);
+  g.fillStyle = '#ffe9b0';
+  g.fillText(d.name, ox + 8, oy + 35);
+  /* 靠近了 → 头顶冒一个 E */
+  const near = npcNear();
+  if(near === d){
+    g.fillStyle = 'rgba(8,10,16,.85)';
+    g.fillRect(ox + 2, oy - 15, 12, 13);
+    g.strokeStyle = CONFIG.COLORS.hudAccent;
+    g.strokeRect(ox + 2.5, oy - 14.5, 11, 12);
+    g.fillStyle = CONFIG.COLORS.hudAccent;
+    g.font = '11px ' + FONT_CJK;
+    g.fillText('E', ox + 8, oy - 5);
+  }
+  g.font = oldFont; g.textAlign = oldAlign; g.textBaseline = oldBase;
 }
 
 /* --- 启动 --- */
@@ -4256,6 +4905,18 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   get groundBakedCount(){ return groundBakedCount; },
   get groundDirtyCount(){ return groundDirty.size; },
   get renderMs(){ return renderMs; },
+  /* 第 13 轮：NPC / 对话 / 送礼 / 好感度 / 存档迁移 */
+  get npcState(){ return npcState; },
+  get npcOpen(){ return npcOpen; },
+  get npcDlg(){ return npcDlg; },
+  get packMode(){ return packMode; }, set packMode(v){ packMode = v; },
+  get giftTarget(){ return giftTarget; }, set giftTarget(v){ giftTarget = v; },
+  npcDef, npcAff, npcTierOf, npcTierIdx, npcTierName, npcSpot, npcPos, npcDist, npcNear,
+  npcBdayAbs, npcIsBirthday, npcBirthdayToday, npcGiftedToday,
+  npcPickLines, npcOpenDialog, npcCloseDialog, npcAdvance, updateNpcDialog, renderNpcDialog,
+  npcStartGift, npcGiftPick, npcAddAff, npcUnlock, npcSyncUnlocks, npcDayStart,
+  npcBuildDiscount, buildCost, npcShopBonusLeft,
+  npcSerialize, npcDeserialize, npcResetState, migrate, migrateSave, drawNpc,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

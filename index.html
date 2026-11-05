@@ -22,7 +22,7 @@
     position:fixed;right:10px;top:10px;z-index:10;
     font:12px/1.7 Consolas,"Courier New",monospace;color:#cfe3ff;
     background:rgba(8,10,16,.74);border:2px solid #3d4a63;padding:6px 10px;
-    white-space:pre;pointer-events:none;
+    white-space:pre;pointer-events:none;display:none;   /* 状态信息只在 Esc 菜单内查看 */
   }
   #stats b{color:#ffd76a}
   /* 屏幕底部提示条：多条同时出现时向上排（容器底边固定，新增的一条排在最下） */
@@ -227,6 +227,7 @@
   #sysMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
   #sysPanel{
     position:relative;padding:14px 16px 12px;width:330px;
+    max-height:calc(100vh - 24px);overflow-y:auto;   /* 小窗口时菜单自身滚动，不切边 */
   }
   #sysHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
   #sysInfo{font-size:11px;color:#8fa3bd;margin-bottom:10px;white-space:pre-line}
@@ -604,6 +605,20 @@
     animation:tutIn .25s ease-out;
   }
   #tut.show{display:block}
+  /* 引导文字改在 Esc 菜单内显示，主画面不再挂提示条 */
+  #tut,#tut.show{display:none}
+  /* Esc 菜单顶部的新手引导当前步骤 */
+  #sysTut{display:none;margin:0 0 8px;padding:7px 10px;border-radius:8px;
+    border:1px solid #8a7a3a;background:rgba(60,52,20,.45);color:#ffe9b0;
+    font:12px/1.55 Consolas,"Microsoft YaHei","PingFang SC",monospace;white-space:pre-line}
+  /* Esc 菜单里的游戏状态（原来右上角常驻面板） */
+  #sysStats{display:none;max-height:220px;overflow-y:auto;margin:10px 0 0;
+    padding:8px 10px;border:1px solid #3a4256;border-radius:8px;
+    background:rgba(10,14,22,.55);color:#cfe0f2;
+    font:11px/1.6 Consolas,"Courier New",monospace;
+    white-space:pre;text-align:left}
+  #sysStats.open{display:block}
+  #sysStats b{color:#ffd76a}
   @keyframes tutIn{
     0%  {opacity:0;transform:translate(-50%,-10px)}
     100%{opacity:1;transform:translate(-50%,0)}
@@ -710,6 +725,7 @@
   <div id="sysMask"></div>
   <div id="sysPanel" class="panel">
     <div id="sysHead">系统菜单</div>
+    <div id="sysTut"></div>
     <div id="sysInfo"></div>
     <div id="sysBtns">
       <button class="mbtn" id="btnSave">保存游戏</button>
@@ -719,11 +735,14 @@
       <button class="mbtn" id="btnAch">🏆 成就墙</button>
       <!-- 第 21 轮：玩法速查表（键位 / 系统说明） -->
       <button class="mbtn" id="btnCheat">📖 玩法速查表</button>
+      <!-- 游戏状态：原右上角常驻面板，收进菜单查看 -->
+      <button class="mbtn" id="btnStats">📊 游戏状态</button>
       <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
       <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
     <div id="sysCheat"></div>
+    <div id="sysStats"></div>
     <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
   </div>
 </div>
@@ -3296,6 +3315,7 @@ document.addEventListener('click', e=>{
 
 /* --- 新手引导：第 1 天早晨依次弹出 3 条提示（移动 / 锄地播种 / 睡觉），完成即消失 --- */
 const tutEl = document.getElementById('tut');
+const sysTutEl = document.getElementById('sysTut');   /* 主画面不再显示，改在 Esc 菜单里看 */
 const tut = {step:0, moved:0, tilled:0, sown:0, slept:false};   /* 进度（会存进存档） */
 /* 三步提示：done() 判断这一步是否完成 */
 const TUT_STEPS = [
@@ -3313,17 +3333,32 @@ function tutActive(){
   if(clock.day > CONFIG.TUTORIAL.DAY) return false;
   return true;
 }
-/* 把当前提示写进 DOM */
+/* 把当前提示写进 DOM（画面上的 #tut 已由 CSS 隐藏，只在菜单里显示同一句） */
 function updateTut(){
   if(!tutEl) return;
   if(!tutActive()){
     if(tutEl.classList) tutEl.classList.remove('show');
     tutEl.textContent = '';
+    syncSysTut();
     return;
   }
   const s = TUT_STEPS[tut.step];
   if(tutEl.textContent !== s.text) tutEl.textContent = s.text;
   if(tutEl.classList) tutEl.classList.add('show');
+  syncSysTut();
+}
+/* 菜单顶部的「新手引导」当前步骤：采完第 1 天 / 三步完成后自动隐藏 */
+function syncSysTut(){
+  if(!sysTutEl) return;
+  if(!tutActive()){
+    sysTutEl.style.display = 'none';
+    sysTutEl.textContent = '';
+    return;
+  }
+  sysTutEl.style.display = 'block';
+  const s = TUT_STEPS[tut.step];
+  const txt = '🎓 新手引导　' + s.text;
+  if(sysTutEl.textContent !== txt) sysTutEl.textContent = txt;
 }
 /* 触发一次检查：当前这一步完成了就往下走一步（全部完成 → 提示消失，之后不再出现） */
 function tutCheck(){
@@ -5261,6 +5296,7 @@ function updateStats(){
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
     '种子 <b>' + CONFIG.SEED + '</b>';   /* 操作提示统一收进 Esc → 玩法速查表 */
+  if(sysStatsOpen) sysStatsRender();     /* 菜单展开时同步一份 */
 }
 
 /* --- 启动菜单（本地有存档时：继续 / 新游戏） --- */
@@ -5388,6 +5424,7 @@ function toggleSys(on){
     }
     if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
     if(sysCheatOpen) sysCheatToggle(false);   /* 每次打开菜单都从收起状态开始 */
+    if(sysStatsOpen) sysStatsToggle(false);
     setPanelOpen(sysEl, true);
   }else{
     setPanelOpen(sysEl, false);
@@ -5435,11 +5472,36 @@ function sysCheatToggle(v){
     if(sysCheat.classList) sysCheat.classList.toggle('open', sysCheatOpen);
     if(sysCheatOpen) sysCheat.scrollTop = 0;
   }
-  const sp = document.getElementById('sysPanel');
-  if(sp && sp.classList) sp.classList.toggle('cheat', sysCheatOpen);
+  sysPanelWide();
   return true;
 }
+/* 速查表 / 游戏状态共用加宽面板：任一展开就保持 500px */
+function sysPanelWide(){
+  const sp = document.getElementById('sysPanel');
+  if(sp && sp.classList) sp.classList.toggle('cheat', !!(sysCheatOpen || sysStatsOpen));
+}
 if(btnCheat) btnCheat.addEventListener('click', ()=>{ sysCheatToggle(); playClick(); });
+
+/* --- 游戏状态：右上角常驻面板收进菜单（内容与 updateStats 同源） --- */
+const btnStats = document.getElementById('btnStats');
+const sysStats = document.getElementById('sysStats');
+var sysStatsOpen = false;
+function sysStatsRender(){
+  if(sysStats && statsEl) sysStats.innerHTML = statsEl.innerHTML;
+}
+function sysStatsToggle(v){
+  const want = (v === undefined) ? !sysStatsOpen : !!v;
+  if(want === sysStatsOpen) return false;
+  sysStatsOpen = want;
+  if(btnStats) btnStats.textContent = sysStatsOpen ? '📊 收起状态' : '📊 游戏状态';
+  if(sysStats && sysStats.classList){
+    sysStats.classList.toggle('open', sysStatsOpen);
+    if(sysStatsOpen){ sysStatsRender(); sysStats.scrollTop = 0; }
+  }
+  sysPanelWide();
+  return true;
+}
+if(btnStats) btnStats.addEventListener('click', ()=>{ sysStatsToggle(); playClick(); });
 
 /* 系统菜单里的"删除存档"：第一次只是警告，第二次才真删 */function sysWipe(){
   if(!sysWipeArmed){
@@ -9330,6 +9392,8 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   tipsSerialize, tipsDeserialize, tipsResetState,
   get sysCheatOpen(){ return sysCheatOpen; },
   sysCheatToggle, CHEAT_TEXT, btnCheat, sysCheat,
+  get sysStatsOpen(){ return sysStatsOpen; }, sysStatsToggle, sysStatsRender, btnStats, sysStats,
+  sysTutEl, syncSysTut,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

@@ -2865,6 +2865,7 @@ function nearHouse(){ return houseDist() <= CONFIG.SLEEP.RANGE; }
 /* 开始睡觉（faint = true 是强制昏睡） */
 function startSleep(faint){
   if(sleepFx.phase !== 'none') return false;
+  cancelFishing(true);               /* 钓鱼中跑去睡觉 → 静默收竿 */
   sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
   dayRolled = false;                 /* 本次睡觉要自己翻天（上一轮的标记不能继承） */
   toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
@@ -2896,6 +2897,7 @@ function rollToNextMorning(faint){
   console.log('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
+  gatherDayStart();                    /* 第 14 轮：每季第 1/4/7/10 天刷新草地采集物（写进 map diff） */
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
   updateTut();                         /* 过了第 1 天就把新手引导收起来 */
   npcDayStart();                       /* 居民：新的天 → 今天谁过生日 */
@@ -3087,6 +3089,7 @@ window.addEventListener('keydown', e=>{
     if(sysOpen){ toggleSys(false); return; }
     if(startMenuOpen) return;                 /* 标题界面必须选一个才能进游戏 */
     if(buildMode){ toggleBuild(false); return; }
+    if(fishingActive()){ cancelFishing(false); return; }   /* 钓鱼中 Esc = 收竿 */
     toggleSys(true);                          /* 其它情况：打开系统菜单（保存/读档） */
     return;
   }
@@ -3094,6 +3097,11 @@ window.addEventListener('keydown', e=>{
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
   if(chestOpen) return;             /* 木箱打开时其它按键一律忽略 */
   if(sleepFx.phase !== 'none') return;   /* 睡觉/昏睡中：其它按键一律忽略 */
+  /* 钓鱼中：左键 / 空格 = 收杆，其它键一律忽略（Tab 已在上面打开背包 → 钓鱼随之冻结） */
+  if(fishingActive()){
+    if((k === ' ' || k === 'enter') && !e.repeat) fishingPress();
+    return;
+  }
   /* B：进出建造模式 */
   if(k === 'b'){ if(!e.repeat) toggleBuild(); ensureAudio(); return; }
   /* 建造模式：E / Q 换配方（E 优先级最高，会顶掉「按 E 睡觉/交易」） */
@@ -3111,9 +3119,13 @@ window.addEventListener('keydown', e=>{
       else if(c){ openChest = c; toggleChest(true); }
       else if(nearShop()) toggleShop();
       else{
-        /* 都不是 → 提示靠近最近的那个（小屋 / 商店 / 居民） */
-        const dh = houseDist(), ds = shopDist();
-        toast(dh <= ds ? '走近小屋才能睡觉' : '走近商店摊才能交易');
+        const g = gatherNear();
+        if(g){ pickGather(g.tx, g.ty); }        /* 第 14 轮：脚边有野花/蘑菇/浆果 → 采走 */
+        else{
+          /* 都不是 → 提示靠近最近的那个（小屋 / 商店 / 居民） */
+          const dh = houseDist(), ds = shopDist();
+          toast(dh <= ds ? '走近小屋才能睡觉' : '走近商店摊才能交易');
+        }
       }
     }
     ensureAudio(); return;
@@ -3149,6 +3161,13 @@ canvas.addEventListener('mousedown', e=>{
   const p = toLogical(e);
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
+  /* 钓鱼中：左键 = 收杆/拉杆，右键 = 收竿 */
+  if(fishingActive()){
+    ensureAudio();
+    if(e.button === 0) fishingPress();
+    else if(e.button === 2) cancelFishing(false);
+    return;
+  }
   /* 建造模式：左键放置 / 右键拆除 */
   if(buildMode){
     ensureAudio();
@@ -3167,6 +3186,9 @@ canvas.addEventListener('mousedown', e=>{
     if(idx >= 0 && idx < CONFIG.INVENTORY.HOTBAR) selectHot(idx);
     return;
   }
+  /* 手持鱼竿 → 抛竿（钓到鱼才进背包，不再走 useTool） */
+  const selNow = selectedSlot();
+  if(selNow && selNow.id === CONFIG.FISHING.ROD_ID){ startFishing(); return; }
   useTool(tx, ty);
 });
 canvas.addEventListener('contextmenu', e=> e.preventDefault());
@@ -3935,6 +3957,21 @@ function drawUI(g){
     g.fillText(hint, hx, hy);
   }
 
+  /* 脚边有采集物 → 提示按 E 采走（有人在场时让位给 NPC 提示） */
+  const gg = (!nn && !shopOpen && !npcOpen && !fishingActive()) ? gatherNear() : null;
+  if(gg){
+    const gx = gg.tx*TILE - cam.x + TILE/2, gy = gg.ty*TILE - cam.y - 12;
+    const hint = '按 E 采集' + (gg.def ? gg.def.name : '');
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = gx - hw/2, hy = gy;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
+  }
+
   /* 左下角：体力条（低于 20 变红闪烁） */
   const sbW = 116, sbH = 11, sbX = 14, sbY = VIEW_H - 26;
   const low = stamina < CONFIG.STAMINA.LOW;
@@ -4457,8 +4494,11 @@ function newGame(){
   paused = false;
   tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;   /* 新游戏重置引导 */
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
+  dexResetState();                              /* 新游戏：图鉴清空 */
+  cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
+  spawnGather(true);                            /* 新地图：先刷一季的采集物（不弹提示） */
   cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
   cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
   rollWeather();
@@ -4491,6 +4531,14 @@ function update(dt){
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
+  if(fishingActive()){
+    /* 钓鱼：人站定不动，只推进抛竿/咬钩/拉杆的状态机（面板打开时上面的分支已经提前返回 → 冻结） */
+    updateFishing(dt);
+    updateCamera(dt);
+    updateSky(dt);
+    updateDropFx(dt);
+    return;
+  }
   updatePlayer(dt);
   updateCamera(dt);
   updateSky(dt);                     /* 昼夜色平滑过渡 */
@@ -4514,6 +4562,7 @@ function render(){
   drawGround(ctx, x0, y0, x1, y1);
   drawRoads(ctx, x0, y0, x1, y1);          /* 石板路（叠加层，在地面之上、季节染色之下） */
   drawSeasonOverlay(ctx, x0, y0, x1, y1);
+  drawGathers(ctx, x0, y0, x1, y1);        /* 野花 / 蘑菇 / 浆果（第 14 轮，长在草地上） */
   if(!CONFIG.PERF.Y_SORT){                 /* 关掉 Y 排序时走老路子：作物 / 物件各自一层 */
     drawCrops(ctx, x0, y0, x1, y1);
     drawObjects(ctx, x0, y0, x1, y1);
@@ -4524,6 +4573,7 @@ function render(){
   drawWeather(ctx);
   drawAtmosphere(ctx);
   drawUI(ctx);
+  drawFishing(ctx);              /* 钓鱼气泡 / 咬钩提示 / 拉杆横条（第 14 轮） */
 
   /* 网格线叠加 */
   if(CONFIG.GRID_OVERLAY){
@@ -5295,7 +5345,7 @@ function clearGatherTiles(){
   return n;
 }
 /* 在农田周围半径内找干净草地刷采集物；避开作物 / 建造物 / 石板路 / 玩家 / 建筑与 NPC */
-function spawnGather(){
+function spawnGather(quiet){
   if(!CONFIG.GATHER.ENABLED) return 0;
   const season = seasonName();
   const types = CONFIG.GATHER.TYPES.filter(t => t.seasons.indexOf(season) >= 0);
@@ -5314,13 +5364,8 @@ function spawnGather(){
     if(buildIndex[i] >= 0 || roads[i]) continue;     /* 不和建造物 / 石板路冲突 */
     if(tileCenterDist(tx,ty) < 3) continue;          /* 不要刷在玩家脚下 */
     /* 避开小屋 / 商店 / 各个 NPC 的定点，免得 E 键互相打架 */
-    let blocked = false;
-    for(let yy=HOUSE_POS.y-1; yy<=HOUSE_POS.y+HOUSE_POS.h && !blocked; yy++)
-      for(let xx=HOUSE_POS.x-1; xx<=HOUSE_POS.x+HOUSE_POS.w; xx++)
-        if(Math.abs(xx-tx) <= 0 && Math.abs(yy-ty) <= 0){ blocked = true; break; }
-    for(let yy=SHOP_POS.y-1; yy<=SHOP_POS.y+SHOP_POS.h && !blocked; yy++)
-      for(let xx=SHOP_POS.x-1; xx<=SHOP_POS.x+SHOP_POS.w; xx++)
-        if(Math.abs(xx-tx) <= 0 && Math.abs(yy-ty) <= 0){ blocked = true; break; }
+    const inRect = (r, x, y) => x >= r.x-1 && x <= r.x+r.w && y >= r.y-1 && y <= r.y+r.h;
+    let blocked = inRect(HOUSE_POS, tx, ty) || inRect(SHOP_POS, tx, ty);
     if(!blocked){
       for(const d of CONFIG.NPC.LIST){
         for(const s of d.sched){
@@ -5334,7 +5379,7 @@ function spawnGather(){
     setTile(i, tp.tile);
     placed++;
   }
-  if(placed && sessionActive) toast('草地上长出了新的采集物');
+  if(placed && sessionActive && !quiet) toast('草地上长出了新的采集物');
   return placed;
 }
 /* 新的一天：季内第 1/4/7/10 天刷新一次 */

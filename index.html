@@ -5260,7 +5260,7 @@ function updateStats(){
         CONFIG.ITEMS[id].icon + ' ' + CONFIG.ITEMS[id].name + ' <b>' + countItem(id) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
-    '种子 <b>' + CONFIG.SEED + '</b>　WASD/方向键移动 · Shift 奔跑 · 数字键1~8选快捷栏 · 左键使用 · 右键补水 · Tab/I 背包 · E 睡觉/商店 · P 暂停';
+    '种子 <b>' + CONFIG.SEED + '</b>';   /* 操作提示统一收进 Esc → 玩法速查表 */
 }
 
 /* --- 启动菜单（本地有存档时：继续 / 新游戏） --- */

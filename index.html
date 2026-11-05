@@ -1043,19 +1043,21 @@ const CONFIG = {
   /* 夜间暗角（以玩家为中心的径向渐变）：DAY_R 白天半径 / NIGHT_R 夜晚半径 / NIGHT_A 夜晚浓度 */
   VIGNETTE: { DAY_R: 760, NIGHT_R: 240, NIGHT_A: 0.55 },
 
-  /* 天气：每天早晨随机（带权重）；只做画面与音效，不影响玩法
+  /* 天气：每天早晨随机（带权重）；影响画面、音效，也影响玩法（雨天自动浇水 / 雪天减速）
    * 字段：id 内部 id / name 显示名 / icon 图标 / w 随机权重（越大越常见） */
   WEATHER: [
     { id:'sun',  name:'晴', icon:'☀', w:6 },   // 晴天（权重最高）
-    { id:'rain', name:'雨', icon:'🌧', w:3 },   // 雨天（下雨声 + 雨滴）
-    { id:'snow', name:'雪', icon:'❄', w:1 }    // 雪天（最少见）
+    { id:'rain', name:'雨', icon:'🌧', w:3 },   // 雨天（下雨声 + 雨滴 + 自动浇水）
+    { id:'snow', name:'雪', icon:'❄', w:1 }    // 雪天（最少见；移动变慢）
   ],
-  /* 天气粒子：数量 / 速度（像素每秒） */
+  /* 天气粒子：数量 / 速度（像素每秒）+ 天气对玩法的影响 */
   WEATHER_FX: {
     RAIN_COUNT: 130,        // 同屏雨滴数量
     SNOW_COUNT: 90,         // 同屏雪花数量
     RAIN_SPEED: 560,        // 雨滴下落速度
-    SNOW_SPEED: 42          // 雪花下落速度
+    SNOW_SPEED: 42,         // 雪花下落速度
+    RAIN_AUTO_WATER: true,  // 雨天：夜里结算时把所有耕地自动浇一遍（当天照常生长）
+    SNOW_SLOW: 0.75         // 雪天：移动速度倍率（0.75 = 慢 25%）
   },
 
   /* 暂停（为 true 时时间/天气/角色全部冻结） */
@@ -1824,6 +1826,9 @@ const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','�
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
 let map = new Uint8Array(MAP_W * MAP_H);
+/* 耕地格数（第 22 轮）：增量维护，setTile 时 +1/-1，评级扩建期数直接读它
+ * （原来每次重算都要扫 4096 格，连续锄地时白扫几十万格） */
+let tilledCount = 0;
 /* 作物层：每格最多一株作物；null = 空地
  * 记录字段：type 作物 id / stage 视觉阶段 0~3 / grown 累计生长天数（浇过水的天数）
  *           watered 当天是否浇过水 / mature 是否成熟 / dead 是否枯萎 */
@@ -1844,6 +1849,9 @@ function markGroundDirty(i){ groundDirty.add(i); }
 function invalidateGround(){ groundBaked.fill(0); groundDirty.clear(); groundBakedCount = 0; }
 /* 改地块的统一入口：写 map 并把这一格标脏（下一帧只重画它） */
 function setTile(i, t){
+  const wasTilled = (map[i] === T.TILLED || map[i] === T.WATERED);
+  const nowTilled = (t === T.TILLED || t === T.WATERED);
+  if(wasTilled !== nowTilled) tilledCount += nowTilled ? 1 : -1;   /* 第 22 轮：耕地数增量维护 */
   map[i] = t;
   ratingInvalidate();                     /* 第 21 轮：耕地格数可能变了 → 评级缓存失效 */
   if(CONFIG.PERF.BAKE_GROUND) markGroundDirty(i);
@@ -1945,6 +1953,7 @@ function genMap(seed){
 
   /* 整张地图重画了 → 离屏画布里的烘焙结果全部作废 */
   invalidateGround();
+  tilledCount = 0;                         /* 第 22 轮：新地图没有耕地，增量计数归零 */
 
   const cnt = [0,0,0,0,0,0,0,0];
   for(let i=0;i<map.length;i++) cnt[map[i]]++;  let farmWild = 0;
@@ -2420,6 +2429,11 @@ function drawCrop(g,x,y,crop){
       g.fillRect(cx-r+2, baseY-r+1, 3, 2);
     }
   }
+  if(crop.watered && !crop.dead){            /* 第 22 轮：今天浇过水 → 右上角挂一滴水 */
+    g.fillStyle = '#6fc7ff';
+    g.fillRect(cx + 8, baseY - h - 3, 2, 3);
+    g.fillRect(cx + 7, baseY - h - 2, 4, 1);
+  }
   if(crop.mature){                                 /* 成熟：果实旁闪一下金光 */
     const bob = ((animTime*10)|0) % 6;
     g.fillStyle = 'rgba(255,215,106,' + (0.9 - bob*0.12).toFixed(2) + ')';
@@ -2466,11 +2480,13 @@ function drawEntities(g, x0, y0, x1, y1){
     if(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W || p.y - cam.y < -TILE || p.y - cam.y > VIEW_H) continue;
     list.push({y:p.y + 12, f:()=>drawNpc(g, d, p.x, p.y)});
   }
-  /* 动物（第 15 轮）：按脚点 y 混进同一张排序表；不参与玩家碰撞 */
+  /* 动物（第 15 轮）：按脚点 y 混进同一张排序表；不参与玩家碰撞
+   * 第 22 轮：animalNear() 每帧只算一次（原来每只动物都重算一遍 → O(n²)） */
+  const nearAnimal = animalNear();
   for(const a of animals){
     if(a.x - cam.x < -TILE || a.x - cam.x > VIEW_W + TILE ||
        a.y - cam.y < -TILE || a.y - cam.y > VIEW_H + TILE) continue;
-    list.push({y:a.y, f:()=>drawAnimal(g, a)});
+    list.push({y:a.y, f:()=>drawAnimal(g, a, nearAnimal)});
   }
   /* 作物 + 地图物件（树 / 岩石 / 野花）按格子的 Y 混进同一张表 */
   if(CONFIG.PERF.Y_SORT && x0 !== undefined){
@@ -3120,8 +3136,10 @@ function updatePlayer(dt){
     if(running) stamina = Math.max(0, stamina - CONFIG.STAMINA.RUN_PER_SEC * dt);
     /* 石板路：踩上去速度 ×1.3 */
     const road = roadUnderPlayer();
+    /* 雪天：地面湿滑，走路慢一截（第 22 轮：天气终于有玩法影响） */
+    const wm = (weather && weather.id === 'snow') ? CONFIG.WEATHER_FX.SNOW_SLOW : 1;
     const sp = CONFIG.PLAYER.SPEED * (road ? CONFIG.BUILD.ROAD_MULT : 1) *
-               (running ? CONFIG.PLAYER.RUN_MULT : 1);
+               (running ? CONFIG.PLAYER.RUN_MULT : 1) * wm;
     player.vx = ix * sp; player.vy = iy * sp;
     /* 朝向：两轴同按时以最后按下的轴为准 */
     if(ix !== 0 && iy !== 0) player.dir = lastAxis === 'x' ? (ix<0?1:2) : (iy<0?3:0);
@@ -3596,6 +3614,8 @@ function refillCan(){
 function settleDay(){
   const newSeason = seasonName();          /* 此刻 clock.day 已经是新的一天 */
   let grew = 0, matured = 0, withered = 0, wateredTiles = 0, irrGrew = 0;
+  /* 第 22 轮：雨天自动浇水（今天下过雨 → 今晚照常生长），要在生长判定之前 */
+  const rained = applyRain();
   for(let i=0;i<crops.length;i++){
     const c = crops[i];
     if(!c || c.dead) continue;
@@ -3628,9 +3648,27 @@ function settleDay(){
   if(irrGrew)  toast('铱质洒水器让 ' + irrGrew + ' 株作物多长了一阶段');
   console.log('[settle] 第 ' + clock.day + ' 天结算：生长 ' + grew + ' 株，成熟 ' + matured +
               ' 株，枯萎 ' + withered + ' 株，重置浇水 ' + wateredTiles + ' 格' +
+              (rained ? '，雨天自动浇水 ' + rained + ' 格' : '') +
               (irrGrew ? '，铱质加速 ' + irrGrew + ' 株' : '') +
               (sprinkled ? '，洒水器浇了 ' + sprinkled + ' 格' : ''));
-  return {grew:grew, matured:matured, withered:withered, sprinkled:sprinkled, irrGrew:irrGrew};
+  return {grew:grew, matured:matured, withered:withered, sprinkled:sprinkled, irrGrew:irrGrew, rained:rained};
+}
+
+/* --- 第 22 轮：雨天自动浇水（把当天雨当成一次浇水，作物当晚照常生长） --- */
+function applyRain(){
+  if(!CONFIG.WEATHER_FX.RAIN_AUTO_WATER) return 0;
+  if(!weather || weather.id !== 'rain') return 0;
+  let n = 0;
+  for(let i=0;i<map.length;i++){
+    if(map[i] !== T.TILLED && map[i] !== T.WATERED) continue;
+    const c = crops[i];
+    if(c && c.dead) continue;            /* 枯萎的不算 */
+    setTile(i, T.WATERED);
+    if(c) c.watered = true;
+    n++;
+  }
+  if(n) toast('🌧 下雨了，' + n + ' 格地自动浇好了');
+  return n;
 }
 
 /* --- 洒水器 / 铱质洒水器：每天早上自动浇地 --- */
@@ -5291,7 +5329,9 @@ function hotbarRect(){
   return {x: Math.round((VIEW_W - w)/2), y: VIEW_H - CELL - 12, w: w, h: CELL, cell: CELL, gap: GAP};
 }
 const statsEl = document.getElementById('stats');
-function updateStats(){
+function updateStats(force){
+  /* 第 22 轮：状态面板只在 Esc 菜单展开时用得上，菜单没开就不拼那两大串 */
+  if(!sysStatsOpen && !force) return;
   const inMap = (hover.tx>=0 && hover.ty>=0 && hover.tx<MAP_W && hover.ty<MAP_H);
   const t = inMap ? TILE_NAMES[map[hover.ty*MAP_W+hover.tx]] : '-';
   const hc = inMap ? crops[hover.ty*MAP_W+hover.tx] : null;
@@ -5299,7 +5339,8 @@ function updateStats(){
   if(hc){
     const d = cropDef(hc.type);
     cropInfo = '　' + d.icon + d.name + ' 阶段' + hc.stage + ' 生长' + hc.grown + '/' + d.days +
-               (hc.dead ? ' <b>已枯萎</b>' : (hc.mature ? ' <b>已成熟</b>' : ''));
+               (hc.dead ? ' <b>已枯萎</b>' : (hc.mature ? ' <b>已成熟</b>' : '')) +
+               (!hc.dead && hc.watered ? ' <b>今天浇过水</b>' : '');   /* 第 22 轮：浇水状态上屏 */
   }
   const spd = Math.round(Math.hypot(player.vx, player.vy));
   statsEl.innerHTML =
@@ -5325,7 +5366,7 @@ function updateStats(){
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +
         CONFIG.WEATHER.map(w=>w.icon+w.name).join(' ') + '\n' +
     '种子 <b>' + CONFIG.SEED + '</b>';   /* 操作提示统一收进 Esc → 玩法速查表 */
-  if(sysStatsOpen) sysStatsRender();     /* 菜单展开时同步一份 */
+  if(sysStats) sysStats.innerHTML = statsEl.innerHTML;   /* 菜单展开时同步一份 */
 }
 
 /* --- 启动菜单（本地有存档时：继续 / 新游戏） --- */
@@ -5517,7 +5558,8 @@ const btnStats = document.getElementById('btnStats');
 const sysStats = document.getElementById('sysStats');
 var sysStatsOpen = false;
 function sysStatsRender(){
-  if(sysStats && statsEl) sysStats.innerHTML = statsEl.innerHTML;
+  if(!sysStats) return;
+  updateStats(true);          /* 重新拼一次；updateStats 末尾会写进菜单里的这块 */
 }
 function sysStatsToggle(v){
   const want = (v === undefined) ? !sysStatsOpen : !!v;
@@ -6317,7 +6359,10 @@ function npcGiftPick(i){
   const bday = npcIsBirthday(d);
   const eff = festivalGiftAff(bday ? delta * CONFIG.NPC.GIFT.BIRTHDAY_MULT : delta);   /* 第 17 轮：冬夜灯会 ×3 */
   const festGift = festivalIs('winter');
-  removeItem(id, 1);
+  if(!removeItem(id, 1)){                  /* 第 22 轮：先确认真的拿得走，再送礼 */
+    toast('这件东西拿不走了，礼物没送出去');
+    return false;
+  }
   npcState.gift[d.id] = clock.day;          /* 记下"今天送过" → 跨天自动重置 */
   /* 收起背包，回到对话 */
   packMode = 'normal';
@@ -7259,7 +7304,7 @@ if(animalByeBtn)     animalByeBtn.addEventListener('click',     ()=>{ animalClos
 if(animalMask)       animalMask.addEventListener('mousedown', e=>{ e.preventDefault(); animalClosePanel(); });
 
 /* --- 绘制（进 Y 排序表；动物不挡玩家） --- */
-function drawAnimal(g, a){
+function drawAnimal(g, a, near){
   const t = animalType(a.type);
   if(!t) return;
   const px = a.x - cam.x, py = a.y - cam.y;
@@ -7272,8 +7317,8 @@ function drawAnimal(g, a){
   g.textAlign = 'center'; g.textBaseline = 'alphabetic';
   g.font = (a.type === 'cow' ? '20px ' : '16px ') + FONT_EMOJI;
   g.fillText(t.icon, px, py - 2);
-  /* 靠近 → 头顶冒 E */
-  if(animalNear() === a){
+  /* 靠近 → 头顶冒 E（near 由 drawEntities 每帧算一次传进来） */
+  if(near === undefined ? (animalNear() === a) : (near === a)){
     g.fillStyle = 'rgba(8,10,16,.85)';
     g.fillRect(px - 6, py - 32, 12, 13);
     g.strokeStyle = CONFIG.COLORS.hudAccent;
@@ -7405,14 +7450,17 @@ function questPick(rng, arr){ return arr[(rng() * arr.length) | 0]; }
 function questRandInt(rng, a, b){ return a + ((rng() * (b - a + 1)) | 0); }
 function questMake(rng, kind){
   const A = CONFIG.QUEST, season = seasonName();
-  let target;
+  /* 第 22 轮：先把种类定下来，再统一生成目标（原来 crop 分支里改 kind 再走 else if 链，容易绕晕） */
   if(kind === 'crop'){
     const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
     /* 冬天没有当季作物 → 换成材料委托，避免刷出做不完的委托 */
     if(!pool.length) kind = 'material';
-    else target = questPick(rng, pool);
   }
-  if(kind === 'fish'){
+  let target = null;
+  if(kind === 'crop'){
+    const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
+    target = questPick(rng, pool);
+  }else if(kind === 'fish'){
     const pool = A.FISH_POOL.filter(id => { const f = fishDef(id); return f && f.seasons.indexOf(season) >= 0; });
     target = questPick(rng, pool.length ? pool : A.FISH_POOL);
   }else if(kind === 'material'){
@@ -8966,10 +9014,13 @@ function crowLastText(){
 var ratingCache = null;
 function ratingInvalidate(){ ratingCache = null; }
 function tilledPlots(){
+  return tilledCount;                     /* 第 22 轮：增量维护的耕地格数（不再每次扫 4096 格） */
+}
+/* 兜底：重新数一遍（读档 / 调试用；正常流程由 setTile 增量维护） */
+function recountTilled(){
   let n = 0;
-  for(let i=0;i<map.length;i++){
-    if(map[i] === T.TILLED || map[i] === T.WATERED) n++;   /* 第 20 轮：扩建期数 = 耕地格数 ÷ 20 */
-  }
+  for(let i=0;i<map.length;i++) if(map[i] === T.TILLED || map[i] === T.WATERED) n++;
+  tilledCount = n;
   return n;
 }
 function ratingParts(force){
@@ -9240,6 +9291,7 @@ requestAnimationFrame(loop);
 if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
   updateClock, updateWeather, updateSky, rollWeather, spawnParticles, update, render,
+  updatePlayer, updateCamera,
   get weather(){ return weather; }, set weather(v){ weather = v; },
   get fxParticles(){ return fxParticles; }, set fxParticles(v){ fxParticles = v; },
   get crops(){ return crops; }, set crops(v){ crops = v; },
@@ -9299,6 +9351,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   openStartMenu, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue,
   toggleSys, sysWipe,
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
+  applyRain, updateStats, recountTilled,
   cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse,
   SHOP_POS, FARM,
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */

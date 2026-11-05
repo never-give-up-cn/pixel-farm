@@ -3286,6 +3286,13 @@ function refreshDexGrid(){
 }
 /* 把背包状态刷到格子上 */
 function refreshPackGrid(){
+  /* 图鉴页签：只刷图鉴，不碰背包格子 */
+  if(packTab === 'dex' && packMode !== 'gift'){
+    if(packInfo) packInfo.textContent = '已收集 ' + dexCollected() + '/' + dexTotal() + '　（鱼 + 采集物）';
+    if(packFoot) packFoot.textContent = '点亮 = 已钓到 / 已采集 · 剪影 = 还没见过 · Esc 关闭';
+    refreshDexGrid();
+    return;
+  }
   if(packInfo){
     if(packMode === 'gift'){
       const gd = npcDef(giftTarget);
@@ -3294,8 +3301,10 @@ function refreshPackGrid(){
       packInfo.textContent = '已用 ' + invUsed() + '/' + CONFIG.INVENTORY.SLOTS + ' 格　💰 ' + gold;
     }
   }
-  if(packMode === 'gift' && packFoot){
-    packFoot.textContent = '点一格 = 把这件东西送出去 · Esc 取消（今天只能送一次）';
+  if(packFoot){
+    packFoot.textContent = (packMode === 'gift')
+      ? '点一格 = 把这件东西送出去 · Esc 取消（今天只能送一次）'
+      : '点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭';
   }
   if(!packGrid || !packGrid.children) return;
   const cells = packGrid.children;
@@ -3413,6 +3422,8 @@ function togglePack(open){
   }
   if(packOpen){
     if(shopOpen) toggleShop(false);            /* 背包与商店互斥 */
+    if(packMode === 'gift') packTab = 'bag';   /* 送礼时必须看背包 */
+    applyPackTabView();
     refreshPackGrid();
     setPanelOpen(packEl, true);
   }else{
@@ -4981,11 +4992,382 @@ function drawNpc(g, d, px, py){
   g.font = oldFont; g.textAlign = oldAlign; g.textBaseline = oldBase;
 }
 
+/* === 10.图鉴（第 14 轮） === */
+/* 图鉴只存两个位掩码：fish 8 位、gather 3 位（紧凑、不会随游玩时长膨胀）。
+ *   bit = 1 → 已经钓到 / 采到过；未解锁的格子画成剪影。 */
+const dexState = {f:0, g:0};
+function dexTotal(){ return CONFIG.FISHING.LIST.length + CONFIG.GATHER.TYPES.length; }
+function dexPopcount(n){
+  n = n | 0; let c = 0;
+  while(n){ n &= n - 1; c++; }
+  return c;
+}
+function dexCollected(){ return dexPopcount(dexState.f) + dexPopcount(dexState.g); }
+function dexResetState(){ dexState.f = 0; dexState.g = 0; }
+function dexAllEntries(){
+  const out = [];
+  for(let i=0;i<CONFIG.FISHING.LIST.length;i++){
+    const f = CONFIG.FISHING.LIST[i];
+    out.push({kind:'fish', idx:i, id:f.id, name:f.name, icon:f.icon});
+  }
+  for(let i=0;i<CONFIG.GATHER.TYPES.length;i++){
+    const t = CONFIG.GATHER.TYPES[i], d = itemDef(t.item);
+    out.push({kind:'gather', idx:i, id:t.item, name:d ? d.name : t.item, icon:d ? d.icon : '？'});
+  }
+  return out;
+}
+function dexHas(kind, idx){
+  if(idx < 0 || idx > 31) return false;
+  const bit = 1 << idx;
+  return kind === 'fish' ? !!(dexState.f & bit) : !!(dexState.g & bit);
+}
+function dexUnlock(kind, idx){
+  if(idx < 0 || idx > 31) return false;
+  const bit = 1 << idx;
+  if(kind === 'fish'){
+    if(dexState.f & bit) return false;
+    dexState.f = (dexState.f | bit) >>> 0;
+  }else if(kind === 'gather'){
+    if(dexState.g & bit) return false;
+    dexState.g = (dexState.g | bit) >>> 0;
+  }else return false;
+  const e = dexAllEntries().find(x => x.kind === kind && x.idx === idx);
+  toast('📖 图鉴新增：' + (e ? e.name : '？'));
+  playSfx(1174, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+
+/* === 11.钓鱼（第 14 轮） === */
+/* 状态机：idle → wait（抛竿 1~4s）→ bite（0.8s 窗口）→ reel（拉杆）→ idle
+ * 世界时间在钓鱼时照常走；打开背包/商店/对话时 update() 提前返回，钓鱼计时同步冻结。 */
+const fishing = {
+  state: 'idle',   /* idle / wait / bite / reel */
+  t: 0,            /* 当前状态已经过的毫秒 */
+  need: 0,         /* 本次抛竿要等多久（毫秒） */
+  fish: null,      /* 咬钩的鱼定义（CONFIG.FISHING.LIST 元素） */
+  zone: 0.5,       /* 绿区中心（0~1） */
+  zoneW: 0.3,      /* 绿区宽度（0~1） */
+  pointer: 0,      /* 指针位置（0~1） */
+  dir: 1           /* 指针方向：1 向右 / -1 向左 */
+};
+function fishingActive(){ return fishing.state !== 'idle'; }
+function fishDef(id){ return CONFIG.FISHING.LIST.find(f => f.id === id) || null; }
+/* 站在水边（抛竿距离内有没有水格） */
+function waterNearFishing(){
+  const px = Math.floor(player.x/TILE), py = Math.floor(player.y/TILE);
+  const R = Math.ceil(CONFIG.FISHING.WATER_RANGE);
+  for(let ty=py-R; ty<=py+R; ty++) for(let tx=px-R; tx<=px+R; tx++){
+    if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) continue;
+    if(map[ty*MAP_W+tx] !== T.WATER) continue;
+    if(tileCenterDist(tx,ty) <= CONFIG.FISHING.WATER_RANGE) return true;
+  }
+  return false;
+}
+/* 24 小时制时段判定：from > to 表示跨午夜（18 → 2） */
+function fishHourOK(f, h){
+  return (f.from <= f.to) ? (h >= f.from && h < f.to) : (h >= f.from || h < f.to);
+}
+/* 当前季节 / 天气 / 时段下这条鱼咬不咬钩 */
+function fishEligible(f){
+  return f.seasons.indexOf(seasonName()) >= 0 &&
+         f.weather.indexOf(weather.id) >= 0 &&
+         fishHourOK(f, skyHour());
+}
+function fishCandidates(){ return CONFIG.FISHING.LIST.filter(fishEligible); }
+/* 按稀有度加权：稀有度越高越难咬钩（TYPE_CHANCE^(rarity-1)） */
+function fishPickWeighted(list){
+  let total = 0;
+  for(const f of list) total += Math.pow(CONFIG.FISHING.TYPE_CHANCE, f.rarity - 1);
+  let r = Math.random() * total;
+  for(const f of list){
+    r -= Math.pow(CONFIG.FISHING.TYPE_CHANCE, f.rarity - 1);
+    if(r <= 0) return f;
+  }
+  return list[list.length - 1];
+}
+/* 抛竿 */
+function startFishing(){
+  if(fishingActive()) return false;
+  const slot = selectedSlot();
+  if(!slot || slot.id !== CONFIG.FISHING.ROD_ID){ toast('先选中鱼竿再抛竿'); return false; }
+  if(!waterNearFishing()){
+    toast('要站在水边才能抛竿');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  if(!CONFIG.FISHING.LIST.some(f => canFit(f.id, 1))){
+    toast('背包满了，装不下鱼');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  fishing.state = 'wait'; fishing.t = 0; fishing.fish = null;
+  const F = CONFIG.FISHING;
+  fishing.need = F.WAIT_MIN_MS + Math.random() * Math.max(0, F.WAIT_MAX_MS - F.WAIT_MIN_MS);
+  toast('抛竿了，等鱼儿上钩…');
+  playSfx(440, 'sine', 0.12, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 收竿（silent=true 不弹提示，用于睡觉 / 读档等被动打断） */
+function cancelFishing(silent){
+  if(!fishingActive()) return false;
+  fishing.state = 'idle'; fishing.fish = null; fishing.t = 0;
+  if(!silent) toast('收竿了');
+  return true;
+}
+/* 跑鱼：扣 1 体力（体力为 0 时不会变负） */
+function fishingEscape(reason){
+  const cost = Math.max(0, CONFIG.FISHING.FAIL_STAMINA_COST | 0);
+  const lost = Math.min(cost, Math.max(0, stamina));
+  if(lost > 0) stamina -= lost;
+  fishing.state = 'idle'; fishing.fish = null; fishing.t = 0;
+  toast(reason + (lost > 0 ? '（体力 -' + lost + '）' : ''));
+  playSfx(140, 'sawtooth', 0.12, CONFIG.AUDIO.VOLUME * 0.7);
+  return false;
+}
+/* 咬钩窗口内按下 → 进入拉杆 */
+function fishingStartReel(){
+  const f = fishing.fish;
+  if(!f) return false;
+  const R = CONFIG.FISHING.REEL;
+  fishing.zoneW = Math.max(R.ZONE_MIN, R.ZONE_BASE - (f.rarity - 1) * R.ZONE_STEP);
+  const half = fishing.zoneW / 2;
+  fishing.zone = half + Math.random() * Math.max(0, 1 - fishing.zoneW);
+  fishing.pointer = Math.random() < 0.5 ? 0 : 1;
+  fishing.dir = fishing.pointer <= 0 ? 1 : -1;
+  fishing.state = 'reel'; fishing.t = 0;
+  toast('拉杆！左键 / 空格 让指针停在绿区');
+  playSfx(659, 'square', 0.08, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 拉杆判定：指针落在绿区 → 得鱼 */
+function fishingResolveReel(){
+  const f = fishing.fish;
+  if(!f) { fishing.state = 'idle'; return false; }
+  const ok = Math.abs(fishing.pointer - fishing.zone) <= fishing.zoneW / 2;
+  if(!ok) return fishingEscape('鱼挣脱了，跑掉了');
+  if(!canFit(f.id, 1)){
+    fishing.state = 'idle'; fishing.fish = null;
+    toast('背包满了，鱼滑回了水里');
+    return false;
+  }
+  addItem(f.id, 1);
+  const idx = CONFIG.FISHING.LIST.indexOf(f);
+  dexUnlock('fish', idx);
+  toast('🎣 钓到了 ' + f.name + '！（稀有度 ' + f.rarity + '）');
+  playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  fishing.state = 'idle'; fishing.fish = null; fishing.t = 0;
+  return true;
+}
+/* 钓鱼中按左键 / 空格 */
+function fishingPress(){
+  if(fishing.state === 'wait'){ return cancelFishing(false); }
+  if(fishing.state === 'bite'){ return fishingStartReel(); }
+  if(fishing.state === 'reel'){ return fishingResolveReel(); }
+  return false;
+}
+/* 每帧推进（只在没有面板/睡觉/暂停时调用 → 面板打开时自动冻结） */
+function updateFishing(dt){
+  if(fishing.state === 'wait'){
+    fishing.t += dt * 1000;
+    if(fishing.t >= fishing.need){
+      const list = fishCandidates();
+      if(!list.length){
+        fishing.state = 'idle'; fishing.t = 0;
+        toast('水面很安静，这个时节没有鱼咬钩');
+        return;
+      }
+      fishing.fish = fishPickWeighted(list);
+      fishing.state = 'bite'; fishing.t = 0;
+      toast('咬钩了！左键收杆');
+      playSfx(988, 'square', 0.10, CONFIG.AUDIO.VOLUME);
+      setTimeout(()=>playSfx(1319, 'square', 0.10, CONFIG.AUDIO.VOLUME), 90);
+    }
+  }else if(fishing.state === 'bite'){
+    fishing.t += dt * 1000;
+    if(fishing.t >= CONFIG.FISHING.BITE_WINDOW_MS) fishingEscape('没来得及收杆，鱼跑掉了');
+  }else if(fishing.state === 'reel'){
+    const sp = CONFIG.FISHING.REEL.SPEED;
+    fishing.pointer += fishing.dir * sp * dt;
+    if(fishing.pointer >= 1){ fishing.pointer = 2 - fishing.pointer; fishing.dir = -1; }
+    else if(fishing.pointer <= 0){ fishing.pointer = -fishing.pointer; fishing.dir = 1; }
+  }
+}
+/* 钓鱼 UI：等待气泡 / 咬钩提示 / 拉杆横条 */
+function drawFishing(g){
+  if(!fishingActive()) return;
+  const px = Math.round(player.x - cam.x), py = Math.round(player.y - cam.y);
+  if(fishing.state === 'wait' || fishing.state === 'bite'){
+    const isBite = fishing.state === 'bite';
+    const text = isBite ? '❗ 咬钩了！左键收杆' : '🎣 等待咬钩…';
+    g.font = '13px ' + FONT_CJK;
+    const w = g.measureText(text).width;
+    const bx = Math.round(px - w/2 - 8), by = py - 58;
+    g.fillStyle = isBite ? 'rgba(60,12,12,.90)' : 'rgba(8,10,16,.82)';
+    g.fillRect(bx, by, w + 16, 22);
+    g.strokeStyle = isBite ? '#ff9a6a' : CONFIG.COLORS.hudBorder;
+    g.strokeRect(bx + 0.5, by + 0.5, w + 15, 21);
+    g.fillStyle = isBite ? '#ffd76a' : CONFIG.COLORS.hudText;
+    g.textAlign = 'left'; g.textBaseline = 'top';
+    g.fillText(text, bx + 8, by + 4);
+    if(isBite){
+      /* 剩余窗口条：越短越紧 */
+      const k = clamp(1 - fishing.t / CONFIG.FISHING.BITE_WINDOW_MS, 0, 1);
+      g.fillStyle = '#3a1a12'; g.fillRect(bx, by + 24, w + 16, 4);
+      g.fillStyle = '#ff6a4a'; g.fillRect(bx, by + 24, (w + 16) * k, 4);
+    }
+    return;
+  }
+  if(fishing.state !== 'reel') return;
+  const R = CONFIG.FISHING.REEL;
+  const W = R.BAR_W, H = R.BAR_H;
+  const x = Math.round((VIEW_W - W) / 2), y = Math.round(VIEW_H * 0.60);
+  /* 横条：深色底 + 绿色区 + 指针 */
+  g.fillStyle = 'rgba(8,10,16,.90)';
+  g.fillRect(x - 4, y - 4, W + 8, H + 8);
+  g.fillStyle = '#1a2130'; g.fillRect(x, y, W, H);
+  const zx = x + (fishing.zone - fishing.zoneW / 2) * W;
+  g.fillStyle = 'rgba(80,190,90,.85)';
+  g.fillRect(Math.round(zx), y + 1, Math.round(fishing.zoneW * W), H - 2);
+  g.fillStyle = '#7fe08a';
+  g.fillRect(Math.round(zx), y + 1, Math.round(fishing.zoneW * W), 2);
+  const pxp = Math.round(x + fishing.pointer * W);
+  g.fillStyle = '#ffd76a';
+  g.fillRect(pxp - 2, y - 3, 4, H + 6);
+  g.fillStyle = '#fff2c0';
+  g.fillRect(pxp - 1, y - 3, 2, H + 6);
+  g.strokeStyle = CONFIG.COLORS.hudBorder;
+  g.strokeRect(x - 4.5, y - 4.5, W + 9, H + 9);
+  /* 文案：鱼名 / 稀有度 / 操作 */
+  const f = fishing.fish;
+  g.textAlign = 'center'; g.textBaseline = 'top';
+  g.font = '14px ' + FONT_CJK;
+  g.fillStyle = '#ffd76a';
+  g.fillText((f ? f.icon + ' ' + f.name : '') + '　稀有度 ' + (f ? f.rarity : '?'), VIEW_W/2, y - 30);
+  g.font = '12px ' + FONT_CJK;
+  g.fillStyle = CONFIG.COLORS.hudText;
+  g.fillText('左键 / 空格：让指针停在绿色区间内', VIEW_W/2, y + H + 10);
+  g.textAlign = 'left';
+}
+
+/* === 12.野外采集（第 14 轮） === */
+/* 采集物是地图上的新地块类型（11/12/13）：长在草地上、不挡路，按 E 采走。
+ * 刷新写进 map diff，存档后仍然存在；每季第 1/4/7/10 天清掉旧的、重新刷 6 株。 */
+const GATHER_ITEM_BY_TILE = {};
+for(const t of CONFIG.GATHER.TYPES) GATHER_ITEM_BY_TILE[t.tile] = t.item;
+function isGatherTile(t){ return !!GATHER_ITEM_BY_TILE[t]; }
+/* 近处可采集的那一株（取最近） */
+function gatherNear(){
+  const px = Math.floor(player.x/TILE), py = Math.floor(player.y/TILE);
+  const R = Math.ceil(CONFIG.GATHER.RANGE);
+  let best = null, bd = CONFIG.GATHER.RANGE;
+  for(let ty=py-R; ty<=py+R; ty++) for(let tx=px-R; tx<=px+R; tx++){
+    if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) continue;
+    const item = GATHER_ITEM_BY_TILE[map[ty*MAP_W+tx]];
+    if(!item) continue;
+    const d = tileCenterDist(tx,ty);
+    if(d <= bd){ bd = d; best = {tx:tx, ty:ty, item:item, def:itemDef(item)}; }
+  }
+  return best;
+}
+/* 采一株：进背包 + 点图鉴 + 地块恢复成草地 */
+function pickGather(tx, ty){
+  if(tx<0 || ty<0 || tx>=MAP_W || ty>=MAP_H) return false;
+  const i = ty*MAP_W + tx;
+  const item = GATHER_ITEM_BY_TILE[map[i]];
+  if(!item) return false;
+  if(tileCenterDist(tx,ty) > CONFIG.GATHER.RANGE){ toast('走近一点再采'); return false; }
+  const d = itemDef(item);
+  if(!canFit(item, 1)){ toast('背包满了，装不下' + (d ? d.name : '采集物')); return false; }
+  addItem(item, 1);
+  setTile(i, T.GRASS);
+  const idx = CONFIG.GATHER.TYPES.findIndex(t => t.item === item);
+  dexUnlock('gather', idx);
+  toast('采到了 ' + (d ? d.name : item) + ' ×1');
+  playSfx(659, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 清掉地图上旧的采集物（恢复成草地；如果原本就是草地，diff 会自动消失） */
+function clearGatherTiles(){
+  let n = 0;
+  for(let i=0;i<map.length;i++){
+    if(isGatherTile(map[i])){ setTile(i, T.GRASS); n++; }
+  }
+  return n;
+}
+/* 在农田周围半径内找干净草地刷采集物；避开作物 / 建造物 / 石板路 / 玩家 / 建筑与 NPC */
+function spawnGather(){
+  if(!CONFIG.GATHER.ENABLED) return 0;
+  const season = seasonName();
+  const types = CONFIG.GATHER.TYPES.filter(t => t.seasons.indexOf(season) >= 0);
+  if(!types.length){ clearGatherTiles(); return 0; }
+  clearGatherTiles();
+  const G = CONFIG.GATHER;
+  const cx = FARM.x + FARM.w / 2, cy = FARM.y + FARM.h / 2;
+  let placed = 0;
+  for(let attempt=0; attempt<900 && placed<G.COUNT; attempt++){
+    const tx = Math.round(cx + (Math.random()*2 - 1) * G.RADIUS);
+    const ty = Math.round(cy + (Math.random()*2 - 1) * G.RADIUS);
+    if(tx < 1 || ty < 1 || tx >= MAP_W-1 || ty >= MAP_H-1) continue;
+    const i = ty*MAP_W + tx;
+    if(map[i] !== T.GRASS) continue;                 /* 只长在草地上 */
+    if(crops[i]) continue;                           /* 不和作物冲突 */
+    if(buildIndex[i] >= 0 || roads[i]) continue;     /* 不和建造物 / 石板路冲突 */
+    if(tileCenterDist(tx,ty) < 3) continue;          /* 不要刷在玩家脚下 */
+    /* 避开小屋 / 商店 / 各个 NPC 的定点，免得 E 键互相打架 */
+    let blocked = false;
+    for(let yy=HOUSE_POS.y-1; yy<=HOUSE_POS.y+HOUSE_POS.h && !blocked; yy++)
+      for(let xx=HOUSE_POS.x-1; xx<=HOUSE_POS.x+HOUSE_POS.w; xx++)
+        if(Math.abs(xx-tx) <= 0 && Math.abs(yy-ty) <= 0){ blocked = true; break; }
+    for(let yy=SHOP_POS.y-1; yy<=SHOP_POS.y+SHOP_POS.h && !blocked; yy++)
+      for(let xx=SHOP_POS.x-1; xx<=SHOP_POS.x+SHOP_POS.w; xx++)
+        if(Math.abs(xx-tx) <= 0 && Math.abs(yy-ty) <= 0){ blocked = true; break; }
+    if(!blocked){
+      for(const d of CONFIG.NPC.LIST){
+        for(const s of d.sched){
+          if(Math.abs(s.x - tx) <= 1 && Math.abs(s.y - ty) <= 1){ blocked = true; break; }
+        }
+        if(blocked) break;
+      }
+    }
+    if(blocked) continue;
+    const tp = types[(Math.random() * types.length) | 0];
+    setTile(i, tp.tile);
+    placed++;
+  }
+  if(placed && sessionActive) toast('草地上长出了新的采集物');
+  return placed;
+}
+/* 新的一天：季内第 1/4/7/10 天刷新一次 */
+function gatherDayStart(){
+  const seasonDay = ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1;
+  if(seasonDay % Math.max(1, CONFIG.GATHER.EVERY_DAYS) === 1) return spawnGather();
+  return 0;
+}
+/* 采集物绘制（不参与 Y 排序，画在实体之前） */
+function drawGathers(g, x0, y0, x1, y1){
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  for(let ty=y0; ty<=y1; ty++){
+    for(let tx=x0; tx<=x1; tx++){
+      const item = GATHER_ITEM_BY_TILE[map[ty*MAP_W+tx]];
+      if(!item) continue;
+      const d = itemDef(item);
+      const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
+      g.fillStyle = 'rgba(0,0,0,.18)';
+      g.fillRect(x + 10, y + 24, 12, 3);
+      g.font = '17px ' + FONT_EMOJI;
+      g.fillStyle = '#fff';
+      g.fillText(d ? d.icon : '？', x + TILE/2, y + 24);
+    }
+  }
+  g.textAlign = 'left'; g.textBaseline = 'top';
+}
+
 /* --- 启动 --- */
 genMap(CONFIG.SEED);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
 buildPackGrid();                       /* 造出背包面板的 24 个格子 */
+buildDexGrid();                        /* 第 14 轮：图鉴格子（鱼 + 采集物） */
 buildChestGrid();                      /* 造出木箱面板的格子（8 + 24） */
 player.x = SPAWN.x*TILE + TILE/2;
 player.y = SPAWN.y*TILE + TILE/2;

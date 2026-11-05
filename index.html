@@ -5727,14 +5727,18 @@ function animalHqChance(aff){
   const k = (aff - A.PRODUCE_MIN_AFF) / Math.max(1, A.AFF_MAX - A.PRODUCE_MIN_AFF);
   return A.HQ_CHANCE_MIN + (A.HQ_CHANCE_MAX - A.HQ_CHANCE_MIN) * clamp(k, 0, 1);
 }
-/* 新动物站哪儿：棚舍四周第一个能站的格子（棚舍本身是实心的） */
+/* 新动物站哪儿：棚舍四周第一个能站的格子（由近到远找 3 圈；棚舍本身是实心的） */
 function animalSpotNear(tx, ty){
-  const cand = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
-  for(const c of cand){
-    const nx = tx + c[0], ny = ty + c[1];
-    if(nx < 0 || ny < 0 || nx >= MAP_W || ny >= MAP_H) continue;
-    if(isSolid(nx, ny)) continue;
-    return {x:(nx + 0.5)*TILE, y:(ny + 0.5)*TILE + 8};
+  for(let r=1; r<=3; r++){
+    for(let dy=-r; dy<=r; dy++){
+      for(let dx=-r; dx<=r; dx++){
+        if(Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+        const nx = tx + dx, ny = ty + dy;
+        if(nx < 0 || ny < 0 || nx >= MAP_W || ny >= MAP_H) continue;
+        if(isSolid(nx, ny)) continue;
+        return {x:(nx + 0.5)*TILE, y:(ny + 0.5)*TILE + 8};
+      }
+    }
   }
   return {x:(tx + 0.5)*TILE, y:(ty + 0.5)*TILE + 8};
 }

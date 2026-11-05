@@ -1706,6 +1706,12 @@ function drawEntities(g, x0, y0, x1, y1){
     if(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W || p.y - cam.y < -TILE || p.y - cam.y > VIEW_H) continue;
     list.push({y:p.y + 12, f:()=>drawNpc(g, d, p.x, p.y)});
   }
+  /* 动物（第 15 轮）：按脚点 y 混进同一张排序表；不参与玩家碰撞 */
+  for(const a of animals){
+    if(a.x - cam.x < -TILE || a.x - cam.x > VIEW_W + TILE ||
+       a.y - cam.y < -TILE || a.y - cam.y > VIEW_H + TILE) continue;
+    list.push({y:a.y, f:()=>drawAnimal(g, a)});
+  }
   /* 作物 + 地图物件（树 / 岩石 / 野花）按格子的 Y 混进同一张表 */
   if(CONFIG.PERF.Y_SORT && x0 !== undefined){
     for(let ty=y0;ty<=y1;ty++){
@@ -3044,6 +3050,7 @@ function triggerFaint(){
 function rollToNextMorning(faint){
   clock.day++; clock.min = 0; clock.hold = 0;
   settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
+  animalDayStart();            /* 第 15 轮：动物成长 / 好感 / 每日产出 */
   rollWeather();
   if(faint){
     /* 惩罚方式选「体力」：次日体力上限扣 20%（不扣金币，避免误伤玩家资产） */
@@ -3241,9 +3248,15 @@ window.addEventListener('keydown', e=>{
     if(k === 'e' || k === ' '){ if(!e.repeat) npcAdvance(); ensureAudio(); }
     return;
   }
+  /* 动物面板：E / 空格 / Esc 关闭，其它键一律忽略（打开时世界冻结） */
+  if(animalOpen && k !== 'escape'){
+    if((k === 'e' || k === ' ') && !e.repeat){ animalClosePanel(); ensureAudio(); }
+    return;
+  }
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(animalOpen){ animalClosePanel(); return; }
     if(chestOpen){ toggleChest(false); return; }
     if(shopOpen){ toggleShop(false); return; }
     if(packOpen){ togglePack(false); if(packMode === 'gift'){ packMode = 'normal'; giftTarget = null; refreshPackGrid(); } return; }
@@ -3280,6 +3293,7 @@ window.addEventListener('keydown', e=>{
       else if(nearHouse()) startSleep(false);
       else if(c){ openChest = c; toggleChest(true); }
       else if(nearShop()) toggleShop();
+      else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
       else{
         const g = gatherNear();
         if(g){ pickGather(g.tx, g.ty); }        /* 第 14 轮：脚边有野花/蘑菇/浆果 → 采走 */
@@ -3319,7 +3333,7 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen || chestOpen || npcOpen) return;
+  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen) return;
   const p = toLogical(e);
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
@@ -4141,8 +4155,24 @@ function drawUI(g){
     g.fillText(hint, hx, hy);
   }
 
-  /* 脚边有采集物 → 提示按 E 采走（有人在场时让位给 NPC 提示） */
-  const gg = (!nn && !shopOpen && !npcOpen && !fishingActive()) ? gatherNear() : null;
+  /* 走到动物旁边 → 提示按 E 互动（第 15 轮） */
+  const na = (!nn && !shopOpen && !npcOpen && !animalOpen && !chestOpen && !fishingActive())
+    ? animalNear() : null;
+  if(na){
+    const nt = animalType(na.type);
+    const hint = '按 E 和' + (nt ? nt.name : '动物') + '互动';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = na.x - cam.x - hw/2, hy = na.y - cam.y - 34;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
+  }
+
+  /* 脚边有采集物 → 提示按 E 采走（有人 / 动物在场时让位给它们的提示） */
+  const gg = (!nn && !na && !shopOpen && !npcOpen && !animalOpen && !fishingActive()) ? gatherNear() : null;
   if(gg){
     const gx = gg.tx*TILE - cam.x + TILE/2, gy = gg.ty*TILE - cam.y - 12;
     const hint = '按 E 采集' + (gg.def ? gg.def.name : '');
@@ -4501,7 +4531,9 @@ function serializeState(){
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
-    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0}
+    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0},
+    /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
+    animals: animalSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -4596,6 +4628,8 @@ function deserializeState(d){
       dexState.f = ((d.dex.f | 0) & fMax) >>> 0;
       dexState.g = ((d.dex.g | 0) & gMax) >>> 0;
     }
+    /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */
+    animalDeserialize(d.animals);
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     refreshDexGrid();
@@ -4696,6 +4730,7 @@ function newGame(){
   tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;   /* 新游戏重置引导 */
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
   dexResetState();                              /* 新游戏：图鉴清空 */
+  animalResetState();                           /* 新游戏：清空动物 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -4729,18 +4764,21 @@ function update(dt){
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
+  if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
   if(fishingActive()){
     /* 钓鱼：人站定不动，只推进抛竿/咬钩/拉杆的状态机（面板打开时上面的分支已经提前返回 → 冻结） */
     updateFishing(dt);
+    updateAnimals(dt);               /* 动物照常走动（第 15 轮） */
     updateCamera(dt);
     updateSky(dt);
     updateDropFx(dt);
     return;
   }
   updatePlayer(dt);
+  updateAnimals(dt);                 /* 第 15 轮：动物在围栏里随便走走 */
   updateCamera(dt);
   updateSky(dt);                     /* 昼夜色平滑过渡 */
   updateDropFx(dt);                  /* 洒水器水滴 */
@@ -5194,6 +5232,10 @@ function migrate(oldSave){
     if(v < 3){
       /* v2 → v3：补上图鉴字段（没有就当作"还没钓到过 / 采到过"） */
       if(!d.dex || typeof d.dex !== 'object') d.dex = {f:0, g:0};
+    }
+    if(v < 4){
+      /* v3 → v4：补上动物字段（没有就当作"还没养过动物"） */
+      if(!Array.isArray(d.animals)) d.animals = [];
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -5866,9 +5908,11 @@ function animalOpenPanel(a){
 }
 function animalClosePanel(silent){
   if(!animalOpen && !silent) return false;
+  const wasOpen = animalOpen || !!(animalEl && animalEl.classList && animalEl.classList.contains('open'));
   animalOpen = false;
   animalTarget = null;
-  if(animalEl) setPanelOpen(animalEl, false);
+  /* 没开过就别播关闭动画（否则会在读档瞬间闪一下遮罩） */
+  if(wasOpen && animalEl) setPanelOpen(animalEl, false);
   return true;
 }
 /* 摸头：+2，每天一次 */
@@ -6138,6 +6182,16 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   pickGather, clearGatherTiles, spawnGather, gatherDayStart, drawGathers,
   GATHER_ITEM_BY_TILE,
   get packTab(){ return packTab; }, setPackTab, buildDexGrid, refreshDexGrid, applyPackTabView,
+  /* 第 15 轮：动物 / 棚舍 / 每日产出 */
+  get animals(){ return animals; }, set animals(v){ animals = v; },
+  get animalOpen(){ return animalOpen; }, set animalOpen(v){ if(v) animalOpenPanel(animalTarget); else animalClosePanel(); },
+  get animalTarget(){ return animalTarget; }, set animalTarget(v){ animalTarget = v; },
+  animalType, animalShelterDef, shelterList, animalCount, animalCapacity, animalsInShelter,
+  freeShelter, animalHqChance, animalSpotNear, makeAnimal, buyAnimal, animalDayStart,
+  animalPickDir, animalStep, updateAnimals, animalNear, animalDist,
+  animalOpenPanel, animalClosePanel, animalRenderPanel, animalPet, animalFeed, animalRelease,
+  drawAnimal, animalSerialize, animalDeserialize, animalResetState,
+  drawCoop, drawBarn,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

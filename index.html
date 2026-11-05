@@ -102,6 +102,31 @@
   #chestInv{display:grid;grid-template-columns:repeat(6,42px);gap:5px}
   #chestFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
   #packFoot{margin-top:9px;font-size:11px;color:#8fa3bd}
+  /* ---------- 第 14 轮：背包里的「图鉴」页签（复用背包格子视觉） ---------- */
+  #packTabs{display:flex;gap:6px;margin-bottom:8px}
+  #packTabs .tab{
+    background:#1a2130;border:2px solid #2c3a4e;color:#8fa3bd;
+    font:13px/1 Consolas,"Microsoft YaHei",monospace;padding:6px 18px;cursor:pointer;
+  }
+  #packTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
+  #dexGrid{display:none;grid-template-columns:repeat(6,42px);gap:5px}
+  #pack.dex #packGrid{display:none}
+  #pack.dex #dexGrid{display:grid}
+  #dexGrid .cell{
+    position:relative;width:42px;height:48px;background:#1a2130;
+    border:2px solid #2c3a4e;cursor:default;
+  }
+  #dexGrid .cell .ic{
+    position:absolute;left:50%;top:17px;transform:translate(-50%,-50%);
+    font-size:20px;line-height:1;
+  }
+  #dexGrid .cell .dn{
+    position:absolute;left:0;right:0;bottom:1px;text-align:center;
+    font-size:9px;line-height:1.2;color:#8fa3bd;white-space:nowrap;overflow:hidden;
+  }
+  #dexGrid .cell.unknown .ic{filter:brightness(0) opacity(.35)}
+  #dexGrid .cell.unknown .dn{color:#4d5a6e}
+  #dexGrid .cell.got{border-color:#7a6a30;background:#202a3a}
   /* 物品名提示（跟随鼠标） */
   #packTip{
     position:fixed;z-index:60;display:none;pointer-events:none;
@@ -313,7 +338,12 @@
   <div id="packMask"></div>
   <div id="packPanel" class="panel">
     <div id="packHead">背包 <span id="packInfo"></span></div>
+    <div id="packTabs">
+      <button class="tab on" data-ptab="bag">背包</button>
+      <button class="tab" data-ptab="dex">图鉴</button>
+    </div>
     <div id="packGrid"></div>
+    <div id="dexGrid"></div>
     <div id="packFoot">点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭</div>
   </div>
 </div>
@@ -416,7 +446,9 @@
 
 /* 地块类型（放在 CONFIG 之前：工具表要引用它们） */
 const T = {GRASS:0, DIRT:1, WATER:2, TREE:3, ROCK:4, FLOWER:5, HOUSE:6, SHOP:7,
-           TILLED:8, WATERED:9, BARE:10};
+           TILLED:8, WATERED:9, BARE:10,
+           /* 第 14 轮：可采集物（长在草地上，走上去不挡路，按 E 采集） */
+           WILDFLOWER:11, MUSHROOM:12, BERRY:13};
 
 const CONFIG = {
   VERSION: 'v0.1',          // 版本号（显示在左上角）
@@ -573,6 +605,7 @@ const CONFIG = {
       { id:'axe',          price:60 },   // 斧头（一次性）
       { id:'pick',         price:50 },   // 镐（一次性）
       { id:'sickle',       price:40 },   // 镰刀（一次性）
+      { id:'rod',          price:60 },   // 鱼竿（一次性，第 14 轮）
       { id:'can_upgrade',  price:80 }    // 水壶扩容（+10 容量）
     ]
   },
@@ -600,7 +633,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 2,               // 存档版本号（第 13 轮 +1：新增 npc 字段；旧档由 migrate() 升级）
+    VERSION: 3,               // 存档版本号（第 14 轮 +1：新增 dex 图鉴字段；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -632,6 +665,8 @@ const CONFIG = {
     // 镐：敲碎岩石
     sickle:{ id:'sickle',name:'镰刀', icon:'🌾', stack:false, max:1,  kind:'tool', tool:'sickle' },
     // 镰刀：清理枯萎作物 / 野花
+    rod:   { id:'rod',   name:'鱼竿', icon:'🎣', stack:false, max:1,  kind:'tool', tool:'rod' },
+    // 鱼竿（第 14 轮）：站在水边选中后左键抛竿
     seed_radish:  { id:'seed_radish',  name:'萝卜种子', icon:'🥕', stack:true, max:99, kind:'seed', crop:'radish' },
     // 萝卜种子（春）
     seed_potato:  { id:'seed_potato',  name:'土豆种子', icon:'🥔', stack:true, max:99, kind:'seed', crop:'potato' },
@@ -646,8 +681,31 @@ const CONFIG = {
     // 土豆：5 天成熟，一次收完
     tomato:  { id:'tomato',  name:'番茄', icon:'🍅', stack:true, max:99, kind:'crop', crop:'tomato' },
     // 番茄：6 天成熟，之后每 2 天可再收
-    pumpkin: { id:'pumpkin', name:'南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin' }
+    pumpkin: { id:'pumpkin', name:'南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin' },
     // 南瓜：8 天成熟，一次收完
+    /* 第 14 轮：鱼类（kind='fish'）与采集物（kind='gather'），都能卖钱、也能当礼物 */
+    fish_crucian:  { id:'fish_crucian',  name:'鲫鱼',   icon:'🐟', stack:true, max:99, kind:'fish',   price:30 },
+    // 鲫鱼：最常见的入门鱼
+    fish_carp:     { id:'fish_carp',     name:'鲤鱼',   icon:'🐠', stack:true, max:99, kind:'fish',   price:55 },
+    // 鲤鱼：春季和夏季的白天
+    fish_puffer:   { id:'fish_puffer',   name:'河豚',   icon:'🐡', stack:true, max:99, kind:'fish',   price:95 },
+    // 河豚：夏季正午到傍晚，晴天限定
+    fish_saury:    { id:'fish_saury',    name:'秋刀鱼', icon:'🦈', stack:true, max:99, kind:'fish',   price:65 },
+    // 秋刀鱼：秋天的夜里
+    fish_moon:     { id:'fish_moon',     name:'月影鱼', icon:'🌙', stack:true, max:99, kind:'fish',   price:180 },
+    // 月影鱼：雨天夜里才现身，稀有度最高
+    fish_koi:      { id:'fish_koi',      name:'锦鲤',   icon:'🎏', stack:true, max:99, kind:'fish',   price:160 },
+    // 锦鲤：春夏季的雨天白天
+    fish_ice:      { id:'fish_ice',      name:'冰鲈',   icon:'🧊', stack:true, max:99, kind:'fish',   price:70 },
+    // 冰鲈：冬天的白天
+    fish_wintercarp:{id:'fish_wintercarp',name:'冬鲫',  icon:'❄️', stack:true, max:99, kind:'fish',   price:110 },
+    // 冬鲫：冬天的夜里
+    wildflower:{ id:'wildflower', name:'野花', icon:'🌸', stack:true, max:99, kind:'gather', price:18 },
+    // 野花：春夏草地上刷新
+    mushroom:  { id:'mushroom',   name:'蘑菇', icon:'🍄', stack:true, max:99, kind:'gather', price:26 },
+    // 蘑菇：秋季草地上刷新
+    berry:     { id:'berry',      name:'浆果', icon:'🍓', stack:true, max:99, kind:'gather', price:22 }
+    // 浆果：夏秋草地上刷新
   },
 
   /* 工具行为表：名字/图标在 ITEMS 表，这里只管「作用在什么地块、产出什么」
@@ -840,6 +898,70 @@ const CONFIG = {
     ]
   },
 
+  /* ---------- 钓鱼系统（第 14 轮）：水边持竿左键 → 等待 → 咬钩 → 拉杆 ---------- */
+  FISHING: {
+    ROD_ID: 'rod',            // 鱼竿物品 id（商店一次性购买）
+    WATER_RANGE: 1.6,         // 离水多近才能抛竿（格）
+    WAIT_MIN_MS: 1000,        // 抛竿后最短等待（毫秒）
+    WAIT_MAX_MS: 4000,        // 抛竿后最长等待（毫秒）
+    BITE_WINDOW_MS: 800,      // 咬钩后按左键的窗口（毫秒）；错过就跑鱼
+    FAIL_STAMINA_COST: 1,     // 跑鱼惩罚：体力 -1（体力为 0 时不再扣成负数）
+    TYPE_CHANCE: 0.55,        // 咬钩时稀有鱼的出现权重衰减（越大越容易出稀有鱼）
+    REEL: {
+      SPEED: 0.85,            // 指针移动速度（占整条横条的百分比 / 秒）
+      ZONE_BASE: 0.34,        // 稀有度 1 的绿色区间宽度（占整条的百分比）
+      ZONE_STEP: 0.05,        // 每高一级稀有度，绿区收窄多少
+      ZONE_MIN: 0.14,         // 绿区最窄不低于此值
+      BAR_W: 360,             // 拉杆横条宽度（逻辑像素）
+      BAR_H: 22               // 拉杆横条高度（逻辑像素）
+    },
+    /* 8 种鱼：季节 / 天气 / 时段三重限制；rarity 同时决定售价与绿区宽度
+     * from/to 用 24 小时制，允许跨午夜（如 18 → 2） */
+    LIST: [
+      { id:'fish_crucian', name:'鲫鱼',   icon:'🐟', rarity:1,
+        seasons:['春','夏','秋'], weather:['sun','rain','snow'], from:6,  to:18, price:30 },
+      // 鲫鱼：春夏秋的白天，晴雨雪都咬钩（最常见的保底鱼）
+      { id:'fish_carp',    name:'鲤鱼',   icon:'🐠', rarity:2,
+        seasons:['春','夏'],      weather:['sun','rain'],         from:6,  to:18, price:55 },
+      // 鲤鱼：春夏白天的晴天 / 雨天
+      { id:'fish_puffer',  name:'河豚',   icon:'🐡', rarity:3,
+        seasons:['夏'],           weather:['sun'],                from:12, to:18, price:95 },
+      // 河豚：夏季正午到傍晚，只认晴天
+      { id:'fish_saury',   name:'秋刀鱼', icon:'🦈', rarity:2,
+        seasons:['秋'],           weather:['sun','rain'],         from:18, to:2,  price:65 },
+      // 秋刀鱼：秋季夜里（18:00 → 次日 2:00）
+      { id:'fish_moon',    name:'月影鱼', icon:'🌙', rarity:4,
+        seasons:['春','夏','秋'], weather:['rain'],                from:19, to:2,  price:180 },
+      // 月影鱼：雨天夜晚才出现（验收示例鱼）
+      { id:'fish_koi',     name:'锦鲤',   icon:'🎏', rarity:4,
+        seasons:['春','夏'],      weather:['rain'],                from:6,  to:18, price:160 },
+      // 锦鲤：春夏雨天的白天
+      { id:'fish_ice',     name:'冰鲈',   icon:'🧊', rarity:2,
+        seasons:['冬'],           weather:['sun','snow'],         from:6,  to:18, price:70 },
+      // 冰鲈：冬季白天（晴 / 雪）
+      { id:'fish_wintercarp', name:'冬鲫', icon:'❄️', rarity:3,
+        seasons:['冬'],           weather:['snow','rain'],        from:18, to:2,  price:110 }
+      // 冬鲫：冬季夜里（雪 / 雨）；冬天总共只有冰鲈 + 冬鲫两种
+    ]
+  },
+
+  /* ---------- 野外采集（第 14 轮）：野花 / 蘑菇 / 浆果按季节刷在草地上 ---------- */
+  GATHER: {
+    ENABLED: true,            // 总开关（关掉就不刷新采集物）
+    RANGE: 1.5,               // 按 E 采集的距离（格）
+    EVERY_DAYS: 3,            // 每季每隔几天刷新一次（季内第 1/4/7/10 天）
+    COUNT: 6,                 // 每次刷新在草地上放几株
+    RADIUS: 20,               // 刷新范围：以农田中心为圆心的半径（格）
+    TYPES: [
+      { item:'wildflower', tile:T.WILDFLOWER, seasons:['春','夏'] },
+      // 野花：春夏
+      { item:'mushroom',   tile:T.MUSHROOM,   seasons:['秋'] },
+      // 蘑菇：秋季
+      { item:'berry',      tile:T.BERRY,      seasons:['夏','秋'] }
+      // 浆果：夏秋
+    ]
+  },
+
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
   BALANCE: {
     EXPANSION_GOLD: 500,    // 扩建地标价（自检参照目标）
@@ -937,7 +1059,8 @@ const CONFIG = {
 };
 
 /* === 2.世界 === */
-const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店','耕地','已浇水','空地'];
+const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店','耕地','已浇水','空地',
+                    '野花丛','蘑菇','浆果'];
 
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
@@ -1801,6 +1924,7 @@ function buildGroundOK(tx,ty,r){
   const i = ty*MAP_W + tx, t = map[i];
   if(t === T.WATER) return '水里不能建';
   if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
+  if(t === T.WILDFLOWER || t === T.MUSHROOM || t === T.BERRY) return '这里长着采集物，先采掉吧';
   if(r.overlay) return '';            /* 石板路是叠加层：耕地 / 作物上都铺 */
   if(t === T.TILLED || t === T.WATERED) return '耕地不能建';
   if(crops[i]) return '这里种着东西';
@@ -2577,7 +2701,7 @@ function basePrice(id){
   const d = itemDef(id);
   if(!d) return 0;
   if(d.kind === 'crop'){ const c = cropDef(d.crop); return c ? c.sell : 0; }
-  if(d.kind === 'material') return d.price || 0;
+  if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather') return d.price || 0;
   return 0;
 }
 /* 当前价格（含季节系数与 ±15% 浮动） */
@@ -2597,11 +2721,11 @@ function priceTrend(id){
   if(p < mid) return '↓';
   return '=';
 }
-/* 能不能卖：只有收获的作物与材料能卖（种子/工具不回收） */
+/* 能不能卖：收获的作物、材料、鱼和采集物能卖（种子/工具不回收） */
 function isSellable(id){
   const d = itemDef(id);
   if(!d) return false;
-  return d.kind === 'crop' || d.kind === 'material';
+  return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather';
 }
 /* 工具是否已经拥有（一次性商品） */
 function toolOwned(id){
@@ -3082,8 +3206,11 @@ const packTip  = document.getElementById('packTip');
 const packHeld = document.getElementById('packHeld');
 const packInfo = document.getElementById('packInfo');
 const packFoot = document.getElementById('packFoot');
+const packTabs = document.getElementById('packTabs');
+const dexGrid  = document.getElementById('dexGrid');
 let packOpen = false;          /* 背包是否打开（打开时 update() 整体冻结 → 时间停住） */
 let held = null;               /* 手上拿着的物品：{id, n, from}（from = 拿起时的格号） */
+let packTab = 'bag';           /* 背包页签：bag 背包 / dex 图鉴（第 14 轮） */
 
 /* 建 24 个格子（前 8 格 = 快捷栏，标 1~8） */
 function buildPackGrid(){
@@ -3100,6 +3227,61 @@ function buildPackGrid(){
     cell.addEventListener('mousemove', e=>{ movePackTip(e); });
     cell.addEventListener('mouseleave', ()=>{ hidePackTip(); });
     packGrid.appendChild(cell);
+  }
+  /* 第 14 轮：背包 / 图鉴页签 */
+  if(packTabs && packTabs.children){
+    for(let i=0;i<packTabs.children.length;i++){
+      const b = packTabs.children[i];
+      if(b && b.addEventListener) b.addEventListener('click', ()=>setPackTab(b.getAttribute('data-ptab')));
+    }
+  }
+}
+/* 页签外观（背包 / 图鉴） */
+function applyPackTabView(){
+  if(packEl) packEl.classList.toggle('dex', packTab === 'dex');
+  if(packTabs && packTabs.children){
+    for(let i=0;i<packTabs.children.length;i++){
+      const b = packTabs.children[i];
+      if(b && b.classList) b.classList.toggle('on', b.getAttribute('data-ptab') === packTab);
+    }
+  }
+}
+function setPackTab(tab){
+  packTab = (tab === 'dex') ? 'dex' : 'bag';
+  if(packTab === 'dex' && packMode === 'gift') packTab = 'bag';   /* 送礼时必须看背包 */
+  applyPackTabView();
+  refreshPackGrid();
+}
+/* 建图鉴格子（8 种鱼 + 3 种采集物） */
+function buildDexGrid(){
+  if(!dexGrid || !dexGrid.appendChild) return;
+  dexGrid.innerHTML = '';
+  const entries = dexAllEntries();
+  for(const e of entries){
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.innerHTML = '<span class="ic"></span><span class="dn"></span>';
+    cell.title = e.name;
+    dexGrid.appendChild(cell);
+  }
+  refreshDexGrid();
+}
+/* 把图鉴解锁状态刷到格子上（未获得 = 剪影 + ？？？） */
+function refreshDexGrid(){
+  if(!dexGrid || !dexGrid.children) return;
+  const entries = dexAllEntries();
+  for(let i=0;i<entries.length;i++){
+    const c = dexGrid.children[i];
+    if(!c || typeof c.querySelector !== 'function') continue;
+    const e = entries[i], got = dexHas(e.kind, e.idx);
+    if(c.classList){
+      c.classList.toggle('got', got);
+      c.classList.toggle('unknown', !got);
+    }
+    const ic = c.querySelector('.ic'), dn = c.querySelector('.dn');
+    if(ic) ic.textContent = e.icon;
+    if(dn) dn.textContent = got ? e.name : '？？？';
+    c.title = got ? e.name : '未发现';
   }
 }
 /* 把背包状态刷到格子上 */

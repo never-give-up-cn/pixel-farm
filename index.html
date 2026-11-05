@@ -907,7 +907,7 @@ const CONFIG = {
     BITE_WINDOW_MS: 800,      // 咬钩后按左键的窗口（毫秒）；错过就跑鱼
     FAIL_STAMINA_COST: 1,     // 跑鱼惩罚：体力 -1（体力为 0 时不再扣成负数）
     TYPE_CHANCE: 0.55,        // 咬钩时稀有鱼的出现权重衰减（越大越容易出稀有鱼）
-    REEL: {
+    REEL: {                   // 拉杆小游戏参数：指针速度 / 绿区宽度
       SPEED: 0.85,            // 指针移动速度（占整条横条的百分比 / 秒）
       ZONE_BASE: 0.34,        // 稀有度 1 的绿色区间宽度（占整条的百分比）
       ZONE_STEP: 0.05,        // 每高一级稀有度，绿区收窄多少
@@ -952,7 +952,7 @@ const CONFIG = {
     EVERY_DAYS: 3,            // 每季每隔几天刷新一次（季内第 1/4/7/10 天）
     COUNT: 6,                 // 每次刷新在草地上放几株
     RADIUS: 20,               // 刷新范围：以农田中心为圆心的半径（格）
-    TYPES: [
+    TYPES: [                  // 各种采集物：对应的物品 / 地块 / 出现的季节
       { item:'wildflower', tile:T.WILDFLOWER, seasons:['春','夏'] },
       // 野花：春夏
       { item:'mushroom',   tile:T.MUSHROOM,   seasons:['秋'] },

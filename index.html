@@ -53,8 +53,16 @@
   #packPanel{
     position:relative;padding:12px 14px 10px;
   }
-  #packHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
-  #packHead span{color:#8fa3bd;font-size:12px;margin-left:10px}
+  #packHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  #packHead span{color:#8fa3bd;font-size:12px;margin-left:10px;flex:1}
+  /* 第 23 轮：背包一键整理按钮 */
+  #packSort{
+    background:#1a2130;border:2px solid #2c3a4e;color:#8fa3bd;
+    font:12px/1 Consolas,"Microsoft YaHei",monospace;padding:5px 12px;cursor:pointer;
+    transition:background .13s ease,border-color .13s ease,color .13s ease,transform .07s ease;
+  }
+  #packSort:hover{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
+  #packSort:active{transform:translateY(1px)}
   #packGrid{display:grid;grid-template-columns:repeat(6,42px);gap:5px}
   #packGrid .cell,
   #chestGrid .cell,
@@ -661,7 +669,7 @@
 <div id="pack">
   <div id="packMask"></div>
   <div id="packPanel" class="panel">
-    <div id="packHead">背包 <span id="packInfo"></span></div>
+    <div id="packHead">背包 <span id="packInfo"></span><button id="packSort" type="button">整理</button></div>
     <div id="packTabs">
       <button class="tab on" data-ptab="bag">背包</button>
       <button class="tab" data-ptab="dex">图鉴</button>
@@ -1136,7 +1144,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 11,              // 存档版本号（第 22 轮 +1：ih 字段存"交互按键提示"开关）
+    VERSION: 12,              // 存档版本号（第 23 轮 +1：soil 土壤肥力 / vs NPC 来访 / 作物经过天数）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1186,6 +1194,21 @@ const CONFIG = {
     // 番茄：6 天成熟，之后每 2 天可再收
     pumpkin: { id:'pumpkin', name:'南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin' },
     // 南瓜：7 天成熟，一次收完
+    /* 第 23 轮：优质作物（品质评分 ≥ CONFIG.QUALITY.HQ_SCORE 时产出；price = 普通 ×1.8） */
+    radish_hq:  { id:'radish_hq',  name:'优质萝卜', icon:'🥕', stack:true, max:99, kind:'crop', crop:'radish',  price:63 },
+    potato_hq:  { id:'potato_hq',  name:'优质土豆', icon:'🥔', stack:true, max:99, kind:'crop', crop:'potato',  price:108 },
+    tomato_hq:  { id:'tomato_hq',  name:'优质番茄', icon:'🍅', stack:true, max:99, kind:'crop', crop:'tomato',  price:81 },
+    pumpkin_hq: { id:'pumpkin_hq', name:'优质南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin', price:216 },
+    /* 第 23 轮：杂交作物（相邻种两种不同作物 → 有概率结出杂交种子） */
+    seed_tomato_radish:  { id:'seed_tomato_radish',  name:'樱桃萝卜种子', icon:'🍒', stack:true, max:99, kind:'seed', crop:'tomato_radish' },
+    tomato_radish:       { id:'tomato_radish',       name:'樱桃萝卜',     icon:'🍒', stack:true, max:99, kind:'crop',  crop:'tomato_radish',  price:80 },
+    tomato_radish_hq:    { id:'tomato_radish_hq',    name:'优质樱桃萝卜', icon:'🍒', stack:true, max:99, kind:'crop',  crop:'tomato_radish',  price:144 },
+    seed_potato_pumpkin: { id:'seed_potato_pumpkin', name:'黄金薯种子',   icon:'🍠', stack:true, max:99, kind:'seed', crop:'potato_pumpkin' },
+    potato_pumpkin:      { id:'potato_pumpkin',      name:'黄金薯',       icon:'🍠', stack:true, max:99, kind:'crop',  crop:'potato_pumpkin', price:180 },
+    potato_pumpkin_hq:   { id:'potato_pumpkin_hq',   name:'优质黄金薯',   icon:'🍠', stack:true, max:99, kind:'crop',  crop:'potato_pumpkin', price:324 },
+    seed_tomato_pumpkin: { id:'seed_tomato_pumpkin', name:'小南瓜种子',   icon:'🧡', stack:true, max:99, kind:'seed', crop:'tomato_pumpkin' },
+    tomato_pumpkin:      { id:'tomato_pumpkin',      name:'小南瓜',       icon:'🧡', stack:true, max:99, kind:'crop',  crop:'tomato_pumpkin', price:165 },
+    tomato_pumpkin_hq:   { id:'tomato_pumpkin_hq',   name:'优质小南瓜',   icon:'🧡', stack:true, max:99, kind:'crop',  crop:'tomato_pumpkin', price:297 },
     /* 第 14 轮：鱼类（kind='fish'）与采集物（kind='gather'），都能卖钱、也能当礼物 */
     fish_crucian:  { id:'fish_crucian',  name:'鲫鱼',   icon:'🐟', stack:true, max:99, kind:'fish',   price:30 },
     // 鲫鱼：最常见的入门鱼
@@ -1264,8 +1287,12 @@ const CONFIG = {
     // 土豆种子
     { id:'seed_tomato',  crop:'tomato',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了番茄', sfx:587 },
     // 番茄种子
-    { id:'seed_pumpkin', crop:'pumpkin', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了南瓜', sfx:392 }
+    { id:'seed_pumpkin', crop:'pumpkin', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了南瓜', sfx:392 },
     // 南瓜种子
+    /* 第 23 轮：杂交种子（种出来的是杂交作物） */
+    { id:'seed_tomato_radish',  crop:'tomato_radish',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了樱桃萝卜', sfx:561 },
+    { id:'seed_potato_pumpkin', crop:'potato_pumpkin', accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了黄金薯',   sfx:470 },
+    { id:'seed_tomato_pumpkin', crop:'tomato_pumpkin',  accepts:[T.TILLED], to:T.TILLED, out:null, cost:0, msg:'播下了小南瓜',   sfx:520 }
   ],
 
   /* 作物表：每季一种；days=需要浇水的生长天数；regrow=收获后再次成熟需要的天数（0=不再结果）
@@ -1286,6 +1313,76 @@ const CONFIG = {
     STAGE_H:  [5, 10, 15, 20],      /* 阶段 0~3 的株高 */
     LEAF_W:  [3, 6, 9, 12],         /* 叶片宽度 */
     DEAD_COLOR:'#9c8340', DEAD_LEAF:'#a8913f', DEAD_STEM:'#7a6234'  // 枯萎：枯黄配色
+  },
+
+  /* ---------- 第 23 轮 · 背包一键整理 ---------- */
+  SORT: {
+    ORDER: 'id',        // 排序依据：按物品 id 字典序（稳定）
+    MERGE: true,        // 先把同 id 的堆叠合并（并进最靠前的那一格）
+    KEEP_HOTBAR: true   // 快捷栏（前 HOTBAR 格）保持原位，只整理背包区
+  },
+
+  /* ---------- 第 23 轮 · 作物品质（浇水完整度 + 当季 + 节日 + 土壤肥力） ---------- */
+  QUALITY: {
+    WEIGHT: {water:0.35, season:0.25, soil:0.25, fest:0.15},  // 四个因子加权
+    HQ_SCORE: 0.90,     // 评分 ≥ 这个值 → 优质（售价 ×1.8；要土肥 + 天天浇水 + 当季）
+    HQ_MULT: 1.8,       // 优质作物售价倍率
+    SEASON_SECONDARY: 0.7,  // 次季播种（只有杂交作物有次季）的当季折扣
+    FEST_NORMAL: 0.35,  // 非节日当天的「节日」因子
+    SOIL: {START:70, MAX:100, MIN:0, HARVEST:-6, ROTATE:8, DAILY:3}
+    // 土壤肥力：收获消耗 / 和邻居种不同作物（轮作）恢复 / 每天自然恢复
+  },
+
+  /* ---------- 第 23 轮 · 小地图（右上角，评级 HUD 下方） ---------- */
+  MINIMAP: {
+    SIZE: 96,           // 边长（像素）：农场区 12×12 格 × 8 像素
+    SCALE: 8,           // 每格占多少像素
+    REFRESH: 0.5,       // 离屏画布重绘间隔（秒）
+    MARGIN: 10,         // 距画布右边缘
+    TOP: 66,            // 顶部 y（避开评级 HUD 的 8~32 和制作台 HUD 的 38~62）
+    PLAYER:'#ffffff', NPC:'#ffd76a', HOUSE:'#e8a45c', SHOP:'#7fd4ff'
+  },
+
+  /* ---------- 第 23 轮 · 动物繁殖 ---------- */
+  BREED: {
+    AFF_MIN: 80,        // 两只同物种的好感都要 ≥ 这个值
+    CHANCE: 0.05,       // 每天早晨 5% 概率
+    MAX_PER_DAY: 1,     // 一天最多生几只
+    NEED_MATURE: true   // 必须都是成年个体
+  },
+
+  /* ---------- 第 23 轮 · NPC 来访农场 ---------- */
+  VISIT: {
+    HOUR_FROM: 12, HOUR_TO: 18,   // 下午来访时段
+    SPOT: {dx:3, dy:5},           // 来访站位（相对农场左上角）
+    PLOT: 8,                      // 每块耕地的分值
+    BUILD: 25,                    // 每座建造物的分值
+    DECOR: 15,                    // 每份装饰（稻草人 / 石板路）的分值
+    GOLD_BASE: 60,                // 基础金币
+    GOLD_PER_POINT: 2,            // 每分折算多少金币
+    SEED_CHANCE: 0.7              // 附赠种子的概率
+  },
+
+  /* ---------- 第 23 轮 · 种子杂交（相邻种两种不同作物 → 有概率结出杂交种子） ---------- */
+  HYBRID: {
+    CHANCE: 0.18,       // 每次杂交判定成功的概率
+    RECIPES: [         // 配方表：两个亲本（顺序无所谓）→ 杂交作物
+      {id:'tomato_radish',   parents:['radish','tomato']},
+      {id:'potato_pumpkin', parents:['potato','pumpkin']},
+      {id:'tomato_pumpkin',  parents:['tomato','pumpkin']}
+    ],
+    /* 杂交作物定义：seasons 有两个 → 主季 + 次季（次季种品质打折） */
+    CROPS: [
+      {id:'tomato_radish',   name:'樱桃萝卜', icon:'🍒', season:'春', seasons:['春','夏'],
+       days:4, seedCost:60, sell:80,  regrow:0, ripe:'#e0556b', unripe:'#d8b0a8', leaf:'#4aa03c'},
+      // 萝卜 + 番茄：售价 = 双亲均价 ×2
+      {id:'potato_pumpkin',  name:'黄金薯',   icon:'🍠', season:'春', seasons:['春','秋'],
+       days:6, seedCost:90, sell:180, regrow:0, ripe:'#d8a24b', unripe:'#c9b58c', leaf:'#3f9440'},
+      // 土豆 + 南瓜
+      {id:'tomato_pumpkin',  name:'小南瓜',   icon:'🧡', season:'夏', seasons:['夏','秋'],
+       days:5, seedCost:80, sell:165, regrow:0, ripe:'#e07a1f', unripe:'#b8bf72', leaf:'#2f8f34'}
+      // 番茄 + 南瓜
+    ]
   },
 
   /* 水壶：容量有限，站在水边右键补满（商店可以扩容） */
@@ -1855,6 +1952,70 @@ function setTile(i, t){
   map[i] = t;
   ratingInvalidate();                     /* 第 21 轮：耕地格数可能变了 → 评级缓存失效 */
   if(CONFIG.PERF.BAKE_GROUND) markGroundDirty(i);
+}
+
+/* --- 第 23 轮：小地图（离屏 canvas，每 0.5 秒重绘一次；画在右上角评级 HUD 下方） --- */
+const miniCv = document.createElement('canvas');
+miniCv.width  = CONFIG.MINIMAP.SIZE;
+miniCv.height = CONFIG.MINIMAP.SIZE;
+const miniCtx = miniCv.getContext('2d');
+let miniTimer = 0;          /* 距下次重绘的秒数 */
+let miniReady = false;      /* 离屏画布是否已经画过东西 */
+function minimapTileColor(t){
+  const C = CONFIG.TILE_COLORS;
+  if(t === T.TILLED)  return C.tilled;
+  if(t === T.WATERED) return C.watered;
+  if(t === T.DIRT)    return C.dirt;
+  if(t === T.WATER)   return C.water;
+  if(t === T.BARE)    return C.bare;
+  if(t === T.TREE)    return C.treeLeaf;
+  if(t === T.ROCK)    return C.rock;
+  if(t === T.FLOWER)  return C.flowers[0];
+  return C.grass;
+}
+function rebuildMinimap(){
+  const M = CONFIG.MINIMAP, S = M.SIZE, K = M.SCALE;
+  miniCtx.clearRect(0, 0, S, S);
+  miniCtx.fillStyle = CONFIG.COLORS.hudBg;
+  miniCtx.fillRect(0, 0, S, S);
+  for(let y = 0; y < FARM.h; y++){
+    for(let x = 0; x < FARM.w; x++){
+      const tx = FARM.x + x, ty = FARM.y + y;
+      if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) continue;
+      const i = ty*MAP_W + tx;
+      miniCtx.fillStyle = minimapTileColor(map[i]);
+      miniCtx.fillRect(x*K, y*K, K, K);
+      if(roads[i]){ miniCtx.fillStyle = CONFIG.TILE_COLORS.roadStone; miniCtx.fillRect(x*K, y*K, K, K); }
+    }
+  }
+  /* 房屋 / 商店图标 */
+  miniCtx.fillStyle = M.HOUSE;
+  miniCtx.fillRect((HOUSE_POS.x-FARM.x)*K, (HOUSE_POS.y-FARM.y)*K, HOUSE_POS.w*K, HOUSE_POS.h*K);
+  miniCtx.fillStyle = M.SHOP;
+  miniCtx.fillRect((SHOP_POS.x-FARM.x)*K, (SHOP_POS.y-FARM.y)*K, SHOP_POS.w*K, SHOP_POS.h*K);
+  /* NPC（黄点） */
+  for(const d of CONFIG.NPC.LIST){
+    const p = npcPos(d);
+    if(!p) continue;
+    if(p.tx < FARM.x || p.tx >= FARM.x + FARM.w || p.ty < FARM.y || p.ty >= FARM.y + FARM.h) continue;
+    miniCtx.fillStyle = M.NPC;
+    miniCtx.fillRect((p.tx-FARM.x)*K + ((K>>1) - 1), (p.ty-FARM.y)*K + ((K>>1) - 1), 3, 3);
+  }
+  /* 玩家（白点；跑出农场区就贴边显示） */
+  const px = Math.floor(player.x/TILE), py = Math.floor(player.y/TILE);
+  const cx = clamp(px - FARM.x + 0.5, 0, FARM.w) * K - 2;
+  const cy = clamp(py - FARM.y + 0.5, 0, FARM.h) * K - 2;
+  miniCtx.fillStyle = M.PLAYER;
+  miniCtx.fillRect(cx, cy, 4, 4);
+  miniReady = true;
+}
+function drawMinimap(g){
+  if(!miniReady) return;
+  const M = CONFIG.MINIMAP;
+  const x = VIEW_W - M.SIZE - M.MARGIN, y = M.TOP;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(x-2, y-2, M.SIZE+4, M.SIZE+4);
+  g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(x-2, y-2, M.SIZE+4, M.SIZE+4);
+  g.drawImage(miniCv, x, y);
 }
 
 /* 中央空地 + 建筑位置（全部由 CONFIG 推导） */
@@ -3503,7 +3664,13 @@ function tileCenterDist(tx,ty){
 
 /* --- 作物系统：播种 → 浇水 → 生长 → 收获 --- */
 let canWater = CONFIG.WATER_CAN.CAPACITY;          /* 水壶剩余容量 */
-function cropDef(type){ return CONFIG.CROPS.find(c => c.id === type); }
+function cropDef(type){ return CONFIG.CROPS.find(c => c.id === type) || CONFIG.HYBRID.CROPS.find(c => c.id === type); }
+/* 第 23 轮：全部作物定义（普通作物 + 杂交作物）；杂交作物不进 CONFIG.CROPS，
+ * 所以不会挤掉成就里那 31 位的「作物种类」掩码 */
+function allCropDefs(){ return CONFIG.CROPS.concat(CONFIG.HYBRID.CROPS); }
+/* 第 23 轮：作物能种的季节（杂交作物有主季 + 次季，普通作物只有自己那一季） */
+function cropSeasons(def){ return (def && def.seasons) ? def.seasons : [def ? def.season : '']; }
+
 function cropAt(tx,ty){ return crops[ty*MAP_W+tx]; }
 /* 视觉阶段 = 已生长的天数（封顶 3），每次浇水+1 */
 function cropStage(c){ return Math.min(3, c.grown); }
@@ -3519,14 +3686,15 @@ function sowCrop(tx,ty,type,seedId){
   const sid = seedId || ('seed_' + type);
   const season = seasonName();
   if(season === '冬'){ toast('土地休眠了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
-  if(def.season !== season){ toast(def.name + '只能在' + def.season + '季种'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  const seasons = cropSeasons(def);            /* 第 23 轮：杂交作物有两个季可种 */
+  if(seasons.indexOf(season) < 0){ toast(def.name + '只能在' + seasons.join('、') + '季种'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   const i = ty*MAP_W+tx;
   if(map[i] !== T.TILLED){ toast('先用锄头把这块地开垦了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   /* 种子来自背包：播下要扣 1 颗，没种子就不能播 */
   const slot = selectedSlot();
   const have = (slot && slot.id === sid && slot.n > 0) ? true : (countItem(sid) > 0);
   if(!have){ toast('没有' + def.name + '种子了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
-  crops[i] = {type:type, stage:0, grown:0, watered:false, mature:false, dead:false};
+  crops[i] = {type:type, stage:0, grown:0, watered:false, mature:false, dead:false, a:0, rc:0};
   festivalOnSow(crops[i]);               /* 第 17 轮：春·播种祭当天播种 → 当晚 ×2 生长 */
   if(slot && slot.id === sid && slot.n > 0){        /* 优先扣当前选中的那一格 */
     slot.n--;
@@ -3538,6 +3706,9 @@ function sowCrop(tx,ty,type,seedId){
   const seedTool = CONFIG.TOOLS.find(t => t.crop === type);
   playSfx(seedTool ? seedTool.sfx : 523, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
   tutSown();                                /* 新手引导：完成"播种"这一步 */
+  /* 第 23 轮：轮作（土壤肥力）+ 种子杂交（相邻种不同作物） */
+  soilRotate(tx, ty, type);
+  hybridCheck(tx, ty, type);
   return true;
 }
 function waterTile(tx,ty){
@@ -3558,24 +3729,30 @@ function harvestCrop(tx,ty){
   const i = ty*MAP_W+tx;
   const c = crops[i];
   const def = cropDef(c.type);
+  const q = cropQuality(c);                       /* 第 23 轮：品质评分 → 决定普通还是优质 */
+  const itemId = q.hq ? (c.type + '_hq') : c.type;
+  const item = itemDef(itemId);
   /* 背包放不下就不收：宁可留在地里，也不能让作物凭空消失 */
-  if(!canFit(c.type, 1)){
-    toast('背包满了，装不下' + def.name);
+  if(!canFit(itemId, 1)){
+    toast('背包满了，装不下' + (item ? item.name : def.name));
     playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6);
     return false;
   }
   if(!payStamina(staminaCost('harvest'))) return false;   /* 收获消耗 1 点体力 */
-  addItem(c.type, 1);
-  questEmit('crop', {id:c.type, n:1});    /* 第 16 轮：委托总线（作物产出） */
+  addItem(itemId, 1);
+  questEmit('crop', {id:c.type, n:1});    /* 第 16 轮：委托总线（作物产出，用基础作物 id） */
   statsHarvest(c.type);                   /* 第 18 轮：收获统计 + 作物种类 + 成就 */
+  soilHarvest();                          /* 第 23 轮：收获消耗土壤肥力 */
+  const itemName = item ? item.name : def.name;
   if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
     c.grown = def.days - def.regrow;
     c.stage = 3; c.mature = false; c.watered = false;
-    toast('收获 ' + def.name + ' ×1（还能再结）');
+    c.a = 0; c.rc = 1;                     /* 第 23 轮：进入下一轮结果，重新计完整度 */
+    toast('收获 ' + itemName + ' ×1（还能再结）');
   }else{
     crops[i] = null;
     if(map[i] === T.WATERED) setTile(i, T.TILLED);   /* 收获后地块变回耕地 */
-    toast('收获 ' + def.name + ' ×1');
+    toast('收获 ' + itemName + ' ×1');
   }
   playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
   return true;
@@ -3589,6 +3766,69 @@ function clearDeadCrop(tx,ty){
   toast('清理了枯萎的' + def.name);
   playSfx(988, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
   return true;
+}
+/* --- 第 23 轮：土壤肥力（收获消耗 / 轮作恢复 / 每天自然恢复） --- */
+let soilFert = CONFIG.QUALITY.SOIL.START;
+function soilAdd(v){
+  soilFert = clamp(soilFert + v, CONFIG.QUALITY.SOIL.MIN, CONFIG.QUALITY.SOIL.MAX);
+  return soilFert;
+}
+/* 轮作：和邻居种的是不同作物 → 土壤恢复 */
+function soilRotate(tx, ty, type){
+  const N = [[1,0],[-1,0],[0,1],[0,-1]];
+  for(let k=0;k<4;k++){
+    const nx = tx+N[k][0], ny = ty+N[k][1];
+    if(nx<0 || ny<0 || nx>=MAP_W || ny>=MAP_H) continue;
+    const c = crops[ny*MAP_W+nx];
+    if(c && !c.dead && c.type !== type){ soilAdd(CONFIG.QUALITY.SOIL.ROTATE); return true; }
+  }
+  return false;
+}
+function soilHarvest(){ return soilAdd(CONFIG.QUALITY.SOIL.HARVEST); }
+function soilDayStart(){ return soilAdd(CONFIG.QUALITY.SOIL.DAILY); }
+/* --- 第 23 轮：作物品质评分（浇水完整度 + 当季 + 节日 + 土壤肥力） --- */
+function cropQuality(c){
+  const def = cropDef(c.type);
+  const Q = CONFIG.QUALITY;
+  if(!def) return {score:0, water:0, season:0, fest:0, soil:0, hq:false};
+  const need = c.rc ? Math.max(1, def.regrow) : def.days;   /* 本轮需要长多少天 */
+  const elapsed = (c.a | 0);
+  const water = elapsed > 0 ? clamp(need / elapsed, 0, 1) : 1;   /* 浇水完整度 */
+  const seasons = cropSeasons(def);
+  const cur = seasonName();
+  const season = (cur === def.season) ? 1 : (seasons.indexOf(cur) >= 0 ? Q.SEASON_SECONDARY : 0.5);
+  const fest = festivalToday() ? 1 : Q.FEST_NORMAL;
+  const soil = clamp(soilFert / 100, 0, 1);
+  const score = clamp(Q.WEIGHT.water*water + Q.WEIGHT.season*season +
+                      Q.WEIGHT.soil*soil + Q.WEIGHT.fest*fest, 0, 1);
+  return {score:score, water:water, season:season, fest:fest, soil:soil, hq:score >= Q.HQ_SCORE};
+}
+/* --- 第 23 轮：种子杂交（相邻种两种不同作物 → 有概率结出杂交种子） --- */
+function hybridRecipe(a, b){
+  for(const r of CONFIG.HYBRID.RECIPES){
+    if((r.parents[0] === a && r.parents[1] === b) || (r.parents[0] === b && r.parents[1] === a)) return r;
+  }
+  return null;
+}
+function hybridCheck(tx, ty, type){
+  const N = [[1,0],[-1,0],[0,1],[0,-1]];
+  for(let k=0;k<4;k++){
+    const nx = tx+N[k][0], ny = ty+N[k][1];
+    if(nx<0 || ny<0 || nx>=MAP_W || ny>=MAP_H) continue;
+    const c = crops[ny*MAP_W+nx];
+    if(!c || c.dead || c.type === type) continue;
+    const r = hybridRecipe(type, c.type);
+    if(!r) continue;
+    if(Math.random() >= CONFIG.HYBRID.CHANCE) continue;
+    const sid = 'seed_' + r.id;
+    if(!canFit(sid, 1)){ toast('背包满了，杂交种子没地方放'); return false; }
+    addItem(sid, 1);
+    const hd = cropDef(r.id);
+    toast('🌱 杂交出了' + (hd ? hd.name : r.id) + '种子！');
+    playSfx(880, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);
+    return true;
+  }
+  return false;
 }
 /* 附近有没有水（站在水边右键补水） */
 function findWaterNear(){
@@ -3620,10 +3860,11 @@ function settleDay(){
     const c = crops[i];
     if(!c || c.dead) continue;
     const def = cropDef(c.type);
-    if(def.season !== newSeason){          /* 换季 → 非当季作物枯萎 */
+    if(cropSeasons(def).indexOf(newSeason) < 0){   /* 换季 → 非当季作物枯萎（第 23 轮：杂交作物有两个季） */
       c.dead = true; c.stage = 0; withered++;
       continue;
     }
+    c.a = (c.a | 0) + 1;                 /* 第 23 轮：经过天数（用来算浇水完整度） */
     if(map[i] === T.WATERED){              /* 当天浇过水 → 生长一天 */
       let inc = festivalGrowInc(c);        /* 第 17 轮：春·播种祭当天播种的生长 ×2 */
       /* 第 20 轮：被铱质洒水器浇过 → 有概率当天多长一阶段（默认 30%） */
@@ -3827,7 +4068,11 @@ function basePrice(id){
   if(buy) return buy.price;
   const d = itemDef(id);
   if(!d) return 0;
-  if(d.kind === 'crop'){ const c = cropDef(d.crop); return c ? c.sell : 0; }
+  if(d.kind === 'crop'){
+    /* 第 23 轮：优质作物自带定价（普通 ×1.8）；普通作物没有 price → 走作物表的 sell */
+    if(typeof d.price === 'number') return d.price;
+    const c = cropDef(d.crop); return c ? c.sell : 0;
+  }
   if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' ||
      d.kind === 'animal' || d.kind === 'food') return d.price || 0;
   return 0;
@@ -4022,7 +4267,9 @@ function rollToNextMorning(faint){
   statsDayTick();              /* 第 18 轮：游玩天数 +1 / 年度总结基线 / 成就检查 */
   festivalDayEnd(endedDay);    /* 第 17 轮：渔获赛排名结算 / 清掉昨天的广场装饰 */
   settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
+  soilDayStart();              /* 第 23 轮：土壤肥力每天自然恢复一点 */
   animalDayStart();            /* 第 15 轮：动物成长 / 好感 / 每日产出 */
+  animalBreedStart();          /* 第 23 轮：好感够 + 棚舍有空 → 有概率生一只幼崽 */
   crowDayStart();              /* 第 20 轮：乌鸦可能来啄掉一株成熟作物（稻草人范围内免疫） */
   workerDayStart();            /* 第 20 轮：雇工自动浇水 + 日薪结算 / 罢工判定 */
   questDayStart();             /* 第 16 轮：委托过期 / 刷新新一天的委托 */
@@ -4428,6 +4675,11 @@ const packInfo = document.getElementById('packInfo');
 const packFoot = document.getElementById('packFoot');
 const packTabs = document.getElementById('packTabs');
 const dexGrid  = document.getElementById('dexGrid');
+/* 第 23 轮：背包「整理」按钮 */
+const packSortBtn = document.getElementById('packSort');
+if(packSortBtn && packSortBtn.addEventListener){
+  packSortBtn.addEventListener('click', ()=>{ sortInventory(); toast('背包整理好了'); });
+}
 let packOpen = false;          /* 背包是否打开（打开时 update() 整体冻结 → 时间停住） */
 let held = null;               /* 手上拿着的物品：{id, n, from}（from = 拿起时的格号） */
 let packTab = 'bag';           /* 背包页签：bag 背包 / dex 图鉴（第 14 轮） */
@@ -4509,6 +4761,36 @@ function refreshDexGrid(){
     c.title = got ? e.name : '未发现';
   }
 }
+/* --- 第 23 轮：背包一键整理（按物品 id 排序 + 合并堆叠） --- */
+function sortInventory(){
+  const S = CONFIG.SORT;
+  const n = CONFIG.INVENTORY.SLOTS;
+  const hot = S.KEEP_HOTBAR ? CONFIG.INVENTORY.HOTBAR : 0;
+  if(S.MERGE){
+    /* 同 id 的堆叠并进最靠前的那一格（工具这类不可堆叠的不动） */
+    const first = {};
+    for(let i=0;i<n;i++){
+      const s = inv[i];
+      if(!s) continue;
+      const lim = stackLimit(s.id);
+      if(lim <= 1) continue;
+      if(first[s.id] === undefined){ first[s.id] = i; continue; }
+      const dst = inv[first[s.id]];
+      const take = Math.min(lim - dst.n, s.n);
+      if(take <= 0) continue;
+      dst.n += take;
+      s.n -= take;
+      if(s.n <= 0) inv[i] = null;
+    }
+  }
+  /* 收集要排序的格子（快捷栏保持原位时只收背包区） */
+  const list = [];
+  for(let i=hot;i<n;i++) if(inv[i]) list.push(inv[i]);
+  list.sort((a,b)=> a.id < b.id ? -1 : (a.id > b.id ? 1 : 0));
+  for(let i=hot;i<n;i++) inv[i] = list[i - hot] || null;
+  refreshPackGrid();
+  return true;
+}
 /* 把背包状态刷到格子上 */
 function refreshPackGrid(){
   /* 图鉴页签：只刷图鉴，不碰背包格子 */
@@ -4529,7 +4811,7 @@ function refreshPackGrid(){
   if(packFoot){
     packFoot.textContent = (packMode === 'gift')
       ? '点一格 = 把这件东西送出去 · Esc 取消（今天只能送一次）'
-      : '点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · Esc 关闭';
+      : '点击拾起 · 再点放下（两格之间可交换）· 拖到面板外自动放回 · 「整理」按 id 排序并合并堆叠 · Esc 关闭';
   }
   if(!packGrid || !packGrid.children) return;
   const cells = packGrid.children;
@@ -5109,6 +5391,8 @@ function drawUI(g){
   drawRatingHud(g);
   /* 第 19 轮：加工台提醒（有成品待取 / 正在加工） */
   drawMakerHud(g);
+  /* 第 23 轮：小地图（右上角，评级 / 加工台 HUD 下方） */
+  drawMinimap(g);
 
   /* 建造模式：左侧配方面板 */
   if(buildMode) drawBuildPanel(g, dY + dH + 6);
@@ -5298,6 +5582,39 @@ function drawUI(g){
     g.fillText(hint, VIEW_W/2, 16);
     g.textAlign = 'left';
   }
+
+  /* 第 23 轮：悬停作物 → 显示生长进度（萝卜 · 还需 2 天（已浇水）） */
+  drawCropTip(g);
+}
+
+/* --- 第 23 轮：作物生长进度提示（跟着鼠标的小浮层） --- */
+function drawCropTip(g){
+  if(!mouse.inside) return;
+  const tx = hover.tx, ty = hover.ty;
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return;
+  const c = crops[ty*MAP_W + tx];
+  if(!c) return;
+  const def = cropDef(c.type);
+  if(!def) return;
+  let txt;
+  if(c.dead)       txt = def.name + ' · 已枯萎（用镰刀清理）';
+  else if(c.mature) txt = def.name + ' · 可收获';
+  else{
+    const left = Math.max(0, def.days - c.grown);
+    txt = def.name + ' · 还需 ' + left + ' 天（' + (c.watered ? '已浇水' : '未浇水') + '）';
+  }
+  g.font = '12px ' + FONT_CJK;
+  g.textAlign = 'left'; g.textBaseline = 'top';
+  const w = g.measureText(txt).width;
+  let x = mouse.x + 14, y = mouse.y + 14;
+  if(x + w + 8 > VIEW_W) x = mouse.x - w - 14;
+  if(y + 22 > VIEW_H)  y = mouse.y - 24;
+  if(x < 2) x = 2;
+  if(y < 2) y = 2;
+  g.fillStyle = 'rgba(8,10,16,0.82)';   g.fillRect(x - 5, y - 3, w + 10, 20);
+  g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(x - 5, y - 3, w + 10, 20);
+  g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.fillText(txt, x, y);
 }
 
 /* 睡觉淡入淡出 + 「第 N 天」标题（画在最上层，连网格线一起盖住） */
@@ -5662,6 +5979,8 @@ function serializeState(){
              grown:c.grown|0, watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
     if(c.fastDay) c0.fast = c.fastDay | 0;      /* 第 17 轮：播种祭的加速标记（只有非 0 才写） */
     if(c.irr) c0.irr = 1;                       /* 第 20 轮：铱质洒水器加速标记（只有 true 才写） */
+    if(c.a) c0.a = c.a | 0;                     /* 第 23 轮：经过天数（用来算浇水完整度） */
+    if(c.rc) c0.rc = 1;                         /* 第 23 轮：第几轮结果（番茄可再收） */
     cs.push(c0);
   }
   const rs = [];
@@ -5715,7 +6034,10 @@ function serializeState(){
     /* 第 20 轮新增：雇工 / 采集箱累计 / 乌鸦事件记录 / 结算标记（紧凑结构） */
     end: endgameSerialize(),
     /* 第 21 轮新增：一次性教学提示的已读位掩码（最多 5 位） */
-    tp: tipsSerialize()
+    tp: tipsSerialize(),
+    /* 第 23 轮新增：土壤肥力 + NPC 来访状态（来访人 / 已评分 / 已提示） */
+    soil: Math.round(soilFert),
+    vs: visitSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -5739,6 +6061,8 @@ function deserializeState(d){
                             watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
         if(c.fast) nc.fastDay = Math.max(0, c.fast | 0);   /* 第 17 轮：播种祭加速标记 */
         if(c.irr) nc.irr = 1;                              /* 第 20 轮：铱质洒水器加速标记 */
+        if(c.a) nc.a = c.a | 0;                            /* 第 23 轮：经过天数 */
+        if(c.rc) nc.rc = 1;                                /* 第 23 轮：第几轮结果 */
         crops[y*MAP_W+x] = nc;
       }
     /* 建造物 + 石板路 */
@@ -5846,6 +6170,10 @@ function deserializeState(d){
     makerEatDeserialize(d.eat);        /* 第 19 轮：成品食用次数 */
     endgameDeserialize(d.end);         /* 第 20 轮：雇工 / 采集箱统计 / 乌鸦记录 / 结算标记 */
     tipsDeserialize(d.tp);             /* 第 21 轮：一次性教学提示（老档 → 全部未读） */
+    /* 第 23 轮：土壤肥力 + NPC 来访状态（老存档没这两个字段 → 默认值） */
+    soilFert = (typeof d.soil === 'number') ? clamp(d.soil, CONFIG.QUALITY.SOIL.MIN, CONFIG.QUALITY.SOIL.MAX)
+                                            : CONFIG.QUALITY.SOIL.START;
+    visitDeserialize(d.vs);
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     /* 第 21 轮：图鉴只在背包打开且正停在图鉴页时重建（懒渲染）；
@@ -5958,6 +6286,8 @@ function newGame(){
   endgameResetState();                          /* 第 20 轮：重置雇工 / 乌鸦记录 / 评级面板 / 结算标记 */
   tipsResetState();                             /* 第 21 轮：教学提示重新变成"未读" */
   setInteractHints(CONFIG.INTERACT_HINT.ENABLED, true);   /* 第 22 轮：交互提示恢复默认 */
+  soilFert = CONFIG.QUALITY.SOIL.START;           /* 第 23 轮：土壤肥力归位 */
+  visitState = {day:-1, id:'', done:0, ann:0};    /* 第 23 轮：来访居民重新抽 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -6012,6 +6342,10 @@ function update(dt){
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
+  /* 第 23 轮：小地图每 CONFIG.MINIMAP.REFRESH 秒重绘一次（面板打开时上面已返回 → 一并冻结） */
+  miniTimer -= dt;
+  if(miniTimer <= 0){ rebuildMinimap(); miniTimer = CONFIG.MINIMAP.REFRESH; }
+  visitTick();                       /* 第 23 轮：来访居民的到场提示 */
   if(fishingActive()){
     /* 钓鱼：人站定不动，只推进抛竿/咬钩/拉杆的状态机（面板打开时上面的分支已经提前返回 → 冻结） */
     updateFishing(dt);
@@ -6168,6 +6502,8 @@ function npcUnlockTierIdx(){
 function npcSpot(d){
   const fs = festivalNpcSpot(d);         /* 第 17 轮：秋·丰收节村民都去广场赶集 */
   if(fs) return fs;
+  const vs = visitSpot(d);               /* 第 23 轮：今天来访的居民下午站到农场里 */
+  if(vs) return vs;
   const h = skyHour();
   for(const s of d.sched) if(h >= s.from && h < s.to) return s;
   return null;
@@ -6230,7 +6566,17 @@ function npcOpenDialog(d){
   /* 上次跨档时背包满了、福利没发出去的，再见面时补发（尤其是邻家女孩的稀有种子） */
   npcSyncUnlocks();
   npcDlg.id = d.id;
-  npcDlg.lines = npcPickLines(d);
+  let lines = npcPickLines(d);
+  /* 第 23 轮：来访居民 → 评农场、发金币和种子（一天只发一次） */
+  const vis = visitReward(d);
+  if(vis){
+    const s = vis.score;
+    let txt = '来看看你的农场！' + s.plots + ' 块耕地、' + s.builds + ' 座建筑、' + s.decor +
+              ' 份装饰，评分 ' + s.score + ' 分 —— 给你 ' + vis.gold + ' 金币！';
+    if(vis.seed) txt += ' 再捎上' + vis.seed.name + '。';
+    lines.unshift(txt);
+  }
+  npcDlg.lines = lines;
   npcDlg.idx = 0; npcDlg.shown = 0; npcDlg.typing = true;
   npcOpen = true;
   npcLastText = '';
@@ -6431,6 +6777,94 @@ function npcDayStart(){
   if(b) toast('🎂 今天是 ' + b.name + ' 的生日！送礼物好感翻倍');
 }
 
+/* --- 第 23 轮：NPC 来访农场 ---
+ * 每天随机一位居民下午来农场转转，按「耕地数 + 建造物数 + 装饰物数」评分给金币和种子。 */
+let visitState = {day:-1, id:'', done:0, ann:0};
+/* 按天数挑一位来访居民（同一天永远是同一位） */
+function visitPick(){
+  const list = CONFIG.NPC.LIST;
+  if(!list || !list.length) return '';
+  const h = (Math.imul(clock.day, 2654435761) >>> 0);
+  return list[h % list.length].id;
+}
+/* 换天就换人：状态懒同步（读档 / 新游戏都不用额外挂钩） */
+function visitEnsure(){
+  if(visitState.day !== clock.day){
+    visitState = {day:clock.day, id:visitPick(), done:0, ann:0};
+  }
+  return visitState;
+}
+function visitNpc(){
+  visitEnsure();
+  return visitState.id ? (CONFIG.NPC.LIST.find(d => d.id === visitState.id) || null) : null;
+}
+/* 来访进行中：当天 + 还没评过分 + 到了下午 */
+function visitActive(){
+  visitEnsure();
+  if(!visitState.id || visitState.done) return false;
+  return skyHour() >= CONFIG.VISIT.HOUR_FROM;
+}
+/* 来访站位：下午期间顶掉原来的时刻表位置 */
+function visitSpot(d){
+  if(!d || d.id !== visitState.id) return null;
+  if(!visitActive()) return null;
+  if(skyHour() >= CONFIG.VISIT.HOUR_TO) return null;
+  return {x:FARM.x + CONFIG.VISIT.SPOT.dx, y:FARM.y + CONFIG.VISIT.SPOT.dy,
+          from:CONFIG.VISIT.HOUR_FROM, to:CONFIG.VISIT.HOUR_TO};
+}
+/* 农场评分：耕地数 + 建造物数 + 装饰物（稻草人 / 石板路） */
+function visitScore(){
+  const V = CONFIG.VISIT;
+  const plots = tilledPlots();
+  const builds = buildings.length;
+  let decor = 0;
+  for(const b of buildings) if(b.type === 'scarecrow') decor++;
+  for(let i=0;i<roads.length;i++) if(roads[i]) decor++;
+  const score = plots*V.PLOT + builds*V.BUILD + decor*V.DECOR;
+  return {plots:plots, builds:builds, decor:decor, score:score};
+}
+/* 和来访居民说话 → 结算评分、发奖励（一天只发一次） */
+function visitReward(d){
+  if(!d || d.id !== visitState.id) return null;
+  if(!visitActive()) return null;
+  const V = CONFIG.VISIT;
+  const sc = visitScore();
+  const gold = V.GOLD_BASE + Math.round(sc.score * V.GOLD_PER_POINT);
+  changeGold(gold);
+  let seed = null;
+  if(Math.random() < V.SEED_CHANCE){
+    const pool = CONFIG.SHOP.BUY.filter(b => b.id.indexOf('seed_') === 0);
+    if(pool.length){
+      const pick = pool[(Math.random()*pool.length)|0];
+      if(pick && canFit(pick.id, 1)){ addItem(pick.id, 1); seed = itemDef(pick.id); }
+    }
+  }
+  visitState.done = 1;
+  return {score:sc, gold:gold, seed:seed};
+}
+/* 到场提示：下午第一次触发时弹一次 */
+function visitTick(){
+  visitEnsure();
+  if(visitState.ann) return;
+  if(skyHour() < CONFIG.VISIT.HOUR_FROM) return;
+  visitState.ann = 1;
+  const d = visitNpc();
+  if(d) toast('👋 ' + d.name + '来农场看看了');
+}
+/* 存档 */
+function visitSerialize(){
+  return {d:visitState.day|0, i:visitState.id||'', g:visitState.done?1:0, a:visitState.ann?1:0};
+}
+function visitDeserialize(o){
+  visitState = {day:-1, id:'', done:0, ann:0};
+  if(!o || typeof o !== 'object') return false;
+  if(typeof o.d === 'number') visitState.day = o.d|0;
+  if(typeof o.i === 'string') visitState.id = o.i;
+  if(o.g) visitState.done = 1;
+  if(o.a) visitState.ann = 1;
+  return true;
+}
+
 /* --- 解锁特权：老木匠的建造折扣 --- */
 function npcBuildDiscount(){ return npcState.unlock['carpenter'] ? CONFIG.NPC.CARPENTER_DISCOUNT : 1; }
 /* 当前生效的建造材料价（老木匠打折后） */
@@ -6525,6 +6959,15 @@ function migrate(oldSave){
     if(v < 11){
       /* v10 → v11：补上「交互按键提示」开关。老档默认开启（ih = 1），行为与升级前一致。 */
       if(typeof d.ih !== 'number') d.ih = 1;
+    }
+    if(v < 12){
+      /* v11 → v12：补上「土壤肥力」和「NPC 来访」字段。
+       * 老档的作物没有经过天数（a）→ 品质评分按"没缺过水"算，不惩罚旧存档；
+       * 老档也没有来访记录 → 当天重新挑一位来访居民。 */
+      if(typeof d.soil !== 'number') d.soil = CONFIG.QUALITY.SOIL.START;
+      if(!d.vs || typeof d.vs !== 'object') d.vs = {d:-1, i:'', g:0, a:0};
+      if(Array.isArray(d.crops))
+        for(const c of d.crops){ if(c && typeof c.a !== 'number') c.a = 0; }
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -7114,6 +7557,29 @@ function animalDayStart(){
   if(hungry)   toast(hungry + ' 只动物昨天没吃东西，好感下降了');
   if(full)     toast('背包满了，有 ' + full + ' 份产出没拿到');
   return {produced:produced, hq:hq, hungry:hungry, grew:grew, full:full, boxed:boxed};
+}
+
+/* --- 第 23 轮：动物繁殖（两只同物种好感 ≥ 80 且棚舍有空位 → 每天早晨 5% 概率生一只幼崽） --- */
+function animalBreedStart(){
+  const B = CONFIG.BREED;
+  let born = 0;
+  for(const t of CONFIG.ANIMALS.TYPES){
+    if(born >= B.MAX_PER_DAY) break;
+    if(animalCount(t.id) >= animalCapacity(t.id)) continue;   /* 棚舍满了就生不了 */
+    const parents = animals.filter(a => a.type === t.id && (!B.NEED_MATURE || a.mature) &&
+                                       (a.aff | 0) >= B.AFF_MIN);
+    if(parents.length < 2) continue;                            /* 至少要一公一母… 这里按「两只」算 */
+    if(Math.random() >= B.CHANCE) continue;
+    const home = freeShelter(t.id);
+    if(!home) continue;
+    const baby = makeAnimal(t.id, [home.tx, home.ty]);
+    baby.aff = 0; baby.age = 0; baby.mature = false;           /* 幼崽：好感从 0 开始 */
+    animals.push(baby);
+    born++;
+    toast('🐣 ' + t.name + '生了一只幼崽！');
+    playSfx(1046, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);
+  }
+  return born;
 }
 
 /* --- 走动 AI：随机方向走，撞到栅栏 / 建筑 / 超出棚舍范围就停下换方向 --- */
@@ -8259,6 +8725,27 @@ function achUnlock(i){
 }
 
 /* --- 右上角解锁卡片（跟着世界一起冻结，不阻塞操作） --- */
+/* 第 23 轮：小地图画在画布右上角（随缩放移动），卡片是视口定位（固定）——
+   窗口一窄两者就可能撞上。撞上时把卡片挪到小地图下面，不改动卡片本身。 */
+function layoutAchCard(){
+  if(!achCard) return;
+  const r = canvas.getBoundingClientRect();
+  const M = CONFIG.MINIMAP;
+  const sc = r.width / VIEW_W;
+  const mini = {
+    left: r.left + (VIEW_W - M.SIZE - M.MARGIN) * sc,
+    right: r.left + (VIEW_W - M.MARGIN) * sc,
+    top: r.top + M.TOP * sc,
+    bottom: r.top + (M.TOP + M.SIZE) * sc
+  };
+  const cw = achCard.offsetWidth || 111;
+  const cardLeft = window.innerWidth - 14 - cw;
+  const cardRight = window.innerWidth - 14;
+  const hit = (cardLeft < mini.right && cardRight > mini.left &&
+               70 < mini.bottom && 110 > mini.top);
+  achCard.style.top = hit ? Math.round(mini.bottom + 8) + 'px' : '70px';
+}
+window.addEventListener('resize', layoutAchCard);
 function achWorldFrozen(){
   return !!(startMenuOpen || sysOpen || paused || npcOpen || packOpen || shopOpen || chestOpen ||
             animalOpen || questOpen || calOpen || achOpen || annualOpen || ratingOpen ||
@@ -8273,6 +8760,7 @@ function achShowNextCard(){
   if(achCardIcon) achCardIcon.textContent = a.icon;
   if(achCardName) achCardName.textContent = a.name;
   if(achCardDesc) achCardDesc.textContent = a.desc;
+  layoutAchCard();
   achCard.classList.add('show');
   return true;
 }
@@ -9353,6 +9841,15 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
   applyRain, updateStats, recountTilled,
   cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse,
+  /* 第 23 轮：品质 / 土壤肥力 / 杂交 / 整理 / 小地图 / 悬停提示 */
+  allCropDefs, cropSeasons, cropQuality,
+  get soilFert(){ return soilFert; }, set soilFert(v){ soilFert = v; },
+  soilAdd, soilRotate, soilHarvest, soilDayStart,
+  hybridRecipe, hybridCheck,
+  sortInventory, drawCropTip,
+  get miniTimer(){ return miniTimer; }, set miniTimer(v){ miniTimer = v; },
+  get miniReady(){ return miniReady; },
+  rebuildMinimap, drawMinimap, minimapTileColor,
   SHOP_POS, FARM,
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */
   ensureAudio, audioCtx, audioMuted:()=>audioMuted, setMuted, toggleMute,
@@ -9379,6 +9876,10 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   npcStartGift, npcGiftPick, npcAddAff, npcUnlock, npcSyncUnlocks, npcDayStart,
   npcBuildDiscount, buildCost, npcShopBonusLeft,
   npcSerialize, npcDeserialize, npcResetState, migrate, migrateSave, drawNpc,
+  /* 第 23 轮：NPC 来访农场 */
+  get visitState(){ return visitState; }, set visitState(v){ visitState = v; },
+  visitPick, visitEnsure, visitNpc, visitActive, visitSpot, visitScore, visitReward,
+  visitTick, visitSerialize, visitDeserialize,
   /* 第 14 轮：钓鱼 / 采集 / 图鉴 */
   get dexState(){ return dexState; },
   get fishing(){ return fishing; },
@@ -9397,6 +9898,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   animalType, animalShelterDef, shelterList, animalCount, animalCapacity, animalsInShelter,
   freeShelter, animalHqChance, animalSpotNear, makeAnimal, buyAnimal, animalDayStart,
   animalPickDir, animalStep, updateAnimals, animalNear, animalDist,
+  animalBreedStart,
   animalOpenPanel, animalClosePanel, animalRenderPanel, animalPet, animalFeed, animalRelease,
   drawAnimal, animalSerialize, animalDeserialize, animalResetState,
   drawCoop, drawBarn,
@@ -9439,10 +9941,11 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   get annualInfo(){ return annualInfo; },
   get annualPending(){ return annualPending; },
   ACHIEVEMENT: CONFIG.ACHIEVEMENT, YEAR_DAYS, STATS_KEYS,
+  get statsState(){ return statsState; },
   statsZero, statsZeroArray, statsSerialize, statsDeserialize, statsResetState, statsDailyIncome,
   statsIncome, statsHarvest, statsFish, statsBuild, statsAff, statsGift, statsSell, statsSleep, statsDayTick,
   achPopcount, achValue, achCheck, achUnlock, achHasUnlocked, achCount, achFriends,
-  achWorldFrozen, achTickCard, achShowNextCard,
+  achWorldFrozen, achTickCard, achShowNextCard, layoutAchCard,
   achSerialize, achDeserialize, achResetState, achRenderWall, achBuildTabs,
   achOpenPanel, achClosePanel, toggleAchPanel,
   statsYearCheck, annualOpenPanel, annualClosePanel,

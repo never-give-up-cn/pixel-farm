@@ -478,6 +478,46 @@
   .arline .arv{color:#ffd76a}
   #annualBtns{display:flex;justify-content:flex-end}
   #annualFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* ---------- 第 19 轮：加工台面板（复用 .panel 视觉，只追加不改旧规则） ---------- */
+  #maker.open #makerPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #maker.closing #makerPanel{animation:panelOut .2s ease-in forwards}
+  #maker.closing{display:flex}
+  #maker{
+    position:fixed;inset:0;z-index:47;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #maker.open{display:flex}
+  #makerMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #makerPanel{position:relative;width:500px;max-width:92vw;padding:12px 14px 10px}
+  #makerHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #makerIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #makerTitle{font-size:15px;color:#ffd76a}
+  #makerStatus{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #makerOut{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+  #makerOut:empty{display:none}
+  #makerList{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:5px}
+  .mrow{
+    display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+  }
+  .mrow .mico{font:17px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif;width:22px;text-align:center}
+  .mrow .minfo{flex:1;min-width:0}
+  .mrow .mname{color:#e8f0ff;font-size:12.5px}
+  .mrow .mmeta{color:#8fa3bd;font-size:11px}
+  .mrow .mmeta em{font-style:normal;color:#ffd76a}
+  .mrow .mbtn{font-size:11.5px;padding:3px 9px;white-space:nowrap}
+  .mrow .mbtn.off{opacity:.45;cursor:not-allowed}
+  .mrow.locked .mico{filter:grayscale(1);opacity:.5}
+  .mout{
+    display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;
+    background:rgba(255,215,106,.10);border:1px solid #6b5a2a;
+  }
+  .mout .mico{font:17px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif;width:22px;text-align:center}
+  .mout .minfo{flex:1;min-width:0}
+  .mout .mname{color:#ffe9b0;font-size:12.5px}
+  .mout .mmeta{color:#8fa3bd;font-size:11px}
+  #makerFoot{margin-top:8px;font-size:11px;color:#7f92ad}
   /* 送礼模式：背包面板要压到对话面板之上（否则会被对话的遮罩盖住点不到） */
   #pack.gift{z-index:48}
   /* 送礼模式：背包面板顶部提示条 */
@@ -729,6 +769,21 @@
   </div>
 </div>
 
+<!-- 加工台（第 19 轮）：靠近按 E 打开；复用 .panel 样式与开合动画，打开时世界冻结 -->
+<div id="maker">
+  <div id="makerMask"></div>
+  <div id="makerPanel" class="panel">
+    <div id="makerHead">
+      <span id="makerIcon">🏭</span>
+      <span id="makerTitle">加工台</span>
+      <span id="makerStatus">空闲</span>
+    </div>
+    <div id="makerOut"></div>
+    <div id="makerList"></div>
+    <div id="makerFoot">选配方投入 · 加工按游戏时间推进（睡觉也会完成） · Esc 关闭</div>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -922,7 +977,9 @@ const CONFIG = {
       { id:'sprinkler', name:'洒水器', cost:{wood:5, stone:5} },               // 每天早上浇 3×3
       /* 第 15 轮：动物棚舍（实体，挡路；里面还有动物时拆除会被拦下） */
       { id:'coop',      name:'鸡舍',   cost:{wood:12},          solid:true  },  // 住 4 只鸡
-      { id:'barn',      name:'牛棚',   cost:{wood:20, stone:6}, solid:true  }   // 住 3 头牛
+      { id:'barn',      name:'牛棚',   cost:{wood:20, stone:6}, solid:true  },  // 住 3 头牛
+      /* 第 19 轮：加工台（把原料做成高价成品；可以放多台，各自独立工作） */
+      { id:'maker',     name:'加工台', cost:{wood:10, stone:5}, solid:true  }
     ]
   },
 
@@ -932,7 +989,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 7,               // 存档版本号（第 18 轮 +1：新增 st 统计 / ach 成就；旧档由 migrate() 升级）
+    VERSION: 8,               // 存档版本号（第 19 轮 +1：加工台 job/out 随 buildings 存档；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1014,8 +1071,29 @@ const CONFIG = {
     // 优质蛋：好感越高越容易出（售价 = 鸡蛋 ×1.8）
     milk:      { id:'milk',      name:'牛奶',   icon:'🥛', stack:true, max:99, kind:'animal', price:60 },
     // 牛奶：牛每天产
-    milk_hq:   { id:'milk_hq',   name:'优质奶', icon:'🥛', stack:true, max:99, kind:'animal', price:108 }
+    milk_hq:   { id:'milk_hq',   name:'优质奶', icon:'🥛', stack:true, max:99, kind:'animal', price:108 },
     // 优质奶：好感越高越容易出（售价 = 牛奶 ×1.8）
+    /* 第 19 轮：加工成品（kind='food'：能卖、能送人；右键吃一份可回体力，每天限 3 次）
+     * price 经过平衡：成品售价比原料总价高 60%~120% */
+    cake:          { id:'cake',          name:'蛋糕',     icon:'🍰', stack:true, max:99, kind:'food', price:150 },
+    // 蛋糕：鸡蛋 + 牛奶
+    ketchup:       { id:'ketchup',       name:'番茄酱',   icon:'🥫', stack:true, max:99, kind:'food', price:230 },
+    // 番茄酱：番茄 ×3
+    pumpkin_pie:   { id:'pumpkin_pie',   name:'南瓜派',   icon:'🥧', stack:true, max:99, kind:'food', price:450 },
+    // 南瓜派：南瓜 ×2 + 鸡蛋
+    charcoal:      { id:'charcoal',      name:'木炭',     icon:'⚫', stack:true, max:99, kind:'food', price:34 },
+    // 木炭：木材 ×5（一次出 2 个）
+    cheese:        { id:'cheese',        name:'奶酪',     icon:'🧀', stack:true, max:99, kind:'food', price:200 },
+    // 奶酪：牛奶 ×2
+    jam:           { id:'jam',           name:'果酱',     icon:'🍯', stack:true, max:99, kind:'food', price:150 },
+    // 果酱：浆果 ×4
+    pickled_radish:{ id:'pickled_radish',name:'腌萝卜',   icon:'🥬', stack:true, max:99, kind:'food', price:180 },
+    // 腌萝卜：萝卜 ×3
+    dried_fish:    { id:'dried_fish',    name:'鱼干',     icon:'🐟', stack:true, max:99, kind:'food', price:100 },
+    // 鱼干：鲫鱼 ×2
+    mushroom_soup: { id:'mushroom_soup', name:'蘑菇浓汤', icon:'🍲', stack:true, max:99, kind:'food', price:240 },
+    // 蘑菇浓汤：蘑菇 ×3 + 牛奶
+    woodcarving:   { id:'woodcarving',   name:'木雕',     icon:'🗿', stack:true, max:99, kind:'food', price:110 }
   },
 
   /* 工具行为表：名字/图标在 ITEMS 表，这里只管「作用在什么地块、产出什么」
@@ -1409,6 +1487,43 @@ const CONFIG = {
     ]
   },
 
+  /* ---------- 加工台（第 19 轮）：把低价原料变成高价成品 ----------
+   * 加工时间按游戏时间推进（睡觉跨夜也照算）；每台加工台各自独立工作。
+   * 利润率的验收口径：(成品基础价 × 数量 − 原料基础价总和) / 原料基础价总和 */
+  RECIPE: {
+    RANGE: 1.6,                // 离加工台多近能按 E 打开（格）
+    OUT_SLOTS: 4,              // 加工台产出槽能放几种成品
+    STACK_MAX: 99,             // 产出槽里单种成品最多堆多少
+    EAT_PER_DAY: 3,            // 成品每天最多吃几次（回体力）
+    EAT_STAMINA: 25,           // 每吃一份成品恢复多少体力
+    PROFIT_MIN: 0.6,           // 成品利润率下限（验收自检用，60%）
+    PROFIT_MAX: 1.2,           // 成品利润率上限（验收自检用，120%）
+    /* 配方表：inputs = 原料 / out = 成品 / hours = 游戏小时
+     * unlock：null = 一开始就会；{type:'aff',npc,min} = 好感解锁；{type:'ach',id} = 成就解锁 */
+    LIST: [
+      {id:'cake',           name:'蛋糕',     icon:'🍰', inputs:{egg:1, milk:1},           out:{id:'cake', n:1},           hours:3, unlock:null},
+      // 蛋糕：鸡蛋 + 牛奶（新手就会）
+      {id:'ketchup',        name:'番茄酱',   icon:'🥫', inputs:{tomato:3},                out:{id:'ketchup', n:1},        hours:2, unlock:null},
+      // 番茄酱：番茄 ×3
+      {id:'pumpkin_pie',    name:'南瓜派',   icon:'🥧', inputs:{pumpkin:2, egg:1},        out:{id:'pumpkin_pie', n:1},    hours:4, unlock:null},
+      // 南瓜派：南瓜 ×2 + 鸡蛋
+      {id:'charcoal',       name:'木炭',     icon:'⚫', inputs:{wood:5},                  out:{id:'charcoal', n:2},       hours:2, unlock:null},
+      // 木炭：木材 ×5 → 木炭 ×2
+      {id:'cheese',         name:'奶酪',     icon:'🧀', inputs:{milk:2},                  out:{id:'cheese', n:1},         hours:3, unlock:null},
+      // 奶酪：牛奶 ×2
+      {id:'pickled_radish', name:'腌萝卜',   icon:'🥬', inputs:{radish:3},                out:{id:'pickled_radish', n:1}, hours:2, unlock:null},
+      // 腌萝卜：萝卜 ×3
+      {id:'jam',            name:'果酱',     icon:'🍯', inputs:{berry:4},                 out:{id:'jam', n:1},            hours:3, unlock:{type:'aff', npc:'aunt',      min:60}},
+      // 果酱：浆果 ×4（老板娘成为朋友后解锁）
+      {id:'dried_fish',     name:'鱼干',     icon:'🐟', inputs:{fish_crucian:2},          out:{id:'dried_fish', n:1},     hours:3, unlock:{type:'ach', id:'fish_first'}},
+      // 鱼干：鲫鱼 ×2（钓到第一条鱼后解锁）
+      {id:'mushroom_soup',  name:'蘑菇浓汤', icon:'🍲', inputs:{mushroom:3, milk:1},      out:{id:'mushroom_soup', n:1},  hours:4, unlock:{type:'ach', id:'gather_all'}},
+      // 蘑菇浓汤：蘑菇 ×3 + 牛奶（集齐采集物后解锁）
+      {id:'woodcarving',    name:'木雕',     icon:'🗿', inputs:{wood:8},                  out:{id:'woodcarving', n:1},    hours:4, unlock:{type:'aff', npc:'carpenter', min:60}}
+      // 木雕：木材 ×8（老木匠成为朋友后解锁）
+    ]
+  },
+
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
   BALANCE: {
     EXPANSION_GOLD: 500,    // 扩建地标价（自检参照目标）
@@ -1797,12 +1912,43 @@ function drawBarn(g,x,y){
   g.fillRect(x+12, y+18, 8, 1); g.fillRect(x+12, y+26, 8, 1);
   g.fillRect(x+15, y+18, 1, 9);
 }
+/* 第 19 轮：加工台 —— 木桌 + 台钳 + 冒烟的炉口；加工中显示进度条，有产出时头顶冒 ✓ */
+function drawMaker(g,x,y,b){
+  const C = CONFIG.TILE_COLORS;
+  const job = b && b.job, ready = b && b.out && b.out.length > 0;
+  /* 影子 */
+  g.fillStyle = 'rgba(0,0,0,.20)'; g.fillRect(x+2, y+28, 28, 3);
+  /* 四条桌腿 + 桌面 */
+  g.fillStyle = '#5b3a1d';
+  g.fillRect(x+5, y+20, 3, 9); g.fillRect(x+24, y+20, 3, 9);
+  g.fillStyle = C.fenceRailDark || '#6a4520'; g.fillRect(x+2, y+15, 28, 6);
+  g.fillStyle = C.fenceRail || '#8a5a2b';     g.fillRect(x+2, y+15, 28, 3);
+  /* 台面工具：砧板 + 齿轮 */
+  g.fillStyle = '#c9b58c'; g.fillRect(x+7, y+11, 9, 4);
+  g.fillStyle = '#9aa1a9'; g.fillRect(x+18, y+9, 7, 7);
+  g.fillStyle = '#63696f'; g.fillRect(x+20, y+11, 3, 3);
+  /* 炉口：加工中冒火星 */
+  g.fillStyle = '#3a2a1a'; g.fillRect(x+9, y+21, 14, 7);
+  g.fillStyle = job ? '#ff9a3a' : '#6b4a2a';
+  g.fillRect(x+12, y+23, 8, 4);
+  if(job){
+    const p = 1 - Math.max(0, job.left) / Math.max(1, job.total);
+    g.fillStyle = '#2a1a10'; g.fillRect(x+2, y+1, 28, 4);
+    g.fillStyle = '#ffd76a'; g.fillRect(x+3, y+2, Math.max(1, Math.round(26 * p)), 2);
+  }
+  if(ready){
+    g.font = '12px ' + FONT_EMOJI; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.fillText('✅', x + TILE/2, y - 4);
+    g.textAlign = 'left'; g.textBaseline = 'top';
+  }
+}
 function drawBuilding(g,b,x,y){
   if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(b.type === 'coop') drawCoop(g,x,y);
   else if(b.type === 'barn') drawBarn(g,x,y);
+  else if(b.type === 'maker') drawMaker(g,x,y,b);
 }
 /* 石板路：半透明地铺在地面上（底下是耕地也照样能看见犁沟） */
 function drawRoadTile(g,x,y){
@@ -2108,6 +2254,7 @@ function drawBuildPreview(g){
   else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(r.id === 'coop')      drawCoop(g,x,y);
   else if(r.id === 'barn')      drawBarn(g,x,y);
+  else if(r.id === 'maker')     drawMaker(g,x,y,null);
   g.globalAlpha = 1;
   g.strokeStyle = p.ok ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
   g.lineWidth = 2;
@@ -2140,6 +2287,11 @@ function drawBuildIcon(g,id,x,y){
     g.fillStyle = C.barnWall;  g.fillRect(x+2, y+4, 10, 9);
     g.fillStyle = C.barnTrim;  g.fillRect(x+5, y+6, 4, 7);
     g.fillStyle = C.barnWallDark; g.fillRect(x+6, y+7, 2, 5);
+  }else if(id === 'maker'){
+    g.fillStyle = '#8a5a2b'; g.fillRect(x+2, y+5, 10, 3);      /* 桌面 */
+    g.fillStyle = '#5b3a1d'; g.fillRect(x+3, y+8, 2, 5); g.fillRect(x+9, y+8, 2, 5);
+    g.fillStyle = '#9aa1a9'; g.fillRect(x+8, y+2, 4, 3);       /* 小齿轮 */
+    g.fillStyle = '#ff9a3a'; g.fillRect(x+5, y+10, 4, 2);      /* 炉口 */
   }
 }
 /* 建造面板（左侧）：配方 + 材料够不够 */
@@ -2475,6 +2627,7 @@ function placeBuilding(tx,ty){
   }else{
     const b = {type:r.id, tx:tx, ty:ty};
     if(r.id === 'chest') b.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+    if(r.id === 'maker'){ b.job = null; b.out = []; }   /* 第 19 轮：加工台自己的活儿与产出槽 */
     buildings.push(b);
     buildIndex[ty*MAP_W+tx] = buildings.length - 1;
   }
@@ -2511,6 +2664,12 @@ function demolishAt(tx,ty){
   }
   if(b.type === 'chest' && b.slots && b.slots.some(s => s)){
     toast('木箱里有东西，先清空再拆');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  /* 第 19 轮：加工台正在加工 / 还有产出 → 先取走再拆，避免成品凭空消失 */
+  if(b.type === 'maker' && (b.job || (b.out && b.out.length))){
+    toast(b.job ? '加工台还在工作，先等它做完' : '加工台里还有成品，先取走再拆');
     playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
     return false;
   }
@@ -3234,7 +3393,8 @@ function basePrice(id){
   const d = itemDef(id);
   if(!d) return 0;
   if(d.kind === 'crop'){ const c = cropDef(d.crop); return c ? c.sell : 0; }
-  if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' || d.kind === 'animal') return d.price || 0;
+  if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' ||
+     d.kind === 'animal' || d.kind === 'food') return d.price || 0;
   return 0;
 }
 /* 当前价格（含季节系数与 ±15% 浮动） */
@@ -3259,7 +3419,7 @@ function isSellable(id){
   const d = itemDef(id);
   if(!d) return false;
   return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' ||
-         d.kind === 'gather' || d.kind === 'animal';
+         d.kind === 'gather' || d.kind === 'animal' || d.kind === 'food';
 }
 /* 工具是否已经拥有（一次性商品） */
 function toolOwned(id){
@@ -3374,6 +3534,7 @@ function updateClock(dt){
     return;
   }
   clock.min += dt * GAME_MIN_PER_SEC;
+  makerAdvance(dt * GAME_MIN_PER_SEC, false);   /* 第 19 轮：加工台按游戏时间推进 */
   if(clock.min >= DAY_SPAN_MIN){
     clock.min = DAY_SPAN_MIN;                  /* 停在 02:00 */
     clock.hold = CONFIG.DAY_END_HOLD;
@@ -3420,7 +3581,9 @@ function triggerFaint(){
 /* 翻到第二天早上：结算作物生长 → 重置浇水 → 恢复体力 */
 function rollToNextMorning(faint){
   const endedDay = clock.day;  /* 第 17 轮：先记下「刚过完的那一天」 */
+  const nightMin = Math.max(0, 24*60 - clock.min);   /* 第 19 轮：睡到次日 6:00 经过的游戏分钟 */
   clock.day++; clock.min = 0; clock.hold = 0;
+  makerAdvance(nightMin, true);  /* 第 19 轮：睡觉时加工照常推进（跨夜直接完成） */
   statsDayTick();              /* 第 18 轮：游玩天数 +1 / 年度总结基线 / 成就检查 */
   festivalDayEnd(endedDay);    /* 第 17 轮：渔获赛排名结算 / 清掉昨天的广场装饰 */
   settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
@@ -3639,6 +3802,11 @@ window.addEventListener('keydown', e=>{
     if((k === 'e' || k === ' ') && !e.repeat){ calClosePanel(); ensureAudio(); }
     return;
   }
+  /* 加工台：E / 空格 / Esc 关闭，其它键一律忽略（打开时世界冻结） */
+  if(makerOpen && k !== 'escape'){
+    if((k === 'e' || k === ' ') && !e.repeat){ makerClosePanel(); ensureAudio(); }
+    return;
+  }
   /* 成就墙 / 年度总结：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
   if((achOpen || annualOpen) && k !== 'escape') return;
   /* 背包：Tab / I 打开，Esc 关闭 */
@@ -3650,6 +3818,7 @@ window.addEventListener('keydown', e=>{
     if(questOpen){ questClosePanel(); return; }
     if(animalOpen){ animalClosePanel(); return; }
     if(chestOpen){ toggleChest(false); return; }
+    if(makerOpen){ makerClosePanel(); return; }
     if(shopOpen){ toggleShop(false); return; }
     if(packOpen){ togglePack(false); if(packMode === 'gift'){ packMode = 'normal'; giftTarget = null; refreshPackGrid(); } return; }
     if(npcOpen){ npcCloseDialog(); return; }
@@ -3663,6 +3832,7 @@ window.addEventListener('keydown', e=>{
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
   if(chestOpen) return;             /* 木箱打开时其它按键一律忽略 */
+  if(makerOpen) return;             /* 加工台打开时其它按键一律忽略 */
   if(sleepFx.phase !== 'none') return;   /* 睡觉/昏睡中：其它按键一律忽略 */
   /* 钓鱼中：左键 / 空格 = 收杆，其它键一律忽略（Tab 已在上面打开背包 → 钓鱼随之冻结） */
   if(fishingActive()){
@@ -3681,9 +3851,11 @@ window.addEventListener('keydown', e=>{
     if(!e.repeat){
       const c = chestNear();
       const n = npcNear();
+      const mk = makerNear();
       if(n) npcOpenDialog(n);                    /* 人在旁边 → 先跟人说话 */
       else if(nearHouse()) startSleep(false);
       else if(c){ openChest = c; toggleChest(true); }
+      else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
       else if(nearShop()) toggleShop();
       else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
@@ -3727,7 +3899,7 @@ canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1;
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
-     achOpen || annualOpen) return;
+     achOpen || annualOpen || makerOpen) return;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */
   if(e.button === 0 && hitHudDate(p)){ ensureAudio(); toggleCalendar(); return; }
@@ -3748,7 +3920,14 @@ canvas.addEventListener('mousedown', e=>{
     placeBuilding(tx,ty);
     return;
   }
-  if(e.button === 2){ ensureAudio(); refillCan(); return; }
+  if(e.button === 2){
+    ensureAudio();
+    /* 第 19 轮：手持成品 → 右键吃一份回体力（每天限 3 次）；否则还是给水壶补水 */
+    const selFood = selectedSlot();
+    const fd = selFood ? itemDef(selFood.id) : null;
+    if(fd && fd.kind === 'food'){ eatFood(selFood.id); return; }
+    refillCan(); return;
+  }
   if(e.button !== 0) return;
   ensureAudio();
   /* 点在快捷栏上 → 选中那一格，不算使用工具 */
@@ -4469,6 +4648,8 @@ function drawUI(g){
   /* 第 17 轮：日历入口（点这块区域打开） */
   g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
   g.fillText('📅', 8 + dW - 22, dY + 4);
+  /* 第 19 轮：加工台提醒（有成品待取 / 正在加工） */
+  drawMakerHud(g);
 
   /* 建造模式：左侧配方面板 */
   if(buildMode) drawBuildPanel(g, dY + dH + 6);
@@ -4602,6 +4783,21 @@ function drawUI(g){
     g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, hy);
+  }
+
+  /* 走到加工台旁边 → 提示按 E 加工（第 19 轮） */
+  const mkHint = (!makerOpen && !shopOpen && !npcOpen && !animalOpen && !chestOpen) ? makerNear() : null;
+  if(mkHint){
+    const mx = mkHint.tx*TILE - cam.x + TILE/2, my = mkHint.ty*TILE - cam.y - 16;
+    const hint = mkHint.job ? '按 E 看加工进度' : (mkHint.out && mkHint.out.length ? '按 E 取成品' : '按 E 加工');
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = mx - hw/2;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, my - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, my - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, my);
   }
 
   /* 左下角：体力条（低于 20 变红闪烁） */
@@ -4942,8 +5138,15 @@ function serializeState(){
     weather: weather.id,
     map: mapDiff(),
     crops: cs,
-    buildings: buildings.map(b => ({type:b.type, x:b.tx, y:b.ty,
-      slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null})),
+    buildings: buildings.map(b => {
+      const o = {type:b.type, x:b.tx, y:b.ty,
+        slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null};
+      if(b.type === 'maker'){                 /* 第 19 轮：加工台剩余时间 + 产出槽 */
+        if(b.job) o.j = {r:b.job.rid, t:Math.max(0, Math.round(b.job.left))};
+        if(b.out && b.out.length) o.o = b.out.map(s => ({id:s.id, n:s.n}));
+      }
+      return o;
+    }),
     roads: rs,
     inv: inv.map((s,i)=> s ? {slot:i, id:s.id, n:s.n} : null).filter(Boolean),
     /* 第 12 轮新增（可选字段，老存档没有也能读）：新手引导进度 + 静音状态 */
@@ -4962,7 +5165,9 @@ function serializeState(){
     fest: festivalSerialize(),
     /* 第 18 轮新增：统计（16 个数字的紧凑数组）+ 成就（一个 32 位掩码） */
     st: statsSerialize(),
-    ach: achSerialize()
+    ach: achSerialize(),
+    /* 第 19 轮新增：成品食用次数（每天限 3 次） */
+    eat: makerEatSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -5004,6 +5209,24 @@ function deserializeState(d){
               const s = b.slots[k];
               if(s && CONFIG.ITEMS[s.id]) nb.slots[k] = {id:s.id, n:s.n|0};
             }
+        }
+        if(b.type === 'maker'){                 /* 第 19 轮：恢复剩余时间与产出槽 */
+          nb.job = null; nb.out = [];
+          if(b.j && typeof b.j === 'object'){
+            const rd = recipeDef(b.j.r);
+            if(rd){
+              const total = rd.hours * 60;
+              nb.job = {rid:rd.id, left:clamp(Number(b.j.t) || 0, 0, total), total:total};
+            }
+          }
+          if(Array.isArray(b.o))
+            for(const s of b.o){
+              if(!s || !CONFIG.ITEMS[s.id]) continue;
+              if(nb.out.length >= CONFIG.RECIPE.OUT_SLOTS) break;
+              const n = s.n | 0;
+              if(n > 0) nb.out.push({id:s.id, n:n});
+            }
+          if(nb.job && nb.job.left <= 0) makerFinish(nb, true);   /* 存档时刚好做完 → 读档即完成 */
         }
         buildings.push(nb);
         buildIndex[y*MAP_W+x] = buildings.length - 1;
@@ -5068,6 +5291,7 @@ function deserializeState(d){
     /* 统计 / 成就（老存档没这两个字段 → 统计从 0 开始、成就未解锁；不报错） */
     statsDeserialize(d.st);
     achDeserialize(d.ach);
+    makerEatDeserialize(d.eat);        /* 第 19 轮：成品食用次数 */
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     refreshDexGrid();
@@ -5173,6 +5397,7 @@ function newGame(){
   festivalResetState();                         /* 新游戏：清空节日状态 / 横幅 / 环境音 */
   statsResetState();                            /* 第 18 轮：统计从 0 开始（第 1 天算 1 天） */
   achResetState();                              /* 第 18 轮：成就全部重新解锁 */
+  makerResetState();                            /* 第 19 轮：关闭加工台面板 / 清空食用次数 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -5208,6 +5433,7 @@ function update(dt){
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
+  if(makerOpen) return;              /* 加工台打开：同样整体冻结（时间停住，加工也不走） */
   if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */
   if(questOpen) return;              /* 委托板打开：同样整体冻结（时间停住） */
   if(calOpen) return;                /* 日历打开：同样整体冻结（时间停住） */
@@ -5707,6 +5933,11 @@ function migrate(oldSave){
        * 成就全部未解锁；之后的行为从现在起正常累计。 */
       if(!Array.isArray(d.st) || d.st.length < 16) d.st = statsZeroArray();
       if(!d.ach || typeof d.ach !== 'object') d.ach = {u:0};
+    }
+    if(v < 8){
+      /* v7 → v8：加工台状态随 buildings 的 job/out 可选字段一起存（老档没有加工台，无需补字段）；
+       * 补上成品食用次数，避免旧档读入后 undefined。 */
+      if(!d.eat || typeof d.eat !== 'object') d.eat = {d:-1, n:0};
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -7583,6 +7814,367 @@ if(annualMaskEl) annualMaskEl.addEventListener('mousedown', e=>{ e.preventDefaul
 if(annualCloseBtn) annualCloseBtn.addEventListener('click', ()=>annualClosePanel());
 achBuildTabs();
 
+/* === 21.加工台（第 19 轮） ===
+ * 建造配方 maker（木 10 + 石 5）→ 走近按 E 打开面板 → 选配方投入原料
+ * → 加工按游戏时间推进（睡觉跨夜也推进）→ 成品进加工台产出槽 → 点「取走」回背包。
+ * 每台加工台各自独立（job / out 挂在自己的 building 上），可以同时开工互不影响。 */
+const makerEl      = document.getElementById('maker');
+const makerMaskEl  = document.getElementById('makerMask');
+const makerStatusEl= document.getElementById('makerStatus');
+const makerOutEl   = document.getElementById('makerOut');
+const makerListEl  = document.getElementById('makerList');
+let makerOpen = false;            /* 面板是否打开（打开时 update() 整体冻结） */
+let openMaker = null;             /* 当前打开的加工台（buildings 里的那一条） */
+const makerEat = {day:-1, n:0};   /* 成品食用：哪一天 + 今天吃了几次 */
+
+function recipeDef(id){
+  if(typeof id === 'number') return CONFIG.RECIPE.LIST[id] || null;
+  if(typeof id === 'string') return CONFIG.RECIPE.LIST.find(r => r.id === id) || null;
+  return null;
+}
+function recipeInputText(r){
+  const parts = [];
+  for(const id in r.inputs) parts.push(itemDef(id).name + '×' + r.inputs[id]);
+  return parts.join(' + ');
+}
+function recipeOutText(r){
+  const d = itemDef(r.out.id);
+  return (d ? d.name : r.out.id) + '×' + r.out.n;
+}
+/* 利润率：(成品基础价 × 数量 − 原料基础价总和) / 原料基础价总和 */
+function recipeProfit(r){
+  let cost = 0;
+  for(const id in r.inputs) cost += basePrice(id) * r.inputs[id];
+  const out = basePrice(r.out.id) * r.out.n;
+  return cost > 0 ? (out - cost) / cost : 0;
+}
+function recipeProfitText(r){ return Math.round(recipeProfit(r) * 100) + '%'; }
+/* 解锁条件：null = 已解锁；好感 / 成就两类 */
+function recipeUnlockInfo(r){
+  if(!r || !r.unlock) return {ok:true, text:''};
+  const u = r.unlock;
+  if(u.type === 'aff'){
+    const d = npcDef(u.npc);
+    const aff = npcAff(u.npc);
+    return {ok: aff >= u.min, text:(d ? d.name : u.npc) + ' 好感 ' + u.min + '（当前 ' + aff + '）'};
+  }
+  if(u.type === 'ach'){
+    const i = CONFIG.ACHIEVEMENT.LIST.findIndex(a => a.id === u.id);
+    const a = CONFIG.ACHIEVEMENT.LIST[i];
+    return {ok: achHasUnlocked(i), text:'成就「' + (a ? a.name : u.id) + '」'};
+  }
+  return {ok:true, text:''};
+}
+function recipeUnlocked(r){ return recipeUnlockInfo(r).ok; }
+/* 缺哪些原料 */
+function recipeMissing(r){
+  const out = [];
+  for(const id in r.inputs){
+    const need = r.inputs[id], have = countItem(id);
+    if(have < need) out.push({id:id, need:need, have:have, lack:need - have});
+  }
+  return out;
+}
+function recipeMissingText(r){
+  return recipeMissing(r).map(m => '缺 ' + itemDef(m.id).name + '×' + m.lack).join('，');
+}
+/* 离玩家最近的加工台（在交互距离内） */
+function makerNear(){
+  let best = null, bd = Infinity;
+  for(const b of buildings){
+    if(b.type !== 'maker') continue;
+    const d = tileCenterDist(b.tx, b.ty);
+    if(d < bd){ bd = d; best = b; }
+  }
+  return (best && bd <= CONFIG.RECIPE.RANGE) ? best : null;
+}
+/* 产出槽还能不能放下 n 个 id（同种先并堆，再占空格） */
+function makerCanStore(b, id, n){
+  if(!b) return false;
+  if(!b.out) b.out = [];
+  const lim = CONFIG.RECIPE.STACK_MAX;
+  let room = 0;
+  for(const s of b.out) if(s.id === id) room += Math.max(0, lim - s.n);   /* 同种先并堆 */
+  const free = CONFIG.RECIPE.OUT_SLOTS - b.out.length;
+  if(free > 0) room += free * lim;                                      /* 再用空槽 */
+  return room >= n;
+}
+function makerStore(b, id, n){
+  if(!b.out) b.out = [];
+  const lim = CONFIG.RECIPE.STACK_MAX;
+  for(const s of b.out){
+    if(s.id !== id || s.n >= lim) continue;
+    const take = Math.min(lim - s.n, n);
+    s.n += take; n -= take;
+    if(n <= 0) return true;
+  }
+  while(n > 0 && b.out.length < CONFIG.RECIPE.OUT_SLOTS){
+    const take = Math.min(lim, n);
+    b.out.push({id:id, n:take});
+    n -= take;
+  }
+  return n <= 0;
+}
+/* 一台完成：把成品放进产出槽 */
+function makerFinish(b, silent){
+  const job = b.job;
+  b.job = null;
+  const r = recipeDef(job && job.rid);
+  if(!r) return false;
+  if(!makerStore(b, r.out.id, r.out.n)){
+    /* 产出槽满：把活儿挂回原位（left=0），等玩家取走后再结算，不会凭空消失 */
+    b.job = {rid:r.id, left:0, total:r.hours * 60};
+    if(!silent) toast('加工台的产出槽满了，先取走成品');
+    return false;
+  }
+  if(!silent){
+    toast('加工完成：' + r.name + '（在加工台里，记得取走）');
+    playSfx(1046, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+  }
+  return true;
+}
+/* 按游戏分钟推进所有加工台（sleep 跨夜时由 rollToNextMorning 调用） */
+function makerAdvance(minutes, silent){
+  const m = Math.max(0, Number(minutes) || 0);
+  if(m <= 0) return 0;
+  let done = 0;
+  for(const b of buildings){
+    if(b.type !== 'maker' || !b.job) continue;
+    if(b.job.left <= 0){
+      /* 上次因为产出槽满而挂起：腾出空位后静默完成，不重复弹提示 */
+      if(makerFinish(b, true)) done++;
+      continue;
+    }
+    b.job.left -= m;
+    if(b.job.left <= 0 && makerFinish(b, silent)) done++;
+  }
+  if(done && makerOpen && openMaker) makerRenderPanel();
+  return done;
+}
+/* 开始加工（rid = 配方 id） */
+function makerStart(rid){
+  const b = openMaker;
+  if(!b || b.type !== 'maker') return false;
+  const r = recipeDef(rid);
+  if(!r){ toast('没有这个配方'); return false; }
+  if(b.job){ toast('这台加工台还在忙，先等它做完'); return false; }
+  const u = recipeUnlockInfo(r);
+  if(!u.ok){
+    toast('还没解锁：需要 ' + u.text);
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  const miss = recipeMissing(r);
+  if(miss.length){
+    toast('材料不足（' + recipeMissingText(r) + '）');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  if(!makerCanStore(b, r.out.id, r.out.n)){
+    toast('产出槽满了，先取走成品');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  for(const id in r.inputs) removeItem(id, r.inputs[id]);
+  b.job = {rid:r.id, left:r.hours * 60, total:r.hours * 60};
+  toast('开始加工：' + r.name + '（' + r.hours + ' 游戏小时）');
+  playSfx(523, 'sine', 0.10, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  updateStats();
+  makerRenderPanel();
+  return true;
+}
+/* 取走产出槽第 i 格 */
+function makerTake(i){
+  const b = openMaker;
+  if(!b || !b.out) return false;
+  const s = b.out[i];
+  if(!s) return false;
+  const d = itemDef(s.id);
+  if(!canFit(s.id, s.n)){ toast('背包放不下' + (d ? d.name : s.id)); return false; }
+  addItem(s.id, s.n);
+  b.out.splice(i, 1);
+  toast('取走 ' + (d ? d.name : s.id) + ' ×' + s.n);
+  playSfx(660, 'square', 0.08, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  updateStats();
+  makerRenderPanel();
+  return true;
+}
+function makerTakeAll(){
+  const b = openMaker;
+  if(!b || !b.out) return 0;
+  let n = 0;
+  for(let i = b.out.length - 1; i >= 0; i--){ if(makerTake(i)) n++; else break; }
+  return n;
+}
+/* 加工台面板渲染 */
+function makerFormatLeft(min){
+  min = Math.max(0, Math.ceil(min || 0));
+  const h = Math.floor(min / 60), m = min % 60;
+  return h > 0 ? (h + ' 小时 ' + m + ' 分') : (m + ' 分钟');
+}
+function makerRenderPanel(){
+  if(!openMaker) return;
+  const b = openMaker;
+  if(makerStatusEl){
+    if(b.job){
+      const r = recipeDef(b.job.rid);
+      makerStatusEl.textContent = '⏳ ' + (r ? r.name : '加工') + ' · 剩 ' + makerFormatLeft(b.job.left);
+    }else if(b.out && b.out.length){
+      makerStatusEl.textContent = '✅ 有 ' + b.out.length + ' 种成品待取';
+    }else{
+      makerStatusEl.textContent = '空闲';
+    }
+  }
+  /* 产出区 */
+  if(makerOutEl && makerOutEl.appendChild){
+    makerOutEl.innerHTML = '';
+    (b.out || []).forEach((s, i) => {
+      const d = itemDef(s.id);
+      const row = document.createElement('div');
+      row.className = 'mout';
+      const ic = document.createElement('div'); ic.className = 'mico'; ic.textContent = d ? d.icon : '❔';
+      const info = document.createElement('div'); info.className = 'minfo';
+      const nm = document.createElement('div'); nm.className = 'mname';
+      nm.textContent = (d ? d.name : s.id) + ' ×' + s.n;
+      const meta = document.createElement('div'); meta.className = 'mmeta';
+      meta.textContent = '售价 ' + basePrice(s.id) + ' 金币/个';
+      info.appendChild(nm); info.appendChild(meta);
+      const btn = document.createElement('button');
+      btn.className = 'mbtn'; btn.textContent = '取走';
+      btn.addEventListener('click', ()=>makerTake(i));
+      row.appendChild(ic); row.appendChild(info); row.appendChild(btn);
+      makerOutEl.appendChild(row);
+    });
+  }
+  /* 配方列表 */
+  if(makerListEl && makerListEl.appendChild){
+    makerListEl.innerHTML = '';
+    for(const r of CONFIG.RECIPE.LIST){
+      const u = recipeUnlockInfo(r);
+      const miss = recipeMissing(r);
+      const busy = !!b.job;
+      const can = u.ok && !miss.length && !busy && makerCanStore(b, r.out.id, r.out.n);
+      const row = document.createElement('div');
+      row.className = 'mrow' + (u.ok ? '' : ' locked');
+      const ic = document.createElement('div'); ic.className = 'mico'; ic.textContent = r.icon;
+      const info = document.createElement('div'); info.className = 'minfo';
+      const nm = document.createElement('div'); nm.className = 'mname'; nm.textContent = r.name;
+      const meta = document.createElement('div'); meta.className = 'mmeta';
+      let mt = recipeInputText(r) + ' → ' + recipeOutText(r) + ' · ' + r.hours + ' 小时 · 利润 +' + recipeProfitText(r);
+      if(!u.ok) mt = '🔒 需要 ' + u.text;
+      else if(miss.length) mt += '　' + recipeMissingText(r);
+      meta.textContent = mt;
+      info.appendChild(nm); info.appendChild(meta);
+      const btn = document.createElement('button');
+      btn.className = 'mbtn' + (can ? '' : ' off');
+      btn.textContent = !u.ok ? '未解锁' : (busy ? '加工中' : (miss.length ? '材料不足' : (can ? '投入' : '产出槽满')));
+      btn.addEventListener('click', ()=>{ if(can) makerStart(r.id); });
+      row.appendChild(ic); row.appendChild(info); row.appendChild(btn);
+      makerListEl.appendChild(row);
+    }
+  }
+}
+/* 开关面板 */
+function makerOpenPanel(b){
+  if(!b || b.type !== 'maker') return false;
+  if(packOpen) togglePack(false);
+  if(shopOpen) toggleShop(false);
+  if(chestOpen) toggleChest(false);
+  openMaker = b;
+  makerOpen = true;
+  makerRenderPanel();
+  setPanelOpen(makerEl, true);
+  playSfx(520, 'square', 0.08, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function makerClosePanel(){
+  if(!makerOpen) return;
+  makerOpen = false;
+  openMaker = null;
+  setPanelOpen(makerEl, false);
+}
+function toggleMakerPanel(b){
+  if(makerOpen) makerClosePanel();
+  else makerOpenPanel(b || makerNear());
+}
+/* HUD 提醒：正在加工 / 有成品待取 */
+function makerHudInfo(){
+  let busy = 0, ready = 0;
+  for(const b of buildings){
+    if(b.type !== 'maker') continue;
+    if(b.job) busy++;
+    if(b.out && b.out.length) ready++;
+  }
+  return {busy:busy, ready:ready};
+}
+function makerHudText(info){
+  if(!info) info = makerHudInfo();
+  const a = [];
+  if(info.ready) a.push('待取 ' + info.ready);
+  if(info.busy)  a.push('加工 ' + info.busy);
+  return a.join(' · ');
+}
+function drawMakerHud(g){
+  const info = makerHudInfo();
+  if(!info.busy && !info.ready) return;
+  const txt = makerHudText(info);
+  g.font = '12px ' + FONT_CJK;
+  const tw = g.measureText(txt).width;
+  const w = tw + 34, h = 24, x = VIEW_W - w - 10, y = 8;
+  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(x, y, w, h);
+  g.strokeStyle = info.ready ? '#ffd76a' : CONFIG.COLORS.hudBorder;
+  g.lineWidth = 1; g.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+  g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+  g.textAlign = 'left'; g.textBaseline = 'middle';
+  g.fillText('🏭', x + 7, y + h/2 + 1);
+  g.font = '12px ' + FONT_CJK;
+  g.fillStyle = info.ready ? '#ffe9b0' : CONFIG.COLORS.hudText;
+  g.fillText(txt, x + 25, y + h/2 + 1);
+  g.textBaseline = 'top';
+}
+/* 成品食用（可选加分项：右键吃，回体力，每天 3 次） */
+function makerEatsToday(){ return makerEat.day === clock.day ? makerEat.n : 0; }
+function eatFood(id){
+  const d = itemDef(id);
+  if(!d || d.kind !== 'food') return false;
+  if(countItem(id) <= 0){ toast('背包里没有' + d.name); return false; }
+  if(makerEatsToday() >= CONFIG.RECIPE.EAT_PER_DAY){
+    toast('今天已经吃了 ' + CONFIG.RECIPE.EAT_PER_DAY + ' 次，明天再吃吧');
+    return false;
+  }
+  if(stamina >= staminaMax){ toast('体力是满的，先省着吧'); return false; }
+  removeItem(id, 1);
+  stamina = Math.min(staminaMax, stamina + CONFIG.RECIPE.EAT_STAMINA);
+  if(makerEat.day !== clock.day){ makerEat.day = clock.day; makerEat.n = 0; }
+  makerEat.n++;
+  toast('吃了' + d.name + '（体力 +' + CONFIG.RECIPE.EAT_STAMINA +
+        '，今天还能吃 ' + (CONFIG.RECIPE.EAT_PER_DAY - makerEat.n) + ' 次）');
+  playSfx(660, 'sine', 0.10, CONFIG.AUDIO.VOLUME);
+  refreshPackGrid();
+  updateStats();
+  return true;
+}
+/* 存档辅助 */
+function makerEatSerialize(){ return {d:makerEat.day | 0, n:Math.max(0, makerEat.n | 0)}; }
+function makerEatDeserialize(o){
+  makerEat.day = -1; makerEat.n = 0;
+  if(o && typeof o === 'object'){
+    if(typeof o.d === 'number') makerEat.day = o.d | 0;
+    if(typeof o.n === 'number') makerEat.n = Math.max(0, o.n | 0);
+  }
+}
+/* 新游戏 / 复位 */
+function makerResetState(){
+  makerOpen = false;
+  openMaker = null;
+  makerEat.day = -1; makerEat.n = 0;
+  if(makerEl) setPanelOpen(makerEl, false);
+}
+/* 面板事件 */
+if(makerMaskEl) makerMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); makerClosePanel(); });
+
 genMap(CONFIG.SEED);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
@@ -7666,7 +8258,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   get hotSel(){ return hotSel; }, set hotSel(v){ hotSel = v; },
   get packOpen(){ return packOpen; }, set packOpen(v){ togglePack(v); },
   get held(){ return held; }, set held(v){ held = v; },
-  addItem, removeItem, countItem, countSlots, canFit, addGold, spendGold,
+  addItem, removeItem, countItem, countSlots, canFit, addGold, spendGold, itemDef,
   initInventory, selectHot, selectedItem, selectedSlot, hotbarRect,
   togglePack, packClick, packDropHeld, refreshPackGrid, buildPackGrid,
   serializeState, deserializeState,
@@ -7774,6 +8366,18 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   achSerialize, achDeserialize, achResetState, achRenderWall, achBuildTabs,
   achOpenPanel, achClosePanel, toggleAchPanel,
   statsYearCheck, annualOpenPanel, annualClosePanel,
+  /* 第 19 轮：加工台 / 配方 / 成品食用 */
+  RECIPE: CONFIG.RECIPE,
+  get makerOpen(){ return makerOpen; },
+  get openMaker(){ return openMaker; },
+  get makerEatState(){ return makerEat; },
+  recipeDef, recipeInputText, recipeOutText, recipeProfit, recipeProfitText,
+  recipeUnlockInfo, recipeUnlocked, recipeMissing, recipeMissingText,
+  makerNear, makerCanStore, makerStore, makerAdvance, makerFinish, makerStart,
+  makerTake, makerTakeAll, makerFormatLeft, makerRenderPanel,
+  makerOpenPanel, makerClosePanel, toggleMakerPanel,
+  makerBusyCount: makerHudInfo, makerHudInfo, makerHudText, drawMakerHud, drawMaker,
+  eatFood, makerEatsToday, makerEatSerialize, makerEatDeserialize, makerResetState,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

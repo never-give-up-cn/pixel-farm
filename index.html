@@ -266,6 +266,10 @@
   #animal.open #animalPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #animal.closing #animalPanel{animation:panelOut .2s ease-in forwards}
   #animal.closing{display:flex}
+  /* 第 16 轮：委托板面板挂到同一套 panelIn / panelOut（只追加，不改上面的规则） */
+  #quest.open #questPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #quest.closing #questPanel{animation:panelOut .2s ease-in forwards}
+  #quest.closing{display:flex}
   /* ---------- 第 13 轮：NPC 对话面板（复用 .panel 视觉，不另起一套） ---------- */
   #npc{
     position:fixed;inset:0;z-index:45;display:none;
@@ -318,6 +322,35 @@
   #animalBtns .mbtn{flex:1;white-space:nowrap;font-size:12px}
   #animalBtns .mbtn.off{opacity:.45;cursor:not-allowed}
   #animalFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* ---------- 第 16 轮：委托板面板（复用 .panel 视觉，不另起一套） ---------- */
+  #quest{
+    position:fixed;inset:0;z-index:46;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #quest.open{display:flex}
+  #questMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #questPanel{position:relative;width:470px;max-width:92vw;padding:12px 14px 10px}
+  #questHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #questIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #questTitle{font-size:15px;color:#ffd76a}
+  #questRep{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #questList{max-height:330px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+  .qsec{font-size:11px;color:#8fa3bd;margin:2px 0 0}
+  .qrow{
+    display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+  }
+  .qrow .qico{font:17px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif;width:22px;text-align:center}
+  .qrow .qinfo{flex:1;min-width:0}
+  .qrow .qname{color:#e8f0ff;font-size:12.5px}
+  .qrow .qmeta{color:#8fa3bd;font-size:11px}
+  .qrow .qgold{color:#ffd76e;font-size:12px;white-space:nowrap}
+  .qrow .mbtn{font-size:11.5px;padding:3px 9px;white-space:nowrap}
+  .qrow .mbtn.off{opacity:.45;cursor:not-allowed}
+  .qbar{height:5px;border-radius:3px;background:#1a2130;border:1px solid #2c3a4e;overflow:hidden;margin-top:4px}
+  .qbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd05a,#ffd76a)}
+  #questFoot{margin-top:8px;font-size:11px;color:#7f92ad}
   /* 送礼模式：背包面板要压到对话面板之上（否则会被对话的遮罩盖住点不到） */
   #pack.gift{z-index:48}
   /* 送礼模式：背包面板顶部提示条 */
@@ -486,6 +519,20 @@
       <button class="mbtn" id="animalBye">关闭</button>
     </div>
     <div id="animalFoot">E / Esc：关闭 · 每天摸头一次 · 喂过食次日才产出 · 放生不可恢复</div>
+  </div>
+</div>
+
+<!-- 委托板（第 16 轮）：复用 .panel 样式与开合动画；靠近按 E 打开，打开时世界冻结 -->
+<div id="quest">
+  <div id="questMask"></div>
+  <div id="questPanel" class="panel">
+    <div id="questHead">
+      <span id="questIcon">📋</span>
+      <span id="questTitle">委托板</span>
+      <span id="questRep">信誉 0 · 奖励 +0%</span>
+    </div>
+    <div id="questList"></div>
+    <div id="questFoot">每天 6:00 刷新 · 同时最多接 2 单 · 完成自动结算 · Esc 关闭</div>
   </div>
 </div>
 
@@ -690,7 +737,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 4,               // 存档版本号（第 15 轮 +1：新增 animals 动物字段；旧档由 migrate() 升级）
+    VERSION: 5,               // 存档版本号（第 16 轮 +1：新增 quest 委托 / 信誉字段；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1063,6 +1110,40 @@ const CONFIG = {
     }
   },
 
+  /* ---------- 委托板（第 16 轮）：商店旁的每日小目标 + 信誉 ----------
+   * 每天 6:00 刷新 DAILY 条；同时最多接 MAX_ACTIVE 条；完成 +信誉，信誉每 REP_STEP 点给奖励加成 */
+  QUEST: {
+    RANGE: 1.6,                // 离委托板多近能按 E 打开（格）
+    DAILY: 3,                  // 每天刷新几条委托
+    MAX_ACTIVE: 2,             // 同时最多接几单
+    DAYS_MIN: 1,               // 委托最短存活天数
+    DAYS_MAX: 2,               // 委托最长存活天数
+    REP_PER_DONE: 1,           // 每完成一单加几点信誉
+    REP_STEP: 10,              // 每多少点信誉算一档
+    REP_BONUS: 0.05,           // 每档奖励加成（+5%）
+    REP_BONUS_MAX: 0.5,        // 奖励加成上限（+50%）
+    GOLD_BASE: {               // 各类委托的基础金币
+      crop: 45,                // 交付作物
+      fish: 90,                // 交付鱼
+      material: 40,            // 交付木材 / 石材
+      talk: 55                 // 和居民对话
+    },
+    GOLD_PER_UNIT: {           // 需求每多一个，多加多少金币
+      crop: 10, fish: 20, material: 6, talk: 0
+    },
+    EXTRA_CHANCE: 0.45,        // 完成时额外奖励的掉落概率
+    NEED: {                    // 需求数量范围 [最少, 最多]
+      crop: [2, 4], fish: [1, 2], material: [4, 8], talk: [1, 1]
+    },
+    CROP_POOL: ['radish','potato','tomato','pumpkin'],   // 作物委托候选（生成时按当季过滤）
+    FISH_POOL: ['fish_crucian','fish_carp','fish_puffer','fish_saury', // 鱼委托候选（按当季过滤）
+                'fish_moon','fish_koi','fish_ice','fish_wintercarp'],
+    MATERIAL_POOL: ['wood','stone'],                    // 材料委托候选
+    TALK_POOL: ['aunt','carpenter','girl'],             // 对话委托候选（NPC id）
+    EXTRA_POOL: ['seed_radish','seed_potato','seed_tomato', // 额外奖励池（种子 / 材料 / 饲料）
+                 'seed_pumpkin','wood','stone','feed']
+  },
+
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
   BALANCE: {
     EXPANSION_GOLD: 500,    // 扩建地标价（自检参照目标）
@@ -1203,6 +1284,8 @@ const FARM = {
 };
 const HOUSE_POS = {x:FARM.x + 1, y:FARM.y, w:CONFIG.GEN.HOUSE_W, h:CONFIG.GEN.HOUSE_H};
 const SHOP_POS  = {x:FARM.x + FARM.w - 1 - CONFIG.GEN.SHOP_W, y:FARM.y, w:CONFIG.GEN.SHOP_W, h:CONFIG.GEN.SHOP_H};
+/* 委托板（第 16 轮）：放在商店西侧 3 格，离商店的交互半径不重叠 */
+const QUEST_BOARD = {x:SHOP_POS.x - 3, y:SHOP_POS.y, w:1, h:1};
 const SPAWN = {x:FARM.x + Math.floor(FARM.w/2), y:FARM.y + Math.floor(FARM.h/2) + 2};
 
 const inFarm = (x,y)=> x>=FARM.x && x<FARM.x+FARM.w && y>=FARM.y && y<FARM.y+FARM.h;
@@ -1696,6 +1779,9 @@ function drawEntities(g, x0, y0, x1, y1){
   const list = [];
   list.push({y:(HOUSE_POS.y + HOUSE_POS.h)*TILE, f:()=>drawHouse(g, HOUSE_POS.x*TILE-cam.x, HOUSE_POS.y*TILE-cam.y)});
   list.push({y:(SHOP_POS.y + SHOP_POS.h)*TILE,  f:()=>drawShop(g, SHOP_POS.x*TILE-cam.x, SHOP_POS.y*TILE-cam.y)});
+  /* 委托板（第 16 轮）：同样按脚点 Y 混进排序表 */
+  list.push({y:(QUEST_BOARD.y + QUEST_BOARD.h)*TILE,
+             f:()=>drawQuestBoard(g, QUEST_BOARD.x*TILE-cam.x, QUEST_BOARD.y*TILE-cam.y)});
   for(const b of buildings){
     const bx = b.tx*TILE - cam.x, by = b.ty*TILE - cam.y;
     if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
@@ -2079,6 +2165,7 @@ function missingMat(r){
 /* 这个格子能不能放这个建造物（返回空串 = 可以） */
 function buildGroundOK(tx,ty,r){
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return '超出地图';
+  if(tx === QUEST_BOARD.x && ty === QUEST_BOARD.y) return '这里是委托板';   /* 第 16 轮 */
   const i = ty*MAP_W + tx, t = map[i];
   if(t === T.WATER) return '水里不能建';
   if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
@@ -2240,6 +2327,7 @@ function isSolid(tx,ty){
   const i = ty*MAP_W+tx;
   const t = map[i];
   if(t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP) return true;
+  if(tx===QUEST_BOARD.x && ty===QUEST_BOARD.y) return true;   /* 第 16 轮：委托板挡路 */
   /* 建造物：栅栏和木箱挡路，洒水器可以踩过去 */
   const bi = buildIndex[i];
   if(bi >= 0){
@@ -2642,6 +2730,7 @@ function harvestCrop(tx,ty){
   }
   if(!payStamina(staminaCost('harvest'))) return false;   /* 收获消耗 1 点体力 */
   addItem(c.type, 1);
+  questEmit('crop', {id:c.type, n:1});    /* 第 16 轮：委托总线（作物产出） */
   if(def.regrow > 0){                      /* 番茄：收获后回到阶段 3，继续结果 */
     c.grown = def.days - def.regrow;
     c.stage = 3; c.mature = false; c.watered = false;
@@ -2836,6 +2925,7 @@ function useTool(tx,ty){
   setTile(i, tool.to);
   if(toolOut){
     addItem(toolOut.item, toolOut.n);
+    questEmit('material', {id:toolOut.item, n:toolOut.n});   /* 第 16 轮：委托总线（木材 / 石材） */
     toast((tool.id === 'sickle' && t === T.GRASS ? '割下一把草，得到 ' : '获得 ') +
           itemDef(toolOut.item).name + ' ×' + toolOut.n);
   }else{
@@ -3053,6 +3143,7 @@ function rollToNextMorning(faint){
   clock.day++; clock.min = 0; clock.hold = 0;
   settleDay();                 /* 每天 6:00 结算：生长 / 枯萎 / 浇水状态重置 */
   animalDayStart();            /* 第 15 轮：动物成长 / 好感 / 每日产出 */
+  questDayStart();             /* 第 16 轮：委托过期 / 刷新新一天的委托 */
   rollWeather();
   if(faint){
     /* 惩罚方式选「体力」：次日体力上限扣 20%（不扣金币，避免误伤玩家资产） */
@@ -3255,9 +3346,15 @@ window.addEventListener('keydown', e=>{
     if((k === 'e' || k === ' ') && !e.repeat){ animalClosePanel(); ensureAudio(); }
     return;
   }
+  /* 委托板：E / 空格 / Esc 关闭，其它键一律忽略（打开时世界冻结） */
+  if(questOpen && k !== 'escape'){
+    if((k === 'e' || k === ' ') && !e.repeat){ questClosePanel(); ensureAudio(); }
+    return;
+  }
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(questOpen){ questClosePanel(); return; }
     if(animalOpen){ animalClosePanel(); return; }
     if(chestOpen){ toggleChest(false); return; }
     if(shopOpen){ toggleShop(false); return; }
@@ -3295,6 +3392,7 @@ window.addEventListener('keydown', e=>{
       else if(nearHouse()) startSleep(false);
       else if(c){ openChest = c; toggleChest(true); }
       else if(nearShop()) toggleShop();
+      else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
       else{
         const g = gatherNear();
@@ -3335,7 +3433,7 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen) return;
+  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen) return;
   const p = toLogical(e);
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
@@ -4071,6 +4169,8 @@ function drawUI(g){
 
   /* 建造模式：左侧配方面板 */
   if(buildMode) drawBuildPanel(g, dY + dH + 6);
+  /* 第 16 轮：进行中的委托追踪条（建造模式时让位给配方面板） */
+  if(!buildMode) drawQuestTracker(g, dY + dH + 6);
 
   /* 底部中央：快捷栏 8 格（= 背包前 8 格），选中格高亮描边 */
   const hb = hotbarRect();
@@ -4142,6 +4242,19 @@ function drawUI(g){
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, hy);
   }
+  /* 走到委托板附近 → 提示按 E 看委托（第 16 轮） */
+  if(!shopOpen && questBoardNear()){
+    const bx = QUEST_BOARD.x*TILE - cam.x, by = QUEST_BOARD.y*TILE - cam.y;
+    const hint = '按 E 看委托';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = bx + QUEST_BOARD.w*TILE/2 - hw/2, hy = by + QUEST_BOARD.h*TILE + 6;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
+  }
   /* 走到居民身边 → 提示按 E 交谈（对话打开时不再提示） */
   const nn = npcNear();
   if(nn && !npcOpen && !shopOpen){
@@ -4158,7 +4271,7 @@ function drawUI(g){
   }
 
   /* 走到动物旁边 → 提示按 E 互动（第 15 轮） */
-  const na = (!nn && !shopOpen && !npcOpen && !animalOpen && !chestOpen && !fishingActive())
+  const na = (!nn && !shopOpen && !npcOpen && !animalOpen && !chestOpen && !fishingActive() && !questBoardNear())
     ? animalNear() : null;
   if(na){
     const nt = animalType(na.type);
@@ -4535,7 +4648,9 @@ function serializeState(){
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
     dex: {f: dexState.f >>> 0, g: dexState.g >>> 0},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
-    animals: animalSerialize()
+    animals: animalSerialize(),
+    /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
+    quest: questSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -4632,6 +4747,8 @@ function deserializeState(d){
     }
     /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */
     animalDeserialize(d.animals);
+    /* 委托板（老存档没这个字段 → 按当天重新生成，信誉归零） */
+    questDeserialize(d.quest);
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     refreshDexGrid();
@@ -4733,6 +4850,7 @@ function newGame(){
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
   dexResetState();                              /* 新游戏：图鉴清空 */
   animalResetState();                           /* 新游戏：清空动物 */
+  questResetState();                            /* 新游戏：清空委托 / 信誉 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -4767,6 +4885,7 @@ function update(dt){
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
   if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */
+  if(questOpen) return;              /* 委托板打开：同样整体冻结（时间停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
@@ -4993,6 +5112,7 @@ function npcOpenDialog(d){
   renderNpcDialog();
   setPanelOpen(npcEl, true);
   playSfx(560, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  questEmit('talk', {id:d.id, n:1});      /* 第 16 轮：委托总线（对话） */
   return true;
 }
 function npcCloseDialog(){
@@ -5239,6 +5359,10 @@ function migrate(oldSave){
       /* v3 → v4：补上动物字段（没有就当作"还没养过动物"） */
       if(!Array.isArray(d.animals)) d.animals = [];
     }
+    if(v < 5){
+      /* v4 → v5：补上委托板字段（没有就当作"今天还没接过委托"，信誉从 0 开始） */
+      if(!d.quest || typeof d.quest !== 'object') d.quest = {r:0, d:0, i:0, o:[], a:[]};
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){
@@ -5450,6 +5574,7 @@ function fishingResolveReel(){
     return false;
   }
   addItem(f.id, 1);
+  questEmit('fish', {id:f.id, n:1});      /* 第 16 轮：委托总线（钓鱼产出） */
   const idx = CONFIG.FISHING.LIST.indexOf(f);
   dexUnlock('fish', idx);
   toast('🎣 钓到了 ' + f.name + '！（稀有度 ' + f.rarity + '）');
@@ -6055,6 +6180,359 @@ function animalResetState(){
   animalClosePanel(true);
 }
 
+/* === 17.委托板 / 信誉（第 16 轮） ===
+ * 可扩展的事件总线：旧系统（收获 / 钓鱼 / 砍树 / 对话）只在产物处 emit 一次，
+ * 所有委托判定都集中在这里，旧代码里没有散落的 if。 */
+const questBus = {
+  map: {},
+  on(evt, fn){ (this.map[evt] = this.map[evt] || []).push(fn); },
+  emit(evt, data){
+    const list = this.map[evt];
+    if(!list) return;
+    for(const fn of list){
+      try{ fn(data); }
+      catch(err){ console.warn('[quest] 事件处理失败：', evt, err); }
+    }
+  }
+};
+function questEmit(evt, data){ questBus.emit(evt, data); }
+
+let questOpen = false;
+let quests = { rep:0, day:0, qid:0, offers:[], active:[] };
+
+const questEl        = document.getElementById('quest');
+const questMaskEl    = document.getElementById('questMask');
+const questListEl    = document.getElementById('questList');
+const questRepEl     = document.getElementById('questRep');
+const questIconEl    = document.getElementById('questIcon');
+const questTitleEl   = document.getElementById('questTitle');
+
+/* --- 数据辅助 --- */
+const QUEST_KINDS = { c:'crop', f:'fish', m:'material', t:'talk' };
+function questKindName(kind){
+  return ({crop:'交付作物', fish:'交付鱼', material:'交付材料', talk:'和居民聊聊'})[kind] || '委托';
+}
+function questIcon(q){
+  if(q.kind === 'talk'){
+    const d = CONFIG.NPC.LIST.find(n => n.id === q.target);
+    return d ? d.icon : '💬';
+  }
+  const d = itemDef(q.target);
+  return d ? d.icon : '📋';
+}
+function questTitle(q){
+  if(q.kind === 'talk'){
+    const n = CONFIG.NPC.LIST.find(x => x.id === q.target);
+    return '和 ' + (n ? n.name : '居民') + ' 聊聊';
+  }
+  const d = itemDef(q.target);
+  return '交付 ' + (d ? d.name : q.target) + ' ×' + q.need;
+}
+/* 信誉加成：每 REP_STEP 点信誉 +5%，封顶 REP_BONUS_MAX */
+function questRepBonus(){
+  const A = CONFIG.QUEST;
+  const steps = Math.floor((quests.rep | 0) / Math.max(1, A.REP_STEP));
+  return Math.min(A.REP_BONUS_MAX, steps * A.REP_BONUS);
+}
+function questFinalGold(q){ return Math.max(1, Math.round((q.gold | 0) * (1 + questRepBonus()))); }
+
+/* --- 每日生成：同一天的结果固定（重开也能复现），换天才变 --- */
+function questRng(){
+  const seed = ((CONFIG.SEED >>> 0) ^ Math.imul((clock.day | 0) + 1, 2654435761)) >>> 0;
+  return mulberry32(seed);
+}
+function questPick(rng, arr){ return arr[(rng() * arr.length) | 0]; }
+function questRandInt(rng, a, b){ return a + ((rng() * (b - a + 1)) | 0); }
+function questMake(rng, kind){
+  const A = CONFIG.QUEST, season = seasonName();
+  let target;
+  if(kind === 'crop'){
+    const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
+    target = questPick(rng, pool.length ? pool : A.CROP_POOL);
+  }else if(kind === 'fish'){
+    const pool = A.FISH_POOL.filter(id => { const f = fishDef(id); return f && f.seasons.indexOf(season) >= 0; });
+    target = questPick(rng, pool.length ? pool : A.FISH_POOL);
+  }else if(kind === 'material'){
+    target = questPick(rng, A.MATERIAL_POOL);
+  }else{
+    target = questPick(rng, A.TALK_POOL);
+  }
+  const range = A.NEED[kind] || [1, 1];
+  const need = questRandInt(rng, range[0], range[1]);
+  const gold = (A.GOLD_BASE[kind] || 40) + need * (A.GOLD_PER_UNIT[kind] || 0);
+  let extra = null;
+  if(rng() < A.EXTRA_CHANCE){
+    extra = {id: questPick(rng, A.EXTRA_POOL), n: 1};
+  }
+  return {id: ++quests.qid, kind: kind, target: target, need: need, got: 0,
+          days: questRandInt(rng, A.DAYS_MIN, A.DAYS_MAX), gold: gold, extra: extra};
+}
+function questRefresh(){
+  const A = CONFIG.QUEST;
+  quests.day = clock.day;
+  quests.offers = [];
+  const rng = questRng();
+  /* 每天按天旋转种类，3 天一轮把四种委托都覆盖到 */
+  const kinds = ['crop', 'fish', 'material', 'talk'];
+  const rot = ((clock.day | 0) - 1) % kinds.length;
+  for(let i=0; i<A.DAILY; i++) quests.offers.push(questMake(rng, kinds[(rot + i) % kinds.length]));
+  return quests.offers;
+}
+function questEnsureBoard(){
+  if(!quests.offers.length || quests.day !== clock.day) questRefresh();
+}
+
+/* --- 接取 / 进度 / 结算 --- */
+function questAccept(id){
+  const A = CONFIG.QUEST;
+  if(quests.active.length >= A.MAX_ACTIVE){
+    toast('最多同时接 ' + A.MAX_ACTIVE + ' 单，先完成手上的');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+  const i = quests.offers.findIndex(q => q.id === id);
+  if(i < 0) return false;
+  const q = quests.offers.splice(i, 1)[0];
+  quests.active.push(q);
+  toast('接下了委托：' + questTitle(q));
+  playSfx(660, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  if(questOpen) questRenderPanel();
+  return true;
+}
+function questProgress(kind, target, n){
+  n = n | 0;
+  if(n <= 0 || !target) return 0;
+  let done = 0;
+  for(const q of quests.active.slice()){
+    if(q.kind !== kind || q.target !== target) continue;
+    q.got = Math.min(q.need, (q.got | 0) + n);
+    if(q.got >= q.need){ questComplete(q); done++; }
+  }
+  if(done && questOpen) questRenderPanel();
+  return done;
+}
+function questComplete(q){
+  const i = quests.active.indexOf(q);
+  if(i >= 0) quests.active.splice(i, 1);
+  const A = CONFIG.QUEST;
+  const pay = questFinalGold(q);
+  changeGold(pay);
+  quests.rep = (quests.rep | 0) + A.REP_PER_DONE;
+  let extraTxt = '';
+  if(q.extra && Math.random() < A.EXTRA_CHANCE){
+    if(canFit(q.extra.id, q.extra.n)){
+      addItem(q.extra.id, q.extra.n);
+      const ed = itemDef(q.extra.id);
+      extraTxt = '，额外奖励 ' + (ed ? ed.name : q.extra.id) + ' ×' + q.extra.n;
+    }else{
+      extraTxt = '，背包满了没拿到额外奖励';
+    }
+  }
+  toast('委托完成：' + questTitle(q) + ' → +' + pay + ' 金币' + extraTxt);
+  playSfx(1319, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  return {pay:pay, rep:quests.rep};
+}
+/* 每天 6:00：先扣存活天数 → 过期的移除（不结算），再刷新委托板 */
+function questDayStart(){
+  const expired = [];
+  for(const q of quests.active){
+    q.days = (q.days | 0) - 1;
+    if(q.days <= 0) expired.push(q);
+  }
+  if(expired.length){
+    quests.active = quests.active.filter(q => q.days > 0);
+    for(const q of expired) toast('委托过期了：' + questTitle(q));
+  }
+  if(quests.day !== clock.day) questRefresh();
+}
+
+/* --- 存档：紧凑数组 [id, kind, target, need, got, days, gold, extra] --- */
+function questPack(q){
+  let kind = 'c';
+  for(const k in QUEST_KINDS) if(QUEST_KINDS[k] === q.kind) kind = k;
+  return [q.id | 0, kind, q.target, q.need | 0, q.got | 0, q.days | 0, q.gold | 0,
+          q.extra ? (q.extra.id + ':' + (q.extra.n | 0)) : 0];
+}
+function questUnpack(a){
+  if(!Array.isArray(a) || a.length < 7) return null;
+  const kind = QUEST_KINDS[a[1]];
+  if(!kind) return null;
+  const target = String(a[2]);
+  if(kind === 'crop' && !cropDef(target)) return null;
+  if(kind === 'fish' && !fishDef(target)) return null;
+  if(kind === 'material' && target !== 'wood' && target !== 'stone') return null;
+  if(kind === 'talk' && !CONFIG.NPC.LIST.some(n => n.id === target)) return null;
+  const need = clamp(a[3] | 0, 1, 99);
+  const q = {id: Math.max(0, a[0] | 0), kind: kind, target: target, need: need,
+             got: clamp(a[4] | 0, 0, need), days: clamp(a[5] | 0, 1, CONFIG.QUEST.DAYS_MAX),
+             gold: Math.max(1, a[6] | 0), extra: null};
+  if(typeof a[7] === 'string' && a[7]){
+    const p = a[7].split(':');
+    if(CONFIG.ITEMS[p[0]]) q.extra = {id: p[0], n: clamp(parseInt(p[1], 10) || 1, 1, 99)};
+  }
+  return q;
+}
+function questSerialize(){
+  return {r: quests.rep | 0, d: quests.day | 0, i: quests.qid | 0,
+          o: quests.offers.map(questPack), a: quests.active.map(questPack)};
+}
+function questDeserialize(o){
+  quests = {rep:0, day:0, qid:0, offers:[], active:[]};
+  if(o && typeof o === 'object'){
+    quests.rep = Math.max(0, o.r | 0);
+    quests.day = Math.max(0, o.d | 0);
+    quests.qid = Math.max(0, o.i | 0);
+    if(Array.isArray(o.o)) for(const e of o.o){ const q = questUnpack(e); if(q) quests.offers.push(q); }
+    if(Array.isArray(o.a)) for(const e of o.a){ const q = questUnpack(e); if(q) quests.active.push(q); }
+    if(quests.active.length > CONFIG.QUEST.MAX_ACTIVE) quests.active.length = CONFIG.QUEST.MAX_ACTIVE;
+  }
+  questEnsureBoard();                 /* 老存档没这个字段 → 当天重新出板 */
+  return true;
+}
+function questResetState(refresh){
+  quests = {rep:0, day:0, qid:0, offers:[], active:[]};
+  if(refresh !== false) questRefresh();
+}
+
+/* --- 面板（复用 .panel / panelIn / panelOut） --- */
+function questRowEl(q, mode){
+  const row = document.createElement('div'); row.className = 'qrow';
+  const ico = document.createElement('span'); ico.className = 'qico'; ico.textContent = questIcon(q);
+  const info = document.createElement('div'); info.className = 'qinfo';
+  const nm = document.createElement('div'); nm.className = 'qname'; nm.textContent = questTitle(q);
+  const meta = document.createElement('div'); meta.className = 'qmeta';
+  let line = '剩余 ' + q.days + ' 天 · ' + (mode === 'active' ? ('进度 ' + q.got + '/' + q.need) : questKindName(q.kind));
+  if(mode === 'active' && q.extra){
+    const ed = itemDef(q.extra.id);
+    line += ' · 额外 ' + (ed ? ed.name : q.extra.id) + '×' + q.extra.n +
+            '（' + Math.round(CONFIG.QUEST.EXTRA_CHANCE * 100) + '%）';
+  }
+  meta.textContent = line;
+  info.appendChild(nm); info.appendChild(meta);
+  if(mode === 'active'){
+    const bar = document.createElement('div'); bar.className = 'qbar';
+    const fill = document.createElement('i');
+    fill.style.width = Math.round(q.got / q.need * 100) + '%';
+    bar.appendChild(fill); info.appendChild(bar);
+  }
+  const gold = document.createElement('span'); gold.className = 'qgold';
+  gold.textContent = questFinalGold(q) + ' 💰';
+  const btn = document.createElement('button');
+  btn.className = 'mbtn';
+  if(mode === 'active'){
+    btn.textContent = '进行中';
+    btn.className = 'mbtn off';
+  }else if(quests.active.length >= CONFIG.QUEST.MAX_ACTIVE){
+    btn.textContent = '已接满';
+    btn.className = 'mbtn off';
+  }else{
+    btn.textContent = '接取';
+    btn.addEventListener('click', ()=>{ questAccept(q.id); });
+  }
+  row.appendChild(ico); row.appendChild(info); row.appendChild(gold); row.appendChild(btn);
+  return row;
+}
+function questRenderPanel(){
+  if(!questListEl) return;
+  if(questRepEl){
+    questRepEl.textContent = '信誉 ' + (quests.rep | 0) + ' · 奖励 +' +
+                             Math.round(questRepBonus() * 100) + '%';
+  }
+  questListEl.innerHTML = '';
+  if(quests.active.length){
+    const h = document.createElement('div'); h.className = 'qsec';
+    h.textContent = '进行中 ' + quests.active.length + '/' + CONFIG.QUEST.MAX_ACTIVE;
+    questListEl.appendChild(h);
+    for(const q of quests.active) questListEl.appendChild(questRowEl(q, 'active'));
+  }
+  const h2 = document.createElement('div'); h2.className = 'qsec';
+  h2.textContent = '今日委托（' + quests.offers.length + '）';
+  questListEl.appendChild(h2);
+  if(!quests.offers.length){
+    const e = document.createElement('div'); e.className = 'qrow';
+    e.textContent = '今天的委托都接完了，明天 6:00 再来';
+    questListEl.appendChild(e);
+  }
+  for(const q of quests.offers) questListEl.appendChild(questRowEl(q, 'offer'));
+}
+function questOpenPanel(){
+  if(questOpen) return false;
+  questOpen = true;
+  questRenderPanel();
+  setPanelOpen(questEl, true);
+  playSfx(620, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function questClosePanel(){
+  if(!questOpen) return false;
+  questOpen = false;
+  setPanelOpen(questEl, false);
+  return true;
+}
+function toggleQuestPanel(v){
+  if(v === undefined) v = !questOpen;
+  return v ? questOpenPanel() : questClosePanel();
+}
+if(questMaskEl) questMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); questClosePanel(); });
+
+/* --- 互动距离 / 世界绘制 --- */
+function questBoardDist(){
+  const dx = (QUEST_BOARD.x + 0.5) * TILE - player.x;
+  const dy = (QUEST_BOARD.y + 0.5) * TILE - player.y;
+  return Math.hypot(dx, dy) / TILE;
+}
+function questBoardNear(){ return questBoardDist() <= CONFIG.QUEST.RANGE; }
+function drawQuestBoard(g, x, y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.fencePostDark; g.fillRect(x + 7, y + 17, 4, 15);
+  g.fillRect(x + 22, y + 17, 4, 15);
+  g.fillStyle = C.shopCounterDark; g.fillRect(x + 2, y + 8, 28, 15);
+  g.fillStyle = C.shopCounter;     g.fillRect(x + 3, y + 9, 26, 12);
+  g.fillStyle = '#efe6cf'; g.fillRect(x + 6, y + 11, 6, 7);
+  g.fillRect(x + 14, y + 12, 5, 5);
+  g.fillRect(x + 21, y + 11, 5, 6);
+  g.fillStyle = C.shopSign;     g.fillRect(x + 8, y + 2, 16, 5);
+  g.fillStyle = C.shopSignText; g.fillRect(x + 10, y + 3, 12, 2);
+  /* 头顶飘一个「委托」小旗子 */
+  g.fillStyle = '#ffd76a'; g.fillRect(x + 14, y - 5, 4, 6);
+}
+
+/* --- HUD 左侧追踪（进行中的委托：进度 x/N + 剩余天数） --- */
+function drawQuestTracker(g, startY){
+  if(!quests.active.length) return;
+  let cy = startY;
+  g.textBaseline = 'top'; g.textAlign = 'left';
+  for(const q of quests.active){
+    const title = questTitle(q);
+    g.font = '12px ' + FONT_CJK;
+    const tw = g.measureText(title).width;
+    const prog = ' ' + q.got + '/' + q.need;
+    const pw = g.measureText(prog).width;
+    const days = ' 剩' + q.days + '天';
+    g.font = '11px ' + FONT_CJK;
+    const dw = g.measureText(days).width;
+    const w = Math.ceil(18 + tw + pw + dw);
+    g.fillStyle = 'rgba(8,10,16,.72)'; g.fillRect(8, cy, w, 20);
+    g.fillStyle = CONFIG.COLORS.hudBorder;
+    g.fillRect(8, cy, w, 1); g.fillRect(8, cy + 19, w, 1);
+    g.fillRect(8, cy, 1, 20); g.fillRect(8 + w - 1, cy, 1, 20);
+    g.font = '12px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+    g.fillText(title, 13, cy + 4);
+    g.fillStyle = '#7fd05a';
+    g.fillText(prog, 13 + tw, cy + 4);
+    g.font = '11px ' + FONT_CJK; g.fillStyle = '#8fa3bd';
+    g.fillText(days, 13 + tw + pw, cy + 5);
+    cy += 24;
+  }
+  g.textAlign = 'left';
+}
+
+/* --- 事件总线：旧系统只用 questEmit() 报告产物，这里统一处理 --- */
+questBus.on('crop',     d => questProgress('crop',     d && d.id, d && d.n));
+questBus.on('fish',     d => questProgress('fish',     d && d.id, d && d.n));
+questBus.on('material', d => questProgress('material', d && d.id, d && d.n));
+questBus.on('talk',     d => questProgress('talk',     d && d.id, d && d.n));
+
 /* --- 启动 --- */
 genMap(CONFIG.SEED);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
@@ -6067,6 +6545,7 @@ player.y = SPAWN.y*TILE + TILE/2;
 cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
 cam.y = clamp(player.y - VIEW_H/2, 0, MAP_W*TILE - VIEW_H);
 rollWeather();                         /* 第 1 天早晨的天气 */
+questResetState();                     /* 第 16 轮：第 1 天的 3 个委托 */
 const sky0 = skyAt(skyHour());
 sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
@@ -6198,6 +6677,16 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   animalOpenPanel, animalClosePanel, animalRenderPanel, animalPet, animalFeed, animalRelease,
   drawAnimal, animalSerialize, animalDeserialize, animalResetState,
   drawCoop, drawBarn,
+  /* 第 16 轮：委托板 / 事件总线 / 信誉 */
+  QUEST_BOARD, questBus, questEmit,
+  get quests(){ return quests; }, set quests(v){ quests = v; },
+  get questOpen(){ return questOpen; }, set questOpen(v){ if(v) questOpenPanel(); else questClosePanel(); },
+  questRefresh, questEnsureBoard, questMake, questRng,
+  questAccept, questProgress, questComplete, questDayStart, questRepBonus, questFinalGold,
+  questTitle, questKindName, questPack, questUnpack,
+  questSerialize, questDeserialize, questResetState,
+  questRenderPanel, questOpenPanel, questClosePanel, toggleQuestPanel,
+  questBoardDist, questBoardNear, drawQuestBoard, drawQuestTracker,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

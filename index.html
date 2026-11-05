@@ -5390,7 +5390,7 @@ function spawnGather(quiet){
     if(!blocked){
       for(const d of CONFIG.NPC.LIST){
         for(const s of d.sched){
-          if(Math.abs(s.x - tx) <= 1 && Math.abs(s.y - ty) <= 1){ blocked = true; break; }
+          if(Math.abs(s.x - tx) <= 2 && Math.abs(s.y - ty) <= 2){ blocked = true; break; }
         }
         if(blocked) break;
       }

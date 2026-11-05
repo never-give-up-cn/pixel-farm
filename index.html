@@ -4499,6 +4499,8 @@ function npcPickLines(d){
 }
 function npcOpenDialog(d){
   if(!d || npcOpen) return false;
+  /* 上次跨档时背包满了、福利没发出去的，再见面时补发（尤其是邻家女孩的稀有种子） */
+  npcSyncUnlocks();
   npcDlg.id = d.id;
   npcDlg.lines = npcPickLines(d);
   npcDlg.idx = 0; npcDlg.shown = 0; npcDlg.typing = true;

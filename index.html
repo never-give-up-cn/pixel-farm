@@ -608,6 +608,26 @@
     0%  {opacity:0;transform:translate(-50%,-10px)}
     100%{opacity:1;transform:translate(-50%,0)}
   }
+  /* 系统教学提示（第 21 轮）：底部居中、悬浮在快捷栏上方；不挡点击，一次只显示一条 */
+  #sysTip{
+    position:fixed;z-index:29;display:none;left:50%;transform:translateX(-50%);
+    pointer-events:none;max-width:520px;padding:9px 16px;border-radius:10px;
+    background:linear-gradient(180deg,rgba(24,34,48,.96),rgba(14,20,30,.96));
+    border:2px solid #7ec8ff;color:#dcefff;white-space:pre-line;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;
+    box-shadow:0 0 0 2px rgba(0,0,0,.7),0 10px 30px rgba(0,0,0,.6);
+    animation:tutIn .25s ease-out;
+  }
+  #sysTip.show{display:block}
+  #sysPanel.cheat{width:500px}
+  /* Esc 菜单里的玩法速查表：默认收起，展开后内部滚动 */
+  #sysCheat{display:none;max-height:210px;overflow-y:auto;margin:10px 0 0;
+    padding:8px 10px;border:1px solid #3a4256;border-radius:8px;
+    background:rgba(10,14,22,.55);color:#cfe0f2;
+    font:12px/1.65 Consolas,"Microsoft YaHei","PingFang SC",monospace;
+    white-space:pre-line;text-align:left}
+  #sysCheat.open{display:block}
+  #sysCheat b{color:#ffd76a}
 </style>
 </head>
 <body>
@@ -617,6 +637,8 @@
 <div id="toasts"></div>
 <!-- 新手引导提示条（第 1 天早晨出现） -->
 <div id="tut"></div>
+<!-- 系统教学提示（第 21 轮）：第一次接触钓鱼 / 送礼 / 委托 / 加工台 / 扩建时各弹一次 -->
+<div id="sysTip"></div>
 
 <!-- 背包面板：DOM 覆盖层，打开时游戏时间冻结 -->
 <div id="pack">
@@ -695,10 +717,13 @@
       <button class="mbtn danger" id="btnWipe">删除存档</button>
       <!-- 第 18 轮：成就墙入口 -->
       <button class="mbtn" id="btnAch">🏆 成就墙</button>
+      <!-- 第 21 轮：玩法速查表（键位 / 系统说明） -->
+      <button class="mbtn" id="btnCheat">📖 玩法速查表</button>
       <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
       <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
+    <div id="sysCheat"></div>
     <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
   </div>
 </div>
@@ -970,7 +995,7 @@ const CONFIG = {
 
   /* 季节 */
   SEASONS: ['春','夏','秋','冬'],
-  DAYS_PER_SEASON: 10,      // 每季几天（第 6 轮由 7 调成 10：南瓜 8 天 / 番茄 6+2 天要能在当季走完）
+  DAYS_PER_SEASON: 10,      // 每季几天（第 6 轮由 7 调成 10：南瓜 7 天 / 番茄 6+2 天要能在当季走完）
   SEASON_TINT: {            // 地面色调（覆盖在地面上，越大越明显）；c=颜色 a=不透明度
     '春': {c:'#7fd05a', a:0.10},   // 春：淡绿
     '夏': {c:'#2f8f22', a:0.18},   // 夏：深绿
@@ -1086,7 +1111,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 9,               // 存档版本号（第 20 轮 +1：end 字段存雇工 / 采集箱 / 乌鸦记录 / 结算标记）
+    VERSION: 10,              // 存档版本号（第 21 轮 +1：tp 字段存"一次性教学提示"位掩码）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1135,7 +1160,7 @@ const CONFIG = {
     tomato:  { id:'tomato',  name:'番茄', icon:'🍅', stack:true, max:99, kind:'crop', crop:'tomato' },
     // 番茄：6 天成熟，之后每 2 天可再收
     pumpkin: { id:'pumpkin', name:'南瓜', icon:'🎃', stack:true, max:99, kind:'crop', crop:'pumpkin' },
-    // 南瓜：8 天成熟，一次收完
+    // 南瓜：7 天成熟，一次收完
     /* 第 14 轮：鱼类（kind='fish'）与采集物（kind='gather'），都能卖钱、也能当礼物 */
     fish_crucian:  { id:'fish_crucian',  name:'鲫鱼',   icon:'🐟', stack:true, max:99, kind:'fish',   price:30 },
     // 鲫鱼：最常见的入门鱼
@@ -1227,8 +1252,8 @@ const CONFIG = {
     // 土豆：5 天成熟，一次收完
     { id:'tomato',  name:'番茄', icon:'🍅', season:'夏', days:6, seedCost:30, sell:45,  regrow:2, ripe:'#e03a24', unripe:'#c9d17a', leaf:'#2f8f34' },
     // 番茄：6 天成熟，之后每 2 天可再收
-    { id:'pumpkin', name:'南瓜', icon:'🎃', season:'秋', days:8, seedCost:40, sell:120, regrow:0, ripe:'#e07a1f', unripe:'#b8bf72', leaf:'#3a8c32' }
-    // 南瓜：8 天成熟，一次收完
+    { id:'pumpkin', name:'南瓜', icon:'🎃', season:'秋', days:7, seedCost:40, sell:120, regrow:0, ripe:'#e07a1f', unripe:'#b8bf72', leaf:'#3a8c32' }
+    // 南瓜：7 天成熟（第 21 轮由 8 调成 7：缩短秋季「只剩等南瓜」的空窗），一次收完
   ],
 
   /* 作物视觉：4 个阶段的株高（像素）与叶片大小 */
@@ -1289,6 +1314,13 @@ const CONFIG = {
     TILL_COUNT: 1,          // 开垦几块地算「学会锄地」
     SOW_COUNT: 1,           // 播下几株算「学会播种」
     SHOW_MS: 0              // 提示条停留时间（毫秒；0 = 不自动消失）
+  },
+
+  /* 系统教学提示（第 21 轮）：第一次接触某个新系统时弹一次，用位掩码记进存档，
+   * 之后（含读档、重开页面）都不再出现。*/
+  TIPS: {
+    ENABLED: true,          // 总开关
+    SHOW_MS: 6500           // 单条停留时间（毫秒，按游戏内时间冻结：开面板时暂停倒计时）
   },
 
   /* 性能：静态地面预渲染到离屏 canvas + Y 排序 */
@@ -1464,7 +1496,8 @@ const CONFIG = {
       SPEED: 0.55,            // 走动速度（格 / 秒）
       RANGE: 3,               // 离棚舍最远几格（超出就往回走）
       PAUSE_MIN: 0.6,         // 停下发呆的最短时间（秒）
-      PAUSE_MAX: 2.2          // 停下发呆的最长时间（秒）
+      PAUSE_MAX: 2.2,         // 停下发呆的最长时间（秒）
+      TICK: 0.25              // AI 决策节拍（秒）：每 250ms 才重新选方向 / 判障碍（第 21 轮降频）
     },
     /* 两种动物：成熟天数 / 每天产出 / 高品质版本 / 住的棚舍 */
     TYPES: [
@@ -1783,6 +1816,7 @@ function invalidateGround(){ groundBaked.fill(0); groundDirty.clear(); groundBak
 /* 改地块的统一入口：写 map 并把这一格标脏（下一帧只重画它） */
 function setTile(i, t){
   map[i] = t;
+  ratingInvalidate();                     /* 第 21 轮：耕地格数可能变了 → 评级缓存失效 */
   if(CONFIG.PERF.BAKE_GROUND) markGroundDirty(i);
 }
 
@@ -1911,7 +1945,7 @@ function fitCanvas(){
   canvas.style.width  = Math.round(VIEW_W * finalScale) + 'px';
   canvas.style.height = Math.round(VIEW_H * finalScale) + 'px';
 }
-window.addEventListener('resize', ()=>{ fitCanvas(); layoutToasts(); });
+window.addEventListener('resize', ()=>{ fitCanvas(); layoutToasts(); layoutSysTip(); });
 fitCanvas();
 
 /* --- 单个瓦片绘制 --- */
@@ -3305,6 +3339,61 @@ function tutTilled(){ tut.tilled++; tutCheck(); }
 function tutSown(){ tut.sown++; tutCheck(); }
 function tutSlept(){ tut.slept = true; tutCheck(); }
 
+/* --- 系统教学提示（第 21 轮）：钓鱼 / 送礼 / 委托 / 加工台 / 扩建，
+ * 每套系统第一次接触时弹一次；位掩码进存档，读档后不再重复。
+ * 提示条悬浮在快捷栏上方，不接收点击，也不会挡住 HUD / 面板。 --- */
+const sysTipEl = document.getElementById('sysTip');
+const SYS_TIPS = [
+  {key:'fish',   bit:1 << 0, text:'🎣 钓鱼：水边选中鱼竿后左键抛竿；鱼漂下沉时左键 / 空格拉杆，右键收竿。\n不同的鱼有季节 / 时段 / 天气限制，钓到会记进图鉴（Tab → 图鉴）。'},
+  {key:'gift',   bit:1 << 1, text:'🎁 送礼：靠近居民按 E 说话，选「送礼物」，再点背包里的一件物品。\n每人每天 1 次；送对方喜欢的东西好感更多，生日当天翻倍。'},
+  {key:'quest',  bit:1 << 2, text:'📋 委托：靠近商店旁的委托板按 E。每天刷新 3 条，最多同时接 2 条。\n收获 / 钓鱼 / 采集会自动累计进度，完成后给金币与信誉。'},
+  {key:'maker',  bit:1 << 3, text:'⚙ 加工台：靠近按 E 打开，把低价原料变成高价成品。\n加工按游戏时间推进（睡觉也照算），做好后按 E 取走成品。'},
+  {key:'expand', bit:1 << 4, text:'🧱 扩建：每开垦 20 格耕地算 1 期扩建（上限 3 期），计入农场评级。\n按 G 打开评级面板，随时查看离 5 星还差多少。'}
+];
+const tipsState = {mask:0};
+let sysTipT = 0;                    /* 剩余显示时间（游戏内秒） */
+function tipSeen(key){
+  const t = SYS_TIPS.find(x => x.key === key);
+  return !!(t && (tipsState.mask & t.bit));
+}
+/* 第一次接触 → 弹一次并记位；已看过 / 总开关关闭 → 静默返回 false */
+function sysTipShow(key){
+  if(!CONFIG.TIPS.ENABLED) return false;
+  const t = SYS_TIPS.find(x => x.key === key);
+  if(!t || (tipsState.mask & t.bit)) return false;
+  tipsState.mask = (tipsState.mask | t.bit) >>> 0;
+  if(!sysTipEl) return false;
+  sysTipEl.textContent = t.text;
+  if(sysTipEl.classList) sysTipEl.classList.add('show');
+  sysTipT = CONFIG.TIPS.SHOW_MS / 1000;
+  layoutSysTip();
+  playSfx(880, 'sine', 0.06, CONFIG.AUDIO.VOLUME * 0.5);
+  return true;
+}
+function sysTipHide(){
+  sysTipT = 0;
+  if(sysTipEl && sysTipEl.classList) sysTipEl.classList.remove('show');
+}
+/* 让提示条贴着画布下沿、快捷栏上方（和 toast 同一套换算） */
+function layoutSysTip(){
+  if(!sysTipEl) return;
+  const r = canvas.getBoundingClientRect();
+  sysTipEl.style.left = (r.left + r.width / 2) + 'px';
+  sysTipEl.style.bottom = Math.max(12, window.innerHeight - (r.top + r.height) + 92) + 'px';
+}
+/* 倒计时只在世界运行时推进（面板打开 → 冻结，不会读完自己消失） */
+function updateSysTip(dt){
+  if(sysTipT <= 0) return;
+  sysTipT -= dt;
+  if(sysTipT <= 0) sysTipHide();
+}
+function tipsSerialize(){ return tipsState.mask >>> 0; }
+function tipsDeserialize(v){
+  tipsState.mask = (Number(v) | 0) >>> 0;      /* 越界的位不影响：只按已知 key 查询 */
+  sysTipHide();
+}
+function tipsResetState(){ tipsState.mask = 0; sysTipHide(); }
+
 /* --- 提示条：屏幕底部，1.5 秒淡出，多条向上排 --- */
 const toastBox = document.getElementById('toasts');
 /* 把提示条锚定到画布下沿（而不是视口底部，避免掉进黑边） */
@@ -4299,6 +4388,11 @@ function buildDexGrid(){
   refreshDexGrid();
 }
 /* 把图鉴解锁状态刷到格子上（未获得 = 剪影 + ？？？） */
+/* 第 21 轮：图鉴懒渲染 —— 只有背包打开且停在图鉴页时才重建 8 个格子 */
+function refreshDexIfVisible(){
+  if(packOpen && packTab === 'dex'){ refreshDexGrid(); return true; }
+  return false;
+}
 function refreshDexGrid(){
   if(!dexGrid || !dexGrid.children) return;
   const entries = dexAllEntries();
@@ -5293,13 +5387,61 @@ function toggleSys(on){
         : '本地还没有存档';
     }
     if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
+    if(sysCheatOpen) sysCheatToggle(false);   /* 每次打开菜单都从收起状态开始 */
     setPanelOpen(sysEl, true);
   }else{
     setPanelOpen(sysEl, false);
   }
 }
-/* 系统菜单里的"删除存档"：第一次只是警告，第二次才真删 */
-function sysWipe(){
+/* --- 第 21 轮：玩法速查表（Esc 菜单内展开；键位与 keydown / mousedown 逐条对齐） --- */
+const btnCheat = document.getElementById('btnCheat');
+const sysCheat = document.getElementById('sysCheat');
+var sysCheatOpen = false;
+const CHEAT_TEXT =
+'【键位】\n' +
+'W A S D / 方向键　移动（按住 Shift 奔跑，消耗体力）\n' +
+'1 ~ 8　　　　　　　选中快捷栏（= 背包前 8 格）\n' +
+'左键　　　　　　　使用手中工具 / 种子 / 鱼竿；建造模式下放置\n' +
+'右键　　　　　　　水边给水壶补水；手持成品时吃一份；建造模式下拆除\n' +
+'Tab / I　　　　　 打开 / 关闭背包（含「图鉴」页签）\n' +
+'E　　　　　　　　 交互：居民对话 / 小屋睡觉 / 木箱 / 加工台 / 商店 /\n' +
+'　　　　　　　　　委托板 / 动物 / 采集；建造模式下换下一个配方\n' +
+'Q　　　　　　　　 建造模式：换上一个配方（滚轮也可以）\n' +
+'B　　　　　　　　 进入 / 退出建造模式\n' +
+'G　　　　　　　　 农场评级 + 雇工面板（也可点右上角评分）\n' +
+'P　　　　　　　　 暂停 / 继续\n' +
+'M　　　　　　　　 静音开关（任何面板开着时也能按）\n' +
+'Esc　　　　　　　 关闭当前面板；没有面板时打开本菜单；钓鱼中 = 收竿\n' +
+'空格 / Enter　　　对话推进 / 钓鱼咬钩时拉杆\n' +
+'\n【系统】\n' +
+'🌱 种植：锄头开垦 → 播种 → 每天浇水才会生长；成熟后左键收获。\n' +
+'💧 水壶：站在水边右键补水；商店可升级容量，减少跑动。\n' +
+'🐔 动物：先造鸡舍 / 牛棚，再在商店买动物；好感 ≥50 每天早上产出。\n' +
+'🏆 成就：Esc 菜单 → 成就墙；25 项成就分四类。\n' +
+'📋 委托：委托板每天 3 条，最多同时接 2 条；完成加信誉、提高奖励。\n' +
+'⚙ 加工台：原料 → 成品，按游戏时间加工；成品可卖钱或右键吃回体力。\n' +
+'🎁 送礼：每人每天 1 次；喜欢 +30 / 普通 +10 / 讨厌 -15，生日翻倍。\n' +
+'🌾 评级：作物种类 / 动物 / 建筑 / 成就 / 扩建五项加权，20 分一星，5 星通关。\n' +
+'📏 扩建：耕地每满 20 格算 1 期（上限 3 期），计入评级。\n' +
+'📅 日历：点左上角日期，查看未来 7 天的节日与居民生日。\n' +
+'💾 存档：每天开始自动保存；本菜单可手动保存 / 读档。';
+function sysCheatToggle(v){
+  const want = (v === undefined) ? !sysCheatOpen : !!v;
+  if(want === sysCheatOpen) return false;
+  sysCheatOpen = want;
+  if(btnCheat) btnCheat.textContent = sysCheatOpen ? '📖 收起速查表' : '📖 玩法速查表';
+  if(sysCheat){
+    if(sysCheat.textContent !== CHEAT_TEXT) sysCheat.textContent = CHEAT_TEXT;
+    if(sysCheat.classList) sysCheat.classList.toggle('open', sysCheatOpen);
+    if(sysCheatOpen) sysCheat.scrollTop = 0;
+  }
+  const sp = document.getElementById('sysPanel');
+  if(sp && sp.classList) sp.classList.toggle('cheat', sysCheatOpen);
+  return true;
+}
+if(btnCheat) btnCheat.addEventListener('click', ()=>{ sysCheatToggle(); playClick(); });
+
+/* 系统菜单里的"删除存档"：第一次只是警告，第二次才真删 */function sysWipe(){
   if(!sysWipeArmed){
     sysWipeArmed = true;
     if(btnWipe) btnWipe.textContent = '真的要删？再点一次';
@@ -5436,7 +5578,9 @@ function serializeState(){
     /* 第 19 轮新增：成品食用次数（每天限 3 次） */
     eat: makerEatSerialize(),
     /* 第 20 轮新增：雇工 / 采集箱累计 / 乌鸦事件记录 / 结算标记（紧凑结构） */
-    end: endgameSerialize()
+    end: endgameSerialize(),
+    /* 第 21 轮新增：一次性教学提示的已读位掩码（最多 5 位） */
+    tp: tipsSerialize()
   };
 }
 /* 读入一份存档数据（覆盖当前状态） */
@@ -5564,9 +5708,12 @@ function deserializeState(d){
     achDeserialize(d.ach);
     makerEatDeserialize(d.eat);        /* 第 19 轮：成品食用次数 */
     endgameDeserialize(d.end);         /* 第 20 轮：雇工 / 采集箱统计 / 乌鸦记录 / 结算标记 */
+    tipsDeserialize(d.tp);             /* 第 21 轮：一次性教学提示（老档 → 全部未读） */
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
-    refreshDexGrid();
+    /* 第 21 轮：图鉴只在背包打开且正停在图鉴页时重建（懒渲染）；
+     * 打开背包时 togglePack / applyPackTabView 会自己刷新。 */
+    refreshDexIfVisible();
     /* 老存档（v2 及以前）地图上没有采集物：如果今天是刷新日，补一批（不弹提示） */
     if(!map.some(isGatherTile)){
       const sd = ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1;
@@ -5672,6 +5819,7 @@ function newGame(){
   achResetState();                              /* 第 18 轮：成就全部重新解锁 */
   makerResetState();                            /* 第 19 轮：关闭加工台面板 / 清空食用次数 */
   endgameResetState();                          /* 第 20 轮：重置雇工 / 乌鸦记录 / 评级面板 / 结算标记 */
+  tipsResetState();                             /* 第 21 轮：教学提示重新变成"未读" */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -5722,6 +5870,7 @@ function update(dt){
   if(ratingOpen) return;             /* 第 20 轮：农场评级打开：整体冻结 */
   if(endingOpen) return;             /* 第 20 轮：终局结算打开：整体冻结 */
   achTickCard(dt);                   /* 第 18 轮：解锁卡片计时（世界冻结时一并停住） */
+  updateSysTip(dt);                  /* 第 21 轮：教学提示倒计时（面板打开时同样停住） */
   animTime += dt;
   updateClock(dt);                   /* 时间推进 */
   updateWeather(dt);                 /* 天气粒子 + 雨声 */
@@ -6051,6 +6200,7 @@ function npcStartGift(){
   if(packEl) packEl.classList.add('gift');
   refreshPackGrid();
   toast('给 ' + d.name + ' 挑一件礼物（点一下格子就送出去）');
+  sysTipShow('gift');                        /* 第 21 轮：第一次送礼 → 教学提示 */
   return true;
 }
 /* 在背包里点一格 = 把这件东西送出去 */
@@ -6226,6 +6376,11 @@ function migrate(oldSave){
        * 采集箱的格子随 buildings.slots 存档，迁移时无需额外补。 */
       if(!d.end || typeof d.end !== 'object') d.end = {w:0, s:0, p:0, m:0, n:0, e:0, c:[]};
     }
+    if(v < 10){
+      /* v9 → v10：补上「一次性教学提示」位掩码。老档没看过任何系统提示 → 0（全部可触发）；
+       * 不影响任何已有进度。 */
+      if(typeof d.tp !== 'number') d.tp = 0;
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){
@@ -6392,6 +6547,7 @@ function startFishing(){
   fishing.need = F.WAIT_MIN_MS + Math.random() * Math.max(0, F.WAIT_MAX_MS - F.WAIT_MIN_MS);
   toast('抛竿了，等鱼儿上钩…');
   playSfx(440, 'sine', 0.12, CONFIG.AUDIO.VOLUME);
+  sysTipShow('fish');                        /* 第 21 轮：第一次抛竿 → 教学提示 */
   return true;
 }
 /* 收竿（silent=true 不弹提示，用于睡觉 / 读档等被动打断） */
@@ -6770,6 +6926,7 @@ function buyAnimal(typeId){
   }
   changeGold(-price);
   animals.push(makeAnimal(typeId, [home.tx, home.ty]));
+  ratingInvalidate();                          /* 第 21 轮：动物数变化 → 评级缓存失效 */
   toast('买下了一只' + t.name + '（住进' + sh.name + '，' + t.matureDays + ' 天长成）');
   playSfx(1174, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);
   renderShop();
@@ -6823,9 +6980,16 @@ function animalPickDir(a){
   a.t = 0;
   a.walkFor = W.PAUSE_MIN + Math.random() * (W.PAUSE_MAX - W.PAUSE_MIN);
 }
-function animalStep(a, dt){
+/* --- 第 21 轮：动物 AI 降频 ---
+ * 决策（发呆计时 / 选方向 / 判障碍 / 到点换向）每 TICK=250ms 跑一次；
+ * 位移仍每帧插值，避免 4Hz 跳格。20 只动物的决策开销降到原来的 1/15。 */
+function animalThink(a, elapsed){
   const W = CONFIG.ANIMALS.WANDER;
-  if(a.wait > 0){ a.wait -= dt; return; }
+  if(a.wait > 0){
+    a.wait -= elapsed;
+    if(a.wait > 0) return;
+    a.wait = 0;
+  }
   if(!a.vx && !a.vy) animalPickDir(a);
   const homeX = (a.home[0] + 0.5) * TILE, homeY = (a.home[1] + 0.5) * TILE;
   let vx = a.vx, vy = a.vy;
@@ -6836,24 +7000,46 @@ function animalStep(a, dt){
     vx = dx / len * W.SPEED * TILE;
     vy = dy / len * W.SPEED * TILE;
   }
-  const nx = a.x + vx * dt, ny = a.y + vy * dt;
-  /* 下一格是栅栏 / 建筑 / 水 → 折返：停下发呆，下次换方向 */
+  /* 预判下一个节拍会不会撞墙：撞了就停下发呆，下次换方向 */
+  const nx = a.x + vx * W.TICK, ny = a.y + vy * W.TICK;
   if(isSolid(Math.floor(nx / TILE), Math.floor(ny / TILE))){
     a.vx = a.vy = 0;
     a.wait = W.PAUSE_MIN + Math.random() * (W.PAUSE_MAX - W.PAUSE_MIN);
     return;
   }
-  a.x = nx; a.y = ny; a.vx = vx; a.vy = vy;
-  a.t += dt;
+  a.vx = vx; a.vy = vy;
+  a.t += elapsed;
   if(a.t >= a.walkFor){
     a.vx = a.vy = 0;
     a.wait = W.PAUSE_MIN + Math.random() * (W.PAUSE_MAX - W.PAUSE_MIN);
     a.t = 0;
   }
 }
-function updateAnimals(dt){
-  for(const a of animals) animalStep(a, dt);
+/* 每帧位移（不跑 AI；撞墙兜底 + 折返） */
+function animalMove(a, dt){
+  if(a.wait > 0 || (!a.vx && !a.vy)) return;
+  const W = CONFIG.ANIMALS.WANDER;
+  const nx = a.x + a.vx * dt, ny = a.y + a.vy * dt;
+  if(isSolid(Math.floor(nx / TILE), Math.floor(ny / TILE))){
+    a.vx = a.vy = 0;
+    a.wait = W.PAUSE_MIN + Math.random() * (W.PAUSE_MAX - W.PAUSE_MIN);
+    return;
+  }
+  a.x = nx; a.y = ny;
 }
+var animalAiAcc = 0;
+function updateAnimals(dt){
+  const W = CONFIG.ANIMALS.WANDER;
+  animalAiAcc += dt;
+  let elapsed = 0;
+  if(animalAiAcc >= W.TICK){ elapsed = animalAiAcc; animalAiAcc = 0; }
+  for(const a of animals){
+    if(elapsed) animalThink(a, elapsed);
+    animalMove(a, dt);
+  }
+}
+/* 兼容旧调用：单只动物「决策 + 位移」一步到位 */
+function animalStep(a, dt){ animalThink(a, dt); animalMove(a, dt); }
 /* 玩家脚边最近的动物 */
 function animalDist(a){ return Math.hypot(a.x - player.x, a.y - player.y) / TILE; }
 function animalNear(){
@@ -6959,6 +7145,7 @@ function animalRelease(){
   const i = animals.indexOf(a);
   if(i < 0) return false;
   animals.splice(i, 1);
+  ratingInvalidate();                          /* 第 21 轮：动物数变化 → 评级缓存失效 */
   const name = animalType(a.type).name;
   animalClosePanel();
   toast('放生了' + name + '（棚舍空出了一个位置）');
@@ -7044,11 +7231,13 @@ function animalDeserialize(arr){
     }
     animals.push(a);
   }
+  ratingInvalidate();                          /* 第 21 轮：重灌动物列表 → 评级缓存失效 */
   return true;
 }
 function animalResetState(){
   animals = [];
   animalClosePanel(true);
+  ratingInvalidate();                          /* 第 21 轮：清空动物 → 评级缓存失效 */
 }
 
 /* === 17.委托板 / 信誉（第 16 轮） ===
@@ -7335,6 +7524,7 @@ function questOpenPanel(){
   questRenderPanel();
   setPanelOpen(questEl, true);
   playSfx(620, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  sysTipShow('quest');                       /* 第 21 轮：第一次打开委托板 → 教学提示 */
   return true;
 }
 function questClosePanel(){
@@ -7910,6 +8100,7 @@ function achUnlock(i){
   const a = CONFIG.ACHIEVEMENT.LIST[i];
   if(!a || achHasUnlocked(i)) return false;
   achState.unl = (achState.unl | (1 << i)) >>> 0;   /* 只解锁一次：位测试挡掉重复触发 */
+  ratingInvalidate();                          /* 第 21 轮：成就数变化 → 评级缓存失效 */
   achQueue.push(a);
   achShowNextCard();
   toast('🏆 成就解锁：' + a.name);
@@ -8381,6 +8572,7 @@ function makerOpenPanel(b){
   makerRenderPanel();
   setPanelOpen(makerEl, true);
   playSfx(520, 'square', 0.08, CONFIG.AUDIO.VOLUME);
+  sysTipShow('maker');                       /* 第 21 轮：第一次打开加工台 → 教学提示 */
   return true;
 }
 function makerClosePanel(){
@@ -8670,6 +8862,9 @@ function crowLastText(){
 }
 
 /* --- 农场评级：作物种类 / 动物 / 建筑 / 成就 / 扩建期数加权；每 20 分一星 --- */
+/* 第 21 轮：评级只在这些数据变化时重算（HUD 每帧读缓存），避免每帧扫 4096 格。 */
+var ratingCache = null;
+function ratingInvalidate(){ ratingCache = null; }
 function tilledPlots(){
   let n = 0;
   for(let i=0;i<map.length;i++){
@@ -8677,7 +8872,8 @@ function tilledPlots(){
   }
   return n;
 }
-function ratingParts(){
+function ratingParts(force){
+  if(!force && ratingCache) return ratingCache;   /* 第 21 轮：默认走缓存 */
   const R = CONFIG.ENDGAME.RATING;
   const tilled = tilledPlots();
   const rows = [
@@ -8693,7 +8889,8 @@ function ratingParts(){
     score += r.pts;
   }
   const stars = Math.min(R.STARS, Math.floor(score / R.STAR_STEP));
-  return {score:score, stars:stars, rows:rows, tilled:tilled, starsMax:R.STARS};
+  ratingCache = {score:score, stars:stars, rows:rows, tilled:tilled, starsMax:R.STARS};
+  return ratingCache;
 }
 function ratingStarsText(n){
   const max = CONFIG.ENDGAME.RATING.STARS;
@@ -8703,7 +8900,8 @@ function ratingStarsText(n){
 }
 /* 重新评估（建筑 / 成就 / 收获等变化后调用）；首次凑满 5 星 → 下一帧弹结算 */
 function ratingCheck(){
-  const info = ratingParts();
+  const info = ratingParts(true);             /* 变化入口：强制重算并刷新缓存 */
+  if(info.tilled >= CONFIG.ENDGAME.RATING.EXPAND_PLOTS) sysTipShow('expand');   /* 第 21 轮 */
   if(info.stars >= CONFIG.ENDGAME.RATING.STARS && !endgameState.ending){
     endgameState.ending = true;
     endingPending = true;
@@ -8721,7 +8919,7 @@ function ratingWorkerText(){
   return '雇工：在职 · 第 ' + w.paidDay + ' 天的工资已付 · 每天早上自动浇所有耕地';
 }
 function ratingRenderPanel(){
-  const info = ratingParts();
+  const info = ratingParts(true);             /* 面板打开次数很少，强制取最新值 */
   const R = CONFIG.ENDGAME.RATING;
   if(ratingStarsEl) ratingStarsEl.textContent = ratingStarsText(info.stars);
   if(ratingTotalEl) ratingTotalEl.textContent = '评分 ' + info.score + ' / 100 · 满 ' + R.STARS + ' 星';
@@ -8794,7 +8992,7 @@ function toggleRatingPanel(v){
 function endingOpenPanel(){
   if(!endingEl || endingOpen) return false;
   endingOpen = true;
-  const info = ratingParts();
+  const info = ratingParts(true);
   if(endingBodyEl){
     const lines = [];
     lines.push('评分 ' + info.score + ' / 100 · ' + ratingStarsText(info.stars));
@@ -8919,6 +9117,7 @@ const sky0 = skyAt(skyHour());
 sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
 layoutToasts();
+layoutSysTip();
 
 /* 离开页面 / 刷新前自动存档（标题界面还开着时不动旧档） */
 window.addEventListener('beforeunload', ()=>{
@@ -9035,7 +9234,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   isGatherTile, gatherItemForTile: (t)=>GATHER_ITEM_BY_TILE[t] || null, gatherNear,
   pickGather, clearGatherTiles, spawnGather, gatherDayStart, drawGathers,
   GATHER_ITEM_BY_TILE,
-  get packTab(){ return packTab; }, setPackTab, buildDexGrid, refreshDexGrid, applyPackTabView,
+  get packTab(){ return packTab; }, setPackTab, buildDexGrid, refreshDexGrid, refreshDexIfVisible, applyPackTabView,
   /* 第 15 轮：动物 / 棚舍 / 每日产出 */
   get animals(){ return animals; }, set animals(v){ animals = v; },
   get animalOpen(){ return animalOpen; }, set animalOpen(v){ if(v) animalOpenPanel(animalTarget); else animalClosePanel(); },
@@ -9120,6 +9319,17 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   endingOpenPanel, endingClosePanel, drawRatingHud, hitHudRating,
   endgameSerialize, endgameDeserialize, endgameResetState,
   drawIrrigator, drawScarecrow, drawAutobox,
+  /* 第 21 轮：性能缓存 / 动物 AI 降频 / 一次性教学提示 / 玩法速查表 */
+  get fps(){ return fps; },
+  get frameNo(){ return frameNo; },
+  get visibleCount(){ return visibleCount; },
+  get animalAiAcc(){ return animalAiAcc; },
+  ratingInvalidate, ratingParts,
+  SYS_TIPS, tipsState, tipSeen, sysTipShow, sysTipHide, updateSysTip, layoutSysTip,
+  get sysTipT(){ return sysTipT; },
+  tipsSerialize, tipsDeserialize, tipsResetState,
+  get sysCheatOpen(){ return sysCheatOpen; },
+  sysCheatToggle, CHEAT_TEXT, btnCheat, sysCheat,
   drawGroundTileBase, drawWaterAnim};
 </script>
 </body>

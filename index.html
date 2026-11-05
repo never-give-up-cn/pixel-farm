@@ -606,7 +606,10 @@ const CONFIG = {
       { id:'pick',         price:50 },   // 镐（一次性）
       { id:'sickle',       price:40 },   // 镰刀（一次性）
       { id:'rod',          price:60 },   // 鱼竿（一次性，第 14 轮）
-      { id:'can_upgrade',  price:80 }    // 水壶扩容（+10 容量）
+      { id:'can_upgrade',  price:80 },   // 水壶扩容（+10 容量）
+      { id:'feed',         price:8  },   // 饲料（第 15 轮，喂动物）
+      { id:'chicken',      price:120, animal:'chicken' },  // 鸡（第 15 轮，需要先建鸡舍）
+      { id:'cow',          price:260, animal:'cow' }       // 牛（第 15 轮，需要先建牛棚）
     ]
   },
 
@@ -623,7 +626,10 @@ const CONFIG = {
       { id:'fence',     name:'木栅栏', cost:{wood:3},           solid:true  },  // 挡住去路
       { id:'chest',     name:'木箱',   cost:{wood:8},           solid:true  },  // 8 格储物
       { id:'path',      name:'石板路', cost:{stone:2},          overlay:true },  // 叠加层，走得更快
-      { id:'sprinkler', name:'洒水器', cost:{wood:5, stone:5} }                // 每天早上浇 3×3
+      { id:'sprinkler', name:'洒水器', cost:{wood:5, stone:5} },               // 每天早上浇 3×3
+      /* 第 15 轮：动物棚舍（实体，挡路；里面还有动物时拆除会被拦下） */
+      { id:'coop',      name:'鸡舍',   cost:{wood:12},          solid:true  },  // 住 4 只鸡
+      { id:'barn',      name:'牛棚',   cost:{wood:20, stone:6}, solid:true  }   // 住 3 头牛
     ]
   },
 
@@ -633,7 +639,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 3,               // 存档版本号（第 14 轮 +1：新增 dex 图鉴字段；旧档由 migrate() 升级）
+    VERSION: 4,               // 存档版本号（第 15 轮 +1：新增 animals 动物字段；旧档由 migrate() 升级）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -704,8 +710,19 @@ const CONFIG = {
     // 野花：春夏草地上刷新
     mushroom:  { id:'mushroom',   name:'蘑菇', icon:'🍄', stack:true, max:99, kind:'gather', price:26 },
     // 蘑菇：秋季草地上刷新
-    berry:     { id:'berry',      name:'浆果', icon:'🍓', stack:true, max:99, kind:'gather', price:22 }
+    berry:     { id:'berry',      name:'浆果', icon:'🍓', stack:true, max:99, kind:'gather', price:22 },
     // 浆果：夏秋草地上刷新
+    /* 第 15 轮：饲料 + 动物产物（kind='animal'，能卖、能当礼物） */
+    feed:      { id:'feed',      name:'饲料',   icon:'🌾', stack:true, max:99, kind:'material', price:8 },
+    // 饲料：商店买 / 镰刀割草地获得，喂动物用
+    egg:       { id:'egg',       name:'鸡蛋',   icon:'🥚', stack:true, max:99, kind:'animal', price:30 },
+    // 鸡蛋：鸡每天产
+    egg_hq:    { id:'egg_hq',    name:'优质蛋', icon:'🥚', stack:true, max:99, kind:'animal', price:54 },
+    // 优质蛋：好感越高越容易出（售价 = 鸡蛋 ×1.8）
+    milk:      { id:'milk',      name:'牛奶',   icon:'🥛', stack:true, max:99, kind:'animal', price:60 },
+    // 牛奶：牛每天产
+    milk_hq:   { id:'milk_hq',   name:'优质奶', icon:'🥛', stack:true, max:99, kind:'animal', price:108 }
+    // 优质奶：好感越高越容易出（售价 = 牛奶 ×1.8）
   },
 
   /* 工具行为表：名字/图标在 ITEMS 表，这里只管「作用在什么地块、产出什么」
@@ -960,6 +977,39 @@ const CONFIG = {
       { item:'berry',      tile:T.BERRY,      seasons:['夏','秋'] }
       // 浆果：夏秋
     ]
+  },
+
+  /* ---------- 动物系统（第 15 轮）：鸡 / 牛 + 棚舍 + 每日产出 ---------- */
+  ANIMALS: {
+    RANGE: 1.6,               // 走近多少格内按 E 能互动
+    AFF_MAX: 100,             // 好感度上限
+    FEED_AFF: 5,              // 每天已喂食 → 次日结算好感 +5
+    HUNGRY_AFF: -5,           // 每天没喂食 → 次日结算好感 -5（且当天不产出）
+    PET_AFF: 2,               // 摸头 +2（每天一次）
+    FEED_ITEM: 'feed',        // 饲料物品 id（商店买 / 镰刀割草）
+    FEED_PER: 1,              // 喂一次消耗几个饲料
+    PRODUCE_MIN_AFF: 50,      // 好感 ≥ 这个值才有产出
+    HQ_CHANCE_MIN: 0.10,      // 好感刚够格（50）时出高品质的概率
+    HQ_CHANCE_MAX: 0.45,      // 好感满（100）时出高品质的概率
+    HQ_PRICE_MULT: 1.8,       // 高品质版本售价倍率（价格表里已按此折算，改这里只影响显示文案）
+    WANDER: {                 // 围栏内简单游走 AI
+      SPEED: 0.55,            // 走动速度（格 / 秒）
+      RANGE: 3,               // 离棚舍最远几格（超出就往回走）
+      PAUSE_MIN: 0.6,         // 停下发呆的最短时间（秒）
+      PAUSE_MAX: 2.2          // 停下发呆的最长时间（秒）
+    },
+    /* 两种动物：成熟天数 / 每天产出 / 高品质版本 / 住的棚舍 */
+    TYPES: [
+      { id:'chicken', name:'鸡', icon:'🐔', price:120, matureDays:2,
+        produce:'egg',  hqProduce:'egg_hq',  shelter:'coop' },
+      { id:'cow',     name:'牛', icon:'🐄', price:260, matureDays:4,
+        produce:'milk', hqProduce:'milk_hq', shelter:'barn' }
+    ],
+    /* 棚舍：对应的建造配方 id + 最多住几只 */
+    SHELTERS: {
+      coop: { id:'coop', name:'鸡舍', recipe:'coop', cap:4 },
+      barn: { id:'barn', name:'牛棚', recipe:'barn', cap:3 }
+    }
   },
 
   /* 平衡自检（第 12 轮）：新手从 100 金币攒到「扩建地 500 金币」要几天 */
@@ -2701,7 +2751,7 @@ function basePrice(id){
   const d = itemDef(id);
   if(!d) return 0;
   if(d.kind === 'crop'){ const c = cropDef(d.crop); return c ? c.sell : 0; }
-  if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather') return d.price || 0;
+  if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' || d.kind === 'animal') return d.price || 0;
   return 0;
 }
 /* 当前价格（含季节系数与 ±15% 浮动） */
@@ -2725,7 +2775,8 @@ function priceTrend(id){
 function isSellable(id){
   const d = itemDef(id);
   if(!d) return false;
-  return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather';
+  return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' ||
+         d.kind === 'gather' || d.kind === 'animal';
 }
 /* 工具是否已经拥有（一次性商品） */
 function toolOwned(id){

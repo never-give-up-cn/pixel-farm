@@ -591,6 +591,8 @@
   #packGrid .cell:active,#chestGrid .cell:active,#chestInv .cell:active{transform:translateY(1px)}
   /* 总音量开关：系统菜单里的一个整行按钮（不再浮在主画面上） */
   #sndBtn{width:100%;text-align:left;font-family:inherit}
+  #hintBtn{width:100%;text-align:left;font-family:inherit}
+  #hintBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.85}
   #sndBtn:hover{border-color:#ffd76a;color:#ffd76a;background:rgba(22,28,44,.92)}
   #sndBtn.off{color:#7f92ad;border-color:#3a4256;opacity:.85}
   /* 新手引导提示条（窗口顶部居中，不挡画布点击） */
@@ -636,7 +638,7 @@
   #sysTip.show{display:block}
   #sysPanel.cheat{width:500px}
   /* Esc 菜单里的玩法速查表：默认收起，展开后内部滚动 */
-  #sysCheat{display:none;max-height:210px;overflow-y:auto;margin:10px 0 0;
+  #sysCheat{display:none;max-height:280px;overflow-y:auto;margin:10px 0 0;
     padding:8px 10px;border:1px solid #3a4256;border-radius:8px;
     background:rgba(10,14,22,.55);color:#cfe0f2;
     font:12px/1.65 Consolas,"Microsoft YaHei","PingFang SC",monospace;
@@ -739,6 +741,8 @@
       <button class="mbtn" id="btnStats">📊 游戏状态</button>
       <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
       <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
+      <!-- 交互按键提示开关：关掉后靠近居民 / 场景不再显示「按 E ...」 -->
+      <button class="mbtn" id="hintBtn" title="交互按键提示开关">💬 交互提示：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
     <div id="sysCheat"></div>
@@ -1130,7 +1134,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 10,              // 存档版本号（第 21 轮 +1：tp 字段存"一次性教学提示"位掩码）
+    VERSION: 11,              // 存档版本号（第 22 轮 +1：ih 字段存"交互按键提示"开关）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1340,6 +1344,12 @@ const CONFIG = {
   TIPS: {
     ENABLED: true,          // 总开关
     SHOW_MS: 6500           // 单条停留时间（毫秒，按游戏内时间冻结：开面板时暂停倒计时）
+  },
+
+  /* 交互按键提示（第 22 轮）：靠近居民 / 商店 / 委托板 / 加工台 / 动物 / 采集物时
+   * 头顶的「按 E ...」浮字。可在 Esc 菜单随时关闭，关闭后不再绘制。*/
+  INTERACT_HINT: {
+    ENABLED: true           // 默认开启；玩家在系统菜单里可切换，状态存进存档
   },
 
   /* 性能：静态地面预渲染到离屏 canvas + Y 排序 */
@@ -3302,6 +3312,22 @@ function setMuted(m, silent){
 function toggleMute(){ return setMuted(!audioMuted); }
 /* 声音开关按钮 */
 if(sndBtn) sndBtn.addEventListener('click', ()=>{ toggleMute(); });
+
+/* 交互按键提示开关（第 22 轮）：关掉后靠近居民 / 场景时不再绘制「按 E ...」浮字。
+ * 只影响提示绘制，交互本身照常可用；开关状态进存档（ih）。*/
+const hintBtn = document.getElementById('hintBtn');
+var interactHintsOn = CONFIG.INTERACT_HINT.ENABLED !== false;
+function setInteractHints(on, silent){
+  interactHintsOn = !!on;
+  if(hintBtn){
+    hintBtn.textContent = interactHintsOn ? '💬 交互提示：开' : '💬 交互提示：关';
+    if(hintBtn.classList) hintBtn.classList.toggle('off', !interactHintsOn);
+  }
+  if(!silent) toast(interactHintsOn ? '💬 交互按键提示已打开' : '💬 交互按键提示已关闭');
+  return interactHintsOn;
+}
+function toggleInteractHints(){ return setInteractHints(!interactHintsOn); }
+if(hintBtn) hintBtn.addEventListener('click', ()=>{ toggleInteractHints(); });
 /* --- UI 点击音：菜单按钮 / 页签按下时"哒"一声（商店的买卖用金币声，不重复） --- */
 const UI_CLICK_SEL = ['.mbtn', '.tab', '#sndBtn'];
 document.addEventListener('click', e=>{
@@ -5094,6 +5120,8 @@ function drawUI(g){
     g.textAlign = 'left';
   }
 
+  /* ===== 交互按键提示（可在 Esc 菜单关闭；关闭后整块不绘制） ===== */
+  if(interactHintsOn){
   /* 走到小屋附近 → 提示按 E 睡觉 */
   if(!shopOpen && sleepFx.phase === 'none' && nearHouse()){
     const hx = HOUSE_POS.x*TILE - cam.x, hy = HOUSE_POS.y*TILE - cam.y;
@@ -5194,6 +5222,7 @@ function drawUI(g){
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, my);
   }
+  }   /* ← interactHintsOn 结束 */
 
   /* 左下角：体力条（低于 20 变红闪烁） */
   const sbW = 116, sbH = 11, sbX = 14, sbY = VIEW_H - 26;
@@ -5461,6 +5490,7 @@ const CHEAT_TEXT =
 '🌾 评级：作物种类 / 动物 / 建筑 / 成就 / 扩建五项加权，20 分一星，5 星通关。\n' +
 '📏 扩建：耕地每满 20 格算 1 期（上限 3 期），计入评级。\n' +
 '📅 日历：点左上角日期，查看未来 7 天的节日与居民生日。\n' +
+'💬 交互提示：本菜单可关闭头顶的「按 E …」按键提示（关掉后交互照常可用）。\n' +
 '💾 存档：每天开始自动保存；本菜单可手动保存 / 读档。';
 function sysCheatToggle(v){
   const want = (v === undefined) ? !sysCheatOpen : !!v;
@@ -5624,6 +5654,7 @@ function serializeState(){
     tut: {step:tut.step|0, moved:Math.round(tut.moved), tilled:tut.tilled|0,
           sown:tut.sown|0, slept:!!tut.slept},
     snd: audioMuted ? 1 : 0,
+    ih: interactHintsOn ? 1 : 0,   /* 第 22 轮：交互按键提示开关 */
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
@@ -5749,6 +5780,8 @@ function deserializeState(d){
     }
     /* 静音状态（老存档没这个字段 → 保持当前设置） */
     if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
+    /* 交互按键提示开关（迁移后的旧档会补齐；直接读当前档时按字段恢复） */
+    setInteractHints(d.ih === undefined ? true : !!d.ih, true);
     /* 居民状态（老存档没这个字段 → 当作"刚认识"，其余进度不受影响） */
     npcDeserialize(d.npc);
     /* 图鉴（老存档没这个字段 → 图鉴为空；超出的位按 0 截断） */
@@ -5882,6 +5915,7 @@ function newGame(){
   makerResetState();                            /* 第 19 轮：关闭加工台面板 / 清空食用次数 */
   endgameResetState();                          /* 第 20 轮：重置雇工 / 乌鸦记录 / 评级面板 / 结算标记 */
   tipsResetState();                             /* 第 21 轮：教学提示重新变成"未读" */
+  setInteractHints(CONFIG.INTERACT_HINT.ENABLED, true);   /* 第 22 轮：交互提示恢复默认 */
   cancelFishing(true);
   player.x = SPAWN.x*TILE + TILE/2;
   player.y = SPAWN.y*TILE + TILE/2;
@@ -6442,6 +6476,10 @@ function migrate(oldSave){
       /* v9 → v10：补上「一次性教学提示」位掩码。老档没看过任何系统提示 → 0（全部可触发）；
        * 不影响任何已有进度。 */
       if(typeof d.tp !== 'number') d.tp = 0;
+    }
+    if(v < 11){
+      /* v10 → v11：补上「交互按键提示」开关。老档默认开启（ih = 1），行为与升级前一致。 */
+      if(typeof d.ih !== 'number') d.ih = 1;
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -9265,6 +9303,8 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   SHOP_POS, FARM,
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */
   ensureAudio, audioCtx, audioMuted:()=>audioMuted, setMuted, toggleMute,
+  get interactHintsOn(){ return interactHintsOn; },
+  setInteractHints, toggleInteractHints, hintBtn,
   playSfx, playNotes, playClick, playCoin, playStep, playSleepSfx,
   startRainAmbience, stopRainAmbience, rainAmbience:()=>rainAmbience,
   get tut(){ return tut; }, set tut(v){ Object.assign(tut, v); },

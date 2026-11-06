@@ -658,6 +658,71 @@
     white-space:pre-line;text-align:left}
   #sysCheat.open{display:block}
   #sysCheat b{color:#ffd76a}
+
+  /* ========== 第 28 轮：天气预报 / 音量滑块 / 多存档槽 / 状态图标 /
+   *              全屏地图 / 好感总览 / 物品提示多行（只追加，不改上面的规则） ========== */
+  /* 音量滑块（系统菜单里，声音按钮下方） */
+  #volRow{display:flex;align-items:center;gap:8px;width:100%;padding:2px 4px;box-sizing:border-box}
+  #volIcon{font:14px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif;width:18px;text-align:center}
+  #volRange{flex:1;accent-color:#ffd76a;height:4px;cursor:pointer}
+  #volVal{font-size:11px;color:#8fa3bd;width:40px;text-align:right}
+  /* 多存档槽位（标题界面 + 系统菜单共用 .slot 按钮样式） */
+  #startSlots{display:flex;gap:6px;justify-content:center;margin:8px 0 4px;flex-wrap:wrap}
+  #sysSlots{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+  #startSlots .slot,#sysSlots .slot{
+    background:#1a2130;border:2px solid #3d4a63;color:#cfe3ff;
+    font:12px/1 Consolas,"Microsoft YaHei",monospace;padding:5px 10px;cursor:pointer;
+  }
+  #startSlots .slot:hover,#sysSlots .slot:hover{border-color:#ffd76a;color:#ffd76a}
+  #startSlots .slot.on,#sysSlots .slot.on{border-color:#ffd76a;color:#ffd76a;background:#2a3550}
+  /* 物品提示：多行（品质 / 价格 / 用途），覆盖上面 #packTip 的 nowrap */
+  #packTip{white-space:pre-line}
+  /* 好感度总览面板（复用 .panel 视觉） */
+  #frend{
+    position:fixed;inset:0;z-index:46;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #frend.open{display:flex}
+  #frendMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #frendPanel{position:relative;width:480px;max-width:92vw;padding:12px 14px 10px}
+  #frendHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #frendIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #frendTitle{font-size:15px;color:#ffd76a}
+  #frendSub{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #frendList{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+  .frow{
+    display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;
+    background:rgba(8,10,16,.55);border:1px solid #2c3a4e;
+  }
+  .frow .ficon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  .frow .fmain{flex:1;min-width:0}
+  .frow .fl1{font-size:12px;color:#e8f0ff}
+  .frow .fl1 b{color:#ffd76a;font-weight:normal}
+  .frow .fl2{font-size:11px;color:#8fa3bd;margin-top:2px}
+  .fbar{height:5px;border-radius:3px;background:#1a2130;border:1px solid #2c3a4e;overflow:hidden;margin-top:4px}
+  .fbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e0556b,#ffd76a)}
+  #frendFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  #frend.open #frendPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #frend.closing #frendPanel{animation:panelOut .2s ease-in forwards}
+  /* 全屏地图面板（复用 .panel 视觉） */
+  #bigmap{
+    position:fixed;inset:0;z-index:46;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #bigmap.open{display:flex}
+  #bigmapMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
+  #bigmapPanel{position:relative;width:560px;max-width:94vw;padding:12px 14px 10px}
+  #bigmapHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  #bigmapIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #bigmapTitle{font-size:15px;color:#ffd76a}
+  #bigmapSub{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #bigmapCv{display:block;margin:0 auto;border:1px solid #3d4a63;background:#0c1018;image-rendering:pixelated}
+  #bigmapLegend{margin-top:8px;font-size:11px;color:#8fa3bd;text-align:center}
+  #bigmapFoot{margin-top:6px;font-size:11px;color:#7f92ad;text-align:center}
+  #bigmap.open #bigmapPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #bigmap.closing #bigmapPanel{animation:panelOut .2s ease-in forwards}
 </style>
 </head>
 <body>
@@ -720,6 +785,8 @@
     <div id="startSub">P I X E L &nbsp; F A R M</div>
     <div id="startInfo"></div>
     <div id="startWarn"></div>
+    <!-- 第 28 轮：多存档槽位（点选后「继续 / 新游戏」作用于该槽） -->
+    <div id="startSlots"></div>
     <div id="startBtns">
       <button class="mbtn" id="btnContinue">继续游戏</button>
       <button class="mbtn" id="btnNew">新游戏</button>
@@ -742,18 +809,28 @@
     <div id="sysHead">系统菜单</div>
     <div id="sysTut"></div>
     <div id="sysInfo"></div>
+    <!-- 第 28 轮：存档槽位切换（保存 / 读档 / 删档都作用于当前选中的槽） -->
+    <div id="sysSlots"></div>
     <div id="sysBtns">
       <button class="mbtn" id="btnSave">保存游戏</button>
       <button class="mbtn" id="btnLoad">读取存档</button>
       <button class="mbtn danger" id="btnWipe">删除存档</button>
       <!-- 第 18 轮：成就墙入口 -->
       <button class="mbtn" id="btnAch">🏆 成就墙</button>
+      <!-- 第 28 轮：居民好感总览入口 -->
+      <button class="mbtn" id="btnFrend">👥 居民好感</button>
       <!-- 第 21 轮：玩法速查表（键位 / 系统说明） -->
       <button class="mbtn" id="btnCheat">📖 玩法速查表</button>
       <!-- 游戏状态：原右上角常驻面板，收进菜单查看 -->
       <button class="mbtn" id="btnStats">📊 游戏状态</button>
       <!-- 总音量开关：放在系统菜单里，不再挡住主画面 -->
       <button class="mbtn" id="sndBtn" title="声音开关（M）">🔊 声音：开</button>
+      <!-- 第 28 轮：音量滑块（0~100%，进存档 vol；静音时无效） -->
+      <div id="volRow" title="音量大小（静音时无效）">
+        <span id="volIcon">🔊</span>
+        <input type="range" id="volRange" min="0" max="100" step="5" value="100">
+        <span id="volVal">100%</span>
+      </div>
       <!-- 交互按键提示开关：关掉后靠近居民 / 场景不再显示「按 E ...」 -->
       <button class="mbtn" id="hintBtn" title="交互按键提示开关">💬 交互提示：开</button>
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
@@ -939,6 +1016,35 @@
   </div>
 </div>
 
+<!-- 好感度总览（第 28 轮）：系统菜单打开；复用 .panel 样式与开合动画，打开时世界冻结 -->
+<div id="frend">
+  <div id="frendMask"></div>
+  <div id="frendPanel" class="panel">
+    <div id="frendHead">
+      <span id="frendIcon">👥</span>
+      <span id="frendTitle">居民好感总览</span>
+      <span id="frendSub"></span>
+    </div>
+    <div id="frendList"></div>
+    <div id="frendFoot">对话 / 送礼提升好感 · 🎂 = 今天生日 · 金色档 = 已解锁特权 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- 全屏地图（第 28 轮）：点右上角小地图打开；复用 .panel 样式与开合动画，打开时世界冻结 -->
+<div id="bigmap">
+  <div id="bigmapMask"></div>
+  <div id="bigmapPanel" class="panel">
+    <div id="bigmapHead">
+      <span id="bigmapIcon">🗺️</span>
+      <span id="bigmapTitle">全屏地图</span>
+      <span id="bigmapSub"></span>
+    </div>
+    <canvas id="bigmapCv" width="528" height="528"></canvas>
+    <div id="bigmapLegend">白=你 · 黄=营业中 · 橙=瞎逛 · 蓝=在家 · 棕=农舍 · 青=杂货店</div>
+    <div id="bigmapFoot">再点小地图或按 Esc 关闭</div>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -1068,6 +1174,10 @@ const CONFIG = {
     { id:'rain', name:'雨', icon:'🌧', w:3 },   // 雨天（下雨声 + 雨滴 + 自动浇水）
     { id:'snow', name:'雪', icon:'❄', w:1 }    // 雪天（最少见；移动变慢）
   ],
+  /* 第 28 轮：天气预报（日历显示未来 N 天 + HUD 明日天气，队列随翻天推进） */
+  FORECAST: {
+    DAYS: 7                   // 预报队列长度（日历用其中 6 天：明天 ~ 第 7 天）
+  },
   /* 天气粒子：数量 / 速度（像素每秒）+ 天气对玩法的影响 */
   WEATHER_FX: {
     RAIN_COUNT: 130,        // 同屏雨滴数量
@@ -1153,8 +1263,9 @@ const CONFIG = {
    * VERSION  存档版本号；与存档里的 v 对不上时，标题界面会提示并可选择重置
    * AUTO_*   自动存档的时机 */
   SAVE: {
-    KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 13,              // 存档版本号（第 25 轮 +1：npc.loot 开过 NPC 箱子的周数）
+    KEY: 'farm_save_v1',      // localStorage 键名（多槽位时槽 1 仍用这个键，不能改名）
+    VERSION: 14,              // 存档版本号（第 28 轮 +1：fc 天气预报队列 + vol 音量档位）
+    SLOTS: 3,                 // 存档槽位数量（槽 1 = KEY，槽 2/3 = KEY + '_s2' / '_s3'）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -2232,14 +2343,90 @@ function rebuildMinimap(){
   miniCtx.fillRect(cx, cy, 4, 4);
   miniReady = true;
 }
+let hudMiniRect = {x:0, y:0, w:0, h:0};   /* 第 28 轮：小地图可点击区域（点开全屏地图） */
 function drawMinimap(g){
   if(!miniReady) return;
   const M = CONFIG.MINIMAP;
   const x = VIEW_W - M.SIZE - M.MARGIN, y = M.TOP;
+  hudMiniRect = {x:x - 2, y:y - 2, w:M.SIZE + 4, h:M.SIZE + 4};   /* 第 28 轮：可点击区域 */
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(x-2, y-2, M.SIZE+4, M.SIZE+4);
   g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(x-2, y-2, M.SIZE+4, M.SIZE+4);
   g.drawImage(miniCv, x, y);
 }
+/* 第 28 轮：点小地图 → 打开全屏地图 */
+function hitHudMini(p){
+  if(!hudMiniRect || hudMiniRect.w <= 0) return false;
+  return p.x >= hudMiniRect.x - 2 && p.x <= hudMiniRect.x + hudMiniRect.w + 2 &&
+         p.y >= hudMiniRect.y - 2 && p.y <= hudMiniRect.y + hudMiniRect.h + 2;
+}
+/* --- 第 28 轮：全屏地图（整个 64×64 世界 + 居民状态色点 + 玩家） --- */
+let bigmapOpen = false;
+const bigmapEl = document.getElementById('bigmap');
+const bigmapMaskEl = document.getElementById('bigmapMask');
+const bigmapCvEl = document.getElementById('bigmapCv');
+const bigmapSubEl = document.getElementById('bigmapSub');
+function renderBigmap(){
+  const cv = bigmapCvEl;
+  if(!cv || !cv.getContext) return;
+  const g = cv.getContext('2d');
+  const K = CONFIG.MINIMAP.SCALE, PAD = 8;
+  g.fillStyle = '#0c1018';
+  g.fillRect(0, 0, cv.width, cv.height);
+  /* 地块 + 石板路 */
+  for(let y = 0; y < MAP_H; y++){
+    for(let x = 0; x < MAP_W; x++){
+      const i = y * MAP_W + x;
+      g.fillStyle = minimapTileColor(map[i]);
+      g.fillRect(PAD + x * K, PAD + y * K, K, K);
+      if(roads[i]){
+        g.fillStyle = CONFIG.TILE_COLORS.roadStone;
+        g.fillRect(PAD + x * K, PAD + y * K, K, K);
+      }
+    }
+  }
+  /* 城镇建筑（整栋画成色块：杂货店青色，其余民居棕色） */
+  const C = CONFIG.TOWN;
+  for(const b of (C.LIST || [])){
+    g.fillStyle = (b.kind === 'shop') ? CONFIG.MINIMAP.SHOP : '#b08968';
+    g.fillRect(PAD + b.x * K, PAD + C.ROW * K, b.w * K, (C.END_ROW - C.ROW + 1) * K);
+  }
+  /* 农舍 / 农场里的杂货店摊位（沿用小地图配色） */
+  g.fillStyle = CONFIG.MINIMAP.HOUSE;
+  g.fillRect(PAD + HOUSE_POS.x * K, PAD + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
+  /* 居民（按当前状态着色：营业黄 / 瞎逛橙 / 在家蓝；睡觉外出不画） */
+  for(const d of CONFIG.NPC.LIST){
+    const p = npcPos(d);
+    if(!p) continue;
+    const col = minimapNpcColor(npcWhere(d));
+    if(!col) continue;
+    g.fillStyle = col;
+    g.fillRect(PAD + p.tx * K + (K >> 1) - 2, PAD + p.ty * K + (K >> 1) - 2, 4, 4);
+  }
+  /* 玩家（白点） */
+  const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
+  g.fillStyle = CONFIG.MINIMAP.PLAYER;
+  g.fillRect(PAD + px * K + (K >> 1) - 2, PAD + py * K + (K >> 1) - 2, 5, 5);
+  if(bigmapSubEl) bigmapSubEl.textContent = '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
+}
+function bigmapOpenPanel(){
+  if(bigmapOpen) return false;
+  bigmapOpen = true;
+  renderBigmap();
+  setPanelOpen(bigmapEl, true);
+  playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function bigmapClosePanel(){
+  if(!bigmapOpen) return false;
+  bigmapOpen = false;
+  setPanelOpen(bigmapEl, false);
+  return true;
+}
+function toggleBigmap(v){
+  if(v === undefined) v = !bigmapOpen;
+  return v ? bigmapOpenPanel() : bigmapClosePanel();
+}
+if(bigmapMaskEl) bigmapMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); toggleBigmap(false); });
 
 /* 中央空地 + 建筑位置（全部由 CONFIG 推导） */
 const FARM = {
@@ -3865,6 +4052,7 @@ function updateCamera(dt){
 /* --- 音效：Web Audio 实时合成（浏览器要求先有用户交互才允许播放） --- */
 let actx = null;
 let audioMuted = CONFIG.AUDIO.MUTE_START;   /* 总音量开关：true = 全部静音 */
+let volLevel = 100;                         /* 第 28 轮：音量档位 0~100（进存档 vol） */
 const sndBtn = document.getElementById('sndBtn');   /* 系统菜单里的总音量开关按钮 */
 function ensureAudio(){
   try{
@@ -3887,15 +4075,17 @@ function audioCtx(){
 /* 基础单音 */
 function playSfx(freq, type, dur, vol){
   if(audioMuted) return false;
+  if(volLevel <= 0) return false;          /* 第 28 轮：音量档 0 = 静音（不走 WebAudio） */
   const ac = audioCtx();
   if(!ac) return false;
+  const v = vol * (volLevel / 100);        /* 第 28 轮：音量档位缩放 */
   try{
     const t0 = ac.currentTime;
     const osc = ac.createOscillator(), gain = ac.createGain();
     osc.type = type || CONFIG.AUDIO.TYPE;
     osc.frequency.setValueAtTime(freq, t0);
     gain.gain.setValueAtTime(0.0001, t0);
-    gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+    gain.gain.exponentialRampToValueAtTime(v, t0 + 0.012);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     osc.connect(gain); gain.connect(ac.destination);
     osc.start(t0); osc.stop(t0 + dur + 0.02);
@@ -3905,8 +4095,10 @@ function playSfx(freq, type, dur, vol){
 /* 连音（金币声：两个音先后响） */
 function playNotes(notes, type, dur, vol){
   if(audioMuted || !notes || !notes.length) return false;
+  if(volLevel <= 0) return false;
   const ac = audioCtx();
   if(!ac) return false;
+  const v = vol * (volLevel / 100);
   try{
     notes.forEach((f,i)=>{
       const t0 = ac.currentTime + i*dur;
@@ -3914,7 +4106,7 @@ function playNotes(notes, type, dur, vol){
       osc.type = type || 'triangle';
       osc.frequency.setValueAtTime(f, t0);
       gain.gain.setValueAtTime(0.0001, t0);
-      gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.01);
+      gain.gain.exponentialRampToValueAtTime(v, t0 + 0.01);
       gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
       osc.connect(gain); gain.connect(ac.destination);
       osc.start(t0); osc.stop(t0 + dur + 0.02);
@@ -3943,7 +4135,7 @@ function playStep(running){
 /* 睡觉转场音：dir 'in' = 入睡（下滑），'out' = 醒来（上扬） */
 function playSleepSfx(dir){
   const S = CONFIG.AUDIO.SLEEP;
-  if(audioMuted) return false;
+  if(audioMuted || volLevel <= 0) return false;
   const ac = audioCtx();
   if(!ac) return false;
   try{
@@ -3955,7 +4147,7 @@ function playSleepSfx(dir){
     osc.frequency.setValueAtTime(f0, t0);
     osc.frequency.exponentialRampToValueAtTime(Math.max(40,f1), t0 + S.DUR);
     gain.gain.setValueAtTime(0.0001, t0);
-    gain.gain.exponentialRampToValueAtTime(CONFIG.AUDIO.VOLUME * S.VOL, t0 + 0.05);
+    gain.gain.exponentialRampToValueAtTime(CONFIG.AUDIO.VOLUME * S.VOL * (volLevel / 100), t0 + 0.05);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0 + S.DUR);
     osc.connect(gain); gain.connect(ac.destination);
     osc.start(t0); osc.stop(t0 + S.DUR + 0.02);
@@ -3982,7 +4174,7 @@ function startRainAmbience(){
     const filter = ac.createBiquadFilter();
     filter.type = 'lowpass'; filter.frequency.value = 1500;
     const gain = ac.createGain();
-    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.AUDIO.RAIN.AMBIENT_VOL;
+    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.AUDIO.RAIN.AMBIENT_VOL * (volLevel / 100);
     src.connect(filter); filter.connect(gain); gain.connect(ac.destination);
     src.start();
     rainAmbience = {src:src, gain:gain, filter:filter};
@@ -4009,6 +4201,32 @@ function setMuted(m, silent){
   return audioMuted;
 }
 function toggleMute(){ return setMuted(!audioMuted); }
+/* 第 28 轮：音量档位（0~100）。滑块在系统菜单；读档恢复时 silent=true 不弹提示。
+ * 正在播放的雨声 / 节日环境底噪立刻跟着变（gain 是直读的 value，不用重启源）。 */
+function setVolLevel(v, silent){
+  v = clamp(Math.round(Number(v)), 0, 100);
+  if(isNaN(v)) v = 100;
+  volLevel = v;
+  const r = document.getElementById('volRange');
+  const val = document.getElementById('volVal');
+  const ic = document.getElementById('volIcon');
+  if(r) r.value = String(v);
+  if(val) val.textContent = v + '%';
+  if(ic) ic.textContent = (v === 0 ? '🔇' : (v < 50 ? '🔉' : '🔊'));
+  const s = volLevel / 100;
+  if(rainAmbience && rainAmbience.gain)
+    rainAmbience.gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.AUDIO.RAIN.AMBIENT_VOL * s;
+  if(festAmbience && festAmbience.gain)
+    festAmbience.gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.FESTIVAL.AMBIENT_VOL * s;
+  if(!silent) toast('🔉 音量 ' + volLevel + '%');
+  return volLevel;
+}
+/* 系统菜单里的音量滑块 */
+const volRange = document.getElementById('volRange');
+if(volRange) volRange.addEventListener('input', ()=>{
+  setVolLevel(parseInt(volRange.value, 10));
+  ensureAudio();
+});
 /* 声音开关按钮 */
 if(sndBtn) sndBtn.addEventListener('click', ()=>{ toggleMute(); });
 
@@ -4850,15 +5068,44 @@ function sleepAlpha(){
   return 0;
 }
 
-/* --- 天气：每天早晨随机（带权重） --- */
+/* --- 天气：每天早晨随机（带权重）--- 第 28 轮改为「预报队列优先」 --- */
 let weather = CONFIG.WEATHER[0];
-function rollWeather(){
+let fcQueue = [];                 /* 未来天气 id 队列（fcQueue[0] = 明天），进存档 */
+/* 按权重随机抽一种天气 */
+function pickWeatherWeighted(){
   let total = 0;
   for(const w of CONFIG.WEATHER) total += w.w;
   let r = Math.random() * total;
   let picked = CONFIG.WEATHER[CONFIG.WEATHER.length-1];
   for(const w of CONFIG.WEATHER){ r -= w.w; if(r < 0){ picked = w; break; } }
+  return picked;
+}
+/* 把预报队列补到 CONFIG.FORECAST.DAYS 天 */
+function fillForecast(){
+  const N = CONFIG.FORECAST.DAYS;
+  while(fcQueue.length < N) fcQueue.push(pickWeatherWeighted().id);
+}
+/* 明天的天气定义（HUD 日期条用） */
+function fcTomorrow(){
+  if(!fcQueue.length) return null;
+  return CONFIG.WEATHER.find(w => w.id === fcQueue[0]) || null;
+}
+/* 日历第 off 天（0=今天，1=明天…）的天气定义；今天用实时 weather */
+function fcOf(off){
+  if(off <= 0) return weather;
+  const id = fcQueue[off - 1];
+  return id ? (CONFIG.WEATHER.find(w => w.id === id) || null) : null;
+}
+function rollWeather(){
+  /* 第 28 轮：优先从预报队列取今天的天气 —— 日历上写什么，第二天就发生什么 */
+  let picked = null;
+  if(fcQueue.length){
+    const id = fcQueue.shift();
+    picked = CONFIG.WEATHER.find(w => w.id === id) || null;
+  }
+  if(!picked) picked = pickWeatherWeighted();
   weather = picked;
+  fillForecast();
   spawnParticles();
   console.log('[weather] 第 ' + clock.day + ' 天天气：' + weather.name);
 }
@@ -5026,8 +5273,8 @@ window.addEventListener('keydown', e=>{
   /* 第 20 轮：终局结算只有 Esc 能动；农场评级只有 Esc / G 能动（打开时世界冻结） */
   if(endingOpen && k !== 'escape') return;
   if(ratingOpen && k !== 'escape' && k !== 'g') return;
-  /* 成就墙 / 年度总结：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
-  if((achOpen || annualOpen) && k !== 'escape') return;
+  /* 成就墙 / 年度总结 / 好感总览 / 全屏地图：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
+  if((achOpen || annualOpen || frendOpen || bigmapOpen) && k !== 'escape') return;
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
@@ -5035,6 +5282,8 @@ window.addEventListener('keydown', e=>{
     if(ratingOpen){ ratingClosePanel(); return; }
     if(annualOpen){ annualClosePanel(); return; }
     if(achOpen){ achClosePanel(); return; }
+    if(frendOpen){ frendClosePanel(); return; }      /* 第 28 轮 */
+    if(bigmapOpen){ toggleBigmap(false); return; }   /* 第 28 轮 */
     if(calOpen){ calClosePanel(); return; }
     if(questOpen){ questClosePanel(); return; }
     if(animalOpen){ animalClosePanel(); return; }
@@ -5124,17 +5373,21 @@ canvas.addEventListener('mousemove', e=>{
   mouse.x = p.x; mouse.y = p.y; mouse.inside = true;
   hover.tx = Math.floor((cam.x + p.x) / TILE);
   hover.ty = Math.floor((cam.y + p.y) / TILE);
+  /* 第 28 轮：悬停 HUD 可点区域（日期 / 评分 / 小地图）时变手型 */
+  canvas.style.cursor = (hitHudDate(p) || hitHudRating(p) || hitHudMini(p)) ? 'pointer' : '';
 });
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
-     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen) return;
+     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen) return;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */
   if(e.button === 0 && hitHudDate(p)){ ensureAudio(); toggleCalendar(); return; }
   /* 第 20 轮：点右上角评分 → 打开农场评级 */
   if(e.button === 0 && hitHudRating(p)){ ensureAudio(); toggleRatingPanel(); return; }
+  /* 第 28 轮：点右上角小地图 → 打开全屏地图 */
+  if(e.button === 0 && hitHudMini(p)){ ensureAudio(); toggleBigmap(true); return; }
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
   /* 钓鱼中：左键 = 收杆/拉杆，右键 = 收竿 */
@@ -5422,19 +5675,35 @@ function packDropHeld(){
   refreshPackGrid();
   updatePackHeld();
 }
-/* 物品名提示 */
+/* 物品名提示（第 28 轮：多行 —— 名称 / 类别·价格·趋势 / 用途） */
 function showPackTip(i, e){
   const s = inv[i];
   const d = s ? itemDef(s.id) : null;
   if(!d){ hidePackTip(); return; }
-  let extra = '';
-  if(d.kind === 'seed'){ const cd = cropDef(d.crop); extra = ' · ' + cd.season + '季 · ' + cd.days + '天'; }
-  else if(d.kind === 'crop'){ extra = ' · 售价 ' + priceOf(d.id) + ' 💰'; }
-  else if(d.kind === 'material') extra = ' · 售价 ' + priceOf(d.id) + ' 💰';
-  else if(d.kind === 'tool')     extra = ' · 工具';
-  else if(d.kind === 'currency') extra = ' · 金币';
+  const lines = [];
+  lines.push(d.name + ' ×' + s.n);
+  const kindName = {seed:'种子', crop:'作物', material:'材料', tool:'工具', currency:'货币',
+                    fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品'}[d.kind] || d.kind;
+  if(isSellable(d.id)){
+    lines.push(kindName + ' · 售价 ' + priceOf(d.id) + ' 💰 ' + priceTrend(d.id));
+  }else if(d.kind === 'seed'){
+    const cd = cropDef(d.crop);
+    lines.push('种子 · ' + cd.season + '季 · ' + cd.days + '天');
+  }else if(d.kind === 'tool'){
+    lines.push('工具 · 左键使用');
+  }else if(d.kind === 'currency'){
+    lines.push('货币 · 通用金币');
+  }else{
+    lines.push(kindName);
+  }
+  /* 第三行：用途 / 怎么用 */
+  if(d.kind === 'seed') lines.push('锄地后左键播种 · 每天浇水才长');
+  else if(d.kind === 'food') lines.push('手持后在世界里右键吃 · 体力 +' + CONFIG.RECIPE.EAT_STAMINA +
+    ' · 今日还可吃 ' + Math.max(0, CONFIG.RECIPE.EAT_PER_DAY - makerEatsToday()) + ' 份');
+  else if(d.kind === 'tool') lines.push('拿在手上，对着目标按左键');
+  else if(isSellable(d.id)) lines.push('去杂货店卖给老板娘');
   if(packTip){
-    packTip.textContent = d.name + ' ×' + s.n + extra;
+    packTip.textContent = lines.join('\n');
     packTip.style.display = 'block';
     movePackTip(e);
   }
@@ -5907,17 +6176,22 @@ function drawUI(g){
     g.textAlign = 'left';
   }
 
-  /* 左上角：季节 · 第几天 · 时刻 · 天气（今天有人过生日就带个 🎂） */
+  /* 左上角：季节 · 第几天 · 时刻 · 天气（今天有人过生日就带个 🎂；第 28 轮 + 明日预报） */
   const bdNpc = npcBirthdayToday();
   const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
   const dB = ' ' + weather.name;
   const dC = bdNpc ? (bdNpc.name + ' 生日') : '';
+  const fcT = fcTomorrow();                       /* 第 28 轮：明天的天气（预报队列头） */
+  const dF1 = fcT ? ' · 明' : '';
+  const dF2 = fcT ? fcT.icon : '';
   g.font = '13px ' + FONT_CJK;   const wA = g.measureText(dA).width;
   g.font = '15px ' + FONT_EMOJI; const wI = g.measureText(weather.icon).width;
   g.font = '13px ' + FONT_CJK;   const wB = g.measureText(dB).width;
   g.font = '15px ' + FONT_EMOJI; const wE = bdNpc ? g.measureText('🎂').width : 0;
   g.font = '13px ' + FONT_CJK;   const wC = dC ? g.measureText(dC).width : 0;
-  const dW = Math.ceil(wA + wI + wB + wE + wC) + 16 + 20, dH = 24, dY = rowY + rowH + 6;
+  g.font = '13px ' + FONT_CJK;   const wF1 = fcT ? g.measureText(dF1).width : 0;
+  g.font = '15px ' + FONT_EMOJI; const wF2 = fcT ? g.measureText(dF2).width : 0;
+  const dW = Math.ceil(wA + wI + wB + wE + wC + wF1 + wF2) + 16 + 20, dH = 24, dY = rowY + rowH + 6;
   hudDateRect = {x:8, y:dY, w:dW, h:dH};   /* 第 17 轮：这个区域可以点开日历 */  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, dY, dW, 1); g.fillRect(8, dY+dH-1, dW, 1);
@@ -5929,11 +6203,20 @@ function drawUI(g){
   g.fillText(weather.icon, 16 + wA, dY + 4);
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
+  let fx0 = 16 + wA + wI + wB;
   if(bdNpc){
     g.font = '15px ' + FONT_EMOJI; g.fillStyle = '#ffb08a';
-    g.fillText('🎂', 16 + wA + wI + wB, dY + 4);
+    g.fillText('🎂', fx0, dY + 4);
     g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
-    g.fillText(dC, 16 + wA + wI + wB + wE, dY + 5);
+    g.fillText(dC, fx0 + wE, dY + 5);
+    fx0 += wE + wC;
+  }
+  /* 第 28 轮：日期条尾部显示明天的天气预报 */
+  if(fcT){
+    g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+    g.fillText(dF1, fx0, dY + 5);
+    g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+    g.fillText(dF2, fx0 + wF1, dY + 4);
   }
   /* 第 17 轮：日历入口（点这块区域打开） */
   g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
@@ -6116,6 +6399,32 @@ function drawUI(g){
   g.fillStyle = low ? 'rgba(255,120,100,' + blink.toFixed(2) + ')' : CONFIG.COLORS.hudText;
   g.fillText(Math.ceil(stamina) + '/' + staminaMax, sbX + sbW + 6, sbY - 1);
 
+  /* 第 28 轮：状态效果图标行（体力条上方；昏睡后遗症 / 今日还能吃几份） */
+  {
+    const chips = [];
+    if(staminaMax < CONFIG.STAMINA.MAX)
+      chips.push({ic:'😵', tx:'体力上限-' + Math.round((1 - staminaMax / CONFIG.STAMINA.MAX) * 100) + '%'});
+    const eatsUsed = makerEatsToday();
+    if(eatsUsed > 0)
+      chips.push({ic:'🍱', tx:'今日还可吃 ' + (CONFIG.RECIPE.EAT_PER_DAY - eatsUsed) + ' 份'});
+    let cx = sbX - 6;
+    const cy = sbY - 19 - 20;
+    for(const c of chips){
+      g.font = '13px ' + FONT_CJK;
+      const tw = g.measureText(c.tx).width;
+      const w = 24 + tw + 10;
+      g.fillStyle = 'rgba(8,10,16,0.80)';
+      g.fillRect(cx, cy, w, 18);
+      g.strokeStyle = CONFIG.COLORS.hudBorder;
+      g.strokeRect(cx + 0.5, cy + 0.5, w - 1, 17);
+      g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
+      g.fillText(c.ic, cx + 5, cy + 1);
+      g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
+      g.fillText(c.tx, cx + 24, cy + 2);
+      cx += w + 6;
+    }
+  }
+
   /* 体力耗尽：顶部提示该回家了 */
   if(stamina <= 0){
     const a = 0.55 + 0.45 * Math.sin(performance.now() / 220);
@@ -6278,16 +6587,48 @@ function saveSummary(d){
 function openStartMenu(d){
   pendingSave = d;
   startMenuOpen = true;
+  renderStartSlots();
+  updateStartInfo();
+  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
+  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
+  setPanelOpen(startEl, true);
+}
+/* 第 28 轮：标题界面槽位行 + 存档摘要（点槽位切换后复用） */
+function renderStartSlots(){
+  const box = document.getElementById('startSlots');
+  if(!box) return;
+  box.innerHTML = '';
+  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
+    const b = document.createElement('button');
+    b.className = 'mbtn slot' + (i === curSlot ? ' on' : '');
+    const d = readSave(i);
+    b.textContent = '槽' + (i + 1) + (d ? (' · 第' + saveDay(d) + '天') : ' · 空');
+    b.addEventListener('click', ()=>{
+      curSlot = i;
+      pendingSave = readSave(i);
+      renderStartSlots();
+      updateStartInfo();
+      playClick();
+    });
+    box.appendChild(b);
+  }
+}
+function updateStartInfo(){
+  const d = pendingSave;
+  const tag = '槽' + (curSlot + 1) + ' · ';
+  if(startInfo) startInfo.textContent = d ? (tag + saveSummary(d)) : (tag + '空槽位 —— 点「新游戏」在这里开局');
+  if(!d){
+    if(startWarn) startWarn.textContent = '';
+    if(btnContinue) btnContinue.textContent = '继续游戏';
+    if(btnNew) btnNew.textContent = '新游戏';
+    return;
+  }
   const vOK = saveVersionOK(d);
-  if(startInfo) startInfo.textContent = saveSummary(d);
   if(startWarn) startWarn.textContent = vOK ? '' :
     ('存档版本 v' + (d.v === undefined ? '?' : d.v) + ' 比当前版本 v' + CONFIG.SAVE.VERSION +
      ' 还新，读取可能不完整。仍要继续吗？');
   if(btnContinue) btnContinue.textContent = vOK ? '继续游戏' : '仍然尝试读取';
   if(btnNew) btnNew.textContent = vOK ? '新游戏' : '删除旧存档并重开';
-  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
-  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
-  setPanelOpen(startEl, true);
 }
 /* 关闭标题界面 */
 function closeStartMenu(){
@@ -6297,7 +6638,7 @@ function closeStartMenu(){
 /* 标题界面：二次确认（防误删存档） */
 function askNewGame(){
   if(confirmText) confirmText.textContent =
-    '确定要删除旧存档，从头开始吗？\n（删掉就找不回来了）';
+    '确定要删除槽' + (curSlot + 1) + ' 的存档，从头开始吗？\n（删掉就找不回来了）';
   if(startBtns && startBtns.style) startBtns.style.display = 'none';
   if(startConfirm && startConfirm.classList) startConfirm.classList.add('open');
 }
@@ -6317,11 +6658,12 @@ function doContinue(){
   const raw = pendingSave;
   closeStartMenu();
   sessionActive = true;
-  if(!raw){ toast('没有存档，开了一局新的'); return; }
-  const r = migrateSave(raw);           /* v1 旧档在这里升级到 v2（进度无损） */
+  /* 第 28 轮：选中的槽位是空的 → 直接在这个槽开新局（不再把玩家丢进空世界） */
+  if(!raw){ newGame(); toast('槽' + (curSlot + 1) + ' 没有存档，开了一局新的'); return; }
+  const r = migrateSave(raw);           /* v1 旧档在这里升级（进度无损） */
   const ok = deserializeState(r.save);
   if(r.degraded){ toast('存档升级失败，已按旧版本读取（居民数据可能缺失）'); return; }
-  if(ok) toast('欢迎回来 · 第 ' + clock.day + ' 天');
+  if(ok) toast('欢迎回来 · 槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天');
   else{ newGame(); toast('存档读取失败，开了一局新的'); }
 }
 if(btnContinue) btnContinue.addEventListener('click', ()=>{ doContinue(); });
@@ -6353,11 +6695,13 @@ function toggleSys(on){
     sysWipeArmed = false;
     if(sysInfo){
       let raw = '';
-      try{ raw = window.localStorage.getItem(CONFIG.SAVE.KEY) || ''; }catch(e){ raw = ''; }
-      sysInfo.textContent = raw
-        ? ('上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(readSave()) + ' 天')
-        : '本地还没有存档';
+      try{ raw = window.localStorage.getItem(slotKey(curSlot)) || ''; }catch(e){ raw = ''; }
+      const d = readSave();
+      sysInfo.textContent = d
+        ? ('槽' + (curSlot + 1) + ' · 上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(d) + ' 天')
+        : ('槽' + (curSlot + 1) + '：本地还没有存档');
     }
+    renderSysSlots();                   /* 第 28 轮：槽位切换行 */
     if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
     if(sysCheatOpen) sysCheatToggle(false);   /* 每次打开菜单都从收起状态开始 */
     if(sysStatsOpen) sysStatsToggle(false);
@@ -6572,6 +6916,8 @@ function serializeState(){
           sown:tut.sown|0, slept:!!tut.slept},
     snd: audioMuted ? 1 : 0,
     ih: interactHintsOn ? 1 : 0,   /* 第 22 轮：交互按键提示开关 */
+    vol: volLevel | 0,             /* 第 28 轮：音量档位 0~100（默认 100） */
+    fc: fcQueue.join(','),         /* 第 28 轮：未来天气预报队列（紧凑字符串，~40 字节） */
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
@@ -6721,6 +7067,15 @@ function deserializeState(d){
     }
     /* 静音状态（老存档没这个字段 → 保持当前设置） */
     if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
+    /* 第 28 轮：音量档位（老档没有 → 保持当前设置，通常 100） */
+    if(typeof d.vol === 'number') setVolLevel(clamp(Math.round(d.vol), 0, 100), true);
+    /* 第 28 轮：天气预报队列（老档没有 → 按当前权重补一队；今天的真实天气来自 d.weather，不受影响） */
+    fcQueue = [];
+    if(typeof d.fc === 'string' && d.fc){
+      for(const id of d.fc.split(','))
+        if(CONFIG.WEATHER.some(w => w.id === id)) fcQueue.push(id);
+    }
+    fillForecast();
     /* 交互按键提示开关（迁移后的旧档会补齐；直接读当前档时按字段恢复） */
     setInteractHints(d.ih === undefined ? true : !!d.ih, true);
     /* 居民状态（老存档没这个字段 → 当作"刚认识"，其余进度不受影响） */
@@ -6778,10 +7133,18 @@ function deserializeState(d){
   }
 }
 
-/* --- localStorage 读写（隐私模式 / 禁用存储时会抛错，全部包 try） --- */
-function readSave(){
+/* --- localStorage 读写（隐私模式 / 禁用存储时会抛错，全部包 try） ---
+ * 第 28 轮：多存档槽位。槽 1 仍用 CONFIG.SAVE.KEY（farm_save_v1，不能改名），
+ * 槽 2/3 用 KEY + '_s2' / '_s3'。默认操作槽 curSlot（0 起）。 */
+let curSlot = 0;
+function slotKey(i){
+  i = i | 0;
+  if(i <= 0) return CONFIG.SAVE.KEY;
+  return CONFIG.SAVE.KEY + '_s' + (i + 1);
+}
+function readSave(slot){
   try{
-    const raw = window.localStorage.getItem(CONFIG.SAVE.KEY);
+    const raw = window.localStorage.getItem(slotKey(slot === undefined ? curSlot : slot));
     if(!raw) return null;
     const d = JSON.parse(raw);
     return (d && typeof d === 'object') ? d : null;
@@ -6790,20 +7153,46 @@ function readSave(){
     return null;
   }
 }
-function writeSave(d){
+function writeSave(d, slot){
   try{
-    window.localStorage.setItem(CONFIG.SAVE.KEY, JSON.stringify(d));
+    window.localStorage.setItem(slotKey(slot === undefined ? curSlot : slot), JSON.stringify(d));
     return true;
   }catch(e){
     console.warn('[save] 存档写入失败：', e);
     return false;
   }
 }
-function deleteSave(){
-  try{ window.localStorage.removeItem(CONFIG.SAVE.KEY); }catch(e){}
+function deleteSave(slot){
+  try{ window.localStorage.removeItem(slotKey(slot === undefined ? curSlot : slot)); }catch(e){}
 }
 /* 有没有存档 */
-function hasSave(){ return !!readSave(); }
+function hasSave(slot){ return !!readSave(slot); }
+/* 第 28 轮：系统菜单里的槽位切换行（保存 / 读档 / 删档都作用于当前槽） */
+function renderSysSlots(){
+  const box = document.getElementById('sysSlots');
+  if(!box) return;
+  box.innerHTML = '';
+  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
+    const b = document.createElement('button');
+    b.className = 'mbtn slot' + (i === curSlot ? ' on' : '');
+    const d = readSave(i);
+    b.textContent = '槽' + (i + 1) + (d ? (' · ' + saveDay(d) + '天') : ' · 空');
+    b.addEventListener('click', ()=>{
+      curSlot = i;
+      renderSysSlots();
+      if(sysInfo){
+        let raw = '';
+        try{ raw = window.localStorage.getItem(slotKey(curSlot)) || ''; }catch(e){ raw = ''; }
+        const dd = readSave();
+        sysInfo.textContent = dd
+          ? ('槽' + (curSlot + 1) + ' · 上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(dd) + ' 天')
+          : ('槽' + (curSlot + 1) + '：本地还没有存档');
+      }
+      playClick();
+    });
+    box.appendChild(b);
+  }
+}
 /* 存档版本对不对得上：旧版本会先 migrate() 升级，所以 ≤ 当前版本都算 OK；只有"更新版本"才不兼容 */
 function saveVersionOK(d){ return !!d && (d.v|0) <= CONFIG.SAVE.VERSION; }
 /* 存档里存的是第几天 */
@@ -6816,7 +7205,7 @@ function saveGame(reason){
   lastSaveBytes = raw.length;
   if(writeSave(data)){
     console.log('[save] 已保存：第 ' + data.time.day + ' 天 · ' + (lastSaveBytes/1024).toFixed(1) + ' KB');
-    if(reason) toast('已保存（' + reason + '）');
+    if(reason) toast('已保存（槽' + (curSlot + 1) + ' · ' + reason + '）');
     return true;
   }
   toast('保存失败：浏览器可能禁用了本地存储');
@@ -6825,7 +7214,7 @@ function saveGame(reason){
 /* 读档 */
 function loadGame(){
   const raw = readSave();
-  if(!raw){ toast('没有存档'); return false; }
+  if(!raw){ toast('槽' + (curSlot + 1) + ' 没有存档'); return false; }
   const r = migrateSave(raw);           /* 旧版本先迁移；迁移失败只降级，不清空进度 */
   const ok = deserializeState(r.save);
   if(r.degraded) toast('存档升级失败，已按旧版本读取（居民数据可能缺失）');
@@ -6835,7 +7224,7 @@ function loadGame(){
 /* 删档 */
 function wipeSave(){
   deleteSave();
-  toast('存档已删除');
+  toast('槽' + (curSlot + 1) + ' 存档已删除');
 }
 /* 全新一局：删掉旧档、从头开始 */
 function newGame(){
@@ -6873,6 +7262,7 @@ function newGame(){
   spawnGather(true);                            /* 新地图：先刷一季的采集物（不弹提示） */
   cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
   cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+  fcQueue = [];                    /* 第 28 轮：新游戏的预报队列清空，rollWeather 重抽 */
   rollWeather();
   const sky0 = skyAt(skyHour());
   sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
@@ -6913,6 +7303,8 @@ function update(dt){
   if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */
   if(questOpen) return;              /* 委托板打开：同样整体冻结（时间停住） */
   if(calOpen) return;                /* 日历打开：同样整体冻结（时间停住） */
+  if(frendOpen) return;              /* 第 28 轮：好感总览打开：整体冻结（时间停住） */
+  if(bigmapOpen) return;             /* 第 28 轮：全屏地图打开：整体冻结（时间停住） */
   if(achOpen) return;                /* 成就墙打开：同样整体冻结（时间停住） */
   if(annualOpen) return;             /* 年度总结打开：同样整体冻结（时间停住） */
   if(ratingOpen) return;             /* 第 20 轮：农场评级打开：整体冻结 */
@@ -8231,6 +8623,13 @@ function migrate(oldSave){
        * 老档没开过箱子 → 记 0（还能开一次）；其余进度全部保留。 */
       if(!d.npc || typeof d.npc !== 'object') d.npc = {aff:{}, gift:{}, unl:{}, bd:-1, bu:0};
       if(!d.npc.loot || typeof d.npc.loot !== 'object') d.npc.loot = {};
+    }
+    if(v < 14){
+      /* v13 → v14：补上「天气预报队列」和「音量档位」。
+       * 老档没有预报 → 读档时按当前权重补一队（今天的真实天气不受影响）；
+       * 音量默认 100（和升级前完全一致）。其余进度全部保留。 */
+      if(typeof d.fc !== 'string') d.fc = '';
+      if(typeof d.vol !== 'number') d.vol = 100;
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -9582,7 +9981,7 @@ function festivalStartAmbience(f){
   if(!ac) return false;
   try{
     const gain = ac.createGain();
-    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.FESTIVAL.AMBIENT_VOL;
+    gain.gain.value = CONFIG.AUDIO.VOLUME * CONFIG.FESTIVAL.AMBIENT_VOL * (volLevel / 100);
     gain.connect(ac.destination);
     const oscs = [];
     for(const fr of (f.amb || [392, 523])){
@@ -9762,8 +10161,10 @@ function renderCalendar(){
     const day = document.createElement('div'); day.className = 'cday';
     day.textContent = '第 ' + abs + ' 天';
     const meta = document.createElement('div'); meta.className = 'cmeta';
+    /* 第 28 轮：今天显示实时天气，未来 6 天显示预报队列（日历上写什么，翻天就发生什么） */
+    const fw = fcOf(off);
     meta.textContent = info.season + ' · 第 ' + info.din + ' 天' +
-      (off === 0 ? (' · ' + weather.icon + ' ' + weather.name) : '') +
+      (fw ? (' · ' + fw.icon + ' ' + fw.name) : '') +
       (info.fest ? (' · ' + info.fest.name) : '');
     const badges = document.createElement('div'); badges.className = 'cbadges';
     if(info.fest){
@@ -9809,6 +10210,70 @@ function hitHudDate(p){
   return p.x >= hudDateRect.x - 2 && p.x <= hudDateRect.x + hudDateRect.w + 2 &&
          p.y >= hudDateRect.y - 2 && p.y <= hudDateRect.y + hudDateRect.h + 2;
 }
+
+/* --- 第 28 轮：居民好感总览面板（系统菜单打开；打开时世界冻结） --- */
+let frendOpen = false;
+const frendEl = document.getElementById('frend');
+const frendMaskEl = document.getElementById('frendMask');
+const frendListEl = document.getElementById('frendList');
+const frendSubEl = document.getElementById('frendSub');
+function renderFrend(){
+  if(!frendListEl) return;
+  frendListEl.innerHTML = '';
+  const bd = npcBirthdayToday();
+  let bestN = 0;
+  for(const d of CONFIG.NPC.LIST){
+    const aff = npcAff(d.id);
+    const tier = npcTierOf(aff);
+    const unlocked = !!(npcState.unlock && npcState.unlock[d.id]);
+    const gifted = npcGiftedToday(d.id);
+    const isBd = !!(bd && bd.id === d.id);
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const ic = document.createElement('span'); ic.className = 'ficon'; ic.textContent = d.icon;
+    const main = document.createElement('div'); main.className = 'fmain';
+    const l1 = document.createElement('div'); l1.className = 'fl1';
+    l1.textContent = d.name + ' · ' + tier.name + ' · 好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX +
+      (unlocked ? ' · 特权已解锁' : '');
+    const bar = document.createElement('div'); bar.className = 'fbar';
+    const fill = document.createElement('i');
+    fill.style.width = (aff / CONFIG.NPC.AFF_MAX * 100).toFixed(0) + '%';
+    bar.appendChild(fill);
+    const l2 = document.createElement('div'); l2.className = 'fl2';
+    const bday = npcBdayAbs(d);
+    l2.textContent = (isBd ? '🎂 今天生日！' : ('生日：第 ' + bday + ' 天')) +
+      ' · ' + npcStatusLine(d) +
+      ' · ' + (gifted ? '今日已送礼' : '今日可送礼');
+    main.appendChild(l1); main.appendChild(bar); main.appendChild(l2);
+    row.appendChild(ic); row.appendChild(main);
+    frendListEl.appendChild(row);
+    if(aff > bestN) bestN = aff;
+  }
+  if(frendSubEl) frendSubEl.textContent = '最高好感 ' + bestN + '/' + CONFIG.NPC.AFF_MAX;
+}
+function frendOpenPanel(){
+  if(frendOpen) return false;
+  frendOpen = true;
+  if(sysOpen) toggleSys(false);              /* 从系统菜单进来：先收起菜单 */
+  if(packOpen) togglePack(false);
+  renderFrend();
+  setPanelOpen(frendEl, true);
+  playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function frendClosePanel(){
+  if(!frendOpen) return false;
+  frendOpen = false;
+  setPanelOpen(frendEl, false);
+  return true;
+}
+function toggleFrend(v){
+  if(v === undefined) v = !frendOpen;
+  return v ? frendOpenPanel() : frendClosePanel();
+}
+if(frendMaskEl) frendMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(); frendClosePanel(); });
+const btnFrend = document.getElementById('btnFrend');
+if(btnFrend) btnFrend.addEventListener('click', ()=>{ frendOpenPanel(); });
 
 /* --- 世界绘制：节日装饰（按脚点 Y 混进 drawEntities） --- */
 function drawFestBanner(g, x, y){
@@ -11044,11 +11509,22 @@ window.addEventListener('beforeunload', ()=>{
   if(CONFIG.SAVE.AUTO_UNLOAD && sessionActive) saveGame('离开前自动保存');
 });
 
-/* 本地有存档 → 标题界面（继续 / 新游戏）；没有 → 直接开新游戏 */
-const bootSave = readSave();
+/* 本地有存档 → 标题界面（继续 / 新游戏）；没有 → 直接开新游戏
+ * 第 28 轮：三个槽位里挑「保存时间最近」的那个作为默认槽 */
+let bootSave = null;
+{
+  let best = -1, bestAt = -1;
+  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
+    const d = readSave(i);
+    /* 时间戳是毫秒级大数，不能用 |0（会折成负数导致永远选不中） */
+    const at = (d && typeof d.at === 'number' && isFinite(d.at)) ? d.at : 0;
+    if(d && at >= bestAt){ bestAt = at; best = i; }
+  }
+  if(best >= 0){ curSlot = best; bootSave = readSave(best); }
+}
 if(bootSave){
   openStartMenu(bootSave);
-  console.log('[save] 发现存档 v' + bootSave.v + '，等待玩家选择');
+  console.log('[save] 发现存档 v' + bootSave.v + '（槽' + (curSlot + 1) + '），等待玩家选择');
 }else{
   sessionActive = true;
   spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */
@@ -11227,6 +11703,19 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   festivalSerialize, festivalDeserialize, festivalResetState,
   showFestivalBanner, hideFestivalBanner,
   calDayInfo, renderCalendar, calOpenPanel, calClosePanel, toggleCalendar, hitHudDate,
+  /* 第 28 轮：天气预报 / 音量 / 状态图标 / 全屏地图 / 好感总览 / 多存档槽 / 物品提示 */
+  get fcQueue(){ return fcQueue; }, set fcQueue(v){ fcQueue = v; },
+  fillForecast, fcTomorrow, fcOf, pickWeatherWeighted,
+  get volLevel(){ return volLevel; }, set volLevel(v){ setVolLevel(v, true); },
+  setVolLevel, volRange,
+  get frendOpen(){ return frendOpen; }, set frendOpen(v){ if(v) frendOpenPanel(); else frendClosePanel(); },
+  renderFrend, frendOpenPanel, frendClosePanel, toggleFrend, btnFrend,
+  get bigmapOpen(){ return bigmapOpen; }, set bigmapOpen(v){ toggleBigmap(v); },
+  renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, hitHudMini,
+  get hudMiniRect(){ return hudMiniRect; },
+  get curSlot(){ return curSlot; }, set curSlot(v){ curSlot = v | 0; },
+  slotKey, renderStartSlots, updateStartInfo, renderSysSlots,
+  showPackTip, hidePackTip,
   drawFestBanner, drawFestStall, drawFestLantern,
   /* 第 18 轮：统计 / 成就 / 年度总结 */
   get statsState(){ return statsState; }, set statsState(v){ statsState = v; },

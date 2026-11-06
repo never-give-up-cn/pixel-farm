@@ -1569,11 +1569,19 @@ const CONFIG = {
   TOWN: {
     ROW: 38, END_ROW: 62,     // 城镇带（38~62 行；63 行是南边的水岸）
     STREET_ROW: 42,           // 街（石板路）在第 42 行
-    BLD_ROW: 43, BLD_H: 6,    // 房子外框：43~48 行
-    ROOM_ROW: 49, ROOM_H: 11, // 室内：49~59 行（北墙 1 + 地板 9 + 南墙 1），紧贴在房子后面
+    /* 第 26 轮：墙只有 1 格厚 —— 房子直接贴着街，屋顶不再是地图上的实体格
+     *   43 行 = 后墙（中间那一格是门）/ 44~51 行 = 木地板 / 52 行 = 前墙 */
+    ROOM_ROW: 43,             // 室内第一行 = 后墙
+    ROOM_H: 10,               // 室内共 10 行（后墙 1 + 地板 8 + 前墙 1）
     DOOR_DX: 5,               // 门在房子里的横向偏移
-    ARRIVE_DY: 2,             // 从大门进屋后落在室内第几行
+    ARRIVE_DY: 1,             // 从大门进屋后落在室内第几行（门正下方）
     SIGN_DX: 8, SIGN_ROW: 41, // 门牌在大门东边两格
+    /* 第 26 轮：屋顶 —— 纯渲染层（地图上没有屋顶格，只在渲染时盖一层） */
+    ROOF: {
+      TILE_H: 9,              // 瓦片横纹的间距（像素）
+      ALPHA_INSIDE: 0,        // 玩家在屋里时屋顶的不透明度（0 = 完全掀开）
+      CHIMNEY: true           // 商店屋顶带烟囱
+    },
     WANDER: {                 // 营业时间也可能出门瞎逛（扑空的惊喜感）
       CHANCE: 0.22,           // 出门概率（按 天 × 时段 哈希 → 同一时段内固定）
       BLOCK: 3,               // 每 3 小时换一个判定
@@ -2242,7 +2250,7 @@ const HOUSE_POS = {x:FARM.x + 1, y:FARM.y, w:CONFIG.GEN.HOUSE_W, h:CONFIG.GEN.HO
 /* 第 24 轮：商店从「农场里的摊位」搬到了镇上的杂货店（能走进去）
  * SHOP_POS 现在指的是镇上杂货店的外框；真正交易的地方在店内柜台（townCounterSpot） */
 const TOWN_SHOP = CONFIG.TOWN.LIST.find(b => b.kind === 'shop');
-const SHOP_POS  = {x:TOWN_SHOP.x, y:CONFIG.TOWN.BLD_ROW, w:TOWN_SHOP.w, h:CONFIG.TOWN.BLD_H};
+const SHOP_POS  = {x:TOWN_SHOP.x, y:CONFIG.TOWN.ROOM_ROW, w:TOWN_SHOP.w, h:CONFIG.TOWN.ROOM_H};
 /* 委托板（第 16 轮）：放在商店西侧 3 格，离商店的交互半径不重叠 */
 const QUEST_BOARD = {x:SHOP_POS.x - 3, y:SHOP_POS.y, w:1, h:1};
 const SPAWN = {x:FARM.x + Math.floor(FARM.w/2), y:FARM.y + Math.floor(FARM.h/2) + 2};
@@ -2289,8 +2297,10 @@ function fbm(x,y,seed){
  * 镇子在地图南边（38~62 行），从农场的南边直接走下去就是街。 */
 function genTown(){
   const C = CONFIG.TOWN;
-  /* 1) 走廊 + 广场：从农场下来的路，街是石板路 */
-  for(let y=C.ROW;y<=C.STREET_ROW;y++)
+  /* 1) 整条城镇带清空（38~62 行）：草地 + 街 + 房子
+   * 第 26 轮：房子变矮了（墙只有 1 格厚），所以整条带子都要清干净，
+   * 不然南边会留下一片随机长出来的树 */
+  for(let y=C.ROW;y<=C.END_ROW;y++)
     for(let x=1;x<MAP_W-1;x++) map[y*MAP_W+x] = T.GRASS;
   /* 竖着下镇的路：走农场东侧（x = 36~37），避开节日广场的 x 范围（29~35）
    * —— 广场必须是干净草地，不然节日装饰放不下去（第 17 轮的回归） */
@@ -2298,14 +2308,10 @@ function genTown(){
     for(let y=C.ROW;y<=C.STREET_ROW;y++) map[y*MAP_W+x] = T.PATH;
   for(let x=1;x<MAP_W-1;x++) map[C.STREET_ROW*MAP_W+x] = T.PATH;
 
-  /* 2) 四栋房子：外框 + 大门；里面一间房：墙 + 地板 + 通向街的门
-   * 第 25 轮：墙分前后 —— 南边那排是「前墙」（玩家在屋里时半透明），
-   * 北边和两侧是「后墙」（永远不透明，撑出空间感） */
+  /* 2) 四栋房子：后墙（中间开门）+ 地板 + 前墙
+   * 第 26 轮：墙只有 1 格厚，屋顶不再是地图上的实体格（改成纯渲染层） */
   for(const b of C.LIST){
-    for(let y=C.BLD_ROW;y<C.BLD_ROW+C.BLD_H;y++)
-      for(let x=b.x;x<b.x+b.w;x++) map[y*MAP_W+x] = T.BLD;
-    map[C.BLD_ROW*MAP_W + b.x + C.DOOR_DX] = T.DOOR;              /* 大门：踩上去进屋 */
-    stampBuilding(buildingDef(b.id), false);                       /* 墙 / 地板 / 屋里的门 */
+    stampBuilding(buildingDef(b.id), false);                       /* 墙 / 地板 / 门 */
   }
 }
 
@@ -2524,6 +2530,51 @@ function drawTownProp(g, p, px, py){
       g.fillStyle = K.chestBoxDark; g.fillRect(px+5, py+12, 22, 2);
       g.fillStyle = K.chestLock;    g.fillRect(px+14, py+11, 5, 6);
       break;
+  }
+}
+/* 门（第 26 轮：单独拎出来 —— 屋顶层也要再画一次门，
+ * 不然玩家站在街上只能看见一块屋顶，看不见门在哪） */
+function drawDoorTile(g,x,y){
+  const K = CONFIG.TOWN.COLORS;
+  g.fillStyle = K.doorDark;  g.fillRect(x, y, TILE, TILE);
+  g.fillStyle = K.door;      g.fillRect(x+4, y+3, TILE-8, TILE-3);
+  g.fillStyle = K.doorFrame; g.fillRect(x+2, y+1, TILE-4, 2);
+  g.fillRect(x+2, y+TILE-3, TILE-4, 2);
+  g.fillStyle = K.doorDark;  g.fillRect(x + TILE/2 - 1, y+5, 2, TILE-6);
+}
+/* 第 26 轮：屋顶 —— 纯渲染层
+ * 地图上不再有「屋顶格」：房子就是一堵 1 格厚的墙 + 一屋地板。
+ * 屋顶只在渲染时盖一层：玩家在屋外 → 盖住，屋里看不见；
+ * 玩家进了这栋房子 → 屋顶掀开（CONFIG.TOWN.ROOF.ALPHA_INSIDE），屋里一览无余。 */
+function drawRoofs(g){
+  const C = CONFIG.TOWN, R = C.ROOF, K = C.COLORS;
+  const room = playerRoomWide();            /* 玩家在哪栋房子里（含墙格和门格） */
+  for(const b of C.LIST){
+    const alpha = (room === b.id) ? R.ALPHA_INSIDE : 1;
+    if(alpha <= 0.02) continue;             /* 玩家在屋里 → 屋顶完全掀开 */
+    const sx = b.x*TILE - cam.x, sy = C.ROOM_ROW*TILE - cam.y;
+    const sw = b.w*TILE, sh = C.ROOM_H*TILE;
+    if(sx > VIEW_W || sx + sw < 0 || sy > VIEW_H || sy + sh < 0) continue;   /* 视锥裁剪 */
+    const shop = b.kind === 'shop';
+    g.globalAlpha = alpha;
+    g.fillStyle = shop ? K.roofShop : K.roofHouse;
+    g.fillRect(sx, sy, sw, sh);
+    /* 瓦片横纹 */
+    g.fillStyle = shop ? K.roofShopLine : K.roofHouseLine;
+    for(let yy = sy + 8; yy < sy + sh - 8; yy += R.TILE_H) g.fillRect(sx + 3, yy, sw - 6, 2);
+    /* 屋脊（北边那条）*/
+    g.fillStyle = K.roofRidge; g.fillRect(sx, sy, sw, 5);
+    /* 屋檐（南边那条）*/
+    g.fillStyle = K.roofEave;  g.fillRect(sx, sy + sh - 6, sw, 6);
+    /* 烟囱（商店屋顶）*/
+    if(R.CHIMNEY && shop){
+      const cx = sx + sw - 46;
+      g.fillStyle = K.roofEave;   g.fillRect(cx, sy + 16, 14, 20);
+      g.fillStyle = K.roofRidge;  g.fillRect(cx - 2, sy + 12, 18, 5);
+    }
+    /* 门口：屋顶上再画一次门（不然街上只看得见一块屋顶）*/
+    drawDoorTile(g, (b.x + C.DOOR_DX)*TILE - cam.x, sy);
+    g.globalAlpha = 1;
   }
 }
 /* 门牌：写清楚「在不在 / 为什么不在 / 去哪了」（原则 C） */
@@ -2802,7 +2853,8 @@ function drawGroundTileBase(g, tx, ty, x, y){
     g.fillRect(x + 6 + ((hash2(tx*7,ty*3)*18)|0), y + 20, 3, 3);
   } else if(t === T.WATER){
     g.fillStyle = C.water; g.fillRect(x,y,TILE,TILE);
-  } else if(t === T.BLD){                         /* 第 24 轮：镇上的房子（俯视屋顶） */
+  } else if(t === T.BLD){                         /* 第 26 轮：地图上已经没有屋顶格了
+                                                  *（这里留着给老存档里的残留格） */
     const K = CONFIG.TOWN.COLORS;
     const b = townBuildingAt(tx,ty);
     const shop = b && b.kind === 'shop';
@@ -2812,19 +2864,8 @@ function drawGroundTileBase(g, tx, ty, x, y){
     g.fillRect(x + 1, y + 5,  TILE-8, 2);         /* 瓦片错缝（同一行对齐 → 连成整片屋顶） */
     g.fillRect(x + 5, y + 14, TILE-8, 2);
     g.fillRect(x + 1, y + 23, TILE-8, 2);
-    if(ty === CONFIG.TOWN.BLD_ROW){
-      g.fillStyle = K.roofRidge; g.fillRect(x, y, TILE, 4);
-    }
-    if(ty === CONFIG.TOWN.BLD_ROW + CONFIG.TOWN.BLD_H - 1){
-      g.fillStyle = K.roofEave; g.fillRect(x, y + TILE - 5, TILE, 5);
-    }
   } else if(t === T.DOOR){                         /* 门：木门框 + 门槛 */
-    const K = CONFIG.TOWN.COLORS;
-    g.fillStyle = K.doorDark;  g.fillRect(x, y, TILE, TILE);
-    g.fillStyle = K.door;      g.fillRect(x+4, y+3, TILE-8, TILE-3);
-    g.fillStyle = K.doorFrame; g.fillRect(x+2, y+1, TILE-4, 2);
-    g.fillRect(x+2, y+TILE-3, TILE-4, 2);
-    g.fillStyle = K.doorDark;  g.fillRect(x + TILE/2 - 1, y+5, 2, TILE-6);
+    drawDoorTile(g,x,y);
   } else if(t === T.WALL || t === T.WALL_BACK){  /* 室内墙（后墙 / 侧墙）：永远不透明 */
     const K = CONFIG.TOWN.COLORS;
     g.fillStyle = K.wall; g.fillRect(x,y,TILE,TILE);
@@ -3083,9 +3124,9 @@ function drawEntities(g, x0, y0, x1, y1){
   /* 第 25 轮：门口挂牌三态（画在大门正上方一格） */
   for(const b of CONFIG.TOWN.LIST){
     const sx = (b.x + CONFIG.TOWN.DOOR_DX)*TILE - cam.x;
-    const sy = (CONFIG.TOWN.BLD_ROW - 1)*TILE - cam.y;
+    const sy = (CONFIG.TOWN.ROOM_ROW - 1)*TILE - cam.y;
     if(sx < -TILE || sx > VIEW_W || sy < -TILE || sy > VIEW_H) continue;
-    list.push({y:CONFIG.TOWN.BLD_ROW*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
+    list.push({y:CONFIG.TOWN.ROOM_ROW*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
   }
   /* NPC（居民）：按脚点 Y 混进同一张排序表（和玩家同一套约定：+12） */
   for(const d of CONFIG.NPC.LIST){
@@ -3758,6 +3799,7 @@ function updatePlayer(dt){
 
   const moving = (ix !== 0 || iy !== 0);
   player.moving = moving;
+  let prevTy = undefined;                  /* 第 26 轮：移动前站在哪一格（进门 / 出门靠它分方向） */
   if(moving){
     /* 对角线归一化：斜向速度与直线一致，不加速 */
     const len = Math.hypot(ix, iy) || 1;
@@ -3776,6 +3818,8 @@ function updatePlayer(dt){
     if(ix !== 0 && iy !== 0) player.dir = lastAxis === 'x' ? (ix<0?1:2) : (iy<0?3:0);
     else if(ix !== 0) player.dir = ix<0 ? 1 : 2;
     else player.dir = iy<0 ? 3 : 0;
+    /* 第 26 轮：记下移动前站在哪一格 —— 进门 / 出门靠它分方向 */
+    prevTy = Math.floor(player.y/TILE);
     movePlayer(player.vx * dt, player.vy * dt);
     /* 脚步声：按固定间隔触发，每次音高随机；跑动时更快更响 */
     player.stepT += dt;
@@ -3795,8 +3839,9 @@ function updatePlayer(dt){
     player.frame = 0;         /* 静止回到站立帧 */
     player.animT = 0;
   }
-  /* 第 24 轮：踩到门就进去（建筑是地图的容器，不是场景 → 没有「当前场景」状态） */
-  townDoorCheck();
+  /* 第 24 轮：踩到门就进去（建筑是地图的容器，不是场景 → 没有「当前场景」状态）
+   * 第 26 轮：墙只有 1 格厚 → 进门 / 出门靠「上一格在哪」分方向 */
+  townDoorCheck(typeof prevTy === 'number' ? prevTy : undefined);
 }
 
 /* --- 摄像机：跟随玩家（轻微缓动）+ 边界钳制 --- */
@@ -6629,6 +6674,17 @@ function deserializeState(d){
       const dr = townDoorAt(dtx, dty);
       if(dr){ player.x = (dr.to.x + 0.5)*TILE; player.y = (dr.to.y + 0.5)*TILE; }
     }
+    /* 第 26 轮：城镇的墙变薄了 → 老存档里玩家可能正好停在新墙里 → 挪到街上 */
+    {
+      const ptx = Math.floor(player.x/TILE), pty = Math.floor(player.y/TILE);
+      const mt = map[pty*MAP_W+ptx];
+      if(mt === T.WALL_FRONT || mt === T.WALL_BACK){
+        const bb = townBuildingAt(ptx, pty);
+        const dx = bb ? bb.x + CONFIG.TOWN.DOOR_DX : CONFIG.TOWN.LIST[0].x + CONFIG.TOWN.DOOR_DX;
+        player.x = (dx + 0.5)*TILE;
+        player.y = (CONFIG.TOWN.STREET_ROW + 0.5)*TILE;
+      }
+    }
     if(typeof d.gold === 'number') gold = d.gold;
     if(typeof d.staminaMax === 'number') staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
@@ -6830,7 +6886,7 @@ let renderMs = 0;                  /* 最近一帧的渲染耗时（毫秒，滑
 
 function update(dt){
   if(npcOpen) updateNpcDialog(dt);   /* 打字机属于 UI：对话打开时字照常一个个蹦出来 */
-  if(warpFx.t < warpFx.dur) warpFx.t += dt;   /* 第 24 轮：进门的闪屏 */
+  if(warpFx.t < warpFx.dur) warpFx.t += dt;   /* 第 26 轮：进门只挪 1 格 → 闪屏不再用（留作以后别的转场） */
   if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
   /* 第 18 轮：年度总结在睡醒后弹（睡觉转场结束时再开面板，免得被黑屏盖住） */
   if(annualPending && !startMenuOpen && !sysOpen){ const p = annualPending; annualPending = null; annualOpenPanel(p); }
@@ -6904,6 +6960,7 @@ function render(){
   }
   drawBuildPreview(ctx);                   /* 建造预览（半透明幽灵） */
   drawEntities(ctx, x0, y0, x1, y1);       /* 按 Y 排序：小屋 / 商店 / 作物 / 物件 / 建造物 / 玩家 */
+  drawRoofs(ctx);                           /* 第 26 轮：屋顶（纯渲染层 —— 盖住屋里的东西） */
   drawDropFx(ctx);                         /* 洒水器的小水滴 */
   drawWeather(ctx);
   drawAtmosphere(ctx);
@@ -6921,7 +6978,7 @@ function render(){
     console.log('[render] 顺序确认: drawGround -> drawObjects -> drawPlayer -> drawUI');
   }
   drawSleepFx(ctx);              /* 睡觉淡入淡出（盖住网格线） */
-  /* 第 24 轮：进门闪一下（盖住瞬移） */
+  /* 转场闪屏（dur = 0 时不触发 —— 第 26 轮进门只挪 1 格，已经不需要它了） */
   if(warpFx.t < warpFx.dur){
     const a = 1 - warpFx.t / warpFx.dur;
     ctx.fillStyle = 'rgba(6,8,12,' + (a * 0.55).toFixed(3) + ')';
@@ -7088,11 +7145,11 @@ function townFrontWallBuilding(tx,ty){
 }
 /* 玩家是不是在屋里（进门 = 在屋子的范围里，含墙和门格） */
 function insideHouse(){ return playerRoomWide() !== null; }
-/* 某个格子是不是某栋房子的外框 */
+/* 某个格子是不是某栋房子的外框（第 26 轮：房子的范围 = 后墙那一行到前墙那一行） */
 function townBuildingAt(tx,ty){
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST)
-    if(tx >= b.x && tx < b.x + b.w && ty >= C.BLD_ROW && ty < C.BLD_ROW + C.BLD_H) return b;
+    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b;
   return null;
 }
 /* 室内区域：站在哪一间屋子里（null = 在室外） */
@@ -7103,27 +7160,33 @@ function townRoomAt(tx,ty){
   return null;
 }
 function playerRoom(){ return townRoomAt(Math.floor(player.x/TILE), Math.floor(player.y/TILE)); }
-/* 门 → 目的地：大门进屋 / 屋里的门回街（双向都能走） */
-function townDoorAt(tx,ty){
+/* 门 → 目的地（第 26 轮：墙只有 1 格厚 → 门就在后墙那一行）
+ * 进 / 出 靠「上一格在哪」分：人在街上（门的北边）踩上去 = 进屋；
+ * 人在屋里（门的南边）踩上去 = 出门。位移只有 1 格 → 不用黑屏闪一下。 */
+function townDoorAt(tx, ty, prevTy){
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
     const dx = b.x + C.DOOR_DX;
-    if(tx === dx && ty === C.BLD_ROW)   return {b:b, dir:'in',  to:{x:dx, y:C.ROOM_ROW + C.ARRIVE_DY}};
-    if(tx === dx && ty === C.ROOM_ROW) return {b:b, dir:'out', to:{x:dx, y:C.STREET_ROW}};
+    if(tx !== dx || ty !== C.ROOM_ROW) continue;
+    let dir;
+    if(typeof prevTy === 'number') dir = (prevTy < ty) ? 'in' : 'out';
+    else dir = (player.y <= (ty + 0.5)*TILE) ? 'in' : 'out';   /* 兜底：站在门的上半格 = 从街上来 */
+    return {b:b, dir:dir,
+            to: dir === 'in' ? {x:dx, y:C.ROOM_ROW + C.ARRIVE_DY} : {x:dx, y:C.STREET_ROW}};
   }
   return null;
 }
-/* 踩到门就进去：没有「当前场景」，只是把人挪到门另一头 */
-function townDoorCheck(){
+/* 踩到门就进去：没有「当前场景」，只是把人挪到门另一头（只挪 1 格） */
+function townDoorCheck(prevTy){
   const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
-  const d = townDoorAt(tx,ty);
+  const d = townDoorAt(tx, ty, prevTy);
   if(!d) return false;
   player.x = (d.to.x + 0.5)*TILE;
   player.y = (d.to.y + 0.5)*TILE;
   player.vx = 0; player.vy = 0;
   cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
   cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
-  warpFx.t = 0;                              /* 闪一下，遮住瞬移 */
+  /* 第 26 轮：只挪 1 格（32px）→ 不再需要黑屏闪一下 */
   townEnter(d);
   return true;
 }
@@ -7357,8 +7420,10 @@ function townPropAt(tx,ty){
   for(const p of townProps()) if(p.x === tx && p.y === ty) return p;
   return null;
 }
-/* 进门的那一下闪一下（遮住瞬移） */
-const warpFx = {t:0, dur:0.32};
+/* 进门的那一下闪一下（遮住瞬移）
+ * 第 26 轮：进门只挪 1 格（32px），不需要遮瞬移 → dur = 0 = 永远不闪
+ * （原来 dur=0.32 时，游戏一开局那 0.32 秒整屏都是黑的） */
+const warpFx = {t:0, dur:0};
 /* 商店柜台（老板娘上班的位置） */
 function townCounterSpot(){
   const b = townShopBuilding();
@@ -10859,7 +10924,7 @@ if(bootSave){
 requestAnimationFrame(loop);
 
 /* 调试钩子（CONFIG.DEBUG_HOOK 打开时才暴露） */
-if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, toast, layoutToasts,
+if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useTool, toast, layoutToasts,
   clock, sky, seasonName, clockHM, skyHour, skyAt, setPaused, paused:()=>paused,
   updateClock, updateWeather, updateSky, rollWeather, spawnParticles, update, render,
   updatePlayer, updateCamera,
@@ -10949,6 +11014,8 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   shopOpenNow, tryOpenShop, townDoorState, drawFrontWalls, drawFrontWall,
   decorText, interactFixture, bedInteract, openNpcChest, currentWeek,
   get npcState(){ return npcState; },
+  /* 第 26 轮：屋顶改成纯渲染层 */
+  drawRoofs, drawDoorTile,
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */
   ensureAudio, audioCtx, audioMuted:()=>audioMuted, setMuted, toggleMute,
   get interactHintsOn(){ return interactHintsOn; },

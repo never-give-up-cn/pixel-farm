@@ -28,7 +28,7 @@
 | `src/infra/environment.ts` | `written()` 按 `/\r?\n/` 切行 | Windows 的 `.cmd` shim 用 CRLF 换行，按 `\n` 切分会把 `\r` 留在行尾，标记匹配不上，报 `foreignFile` |
 | `src/index.ts` | 启动失败时把异常栈写到 `<stateDir>/startup-error.log` | fiber 失败时面板上看不到原因 |
 | `src/sources/github.ts` | `pollBranchCi()` 把 HTTP 409（空仓库没有默认分支）当作「暂无 CI」而不是读取失败 | 空仓库时 `GET /commits/<branch>` 必然 409，上游把它算作整轮轮询失败，连累 Issue/PR/评论流一起报错 |
-| `package.json`（待加固） | 运行时依赖 `zod` 已被 tsdown 打进 `lib/index.js`；`proper-lockfile` 仍是顶层裸导入，靠 DSH 插件加载器把它解析到 Harness 应用自带的依赖上 | profile 的 `node_modules` 里除了这个 link 之外没有任何包，磁盘上也找不到 `proper-lockfile`；插件能启动是因为加载器兜底解析，Harness 升级后这个隐式依赖有失效风险。建议把 `proper-lockfile` 也加入 tsdown 的 `noExternal` |
+| `tsdown.config.ts` | 主机条目改为 `deps: { neverBundle: [/^@deepseek-ai\//], alwaysBundle: ['zod', 'proper-lockfile'] }` | profile 以 `link:` 安装本 bundle，pnpm 不会为被链接的包安装依赖；`proper-lockfile` 只存在于本目录的 `node_modules`，而那个目录并不随 profile 持久存在。把 zod 与 proper-lockfile 打进 `lib/`，插件就只依赖 Harness 提供的 `@deepseek-ai/*` peer。已用隔离加载验证：临时目录里只有 peer 依赖时 `lib/index.js` 正常加载，而同一目录下直接 `import('zod')` 为 `ERR_MODULE_NOT_FOUND` |
 
 ## 清单改动
 

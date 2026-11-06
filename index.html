@@ -1477,6 +1477,7 @@ const CONFIG = {
   /* ---------- NPC 系统（第 13 轮）：小镇居民 / 对话 / 送礼 / 好感度 ---------- */
   NPC: {
     RANGE: 1.5,             // 交互距离（格）：走近按 E 说话
+    SPEED: 100,             // 第 27 轮：NPC 走动速度（像素/秒）—— 1 格 32px ≈ 0.32 秒一格
     AFF_MAX: 100,           // 好感度上限
     /* 好感度分档（按顺序取第一个 min <= 当前好感度的档；升到新档立刻触发解锁） */
     TIERS: [
@@ -3134,7 +3135,9 @@ function drawEntities(g, x0, y0, x1, y1){
     if(!p) continue;
     if(npcHidden(d)) continue;        /* 第 24 轮：屋里的 NPC 只有进屋才看得见 */
     if(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W || p.y - cam.y < -TILE || p.y - cam.y > VIEW_H) continue;
-    list.push({y:p.y + 12, f:()=>drawNpc(g, d, p.x, p.y)});
+    /* 第 27 轮：睡着的 NPC 画在床上面（不然被子会把她盖住 → 晚上就看不见人了） */
+    const sy = (p.type === 'sleep') ? p.y + 20 : p.y + 12;
+    list.push({y:sy, f:()=>drawNpc(g, d, p.x, p.y)});
   }
   /* 动物（第 15 轮）：按脚点 y 混进同一张排序表；不参与玩家碰撞
    * 第 22 轮：animalNear() 每帧只算一次（原来每只动物都重算一遍 → O(n²)） */
@@ -6765,6 +6768,8 @@ function deserializeState(d){
     refreshPackGrid();
     updateStats();
     updateTut();
+    npcRuntimeClear();                     /* 第 27 轮：清空物理坐标缓存（强制 NPC 在下一次 tick 时
+                                             直接出现在床上或街上 —— 防止从地图左上角跑过来） */
     ratingCheck();                             /* 第 20 轮：读档后重新评估星级 */
     return true;
   }catch(e){
@@ -6849,6 +6854,7 @@ function newGame(){
   paused = false;
   tut.step = 0; tut.moved = 0; tut.tilled = 0; tut.sown = 0; tut.slept = false;   /* 新游戏重置引导 */
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
+  npcRuntimeClear();                            /* 第 27 轮：清空 NPC 物理坐标（下次 tick 直接落在落脚点上） */
   dexResetState();                              /* 新游戏：图鉴清空 */
   animalResetState();                           /* 新游戏：清空动物 */
   questResetState();                            /* 新游戏：清空委托 / 信誉 */
@@ -6920,6 +6926,7 @@ function update(dt){
   miniTimer -= dt;
   if(miniTimer <= 0){ rebuildMinimap(); miniTimer = CONFIG.MINIMAP.REFRESH; }
   visitTick();                       /* 第 23 轮：来访居民的到场提示 */
+  updateNpcs(dt);                    /* 第 27 轮：NPC 连续移动（按日程寻路进出屋子） */
   if(fishingActive()){
     /* 钓鱼：人站定不动，只推进抛竿/咬钩/拉杆的状态机（面板打开时上面的分支已经提前返回 → 冻结） */
     updateFishing(dt);
@@ -7046,6 +7053,114 @@ function npcResetState(){
   }
 }
 npcResetState();
+
+/* --- 第 27 轮：NPC 连续移动 + 简易寻路（门是唯一的出入口） ---
+ * 以前 NPC 的位置是「到点瞬间刷新」的坐标；现在多一份纯运行时的物理坐标：
+ *   npcRuntime[id] = {x, y, dir, moving, animT, path, key, away, ready}
+ * 逻辑位置（日程推出来的落脚点）还是唯一的「目的地」，物理位置负责走过去。
+ * 跨房子必须先到门（门内侧 → 门外的街 → 另一扇门），不然会穿墙。
+ * 运行时状态不进存档（读档 / 开新局都清空 → 下一次 tick 直接落在落脚点上）。 */
+const npcRuntime = {};            /* id → 物理状态 */
+function npcRuntimeClear(){
+  for(const id in npcRuntime) delete npcRuntime[id];
+}
+/* 某个像素坐标属于哪栋房子（含墙 / 门格 —— 宽判定，和 playerRoomWide 同一套） */
+function npcRoomIdAt(x, y){
+  const tx = Math.floor(x/TILE), ty = Math.floor(y/TILE);
+  const C = CONFIG.TOWN;
+  for(const b of C.LIST)
+    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b.id;
+  return null;
+}
+/* 门的三个落脚点：门外侧（街上）+ 门内侧（门格）+ 再往屋里一格
+ * 多加「屋里那一格」是为了不让斜线贴着墙角拐过去（否则会蹭到后墙） */
+function npcDoorPoints(bid){
+  const b = CONFIG.TOWN.LIST.find(x => x.id === bid);
+  if(!b) return null;
+  const dx = b.x + CONFIG.TOWN.DOOR_DX;
+  let iy = CONFIG.TOWN.ROOM_ROW + 1;
+  for(let k=0;k<3;k++){
+    const y = CONFIG.TOWN.ROOM_ROW + 1 + k;
+    iy = y;
+    if(!isSolid(dx, y)) break;
+  }
+  return {inside:{x:(dx + 0.5)*TILE, y:(CONFIG.TOWN.ROOM_ROW + 0.5)*TILE},
+          inner:{x:(dx + 0.5)*TILE, y:(iy + 0.5)*TILE},
+          outside:{x:(dx + 0.5)*TILE, y:(CONFIG.TOWN.STREET_ROW + 0.5)*TILE}};
+}
+/* 逻辑落脚点（像素坐标）：日程 / 节日赶集 / 来访农场都算进来 */
+function npcLogicalTarget(d){
+  const w = npcWhere(d);
+  if(!w || w.x === null || w.x === undefined) return null;
+  return {x:(w.x + 0.5)*TILE, y:(w.y + 0.5)*TILE, tx:w.x, ty:w.y,
+          at:w.at, label:w.label, type:w.type, key:w.x + ',' + w.y};
+}
+/* 寻路：起点 / 终点在不同房子里 → 必须走门（门 → 街 → 门） */
+function buildNpcPath(sx, sy, tx, ty){
+  const sBid = npcRoomIdAt(sx, sy), eBid = npcRoomIdAt(tx, ty);
+  const path = [];
+  if(sBid && sBid !== eBid){
+    const dp = npcDoorPoints(sBid);
+    if(dp){ path.push(dp.inner); path.push(dp.inside); path.push(dp.outside); }
+  }
+  if(eBid && eBid !== sBid){
+    const dp = npcDoorPoints(eBid);
+    if(dp){ path.push(dp.outside); path.push(dp.inside); path.push(dp.inner); }
+  }
+  path.push({x:tx, y:ty});
+  return path;
+}
+/* 取（必要时建好）某个 NPC 的运行时状态；第一次建好时直接落在逻辑落脚点上 */
+function npcRuntimeOf(d){
+  let rt = npcRuntime[d.id];
+  if(!rt){
+    rt = {x:0, y:0, dir:0, moving:false, animT:0, path:[], key:null, away:true, ready:false};
+    npcRuntime[d.id] = rt;
+  }
+  if(!rt.ready){
+    rt.ready = true;
+    const t = npcLogicalTarget(d);
+    if(t){ rt.x = t.x; rt.y = t.y; rt.key = t.key; rt.away = false; }
+  }
+  return rt;
+}
+/* 每帧推进 NPC：朝逻辑落脚点走（跨屋先走到门） */
+function updateNpcs(dt){
+  const speed = CONFIG.NPC.SPEED || 50;
+  for(const d of CONFIG.NPC.LIST){
+    const rt = npcRuntimeOf(d);
+    const t = npcLogicalTarget(d);
+    if(!t){ rt.moving = false; rt.away = true; rt.path.length = 0; continue; }
+    /* 从「不在镇上」回来 → 直接出现在落脚点（不用横穿全镇） */
+    if(rt.away){
+      rt.away = false;
+      rt.x = t.x; rt.y = t.y; rt.key = t.key;
+      rt.path.length = 0; rt.moving = false;
+      continue;
+    }
+    const far = Math.hypot(t.x - rt.x, t.y - rt.y);
+    if(rt.key !== t.key || (!rt.path.length && far > 4)){
+      rt.key = t.key;
+      rt.path = buildNpcPath(rt.x, rt.y, t.x, t.y);
+    }
+    if(!rt.path.length){ rt.moving = false; continue; }
+    const wp = rt.path[0];
+    const dx = wp.x - rt.x, dy = wp.y - rt.y;
+    const dist = Math.hypot(dx, dy);
+    if(dist > 1.5){
+      rt.moving = true;
+      const step = Math.min(dist, speed * dt);
+      rt.x += dx / dist * step;
+      rt.y += dy / dist * step;
+      rt.dir = (Math.abs(dx) > Math.abs(dy)) ? (dx > 0 ? 2 : 1) : (dy > 0 ? 0 : 3);
+      rt.animT += dt;
+    }else{
+      rt.x = wp.x; rt.y = wp.y;
+      rt.path.shift();
+      rt.moving = rt.path.length > 0;
+    }
+  }
+}
 
 /* --- DOM（对话面板复用 .panel 样式） --- */
 const npcEl      = document.getElementById('npc');
@@ -7591,9 +7706,10 @@ function npcCurrentState(d, day, hour){
 function npcAsleepHere(d){
   const st = npcCurrentState(d);
   if(!st || st.type !== 'sleep') return false;
-  const room = playerRoom();
+  if(st.x === null || st.x === undefined) return false;
+  const room = playerRoomWide();
   if(!room) return false;                       /* 玩家在室外 → 不算（来访居民不受影响） */
-  return townRoomAt(st.x, st.y) === room;
+  return npcRoomIdAt((st.x + 0.5)*TILE, (st.y + 0.5)*TILE) === room;
 }
 /* 作息表：当前这个人在哪个时段（第 24 轮的旧接口，现在由新引擎推导） */
 function npcRoutineSlot(d, h){
@@ -7625,16 +7741,20 @@ function npcSpot(d){
   return {x:w.x, y:w.y, from:(w.from === undefined ? 0 : w.from), to:(w.to === undefined ? 24 : w.to),
           at:w.at, label:w.label, type:w.type};
 }
+/* 第 27 轮：NPC 的位置 = 运行时物理坐标（连续移动中的那一格）
+ * 逻辑位置（npcSpot / npcWhere）还是「目的地」，这里给的是「现在站在哪」。 */
 function npcPos(d){
-  const s = npcSpot(d);
-  if(!s) return null;
-  return {x:(s.x + 0.5)*TILE, y:(s.y + 0.5)*TILE, tx:s.x, ty:s.y, at:s.at, label:s.label, type:s.type};
+  const rt = npcRuntimeOf(d);
+  const t = npcLogicalTarget(d);
+  if(!t) return null;                          /* 真的不在镇上 → 不显示 */
+  return {x:rt.x, y:rt.y, tx:Math.floor(rt.x/TILE), ty:Math.floor(rt.y/TILE),
+          at:t.at, label:t.label, type:t.type};
 }
 /* 玩家与 NPC 的距离（格）：不在同一片区域就看不见（隔着墙不算） */
 function npcDist(d){
   const p = npcPos(d);
   if(!p) return Infinity;
-  if(townRoomAt(Math.floor(p.x/TILE), Math.floor(p.y/TILE)) !== playerRoom()) return Infinity;
+  if(npcRoomIdAt(p.x, p.y) !== playerRoomWide()) return Infinity;
   return Math.hypot(p.x - player.x, p.y - player.y) / TILE;
 }
 /* 现在站在旁边的那个 NPC（没有就 null） */
@@ -7646,11 +7766,11 @@ function npcNear(){
   }
   return best;
 }
-/* 这个 NPC 现在看不见（不在玩家所在的那片区域） */
+/* 这个 NPC 现在看不见（不在玩家所在的那片区域：屋里 / 街上各算一片） */
 function npcHidden(d){
   const p = npcPos(d);
   if(!p) return true;
-  return townRoomAt(Math.floor(p.x/TILE), Math.floor(p.y/TILE)) !== playerRoom();
+  return npcRoomIdAt(p.x, p.y) !== playerRoomWide();
 }
 /* 生日：每季一次（season + 季内第几天 → 一年里的第几天） */
 function npcBdayAbs(d){
@@ -8128,8 +8248,11 @@ function migrateSave(raw){
 
 /* --- 画 NPC（emoji 立绘 + 身体 + 名字 + 靠近时的 E 提示） --- */
 function drawNpc(g, d, px, py){
+  const rt = npcRuntime[d.id];
   const ox = Math.round(px - cam.x - 8);
-  const oy = Math.round(py - cam.y - 12);     /* 身体顶端（和玩家同一套脚点约定） */
+  let oy = Math.round(py - cam.y - 12);     /* 身体顶端（和玩家同一套脚点约定） */
+  /* 第 27 轮：走着的时候上下轻轻浮动 */
+  if(rt && rt.moving) oy += Math.round(Math.sin(rt.animT * 15) * 1.5);
   const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
   /* 影子 */
   g.fillStyle = CONFIG.COLORS.shadow;
@@ -8160,6 +8283,16 @@ function drawNpc(g, d, px, py){
     g.fillStyle = CONFIG.COLORS.hudAccent;
     g.font = '11px ' + FONT_CJK;
     g.fillText('E', ox + 8, oy - 5);
+  }
+  /* 第 27 轮：睡着了 → 冒两个 Z（用游戏自己的计时器 → 暂停时也一起停住） */
+  const st = npcCurrentState(d);
+  if(st && st.type === 'sleep' && rt && !rt.moving){
+    const bob = Math.sin(animTime * 6) * 2;
+    g.textAlign = 'left';
+    g.font = '12px ' + FONT_CJK;
+    g.fillStyle = '#8fa3bd';
+    g.fillText('Z', ox + 15, oy - 2 + bob);
+    g.fillText('z', ox + 21, oy - 9 - bob);
   }
   g.font = oldFont; g.textAlign = oldAlign; g.textBaseline = oldBase;
 }
@@ -11016,6 +11149,9 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   get npcState(){ return npcState; },
   /* 第 26 轮：屋顶改成纯渲染层 */
   drawRoofs, drawDoorTile,
+  /* 第 27 轮：NPC 连续移动 + 寻路 */
+  npcRuntime, npcRuntimeOf, npcRuntimeClear, npcRoomIdAt, npcDoorPoints,
+  npcLogicalTarget, buildNpcPath, updateNpcs,
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */
   ensureAudio, audioCtx, audioMuted:()=>audioMuted, setMuted, toggleMute,
   get interactHintsOn(){ return interactHintsOn; },

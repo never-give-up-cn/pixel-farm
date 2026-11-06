@@ -308,6 +308,9 @@
   #npcAff{font-size:11px;color:#cfe3ff;margin-left:auto}
   #npcBirthday{display:none;font-size:11px;color:#ffb08a;border:1px solid #7a4a3a;border-radius:6px;padding:1px 6px}
   #npcBirthday.show{display:inline-block}
+  /* 第 25 轮：状态提示行（营业中 / 休息中 / 在家…） */
+  #npcStatus{display:none;font-size:11px;color:#9fd8a8;border:1px solid #3c5a44;border-radius:6px;padding:1px 6px}
+  #npcStatus.show{display:inline-block}
   #npcBar{height:6px;border-radius:3px;background:#1a2130;border:1px solid #2c3a4e;overflow:hidden;margin-bottom:9px}
   #npcBarFill{height:100%;width:0;background:linear-gradient(90deg,#7fd05a,#ffd76a)}
   #npcText{
@@ -395,6 +398,8 @@
   .crow.fest{border-color:#e0a24a;background:rgba(46,32,14,.62)}
   .crow .cday{width:74px;color:#e8f0ff;font-size:12px;white-space:nowrap}
   .crow .cmeta{flex:1;color:#8fa3bd;font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .crow .cbiz{width:132px;color:#ffd76a;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .crow .cbiz.none{color:#7f92ad}
   .crow .cbadges{display:flex;gap:5px;flex-wrap:nowrap}
   .crow .cbadge{
     font-size:10.5px;color:#ffd76a;border:1px solid #4a3d22;border-radius:6px;
@@ -768,6 +773,7 @@
       <span id="npcName">杂货店老板娘</span>
       <span id="npcTier">陌生</span>
       <span id="npcAff">好感 0</span>
+      <span id="npcStatus">营业中</span>
       <span id="npcBirthday">🎂 生日</span>
     </div>
     <div id="npcBar"><div id="npcBarFill"></div></div>
@@ -1148,7 +1154,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名
-    VERSION: 12,              // 存档版本号（第 23 轮 +1：soil 土壤肥力 / vs NPC 来访 / 作物经过天数）
+    VERSION: 13,              // 存档版本号（第 25 轮 +1：npc.loot 开过 NPC 箱子的周数）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
@@ -1344,7 +1350,12 @@ const CONFIG = {
     REFRESH: 0.5,       // 离屏画布重绘间隔（秒）
     MARGIN: 10,         // 距画布右边缘
     TOP: 66,            // 顶部 y（避开评级 HUD 的 8~32 和制作台 HUD 的 38~62）
-    PLAYER:'#ffffff', NPC:'#ffd76a', HOUSE:'#e8a45c', SHOP:'#7fd4ff'
+    PLAYER:'#ffffff', NPC:'#ffd76a', HOUSE:'#e8a45c', SHOP:'#7fd4ff',
+    /* 第 25 轮：NPC 点按当前状态着色 */
+    NPC_OPEN:'#ffd76a',    // 营业中（黄点）
+    NPC_WANDER:'#ff9d5c',  // 瞎逛（橙点）
+    NPC_HOME:'#7fb4ff',    // 在家（蓝点）
+    NPC_ASLEEP:'#8a8a8a'   // 睡觉 / 外出（不显示）
   },
 
   /* ---------- 第 23 轮 · 动物繁殖 ---------- */
@@ -1498,7 +1509,7 @@ const CONFIG = {
         dislike:['stone','pick'],                               // 不喜欢的硬通货
         bday:{season:'春', day:3},                              // 生日：春 3 日
         /* 时刻表：按时段换位置；不落在任何时段 = 回家了（不出现） */
-        /* 户外站位（什么时候去哪儿由 CONFIG.TOWN.ROUTINE 的作息表决定） */
+        /* 户外站位（第 25 轮起日程表看 CONFIG.NPC_SCHED.LIST，这里只是备用站位） */
         sched:[   // 第 24 轮：杂货店搬进镇上了，站位也搬到街边
           {from:0, to:24, x:9,  y:42},   // 店门口
           {from:0, to:24, x:14, y:42},   // 广场
@@ -1516,7 +1527,7 @@ const CONFIG = {
         like:['wood','pumpkin','seed_pumpkin','mushroom'],    // 喜欢的木料和南瓜（还有林子里的蘑菇）
         dislike:['tomato','seed_tomato'],                      // 不喜欢的番茄
         bday:{season:'夏', day:3},                              // 生日：夏 3 日
-        sched:[   // 第 24 轮：户外站位（作息表见 CONFIG.TOWN.ROUTINE）
+        sched:[   // 第 24 轮：户外站位（第 25 轮起作息表见 CONFIG.NPC_SCHED.LIST）
           {from:0, to:24, x:41, y:42},   // 工棚门口
           {from:0, to:24, x:29, y:34},   // 农场西边
           {from:0, to:24, x:26, y:32}    // 田的另一头
@@ -1533,7 +1544,7 @@ const CONFIG = {
         like:['tomato','seed_tomato','radish','wildflower','berry'],  // 喜欢的番茄、萝卜，和送她的野花 / 浆果
         dislike:['sickle','stone'],                            // 不喜欢的工具
         bday:{season:'秋', day:3},                              // 生日：秋 3 日
-        sched:[   // 第 24 轮：户外站位（作息表见 CONFIG.TOWN.ROUTINE）
+        sched:[   // 第 24 轮：户外站位（第 25 轮起作息表见 CONFIG.NPC_SCHED.LIST）
           {from:0, to:24, x:31, y:30},   // 小屋东边
           {from:0, to:24, x:37, y:33},   // 田边玩
           {from:0, to:24, x:33, y:30}    // 门口
@@ -1573,7 +1584,7 @@ const CONFIG = {
      * hours = 「开门时间」：商店是营业时段，房子是主人在家的时段（to > 24 表示跨午夜） */
     LIST: [
       { id:'shop', name:'杂货店', kind:'shop', npc:'aunt', x:4, w:12,
-        hours:{from:7, to:19}, sign:'杂货店',
+        hours:{from:10, to:19}, sign:'杂货店',
         wander:{chance:0.26, spots:[{x:13,y:42,label:'街角'},{x:18,y:41,label:'广场'}]},
         props:[{dx:5,dy:4,type:'counter',solid:1,interact:'work'},{dx:2,dy:2,type:'shelf'},
                {dx:9,dy:2,type:'shelf'},{dx:10,dy:7,type:'barrel'},{dx:5,dy:7,type:'rug',flat:1}] },
@@ -1596,32 +1607,8 @@ const CONFIG = {
                {dx:9,dy:4,type:'flowerstand',solid:1,interact:'work'},{dx:6,dy:2,type:'chest',solid:1,interact:'chest'},
                {dx:2,dy:2,type:'shelf'},{dx:5,dy:5,type:'rug',flat:1}] }
     ],
-    /* 每位居民自己的作息表（各不相同）：
-     * at = home（自己卧室）/ shop（店里柜台）/ street（户外点）
-     * spot = 借用 CONFIG.NPC.LIST[].sched 的第几个户外点；label = 这个点的中文名 */
-    ROUTINE: {
-      aunt: [
-        {from:0,  to:6,   at:'home'},
-        {from:6,  to:7,   at:'street', spot:0, label:'店门口'},
-        {from:7,  to:19,  at:'shop'},
-        {from:19, to:24,  at:'home'}
-      ],
-      carpenter: [
-        {from:0,   to:5.5, at:'home'},
-        {from:5.5, to:8,   at:'street', spot:0, label:'工棚门口'},
-        {from:8,   to:12,  at:'street', spot:1, label:'农场西边'},
-        {from:12,  to:17,  at:'street', spot:2, label:'田的另一头'},
-        {from:17,  to:24,  at:'home'}
-      ],
-      girl: [
-        {from:0,  to:8,   at:'home'},
-        {from:8,  to:12,  at:'street', spot:0, label:'小屋东边'},
-        {from:12, to:17,  at:'street', spot:1, label:'田边'},
-        {from:17, to:20,  at:'street', spot:2, label:'你家门口'},
-        {from:20, to:24,  at:'home'}
-      ]
-    },
-    /* 城镇用色（单独放，不动 CONFIG.TILE_COLORS 的老字段） */
+    /* 第 25 轮：作息表挪到 CONFIG.NPC_SCHED.LIST（5 种 slot 类型：
+     * work / home / sleep / wander / away），这里不再重复维护一份 */
     COLORS: {
       roofHouse:'#c8703f', roofHouseLine:'#a4552c',
       roofShop:'#5b86ad', roofShopLine:'#44678a',
@@ -1640,7 +1627,10 @@ const CONFIG = {
       stove:'#8a8f96', stoveDark:'#5f646b', stoveFire:'#e07a2a',
       bench:'#9a6b3c', benchDark:'#6d4a27', benchTool:'#b9c3cf',
       desk:'#a9713a', deskDark:'#7d4f24',
-      flowerstand:'#6f9b4a', flowerStandWood:'#7d5426'
+      flowerstand:'#6f9b4a', flowerStandWood:'#7d5426',
+      /* 第 25 轮：门口挂牌三态（营业中 / 休息中 / 外出中） */
+      signOpen:'#5fd07a', signRest:'#8a8a8a', signAway:'#ffd76a',
+      chestBox:'#8a5a2b', chestBoxDark:'#5b3a1d', chestLock:'#e2c14a'
     }
   },
 
@@ -1659,35 +1649,35 @@ const CONFIG = {
     BAD_WEATHER_OUT: true,   /* 雨雪天不出门瞎逛 */
     TICK_MIN: 4,             /* 瞎逛每隔几分钟换一次目标点 */
     LIST: {
-      /* 老板娘：白班 10:00~19:00，晚上在家做饭，22 点睡 */
-      aunt: { open:{from:10, to:19}, sched:[
-        {from:6,  to:8,   type:'home',   at:'bed'},
-        {from:8,  to:10,  type:'home',   at:'table'},
-        {from:10, to:13,  type:'work',   at:'counter'},
-        {from:13, to:14,  type:'home',   at:'table'},
-        {from:14, to:18,  type:'work',   at:'counter'},
-        {from:18, to:19,  type:'wander', area:{x:6,  y:42, w:16, h:1}},
-        {from:19, to:22,  type:'home',   at:'table'},
-        {from:22, to:30,  type:'sleep',  at:'bed'}          /* 跨午夜到早上 6 点 */
+      /* 老板娘：白班 10:00~19:00（营业时间整段都在柜台，摸鱼走哈希概率），
+       * 晚上回家做饭，21 点就睡（睡得早 → 早上起得早） */
+      aunt: { open:{from:10, to:19}, house:'home_aunt', work:'shop', sched:[
+        {from:6,  to:10,  type:'home',   at:'table'},
+        {from:10, to:14,  type:'work',   at:'counter'},
+        {from:14, to:19,  type:'work',   at:'counter'},
+        {from:19, to:21,  type:'home',   at:'stove'},
+        {from:21, to:30,  type:'sleep',  at:'bed'}          /* 跨午夜到早上 6 点 */
       ]},
-      /* 老木匠：早班 7:00~14:00，下午在镇上溜达，20 点睡 */
-      carpenter: { open:{from:7, to:14}, sched:[
-        {from:6,  to:7,   type:'home',   at:'bed'},
-        {from:7,  to:12,  type:'work',   at:'bench'},
-        {from:12, to:13,  type:'home',   at:'table'},
-        {from:13, to:14,  type:'work',   at:'bench'},
-        {from:14, to:17,  type:'wander', area:{x:24, y:42, w:16, h:1}},
-        {from:17, to:20,  type:'home',   at:'table'},
-        {from:20, to:30,  type:'sleep',  at:'bed'}
+      /* 老木匠：早班 7:00~14:00（在自己家的工作台上），下午回家收拾工具，23 点睡 */
+      carpenter: { open:{from:7, to:14}, house:'home_carpenter', work:'home_carpenter', sched:[
+        {from:6,  to:7,   type:'home',   at:'bench'},
+        {from:7,  to:11,  type:'work',   at:'bench'},
+        {from:11, to:14,  type:'work',   at:'bench'},
+        {from:14, to:17,  type:'home',   at:'bench'},   /* 收拾工具 */
+        {from:17, to:26,  type:'home',   at:'table'},   /* 23:00~2:00 也在家（睡不着就坐一会儿） */
+        {from:26, to:30,  type:'sleep',  at:'bed'}      /* 2:00~6:00 */
       ]},
-      /* 邻家女孩：下午班 14:00~22:00，上午在家看书，22 点睡 */
-      girl: { open:{from:14, to:22}, sched:[
-        {from:6,  to:10,  type:'sleep',  at:'bed'},
-        {from:10, to:13,  type:'home',   at:'desk'},
-        {from:13, to:14,  type:'wander', area:{x:40, y:42, w:16, h:1}},
-        {from:14, to:21,  type:'work',   at:'flowerstand'},
-        {from:21, to:22,  type:'wander', area:{x:46, y:42, w:14, h:1}},
-        {from:22, to:30,  type:'sleep',  at:'bed'}
+      /* 邻家女孩：下午班 14:00~22:00（自己家的花摊），上午在家看书 / 上午出门，
+       * 晚上在家看书看到很晚（2 点才睡）→ 夜里也总有人找得到 */
+      girl: { open:{from:14, to:22}, house:'home_girl', work:'home_girl', sched:[
+        {from:6,  to:10,  type:'home',   at:'desk'},
+        {from:10, to:13,  type:'wander', area:{x:40, y:42, w:16, h:1}, label:'街上'},
+        {from:13, to:14,  type:'home',   at:'desk'},
+        {from:14, to:18,  type:'work',   at:'flowerstand'},
+        {from:18, to:22,  type:'work',   at:'flowerstand'},
+        {from:22, to:24,  type:'home',   at:'desk'},
+        {from:0,  to:2,   type:'away',   label:'不在镇上'},   /* 深夜去亲戚家过夜 */
+        {from:26, to:30,  type:'sleep',  at:'bed'}          /* 2:00~6:00 */
       ]}
     }
   },
@@ -2104,7 +2094,30 @@ const CONFIG = {
 /* === 2.世界 === */
 const TILE_NAMES = ['草地','泥土','水','树','岩石','野花','小屋','商店','耕地','已浇水','空地',
                     '野花丛','蘑菇','浆果','节日彩旗','集市摊位','节日灯笼',
-                    '镇屋','门','室内墙','木地板','石板路'];
+                    '镇屋','门','室内墙','木地板','石板路','前墙','后墙'];
+
+/* ================= 第 25 轮：BUILDING_DEFS（静态建筑定义，不存档） =================
+ * 建筑 = 外墙 + 门 + 地板 + 家具，全部是 map 上的格子。
+ * 每条 fixture 的结构和玩家盖的房子一模一样（{type, tx, ty}），
+ * 区别是 preset:true —— 玩家拆不了、也不写进存档（读档时重新盖一遍）。
+ * 好处：isSolid / chestNear / buildingAt 这些逻辑一行都不用改，
+ *       照样查 buildIndex 就能认出「柜台」「箱子」「床」。 */
+const BUILDING_DEFS = (function(){
+  const C = CONFIG.TOWN;
+  const out = [];
+  for(const b of C.LIST){
+    const fixtures = [];
+    for(const p of (b.props || []))
+      fixtures.push({
+        type:p.type, tx:b.x + p.dx, ty:C.ROOM_ROW + p.dy,
+        solid:!!p.solid, flat:!!p.flat, interact:p.interact || '',
+        preset:true, npc:b.npc, bid:b.id
+      });
+    out.push({id:b.id, name:b.name, kind:b.kind, npc:b.npc, x:b.x, w:b.w,
+              hours:b.hours, wander:b.wander || null, fixtures:fixtures});
+  }
+  return out;
+})();
 
 const MAP_W = CONFIG.MAP_W, MAP_H = CONFIG.MAP_H, TILE = CONFIG.TILE;
 const VIEW_W = CONFIG.VIEW_W, VIEW_H = CONFIG.VIEW_H;
@@ -2159,6 +2172,18 @@ function minimapTileColor(t){
   if(t === T.FLOWER)  return C.flowers[0];
   return C.grass;
 }
+/* 第 25 轮：小地图上的 NPC 点按「他现在的状态」着色
+ *   营业中 = 黄点 / 瞎逛 = 橙点 / 在家 = 蓝点 / 睡觉·外出·赶集 = 不显示
+ * （单独拎成一个函数 → 规则一眼能看懂，也能直接测） */
+function minimapNpcColor(st){
+  if(!st) return null;
+  const M = CONFIG.MINIMAP;
+  if(st.type === 'work')   return M.NPC_OPEN;      /* 营业中（黄点） */
+  if(st.type === 'wander') return M.NPC_WANDER;    /* 瞎逛（橙点） */
+  if(st.type === 'home')   return M.NPC_HOME;      /* 在家（蓝点） */
+  if(st.type === 'visit')  return M.NPC_OPEN;      /* 来访农场（黄点） */
+  return null;                                     /* sleep / away / festival：不显示 */
+}
 function rebuildMinimap(){
   const M = CONFIG.MINIMAP, S = M.SIZE, K = M.SCALE;
   miniCtx.clearRect(0, 0, S, S);
@@ -2179,12 +2204,15 @@ function rebuildMinimap(){
   miniCtx.fillRect((HOUSE_POS.x-FARM.x)*K, (HOUSE_POS.y-FARM.y)*K, HOUSE_POS.w*K, HOUSE_POS.h*K);
   miniCtx.fillStyle = M.SHOP;
   miniCtx.fillRect((SHOP_POS.x-FARM.x)*K, (SHOP_POS.y-FARM.y)*K, SHOP_POS.w*K, SHOP_POS.h*K);
-  /* NPC（黄点） */
+  /* NPC（第 25 轮：按当前状态着色 —— 营业中=黄 / 瞎逛=橙 / 在家=蓝；睡觉·外出不显示） */
   for(const d of CONFIG.NPC.LIST){
     const p = npcPos(d);
     if(!p) continue;
     if(p.tx < FARM.x || p.tx >= FARM.x + FARM.w || p.ty < FARM.y || p.ty >= FARM.y + FARM.h) continue;
-    miniCtx.fillStyle = M.NPC;
+    const st = npcWhere(d);
+    const col = minimapNpcColor(st);
+    if(!col) continue;
+    miniCtx.fillStyle = col;
     miniCtx.fillRect((p.tx-FARM.x)*K + ((K>>1) - 1), (p.ty-FARM.y)*K + ((K>>1) - 1), 3, 3);
   }
   /* 玩家（白点；跑出农场区就贴边显示） */
@@ -2270,16 +2298,14 @@ function genTown(){
     for(let y=C.ROW;y<=C.STREET_ROW;y++) map[y*MAP_W+x] = T.PATH;
   for(let x=1;x<MAP_W-1;x++) map[C.STREET_ROW*MAP_W+x] = T.PATH;
 
-  /* 2) 四栋房子：外框 + 大门；里面一间房：墙 + 地板 + 通向街的门 */
+  /* 2) 四栋房子：外框 + 大门；里面一间房：墙 + 地板 + 通向街的门
+   * 第 25 轮：墙分前后 —— 南边那排是「前墙」（玩家在屋里时半透明），
+   * 北边和两侧是「后墙」（永远不透明，撑出空间感） */
   for(const b of C.LIST){
     for(let y=C.BLD_ROW;y<C.BLD_ROW+C.BLD_H;y++)
       for(let x=b.x;x<b.x+b.w;x++) map[y*MAP_W+x] = T.BLD;
     map[C.BLD_ROW*MAP_W + b.x + C.DOOR_DX] = T.DOOR;              /* 大门：踩上去进屋 */
-    for(let y=C.ROOM_ROW;y<C.ROOM_ROW+C.ROOM_H;y++)
-      for(let x=b.x;x<b.x+b.w;x++) map[y*MAP_W+x] = T.WALL;
-    for(let y=C.ROOM_ROW+1;y<C.ROOM_ROW+C.ROOM_H-1;y++)
-      for(let x=b.x+1;x<b.x+b.w-1;x++) map[y*MAP_W+x] = T.FLOOR;
-    map[C.ROOM_ROW*MAP_W + b.x + C.DOOR_DX] = T.DOOR;             /* 屋里的门：踩上去回街上 */
+    stampBuilding(buildingDef(b.id), false);                       /* 墙 / 地板 / 屋里的门 */
   }
 }
 
@@ -2468,6 +2494,36 @@ function drawTownProp(g, p, px, py){
       g.fillStyle = K.rug;     g.fillRect(px+2, py+2, 28, 28);
       g.fillStyle = K.rugLine; g.fillRect(px+6, py+6, 20, 20);
       break;
+    /* 第 25 轮：原来没画的几件家具（灶台 / 工作台 / 书桌 / 花摊 / 箱子） */
+    case 'stove':
+      g.fillStyle = K.stoveDark; g.fillRect(px+4, py+10, 24, 18);
+      g.fillStyle = K.stove;     g.fillRect(px+6, py+6, 20, 18);
+      g.fillStyle = K.stoveFire; g.fillRect(px+10, py+8, 12, 4);
+      g.fillStyle = K.stoveDark; g.fillRect(px+8, py+1, 16, 5);    /* 锅 */
+      break;
+    case 'bench':
+      g.fillStyle = K.benchDark; g.fillRect(px+3, py+14, 26, 12);
+      g.fillStyle = K.bench;     g.fillRect(px+5, py+10, 22, 8);
+      g.fillStyle = K.benchTool; g.fillRect(px+8, py+4, 14, 5);    /* 刨子 */
+      g.fillStyle = K.benchDark; g.fillRect(px+9, py+9, 3, 3);
+      break;
+    case 'desk':
+      g.fillStyle = K.deskDark; g.fillRect(px+5, py+19, 22, 9);
+      g.fillStyle = K.desk;     g.fillRect(px+3, py+9, 26, 12);
+      g.fillStyle = K.signText; g.fillRect(px+8, py+5, 14, 9);     /* 摊开的书 */
+      break;
+    case 'flowerstand':
+      g.fillStyle = K.flowerStandWood; g.fillRect(px+4, py+18, 24, 10);
+      g.fillStyle = K.flowerstand;      g.fillRect(px+6, py+6, 20, 13);
+      g.fillStyle = K.shelfGoods; g.fillRect(px+8, py+3, 4, 4);
+      g.fillRect(px+15, py+1, 4, 5); g.fillRect(px+21, py+4, 4, 4);
+      break;
+    case 'chest':
+      g.fillStyle = K.chestBoxDark; g.fillRect(px+3, py+8, 26, 19);
+      g.fillStyle = K.chestBox;     g.fillRect(px+5, py+5, 22, 16);
+      g.fillStyle = K.chestBoxDark; g.fillRect(px+5, py+12, 22, 2);
+      g.fillStyle = K.chestLock;    g.fillRect(px+14, py+11, 5, 6);
+      break;
   }
 }
 /* 门牌：写清楚「在不在 / 为什么不在 / 去哪了」（原则 C） */
@@ -2490,6 +2546,27 @@ function drawTownSign(g, b, px, py){
   g.fillText(txt, bx + 5, by + 13);
 }
 
+/* 第 25 轮：门口挂牌三态 —— 营业中（绿）/ 休息中（灰）/ 外出中（黄） */
+function drawTownDoorState(g, b, px, py){
+  const K = CONFIG.TOWN.COLORS;
+  const st = townDoorState(b);
+  /* 小木牌 + 状态灯（远远地就能看出开没开） */
+  g.fillStyle = K.signPost; g.fillRect(px+13, py+10, 6, 18);
+  g.fillStyle = K.sign;    g.fillRect(px+4, py+2, 24, 11);
+  g.fillStyle = st.color;  g.fillRect(px+6, py+4, 20, 7);
+  /* 走近了才把状态写出来 */
+  const dx = px + 16 + cam.x - player.x, dy = py + 6 + cam.y - player.y;
+  if(dx*dx + dy*dy > 260*260) return;
+  const txt = st.text;
+  g.font = '12px ' + FONT_CJK;
+  const w = g.measureText(txt).width;
+  const bx = px + 16 - w/2 - 5, by = py - 15;
+  g.fillStyle = 'rgba(8,10,16,0.86)'; g.fillRect(bx, by, w + 10, 18);
+  g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(bx, by, w + 10, 18);
+  g.fillStyle = st.color; g.textAlign = 'left';
+  g.fillText(txt, bx + 5, by + 13);
+  g.textAlign = 'left';
+}
 /* --- 建造物：木栅栏 / 木箱 / 洒水器 --- */
 function drawFence(g,x,y){
   const C = CONFIG.TILE_COLORS;
@@ -2652,7 +2729,8 @@ function drawAutobox(g,x,y,t){
   if(on){ g.fillStyle = 'rgba(110,240,160,.35)'; g.fillRect(x+5, y+14, 5, 5); }
 }
 function drawBuilding(g,b,x,y){
-  if(b.type === 'fence')     drawFence(g,x,y);
+  if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
+  else if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(b.type === 'coop') drawCoop(g,x,y);
@@ -2747,12 +2825,15 @@ function drawGroundTileBase(g, tx, ty, x, y){
     g.fillStyle = K.doorFrame; g.fillRect(x+2, y+1, TILE-4, 2);
     g.fillRect(x+2, y+TILE-3, TILE-4, 2);
     g.fillStyle = K.doorDark;  g.fillRect(x + TILE/2 - 1, y+5, 2, TILE-6);
-  } else if(t === T.WALL){                         /* 室内墙 */
+  } else if(t === T.WALL || t === T.WALL_BACK){  /* 室内墙（后墙 / 侧墙）：永远不透明 */
     const K = CONFIG.TOWN.COLORS;
     g.fillStyle = K.wall; g.fillRect(x,y,TILE,TILE);
     g.fillStyle = K.wallLine;
     g.fillRect(x, y+15, TILE, 2);
     g.fillRect(x+15, y, 2, 15);
+  } else if(t === T.WALL_FRONT){                /* 第 25 轮：前墙 —— 底子画成室外地面，
+                                                  * 墙本身每帧单独画（玩家在屋里时半透明） */
+    drawGrassTile(g,tx,ty,x,y);
   } else if(t === T.FLOOR){                        /* 室内木地板 */
     const K = CONFIG.TOWN.COLORS;
     g.fillStyle = K.floor; g.fillRect(x,y,TILE,TILE);
@@ -2770,12 +2851,17 @@ function drawGroundTileBase(g, tx, ty, x, y){
     g.fillRect(x, y+21, TILE, 1);
   } else {
     /* 草地（含树/石/花/建筑所在格的地基） */
-    g.fillStyle = C.grass; g.fillRect(x,y,TILE,TILE);
-    const h1 = hash2(tx,ty), h2 = hash2(ty*7+3, tx*11+5), h3 = hash2(tx*13+1, ty*17+2);
-    g.fillStyle = C.grassDot;  g.fillRect(x + ((h1*28)|0), y + ((h2*28)|0), 2, 2);
-    g.fillStyle = C.grassDot2; g.fillRect(x + ((h2*26)|0), y + ((h3*27)|0), 2, 2);
-    g.fillStyle = C.grassDot;  g.fillRect(x + ((h3*25)|0), y + ((h1*29)|0), 3, 1);
+    drawGrassTile(g,tx,ty,x,y);
   }
+}
+/* 草地底色（树 / 石 / 花 / 前墙底下都铺这个） */
+function drawGrassTile(g,tx,ty,x,y){
+  const C = CONFIG.TILE_COLORS;
+  g.fillStyle = C.grass; g.fillRect(x,y,TILE,TILE);
+  const h1 = hash2(tx,ty), h2 = hash2(ty*7+3, tx*11+5), h3 = hash2(tx*13+1, ty*17+2);
+  g.fillStyle = C.grassDot;  g.fillRect(x + ((h1*28)|0), y + ((h2*28)|0), 2, 2);
+  g.fillStyle = C.grassDot2; g.fillRect(x + ((h2*26)|0), y + ((h3*27)|0), 2, 2);
+  g.fillStyle = C.grassDot;  g.fillRect(x + ((h3*25)|0), y + ((h1*29)|0), 3, 1);
 }
 /* 水面反光：会动 → 不烘焙，每帧单独画 */
 function drawWaterAnim(g, tx, ty, x, y){
@@ -2819,6 +2905,8 @@ function drawGround(g,x0,y0,x1,y1){
     for(let ty=y0;ty<=y1;ty++)
       for(let tx=x0;tx<=x1;tx++)
         if(map[ty*MAP_W+tx] === T.WATER) drawWaterAnim(g, tx, ty, tx*TILE-cam.x, ty*TILE-cam.y);
+    /* 第 25 轮：前墙也是「每帧」的（玩家在屋里时半透明），不能烘焙 */
+    drawFrontWalls(g,x0,y0,x1,y1);
     return;
   }
   /* 慢路径（关掉 CONFIG.PERF.BAKE_GROUND 时）：逐格现画 */
@@ -2829,6 +2917,26 @@ function drawGround(g,x0,y0,x1,y1){
       if(map[ty*MAP_W+tx] === T.WATER) drawWaterAnim(g, tx, ty, x, y);
     }
   }
+  drawFrontWalls(g,x0,y0,x1,y1);
+}
+/* 第 25 轮：前墙（玩家在屋里时 alpha 0.25，免得挡住视线；不在屋里就实心） */
+function drawFrontWalls(g,x0,y0,x1,y1){
+  const room = playerRoomWide();
+  for(let ty=y0;ty<=y1;ty++)
+    for(let tx=x0;tx<=x1;tx++){
+      if(map[ty*MAP_W+tx] !== T.WALL_FRONT) continue;
+      const b = townFrontWallBuilding(tx,ty);
+      drawFrontWall(g, tx, ty, tx*TILE-cam.x, ty*TILE-cam.y, !!(b && room === b.id));
+    }
+}
+function drawFrontWall(g,tx,ty,x,y,inside){
+  const K = CONFIG.TOWN.COLORS;
+  g.globalAlpha = inside ? 0.25 : 1;
+  g.fillStyle = K.wall; g.fillRect(x,y,TILE,TILE);
+  g.fillStyle = K.wallLine;
+  g.fillRect(x, y+15, TILE, 2);
+  g.fillRect(x+15, y, 2, 15);
+  g.globalAlpha = 1;
 }
 
 /* 物件层：树 / 岩石 / 野花（建筑单独绘制，可跨格） */
@@ -2956,14 +3064,7 @@ function drawEntities(g, x0, y0, x1, y1){
   /* 委托板（第 16 轮）：同样按脚点 Y 混进排序表 */
   list.push({y:(QUEST_BOARD.y + QUEST_BOARD.h)*TILE,
              f:()=>drawQuestBoard(g, QUEST_BOARD.x*TILE-cam.x, QUEST_BOARD.y*TILE-cam.y)});
-  /* 镇上的家具（第 24 轮）：按脚点 Y 混进同一张排序表 */
-  for(const p of townProps()){
-    if(p.flat) continue;
-    const bx = p.x*TILE - cam.x, by = p.y*TILE - cam.y;
-    if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
-    const sy = (p.type === 'counter') ? p.y*TILE + 4 : p.y*TILE + TILE;
-    list.push({y:sy, f:()=>drawTownProp(g, p, bx, by)});
-  }
+  /* 第 25 轮：镇上的家具已经进了 buildings（preset），跟着建造物一起排 Y */
   /* 门牌（第 24 轮）：说明主人在不在、去哪了 */
   for(const b of CONFIG.TOWN.LIST){
     const sx = (b.x + CONFIG.TOWN.SIGN_DX)*TILE - cam.x;
@@ -2974,7 +3075,17 @@ function drawEntities(g, x0, y0, x1, y1){
   for(const b of buildings){
     const bx = b.tx*TILE - cam.x, by = b.ty*TILE - cam.y;
     if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
-    list.push({y:b.ty*TILE + TILE, f:()=>drawBuilding(g,b,bx,by)});
+    if(b.preset && b.flat) continue;      /* 地毯已经画在地面层了 */
+    /* 柜台比别的家具矮一点（老板娘站在后面） */
+    const sy = (b.preset && b.type === 'counter') ? b.ty*TILE + 4 : b.ty*TILE + TILE;
+    list.push({y:sy, f:()=>drawBuilding(g,b,bx,by)});
+  }
+  /* 第 25 轮：门口挂牌三态（画在大门正上方一格） */
+  for(const b of CONFIG.TOWN.LIST){
+    const sx = (b.x + CONFIG.TOWN.DOOR_DX)*TILE - cam.x;
+    const sy = (CONFIG.TOWN.BLD_ROW - 1)*TILE - cam.y;
+    if(sx < -TILE || sx > VIEW_W || sy < -TILE || sy > VIEW_H) continue;
+    list.push({y:CONFIG.TOWN.BLD_ROW*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
   }
   /* NPC（居民）：按脚点 Y 混进同一张排序表（和玩家同一套约定：+12） */
   for(const d of CONFIG.NPC.LIST){
@@ -3401,6 +3512,11 @@ function buildGroundOK(tx,ty,r){
   if(t === T.WATER) return '水里不能建';
   if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
   if(t === T.WILDFLOWER || t === T.MUSHROOM || t === T.BERRY) return '这里长着采集物，先采掉吧';
+  /* 第 25 轮：门 / 地板 / 墙（前墙 / 后墙）上不能盖房子 */
+  if(t === T.DOOR) return '门口不能建';
+  if(t === T.FLOOR) return '地板上不能建';
+  if(t === T.WALL || t === T.WALL_FRONT || t === T.WALL_BACK) return '墙上不能建';
+  if(t === T.BLD) return '房子上不能建';
   if(t === T.FEST_BANNER || t === T.FEST_STALL || t === T.FEST_LANTERN) return '节日装饰先别动';   /* 第 17 轮 */
   if(r.overlay) return '';            /* 石板路是叠加层：耕地 / 作物上都铺 */
   if(t === T.TILLED || t === T.WATERED) return '耕地不能建';
@@ -3470,6 +3586,12 @@ function demolishAt(tx,ty){
     return false;
   }
   const b = buildings[bi], r = buildRecipe(b.type);
+  /* 第 25 轮：镇上的家具拆不了 */
+  if(b.preset){
+    toast('镇上的东西，拆不了');
+    playSfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
   /* 第 15 轮：棚舍里还有动物 → 拦住（先把动物放生，再拆棚舍） */
   if((b.type === 'coop' || b.type === 'barn') && animalsInShelter(b.tx, b.ty) > 0){
     toast('棚舍里还有 ' + animalsInShelter(b.tx, b.ty) + ' 只动物，先在动物面板里放生再拆');
@@ -3577,13 +3699,17 @@ function isSolid(tx,ty){
   const i = ty*MAP_W+tx;
   const t = map[i];
   if(t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP) return true;
-  if(t===T.BLD || t===T.WALL) return true;          /* 第 24 轮：镇屋外墙 / 室内墙 */
+  if(t===T.BLD || t===T.WALL || t===T.WALL_FRONT || t===T.WALL_BACK) return true;   /* 镇屋外墙 / 室内墙（前墙 + 后墙） */
   if(tx===QUEST_BOARD.x && ty===QUEST_BOARD.y) return true;   /* 第 16 轮：委托板挡路 */
   /* 建造物：栅栏和木箱挡路，洒水器可以踩过去 */
   const bi = buildIndex[i];
   if(bi >= 0){
-    const r = buildRecipe(buildings[bi].type);
-    if(r && r.solid) return true;
+    const b = buildings[bi];
+    if(b.preset){ if(b.solid) return true; }        /* 第 25 轮：镇上的家具（柜台 / 床 / 箱子…）挡路 */
+    else{
+      const r = buildRecipe(b.type);
+      if(r && r.solid) return true;
+    }
   }
   return false;
 }
@@ -4537,13 +4663,13 @@ function nearShop(){
   return shopDist() <= CONFIG.SHOP.RANGE;
 }
 /* 店主在不在柜台前（不在 → 没有加购，牌子也会写清楚） */
-function townOwnerPresent(){
+function townOwnerPresent(h){
   const b = townShopBuilding();
   if(!b) return false;
   const d = npcDef(b.npc);
   if(!d) return false;
-  const w = npcWhere(d);
-  return !!(w && w.at === 'shop');
+  const st = npcCurrentState(d, clock.day, h);     /* 第 25 轮：店主必须在「上班」状态 */
+  return !!(st && st.type === 'work' && st.at === 'shop');
 }
 
 /* --- 时间系统：每 tick 推进；6:00 天亮 → 20:00 入夜 → 2:00 强制结束一天 --- */
@@ -4901,11 +5027,18 @@ window.addEventListener('keydown', e=>{
       const c = chestNear();
       const n = npcNear();
       const mk = makerNear();
-      if(n) npcOpenDialog(n);                    /* 人在旁边 → 先跟人说话 */
+      if(n){                                     /* 人在旁边 → 先跟人说话 */
+        if(npcAsleepHere(n)) toast(n.name + '睡得正香，别吵醒他');   /* 第 25 轮：睡着的叫不醒 */
+        else npcOpenDialog(n);
+      }
       else if(nearHouse()) startSleep(false);
-      else if(c){ openChest = c; toggleChest(true); }
-      else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
       else if(nearShop()) toggleShop();
+      else if(c){
+        if(c.preset) openNpcChest(c.npc);        /* 第 25 轮：NPC 家的箱子（一周一次） */
+        else { openChest = c; toggleChest(true); }
+      }
+      else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
+      else if(fixtureNear()) interactFixture(fixtureNear());   /* 第 25 轮：看装饰 / 睡 bed */
       else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
       else{
@@ -5379,6 +5512,10 @@ function chestNear(){
 function toggleChest(open){
   const want = (open === undefined) ? !chestOpen : !!open;
   if(want === chestOpen) return;
+  if(want && openChest && openChest.preset){     /* 第 25 轮：镇上的箱子走 openNpcChest */
+    toast('这是镇上的箱子');
+    return;
+  }
   chestOpen = want;
   if(chestOpen){
     if(packOpen) togglePack(false);
@@ -5600,8 +5737,7 @@ function toggleShop(open){
   if(want === shopOpen) return false;
   if(want && !nearShop()){ toast('走到店里的柜台前才能交易'); return false; }
   if(want){
-    const sb = townShopBuilding();
-    if(sb && !townOpenNow(sb)){ toast('打烊了 —— 营业时间 ' + hourText(sb.hours.from) + '~' + hourText(sb.hours.to)); return false; }
+    if(!tryOpenShop()) return false;      /* 第 25 轮：打烊 / 店主不在柜台，都说清楚 */
   }
   shopOpen = want;
   if(shopOpen){
@@ -6372,7 +6508,7 @@ function serializeState(){
     weather: weather.id,
     map: mapDiff(),
     crops: cs,
-    buildings: buildings.map(b => {
+    buildings: buildings.filter(b => !b.preset).map(b => {     /* 第 25 轮：镇上的家具是静态配置，不存档 */
       const o = {type:b.type, x:b.tx, y:b.ty,
         slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null};
       if(b.type === 'maker'){                 /* 第 19 轮：加工台剩余时间 + 产出槽 */
@@ -6477,6 +6613,8 @@ function deserializeState(d){
         buildings.push(nb);
         buildIndex[y*MAP_W+x] = buildings.length - 1;
       }
+    /* 第 25 轮：镇上的家具（preset）不存档 —— 读档后按 BUILDING_DEFS 重新盖一遍 */
+    stampTownFixtures();
     if(Array.isArray(d.roads))
       for(const k of d.roads){
         const p = String(k).split(',');
@@ -6485,6 +6623,12 @@ function deserializeState(d){
       }
     /* 玩家 / 背包 / 时间 / 天气 */
     if(d.player){ player.x = d.player.x; player.y = d.player.y; }
+    /* 第 25 轮：存档正好停在门格上 → 挪到门另一头（不然会卡在门里） */
+    {
+      const dtx = Math.floor(player.x/TILE), dty = Math.floor(player.y/TILE);
+      const dr = townDoorAt(dtx, dty);
+      if(dr){ player.x = (dr.to.x + 0.5)*TILE; player.y = (dr.to.y + 0.5)*TILE; }
+    }
     if(typeof d.gold === 'number') gold = d.gold;
     if(typeof d.staminaMax === 'number') staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
@@ -6639,6 +6783,7 @@ function newGame(){
   snapshotBaseMap();
   initInventory();
   buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);
+  stampTownFixtures();                        /* 第 25 轮：镇上的家具重新盖一遍（静态配置，不存档） */
   dropFx = [];
   clock.day = 1; clock.min = 0; clock.hold = 0;
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;
@@ -6828,17 +6973,19 @@ const npcState = {
   aff:    {},   /* id → 好感度 0~100 */
   gift:   {},   /* id → 上次送礼时的天数（跨天自动失效 → 实现"每天一次"） */
   unlock: {},   /* id → 1 = 已经发过「朋友」档的解锁福利 */
+  lootDay:{},   /* 第 25 轮：id → 上次开他箱子时的「周序号」（一周只能开一次） */
   bonusDay: -1, /* 老板娘加购计数所属的天 */
   bonusUsed: 0  /* 老板娘当天已加购的件数 */
 };
 /* 把 NPC 状态复位（新游戏 / 读档前） */
 function npcResetState(){
-  npcState.aff = {}; npcState.gift = {}; npcState.unlock = {};
+  npcState.aff = {}; npcState.gift = {}; npcState.unlock = {}; npcState.lootDay = {};
   npcState.bonusDay = -1; npcState.bonusUsed = 0;
   for(const d of CONFIG.NPC.LIST){
     npcState.aff[d.id] = 0;
     npcState.gift[d.id] = -1;
     npcState.unlock[d.id] = 0;
+    npcState.lootDay[d.id] = 0;
   }
 }
 npcResetState();
@@ -6851,6 +6998,7 @@ const npcName    = document.getElementById('npcName');
 const npcTierEl  = document.getElementById('npcTier');
 const npcAffEl   = document.getElementById('npcAff');
 const npcBdayEl  = document.getElementById('npcBirthday');
+const npcStatEl  = document.getElementById('npcStatus');      /* 第 25 轮：状态提示行 */
 const npcBarFill = document.getElementById('npcBarFill');
 const npcTextEl  = document.getElementById('npcText');
 const npcNextBtn = document.getElementById('npcNext');
@@ -6886,6 +7034,60 @@ function npcUnlockTierIdx(){
 function townBuilding(id){ return CONFIG.TOWN.LIST.find(b => b.id === id) || null; }
 function townShopBuilding(){ return CONFIG.TOWN.LIST.find(b => b.kind === 'shop') || null; }
 function townHomeBuilding(npcId){ return CONFIG.TOWN.LIST.find(b => b.kind === 'house' && b.npc === npcId) || null; }
+/* 第 25 轮：静态建筑定义（不存档） */
+function buildingDef(id){ return BUILDING_DEFS.find(b => b.id === id) || null; }
+/* 盖一栋房子：外墙（前墙 / 后墙）+ 屋里的门 + 地板 + 家具
+ * withFixtures = false 时只改地图（genTown 用；家具另外在 newGame / 读档后补） */
+function stampBuilding(def, withFixtures){
+  if(!def) return false;
+  const C = CONFIG.TOWN;
+  for(let y=C.ROOM_ROW;y<C.ROOM_ROW+C.ROOM_H;y++)
+    for(let x=def.x;x<def.x+def.w;x++)
+      map[y*MAP_W+x] = (y === C.ROOM_ROW + C.ROOM_H - 1) ? T.WALL_FRONT : T.WALL_BACK;
+  for(let y=C.ROOM_ROW+1;y<C.ROOM_ROW+C.ROOM_H-1;y++)
+    for(let x=def.x+1;x<def.x+def.w-1;x++) map[y*MAP_W+x] = T.FLOOR;
+  map[C.ROOM_ROW*MAP_W + def.x + C.DOOR_DX] = T.DOOR;             /* 屋里的门：踩上去回街上 */
+  if(withFixtures !== false) stampFixtures(def);
+  return true;
+}
+/* 家具推进 buildings / buildIndex —— 结构和玩家盖的房子一模一样（只是 preset:true） */
+function stampFixtures(def){
+  if(!def || !def.fixtures) return 0;
+  let n = 0;
+  for(const f of def.fixtures){
+    if(f.tx < 0 || f.ty < 0 || f.tx >= MAP_W || f.ty >= MAP_H) continue;
+    if(buildIndex[f.ty*MAP_W+f.tx] >= 0) continue;         /* 这一格已经有东西了 */
+    const b = {type:f.type, tx:f.tx, ty:f.ty, preset:true, npc:f.npc, bid:f.bid,
+               solid:f.solid, flat:f.flat, interact:f.interact};
+    buildings.push(b);
+    buildIndex[f.ty*MAP_W+f.tx] = buildings.length - 1;
+    n++;
+  }
+  return n;
+}
+/* 全镇家具重新盖一遍（新游戏 / 读档后调用） */
+function stampTownFixtures(){
+  let n = 0;
+  for(const def of BUILDING_DEFS) n += stampFixtures(def);
+  return n;
+}
+/* 玩家在「哪一栋房子的范围内」（含墙和门格 —— 剖切判定用这个，宽一圈） */
+function playerRoomWide(){
+  const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
+  const C = CONFIG.TOWN;
+  for(const b of CONFIG.TOWN.LIST)
+    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b.id;
+  return null;
+}
+/* 某一格是不是某栋房子的「前墙」（南边那排墙） */
+function townFrontWallBuilding(tx,ty){
+  const C = CONFIG.TOWN;
+  if(ty !== C.ROOM_ROW + C.ROOM_H - 1) return null;
+  for(const b of CONFIG.TOWN.LIST) if(tx >= b.x && tx < b.x + b.w) return b;
+  return null;
+}
+/* 玩家是不是在屋里（进门 = 在屋子的范围里，含墙和门格） */
+function insideHouse(){ return playerRoomWide() !== null; }
 /* 某个格子是不是某栋房子的外框 */
 function townBuildingAt(tx,ty){
   const C = CONFIG.TOWN;
@@ -6938,9 +7140,11 @@ function townEnter(d){
   if(w && w.at === 'wander'){ toast(b.name + '里没人 —— ' + npc.name + '去' + (w.label || '外面') + '逛了'); return; }
   if(b.kind === 'shop'){
     if(w && w.at === 'shop') toast('杂货店 · 营业中（' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
+    else if(townOpenNow(b)) toast('店里没人 —— ' + npc.name + '不在柜台（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
     else toast('店里没人 —— 已经打烊了（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
     return;
   }
+  if(w && w.type === 'sleep'){ toast(b.name + ' · ' + npc.name + '睡着了（别吵醒她）'); return; }
   if(w && w.at === 'home'){ toast(b.name + ' · ' + npc.name + '在家'); return; }
   toast(b.name + '里没人 —— ' + npc.name + '在' + ((w && w.label) || '外面'));
 }
@@ -6960,10 +7164,176 @@ function townSignText(b){
   if(w && w.at === 'wander') return npc.name + '不在，' + (w.label || '外面') + '那边逛着呢';
   if(b.kind === 'shop'){
     if(w && w.at === 'shop') return b.sign + ' · 营业中 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to);
-    return b.sign + ' · 打烊了（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）';
+    return b.sign + ' · 店主不在柜台（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）';
   }
   if(w && w.at === 'home') return b.sign + ' · ' + npc.name + '在家';
+  if(w && w.type === 'sleep') return b.sign + ' · ' + npc.name + '睡着了';
   return b.sign + ' · ' + npc.name + '不在（' + ((w && w.label) || '出门了') + '）';
+}
+/* ================= 第 25 轮：走进 NPC 家的四层价值 =================
+ * ① 找人：在家能聊能送礼；睡着了按 E 只会被赶走
+ * ② 看装饰：按 E 看一句描述
+ * ③ 拿东西：开箱子（要到「朋友」档，一周一次）
+ * ④ 床：床空着就能当自己的床睡一晚 */
+/* 附近最近的那件家具（只在玩家所在的屋子里找） */
+function fixtureNear(){
+  const room = playerRoom();
+  if(!room) return null;
+  let best = null, bd = CONFIG.INTERACT.RANGE_TILES;
+  for(const b of buildings){
+    if(!b.preset) continue;
+    if(b.bid !== room) continue;
+    const d = tileCenterDist(b.tx, b.ty);
+    if(d < bd){ bd = d; best = b; }
+  }
+  return best;
+}
+/* 家具的一句描述（同一个人的家里有专属文案） */
+function decorText(npcId, type){
+  const H = CONFIG.NPC_HOME;
+  const own = H.DECOR_BY_NPC[npcId];
+  if(own && own[type]) return own[type];
+  const list = H.DECOR[type];
+  if(!list || !list.length) return '';
+  return list[0];
+}
+/* 按 E 看家具 / 睡 bed */
+function interactFixture(f){
+  if(!f) return false;
+  const npc = npcDef(f.npc);
+  if(f.type === 'bed') return bedInteract(f);
+  const txt = decorText(f.npc, f.type);
+  toast(txt || '看起来没什么特别的');
+  return true;
+}
+/* 床：主人睡着就别吵醒他；空着就能当自己的床睡 */
+function bedInteract(f){
+  const npc = npcDef(f.npc);
+  const st = npc ? npcCurrentState(npc) : null;
+  if(st && st.type === 'sleep' && st.x === f.tx && st.y === f.ty){
+    toast(npc.name + '睡得正香，别吵醒他');
+    return false;
+  }
+  if(npc && st && st.type === 'sleep'){
+    toast(npc.name + '睡得正香，别吵醒他');
+    return false;
+  }
+  /* 床空着 → 在别人家也能睡一晚（跟睡自己的床一样）
+   * 先睡再提示：这样最后一条提示是「你在谁的床上睡着了」，
+   * 不会被 startSleep 里的「晚安…」盖掉 */
+  const ok = startSleep(false);
+  if(ok) toast('你在' + (npc ? npc.name + '的' : '') + '床上睡着了…');
+  return ok;
+}
+/* 周序号（箱子一周只能开一次） */
+function currentWeek(){
+  const w = Math.max(1, CONFIG.NPC_HOME.LOOT_WEEK);
+  return Math.floor((clock.day - 1) / w) + 1;
+}
+/* 打开 NPC 家的箱子：要到「朋友」档，一周一次 */
+function openNpcChest(npcId){
+  const npc = npcDef(npcId);
+  if(!npc) return false;
+  const needKey = CONFIG.NPC_HOME.LOOT_TIER;
+  const need = CONFIG.NPC.TIERS.find(t => t.key === needKey);
+  const aff = npcAff(npcId);
+  if(need && aff < need.min){
+    toast(npc.name + '的箱子还锁着 —— 好感到「' + (need ? need.name : needKey) + '」档才拿得到');
+    return false;
+  }
+  const week = currentWeek();
+  if(npcState.lootDay[npcId] === week){
+    toast('这周已经来过了 —— ' + npc.name + '的箱子一周只能开一次');
+    return false;
+  }
+  const loot = CONFIG.NPC_HOME.LOOT[npcId] || [];
+  const got = [];
+  for(const it of loot){
+    if(!it || !CONFIG.ITEMS[it.id]) continue;
+    if(!addItem(it.id, it.n)){ toast('背包装不下了'); break; }
+    got.push(itemDef(it.id).name + '×' + it.n);
+  }
+  npcState.lootDay[npcId] = week;
+  if(got.length) toast('从' + npc.name + '的箱子里拿到：' + got.join('、'));
+  else toast(npc.name + '的箱子是空的');
+  return true;
+}
+/* 谁在这天营业（日历上写「营业中：老木匠、老板娘」） */
+function npcBusinessList(day){
+  const out = [];
+  const dy = (day === undefined || day === null) ? clock.day : day;
+  for(const d of CONFIG.NPC.LIST){
+    const S = npcSched(d);
+    if(!S) continue;
+    for(const s of S.sched){
+      if(s.type !== 'work') continue;
+      if(npcWandersOnWork(d, dy, s)) continue;      /* 那天她摸鱼去了 → 不算营业 */
+      out.push(d.name);
+      break;
+    }
+  }
+  return out;
+}
+/* 对话面板上的状态提示行：「营业中（19:00 关店）」 */
+function npcStatusLine(d){
+  const st = npcCurrentState(d);
+  if(!st) return '';
+  const S = npcSched(d) || {};
+  if(st.type === 'sleep') return '睡着了';
+  if(st.type === 'away') return '不在镇上';
+  if(st.type === 'wander') return '外出中';
+  if(st.type === 'work'){
+    if(st.at === 'shop' && S.open) return '营业中（' + hourText(S.open.to) + ' 关店）';
+    return '在工作';
+  }
+  if(S.open && skyHour() < S.open.from) return '休息中（' + hourText(S.open.from) + ' 开门）';
+  return '在家';
+}
+/* ================= 第 25 轮：商店营业 + 门口挂牌三态 =================
+ * 营业中（绿）/ 休息中（灰，10:00 开门）/ 外出中（黄，大概几点回来） */
+function shopOpenNow(h){
+  const b = townShopBuilding();
+  if(!b) return false;
+  const hh = (h === undefined || h === null) ? skyHour() : h;
+  if(!townOpenNow(b, hh)) return false;      /* 不在营业时间 */
+  return townOwnerPresent(hh);               /* 还得老板娘真的在柜台 */
+}
+/* 想开商店：先说清楚为什么开不了 */
+function tryOpenShop(){
+  const b = townShopBuilding();
+  if(!b){ toast('镇上还没有商店'); return false; }
+  const hh = skyHour();
+  if(!townOpenNow(b, hh)){
+    toast('打烊了 —— 营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to));
+    return false;
+  }
+  if(!townOwnerPresent(hh)){
+    toast('老板娘现在不在柜台（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
+    return false;
+  }
+  return true;
+}
+/* 门口挂牌的三种状态 */
+function townDoorState(b){
+  const K = CONFIG.TOWN.COLORS;
+  const npc = npcDef(b.npc);
+  const st = npc ? npcCurrentState(npc, clock.day) : null;
+  if(b.kind === 'shop'){
+    const S = npcSched(npc) || {open:{from:b.hours.from, to:b.hours.to}};
+    const h = skyHour();
+    if(st && st.type === 'work' && st.at === 'shop') return {key:'open', color:K.signOpen, text:'营业中'};
+    if(h >= S.open.from && h < S.open.to){
+      const back = npcNextSlotFrom(npc, h);
+      return {key:'away', color:K.signAway, text:'外出中（约 ' + hourText(back) + ' 回来）'};
+    }
+    if(h < S.open.from) return {key:'rest', color:K.signRest, text:'休息中 · ' + hourText(S.open.from) + ' 开门'};
+    return {key:'rest', color:K.signRest, text:'休息中 · 今天关店了'};
+  }
+  if(!st) return {key:'rest', color:K.signRest, text:'空房子'};
+  if(st.type === 'sleep') return {key:'rest', color:K.signRest, text:b.npc === 'aunt' ? '老板娘在睡觉' : '主人在睡觉'};
+  if(st.type === 'work')  return {key:'open', color:K.signOpen, text:'主人在忙'};
+  if(st.at === 'home')    return {key:'open', color:K.signOpen, text:'主人在家'};
+  return {key:'away', color:K.signAway, text:'主人出去了'};
 }
 /* 家具（床 / 柜台 / 桌子 / 货架…）：坐标由配置算出来，只算一次 */
 let _townProps = null;
@@ -6975,7 +7345,8 @@ function townProps(){
       if(!b.props) continue;
       for(const p of b.props)
         _townProps.push({b:b, x:b.x + p.dx, y:C.ROOM_ROW + p.dy,
-                         type:p.type, solid:!!p.solid, flat:!!p.flat});
+                         type:p.type, solid:!!p.solid, flat:!!p.flat,
+                         interact:p.interact || '', preset:true});
     }
   }
   return _townProps;
@@ -7008,67 +7379,191 @@ function townOpenNow(b, h){
   if(H.to <= 24) return h >= H.from && h < H.to;
   return h >= H.from || h < (H.to - 24);
 }
-/* 作息表：当前这个人在哪个时段 */
-function npcRoutineSlot(d, h){
-  const R = CONFIG.TOWN.ROUTINE[d.id];
-  if(!R || !R.length) return {at:'street', spot:0, label:''};
-  for(const s of R) if(h >= s.from && h < s.to) return s;
-  return R[R.length-1];
+/* ================= 第 25 轮：NPC 日程引擎 =================
+ * 5 种 slot 类型：work（上班）/ home（在家）/ sleep（睡觉）/ wander（瞎逛）/ away（不在镇上）
+ * 位置 = f(天数, 小时, 天气, NPC id) —— 纯函数，不写进存档（原则 B） */
+/* 字符串哈希 → [0,1)：同一天同一时段的结果永远一样（读档不会变来变去） */
+function hash01(str){
+  let h = 2166136261 >>> 0;
+  const s = String(str);
+  for(let i=0;i<s.length;i++){
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  h ^= h >>> 15; h = Math.imul(h, 2246822507) >>> 0; h ^= h >>> 13;
+  return (h >>> 0) / 4294967296;
 }
-/* 出门瞎逛吗？（原则 C：扑空必须可解释）
- * 只在「该主人在自己生意点（柜台 / 家）的时间段」才可能扑空；
- * 用 (天 × 时段) 哈希决定 → 同一时段内结果固定，读档不会变来变去 */
+/* 小时是否落在 [from, to)：跨午夜（from > to）也算
+ * to > 24 写成「22 → 30」这种（= 22:00 ~ 次日 6:00） */
+function inHours(h, from, to){
+  if(typeof from !== 'number' || typeof to !== 'number') return false;
+  let f = from, t = to;
+  if(t > 24) t -= 24;
+  if(f >= 24) f -= 24;
+  if(f === t) return true;
+  return (f <= t) ? (h >= f && h < t) : (h >= f || h < t);
+}
+/* 这个 NPC 的日程表（CONFIG.NPC_SCHED.LIST） */
+function npcSched(d){ return (d && CONFIG.NPC_SCHED.LIST[d.id]) || null; }
+/* 当前时段是哪一个 slot（找不到就是 away） */
+function npcSlotOf(d, h){
+  const S = npcSched(d);
+  if(!S) return null;
+  for(const s of S.sched) if(inHours(h, s.from, s.to)) return s;
+  return null;
+}
+/* 下一个 slot 的开始时间（用来写「大概几点回来」） */
+function npcNextSlotFrom(d, h){
+  const S = npcSched(d);
+  if(!S || !S.sched.length) return null;
+  for(const s of S.sched) if(inHours(h, s.from, s.to)){        /* 找到当前 slot */
+    const i = S.sched.indexOf(s);
+    if(i + 1 < S.sched.length) return S.sched[i+1].from;
+    return S.sched[0].from;                                    /* 跨到明天 */
+  }
+  for(const s of S.sched) if(s.from > h) return s.from;
+  return S.sched[0].from;
+}
+/* 家具坐标：先找自己家，再找上班的地方 */
+function npcFixtureSpot(d, type){
+  if(!type) return null;
+  const S = npcSched(d);
+  const order = [];
+  if(S && S.house) order.push(S.house);
+  if(S && S.work && S.work !== S.house) order.push(S.work);
+  for(const id of order){
+    const def = buildingDef(id);
+    if(!def) continue;
+    for(const f of def.fixtures) if(f.type === type) return f;
+  }
+  for(const def of BUILDING_DEFS)                              /* 兜底：全镇找一件 */
+    for(const f of def.fixtures) if(f.type === type) return f;
+  return null;
+}
+/* 就近找一个能站的空位（瞎逛落点可能是实心格） */
+function nearestFreeTile(tx,ty){
+  if(tx >= 0 && ty >= 0 && tx < MAP_W && ty < MAP_H && !isSolid(tx,ty)) return {x:tx, y:ty};
+  for(let r=1;r<=6;r++)
+    for(let dy=-r;dy<=r;dy++)
+      for(let dx=-r;dx<=r;dx++){
+        if(Math.max(Math.abs(dx),Math.abs(dy)) !== r) continue;
+        const x = tx+dx, y = ty+dy;
+        if(x<0 || y<0 || x>=MAP_W || y>=MAP_H) continue;
+        if(!isSolid(x,y)) return {x:x, y:y};
+      }
+  return null;
+}
+/* 今天的天气是不是「坏天气」（雨雪天不出门瞎逛） */
+function weatherBadNow(day){
+  if(day !== undefined && day !== null && day !== clock.day) return false;  /* 未来的天气不知道 → 当好天气 */
+  if(!weather) return false;
+  return weather.id === 'rain' || weather.id === 'snow';
+}
+/* 营业时间摸鱼吗？（确定性哈希：同一天同一人同一时段固定） */
+function npcWandersOnWork(d, day, slot){
+  const C = CONFIG.NPC_SCHED;
+  if(!C.WANDER_ON_WORK) return false;
+  if(C.BAD_WEATHER_OUT && weatherBadNow(day)) return false;
+  return hash01(d.id + '#' + day + '#' + slot.from) < C.WANDER_ON_WORK;
+}
+/* 瞎逛的落点：每 TICK_MIN 分钟换一次目标（哈希推导），可能是实心格 → 就近找空位 */
+function npcWanderPos(d, day, h, area){
+  const C = CONFIG.NPC_SCHED;
+  const tick = Math.floor((h * 60) / Math.max(1, C.TICK_MIN));
+  const key = d.id + '#' + day + '#' + tick;
+  let tx = 0, ty = 0, label = '';
+  const S = npcSched(d);
+  const def = (S && S.work) ? buildingDef(S.work) : null;
+  const spots = (def && def.wander && def.wander.spots) || [];
+  if(area){
+    const w = Math.max(1, area.w|0), hh = Math.max(1, area.h|0);
+    tx = area.x + Math.min(w-1,  Math.floor(hash01(key + '#x') * w));
+    ty = area.y + Math.min(hh-1, Math.floor(hash01(key + '#y') * hh));
+    label = area.label || '外面';
+  } else if(spots.length){
+    const i = Math.min(spots.length-1, Math.floor(hash01(key + '#s') * spots.length));
+    tx = spots[i].x; ty = spots[i].y; label = spots[i].label || '外面';
+  } else {
+    return {x:tx, y:ty, label:'外面'};
+  }
+  const free = nearestFreeTile(tx,ty);
+  if(free){ tx = free.x; ty = free.y; }
+  return {x:tx, y:ty, label:label};
+}
+/* 原则 B：NPC 现在的状态 = f(天数, 小时, 天气, NPC id) */
+function npcCurrentState(d, day, hour){
+  const S = npcSched(d);
+  if(!S) return null;
+  const h = (hour === undefined || hour === null) ? skyHour() : hour;
+  const dy = (day === undefined || day === null) ? clock.day : day;
+  const slot = npcSlotOf(d, h);
+  if(!slot) return {id:d.id, type:'away', at:'away', label:'不在镇上', x:null, y:null,
+                     from:0, to:24, slot:null, day:dy, hour:h};
+  const st = {id:d.id, type:slot.type, at:'home', label:'', x:null, y:null,
+              from:slot.from, to:slot.to, slot:slot, day:dy, hour:h};
+  /* 上班时间也可能跑出去摸鱼（确定性哈希，同一天同一时段固定） */
+  if(slot.type === 'work' && npcWandersOnWork(d, dy, slot)){
+    const w = npcWanderPos(d, dy, h, null);
+    st.type = 'wander'; st.at = 'wander';
+    st.x = w.x; st.y = w.y; st.label = w.label;
+    return st;
+  }
+  if(slot.type === 'wander'){
+    const w = npcWanderPos(d, dy, h, slot.area);
+    st.at = 'street';
+    st.x = w.x; st.y = w.y; st.label = w.label || slot.label || '外面';
+    return st;
+  }
+  if(slot.type === 'away'){ st.at = 'away'; st.label = slot.label || '不在镇上'; return st; }
+  /* home / sleep / work：站在某件家具上 */
+  const f = npcFixtureSpot(d, slot.at);
+  if(f){ st.x = f.tx; st.y = f.ty; }
+  st.at = (slot.type === 'work' && slot.at === 'counter') ? 'shop' : 'home';
+  st.label = (slot.type === 'sleep') ? '床上' : (st.at === 'shop' ? '店里' : '家');
+  return st;
+}
+/* 这个 NPC 是不是就在玩家面前睡着了（叫不醒） */
+function npcAsleepHere(d){
+  const st = npcCurrentState(d);
+  if(!st || st.type !== 'sleep') return false;
+  const room = playerRoom();
+  if(!room) return false;                       /* 玩家在室外 → 不算（来访居民不受影响） */
+  return townRoomAt(st.x, st.y) === room;
+}
+/* 作息表：当前这个人在哪个时段（第 24 轮的旧接口，现在由新引擎推导） */
+function npcRoutineSlot(d, h){
+  const st = npcCurrentState(d, clock.day, h);
+  if(!st) return {at:'street', spot:0, label:''};
+  return {at:st.at, spot:0, label:st.label, from:st.from, to:st.to, type:st.type};
+}
+/* 出门瞎逛吗？（第 24 轮的旧接口，现在由新引擎推导） */
 function townWanderSpot(d, slot){
-  if(slot.at !== 'shop' && slot.at !== 'home') return null;
-  const W = CONFIG.TOWN.WANDER;
-  const h = skyHour();
-  if(h < W.HOUR_FROM || h >= W.HOUR_TO) return null;
-  const b = slot.at === 'shop' ? townShopBuilding() : townHomeBuilding(d.id);
-  if(!b || !b.wander || !b.wander.spots || !b.wander.spots.length) return null;
-  if(!townOpenNow(b, h)) return null;                 /* 没开门就不会扑空 */
-  const hour = Math.floor(h);
-  const block = Math.floor((hour - W.HOUR_FROM) / W.BLOCK);
-  const idx = Math.max(0, CONFIG.NPC.LIST.indexOf(d));
-  if(hash2(clock.day * 31 + block, idx * 17 + 5) >= b.wander.chance) return null;
-  const spots = b.wander.spots;
-  const k = Math.floor(hash2(clock.day + block * 7, idx * 13 + 3) * spots.length) % spots.length;
-  return spots[k];
+  const st = npcCurrentState(d, clock.day, skyHour());
+  if(!st || st.type !== 'wander') return null;
+  return {x:st.x, y:st.y, label:st.label};
 }
 /* 原则 B：NPC 的位置 = f(天数, 小时, 天气, NPC id) */
 function npcWhere(d){
   const h = skyHour();
   const fs = festivalNpcSpot(d);         /* 第 17 轮：秋·丰收节村民都去广场赶集 */
-  if(fs) return {x:fs.x, y:fs.y, at:'festival', label:'广场', from:fs.from, to:fs.to};
+  if(fs) return {x:fs.x, y:fs.y, at:'festival', label:'广场', from:fs.from, to:fs.to, type:'festival'};
   const vs = visitSpot(d);               /* 第 23 轮：今天来访的居民下午站到农场里 */
-  if(vs) return {x:vs.x, y:vs.y, at:'visit', label:'农场', from:vs.from, to:vs.to};
-  const slot = npcRoutineSlot(d, h);
-  /* 出门瞎逛优先：他在营业点但人跑出去了 → 扑空（原则 C：牌子 / 提示会解释他去哪了） */
-  const w = townWanderSpot(d, slot);     /* 营业时间也可能出去瞎逛 */
-  if(w) return {x:w.x, y:w.y, at:'wander', label:w.label, from:slot.from, to:slot.to};
-  if(slot.at === 'home'){
-    const p = townHomeSpot(d.id);
-    if(p) return {x:p.x, y:p.y, at:'home', label:'家', from:slot.from, to:slot.to};
-  }
-  if(slot.at === 'shop'){
-    const p = townCounterSpot();
-    if(p) return {x:p.x, y:p.y, at:'shop', label:'店里', from:slot.from, to:slot.to};
-  }
-  const list = (d && d.sched) || [];
-  const s = list[slot.spot|0] || list[0];
-  if(!s) return null;
-  return {x:s.x, y:s.y, at:'street', label:slot.label || '', from:slot.from, to:slot.to};
+  if(vs) return {x:vs.x, y:vs.y, at:'visit', label:'农场', from:vs.from, to:vs.to, type:'visit'};
+  const st = npcCurrentState(d, clock.day, h);
+  if(!st || st.x === null || st.x === undefined) return null;
+  return {x:st.x, y:st.y, at:st.at, label:st.label, from:st.from, to:st.to, type:st.type};
 }
 /* 时刻表：当前这个点在哪儿（null = 今天不出现） */
 function npcSpot(d){
   const w = npcWhere(d);
   if(!w) return null;
   return {x:w.x, y:w.y, from:(w.from === undefined ? 0 : w.from), to:(w.to === undefined ? 24 : w.to),
-          at:w.at, label:w.label};
+          at:w.at, label:w.label, type:w.type};
 }
 function npcPos(d){
   const s = npcSpot(d);
   if(!s) return null;
-  return {x:(s.x + 0.5)*TILE, y:(s.y + 0.5)*TILE, tx:s.x, ty:s.y, at:s.at, label:s.label};
+  return {x:(s.x + 0.5)*TILE, y:(s.y + 0.5)*TILE, tx:s.x, ty:s.y, at:s.at, label:s.label, type:s.type};
 }
 /* 玩家与 NPC 的距离（格）：不在同一片区域就看不见（隔着墙不算） */
 function npcDist(d){
@@ -7127,6 +7622,8 @@ function npcPickLines(d){
 }
 function npcOpenDialog(d){
   if(!d || npcOpen) return false;
+  /* 第 25 轮：睡着的叫不醒（站在他床边按 E 只会吃闭门羹） */
+  if(npcAsleepHere(d)){ toast(d.name + '睡得正香，别吵醒他'); return false; }
   /* 上次跨档时背包满了、福利没发出去的，再见面时补发（尤其是邻家女孩的稀有种子） */
   npcSyncUnlocks();
   npcDlg.id = d.id;
@@ -7207,6 +7704,12 @@ function renderNpcDialog(){
   if(npcTierEl) npcTierEl.textContent = tier.name;
   if(npcAffEl)  npcAffEl.textContent  = '好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX;
   if(npcBarFill) npcBarFill.style.width = (aff / CONFIG.NPC.AFF_MAX * 100).toFixed(1) + '%';
+  /* 第 25 轮：状态提示行（「老板娘 · 好感 62 · 营业中（19:00 关店）」） */
+  const stat = npcStatusLine(d);
+  if(npcStatEl){
+    npcStatEl.textContent = stat;
+    npcStatEl.classList.toggle('show', !!stat);
+  }
   const isB = npcIsBirthday(d);
   if(npcBdayEl){
     npcBdayEl.textContent = '🎂 生日 · 送礼 ×' + CONFIG.NPC.GIFT.BIRTHDAY_MULT;
@@ -7380,9 +7883,9 @@ function visitSpot(d){
 function visitScore(){
   const V = CONFIG.VISIT;
   const plots = tilledPlots();
-  const builds = buildings.length;
+  const builds = buildings.filter(b => !b.preset).length;   /* 第 25 轮：镇上的家具不算农场的建筑 */
   let decor = 0;
-  for(const b of buildings) if(b.type === 'scarecrow') decor++;
+  for(const b of buildings) if(!b.preset && b.type === 'scarecrow') decor++;
   for(let i=0;i<roads.length;i++) if(roads[i]) decor++;
   const score = plots*V.PLOT + builds*V.BUILD + decor*V.DECOR;
   return {plots:plots, builds:builds, decor:decor, score:score};
@@ -7449,13 +7952,15 @@ function npcShopBonusLeft(){
 
 /* --- 存档（紧凑结构） --- */
 function npcSerialize(){
-  const aff = {}, gift = {}, unl = {};
+  const aff = {}, gift = {}, unl = {}, loot = {};
   for(const d of CONFIG.NPC.LIST){
     aff[d.id]  = npcAff(d.id);
     gift[d.id] = (npcState.gift[d.id] | 0);
     unl[d.id]  = npcState.unlock[d.id] ? 1 : 0;
+    const lw = npcState.lootDay[d.id] | 0;             /* 第 25 轮：开过箱子的周数 */
+    if(lw > 0) loot[d.id] = lw;
   }
-  return {aff:aff, gift:gift, unl:unl, bd:npcState.bonusDay, bu:npcState.bonusUsed};
+  return {aff:aff, gift:gift, unl:unl, loot:loot, bd:npcState.bonusDay, bu:npcState.bonusUsed};
 }
 function npcDeserialize(o){
   npcResetState();
@@ -7467,6 +7972,8 @@ function npcDeserialize(o){
     if(typeof g === 'number') npcState.gift[d.id] = Math.max(0, g | 0);
     const u = o.unl ? o.unl[d.id] : undefined;
     if(u) npcState.unlock[d.id] = 1;
+    const l = (o.loot && typeof o.loot === 'object') ? o.loot[d.id] : undefined;   /* 第 25 轮 */
+    if(typeof l === 'number') npcState.lootDay[d.id] = Math.max(0, l | 0);
   }
   if(typeof o.bd === 'number') npcState.bonusDay = o.bd | 0;
   if(typeof o.bu === 'number') npcState.bonusUsed = Math.max(0, o.bu | 0);
@@ -7533,6 +8040,12 @@ function migrate(oldSave){
       if(!d.vs || typeof d.vs !== 'object') d.vs = {d:-1, i:'', g:0, a:0};
       if(Array.isArray(d.crops))
         for(const c of d.crops){ if(c && typeof c.a !== 'number') c.a = 0; }
+    }
+    if(v < 13){
+      /* v12 → v13：补上「开过 NPC 箱子的周数」。
+       * 老档没开过箱子 → 记 0（还能开一次）；其余进度全部保留。 */
+      if(!d.npc || typeof d.npc !== 'object') d.npc = {aff:{}, gift:{}, unl:{}, bd:-1, bu:0};
+      if(!d.npc.loot || typeof d.npc.loot !== 'object') d.npc.loot = {};
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -9065,7 +9578,12 @@ function renderCalendar(){
       b.textContent = '🎂 ' + n.name;
       badges.appendChild(b);
     }
-    row.appendChild(day); row.appendChild(meta); row.appendChild(badges);
+    /* 第 25 轮：谁在营业（拿 npcCurrentState 跑一遍这一天） */
+    const biz = document.createElement('div'); biz.className = 'cbiz';
+    const names = npcBusinessList(abs);
+    biz.textContent = names.length ? ('营业中：' + names.join('、')) : '这天没人营业';
+    if(!names.length) biz.classList.add('none');
+    row.appendChild(day); row.appendChild(meta); row.appendChild(biz); row.appendChild(badges);
     calListEl.appendChild(row);
   }
 }
@@ -10083,7 +10601,7 @@ function ratingParts(force){
   const rows = [
     {key:'crop',     name:'作物种类', value:achPopcount(statsState.cv | 0), target:R.CROP_TARGET,   weight:R.WEIGHTS.crop,     unit:'种'},
     {key:'animal',   name:'动物数量', value:animals.length,                  target:R.ANIMAL_TARGET, weight:R.WEIGHTS.animal,   unit:'只'},
-    {key:'building', name:'建筑数量', value:buildings.length,                target:R.BUILD_TARGET,  weight:R.WEIGHTS.building, unit:'座'},
+    {key:'building', name:'建筑数量', value:buildings.filter(b=>!b.preset).length, target:R.BUILD_TARGET, weight:R.WEIGHTS.building, unit:'座'},
     {key:'ach',      name:'成就数量', value:achCount(),                      target:R.ACH_TARGET,    weight:R.WEIGHTS.ach,      unit:'项'},
     {key:'expand',   name:'扩建期数', value:Math.floor(tilled / R.EXPAND_PLOTS), target:R.EXPAND_TARGET, weight:R.WEIGHTS.expand, unit:'期'}
   ];
@@ -10414,7 +10932,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   sortInventory, drawCropTip,
   get miniTimer(){ return miniTimer; }, set miniTimer(v){ miniTimer = v; },
   get miniReady(){ return miniReady; },
-  rebuildMinimap, drawMinimap, minimapTileColor,
+  rebuildMinimap, drawMinimap, minimapTileColor, minimapNpcColor,
   SHOP_POS, FARM,
   /* 第 24 轮：城镇（建筑是容器 / NPC 位置是时间的纯函数 / 扑空可解释） */
   genTown, townBuilding, townShopBuilding, townHomeBuilding, townBuildingAt,
@@ -10422,6 +10940,15 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, useTool, 
   townCounterSpot, townHomeSpot, townOpenNow, townProps, townPropAt,
   townSignText, hourText, townWanderSpot, npcRoutineSlot, npcWhere, npcHidden,
   townOwnerPresent, drawTownProp, drawTownSign, get warpFx(){ return warpFx; },
+  /* 第 25 轮：前墙 / 后墙 + 静态家具 + NPC 日程 + 商店营业 + 室内互动 */
+  BUILDING_DEFS, buildingDef, stampBuilding, stampFixtures, stampTownFixtures,
+  playerRoomWide, townFrontWallBuilding, insideHouse, fixtureNear,
+  hash01, inHours, npcSched, npcSlotOf, npcNextSlotFrom, npcFixtureSpot,
+  nearestFreeTile, weatherBadNow, npcWandersOnWork, npcWanderPos,
+  npcCurrentState, npcAsleepHere, npcBusinessList, npcStatusLine,
+  shopOpenNow, tryOpenShop, townDoorState, drawFrontWalls, drawFrontWall,
+  decorText, interactFixture, bedInteract, openNpcChest, currentWeek,
+  get npcState(){ return npcState; },
   /* 第 12 轮：音效 / 引导 / 面板动画 / 性能 */
   ensureAudio, audioCtx, audioMuted:()=>audioMuted, setMuted, toggleMute,
   get interactHintsOn(){ return interactHintsOn; },

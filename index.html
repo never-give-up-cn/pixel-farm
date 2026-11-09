@@ -1664,7 +1664,9 @@ const CONFIG = {
     SHOW_MS: true           // HUD 上显示每帧渲染耗时
   },
 
-  /* ---------- NPC 系统（第 13 轮）：小镇居民 / 对话 / 送礼 / 好感度 ---------- */
+  /* ---------- NPC 系统（第 13 轮）：小镇居民 / 对话 / 送礼 / 好感度 ----------
+   * 第 25 轮起真实作息看 CONFIG.NPC_SCHED.LIST；LIST[].sched 仅作备用站位。
+   * 第 27 轮新增 SPEED：NPC 改为连续移动，不再到点瞬移。 */
   NPC: {
     RANGE: 1.5,             // 交互距离（格）：走近按 E 说话
     SPEED: 100,             // 第 27 轮：NPC 走动速度（像素/秒）—— 1 格 32px ≈ 0.32 秒一格
@@ -1692,16 +1694,15 @@ const CONFIG = {
       COUNT: 2,              // 每天额外收购几件作物
       PRICE_MULT: 1.5        // 加购部分的收购价倍率
     },
-    /* 三位居民：名字 / emoji 立绘 / 时刻表 / 喜好 / 厌恶 / 生日 / 台词池 */
+    /* 三位居民：名字 / emoji 立绘 / 备用站位 / 喜好 / 厌恶 / 生日 / 台词池 */
     LIST: [
       {
         id:'aunt', name:'杂货店老板娘', icon:'👩‍🍳', color:'#e8a45c',
         like:['radish','potato','seed_radish','seed_potato'],   // 喜欢的收成和种子
         dislike:['stone','pick'],                               // 不喜欢的硬通货
         bday:{season:'春', day:3},                              // 生日：春 3 日
-        /* 时刻表：按时段换位置；不落在任何时段 = 回家了（不出现） */
-        /* 户外站位（第 25 轮起日程表看 CONFIG.NPC_SCHED.LIST，这里只是备用站位） */
-        sched:[   // 第 24 轮：杂货店搬进镇上了，站位也搬到街边
+        /* 户外备用站位：真实作息（在家 / 工作 / 睡觉 / 外出）看 CONFIG.NPC_SCHED.LIST */
+        sched:[   // 第 24 轮：杂货店搬进镇上了，备用站位也搬到街边
           {from:0, to:24, x:9,  y:42},   // 店门口
           {from:0, to:24, x:14, y:42},   // 广场
           {from:0, to:24, x:25, y:42}    // 自家门口
@@ -1718,7 +1719,7 @@ const CONFIG = {
         like:['wood','pumpkin','seed_pumpkin','mushroom'],    // 喜欢的木料和南瓜（还有林子里的蘑菇）
         dislike:['tomato','seed_tomato'],                      // 不喜欢的番茄
         bday:{season:'夏', day:3},                              // 生日：夏 3 日
-        sched:[   // 第 24 轮：户外站位（第 25 轮起作息表见 CONFIG.NPC_SCHED.LIST）
+        sched:[   // 户外备用站位（真实作息见 CONFIG.NPC_SCHED.LIST）
           {from:0, to:24, x:41, y:42},   // 工棚门口
           {from:0, to:24, x:29, y:34},   // 农场西边
           {from:0, to:24, x:26, y:32}    // 田的另一头
@@ -1735,7 +1736,7 @@ const CONFIG = {
         like:['tomato','seed_tomato','radish','wildflower','berry'],  // 喜欢的番茄、萝卜，和送她的野花 / 浆果
         dislike:['sickle','stone'],                            // 不喜欢的工具
         bday:{season:'秋', day:3},                              // 生日：秋 3 日
-        sched:[   // 第 24 轮：户外站位（第 25 轮起作息表见 CONFIG.NPC_SCHED.LIST）
+        sched:[   // 户外备用站位（真实作息见 CONFIG.NPC_SCHED.LIST）
           {from:0, to:24, x:31, y:30},   // 小屋东边
           {from:0, to:24, x:37, y:33},   // 田边玩
           {from:0, to:24, x:33, y:30}    // 门口

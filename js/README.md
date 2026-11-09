@@ -112,7 +112,7 @@ import './world/buildings.js';
 | `js/anim/minerals.js` | 53 种矿物/宝石图标；`drawMineral(ctx, mineral, phase)`，32×32 |
 | `js/anim/fish.js` | 72 种鱼类/水生生物图标；`drawFishIcon(ctx, fish, phase)`，40×32 |
 | `js/anim/buildings.js` | 25 种农场建筑；`drawBuilding(ctx, building, phase)`，72×64 |
-| `js/anim/npcs.js` | 34 位村民头像与四方向行走；`drawNpcPortrait` / `drawNpcWalk` |
+| `js/anim/npcs.js` | 34 位村民头像与四方向行走；外观参考官方 Wiki 村民肖像，程序化重绘 |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js

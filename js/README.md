@@ -1,0 +1,147 @@
+# js/ 目录说明
+
+`index.html` 现在只加载一个入口：
+
+```html
+<script type="module" src="js/main.js"></script>
+```
+
+其余代码全部在 `js/` 下，按功能拆成独立模块。**改某个功能时，只需要找对应的文件。**
+
+## 运行
+
+ES Modules 在 `file://` 下会被浏览器的 CORS 策略拦住，必须用 HTTP 打开。
+
+```bash
+node serve.js
+# 打开 http://127.0.0.1:8123/index.html
+```
+
+也可以用自己的静态服务器：
+
+```bash
+python -m http.server 8123 --bind 127.0.0.1
+```
+
+`serve.js` 是零依赖的 Node 静态服务器，默认监听 `127.0.0.1:8123`，并给 `.js` 返回正确的 `text/javascript`。
+
+## 入口与加载顺序
+
+`js/main.js` 只做一件事：按**原单文件脚本的执行顺序** import 所有模块。
+
+```js
+import './config.js';
+import './world/buildings.js';
+// ...
+```
+
+这个顺序不能随便改：模块顶层会立即执行初始化代码、读取前面的常量。新增文件时，把 `import` 放到它依赖的模块之后。
+
+## 目录结构
+
+| 目录 | 负责 |
+| --- | --- |
+| `js/config.js` | `CONFIG` 全部可调参数、地块类型 `T`、物品/作物/商店/NPC 日程等配置 |
+| `js/world/` | 地图生成、建筑定义 |
+| `js/render/` | 瓦片、建筑、作物、实体、建造预览的 Canvas 绘制 |
+| `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、终局等 |
+| `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
+| `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
+| `js/player.js` | 玩家精灵与朝向 |
+| `js/town.js` | 小镇建筑、房间、街道的查询 |
+| `js/audio.js` | 音效与音量 |
+| `js/save.js` | 存档序列化/反序列化 |
+| `js/main-loop.js` | 固定步长主循环、更新与渲染调度 |
+| `js/boot.js` | 启动初始化、读档判断、`requestAnimationFrame(loop)` |
+| `js/debug.js` | `window.__game` 调试钩子（需开启 `CONFIG.DEBUG_HOOK`） |
+
+## 改功能去哪找
+
+| 想改什么 | 文件 |
+| --- | --- |
+| 数值、价格、作物生长天数、NPC 日程数据 | `js/config.js` |
+| 地图生成、地形 | `js/world/map.js` |
+| 建筑外观/布局 | `js/world/buildings.js` + `js/render/buildings.js` |
+| 地面/作物/实体怎么画 | `js/render/` 下对应文件 |
+| 玩家移动、碰撞、体力 | `js/systems/collision.js`、`js/systems/stamina.js` |
+| 锄地、浇水、播种、收获 | `js/systems/crops.js`、`js/systems/soil.js` |
+| 工具切换与使用 | `js/systems/tools.js` |
+| 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
+| 商店买卖、价格浮动 | `js/systems/shop.js` + `js/ui/shop-panel.js` |
+| 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
+| 睡觉/跨天 | `js/systems/sleep.js` |
+| 钓鱼 | `js/systems/fishing.js` |
+| 动物/鸡舍/牛棚 | `js/systems/animals.js` |
+| 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
+| 委托 | `js/systems/quests.js` |
+| 节日/日历/好感总览面板 | `js/systems/festival.js` |
+| 成就/统计 | `js/systems/stats.js` |
+| 加工台 | `js/systems/maker.js` |
+| 评级/终局结算 | `js/systems/endgame.js` |
+| 输入、按键、暂停 | `js/systems/input.js` |
+| NPC 日程/站位 | `js/npc/schedule.js` |
+| NPC 连续移动/寻路 | `js/npc/runtime.js` |
+| NPC 对话/送礼/好感 | `js/npc/dialog.js`、`js/npc/gift.js`、`js/npc/perks.js` |
+| NPC 来访农场 | `js/npc/visit.js` |
+| 存档 | `js/save.js`、`js/npc/save.js` |
+| 启动流程 | `js/boot.js` |
+| 主循环 | `js/main-loop.js` |
+
+## 模块桥（过渡方案）
+
+原代码是一个全局作用域，跨文件大量读写同一批变量。ES Module 的 import 绑定是只读的，不能 `export let gold` 之后在另一个文件里 `gold += 1`。所以当前采用过渡写法：
+
+- 每个文件是真正的 ES Module；
+- 顶层 `const` / `function` / `class` 留在模块内，文件末尾统一：
+
+  ```js
+  Object.assign(window, { foo, bar });
+  export { foo, bar };
+  ```
+
+- 顶层 `let` / `var` 改写成 `window.X = ...`，这样其他文件里的 `X = ...` 仍然能赋值；
+- 其他文件通过全局名访问这些符号（等价于原来的跨 `<script>` 访问）。
+
+这意味着：
+
+1. **新增函数/常量**时，记得把它加进文件末尾的 `Object.assign(window, {...})` 和 `export { ... }`，否则别的文件看不到。
+2. **新增可变全局状态**用 `window.X = ...`，不要用裸 `let X`。
+3. 后续可以逐步把 `window.X` 收进 `state.js`，再把跨文件调用改成显式 `import`。
+
+## NPC 日程约定
+
+`CONFIG.NPC_SCHED.LIST[npcId]` 是每个 NPC 的日程表：
+
+```js
+aunt: {
+  house: 'farmhouse',
+  work: 'shop',
+  sched: [
+    { from: 6,  to: 10, x: 29, y: 50 },          // 6:00–10:00 在 (29,50)
+    { from: 10, to: 14, x: 9,  y: 47 },          // 10:00–14:00 在 (9,47)
+    { from: 21, to: 30, x: 22, y: 51, type: 'sleep' } // 跨午夜
+  ]
+}
+```
+
+规则：
+
+- 每条 `sched` 是 `{ from, to, x, y }`，`from <= h < to` 时 NPC 出现在 `(x, y)`；
+- `to > 24` 表示跨到次日（`{from:21, to:30}` = 21:00 ~ 次日 6:00）；
+- 不在任何区间 = 回家/看不见；
+- 可选字段：`type`（`work` / `home` / `sleep` / `wander` / `away`）、`label`、`at`；
+- 写了 `x` / `y` 时直接使用字面坐标，不再从家具或瞎逛范围推导；
+- 不写 `x` / `y` 时保留旧的推导方式（`type: 'work'` 找柜台、`home` 找家具、`wander` 找街上空位）。
+
+相关函数都在 `js/npc/schedule.js`：
+
+| 函数 | 返回 |
+| --- | --- |
+| `inHours(h, from, to)` | 小时是否落在区间内（支持跨午夜） |
+| `npcCurrentState(d, day, hour)` | 当前完整状态（含 `type/at/x/y/label/from/to`） |
+| `npcSpot(d)` | 当前时段 `{x, y, from, to, at, label, type}` |
+| `npcWhere(d)` | 当前逻辑位置 `{x, y, at, label, from, to, type}`，含节日/来访覆盖 |
+| `npcPos(d)` | 运行时像素坐标 `{x, y, tx, ty}`（连续移动中的实际位置） |
+| `npcHidden(d)` | 不在玩家所在区域时返回 `true`，`drawEntities` 会跳过 |
+
+> 当前 `npcPos` 仍是第 27 轮的连续移动版本：NPC 会朝目标慢慢走。若要改成“换时段瞬移”，把 `npcPos` 改为直接返回 `(x + 0.5) * TILE` 即可，`js/npc/runtime.js` 可以保留给以后使用。

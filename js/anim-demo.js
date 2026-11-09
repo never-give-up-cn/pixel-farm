@@ -15,6 +15,7 @@ import { initBuildingPanel } from './anim-demo-buildings.js';
 import { initArtisanPanel } from './anim-demo-artisan.js';
 import { initDishPanel } from './anim-demo-dishes.js';
 import { initNpcPanel } from './anim-demo-npcs.js';
+import { initMonsterPanel } from './anim-demo-monsters.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -493,6 +494,8 @@ function tick(dt) {
     dishPanel.tick(dt);
   } else if (state.tab === 'npcs') {
     npcPanel.tick(dt);
+  } else if (state.tab === 'monsters') {
+    monsterPanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -515,10 +518,11 @@ const buildingPanel = initBuildingPanel();
 const artisanPanel = initArtisanPanel();
 const dishPanel = initDishPanel();
 const npcPanel = initNpcPanel();
+const monsterPanel = initMonsterPanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -533,6 +537,7 @@ function setTab(name) {
   else if (name === 'artisan') artisanPanel.activate();
   else if (name === 'dishes') dishPanel.activate();
   else if (name === 'npcs') npcPanel.activate();
+  else if (name === 'monsters') monsterPanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -566,5 +571,6 @@ window.__animDemo = {
   artisanPanel,
   dishPanel,
   npcPanel,
+  monsterPanel,
   setTab
 };

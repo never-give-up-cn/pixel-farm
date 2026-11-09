@@ -9,6 +9,7 @@ import { mulberry32, ellipse } from './anim/pixel.js';
 import { initPlantPanel } from './anim-demo-plants.js';
 import { initAnimalPanel } from './anim-demo-animals.js';
 import { initTreePanel } from './anim-demo-trees.js';
+import { initMineralPanel } from './anim-demo-minerals.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -475,6 +476,8 @@ function tick(dt) {
     plantPanel.tick(dt);
   } else if (state.tab === 'trees') {
     treePanel.tick(dt);
+  } else if (state.tab === 'minerals') {
+    mineralPanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -491,10 +494,11 @@ function loop(now) {
 const plantPanel = initPlantPanel();
 const animalPanel = initAnimalPanel();
 const treePanel = initTreePanel();
+const mineralPanel = initMineralPanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'animals'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'animals'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -503,6 +507,7 @@ function setTab(name) {
   if (name === 'farmer') render();
   else if (name === 'plants') plantPanel.activate();
   else if (name === 'trees') treePanel.activate();
+  else if (name === 'minerals') mineralPanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -530,5 +535,6 @@ window.__animDemo = {
   plantPanel,
   animalPanel,
   treePanel,
+  mineralPanel,
   setTab
 };

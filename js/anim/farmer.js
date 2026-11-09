@@ -162,7 +162,7 @@ function actionPose(action, dir, phase) {
   return basePose(view, 0, 0);
 }
 
-export function drawFarmer(g, action, dir, phase) {
+export function drawFarmer(g, action, dir, phase, opts = {}) {
   g.save();
   g.imageSmoothingEnabled = false;
 
@@ -174,6 +174,7 @@ export function drawFarmer(g, action, dir, phase) {
   }
 
   const p = actionPose(action, d, phase);
+  p.noHat = !!opts.noHat;
   if (p.shake) g.translate(p.shake, 0);
 
   if (p.asleep) {

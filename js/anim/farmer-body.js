@@ -29,7 +29,8 @@ export function basePose(view, bob = 0, lean = 0) {
     tool: null,
     effects: [],
     hold: null,
-    asleep: false
+    asleep: false,
+    noHat: false
   };
   return p;
 }
@@ -135,12 +136,14 @@ function drawHead(g, p) {
     R(g, cx - 3, top + 9, 6, 1, PALETTE.skinShade);
   }
 
-  /* 草帽 */
-  R(g, cx - 9, top - 3, 18, 2, PALETTE.hat);
-  R(g, cx - 8, top - 4, 16, 1, PALETTE.hatShade);
-  R(g, cx - 5, top - 8, 10, 5, PALETTE.hat);
-  R(g, cx - 5, top - 4, 10, 2, PALETTE.hatBand);
-  R(g, cx - 4, top - 8, 6, 1, PALETTE.hatLight);
+  /* 草帽（noHat 时留给外部帽子覆盖） */
+  if (!p.noHat) {
+    R(g, cx - 9, top - 3, 18, 2, PALETTE.hat);
+    R(g, cx - 8, top - 4, 16, 1, PALETTE.hatShade);
+    R(g, cx - 5, top - 8, 10, 5, PALETTE.hat);
+    R(g, cx - 5, top - 4, 10, 2, PALETTE.hatBand);
+    R(g, cx - 4, top - 8, 6, 1, PALETTE.hatLight);
+  }
 }
 
 export function drawStanding(g, p) {

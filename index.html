@@ -723,6 +723,39 @@
   #bigmapFoot{margin-top:6px;font-size:11px;color:#7f92ad;text-align:center}
   #bigmap.open #bigmapPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #bigmap.closing #bigmapPanel{animation:panelOut .2s ease-in forwards}
+
+  /* ========== 第 29 轮：暂停菜单 / 设置 / 导出导入 / UI 缩放 / 减少动画（只追加，不改上面的规则） ========== */
+  /* 暂停菜单：P 打开，半透明遮罩 + 中央面板（复用 .panel 视觉与开合动画） */
+  #pause{
+    position:fixed;inset:0;z-index:47;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.6 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #pause.open{display:flex}
+  #pauseMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #pausePanel{position:relative;width:360px;max-width:92vw;padding:14px 16px 12px;text-align:center}
+  #pauseHead{font-size:18px;color:#ffd76a;margin-bottom:6px}
+  #pauseInfo{font-size:11px;color:#8fa3bd;margin-bottom:12px;white-space:pre-line}
+  #pauseBtns{display:flex;flex-direction:column;gap:8px}
+  #pauseBtns .mbtn{width:100%}
+  #pauseFoot{margin-top:10px;font-size:11px;color:#7f92ad}
+  #pause.open #pausePanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #pause.closing #pausePanel{animation:panelOut .2s ease-in forwards}
+  #pause.closing{display:flex}
+  /* 系统菜单里的设置区 */
+  #sysSettings{margin-top:4px;padding-top:8px;border-top:1px solid #2c3a4e;display:flex;flex-direction:column;gap:8px}
+  #setHead{font-size:12px;color:#8fa3bd}
+  .setRow{display:flex;align-items:center;gap:8px}
+  .setLabel{font-size:12px;color:#cfe3ff;flex:1;text-align:left}
+  #scaleBtns{display:flex;gap:4px}
+  #scaleBtns .scale{width:auto;padding:4px 8px;font-size:11px}
+  .mbtn.on{border-color:#ffd76a;color:#ffd76a;background:#2a3550}
+  .mbtn.off{color:#7f92ad}
+  /* UI 缩放：只缩放面板本体，不动全屏遮罩与画布输入坐标 */
+  body[data-uiscale="90"] .panel{zoom:.9}
+  body[data-uiscale="110"] .panel{zoom:1.1}
+  /* 减少动画：把开合 / 过渡压到几乎为 0（保留状态切换） */
+  body.reduce-motion *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
 </style>
 </head>
 <body>
@@ -833,11 +866,49 @@
       </div>
       <!-- 交互按键提示开关：关掉后靠近居民 / 场景不再显示「按 E ...」 -->
       <button class="mbtn" id="hintBtn" title="交互按键提示开关">💬 交互提示：开</button>
+      <!-- 第 29 轮：设置（界面缩放 / 减少动画 / FPS·网格 / 调试日志 / 全屏） -->
+      <div id="sysSettings">
+        <div id="setHead">设置</div>
+        <div class="setRow">
+          <span class="setLabel">界面缩放</span>
+          <div id="scaleBtns">
+            <button class="mbtn scale" data-scale="90">90%</button>
+            <button class="mbtn scale on" data-scale="100">100%</button>
+            <button class="mbtn scale" data-scale="110">110%</button>
+          </div>
+        </div>
+        <button class="mbtn" id="optMotion">✨ 减少动画：关</button>
+        <button class="mbtn" id="optFps">📈 显示 FPS：关</button>
+        <button class="mbtn" id="optGrid">▦ 显示网格：关</button>
+        <button class="mbtn" id="optLog">🐞 调试日志：关</button>
+        <button class="mbtn" id="optFull">⛶ 全屏</button>
+      </div>
+      <!-- 第 29 轮：存档导出 / 导入 / 返回标题 -->
+      <button class="mbtn" id="btnExport">📤 导出存档</button>
+      <button class="mbtn" id="btnImport">📥 导入存档</button>
+      <button class="mbtn" id="btnTitle">🏠 返回标题</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
       <button class="mbtn" id="btnClose">继续游戏（Esc）</button>
     </div>
     <div id="sysCheat"></div>
     <div id="sysStats"></div>
     <div id="sysFoot">Esc 关闭 · 每天开始与离开页面前都会自动保存</div>
+  </div>
+</div>
+
+<!-- 暂停菜单（第 29 轮）：P 打开；视觉遮罩 + 快捷操作，打开时世界冻结 -->
+<div id="pause">
+  <div id="pauseMask"></div>
+  <div id="pausePanel" class="panel">
+    <div id="pauseHead">⏸ 已暂停</div>
+    <div id="pauseInfo"></div>
+    <div id="pauseBtns">
+      <button class="mbtn" id="btnResume">继续游戏（P / Esc）</button>
+      <button class="mbtn" id="btnPauseSave">保存游戏</button>
+      <button class="mbtn" id="btnPauseSettings">设置</button>
+      <button class="mbtn danger" id="btnPauseTitle">返回标题</button>
+    </div>
+    <div id="pauseFoot">世界已冻结 · 返回标题前会自动保存</div>
   </div>
 </div>
 
@@ -1264,11 +1335,19 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名（多槽位时槽 1 仍用这个键，不能改名）
-    VERSION: 14,              // 存档版本号（第 28 轮 +1：fc 天气预报队列 + vol 音量档位）
+    VERSION: 15,              // 存档版本号（第 29 轮 +1：opt 设置项）
     SLOTS: 3,                 // 存档槽位数量（槽 1 = KEY，槽 2/3 = KEY + '_s2' / '_s3'）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */
+  },
+
+  /* 设置（第 29 轮）：界面缩放 / 减少动画 / 调试显示；全部可持久化到存档 opt */
+  SETTINGS: {               /* 第 29 轮设置项 */
+    UI_SCALE: 100,          // 界面缩放（90 / 100 / 110）
+    REDUCE_MOTION: false,   // 减少动画（关掉面板开合与过渡）
+    SHOW_FPS: false,        // 左上角 FPS / 版本面板（默认隐藏）
+    DEBUG_LOG: false        // 控制台调试日志（默认关闭）
   },
 
   /* 物品定义表（背包 / 快捷栏的唯一数据源）
@@ -2123,7 +2202,7 @@ const CONFIG = {
   FPS_INTERVAL: 0.25,       // FPS / 面板刷新间隔（秒）
 
   /* 调试 */
-  GRID_OVERLAY: true,       // 叠加网格线
+  GRID_OVERLAY: false,      // 叠加网格线（第 29 轮默认关闭，设置里可开）
   GRID_COLOR: 'rgba(255,255,255,0.09)',   // 网格线颜色（GRID_OVERLAY 打开时用）
   LOG_EVERY: 60,            // 每 N 帧在控制台打印一次瓦片统计
   DEBUG_HOOK: false,        // true = 暴露 window.__game（仅调试用）
@@ -2561,7 +2640,7 @@ function genMap(seed){
     const t = map[y*MAP_W+x];
     if(t===T.TREE||t===T.ROCK||t===T.FLOWER) farmWild++;
   }
-  console.log('[map] seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
+  dlog('[map] seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
     ' water=' + cnt[T.WATER] + ' tree=' + cnt[T.TREE] + ' rock=' + cnt[T.ROCK] +
     ' flower=' + cnt[T.FLOWER] + ' house=' + cnt[T.HOUSE] + ' shop=' + cnt[T.SHOP] +
     ' | farm ' + FARM.w + 'x' + FARM.h + ' wild-in-farm=' + farmWild);
@@ -4245,6 +4324,125 @@ function setInteractHints(on, silent){
 }
 function toggleInteractHints(){ return setInteractHints(!interactHintsOn); }
 if(hintBtn) hintBtn.addEventListener('click', ()=>{ toggleInteractHints(); });
+/* --- 第 29 轮：设置项（界面缩放 / 减少动画 / FPS·网格 / 调试日志） ---
+ * 全部随存档的 opt 字段持久化；这里同时维护运行时开关，渲染与日志统一读这些变量。 */
+let optState = {
+  scale: CONFIG.SETTINGS.UI_SCALE,
+  motion: !!CONFIG.SETTINGS.REDUCE_MOTION,
+  fps: !!CONFIG.SETTINGS.SHOW_FPS,
+  grid: !!CONFIG.GRID_OVERLAY,
+  log: !!CONFIG.SETTINGS.DEBUG_LOG
+};
+let showFps = optState.fps;
+let showGrid = optState.grid;
+let logOn = optState.log;
+/* 调试日志闸门：默认关闭，设置里打开后才往控制台写（console.warn / error 不受影响） */
+function dlog(){ if(logOn){ try{ console.log.apply(console, arguments); }catch(e){} } }
+const UI_SCALES = [90, 100, 110];
+function applyOptions(){
+  /* 浏览器里才有 body / dataset；vm 沙箱里跳过 DOM 部分，开关变量照样生效 */
+  const body = (typeof document !== 'undefined') ? document.body : null;
+  if(body && body.dataset) body.dataset.uiscale = String(optState.scale);
+  if(body && body.classList){
+    if(optState.motion) body.classList.add('reduce-motion');
+    else body.classList.remove('reduce-motion');
+  }
+  showFps = !!optState.fps;
+  showGrid = !!optState.grid;
+  logOn = !!optState.log;
+  const scaleBox = document.getElementById('scaleBtns');
+  if(scaleBox && scaleBox.children)
+    for(let i = 0; i < scaleBox.children.length; i++){
+      const el = scaleBox.children[i];
+      if(el && el.classList) el.classList.toggle('on', UI_SCALES[i] === optState.scale);
+    }
+  const m = document.getElementById('optMotion');
+  if(m){ m.textContent = '✨ 减少动画：' + (optState.motion ? '开' : '关'); if(m.classList) m.classList.toggle('off', !optState.motion); }
+  const f = document.getElementById('optFps');
+  if(f){ f.textContent = '📈 显示 FPS：' + (optState.fps ? '开' : '关'); if(f.classList) f.classList.toggle('off', !optState.fps); }
+  const gr = document.getElementById('optGrid');
+  if(gr){ gr.textContent = '▦ 显示网格：' + (optState.grid ? '开' : '关'); if(gr.classList) gr.classList.toggle('off', !optState.grid); }
+  const lg = document.getElementById('optLog');
+  if(lg){ lg.textContent = '🐞 调试日志：' + (optState.log ? '开' : '关'); if(lg.classList) lg.classList.toggle('off', !optState.log); }
+  return optState;
+}
+function optionsToSave(){
+  return {s:optState.scale, m:optState.motion ? 1 : 0, f:optState.fps ? 1 : 0,
+          g:optState.grid ? 1 : 0, l:optState.log ? 1 : 0};
+}
+function optionsFromSave(o){
+  o = (o && typeof o === 'object') ? o : {};
+  optState.scale = UI_SCALES.indexOf(Number(o.s)) >= 0 ? Number(o.s) : CONFIG.SETTINGS.UI_SCALE;
+  optState.motion = !!o.m;
+  optState.fps = !!o.f;
+  optState.grid = (typeof o.g === 'number') ? !!o.g : !!CONFIG.GRID_OVERLAY;
+  optState.log = !!o.l;
+  return applyOptions();
+}
+function setUiScale(v, silent){
+  v = Number(v) | 0;
+  if(UI_SCALES.indexOf(v) < 0) v = 100;
+  optState.scale = v;
+  applyOptions();
+  if(!silent) toast('界面缩放 ' + v + '%');
+  return v;
+}
+function setReduceMotion(on, silent){
+  optState.motion = !!on;
+  applyOptions();
+  if(!silent) toast(optState.motion ? '✨ 已减少动画' : '✨ 动画已恢复');
+  return optState.motion;
+}
+function setShowFps(on, silent){
+  optState.fps = !!on;
+  applyOptions();
+  if(!silent) toast(optState.fps ? '📈 已显示 FPS' : '📈 已隐藏 FPS');
+  return optState.fps;
+}
+function setShowGrid(on, silent){
+  optState.grid = !!on;
+  applyOptions();
+  if(!silent) toast(optState.grid ? '▦ 已显示网格' : '▦ 已隐藏网格');
+  return optState.grid;
+}
+function setDebugLog(on, silent){
+  optState.log = !!on;
+  applyOptions();
+  if(!silent) toast(optState.log ? '🐞 调试日志已打开' : '🐞 调试日志已关闭');
+  return optState.log;
+}
+function toggleFullscreen(){
+  try{
+    if(typeof document === 'undefined') return false;
+    if(!document.fullscreenElement && document.documentElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+      return true;
+    }
+    if(document.exitFullscreen){ document.exitFullscreen(); return false; }
+  }catch(e){}
+  return false;
+}
+{
+  const scaleBox = document.getElementById('scaleBtns');
+  if(scaleBox) scaleBox.addEventListener('click', e=>{
+    const t = e && e.target;
+    if(!t || !t.getAttribute) return;
+    const v = parseInt(t.getAttribute('data-scale'), 10);
+    if(v) setUiScale(v);
+  });
+  const m = document.getElementById('optMotion');
+  if(m) m.addEventListener('click', ()=> setReduceMotion(!optState.motion));
+  const f = document.getElementById('optFps');
+  if(f) f.addEventListener('click', ()=> setShowFps(!optState.fps));
+  const gr = document.getElementById('optGrid');
+  if(gr) gr.addEventListener('click', ()=> setShowGrid(!optState.grid));
+  const lg = document.getElementById('optLog');
+  if(lg) lg.addEventListener('click', ()=> setDebugLog(!optState.log));
+  const fu = document.getElementById('optFull');
+  if(fu) fu.addEventListener('click', ()=>{ toggleFullscreen(); });
+}
+applyOptions();
+
 /* --- UI 点击音：菜单按钮 / 页签按下时"哒"一声（商店的买卖用金币声，不重复） --- */
 const UI_CLICK_SEL = ['.mbtn', '.tab', '#sndBtn'];
 document.addEventListener('click', e=>{
@@ -4625,7 +4823,7 @@ function settleDay(){
   if(withered) toast('换季了，' + withered + ' 株作物枯萎了');
   if(matured)  toast('有 ' + matured + ' 株作物成熟了');
   if(irrGrew)  toast('铱质洒水器让 ' + irrGrew + ' 株作物多长了一阶段');
-  console.log('[settle] 第 ' + clock.day + ' 天结算：生长 ' + grew + ' 株，成熟 ' + matured +
+  dlog('[settle] 第 ' + clock.day + ' 天结算：生长 ' + grew + ' 株，成熟 ' + matured +
               ' 株，枯萎 ' + withered + ' 株，重置浇水 ' + wateredTiles + ' 格' +
               (rained ? '，雨天自动浇水 ' + rained + ' 格' : '') +
               (irrGrew ? '，铱质加速 ' + irrGrew + ' 株' : '') +
@@ -4958,7 +5156,7 @@ function updateClock(dt){
     if(clock.hold <= 0){
       clock.hold = 0;
       if(!dayRolled) rollToNextMorning(sleepFx.faint);
-      console.log('[time] 第 ' + clock.day + ' 天 ' + clockHM().s + ' · ' + seasonName() + ' · ' + weather.name);
+      dlog('[time] 第 ' + clock.day + ' 天 ' + clockHM().s + ' · ' + seasonName() + ' · ' + weather.name);
     }
     return;
   }
@@ -4969,7 +5167,7 @@ function updateClock(dt){
     clock.hold = CONFIG.DAY_END_HOLD;
     dayRolled = false;
     triggerFaint();                            /* 2:00 还没睡 → 强制昏睡 */
-    console.log('[time] 第 ' + clock.day + ' 天结束（' + clockHM().s + '）→ 昏睡');
+    dlog('[time] 第 ' + clock.day + ' 天结束（' + clockHM().s + '）→ 昏睡');
   }
 }
 
@@ -5035,7 +5233,7 @@ function rollToNextMorning(faint){
   stamina = staminaMax;
   dayRolled = true;
   sleepFx.day = clock.day;
-  console.log('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
+  dlog('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
   gatherDayStart();                    /* 第 14 轮：每季第 1/4/7/10 天刷新草地采集物（写进 map diff） */
@@ -5107,7 +5305,7 @@ function rollWeather(){
   weather = picked;
   fillForecast();
   spawnParticles();
-  console.log('[weather] 第 ' + clock.day + ' 天天气：' + weather.name);
+  dlog('[weather] 第 ' + clock.day + ' 天天气：' + weather.name);
 }
 
 /* --- 天气粒子（画在画布坐标系里，随画布缩放自动对齐） --- */
@@ -5245,6 +5443,8 @@ window.addEventListener('keydown', e=>{
     if(!e.repeat) toggleMute();
     return;
   }
+  /* 第 29 轮：暂停菜单开着时只有 Esc / P 能动 */
+  if(pauseMenuOpen && k !== 'escape' && k !== CONFIG.PAUSE_KEY) return;
   /* NPC 对话中：E / 空格推进对话，其余键一律忽略（Esc 交给下面的分支统一处理） */
   if(npcOpen && !packOpen && k !== 'escape'){
     if(k === 'e' || k === ' '){ if(!e.repeat) npcAdvance(); ensureAudio(); }
@@ -5278,6 +5478,7 @@ window.addEventListener('keydown', e=>{
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(pauseMenuOpen){ togglePauseMenu(false); return; }   /* 第 29 轮：先关暂停菜单 */
     if(endingOpen){ endingClosePanel(); return; }
     if(ratingOpen){ ratingClosePanel(); return; }
     if(annualOpen){ annualClosePanel(); return; }
@@ -5299,6 +5500,8 @@ window.addEventListener('keydown', e=>{
     toggleSys(true);                          /* 其它情况：打开系统菜单（保存/读档） */
     return;
   }
+  if(startMenuOpen) return;         /* 标题界面：其它按键一律忽略 */
+  if(sysOpen) return;               /* 系统菜单：其它按键一律忽略 */
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
   if(chestOpen) return;             /* 木箱打开时其它按键一律忽略 */
@@ -5355,7 +5558,7 @@ window.addEventListener('keydown', e=>{
     selectHot(Number(k) - 1);
     ensureAudio();                   /* 键盘也算一次用户交互，解锁音频 */
   }
-  if(k === CONFIG.PAUSE_KEY) setPaused(!paused);   /* 暂停/恢复 */
+  if(k === CONFIG.PAUSE_KEY) togglePauseMenu();   /* 第 29 轮：P 打开 / 关闭暂停菜单 */
 });
 window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
 window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
@@ -5379,7 +5582,7 @@ canvas.addEventListener('mousemove', e=>{
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
+  if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen) return;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */
@@ -6116,19 +6319,23 @@ function drawUI(g){
     g.lineWidth = 2;
     g.strokeRect(hx + 1, hy + 1, TILE - 2, TILE - 2);
   }
-  /* FPS + 版本 */
-  const scale = 2, pad = 6;
-  const l1 = 'FPS ' + String(Math.round(fps)).padStart(2,' ');
-  const l2 = CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ';
-  const charW = (GLYPH_W + 1) * scale;                 /* 每个字形占位（含 1px 字距） */
-  const lineW = Math.max(l1.length, l2.length) * charW;
-  const boxW = lineW + pad*2, boxH = GLYPH_H*scale*2 + pad*2 + 4;
-  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, 8, boxW, boxH);
-  g.fillStyle = CONFIG.COLORS.hudBorder;
-  g.fillRect(8, 8, boxW, 1); g.fillRect(8, 8+boxH-1, boxW, 1);
-  g.fillRect(8, 8, 1, boxH);   g.fillRect(8+boxW-1, 8, 1, boxH);
-  drawText(g, l1, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
-  drawText(g, l2, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+  /* FPS + 版本（第 29 轮：默认隐藏，设置里可开） */
+  let boxH = 0;                       /* 隐藏时高度为 0，下面的金币行自动上移 */
+  if(showFps){
+    const scale = 2, pad = 6;
+    const l1 = 'FPS ' + String(Math.round(fps)).padStart(2,' ');
+    const l2 = CONFIG.VERSION + ' ' + CONFIG.TARGET_FPS + 'HZ';
+    const charW = (GLYPH_W + 1) * scale;                 /* 每个字形占位（含 1px 字距） */
+    const lineW = Math.max(l1.length, l2.length) * charW;
+    const boxW = lineW + pad*2;
+    boxH = GLYPH_H*scale*2 + pad*2 + 4;
+    g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, 8, boxW, boxH);
+    g.fillStyle = CONFIG.COLORS.hudBorder;
+    g.fillRect(8, 8, boxW, 1); g.fillRect(8, 8+boxH-1, boxW, 1);
+    g.fillRect(8, 8, 1, boxH);   g.fillRect(8+boxW-1, 8, 1, boxH);
+    drawText(g, l1, 8+pad, 8+pad, scale, CONFIG.COLORS.hudAccent);
+    drawText(g, l2, 8+pad, 8+pad + GLYPH_H*scale + 4, scale, CONFIG.COLORS.hudText);
+  }
 
   /* 左上角：金币 + 背包提示（资源计数已全部移入背包） */
   g.textBaseline = 'top'; g.textAlign = 'left';
@@ -6726,7 +6933,7 @@ const CHEAT_TEXT =
 'Q　　　　　　　　 建造模式：换上一个配方（滚轮也可以）\n' +
 'B　　　　　　　　 进入 / 退出建造模式\n' +
 'G　　　　　　　　 农场评级 + 雇工面板（也可点右上角评分）\n' +
-'P　　　　　　　　 暂停 / 继续\n' +
+'P　　　　　　　　 暂停菜单（再按继续）\n' +
 'M　　　　　　　　 静音开关（任何面板开着时也能按）\n' +
 'Esc　　　　　　　 关闭当前面板；没有面板时打开本菜单；钓鱼中 = 收竿\n' +
 '空格 / Enter　　　对话推进 / 钓鱼咬钩时拉杆\n' +
@@ -6734,7 +6941,7 @@ const CHEAT_TEXT =
 '🌱 种植：锄头开垦 → 播种 → 每天浇水才会生长；成熟后左键收获。\n' +
 '💧 水壶：站在水边右键补水；商店可升级容量，减少跑动。\n' +
 '🐔 动物：先造鸡舍 / 牛棚，再在商店买动物；好感 ≥50 每天早上产出。\n' +
-'🏆 成就：Esc 菜单 → 成就墙；25 项成就分四类。\n' +
+'🏆 成就：Esc 菜单 → 成就墙；' + CONFIG.ACHIEVEMENT.LIST.length + ' 项成就分四类。\n' +
 '📋 委托：委托板每天 3 条，最多同时接 2 条；完成加信誉、提高奖励。\n' +
 '⚙ 加工台：原料 → 成品，按游戏时间加工；成品可卖钱或右键吃回体力。\n' +
 '🎁 送礼：每人每天 1 次；喜欢 +30 / 普通 +10 / 讨厌 -15，生日翻倍。\n' +
@@ -6803,6 +7010,152 @@ if(btnWipe)  btnWipe .addEventListener('click', ()=>{ sysWipe(); });
 if(btnAch)   btnAch  .addEventListener('click', ()=>{ achOpenPanel(); });
 if(btnClose) btnClose.addEventListener('click', ()=>{ toggleSys(false); });
 if(sysMask)  sysMask .addEventListener('mousedown', e=>{ e.preventDefault(); toggleSys(false); });
+
+/* ========== 第 29 轮：暂停菜单 / 返回标题 / 存档导出导入 ========== */
+const pauseEl      = document.getElementById('pause');
+const pauseMaskEl  = document.getElementById('pauseMask');
+const pauseInfoEl  = document.getElementById('pauseInfo');
+const btnResume    = document.getElementById('btnResume');
+const btnPauseSave = document.getElementById('btnPauseSave');
+const btnPauseSet  = document.getElementById('btnPauseSettings');
+const btnPauseTitle= document.getElementById('btnPauseTitle');
+const btnExport    = document.getElementById('btnExport');
+const btnImport    = document.getElementById('btnImport');
+const btnTitle     = document.getElementById('btnTitle');
+const importFile   = document.getElementById('importFile');
+let pauseMenuOpen = false;
+
+function pauseInfoText(){
+  return '槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ' + seasonName() + '季\n' +
+         '金币 ' + gold + ' · 体力 ' + Math.ceil(stamina) + '/' + staminaMax;
+}
+/* P 键 / 暂停按钮：世界冻结 + 中央暂停菜单（与调试用的 setPaused 分开，不互相抢状态） */
+function togglePauseMenu(on){
+  const want = (on === undefined) ? !pauseMenuOpen : !!on;
+  if(want === pauseMenuOpen) return want;
+  pauseMenuOpen = want;
+  setPaused(want);
+  if(want){
+    if(pauseInfoEl) pauseInfoEl.textContent = pauseInfoText();
+    setPanelOpen(pauseEl, true);
+  }else{
+    setPanelOpen(pauseEl, false);
+  }
+  return want;
+}
+/* 返回标题前把现有的世界面板全部收起来（世界状态本身保留在存档里） */
+function closeAllPanelsForTitle(){
+  if(pauseMenuOpen) togglePauseMenu(false);
+  if(sysOpen) toggleSys(false);
+  if(packOpen) togglePack(false);
+  if(shopOpen) toggleShop(false);
+  if(chestOpen) toggleChest(false);
+  if(makerOpen) makerClosePanel();
+  if(animalOpen) animalClosePanel();
+  if(questOpen) questClosePanel();
+  if(calOpen) calClosePanel();
+  if(frendOpen) frendClosePanel();
+  if(bigmapOpen) toggleBigmap(false);
+  if(achOpen) achClosePanel();
+  if(annualOpen) annualClosePanel();
+  if(ratingOpen) ratingClosePanel();
+  if(endingOpen) endingClosePanel();
+  if(npcOpen) npcCloseDialog();
+  if(buildMode) toggleBuild(false);
+}
+/* 返回标题：先自动存档（不弹「已保存」），再回到槽位选择界面 */
+function returnToTitle(silent){
+  if(!sessionActive) return false;
+  closeAllPanelsForTitle();
+  if(!saveGame(null, true)){ toast('保存失败，已取消返回标题'); return false; }
+  sessionActive = false;              /* 标题界面不再自动存档，避免写脏用户刚点选的其它槽 */
+  pendingSave = readSave();
+  renderStartSlots();
+  updateStartInfo();
+  startMenuOpen = true;
+  setPanelOpen(startEl, true);
+  if(!silent) toast('已自动保存 · 回到标题');
+  return true;
+}
+function exportSaveText(slot){
+  const d = readSave(slot);
+  if(!d) return '';
+  try{ return JSON.stringify(d); }catch(e){ return ''; }
+}
+function exportSave(){
+  const txt = exportSaveText();
+  if(!txt){ toast('当前槽没有可导出的存档'); return false; }
+  try{
+    if(typeof Blob !== 'undefined' && typeof URL !== 'undefined' && URL.createObjectURL){
+      const blob = new Blob([txt], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = CONFIG.SAVE.KEY + '_slot' + (curSlot + 1) + '.json';
+      if(document.body && document.body.appendChild) document.body.appendChild(a);
+      if(a.click) a.click();
+      if(document.body && document.body.removeChild) document.body.removeChild(a);
+      setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} }, 0);
+      toast('已导出槽' + (curSlot + 1) + ' 存档');
+      return true;
+    }
+  }catch(e){}
+  toast('导出失败：当前浏览器不支持下载');
+  return false;
+}
+/* 导入：解析 → 迁移 → 覆盖当前槽（旧档先备份到 _bak）→ 直接读入 */
+function importSaveText(text){
+  let d;
+  try{ d = JSON.parse(String(text)); }catch(e){ toast('导入失败：不是合法的存档文件'); return false; }
+  if(!d || typeof d !== 'object' || typeof d.v !== 'number'){ toast('导入失败：不是像素农场存档'); return false; }
+  const r = migrateSave(d);
+  if(!r || !r.save){ toast('导入失败：存档迁移出错'); return false; }
+  try{
+    const oldRaw = window.localStorage.getItem(slotKey(curSlot));
+    if(oldRaw) window.localStorage.setItem(slotKey(curSlot) + '_bak', oldRaw);
+  }catch(e){}
+  const okWrite = writeSave(r.save);
+  const okLoad = deserializeState(r.save);
+  if(okWrite && okLoad){
+    toast('已导入槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天');
+    return true;
+  }
+  toast('导入失败：存档写入被拒绝');
+  return false;
+}
+if(btnResume)     btnResume    .addEventListener('click', ()=>{ togglePauseMenu(false); });
+if(btnPauseSave)  btnPauseSave .addEventListener('click', ()=>{ saveGame('暂停菜单'); });
+if(btnPauseSet)   btnPauseSet  .addEventListener('click', ()=>{ togglePauseMenu(false); toggleSys(true); });
+if(btnPauseTitle) btnPauseTitle.addEventListener('click', ()=>{ returnToTitle(); });
+if(pauseMaskEl)   pauseMaskEl  .addEventListener('mousedown', e=>{ e.preventDefault(); togglePauseMenu(false); });
+if(btnExport)     btnExport    .addEventListener('click', ()=>{ exportSave(); });
+if(btnImport)     btnImport    .addEventListener('click', ()=>{ if(importFile && importFile.click) importFile.click(); });
+if(btnTitle)      btnTitle     .addEventListener('click', ()=>{ returnToTitle(); });
+if(importFile)    importFile   .addEventListener('change', ()=>{
+  const f = importFile.files && importFile.files[0];
+  if(!f) return;
+  if(typeof FileReader === 'undefined'){ toast('导入失败：当前浏览器不支持读取文件'); return; }
+  const rd = new FileReader();
+  rd.onload = ()=>{ importSaveText(String(rd.result || '')); };
+  rd.readAsText(f);
+  try{ importFile.value = ''; }catch(e){}
+});
+/* 多标签页：另一个标签页写了当前槽 → 只更新「已见时间戳」并提示，不抢写 */
+window.addEventListener('storage', e=>{
+  try{
+    if(!e || !e.key) return;
+    for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
+      if(e.key === slotKey(i)){
+        if(e.newValue){
+          const d = JSON.parse(e.newValue);
+          if(d && typeof d.at === 'number') lastSeenAt[i] = d.at;
+        }
+        if(sessionActive && !startMenuOpen && i === curSlot)
+          toast('槽' + (i + 1) + ' 已被另一个标签页更新（本页未覆盖）');
+        break;
+      }
+    }
+  }catch(err){}
+});
 
 /* === 7.存档 === */
 /* 浏览器本地存档：localStorage 单档位，键名 CONFIG.SAVE.KEY（farm_save_v1）
@@ -6918,6 +7271,7 @@ function serializeState(){
     ih: interactHintsOn ? 1 : 0,   /* 第 22 轮：交互按键提示开关 */
     vol: volLevel | 0,             /* 第 28 轮：音量档位 0~100（默认 100） */
     fc: fcQueue.join(','),         /* 第 28 轮：未来天气预报队列（紧凑字符串，~40 字节） */
+    opt: optionsToSave(),          /* 第 29 轮：界面缩放 / 减少动画 / FPS / 网格 / 调试日志 */
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
@@ -7069,6 +7423,9 @@ function deserializeState(d){
     if(typeof d.snd === 'number') setMuted(d.snd ? true : false, true);
     /* 第 28 轮：音量档位（老档没有 → 保持当前设置，通常 100） */
     if(typeof d.vol === 'number') setVolLevel(clamp(Math.round(d.vol), 0, 100), true);
+    /* 第 29 轮：设置项（老档没有 → 保持当前设置 / 默认值） */
+    if(d.opt && typeof d.opt === 'object') optionsFromSave(d.opt);
+    else applyOptions();
     /* 第 28 轮：天气预报队列（老档没有 → 按当前权重补一队；今天的真实天气来自 d.weather，不受影响） */
     fcQueue = [];
     if(typeof d.fc === 'string' && d.fc){
@@ -7137,27 +7494,62 @@ function deserializeState(d){
  * 第 28 轮：多存档槽位。槽 1 仍用 CONFIG.SAVE.KEY（farm_save_v1，不能改名），
  * 槽 2/3 用 KEY + '_s2' / '_s3'。默认操作槽 curSlot（0 起）。 */
 let curSlot = 0;
+let lastWriteError = '';                 /* '' / 'size' / 'storage' */
+let lastWriteConflict = false;           /* 本次写入前发现另一个标签页的较新存档 */
+const lastSeenAt = {};                   /* 槽位 → 本页最后见到的存档时间戳（多标签页冲突检测） */
 function slotKey(i){
   i = i | 0;
   if(i <= 0) return CONFIG.SAVE.KEY;
   return CONFIG.SAVE.KEY + '_s' + (i + 1);
 }
 function readSave(slot){
+  const i = slot === undefined ? curSlot : slot;
   try{
-    const raw = window.localStorage.getItem(slotKey(slot === undefined ? curSlot : slot));
+    const raw = window.localStorage.getItem(slotKey(i));
     if(!raw) return null;
     const d = JSON.parse(raw);
-    return (d && typeof d === 'object') ? d : null;
+    if(d && typeof d === 'object'){
+      if(typeof d.at === 'number') lastSeenAt[i] = d.at;
+      return d;
+    }
+    return null;
   }catch(e){
     console.warn('[save] 存档读取失败：', e);
     return null;
   }
 }
-function writeSave(d, slot){
+/* UTF-8 字节数（用于 MAX_BYTES 上限；vm 沙箱没有 TextEncoder 时退回字符数） */
+function utf8Bytes(s){
+  try{ if(typeof TextEncoder !== 'undefined') return new TextEncoder().encode(s).length; }catch(e){}
+  return String(s).length;
+}
+function writeSave(d, slot, force){
+  const i = slot === undefined ? curSlot : slot;
+  lastWriteError = '';
+  lastWriteConflict = false;
   try{
-    window.localStorage.setItem(slotKey(slot === undefined ? curSlot : slot), JSON.stringify(d));
+    const raw = JSON.stringify(d);
+    if(utf8Bytes(raw) > CONFIG.SAVE.MAX_BYTES){
+      lastWriteError = 'size';
+      console.warn('[save] 存档超过体积上限，已拒绝写入');
+      return false;
+    }
+    /* 多标签页防覆盖：磁盘上的存档比本页见过的新 → 先把对方备份到 _bak 再写，双方都不丢 */
+    try{
+      const oldRaw = window.localStorage.getItem(slotKey(i));
+      if(oldRaw && !force){
+        const old = JSON.parse(oldRaw);
+        if(old && typeof old.at === 'number' && old.at > (lastSeenAt[i] || 0) && old.at !== d.at){
+          window.localStorage.setItem(slotKey(i) + '_bak', oldRaw);
+          lastWriteConflict = true;
+        }
+      }
+    }catch(e){}
+    window.localStorage.setItem(slotKey(i), raw);
+    lastSeenAt[i] = (d && typeof d.at === 'number') ? d.at : Date.now();
     return true;
   }catch(e){
+    lastWriteError = 'storage';
     console.warn('[save] 存档写入失败：', e);
     return false;
   }
@@ -7199,16 +7591,20 @@ function saveVersionOK(d){ return !!d && (d.v|0) <= CONFIG.SAVE.VERSION; }
 function saveDay(d){ return (d && d.time) ? (d.time.day|0) : 1; }
 
 /* 存档（手动 / 自动都走这里） */
-function saveGame(reason){
+function saveGame(reason, silent){
   const data = serializeState();
   const raw = JSON.stringify(data);
   lastSaveBytes = raw.length;
   if(writeSave(data)){
-    console.log('[save] 已保存：第 ' + data.time.day + ' 天 · ' + (lastSaveBytes/1024).toFixed(1) + ' KB');
-    if(reason) toast('已保存（槽' + (curSlot + 1) + ' · ' + reason + '）');
+    dlog('[save] 已保存：第 ' + data.time.day + ' 天 · ' + (lastSaveBytes/1024).toFixed(1) + ' KB');
+    if(reason && !silent) toast('已保存（槽' + (curSlot + 1) + ' · ' + reason + '）');
+    if(lastWriteConflict && !silent)
+      toast('另一个标签页的存档较新，已备份为槽' + (curSlot + 1) + ' 备份后写入');
     return true;
   }
-  toast('保存失败：浏览器可能禁用了本地存储');
+  if(!silent) toast(lastWriteError === 'size'
+    ? ('保存失败：存档超过 ' + Math.round(CONFIG.SAVE.MAX_BYTES / 1024) + ' KB 上限')
+    : '保存失败：浏览器可能禁用了本地存储');
   return false;
 }
 /* 读档 */
@@ -7344,10 +7740,10 @@ function render(){
   const y1 = Math.min(MAP_H-1, Math.floor((cam.y + VIEW_H - 1) / TILE));
   visibleCount = (x1-x0+1) * (y1-y0+1);
 
-  if(!renderLog.ground){ renderLog.ground = true; console.log('[render] 1/4 drawGround'); }
-  if(!renderLog.objects){ renderLog.objects = true; console.log('[render] 2/4 drawObjects'); }
-  if(!renderLog.player){ renderLog.player = true; console.log('[render] 3/4 drawPlayer'); }
-  if(!renderLog.ui){ renderLog.ui = true; console.log('[render] 4/4 drawUI'); }
+  if(!renderLog.ground){ renderLog.ground = true; dlog('[render] 1/4 drawGround'); }
+  if(!renderLog.objects){ renderLog.objects = true; dlog('[render] 2/4 drawObjects'); }
+  if(!renderLog.player){ renderLog.player = true; dlog('[render] 3/4 drawPlayer'); }
+  if(!renderLog.ui){ renderLog.ui = true; dlog('[render] 4/4 drawUI'); }
 
   drawGround(ctx, x0, y0, x1, y1);
   drawRoads(ctx, x0, y0, x1, y1);          /* 石板路（叠加层，在地面之上、季节染色之下） */
@@ -7366,15 +7762,15 @@ function render(){
   drawUI(ctx);
   drawFishing(ctx);              /* 钓鱼气泡 / 咬钩提示 / 拉杆横条（第 14 轮） */
 
-  /* 网格线叠加 */
-  if(CONFIG.GRID_OVERLAY){
+  /* 网格线叠加（第 29 轮：默认关闭，设置里可开） */
+  if(showGrid){
     ctx.fillStyle = CONFIG.GRID_COLOR;
     for(let tx=x0;tx<=x1+1;tx++) ctx.fillRect(Math.round(tx*TILE - cam.x), 0, 1, VIEW_H);
     for(let ty=y0;ty<=y1+1;ty++) ctx.fillRect(0, Math.round(ty*TILE - cam.y), VIEW_W, 1);
   }
   if(!firstRenderDone){
     firstRenderDone = true;
-    console.log('[render] 顺序确认: drawGround -> drawObjects -> drawPlayer -> drawUI');
+    dlog('[render] 顺序确认: drawGround -> drawObjects -> drawPlayer -> drawUI');
   }
   drawSleepFx(ctx);              /* 睡觉淡入淡出（盖住网格线） */
   /* 转场闪屏（dur = 0 时不触发 —— 第 26 轮进门只挪 1 格，已经不需要它了） */
@@ -7411,7 +7807,7 @@ function loop(now){
     updateStats();
   }
   if(CONFIG.LOG_EVERY > 0 && frameNo % CONFIG.LOG_EVERY === 0){
-    console.log('[map] tiles drawn ' + visibleCount + ' / ' + (MAP_W*MAP_H) +
+    dlog('[map] tiles drawn ' + visibleCount + ' / ' + (MAP_W*MAP_H) +
       ' (' + (visibleCount/(MAP_W*MAP_H)*100).toFixed(1) + '%)  player(' +
       player.x.toFixed(0) + ',' + player.y.toFixed(0) + ')  seed ' + CONFIG.SEED);
   }
@@ -8630,6 +9026,11 @@ function migrate(oldSave){
        * 音量默认 100（和升级前完全一致）。其余进度全部保留。 */
       if(typeof d.fc !== 'string') d.fc = '';
       if(typeof d.vol !== 'number') d.vol = 100;
+    }
+    if(v < 15){
+      /* v14 → v15：补上设置项（界面缩放 / 减少动画 / FPS / 网格 / 调试日志）。
+       * 老档一律按默认值：100% / 关 / 隐藏 / 隐藏 / 关，和升级前观感一致。 */
+      if(!d.opt || typeof d.opt !== 'object') d.opt = {s:100, m:0, f:0, g:0, l:0};
     }
     d.v = CONFIG.SAVE.VERSION;
     return d;
@@ -11290,7 +11691,7 @@ function ratingCheck(){
   if(info.stars >= CONFIG.ENDGAME.RATING.STARS && !endgameState.ending){
     endgameState.ending = true;
     endingPending = true;
-    console.log('[rating] 达成农场 5 星：' + info.score + ' 分');
+    dlog('[rating] 达成农场 5 星：' + info.score + ' 分');
   }
   if(ratingOpen) ratingRenderPanel();
   return info;
@@ -11524,7 +11925,7 @@ let bootSave = null;
 }
 if(bootSave){
   openStartMenu(bootSave);
-  console.log('[save] 发现存档 v' + bootSave.v + '（槽' + (curSlot + 1) + '），等待玩家选择');
+  dlog('[save] 发现存档 v' + bootSave.v + '（槽' + (curSlot + 1) + '），等待玩家选择');
 }else{
   sessionActive = true;
   spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */
@@ -11594,7 +11995,17 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   readSave, writeSave, deleteSave, hasSave, saveVersionOK, saveDay,
   saveGame, loadGame, wipeSave, newGame, saveSummary, fmtStamp,
   openStartMenu, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue,
+  get pendingSave(){ return pendingSave; }, set pendingSave(v){ pendingSave = v; },
   toggleSys, sysWipe,
+  /* 第 29 轮：暂停菜单 / 返回标题 / 设置 / 存档导出导入 / 体积与多标签页 */
+  togglePauseMenu, returnToTitle, exportSaveText, exportSave, importSaveText, closeAllPanelsForTitle,
+  get pauseMenuOpen(){ return pauseMenuOpen; }, set pauseMenuOpen(v){ togglePauseMenu(v); },
+  get optState(){ return optState; }, set optState(v){ optionsFromSave(v); },
+  get showFps(){ return showFps; }, get showGrid(){ return showGrid; }, get logOn(){ return logOn; },
+  setUiScale, setReduceMotion, setShowFps, setShowGrid, setDebugLog, applyOptions,
+  optionsToSave, optionsFromSave, utf8Bytes,
+  get lastWriteError(){ return lastWriteError; }, get lastWriteConflict(){ return lastWriteConflict; },
+  get lastSeenAt(){ return lastSeenAt; },
   sowCrop, waterTile, harvestCrop, clearDeadCrop, settleDay, refillCan, findWaterNear,
   applyRain, updateStats, recountTilled,
   cropDef, ripeness, cropStage, drawCrop, TILE_NAMES, T, hover, mouse,

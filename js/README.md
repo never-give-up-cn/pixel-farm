@@ -47,8 +47,10 @@ import './world/buildings.js';
 | `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、终局等 |
 | `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
-| `js/anim/` | 可复用的像素角色动画：调色板/像素绘制、农夫身体、工具特效、帧缓存与播放器 |
-| `js/anim-demo.js` | 动画测试页交互（不进 `main.js`） |
+| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 动物、像素绘制、帧缓存与播放器 |
+| `js/anim-demo.js` | 动画测试页入口与标签切换（不进 `main.js`） |
+| `js/anim-demo-plants.js` | 植物图鉴测试面板 |
+| `js/anim-demo-animals.js` | 动物图鉴测试面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -91,7 +93,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素角色动画层，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、作物与动物三套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -99,7 +101,9 @@ import './world/buildings.js';
 | `js/anim/farmer-body.js` | 关节基础姿势、站立/睡觉绘制、草帽与手臂 |
 | `js/anim/farmer-tools.js` | 锄头/斧头/镐/镰刀/水壶/鱼竿，土屑与水滴粒子 |
 | `js/anim/farmer.js` | 全部动作姿势；`drawFarmer(ctx, action, dir, phase)` |
-| `js/anim/animator.js` | 动作元数据、帧缓存、`Animator` 播放器 |
+| `js/anim/plants.js` | 12 种作物 × 5 个生长阶段；`drawPlant(ctx, type, stage, phase)` |
+| `js/anim/animals.js` | 6 种动物 × 4 个动作、帧缓存；`drawAnimal` / `AnimalAnimator` |
+| `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js
 import { Animator, DIR_DOWN } from './anim/animator.js';
@@ -111,10 +115,22 @@ animator.update(dt);
 animator.draw(ctx, x, y, 4);
 ```
 
+```js
+import { drawPlant } from './anim/plants.js';
+import { AnimalAnimator } from './anim/animals.js';
+
+drawPlant(ctx, 'tomato', 4, phase);              // 32×40 格
+const cow = new AnimalAnimator({ type: 'cow', action: 'eat', facing: -1 });
+cow.update(dt);
+cow.draw(ctx, x, y, 4);                          // 40×32 格
+```
+
 - `phase` 范围 0~1；循环动作最后一帧用 `frame / frames`，单次动作用 `frame / (frames - 1)`。
-- 每帧先画进 32×40 的离屏 canvas 并缓存，再按整数倍放大，保持像素边缘。
-- 朝左复用朝右的侧视图，在 `drawFarmer` 内水平翻转。
-- 新增动作时，在 `farmer.js` 里加姿势分支，并在 `animator.js` 的 `ACTIONS` 里登记帧数/FPS/是否循环。
+- 农夫每帧先画进 32×40 的离屏 canvas 并缓存；动物用 40×32 的格子，同样走帧缓存。
+- 朝左复用朝右的侧视图，在 `drawFarmer` / `drawAnimal` 内水平翻转。
+- 新增农夫动作时，在 `farmer.js` 里加姿势分支，并在 `animator.js` 的 `ACTIONS` 里登记帧数/FPS/是否循环。
+- 新增作物时，在 `plants.js` 的 `PLANTS` 里加数据，并按 `kind` 复用或新增绘制函数。
+- 新增动物时，在 `animals.js` 的 `ANIMALS` 里登记，并补一个 `drawXxx` 绘制函数。
 
 测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。
 

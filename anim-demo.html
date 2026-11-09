@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>农夫动画测试 · Pixel Farm</title>
+<title>像素动画测试 · Pixel Farm</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
@@ -30,11 +30,18 @@
   }
   #app{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
 
-  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:10px;border-bottom:2px solid var(--line)}
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
   header h1{font-size:20px;letter-spacing:2px;color:var(--accent)}
   header .sub{color:var(--muted);font-size:12px}
   header a{margin-left:auto;color:var(--accent-2);text-decoration:none;border:1px solid var(--line);padding:5px 10px;border-radius:3px}
   header a:hover{border-color:var(--accent-2);background:rgba(108,196,242,.08)}
+
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  .tabs button{font-size:13px;padding:7px 20px}
+  .tabs button.active{background:rgba(233,201,111,.16);border-color:var(--accent);color:var(--accent)}
+
+  .tab-panel{display:none;flex-direction:column;gap:14px}
+  .tab-panel.active{display:flex}
 
   main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:start}
 
@@ -58,20 +65,36 @@
   .slider output{color:var(--text)}
   .slider input{width:100%;accent-color:var(--accent)}
 
-  #status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#animal-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#animal-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
-  #stage{width:100%;max-width:520px;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#animal-stage{width:100%;max-width:520px;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#animal-gallery{overflow-x:auto;padding-bottom:4px}
+
+  /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
   .grow .dlabel{color:var(--accent);font-size:12px;text-align:center;border:1px solid var(--line);border-radius:3px;padding:4px 0;background:var(--panel-2)}
   .gcell{display:flex;flex-direction:column;align-items:center;gap:2px;background:#121820;border:1px solid #232e3a;border-radius:3px;padding:3px 0}
   .gcell canvas{width:32px;height:40px;display:block;image-rendering:pixelated}
   .gcell span{font-size:10px;color:var(--muted);white-space:nowrap}
+
+  /* 植物画廊：行 = 阶段，列 = 植物 */
+  .pgrid{display:grid;grid-template-columns:70px repeat(12, minmax(72px,1fr));gap:6px;align-items:center;min-width:1000px}
+  .phead{font-size:11px;color:var(--accent-2);text-align:center;padding:4px 0;white-space:nowrap}
+  .plabel{font-size:11px;color:var(--muted);text-align:center;border:1px solid var(--line);border-radius:3px;padding:4px 0;background:var(--panel-2)}
+  .pcell{display:flex;justify-content:center;background:#121820;border:1px solid #232e3a;border-radius:3px;padding:3px 0}
+  .pcell canvas{width:64px;height:80px;display:block;image-rendering:pixelated}
+
+  /* 动物画廊：行 = 动物，列 = 动作 */
+  .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
+  .ahead{font-size:11px;color:var(--accent-2);text-align:center;padding:4px 0}
+  .alabel{font-size:12px;color:var(--accent);text-align:center;border:1px solid var(--line);border-radius:3px;padding:4px 0;background:var(--panel-2);height:70px;display:flex;align-items:center;justify-content:center}
+  .acell{display:flex;justify-content:center;background:#121820;border:1px solid #232e3a;border-radius:3px;padding:3px 0}
+  .acell canvas{width:80px;height:64px;display:block;image-rendering:pixelated}
 
   @media (max-width:820px){
     main{grid-template-columns:1fr}
@@ -83,61 +106,165 @@
 <body>
 <div id="app">
   <header>
-    <h1>农夫动画测试</h1>
-    <div class="sub">32 × 40 像素 · 程序化绘制 · 四方向</div>
+    <h1>像素动画测试</h1>
+    <div class="sub">农夫 · 植物 · 动物 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
-  <main>
-    <aside class="panel">
-      <section>
-        <h2>动作</h2>
-        <div id="actions" class="btn-grid"></div>
-      </section>
+  <nav class="tabs">
+    <button data-tab="farmer" class="active">农夫</button>
+    <button data-tab="plants">植物</button>
+    <button data-tab="animals">动物</button>
+  </nav>
 
-      <section>
-        <h2>朝向</h2>
-        <div id="dirs" class="btn-row"></div>
-      </section>
+  <!-- ================= 农夫 ================= -->
+  <section id="tab-farmer" class="tab-panel active">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>动作</h2>
+          <div id="actions" class="btn-grid"></div>
+        </section>
 
-      <section>
-        <h2>播放</h2>
-        <div class="btn-row">
-          <button id="btn-play">暂停</button>
-          <button id="btn-prev">上一帧</button>
-          <button id="btn-next">下一帧</button>
-          <button id="btn-replay">重播</button>
-        </div>
-        <label class="slider">
-          速度 <output id="speed-out">1.0×</output>
-          <input id="speed" type="range" min="0.1" max="3" step="0.1" value="1">
-        </label>
-        <label class="slider">
-          缩放 <output id="zoom-out">9×</output>
-          <input id="zoom" type="range" min="2" max="11" step="1" value="9">
-        </label>
-        <div class="btn-row" style="margin-top:8px">
-          <button id="btn-grid" class="toggle on">网格</button>
-          <button id="btn-bg" class="toggle on">背景</button>
-          <button id="btn-png">导出 PNG</button>
-        </div>
-      </section>
+        <section>
+          <h2>朝向</h2>
+          <div id="dirs" class="btn-row"></div>
+        </section>
 
-      <section>
-        <h2>状态</h2>
-        <dl id="status"></dl>
-      </section>
-    </aside>
+        <section>
+          <h2>播放</h2>
+          <div class="btn-row">
+            <button id="btn-play">暂停</button>
+            <button id="btn-prev">上一帧</button>
+            <button id="btn-next">下一帧</button>
+            <button id="btn-replay">重播</button>
+          </div>
+          <label class="slider">
+            速度 <output id="speed-out">1.0×</output>
+            <input id="speed" type="range" min="0.1" max="3" step="0.1" value="1">
+          </label>
+          <label class="slider">
+            缩放 <output id="zoom-out">9×</output>
+            <input id="zoom" type="range" min="2" max="11" step="1" value="9">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="btn-grid" class="toggle on">网格</button>
+            <button id="btn-bg" class="toggle on">背景</button>
+            <button id="btn-png">导出 PNG</button>
+          </div>
+        </section>
 
-    <section class="stage-wrap">
-      <canvas id="stage" width="480" height="520"></canvas>
-      <div class="hint">← → 切换朝向 · ↑ ↓ 切换动作 · 空格 播放/暂停</div>
+        <section>
+          <h2>状态</h2>
+          <dl id="status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="stage" width="480" height="520"></canvas>
+        <div class="hint">← → 切换朝向 · ↑ ↓ 切换动作 · 空格 播放/暂停</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部动作 × 四方向（自动循环预览）</h2>
+      <div id="gallery"></div>
     </section>
-  </main>
+  </section>
 
-  <section class="gallery">
-    <h2>全部动作 × 四方向（自动循环预览）</h2>
-    <div id="gallery"></div>
+  <!-- ================= 植物 ================= -->
+  <section id="tab-plants" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>植物</h2>
+          <div id="plant-list" class="btn-grid"></div>
+        </section>
+
+        <section>
+          <h2>生长阶段</h2>
+          <div id="plant-stages" class="btn-row"></div>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="plant-grow" class="toggle on">暂停生长</button>
+            <button id="plant-grid" class="toggle on">网格</button>
+            <button id="plant-png">导出 PNG</button>
+          </div>
+          <label class="slider">
+            缩放 <output id="plant-zoom-out">10×</output>
+            <input id="plant-zoom" type="range" min="6" max="11" step="1" value="10">
+          </label>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="plant-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="plant-stage" width="480" height="520"></canvas>
+        <div class="hint">生长动画每 0.9 秒推进一个阶段 · 点击阶段可暂停查看</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部植物 × 生长阶段</h2>
+      <div id="plant-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= 动物 ================= -->
+  <section id="tab-animals" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>动物</h2>
+          <div id="animal-list" class="btn-grid"></div>
+        </section>
+
+        <section>
+          <h2>动作</h2>
+          <div id="animal-actions" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>朝向</h2>
+          <div id="animal-dirs" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>播放</h2>
+          <div class="btn-row">
+            <button id="animal-play">暂停</button>
+            <button id="animal-grid" class="toggle on">网格</button>
+            <button id="animal-png">导出 PNG</button>
+          </div>
+          <label class="slider">
+            速度 <output id="animal-speed-out">1.0×</output>
+            <input id="animal-speed" type="range" min="0.1" max="3" step="0.1" value="1">
+          </label>
+          <label class="slider">
+            缩放 <output id="animal-zoom-out">10×</output>
+            <input id="animal-zoom" type="range" min="6" max="11" step="1" value="10">
+          </label>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="animal-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="animal-stage" width="480" height="520"></canvas>
+        <div class="hint">切换动物 / 动作 / 朝向 · 画廊自动循环</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部动物 × 动作（自动循环预览）</h2>
+      <div id="animal-gallery"></div>
+    </section>
   </section>
 </div>
 

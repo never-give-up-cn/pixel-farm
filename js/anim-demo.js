@@ -6,6 +6,8 @@ import {
   CELL_W, CELL_H, DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP
 } from './anim/animator.js';
 import { mulberry32, ellipse } from './anim/pixel.js';
+import { initPlantPanel } from './anim-demo-plants.js';
+import { initAnimalPanel } from './anim-demo-animals.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -19,7 +21,8 @@ const state = {
   zoom: 9,
   grid: true,
   bg: true,
-  speed: 1
+  speed: 1,
+  tab: 'farmer'
 };
 
 const animator = new Animator({ action: 'idle', dir: DIR_DOWN, playing: true });
@@ -418,6 +421,7 @@ const DIR_ORDER = [DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP];
 
 window.addEventListener('keydown', e => {
   if (e.target instanceof HTMLInputElement) return;
+  if (state.tab !== 'farmer') return;
   const k = e.key.toLowerCase();
 
   if (k === ' ') {
@@ -462,9 +466,15 @@ window.addEventListener('keydown', e => {
 let last = performance.now();
 
 function tick(dt) {
-  if (animator.playing) animator.update(dt);
-  updateGallery(dt);
-  render();
+  if (state.tab === 'farmer') {
+    if (animator.playing) animator.update(dt);
+    updateGallery(dt);
+    render();
+  } else if (state.tab === 'plants') {
+    plantPanel.tick(dt);
+  } else {
+    animalPanel.tick(dt);
+  }
 }
 
 function loop(now) {
@@ -475,6 +485,23 @@ function loop(now) {
 }
 
 /* 初始化 */
+const plantPanel = initPlantPanel();
+const animalPanel = initAnimalPanel();
+
+const tabButtons = [...document.querySelectorAll('.tabs button')];
+function setTab(name) {
+  if (!['farmer', 'plants', 'animals'].includes(name)) return;
+  state.tab = name;
+  for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
+  for (const p of document.querySelectorAll('.tab-panel')) {
+    p.classList.toggle('active', p.id === `tab-${name}`);
+  }
+  if (name === 'farmer') render();
+  else if (name === 'plants') plantPanel.activate();
+  else animalPanel.activate();
+}
+for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
+
 preloadAll();
 buildGallery();
 syncButtons();
@@ -494,5 +521,8 @@ window.__animDemo = {
   stepFrame,
   togglePlay,
   getFrame,
-  ACTION_MAP
+  ACTION_MAP,
+  plantPanel,
+  animalPanel,
+  setTab
 };

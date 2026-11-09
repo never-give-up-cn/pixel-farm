@@ -3,6 +3,7 @@
 
 import {
   CROPS, CROP_MAP, CROP_SEASONS, cropMatchesSeason,
+  nextSeason, firstSeason, cropSurvivesSeason, drawWithered, MULTI_SEASON_IDS,
   drawCrop, CROP_W, CROP_H
 } from './anim/sdv-crops.js';
 import { mulberry32, ellipse } from './anim/pixel.js';
@@ -42,7 +43,10 @@ export function initPlantPanel() {
     hold: 0,
     zoom: 10,
     grid: true,
-    season: '全部',
+    season: '夏',
+    withered: false,
+    witherPreview: false,
+    filter: '全部',
     time: 0
   };
 
@@ -58,6 +62,9 @@ export function initPlantPanel() {
   const dayOut = document.getElementById('crop-day-out');
   const daysOut = document.getElementById('crop-days-out');
   const stripHost = document.getElementById('crop-filmstrip');
+  const seasonBtn = document.getElementById('plant-next-season');
+  const witherBtn = document.getElementById('plant-wither');
+  const seasonNote = document.getElementById('plant-season-note');
 
   /* ---------- 背景 ---------- */
   const bg = (() => {
@@ -107,7 +114,7 @@ export function initPlantPanel() {
     b.textContent = s;
     b.dataset.season = s;
     b.addEventListener('click', () => {
-      state.season = s;
+      state.filter = s;
       applyFilter();
       sync();
     });
@@ -127,13 +134,13 @@ export function initPlantPanel() {
     let n = 0;
     for (const b of plantHost.children) {
       const c = CROP_MAP[b.dataset.crop];
-      const show = cropMatchesSeason(c, state.season);
+      const show = cropMatchesSeason(c, state.filter);
       b.style.display = show ? '' : 'none';
       if (show) n++;
     }
     countEl.textContent = `（${n}）`;
     for (const b of seasonHost.children) {
-      b.classList.toggle('active', b.dataset.season === state.season);
+      b.classList.toggle('active', b.dataset.season === state.filter);
     }
   }
 
@@ -159,12 +166,40 @@ export function initPlantPanel() {
       cell.addEventListener('click', () => setDay(d, false));
       stripHost.appendChild(cell);
     }
+
+    /* 通用枯萎帧：所有作物共用，放在逐日帧末尾 */
+    const dead = document.createElement('div');
+    dead.className = 'fstrip dead';
+    dead.dataset.day = 'dead';
+    dead.title = '通用枯萎帧（换季时使用）';
+    const dcv = document.createElement('canvas');
+    dcv.width = CROP_W;
+    dcv.height = CROP_H;
+    const dg = dcv.getContext('2d');
+    dg.imageSmoothingEnabled = false;
+    drawWithered(dg);
+    const dlabel = document.createElement('span');
+    dlabel.textContent = '枯';
+    dead.appendChild(dcv);
+    dead.appendChild(dlabel);
+    dead.addEventListener('click', () => {
+      state.witherPreview = true;
+      state.playing = false;
+      sync();
+      render();
+    });
+    stripHost.appendChild(dead);
+
     markStrip();
   }
 
   function markStrip() {
     for (const cell of stripHost.children) {
-      cell.classList.toggle('active', Number(cell.dataset.day) === state.day);
+      const isDead = cell.dataset.day === 'dead';
+      const active = isDead
+        ? (state.withered || state.witherPreview)
+        : (!state.withered && !state.witherPreview && Number(cell.dataset.day) === state.day);
+      cell.classList.toggle('active', active);
     }
   }
 
@@ -181,27 +216,54 @@ export function initPlantPanel() {
     gridBtn.classList.toggle('on', state.grid);
     zoomInput.value = String(state.zoom);
     zoomOut.textContent = `${state.zoom}×`;
+    witherBtn.classList.toggle('on', state.witherPreview);
+
+    const next = nextSeason(state.season);
+    const willLive = cropSurvivesSeason(c, next);
+    const multi = MULTI_SEASON_IDS.includes(c.id);
+    if (state.withered) {
+      seasonNote.textContent = `换季失败：${state.season} 季不在 ${c.name} 的生长季（${c.season}）内，显示通用枯萎帧。`;
+    } else if (state.witherPreview) {
+      seasonNote.textContent = '通用枯萎帧预览：所有作物共用这一帧；换季时新季节不在生长季内就会变成它。';
+    } else if (c.indoorOnly) {
+      seasonNote.textContent = '仙人掌果只能种在温室 / 姜岛 / 室内花盆，不参与农场换季。';
+    } else if (multi && cropSurvivesSeason(c, state.season)) {
+      seasonNote.textContent = `多季作物，在 ${state.season} 季存活；下一季 ${next} ${willLive ? '继续存活' : '会枯萎'}。`;
+    } else {
+      seasonNote.textContent = `下一季 ${next}：${willLive ? '存活' : '会枯萎'} · 生长季：${c.season}`;
+    }
+
     markStrip();
   }
 
   function status() {
     const c = CROP_MAP[state.crop];
+    const next = nextSeason(state.season);
+    const willLive = cropSurvivesSeason(c, next);
+    const seasonState = state.withered ? '已枯萎'
+      : state.witherPreview ? '枯萎帧预览'
+      : `${next} 季${willLive ? '存活' : '枯萎'}`;
     statusEl.innerHTML =
       `<dt>作物</dt><dd>${c.name} (${c.en})</dd>` +
-      `<dt>季节</dt><dd>${c.season}</dd>` +
+      `<dt>生长季</dt><dd>${c.season}</dd>` +
       `<dt>成熟</dt><dd>${c.days} 天</dd>` +
       `<dt>再收</dt><dd>${c.regrow ? `每 ${c.regrow} 天` : '—'}</dd>` +
-      `<dt>当前</dt><dd>第 ${state.day} / ${c.days} 天</dd>` +
+      `<dt>当前</dt><dd>第 ${state.day} / ${c.days} 天 · ${state.season} 季</dd>` +
+      `<dt>换季</dt><dd>${seasonState}</dd>` +
       `<dt>形态</dt><dd>${KIND_NAMES[c.kind] || c.kind}</dd>`;
   }
 
   /* ---------- 交互 ---------- */
   function selectCrop(id, autoplay) {
     if (!CROP_MAP[id]) return;
+    const c = CROP_MAP[id];
     state.crop = id;
     state.day = 1;
     state.timer = 0;
     state.hold = 0;
+    state.season = firstSeason(c);
+    state.withered = false;
+    state.witherPreview = false;
     state.playing = !!autoplay;
     buildFilmstrip();
     sync();
@@ -216,12 +278,23 @@ export function initPlantPanel() {
     state.playing = !!play;
     state.timer = 0;
     state.hold = 0;
+    state.withered = false;
+    state.witherPreview = false;
+    if (!cropSurvivesSeason(c, state.season)) state.season = firstSeason(c);
     sync();
     render();
   }
 
   growBtn.addEventListener('click', () => {
-    if (!state.playing && state.day >= CROP_MAP[state.crop].days) {
+    const c = CROP_MAP[state.crop];
+    if (state.withered || state.witherPreview) {
+      state.withered = false;
+      state.witherPreview = false;
+      state.season = firstSeason(c);
+      state.day = 1;
+      state.timer = 0;
+      state.hold = 0;
+    } else if (!state.playing && state.day >= c.days) {
       state.day = 1;
       state.timer = 0;
       state.hold = 0;
@@ -243,10 +316,34 @@ export function initPlantPanel() {
   });
 
   dayInput.addEventListener('input', () => {
+    const c = CROP_MAP[state.crop];
     state.day = Number(dayInput.value) | 0;
     state.playing = false;
     state.timer = 0;
     state.hold = 0;
+    state.withered = false;
+    state.witherPreview = false;
+    if (!cropSurvivesSeason(c, state.season)) state.season = firstSeason(c);
+    sync();
+    render();
+  });
+
+  seasonBtn.addEventListener('click', () => {
+    const c = CROP_MAP[state.crop];
+    const next = nextSeason(state.season);
+    state.season = next;
+    if (!state.withered) state.withered = !cropSurvivesSeason(c, next);
+    state.witherPreview = false;
+    state.playing = false;
+    state.timer = 0;
+    state.hold = 0;
+    sync();
+    render();
+  });
+
+  witherBtn.addEventListener('click', () => {
+    state.witherPreview = !state.witherPreview;
+    state.playing = false;
     sync();
     render();
   });
@@ -283,7 +380,8 @@ export function initPlantPanel() {
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(z, z);
-    drawCrop(ctx, c, state.day, phase);
+    if (state.withered || state.witherPreview) drawWithered(ctx);
+    else drawCrop(ctx, c, state.day, phase);
     ctx.restore();
 
     ctx.fillStyle = 'rgba(10, 14, 12, 0.72)';
@@ -291,7 +389,8 @@ export function initPlantPanel() {
     ctx.fillStyle = '#e9c96f';
     ctx.font = '13px "Microsoft YaHei", monospace';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${c.name} · 第 ${state.day} / ${c.days} 天`, 14, H - 27);
+    const deadTag = state.withered ? ' · 已枯萎' : state.witherPreview ? ' · 枯萎帧' : '';
+    ctx.fillText(`${c.name} · 第 ${state.day} / ${c.days} 天 · ${state.season} 季${deadTag}`, 14, H - 27);
     ctx.fillStyle = '#8b9aab';
     ctx.font = '11px monospace';
     ctx.fillText(`${c.en}   ${c.season}   ${c.days}d${c.regrow ? ` +${c.regrow}d regrow` : ''}`, 14, H - 10);
@@ -302,7 +401,8 @@ export function initPlantPanel() {
   function exportPng() {
     const c = CROP_MAP[state.crop];
     const cell = makeCanvas(CROP_W, CROP_H);
-    drawCrop(cell.ctx, c, state.day, 0.5);
+    if (state.withered || state.witherPreview) drawWithered(cell.ctx);
+    else drawCrop(cell.ctx, c, state.day, 0.5);
     const scale = 8;
     const out = document.createElement('canvas');
     out.width = CROP_W * scale;
@@ -310,7 +410,8 @@ export function initPlantPanel() {
     const g = out.getContext('2d');
     g.imageSmoothingEnabled = false;
     g.drawImage(cell.canvas, 0, 0, out.width, out.height);
-    download(out, `sdv-${c.id}-day${state.day}.png`);
+    const tag = (state.withered || state.witherPreview) ? 'withered' : `day${state.day}`;
+    download(out, `sdv-${c.id}-${tag}.png`);
   }
 
   /* ---------- 全部作物成熟图鉴 ---------- */

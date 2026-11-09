@@ -91,6 +91,9 @@
   .fstrip.active{border-color:var(--accent);background:rgba(233,201,111,.13)}
   .fstrip canvas{width:32px;height:40px;image-rendering:pixelated;display:block}
   .fstrip span{font-size:9px;color:var(--muted);line-height:1}
+  .fstrip.dead{border-color:#5a4030}
+  .fstrip.dead span{color:#d09a6a}
+  .note{font-size:11px;line-height:1.65;color:var(--muted);margin-top:7px}
   .cgrid{display:grid;grid-template-columns:repeat(10,minmax(64px,1fr));gap:6px;min-width:760px}
   .ccell{display:flex;flex-direction:column;align-items:center;gap:1px;background:#121820;border:1px solid #232e3a;border-radius:3px;padding:3px 0;cursor:pointer}
   .ccell:hover{border-color:#3d4c5e;background:#18212c}
@@ -186,7 +189,7 @@
     <main>
       <aside class="panel">
         <section>
-          <h2>季节</h2>
+          <h2>筛选季节</h2>
           <div id="crop-seasons" class="btn-row"></div>
         </section>
 
@@ -210,6 +213,16 @@
             缩放 <output id="plant-zoom-out">10×</output>
             <input id="plant-zoom" type="range" min="6" max="11" step="1" value="10">
           </label>
+        </section>
+
+        <section>
+          <h2>换季测试</h2>
+          <div class="btn-row">
+            <button id="plant-next-season">换到下一季</button>
+            <button id="plant-wither" class="toggle">枯萎帧</button>
+          </div>
+          <div class="note">多季作物：上古水果 / 咖啡豆 / 玉米 / 向日葵 / 小麦</div>
+          <div id="plant-season-note" class="note"></div>
         </section>
 
         <section>

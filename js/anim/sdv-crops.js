@@ -68,7 +68,7 @@ export const CROPS = [
 
   // ---------- 特殊 / 全季节 ----------
   { id:'ancient_fruit',  name:'上古水果', en:'Ancient Fruit',  season:'春夏秋',days:28,regrow:7, kind:'tree',   leaf:'#3f7a4a', leafDark:'#2a5a32', produce:{ shape:'round',  c1:'#6a3a9a', c2:'#a06ac0', size:5 }, special:true },
-  { id:'cactus_fruit',   name:'仙人掌果', en:'Cactus Fruit',   season:'全年', days:12, regrow:3, kind:'tree',   leaf:'#4a8a3a', leafDark:'#2f6a28', produce:{ shape:'cactus', c1:'#d04a7a', c2:'#f08aa0', size:4 }, special:true },
+  { id:'cactus_fruit',   name:'仙人掌果', en:'Cactus Fruit',   season:'全年', days:12, regrow:3, kind:'tree',   leaf:'#4a8a3a', leafDark:'#2f6a28', produce:{ shape:'cactus', c1:'#d04a7a', c2:'#f08aa0', size:4 }, special:true, indoorOnly:true },
   { id:'fiber',          name:'纤维',     en:'Fiber',          season:'全年', days:7,  regrow:0, kind:'fiber',  leaf:'#5fae4a', leafDark:'#3f7f32', produce:{ shape:'grass',  c1:'#5fae4a', c2:'#8ad06a', size:0 }, special:true },
   { id:'qi_fruit',       name:'齐瓜',     en:'Qi Fruit',       season:'全年', days:4,  regrow:0, kind:'bush',   leaf:'#2f6f3a', leafDark:'#1e4f28', produce:{ shape:'round',  c1:'#3a8ad0', c2:'#7ac0f0', size:4 }, special:true }
 ];
@@ -76,6 +76,60 @@ export const CROPS = [
 export const CROP_MAP = Object.fromEntries(CROPS.map(c => [c.id, c]));
 
 export const CROP_SEASONS = ['全部', '春', '夏', '秋', '冬', '特殊'];
+
+/* 星露谷换季规则：
+ * - 每个季节第 1 天，新季节不在作物的生长季节表里的植株会枯萎（包括成熟可收的）。
+ * - 多季作物只有在新季节仍属于其生长季节时才会继续生长，官方列出的多季作物：
+ *   上古水果、咖啡豆、玉米、向日葵、小麦。
+ * - 仙人掌果虽然数据上是全季节，但 1.6 只能在温室 / 姜岛 / 室内花盆种植，不参与农场换季。
+ * - 纤维、齐瓜属于特殊全年作物，这里按“换季存活”处理并单独标注。 */
+export const SEASONS = ['春', '夏', '秋', '冬'];
+export const MULTI_SEASON_IDS = ['ancient_fruit', 'coffee_bean', 'corn', 'sunflower', 'wheat'];
+
+export function nextSeason(season) {
+  const i = SEASONS.indexOf(season);
+  return SEASONS[(i + 1) % SEASONS.length];
+}
+
+export function firstSeason(crop) {
+  for (const s of SEASONS) if (crop.season.includes(s)) return s;
+  return '春';
+}
+
+export function cropSurvivesSeason(crop, season) {
+  if (crop.season.includes('全年')) return true;
+  return crop.season.includes(season);
+}
+
+/* 通用枯萎帧：所有作物共用，换季时新季节不在生长季节表里就画这一帧。 */
+export function drawWithered(g) {
+  g.save();
+  g.imageSmoothingEnabled = false;
+
+  /* 土堆 */
+  ellipse(g, 16, CROP_BASE + 1, 6, 2, 'rgba(74, 52, 30, 0.4)');
+  R(g, 11, CROP_BASE, 10, 1, '#6b4a2b');
+  R(g, 13, CROP_BASE - 1, 2, 1, '#8a6238');
+
+  /* 弯折的枯茎 */
+  line(g, 16, CROP_BASE, 12, CROP_BASE - 5, '#7a6234', 2);
+  line(g, 12, CROP_BASE - 5, 16, CROP_BASE - 11, '#8a7240', 2);
+  R(g, 15, CROP_BASE - 12, 2, 2, '#6b5730');
+
+  /* 下垂的枯叶 */
+  line(g, 12, CROP_BASE - 5, 8, CROP_BASE - 2, '#9c8340', 2);
+  line(g, 12, CROP_BASE - 6, 7, CROP_BASE - 7, '#a8913f', 1);
+  line(g, 14, CROP_BASE - 8, 18, CROP_BASE - 4, '#9c8340', 2);
+  line(g, 15, CROP_BASE - 10, 20, CROP_BASE - 11, '#a8913f', 1);
+  R(g, 7, CROP_BASE - 3, 2, 1, '#8a7240');
+  R(g, 19, CROP_BASE - 3, 2, 1, '#8a7240');
+
+  /* 干枯顶芽 */
+  R(g, 15, CROP_BASE - 14, 3, 2, '#7a6234');
+  R(g, 14, CROP_BASE - 15, 1, 1, '#9c8340');
+
+  g.restore();
+}
 
 export function cropMatchesSeason(crop, filter) {
   if (filter === '全部') return true;

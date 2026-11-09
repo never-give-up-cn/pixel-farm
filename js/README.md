@@ -101,7 +101,7 @@ import './world/buildings.js';
 | `js/anim/farmer-body.js` | 关节基础姿势、站立/睡觉绘制、草帽与手臂 |
 | `js/anim/farmer-tools.js` | 锄头/斧头/镐/镰刀/水壶/鱼竿，土屑与水滴粒子 |
 | `js/anim/farmer.js` | 全部动作姿势；`drawFarmer(ctx, action, dir, phase)` |
-| `js/anim/sdv-crops.js` | 星露谷 50 种作物 × 逐日生长；`drawCrop(ctx, type, day, phase)`，一帧 = 一天 |
+| `js/anim/sdv-crops.js` | 星露谷 50 种作物 × 逐日生长；`drawCrop(ctx, type, day, phase)`，一帧 = 一天；`drawWithered(ctx)` 为所有作物共用的枯萎帧 |
 | `js/anim/animals.js` | 6 种动物 × 4 个动作、帧缓存；`drawAnimal` / `AnimalAnimator` |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
@@ -130,6 +130,7 @@ cow.draw(ctx, x, y, 4);                          // 40×32 格
 - 朝左复用朝右的侧视图，在 `drawFarmer` / `drawAnimal` 内水平翻转。
 - 新增农夫动作时，在 `farmer.js` 里加姿势分支，并在 `animator.js` 的 `ACTIONS` 里登记帧数/FPS/是否循环。
 - 新增作物时，在 `sdv-crops.js` 的 `CROPS` 里加数据；`day` 直接对应生长天数，一帧 = 一天。
+- 换季规则：新季节不在作物的 `season` 里时，用 `drawWithered` 画通用枯萎帧；官方多季作物为上古水果、咖啡豆、玉米、向日葵、小麦。
 - 新增动物时，在 `animals.js` 的 `ANIMALS` 里登记，并补一个 `drawXxx` 绘制函数。
 
 测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。作物数据按 Stardew Valley 1.6.15 作物表整理，`day` 从 1 到 `days`，一帧对应一天。

@@ -55,6 +55,7 @@ import './world/buildings.js';
 | `js/anim-demo-minerals.js` | 矿物 / 宝石图鉴测试面板 |
 | `js/anim-demo-fish.js` | 鱼类图鉴测试面板 |
 | `js/anim-demo-buildings.js` | 农场建筑图鉴测试面板 |
+| `js/anim-demo-npcs.js` | NPC 头像与行走测试面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -97,7 +98,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑与 6 种动物七套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、34 位村民与 6 种动物八套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -111,6 +112,7 @@ import './world/buildings.js';
 | `js/anim/minerals.js` | 53 种矿物/宝石图标；`drawMineral(ctx, mineral, phase)`，32×32 |
 | `js/anim/fish.js` | 72 种鱼类/水生生物图标；`drawFishIcon(ctx, fish, phase)`，40×32 |
 | `js/anim/buildings.js` | 25 种农场建筑；`drawBuilding(ctx, building, phase)`，72×64 |
+| `js/anim/npcs.js` | 34 位村民头像与四方向行走；`drawNpcPortrait` / `drawNpcWalk` |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js

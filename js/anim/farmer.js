@@ -175,6 +175,7 @@ export function drawFarmer(g, action, dir, phase, opts = {}) {
 
   const p = actionPose(action, d, phase);
   p.noHat = !!opts.noHat;
+  p.outfit = opts.outfit || null;
   if (p.shake) g.translate(p.shake, 0);
 
   if (p.asleep) {

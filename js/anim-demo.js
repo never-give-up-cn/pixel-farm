@@ -20,6 +20,7 @@ import { initEquipmentPanel } from './anim-demo-equipment.js';
 import { initHatPanel } from './anim-demo-hats.js';
 import { initClothesPanel } from './anim-demo-clothes.js';
 import { initInteriorPanel } from './anim-demo-interior.js';
+import { initResourcePanel } from './anim-demo-resources.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -508,6 +509,8 @@ function tick(dt) {
     clothesPanel.tick(dt);
   } else if (state.tab === 'interior') {
     interiorPanel.tick(dt);
+  } else if (state.tab === 'resources') {
+    resourcePanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -535,10 +538,11 @@ const equipmentPanel = initEquipmentPanel();
 const hatPanel = initHatPanel();
 const clothesPanel = initClothesPanel();
 const interiorPanel = initInteriorPanel();
+const resourcePanel = initResourcePanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -558,6 +562,7 @@ function setTab(name) {
   else if (name === 'hats') hatPanel.activate();
   else if (name === 'clothes') clothesPanel.activate();
   else if (name === 'interior') interiorPanel.activate();
+  else if (name === 'resources') resourcePanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -596,5 +601,6 @@ window.__animDemo = {
   hatPanel,
   clothesPanel,
   interiorPanel,
+  resourcePanel,
   setTab
 };

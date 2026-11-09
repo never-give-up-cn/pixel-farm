@@ -93,7 +93,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、作物与动物三套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物与 6 种动物三套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -101,7 +101,7 @@ import './world/buildings.js';
 | `js/anim/farmer-body.js` | 关节基础姿势、站立/睡觉绘制、草帽与手臂 |
 | `js/anim/farmer-tools.js` | 锄头/斧头/镐/镰刀/水壶/鱼竿，土屑与水滴粒子 |
 | `js/anim/farmer.js` | 全部动作姿势；`drawFarmer(ctx, action, dir, phase)` |
-| `js/anim/plants.js` | 12 种作物 × 5 个生长阶段；`drawPlant(ctx, type, stage, phase)` |
+| `js/anim/sdv-crops.js` | 星露谷 50 种作物 × 逐日生长；`drawCrop(ctx, type, day, phase)`，一帧 = 一天 |
 | `js/anim/animals.js` | 6 种动物 × 4 个动作、帧缓存；`drawAnimal` / `AnimalAnimator` |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
@@ -116,10 +116,10 @@ animator.draw(ctx, x, y, 4);
 ```
 
 ```js
-import { drawPlant } from './anim/plants.js';
+import { drawCrop } from './anim/sdv-crops.js';
 import { AnimalAnimator } from './anim/animals.js';
 
-drawPlant(ctx, 'tomato', 4, phase);              // 32×40 格
+drawCrop(ctx, 'tomato', 6, phase);               // 第 6 天，32×40 格
 const cow = new AnimalAnimator({ type: 'cow', action: 'eat', facing: -1 });
 cow.update(dt);
 cow.draw(ctx, x, y, 4);                          // 40×32 格
@@ -129,10 +129,10 @@ cow.draw(ctx, x, y, 4);                          // 40×32 格
 - 农夫每帧先画进 32×40 的离屏 canvas 并缓存；动物用 40×32 的格子，同样走帧缓存。
 - 朝左复用朝右的侧视图，在 `drawFarmer` / `drawAnimal` 内水平翻转。
 - 新增农夫动作时，在 `farmer.js` 里加姿势分支，并在 `animator.js` 的 `ACTIONS` 里登记帧数/FPS/是否循环。
-- 新增作物时，在 `plants.js` 的 `PLANTS` 里加数据，并按 `kind` 复用或新增绘制函数。
+- 新增作物时，在 `sdv-crops.js` 的 `CROPS` 里加数据；`day` 直接对应生长天数，一帧 = 一天。
 - 新增动物时，在 `animals.js` 的 `ANIMALS` 里登记，并补一个 `drawXxx` 绘制函数。
 
-测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。
+测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。作物数据按 Stardew Valley 1.6.15 作物表整理，`day` 从 1 到 `days`，一帧对应一天。
 
 ## 模块桥（过渡方案）
 

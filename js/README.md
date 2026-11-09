@@ -47,7 +47,7 @@ import './world/buildings.js';
 | `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、终局等 |
 | `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
-| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物、像素绘制、帧缓存与播放器 |
+| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内、像素绘制、帧缓存与播放器 |
 | `js/anim-demo.js` | 动画测试页入口与标签切换（不进 `main.js`） |
 | `js/anim-demo-plants.js` | 植物图鉴测试面板 |
 | `js/anim-demo-animals.js` | 动物图鉴测试面板 |
@@ -62,6 +62,7 @@ import './world/buildings.js';
 | `js/anim-demo-equipment.js` | 武器 / 戒指 / 靴子图鉴测试面板 |
 | `js/anim-demo-hats.js` | 帽子图鉴与农夫试戴测试面板 |
 | `js/anim-demo-clothes.js` | 衬衫 / 裤子纸娃娃测试面板 |
+| `js/anim-demo-interior.js` | 家具 / 墙纸 / 地板房间预览面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -104,7 +105,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子与 80 件衣物十四套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子、80 件衣物与 152 件室内物品十五套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -125,6 +126,7 @@ import './world/buildings.js';
 | `js/anim/equipment.js` | 110 件装备图标（62 武器 / 30 戒指 / 18 靴子）；`drawEquipment(ctx, item, phase)`，32×32 |
 | `js/anim/hats.js` | 90 顶帽子图标；`drawHatIcon(ctx, hat, phase)`（32×32）与 `drawHatOnFarmer(ctx, hat, dir, phase)` 试戴叠加 |
 | `js/anim/clothes.js` | 80 件衣物图标（64 衬衫 / 16 裤子）；`drawClothingIcon` 与 `makeOutfit(shirt, pants)` 纸娃娃参数 |
+| `js/anim/interior.js` | 152 件室内物品（96 家具 / 32 墙纸 / 24 地板）；`drawFurnitureIcon`、`drawWallpaperTile`、`drawFloorTile` |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js
@@ -156,6 +158,7 @@ cow.draw(ctx, x, y, 4);                          // 40×32 格
 - 新增动物时，在 `animals.js` 的 `ANIMALS` 里登记，并补一个 `drawXxx` 绘制函数。
 - 给农夫叠加帽子时用 `drawFarmer(ctx, action, dir, phase, { noHat: true })` 先隐藏默认草帽，再调用 `drawHatOnFarmer`。
 - 换装时把 `makeOutfit(shirt, pants)` 的结果传给 `drawFarmer` 的 `{ outfit }`，即可替换上衣、裤子、裙子和袖子。
+- 室内墙纸/地板用 `drawWallpaperTile` / `drawFloorTile` 生成 32×32 贴图，再通过 `createPattern` 平铺。
 
 测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。作物数据按 Stardew Valley 1.6.15 作物表整理，`day` 从 1 到 `days`，一帧对应一天。
 

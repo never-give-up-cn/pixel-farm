@@ -191,6 +191,12 @@ function drawPortrait(g, n) {
     R(g, 33, 30, 7, 1, '#2a2a2a');
     R(g, 31, 28, 2, 1, '#2a2a2a');
   }
+  /* 眼罩 */
+  if (n.eyepatch) {
+    R(g, 32, 26, 9, 6, '#1a1a1a');
+    R(g, 32, 26, 9, 1, '#3a3a3a');
+    line(g, 24, 27, 44, 25, '#2a2a2a', 1);
+  }
 
   /* 胡子 / 八字胡 / 胡茬 */
   if (n.beard) {
@@ -338,6 +344,10 @@ function drawWalk(g, n, dir, frame) {
   if (n.glasses && !back) {
     R(g, cx - 4, headY + 2, 4, 1, '#2a2a2a');
     R(g, cx, headY + 2, 4, 1, '#2a2a2a');
+  }
+  if (n.eyepatch && !back) {
+    R(g, cx + 1, headY + 2, 4, 3, '#1a1a1a');
+    line(g, cx - 4, headY + 3, cx + 5, headY + 2, '#2a2a2a', 1);
   }
   /* 帽子 / 头盔 */
   if (n.hat === 'wizard') {

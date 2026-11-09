@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>农夫动画测试 · Pixel Farm</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0e1116;
+    --panel:#161c24;
+    --panel-2:#1d2530;
+    --line:#2e3a48;
+    --text:#f4e6c6;
+    --muted:#8b9aab;
+    --accent:#e9c96f;
+    --accent-2:#6cc4f2;
+    --green:#5fae4a;
+  }
+  html,body{min-height:100%}
+  body{
+    background:
+      radial-gradient(circle at 30% 0%, #1b2430 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Courier New",monospace;
+    font-size:13px;
+    -webkit-font-smoothing:none;
+    padding:18px;
+  }
+  #app{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:10px;border-bottom:2px solid var(--line)}
+  header h1{font-size:20px;letter-spacing:2px;color:var(--accent)}
+  header .sub{color:var(--muted);font-size:12px}
+  header a{margin-left:auto;color:var(--accent-2);text-decoration:none;border:1px solid var(--line);padding:5px 10px;border-radius:3px}
+  header a:hover{border-color:var(--accent-2);background:rgba(108,196,242,.08)}
+
+  main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:start}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:14px}
+  .panel h2,.gallery h2{font-size:12px;letter-spacing:2px;color:var(--muted);font-weight:400;margin-bottom:8px;text-transform:uppercase}
+
+  .btn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .btn-row{display:flex;gap:6px;flex-wrap:wrap}
+  button{
+    font:inherit;color:var(--text);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:3px;
+    padding:6px 8px;cursor:pointer;transition:background .12s,border-color .12s;
+  }
+  button:hover{background:#26313e;border-color:#3d4c5e}
+  button:active{transform:translateY(1px)}
+  button.active{background:rgba(233,201,111,.16);border-color:var(--accent);color:var(--accent)}
+  button.toggle.on{background:rgba(108,196,242,.14);border-color:var(--accent-2);color:var(--accent-2)}
+  .btn-grid button{padding:7px 4px;font-size:12px}
+
+  .slider{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px;margin-top:4px}
+  .slider output{color:var(--text)}
+  .slider input{width:100%;accent-color:var(--accent)}
+
+  #status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd{color:var(--text);font-variant-numeric:tabular-nums}
+
+  .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
+  #stage{width:100%;max-width:520px;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  .hint{color:var(--muted);font-size:11px;text-align:center}
+
+  .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
+  #gallery{overflow-x:auto;padding-bottom:4px}
+  .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
+  .grow .dlabel{color:var(--accent);font-size:12px;text-align:center;border:1px solid var(--line);border-radius:3px;padding:4px 0;background:var(--panel-2)}
+  .gcell{display:flex;flex-direction:column;align-items:center;gap:2px;background:#121820;border:1px solid #232e3a;border-radius:3px;padding:3px 0}
+  .gcell canvas{width:32px;height:40px;display:block;image-rendering:pixelated}
+  .gcell span{font-size:10px;color:var(--muted);white-space:nowrap}
+
+  @media (max-width:820px){
+    main{grid-template-columns:1fr}
+    .panel{order:2}
+    .stage-wrap{order:1}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>农夫动画测试</h1>
+    <div class="sub">32 × 40 像素 · 程序化绘制 · 四方向</div>
+    <a href="index.html">返回游戏</a>
+  </header>
+
+  <main>
+    <aside class="panel">
+      <section>
+        <h2>动作</h2>
+        <div id="actions" class="btn-grid"></div>
+      </section>
+
+      <section>
+        <h2>朝向</h2>
+        <div id="dirs" class="btn-row"></div>
+      </section>
+
+      <section>
+        <h2>播放</h2>
+        <div class="btn-row">
+          <button id="btn-play">暂停</button>
+          <button id="btn-prev">上一帧</button>
+          <button id="btn-next">下一帧</button>
+          <button id="btn-replay">重播</button>
+        </div>
+        <label class="slider">
+          速度 <output id="speed-out">1.0×</output>
+          <input id="speed" type="range" min="0.1" max="3" step="0.1" value="1">
+        </label>
+        <label class="slider">
+          缩放 <output id="zoom-out">9×</output>
+          <input id="zoom" type="range" min="2" max="11" step="1" value="9">
+        </label>
+        <div class="btn-row" style="margin-top:8px">
+          <button id="btn-grid" class="toggle on">网格</button>
+          <button id="btn-bg" class="toggle on">背景</button>
+          <button id="btn-png">导出 PNG</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>状态</h2>
+        <dl id="status"></dl>
+      </section>
+    </aside>
+
+    <section class="stage-wrap">
+      <canvas id="stage" width="480" height="520"></canvas>
+      <div class="hint">← → 切换朝向 · ↑ ↓ 切换动作 · 空格 播放/暂停</div>
+    </section>
+  </main>
+
+  <section class="gallery">
+    <h2>全部动作 × 四方向（自动循环预览）</h2>
+    <div id="gallery"></div>
+  </section>
+</div>
+
+<script type="module" src="js/anim-demo.js"></script>
+</body>
+</html>

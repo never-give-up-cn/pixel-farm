@@ -57,6 +57,7 @@ import './world/buildings.js';
 | `js/anim-demo-buildings.js` | 农场建筑图鉴测试面板 |
 | `js/anim-demo-npcs.js` | NPC 头像与行走测试面板 |
 | `js/anim-demo-artisan.js` | 工匠品图鉴测试面板 |
+| `js/anim-demo-dishes.js` | 料理图鉴测试面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -99,7 +100,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、34 位村民与 6 种动物九套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民与 6 种动物十套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -115,6 +116,7 @@ import './world/buildings.js';
 | `js/anim/buildings.js` | 25 种农场建筑；`drawBuilding(ctx, building, phase)`，72×64 |
 | `js/anim/npcs.js` | 34 位村民头像与四方向行走；外观参考官方 Wiki 村民肖像，程序化重绘 |
 | `js/anim/artisan.js` | 28 种工匠品图标；`drawArtisan(ctx, item, phase)`，32×32 |
+| `js/anim/dishes.js` | 81 道料理图标；`drawDish(ctx, dish, phase)`，32×32 |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js

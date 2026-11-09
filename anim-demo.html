@@ -65,15 +65,15 @@
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
-  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery,#pet-gallery{overflow-x:auto;padding-bottom:4px}
 
   /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
@@ -178,6 +178,12 @@
   .rcell canvas{width:56px;height:56px;display:block;image-rendering:pixelated}
   .rcell b{font-size:9px;color:#e9c96f;font-weight:400;white-space:nowrap}
   .rcell span{font-size:9px;color:var(--muted)}
+  .pgrid{display:grid;grid-template-columns:repeat(5,minmax(96px,1fr));gap:8px;min-width:620px}
+  .pcell{display:flex;flex-direction:column;align-items:center;gap:2px;background:#182018;border:1px solid #30402a;border-radius:4px;padding:6px 0;cursor:pointer}
+  .pcell:hover{border-color:#6a8a4a;background:#202a1e}
+  .pcell canvas{width:80px;height:64px;display:block;image-rendering:pixelated}
+  .pcell b{font-size:10px;color:#e9c96f;font-weight:400;white-space:nowrap}
+  .pcell span{font-size:9px;color:var(--muted)}
 
   /* 动物画廊：行 = 动物，列 = 动作 */
   .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
@@ -197,7 +203,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -218,6 +224,7 @@
     <button data-tab="clothes">衣物</button>
     <button data-tab="interior">室内</button>
     <button data-tab="resources">资源</button>
+    <button data-tab="pets">宠物</button>
   </nav>
 
   <!-- ================= 农夫 ================= -->
@@ -962,6 +969,54 @@
     <section class="gallery">
       <h2>全部资源 × 分类（点击切换）</h2>
       <div id="resource-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= 宠物 ================= -->
+  <section id="tab-pets" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>类型</h2>
+          <div id="pet-filters" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>宠物 <span id="pet-count"></span></h2>
+          <div id="pet-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>动作</h2>
+          <div class="btn-row">
+            <button id="pet-idle" class="active">站立</button>
+            <button id="pet-walk">走路</button>
+          </div>
+          <label class="slider" style="margin-top:8px">
+            缩放 <output id="pet-zoom-out">6×</output>
+            <input id="pet-zoom" type="range" min="4" max="8" step="1" value="6">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="pet-png">导出 PNG</button>
+          </div>
+          <div id="pet-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="pet-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="pet-stage" width="480" height="520"></canvas>
+        <div class="hint">5 种猫 · 5 种狗 · 2 种乌龟 · 马 · 站立与走路动画</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部宠物 × 类型（点击切换）</h2>
+      <div id="pet-gallery"></div>
     </section>
   </section>
 </div>

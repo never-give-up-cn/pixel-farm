@@ -65,15 +65,15 @@
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
-  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery,#pet-gallery,#product-gallery,#special-gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery,#pet-gallery,#product-gallery,#special-gallery,#ach-gallery{overflow-x:auto;padding-bottom:4px}
 
   /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
@@ -196,6 +196,12 @@
   .sncell canvas{width:96px;height:96px;display:block;image-rendering:pixelated}
   .sncell b{font-size:10px;color:#e9c96f;font-weight:400;white-space:nowrap}
   .sncell span{font-size:9px;color:var(--muted)}
+  .achgrid{display:grid;grid-template-columns:repeat(7,minmax(72px,1fr));gap:6px;min-width:660px}
+  .achcell{display:flex;flex-direction:column;align-items:center;gap:1px;background:#1a1510;border:1px solid #3a2e22;border-radius:3px;padding:3px 0;cursor:pointer}
+  .achcell:hover{border-color:#7a5a30;background:#241c14}
+  .achcell canvas{width:64px;height:64px;display:block;image-rendering:pixelated}
+  .achcell b{font-size:9px;color:#e9c96f;font-weight:400;white-space:nowrap}
+  .achcell span{font-size:9px;color:var(--muted)}
 
   /* 动物画廊：行 = 动物，列 = 动作 */
   .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
@@ -215,7 +221,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -239,6 +245,7 @@
     <button data-tab="pets">宠物</button>
     <button data-tab="products">产品</button>
     <button data-tab="specials">特殊 NPC</button>
+    <button data-tab="achievements">成就</button>
   </nav>
 
   <!-- ================= 农夫 ================= -->
@@ -1118,6 +1125,50 @@
     <section class="gallery">
       <h2>全部特殊 NPC × 分组（点击切换）</h2>
       <div id="special-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= 成就 ================= -->
+  <section id="tab-achievements" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>分组</h2>
+          <div id="ach-filters" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>成就 <span id="ach-count"></span></h2>
+          <div id="ach-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>显示</h2>
+          <label class="slider">
+            缩放 <output id="ach-zoom-out">8×</output>
+            <input id="ach-zoom" type="range" min="5" max="10" step="1" value="8">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="ach-png">导出 PNG</button>
+          </div>
+          <div id="ach-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="ach-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="ach-stage" width="480" height="520"></canvas>
+        <div class="hint">49 个成就徽章 · 财富 / 社交 / 料理 / 建造 / 钓鱼 / 收集 / 任务 / 农业 / 冒险 / 岛屿</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部成就 × 分组（点击切换）</h2>
+      <div id="ach-gallery"></div>
     </section>
   </section>
 </div>

@@ -24,6 +24,7 @@ import { initResourcePanel } from './anim-demo-resources.js';
 import { initPetPanel } from './anim-demo-pets.js';
 import { initProductPanel } from './anim-demo-products.js';
 import { initSpecialNpcPanel } from './anim-demo-special-npcs.js';
+import { initAchievementPanel } from './anim-demo-achievements.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -520,6 +521,8 @@ function tick(dt) {
     productPanel.tick(dt);
   } else if (state.tab === 'specials') {
     specialNpcPanel.tick(dt);
+  } else if (state.tab === 'achievements') {
+    achievementPanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -551,10 +554,11 @@ const resourcePanel = initResourcePanel();
 const petPanel = initPetPanel();
 const productPanel = initProductPanel();
 const specialNpcPanel = initSpecialNpcPanel();
+const achievementPanel = initAchievementPanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -578,6 +582,7 @@ function setTab(name) {
   else if (name === 'pets') petPanel.activate();
   else if (name === 'products') productPanel.activate();
   else if (name === 'specials') specialNpcPanel.activate();
+  else if (name === 'achievements') achievementPanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -620,5 +625,6 @@ window.__animDemo = {
   petPanel,
   productPanel,
   specialNpcPanel,
+  achievementPanel,
   setTab
 };

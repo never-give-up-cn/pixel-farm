@@ -65,15 +65,15 @@
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#animal-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#animal-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#animal-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#animal-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
   #stage,#plant-stage,#animal-stage{width:100%;max-width:520px;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#animal-gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#animal-gallery{overflow-x:auto;padding-bottom:4px}
 
   /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
@@ -118,6 +118,12 @@
   .fcell canvas{width:80px;height:64px;display:block;image-rendering:pixelated}
   .fcell b{font-size:10px;color:#7fd4ff;font-weight:400;white-space:nowrap}
   .fcell span{font-size:9px;color:var(--muted)}
+  .bgrid{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:6px;min-width:760px}
+  .bcell{display:flex;flex-direction:column;align-items:center;gap:1px;background:#121a14;border:1px solid #27382a;border-radius:3px;padding:3px 0;cursor:pointer}
+  .bcell:hover{border-color:#3d5c40;background:#18241a}
+  .bcell canvas{width:144px;height:128px;display:block;image-rendering:pixelated}
+  .bcell b{font-size:10px;color:var(--accent);font-weight:400;white-space:nowrap}
+  .bcell span{font-size:9px;color:var(--muted)}
 
   /* 动物画廊：行 = 动物，列 = 动作 */
   .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
@@ -137,7 +143,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 动物 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 动物 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -147,6 +153,7 @@
     <button data-tab="trees">树木</button>
     <button data-tab="minerals">矿物</button>
     <button data-tab="fish">鱼类</button>
+    <button data-tab="buildings">建筑</button>
     <button data-tab="animals">动物</button>
   </nav>
 
@@ -401,6 +408,50 @@
     <section class="gallery">
       <h2>全部鱼类 × 售价（点击切换）</h2>
       <div id="fish-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= 建筑 ================= -->
+  <section id="tab-buildings" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>类别</h2>
+          <div id="building-filters" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>建筑 <span id="building-count"></span></h2>
+          <div id="building-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>显示</h2>
+          <label class="slider">
+            缩放 <output id="building-zoom-out">6×</output>
+            <input id="building-zoom" type="range" min="4" max="6" step="1" value="6">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="building-png">导出 PNG</button>
+          </div>
+          <div id="building-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="building-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="building-stage" width="480" height="520"></canvas>
+        <div class="hint">25 种农场建筑 · 风车/鱼塘/图腾柱/金钟会动</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部建筑 × 占地与价格（点击切换）</h2>
+      <div id="building-gallery"></div>
     </section>
   </section>
 

@@ -11,6 +11,7 @@ import { initAnimalPanel } from './anim-demo-animals.js';
 import { initTreePanel } from './anim-demo-trees.js';
 import { initMineralPanel } from './anim-demo-minerals.js';
 import { initFishPanel } from './anim-demo-fish.js';
+import { initBuildingPanel } from './anim-demo-buildings.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -481,6 +482,8 @@ function tick(dt) {
     mineralPanel.tick(dt);
   } else if (state.tab === 'fish') {
     fishPanel.tick(dt);
+  } else if (state.tab === 'buildings') {
+    buildingPanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -499,10 +502,11 @@ const animalPanel = initAnimalPanel();
 const treePanel = initTreePanel();
 const mineralPanel = initMineralPanel();
 const fishPanel = initFishPanel();
+const buildingPanel = initBuildingPanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'animals'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'animals'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -513,6 +517,7 @@ function setTab(name) {
   else if (name === 'trees') treePanel.activate();
   else if (name === 'minerals') mineralPanel.activate();
   else if (name === 'fish') fishPanel.activate();
+  else if (name === 'buildings') buildingPanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -542,5 +547,6 @@ window.__animDemo = {
   treePanel,
   mineralPanel,
   fishPanel,
+  buildingPanel,
   setTab
 };

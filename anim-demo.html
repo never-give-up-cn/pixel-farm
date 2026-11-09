@@ -65,15 +65,15 @@
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
 
-  #status,#plant-status,#tree-status,#mineral-status,#animal-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#animal-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#animal-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#animal-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
   #stage,#plant-stage,#animal-stage{width:100%;max-width:520px;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#animal-gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#animal-gallery{overflow-x:auto;padding-bottom:4px}
 
   /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
@@ -112,6 +112,12 @@
   .mcell canvas{width:64px;height:64px;display:block;image-rendering:pixelated}
   .mcell b{font-size:10px;color:var(--accent);font-weight:400;white-space:nowrap}
   .mcell span{font-size:9px;color:var(--muted)}
+  .fgrid{display:grid;grid-template-columns:repeat(8,minmax(84px,1fr));gap:6px;min-width:720px}
+  .fcell{display:flex;flex-direction:column;align-items:center;gap:1px;background:#101820;border:1px solid #23303c;border-radius:3px;padding:3px 0;cursor:pointer}
+  .fcell:hover{border-color:#3d5c6e;background:#152330}
+  .fcell canvas{width:80px;height:64px;display:block;image-rendering:pixelated}
+  .fcell b{font-size:10px;color:#7fd4ff;font-weight:400;white-space:nowrap}
+  .fcell span{font-size:9px;color:var(--muted)}
 
   /* 动物画廊：行 = 动物，列 = 动作 */
   .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
@@ -131,7 +137,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 动物 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 动物 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -140,6 +146,7 @@
     <button data-tab="plants">植物</button>
     <button data-tab="trees">树木</button>
     <button data-tab="minerals">矿物</button>
+    <button data-tab="fish">鱼类</button>
     <button data-tab="animals">动物</button>
   </nav>
 
@@ -350,6 +357,50 @@
     <section class="gallery">
       <h2>全部矿物 × 售价（点击切换）</h2>
       <div id="mineral-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= 鱼类 ================= -->
+  <section id="tab-fish" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>类型</h2>
+          <div id="fish-filters" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>鱼类 <span id="fish-count"></span></h2>
+          <div id="fish-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>显示</h2>
+          <label class="slider">
+            缩放 <output id="fish-zoom-out">8×</output>
+            <input id="fish-zoom" type="range" min="5" max="10" step="1" value="8">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="fish-png">导出 PNG</button>
+          </div>
+          <div id="fish-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="fish-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="fish-stage" width="480" height="520"></canvas>
+        <div class="hint">72 种水生生物 · 含齐先生家族与海胆 · 鱼会游动</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部鱼类 × 售价（点击切换）</h2>
+      <div id="fish-gallery"></div>
     </section>
   </section>
 

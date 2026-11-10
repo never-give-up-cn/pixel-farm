@@ -1386,6 +1386,35 @@ const CONFIG = {
 })();
 
 
+/* 第 32 轮：把 anim 建筑图鉴的其余建筑接进建造配方。
+ * 建筑本体仍占 1 格；鸡舍 / 牛棚继续使用原有功能，只替换外观。 */
+(function addAnimBuildingRecipes(){
+  const EXTRA = [
+    ['greenhouse',      '温室',     { wood:30, stone:20 }, 800],
+    ['silo',            '筒仓',     { wood:12, stone:4  }, 0],
+    ['cabin',           '小屋',     { wood:15, stone:5  }, 0],
+    ['shipping_bin',    '发货箱',   { wood:12 },            0],
+    ['well',            '水井',     { wood:10, stone:10 }, 0],
+    ['mill',            '磨坊',     { wood:20, stone:15 }, 250],
+    ['fish_pond',       '鱼塘',     { wood:10, stone:20 }, 0],
+    ['pet_bowl',        '宠物碗',   { wood:5,  stone:2  }, 0],
+    ['stable',          '马厩',     { wood:25, stone:10 }, 300],
+    ['slime_hutch',     '史莱姆屋', { wood:20, stone:30 }, 500],
+    ['shed',            '棚屋',     { wood:20, stone:10 }, 0],
+    ['junimo_hut',      '祝尼魔屋', { wood:20, stone:20 }, 500],
+    ['earth_obelisk',   '大地图腾', { stone:40 },           1500],
+    ['water_obelisk',   '水之图腾', { stone:40 },           1500],
+    ['desert_obelisk',  '沙漠图腾', { stone:40 },           3000],
+    ['island_obelisk',  '岛屿图腾', { stone:40 },           3000],
+    ['gold_clock',      '黄金时钟', { stone:50 },           5000]
+  ];
+  for (const [id, name, cost, gold] of EXTRA) {
+    if (CONFIG.BUILD.RECIPES.some(r => r.id === id)) continue;
+    CONFIG.BUILD.RECIPES.push({ id, name, cost, gold, solid: true });
+  }
+})();
+
+
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
 Object.assign(window, { T, CONFIG });
 export { T, CONFIG };

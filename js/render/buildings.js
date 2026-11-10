@@ -167,12 +167,14 @@ function drawBuilding(g,b,x,y){
   else if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
-  else if(b.type === 'coop') drawCoop(g,x,y);
-  else if(b.type === 'barn') drawBarn(g,x,y);
+  else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
+  else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);
   else if(b.type === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
   else if(b.type === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
   else if(b.type === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
+  else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(b.type))
+    drawAnimStructure(g, b.type, x, y);
 }
 /* 石板路：半透明地铺在地面上（底下是耕地也照样能看见犁沟） */
 function drawRoadTile(g,x,y){

@@ -6,6 +6,7 @@ import './world/map.js';
 import './render/tiles.js';
 import './render/town-fixtures.js';
 import './render/buildings.js';
+import './render/buildings-anim.js';
 import './render/crops.js';
 import './render/entities.js';
 import './render/preview.js';

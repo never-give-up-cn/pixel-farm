@@ -18,12 +18,12 @@ function drawBuildPreview(g){
   else if(r.id === 'fence')     drawFence(g,x,y);
   else if(r.id === 'chest')     drawChest(g,x,y,false);
   else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
-  else if(r.id === 'coop')      drawCoop(g,x,y);
-  else if(r.id === 'barn')      drawBarn(g,x,y);
+  else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
   else if(r.id === 'maker')     drawMaker(g,x,y,null);
   else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
   else if(r.id === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
   else if(r.id === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
+  else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y);
   g.globalAlpha = 1;
   g.strokeStyle = p.ok ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
   g.lineWidth = 2;
@@ -48,14 +48,18 @@ function drawBuildIcon(g,id,x,y){
     g.fillStyle = C.sprinkHead; g.fillRect(x+2, y+3, 10, 3);
     g.fillStyle = C.dropWater;  g.fillRect(x+1, y+9, 2, 2); g.fillRect(x+11, y+9, 2, 2);
   }else if(id === 'coop'){
-    g.fillStyle = C.coopRoof;  g.fillRect(x+1, y+2, 12, 3);
-    g.fillStyle = C.coopWall;  g.fillRect(x+2, y+5, 10, 8);
-    g.fillStyle = '#4a3222';   g.fillRect(x+5, y+8, 4, 5);
+    if(!(typeof drawAnimStructureIcon === 'function' && drawAnimStructureIcon(g, id, x+1, y+1, 13))){
+      g.fillStyle = C.coopRoof;  g.fillRect(x+1, y+2, 12, 3);
+      g.fillStyle = C.coopWall;  g.fillRect(x+2, y+5, 10, 8);
+      g.fillStyle = '#4a3222';   g.fillRect(x+5, y+8, 4, 5);
+    }
   }else if(id === 'barn'){
-    g.fillStyle = C.barnRoof;  g.fillRect(x+1, y+1, 12, 3);
-    g.fillStyle = C.barnWall;  g.fillRect(x+2, y+4, 10, 9);
-    g.fillStyle = C.barnTrim;  g.fillRect(x+5, y+6, 4, 7);
-    g.fillStyle = C.barnWallDark; g.fillRect(x+6, y+7, 2, 5);
+    if(!(typeof drawAnimStructureIcon === 'function' && drawAnimStructureIcon(g, id, x+1, y+1, 13))){
+      g.fillStyle = C.barnRoof;  g.fillRect(x+1, y+1, 12, 3);
+      g.fillStyle = C.barnWall;  g.fillRect(x+2, y+4, 10, 9);
+      g.fillStyle = C.barnTrim;  g.fillRect(x+5, y+6, 4, 7);
+      g.fillStyle = C.barnWallDark; g.fillRect(x+6, y+7, 2, 5);
+    }
   }else if(id === 'maker'){
     g.fillStyle = '#8a5a2b'; g.fillRect(x+2, y+5, 10, 3);      /* 桌面 */
     g.fillStyle = '#5b3a1d'; g.fillRect(x+3, y+8, 2, 5); g.fillRect(x+9, y+8, 2, 5);
@@ -77,13 +81,20 @@ function drawBuildIcon(g,id,x,y){
     g.fillStyle = '#6d8299'; g.fillRect(x+2, y+2, 10, 2);
     g.fillStyle = '#26303c'; g.fillRect(x+5, y+7, 4, 6);
     g.fillStyle = '#6ef0a0'; g.fillRect(x+3, y+6, 2, 2);
+  }else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(id)){
+    drawAnimStructureIcon(g, id, x+1, y+1, 13);
   }
 }
 /* 建造面板（左侧）：配方 + 材料够不够 */
 function drawBuildPanel(g, y0){
   const R = CONFIG.BUILD.RECIPES;
   const rowH = 24, w = 214, headH = 22, footH = 20;
-  const h = headH + R.length*rowH + footH;
+  const MAX_ROWS = 12;
+  const total = R.length;
+  const rows = Math.min(MAX_ROWS, total);
+  /* 配方多了以后只显示当前选中附近的一页 */
+  const start = Math.max(0, Math.min(total - rows, buildSel - Math.floor(MAX_ROWS / 2)));
+  const h = headH + rows*rowH + footH;
   const x = 8;
   g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(x, y0, w, h);
   g.fillStyle = CONFIG.COLORS.hudBorder;
@@ -94,8 +105,9 @@ function drawBuildPanel(g, y0){
   g.fillText('建造模式', x+8, y0+5);
   g.font = '11px ' + FONT_CJK; g.fillStyle = '#8fa3bd';
   g.fillText('B 退出', x+w-44, y0+6);
-  for(let i=0; i<R.length; i++){
-    const r = R[i], ry = y0 + headH + i*rowH;
+  for(let vi=0; vi<rows; vi++){
+    const i = start + vi;
+    const r = R[i], ry = y0 + headH + vi*rowH;
     if(i === buildSel){
       g.fillStyle = 'rgba(255,215,106,0.14)'; g.fillRect(x+4, ry, w-8, rowH-2);
     }
@@ -122,7 +134,7 @@ function drawBuildPanel(g, y0){
     }
   }
   g.font = '11px ' + FONT_CJK; g.fillStyle = '#8fa3bd';
-  g.fillText('Q/E 或滚轮换配方 · 左键放置 · 右键拆除', x+8, y0 + headH + R.length*rowH + 4);
+  g.fillText('Q/E 或滚轮换配方 · ' + (buildSel+1) + '/' + total, x+8, y0 + headH + rows*rowH + 4);
 }
 
 

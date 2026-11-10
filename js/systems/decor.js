@@ -32,6 +32,10 @@ function decorTileFree(tx, ty) {
 
 function toggleDecor(v) {
   const want = (v === undefined) ? !window.decorMode : !!v;
+  if (want && typeof currentMap !== 'undefined' && currentMap !== 'valley') {
+    toast('只能在农场 / 小镇摆放家具');
+    return false;
+  }
   if (want && !decorItem()) {
     toast('先在快捷栏选中一件家具');
     return false;

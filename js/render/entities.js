@@ -6,21 +6,23 @@
  * 第 12 轮：作物和建造物一起进这张表（原来作物是单独一层，永远被树压着） */
 function drawEntities(g, x0, y0, x1, y1){
   const list = [];
-  list.push({y:(HOUSE_POS.y + HOUSE_POS.h)*TILE, f:()=>drawHouse(g, HOUSE_POS.x*TILE-cam.x, HOUSE_POS.y*TILE-cam.y)});
-  /* 第 24 轮：商店不再是「摊位」，而是镇上能走进去的杂货店（屋顶是地砖，画在地面层） */
-  /* 委托板（第 16 轮）：同样按脚点 Y 混进排序表 */
-  list.push({y:(QUEST_BOARD.y + QUEST_BOARD.h)*TILE,
-             f:()=>drawQuestBoard(g, QUEST_BOARD.x*TILE-cam.x, QUEST_BOARD.y*TILE-cam.y)});
-  /* 农场 / 城镇入口方向牌 */
-  if(typeof drawDirectionSign === 'function' && typeof FARM !== 'undefined'){
-    const cx = (CONFIG.TOWN.CONNECTOR_X + 2)*TILE - cam.x;
-    const fy = (FARM.y + FARM.h - 1)*TILE - cam.y;
-    const ty = (CONFIG.TOWN.ROW + 1)*TILE - cam.y;
-    if(cx > -TILE && cx < VIEW_W + TILE){
-      if(fy > -TILE && fy < VIEW_H + TILE)
-        list.push({y:(FARM.y + FARM.h)*TILE, f:()=>drawDirectionSign(g, cx, fy, '南边 · 城镇 ↓')});
-      if(ty > -TILE && ty < VIEW_H + TILE)
-        list.push({y:(CONFIG.TOWN.ROW + 2)*TILE, f:()=>drawDirectionSign(g, cx, ty, '北边 · 农场 ↑')});
+  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
+    list.push({y:(HOUSE_POS.y + HOUSE_POS.h)*TILE, f:()=>drawHouse(g, HOUSE_POS.x*TILE-cam.x, HOUSE_POS.y*TILE-cam.y)});
+    /* 第 24 轮：商店不再是「摊位」，而是镇上能走进去的杂货店（屋顶是地砖，画在地面层） */
+    /* 委托板（第 16 轮）：同样按脚点 Y 混进排序表 */
+    list.push({y:(QUEST_BOARD.y + QUEST_BOARD.h)*TILE,
+               f:()=>drawQuestBoard(g, QUEST_BOARD.x*TILE-cam.x, QUEST_BOARD.y*TILE-cam.y)});
+    /* 农场 / 城镇入口方向牌 */
+    if(typeof drawDirectionSign === 'function' && typeof FARM !== 'undefined'){
+      const cx = (CONFIG.TOWN.CONNECTOR_X + 2)*TILE - cam.x;
+      const fy = (FARM.y + FARM.h - 1)*TILE - cam.y;
+      const ty = (CONFIG.TOWN.ROW + 1)*TILE - cam.y;
+      if(cx > -TILE && cx < VIEW_W + TILE){
+        if(fy > -TILE && fy < VIEW_H + TILE)
+          list.push({y:(FARM.y + FARM.h)*TILE, f:()=>drawDirectionSign(g, cx, fy, '南边 · 城镇 ↓')});
+        if(ty > -TILE && ty < VIEW_H + TILE)
+          list.push({y:(CONFIG.TOWN.ROW + 2)*TILE, f:()=>drawDirectionSign(g, cx, ty, '北边 · 农场 ↑')});
+      }
     }
   }
   /* 第 25 轮：镇上的家具已经进了 buildings（preset），跟着建造物一起排 Y */
@@ -48,6 +50,14 @@ function drawEntities(g, x0, y0, x1, y1){
     if(sx < -TILE || sx > VIEW_W || sy < -TILE || sy > VIEW_H) continue;
     list.push({y:(row - 1)*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
   }
+  /* 新地图地标（房屋 / 塔 / 帐篷 / 矿井 / 栈桥…） */
+  if(typeof worldLandmarks === 'function' && typeof drawWorldLandmark === 'function'){
+    for(const l of worldLandmarks()){
+      const lx = l.x*TILE - cam.x, ly = l.y*TILE - cam.y;
+      if(lx > VIEW_W || lx + l.w*TILE < 0 || ly > VIEW_H || ly + l.h*TILE < 0) continue;
+      list.push({y:(l.y + l.h)*TILE, f:()=>drawWorldLandmark(g, l)});
+    }
+  }
   /* NPC（居民）：按脚点 Y 混进同一张排序表（和玩家同一套约定：+12） */
   for(const d of CONFIG.NPC.LIST){
     const p = npcPos(d);
@@ -61,13 +71,16 @@ function drawEntities(g, x0, y0, x1, y1){
   /* 动物（第 15 轮）：按脚点 y 混进同一张排序表；不参与玩家碰撞
    * 第 22 轮：animalNear() 每帧只算一次（原来每只动物都重算一遍 → O(n²)） */
   const nearAnimal = animalNear();
-  for(const a of animals){
-    if(a.x - cam.x < -TILE || a.x - cam.x > VIEW_W + TILE ||
-       a.y - cam.y < -TILE || a.y - cam.y > VIEW_H + TILE) continue;
-    list.push({y:a.y, f:()=>drawAnimal(g, a, nearAnimal)});
+  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
+    for(const a of animals){
+      if(a.x - cam.x < -TILE || a.x - cam.x > VIEW_W + TILE ||
+         a.y - cam.y < -TILE || a.y - cam.y > VIEW_H + TILE) continue;
+      list.push({y:a.y, f:()=>drawAnimal(g, a, nearAnimal)});
+    }
   }
   /* 宠物（第 32 轮）：和玩家 / 动物同一套 Y 排序 */
-  if(typeof ensurePet === 'function' && typeof drawPetEntity === 'function'){
+  if((typeof currentMap === 'undefined' || currentMap === 'valley') &&
+     typeof ensurePet === 'function' && typeof drawPetEntity === 'function'){
     const p = ensurePet();
     if(!(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W + TILE ||
          p.y - cam.y < -TILE || p.y - cam.y > VIEW_H + TILE)){

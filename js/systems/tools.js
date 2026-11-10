@@ -4,6 +4,10 @@
 /* --- 工具使用：当前选中物品 → 工具行为 → 适用性判定 → 改地块 + 产出 + 音效 + 提示 --- */
 function useTool(tx,ty){
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+    toast('这里只能探索、钓鱼和看地标；开垦和建造请回农场');
+    return false;
+  }
   if(tileCenterDist(tx,ty) > CONFIG.INTERACT.RANGE_TILES){
     toast('太远了，走近一点再试试');
     playSfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);

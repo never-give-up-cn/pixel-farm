@@ -63,12 +63,17 @@ function minimapNpcColor(st){
 }
 function rebuildMinimap(){
   const M = CONFIG.MINIMAP, S = M.SIZE, K = M.SCALE;
+  const TW = Math.floor(S / K), TH = Math.floor(S / K);
+  const local = (typeof currentMap !== 'undefined' && currentMap !== 'valley');
+  const ptx = Math.floor(player.x / TILE), pty = Math.floor(player.y / TILE);
+  const ox = local ? clamp(ptx - Math.floor(TW/2), 0, MAP_W - TW) : FARM.x;
+  const oy = local ? clamp(pty - Math.floor(TH/2), 0, MAP_H - TH) : FARM.y;
   miniCtx.clearRect(0, 0, S, S);
   miniCtx.fillStyle = CONFIG.COLORS.hudBg;
   miniCtx.fillRect(0, 0, S, S);
-  for(let y = 0; y < FARM.h; y++){
-    for(let x = 0; x < FARM.w; x++){
-      const tx = FARM.x + x, ty = FARM.y + y;
+  for(let y = 0; y < TH; y++){
+    for(let x = 0; x < TW; x++){
+      const tx = ox + x, ty = oy + y;
       if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) continue;
       const i = ty*MAP_W + tx;
       miniCtx.fillStyle = minimapTileColor(map[i]);
@@ -76,26 +81,35 @@ function rebuildMinimap(){
       if(roads[i]){ miniCtx.fillStyle = CONFIG.TILE_COLORS.roadStone; miniCtx.fillRect(x*K, y*K, K, K); }
     }
   }
-  /* 房屋 / 商店图标 */
-  miniCtx.fillStyle = M.HOUSE;
-  miniCtx.fillRect((HOUSE_POS.x-FARM.x)*K, (HOUSE_POS.y-FARM.y)*K, HOUSE_POS.w*K, HOUSE_POS.h*K);
-  miniCtx.fillStyle = M.SHOP;
-  miniCtx.fillRect((SHOP_POS.x-FARM.x)*K, (SHOP_POS.y-FARM.y)*K, SHOP_POS.w*K, SHOP_POS.h*K);
-  /* NPC（第 25 轮：按当前状态着色 —— 营业中=黄 / 瞎逛=橙 / 在家=蓝；睡觉·外出不显示） */
-  for(const d of CONFIG.NPC.LIST){
-    const p = npcPos(d);
-    if(!p) continue;
-    if(p.tx < FARM.x || p.tx >= FARM.x + FARM.w || p.ty < FARM.y || p.ty >= FARM.y + FARM.h) continue;
-    const st = npcWhere(d);
-    const col = minimapNpcColor(st);
-    if(!col) continue;
-    miniCtx.fillStyle = col;
-    miniCtx.fillRect((p.tx-FARM.x)*K + ((K>>1) - 1), (p.ty-FARM.y)*K + ((K>>1) - 1), 3, 3);
+  if(local && typeof worldLandmarks === 'function'){
+    for(const l of worldLandmarks()){
+      const lx = Math.max(0, l.x - ox), ly = Math.max(0, l.y - oy);
+      const rx = Math.min(TW, l.x + l.w - ox), ry = Math.min(TH, l.y + l.h - oy);
+      if(rx <= lx || ry <= ly) continue;
+      miniCtx.fillStyle = (typeof worldLandmarkColor === 'function') ? worldLandmarkColor(l.type) : '#b08968';
+      miniCtx.fillRect(lx*K, ly*K, (rx-lx)*K, (ry-ly)*K);
+    }
+  } else {
+    miniCtx.fillStyle = M.HOUSE;
+    miniCtx.fillRect((HOUSE_POS.x-ox)*K, (HOUSE_POS.y-oy)*K, HOUSE_POS.w*K, HOUSE_POS.h*K);
+    miniCtx.fillStyle = M.SHOP;
+    miniCtx.fillRect((SHOP_POS.x-ox)*K, (SHOP_POS.y-oy)*K, SHOP_POS.w*K, SHOP_POS.h*K);
   }
-  /* 玩家（白点；跑出农场区就贴边显示） */
+  if(!local){
+    for(const d of CONFIG.NPC.LIST){
+      const p = npcPos(d);
+      if(!p) continue;
+      if(p.tx < ox || p.tx >= ox + TW || p.ty < oy || p.ty >= oy + TH) continue;
+      const st = npcWhere(d);
+      const col = minimapNpcColor(st);
+      if(!col) continue;
+      miniCtx.fillStyle = col;
+      miniCtx.fillRect((p.tx-ox)*K + ((K>>1) - 1), (p.ty-oy)*K + ((K>>1) - 1), 3, 3);
+    }
+  }
   const px = Math.floor(player.x/TILE), py = Math.floor(player.y/TILE);
-  const cx = clamp(px - FARM.x + 0.5, 0, FARM.w) * K - 2;
-  const cy = clamp(py - FARM.y + 0.5, 0, FARM.h) * K - 2;
+  const cx = clamp(px - ox + 0.5, 0, TW) * K - 2;
+  const cy = clamp(py - oy + 0.5, 0, TH) * K - 2;
   miniCtx.fillStyle = M.PLAYER;
   miniCtx.fillRect(cx, cy, 4, 4);
   miniReady = true;
@@ -153,23 +167,34 @@ function renderBigmap(){
     g.fillStyle = '#f4d35e';
     g.fillRect(PX + (b.x + C.DOOR_DX) * K, PY + row * K, Math.max(1, K), Math.max(1, K));
   }
-  /* 农舍 / 农场里的杂货店摊位（沿用小地图配色） */
-  g.fillStyle = CONFIG.MINIMAP.HOUSE;
-  g.fillRect(PX + HOUSE_POS.x * K, PY + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
+  /* 农舍 / 农场里的杂货店摊位（只有 valley 有） */
+  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
+    g.fillStyle = CONFIG.MINIMAP.HOUSE;
+    g.fillRect(PX + HOUSE_POS.x * K, PY + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
+  }
+  /* 新地图地标 */
+  if(typeof worldLandmarks === 'function'){
+    for(const l of worldLandmarks()){
+      g.fillStyle = (typeof worldLandmarkColor === 'function') ? worldLandmarkColor(l.type) : '#b08968';
+      g.fillRect(PX + l.x * K, PY + l.y * K, l.w * K, l.h * K);
+    }
+  }
   /* 居民（按当前状态着色：营业黄 / 瞎逛橙 / 在家蓝；睡觉外出不画） */
-  for(const d of CONFIG.NPC.LIST){
-    const p = npcPos(d);
-    if(!p) continue;
-    const col = minimapNpcColor(npcWhere(d));
-    if(!col) continue;
-    g.fillStyle = col;
-    g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
+  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
+    for(const d of CONFIG.NPC.LIST){
+      const p = npcPos(d);
+      if(!p) continue;
+      const col = minimapNpcColor(npcWhere(d));
+      if(!col) continue;
+      g.fillStyle = col;
+      g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
+    }
   }
   /* 玩家（白点） */
   const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
   g.fillStyle = CONFIG.MINIMAP.PLAYER;
   g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
-  if(bigmapSubEl) bigmapSubEl.textContent = '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
+  if(bigmapSubEl) bigmapSubEl.textContent = (typeof mapDisplayName !== 'undefined' ? mapDisplayName + ' · ' : '') + '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
 }
 function bigmapOpenPanel(){
   if(bigmapOpen) return false;

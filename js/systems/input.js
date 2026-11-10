@@ -141,6 +141,11 @@ window.addEventListener('keydown', e=>{
   /* E：上下文交互 —— 小屋旁睡觉，木箱旁开箱，商店摊旁交易，NPC 旁说话 */
   if(k === 'e'){
     if(!e.repeat){
+      if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+        toast('这里是探索区域：可以走路、钓鱼、看地标；交互请回农场 / 小镇');
+        ensureAudio();
+        return;
+      }
       const c = chestNear();
       const n = npcNear();
       const mk = makerNear();

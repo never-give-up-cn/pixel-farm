@@ -1,0 +1,415 @@
+﻿/* js/world/multimap.js — 多地图：农场/小镇、煤渣森林、山地、鹈鹕海滩。
+ *
+ * 所有地图共用 128×104 的网格。切换地图时只替换 map / crops / roads /
+ * buildings / buildIndex / baseMap 这些全局数组，原有玩法代码不用改。
+ * 新地图是探索地图：可以走路、钓鱼、看地标，不开放开垦 / 建造。
+ */
+
+'use strict';
+
+const MAP_DEFS = {
+  valley:   { name: '农场与小镇' },
+  forest:   { name: '煤渣森林' },
+  mountain: { name: '山地' },
+  beach:    { name: '鹈鹕海滩' }
+};
+
+window.MAP_WORLD = {};
+window.currentMap = 'valley';
+window.mapDisplayName = MAP_DEFS.valley.name;
+
+function blankWorldState(name, townList){
+  const n = MAP_W * MAP_H;
+  return {
+    name: name,
+    map: new Uint8Array(n),
+    crops: new Array(n).fill(null),
+    roads: new Uint8Array(n),
+    buildings: [],
+    buildIndex: new Int32Array(n).fill(-1),
+    baseMap: new Uint8Array(n),
+    townList: townList || [],
+    landmarks: [],
+    exits: []
+  };
+}
+
+/* 只替换地图数组，不改玩家 / 镜头 / 时间 */
+function useWorldArrays(st){
+  window.map = st.map;
+  window.crops = st.crops;
+  window.roads = st.roads;
+  window.buildings = st.buildings;
+  window.buildIndex = st.buildIndex;
+  window.baseMap = st.baseMap;
+  CONFIG.TOWN.LIST = st.townList || [];
+  window._townProps = null;
+  if(typeof invalidateGround === 'function') invalidateGround();
+}
+
+/* 新游戏 / 读档后，把当前（农场+小镇）地图登记成 valley */
+function worldRegisterValley(){
+  const C = CONFIG.TOWN;
+  const st = blankWorldState(MAP_DEFS.valley.name, CONFIG.TOWN.LIST);
+  st.map = map;
+  st.crops = crops;
+  st.roads = roads;
+  st.buildings = buildings;
+  st.buildIndex = buildIndex;
+  st.baseMap = baseMap;
+  st.townList = CONFIG.TOWN.LIST;
+  st.landmarks = [];
+  st.exits = [
+    { x: 64, y: 1,   w: 2, h: 1, to: 'mountain', tx: 64,  ty: 92, label: '北边 · 山地' },
+    { x: 1,  y: 42,  w: 1, h: 1, to: 'forest',   tx: 112, ty: 42, label: '西边 · 森林' },
+    { x: 64, y: 102, w: 2, h: 1, to: 'beach',    tx: 64,  ty: 8,  label: '南边 · 海滩' }
+  ];
+  MAP_WORLD.valley = st;
+  currentMap = 'valley';
+  mapDisplayName = st.name;
+  if(typeof player !== 'undefined') player.warpCd = 0;
+
+  /* 把出口接到路网（同时写进 baseMap，避免变成存档 diff） */
+  const carve = (tx, ty) => {
+    if(tx < 1 || ty < 1 || tx >= MAP_W-1 || ty >= MAP_H-1) return;
+    const i = ty * MAP_W + tx;
+    map[i] = T.PATH;
+    baseMap[i] = T.PATH;
+  };
+  for(let y = 1; y <= FARM.y; y++){ carve(64, y); carve(65, y); }
+  for(let x = 1; x <= 4; x++) carve(x, 42);
+  for(let y = C.END_ROW + 1; y < MAP_H - 2; y++){ carve(64, y); carve(65, y); }
+}
+
+/* ---------- 生成辅助 ---------- */
+function fillMap(tile){ map.fill(tile); crops.fill(null); }
+function borderWater(){
+  for(let x = 0; x < MAP_W; x++){ map[x] = T.WATER; map[(MAP_H-1)*MAP_W+x] = T.WATER; }
+  for(let y = 0; y < MAP_H; y++){ map[y*MAP_W] = T.WATER; map[y*MAP_W+MAP_W-1] = T.WATER; }
+}
+function setRect(x, y, w, h, tile){
+  for(let ty = y; ty < y+h; ty++)
+    for(let tx = x; tx < x+w; tx++){
+      if(tx < 1 || ty < 1 || tx >= MAP_W-1 || ty >= MAP_H-1) continue;
+      map[ty*MAP_W+tx] = tile;
+    }
+}
+function setPathRect(x, y, w, h){ setRect(x, y, w, h, T.PATH); }
+function aroundLandmark(l, tx, ty, pad){
+  pad = pad || 2;
+  return tx >= l.x-pad && tx < l.x+l.w+pad && ty >= l.y-pad && ty < l.y+l.h+pad;
+}
+function scatterWild(rng, count, landmarks, opts){
+  opts = opts || {};
+  for(let n = 0; n < count; n++){
+    const tx = 2 + Math.floor(rng() * (MAP_W-4));
+    const ty = 2 + Math.floor(rng() * (MAP_H-4));
+    const i = ty * MAP_W + tx;
+    if(map[i] !== T.GRASS) continue;
+    if(landmarks.some(l => aroundLandmark(l, tx, ty, 2))) continue;
+    const r = rng();
+    if(r < (opts.tree == null ? 0.72 : opts.tree)) map[i] = T.TREE;
+    else if(r < 0.90) map[i] = T.ROCK;
+    else map[i] = T.FLOWER;
+  }
+}
+function pond(cx, cy, rx, ry){
+  for(let y = cy-ry; y <= cy+ry; y++)
+    for(let x = cx-rx; x <= cx+rx; x++){
+      if(x < 1 || y < 1 || x >= MAP_W-1 || y >= MAP_H-1) continue;
+      const dx = (x-cx)/rx, dy = (y-cy)/ry;
+      if(dx*dx + dy*dy <= 1) map[y*MAP_W+x] = T.WATER;
+    }
+}
+
+/* ---------- 煤渣森林 ---------- */
+function genForest(){
+  fillMap(T.GRASS);
+  borderWater();
+  /* 南北向的河 */
+  for(let y = 1; y < MAP_H-1; y++)
+    for(let x = 54; x <= 62; x++) map[y*MAP_W+x] = T.WATER;
+  /* 两座桥 */
+  setPathRect(52, 42, 13, 2);
+  setPathRect(52, 70, 13, 2);
+  /* 西北池塘 */
+  pond(28, 18, 9, 7);
+  /* 主路：东入口 → 牧场 / 莉亚 / 法师塔 */
+  setPathRect(120, 42, 7, 2);
+  setPathRect(78, 42, 43, 2);
+  setPathRect(104, 38, 3, 5);
+  setPathRect(100, 42, 3, 6);
+  setPathRect(76, 42, 3, 9);
+  setPathRect(60, 30, 17, 2);
+
+  const L = [
+    { type:'ranch',   x:104, y:34, w:15, h:8,  label:'玛妮牧场' },
+    { type:'cottage', x:98,  y:46, w:11, h:7,  label:'莉亚小屋' },
+    { type:'tower',   x:66,  y:34, w:10, h:15, label:'法师塔' },
+    { type:'log',     x:8,   y:8,  w:7,  h:4,  label:'秘密森林' },
+    { type:'cart',    x:58,  y:22, w:7,  h:5,  label:'旅行货车' },
+    { type:'sign',    x:119, y:40, w:3,  h:3,  label:'东边 · 小镇', solid:false }
+  ];
+  scatterWild(mulberry32(9101), 1800, L, { tree:0.80 });
+  return {
+    landmarks: L,
+    exits: [{ x:127, y:42, w:1, h:1, to:'valley', tx:4, ty:42, label:'东边 · 小镇' }],
+    spawn: { x:112, y:42 }
+  };
+}
+
+/* ---------- 山地 ---------- */
+function genMountain(){
+  fillMap(T.GRASS);
+  borderWater();
+  /* 大湖 */
+  pond(66, 32, 28, 18);
+  pond(50, 24, 14, 10);
+  /* 主路：南入口 → 矿洞 / 公会 / 木匠 / 莱纳斯 */
+  setPathRect(64, 84, 3, 19);
+  setPathRect(52, 86, 15, 3);
+  setPathRect(74, 84, 12, 3);
+  setPathRect(40, 74, 26, 3);
+  setPathRect(40, 70, 3, 8);
+  setPathRect(58, 52, 3, 24);
+  setPathRect(52, 52, 8, 3);
+
+  const L = [
+    { type:'mine',      x:46, y:80, w:12, h:9,  label:'矿井' },
+    { type:'guild',     x:76, y:84, w:14, h:11, label:'冒险家公会' },
+    { type:'carpenter', x:30, y:70, w:18, h:11, label:'罗宾木匠店' },
+    { type:'tent',      x:55, y:40, w:7,  h:5,  label:'莱纳斯的帐篷' },
+    { type:'bridge',    x:104,y:28, w:13, h:3,  label:'采石场', solid:false },
+    { type:'sign',      x:61, y:94, w:3,  h:3,  label:'南边 · 小镇', solid:false }
+  ];
+  scatterWild(mulberry32(9102), 1300, L, { tree:0.62 });
+  return {
+    landmarks: L,
+    exits: [{ x:64, y:102, w:2, h:1, to:'valley', tx:64, ty:3, label:'南边 · 小镇' }],
+    spawn: { x:64, y:92 }
+  };
+}
+
+/* ---------- 鹈鹕海滩 ---------- */
+function genBeach(){
+  fillMap(T.GRASS);
+  borderWater();
+  /* 沙滩带 */
+  setRect(1, 8, MAP_W-2, 44, T.BARE);
+  /* 海 */
+  setRect(1, 52, MAP_W-2, MAP_H-53, T.WATER);
+  /* 木栈桥 */
+  setPathRect(58, 50, 5, 52);
+  /* 从北入口下来的路 */
+  setPathRect(64, 1, 3, 50);
+  /* 潮池 */
+  setRect(92, 36, 10, 5, T.WATER);
+  setRect(22, 38, 9, 4, T.WATER);
+
+  const L = [
+    { type:'fishshop', x:70, y:10, w:13, h:8, label:'威利的鱼店' },
+    { type:'cabin',    x:44, y:10, w:11, h:8, label:'艾利欧特小屋' },
+    { type:'pier',     x:58, y:50, w:5,  h:52, label:'栈桥', solid:false },
+    { type:'sign',     x:61, y:4,  w:3,  h:3,  label:'北边 · 小镇', solid:false }
+  ];
+  scatterWild(mulberry32(9103), 240, L, { tree:0.25 });
+  return {
+    landmarks: L,
+    exits: [{ x:64, y:1, w:2, h:1, to:'valley', tx:64, ty:99, label:'北边 · 小镇' }],
+    spawn: { x:64, y:8 }
+  };
+}
+
+/* 懒加载：第一次进入某张地图时才生成 */
+function ensureWorld(id){
+  if(MAP_WORLD[id]) return MAP_WORLD[id];
+  const old = MAP_WORLD[currentMap] || {
+    map: window.map, crops: window.crops, roads: window.roads,
+    buildings: window.buildings, buildIndex: window.buildIndex,
+    baseMap: window.baseMap, townList: CONFIG.TOWN.LIST
+  };
+  const st = blankWorldState(MAP_DEFS[id] ? MAP_DEFS[id].name : id, []);
+  useWorldArrays(st);
+  let result = null;
+  if(id === 'forest') result = genForest();
+  else if(id === 'mountain') result = genMountain();
+  else if(id === 'beach') result = genBeach();
+  if(result){
+    st.landmarks = result.landmarks || [];
+    st.exits = result.exits || [];
+    st.name = MAP_DEFS[id] ? MAP_DEFS[id].name : id;
+    st.spawn = result.spawn || { x: 64, y: 52 };
+    st.baseMap.set(map);
+  }
+  useWorldArrays(old);
+  MAP_WORLD[id] = st;
+  return st;
+}
+
+/* 只切数组，不改玩家坐标；保存 / 读档时也用它 */
+function worldUseArrays(id){
+  const st = MAP_WORLD[id] || ensureWorld(id);
+  useWorldArrays(st);
+  currentMap = id;
+  mapDisplayName = st.name;
+  return st;
+}
+
+function worldActivate(id, x, y, silent){
+  const st = worldUseArrays(id);
+  player.x = x * TILE + TILE/2;
+  player.y = y * TILE + TILE/2;
+  player.vx = 0; player.vy = 0; player.moving = false;
+  cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
+  cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
+  if(typeof cancelFishing === 'function') cancelFishing(true);
+  if(!silent) toast('进入 · ' + st.name);
+  return st;
+}
+
+function worldSwitch(id, tx, ty){
+  if(id === currentMap) return false;
+  return !!worldActivate(id, tx, ty, false);
+}
+
+/* 出口判定：踩到地图边缘的出口格就切换 */
+function worldExitCheck(){
+  const st = MAP_WORLD[currentMap];
+  if(!st || !st.exits || !st.exits.length) return false;
+  if(player.warpCd > 0) return false;
+  const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
+  for(const e of st.exits){
+    if(tx >= e.x && tx < e.x + e.w && ty >= e.y && ty < e.y + e.h){
+      player.warpCd = 0.8;
+      worldSwitch(e.to, e.tx, e.ty);
+      return true;
+    }
+  }
+  return false;
+}
+
+/* ---------- 地标绘制 ---------- */
+function landmarkColor(type){
+  if(type === 'tower') return '#7a5aa8';
+  if(type === 'mine') return '#3a3a44';
+  if(type === 'tent') return '#c9a24a';
+  if(type === 'fishshop') return '#4f8fbf';
+  if(type === 'ranch') return '#b3443c';
+  if(type === 'guild') return '#8a8a96';
+  if(type === 'bridge' || type === 'pier') return '#9a6b3c';
+  return '#b07a4a';
+}
+
+function drawLandmarkLabel(g, l, x, y, w, h){
+  const dx = x + w/2 + cam.x - player.x, dy = y + h/2 + cam.y - player.y;
+  if(dx*dx + dy*dy >= 700*700) return;
+  g.font = '12px ' + FONT_CJK;
+  const tw = g.measureText(l.label).width;
+  const lx = x+w/2 - tw/2, ly = Math.max(4, y - 24);
+  g.fillStyle = 'rgba(8,10,16,.86)';
+  g.fillRect(lx - 5, ly, tw + 10, 18);
+  g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(lx - 5, ly, tw + 10, 18);
+  g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+  g.fillText(l.label, lx, ly + 13);
+  g.textAlign = 'left';
+}
+
+function drawWorldLandmark(g, l){
+  const x = l.x*TILE - cam.x, y = l.y*TILE - cam.y;
+  const w = l.w*TILE, h = l.h*TILE;
+  if(x > VIEW_W || x + w < 0 || y > VIEW_H || y + h < 0) return;
+  const type = l.type;
+
+  if(type === 'pier' || type === 'bridge'){
+    g.fillStyle = '#8a5a2b';
+    for(let yy = y; yy < y+h; yy += 10) g.fillRect(x, yy, w, 4);
+    g.fillStyle = '#5b3a1d';
+    g.fillRect(x, y, 3, h); g.fillRect(x+w-3, y, 3, h);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'sign'){
+    g.fillStyle = '#5b3a1d'; g.fillRect(x+w/2-2, y+h/2, 4, h/2);
+    g.fillStyle = '#7d5426'; g.fillRect(x, y, w, h/2);
+    g.fillStyle = '#f4e6bc'; g.fillRect(x+4, y+4, w-8, 3);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'mine' || type === 'log'){
+    const mx = x + w*0.12, my = y + h*0.28, mw = w*0.76, mh = h*0.68;
+    g.fillStyle = type === 'mine' ? '#5a5a64' : '#5b3a1d';
+    g.fillRect(mx, my, mw, mh);
+    g.fillStyle = type === 'mine' ? '#7a7a86' : '#7d5426';
+    g.fillRect(mx, my, mw, 5);
+    g.fillStyle = '#16161c';
+    g.beginPath();
+    g.moveTo(mx+mw*0.32, my+mh); g.lineTo(mx+mw*0.32, my+mh*0.45);
+    g.quadraticCurveTo(mx+mw/2, my, mx+mw*0.68, my+mh*0.45);
+    g.lineTo(mx+mw*0.68, my+mh); g.closePath(); g.fill();
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'tent'){
+    g.fillStyle = '#c9a24a';
+    g.beginPath(); g.moveTo(x+w/2, y); g.lineTo(x+w, y+h); g.lineTo(x, y+h); g.closePath(); g.fill();
+    g.fillStyle = '#8a6a2a'; g.fillRect(x+w/2-3, y+h*0.55, 6, h*0.45);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'tower'){
+    g.fillStyle = landmarkColor(type); g.fillRect(x+w*0.2, y+h*0.28, w*0.6, h*0.72);
+    g.fillStyle = '#4a3068';
+    g.beginPath(); g.moveTo(x+w/2, y-8); g.lineTo(x+w*0.9, y+h*0.28); g.lineTo(x+w*0.1, y+h*0.28); g.closePath(); g.fill();
+    g.fillStyle = '#ffe08a'; g.fillRect(x+w*0.38, y+h*0.48, w*0.24, h*0.14);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+
+  /* 房屋类：临街墙面 + 屋顶 + 门 + 窗 */
+  const wall = type === 'guild' ? '#8a8a96' : (type === 'fishshop' ? '#7a9ab0' : '#b07a4a');
+  const roof = type === 'ranch' ? '#b3443c' : (type === 'fishshop' ? '#4f8fbf' : '#7a4a2a');
+  const fx = x + w*0.18, fw = w*0.64;
+  const fy = y + h*0.30, fh = Math.max(14, h*0.22);
+  const ry = fy + fh, rh = Math.max(18, h*0.40);
+  g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(x+w*0.16, y+h*0.94, w*0.68, 5);
+  g.fillStyle = wall; g.fillRect(fx, fy, fw, fh);
+  g.fillStyle = 'rgba(60,36,20,.22)'; g.fillRect(fx, fy+fh-3, fw, 3);
+  g.fillStyle = '#5b3a1d'; g.fillRect(x+w/2-5, fy+fh*0.35, 10, fh*0.65);
+  g.fillStyle = '#9ec4d8';
+  g.fillRect(fx+8, fy+5, 10, 8);
+  g.fillRect(fx+fw-18, fy+5, 10, 8);
+  g.fillStyle = roof; g.fillRect(fx-3, ry, fw+6, rh);
+  g.fillStyle = 'rgba(255,255,255,.10)'; g.fillRect(fx-3, ry, fw+6, 4);
+  g.fillStyle = 'rgba(40,20,10,.25)';
+  for(let yy = ry+10; yy < ry+rh-4; yy += 9) g.fillRect(fx, yy, fw, 1);
+  g.fillStyle = '#5a3218'; g.fillRect(fx-3, ry, fw+6, 3);
+  g.strokeStyle = '#4a2a14'; g.lineWidth = 1; g.strokeRect(fx-3.5, ry+0.5, fw+7, rh-1);
+  if(type === 'ranch' || type === 'fishshop'){
+    g.fillStyle = '#e8dcc0'; g.fillRect(fx-2, ry+4, fw+4, 2);
+  }
+  drawLandmarkLabel(g, l, x, y, w, h);
+}
+
+function worldLandmarks(){
+  const st = MAP_WORLD[currentMap];
+  return (st && st.landmarks) ? st.landmarks : [];
+}
+function worldLandmarkSolid(tx, ty){
+  const st = MAP_WORLD[currentMap];
+  if(!st || currentMap === 'valley') return false;
+  for(const l of (st.landmarks || [])){
+    if(l.solid === false) continue;
+    if(tx >= l.x && tx < l.x + l.w && ty >= l.y && ty < l.y + l.h) return true;
+  }
+  return false;
+}
+function worldLandmarkColor(type){ return landmarkColor(type); }
+
+Object.assign(window, {
+  MAP_DEFS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldLandmarks, worldLandmarkSolid, drawWorldLandmark, worldLandmarkColor, ensureWorld
+});
+export {
+  MAP_DEFS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldLandmarks, worldLandmarkSolid, drawWorldLandmark, worldLandmarkColor, ensureWorld
+};

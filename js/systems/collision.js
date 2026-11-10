@@ -8,7 +8,8 @@ function isSolid(tx,ty){
   const t = map[i];
   if(t===T.TREE || t===T.ROCK || t===T.WATER || t===T.HOUSE || t===T.SHOP) return true;
   if(t===T.BLD || t===T.WALL || t===T.WALL_FRONT || t===T.WALL_BACK) return true;   /* 镇屋外墙 / 室内墙（前墙 + 后墙） */
-  if(tx===QUEST_BOARD.x && ty===QUEST_BOARD.y) return true;   /* 第 16 轮：委托板挡路 */
+  if(currentMap === 'valley' && tx===QUEST_BOARD.x && ty===QUEST_BOARD.y) return true;   /* 委托板挡路 */
+  if(typeof worldLandmarkSolid === 'function' && worldLandmarkSolid(tx,ty)) return true;
   /* 建造物：栅栏和木箱挡路，洒水器可以踩过去 */
   const bi = buildIndex[i];
   if(bi >= 0){
@@ -116,6 +117,9 @@ function updatePlayer(dt){
     player.frame = 0;         /* 静止回到站立帧 */
     player.animT = 0;
   }
+  if(player.warpCd > 0) player.warpCd = Math.max(0, player.warpCd - dt);
+  /* 地图出口：农场北 → 山地，小镇西 → 森林，小镇南 → 海滩 */
+  if(typeof worldExitCheck === 'function' && worldExitCheck()) return;
   /* 第 24 轮：踩到门就进去（建筑是地图的容器，不是场景 → 没有「当前场景」状态）
    * 第 26 轮：墙只有 1 格厚 → 进门 / 出门靠「上一格在哪」分方向 */
   townDoorCheck(typeof prevTy === 'number' ? prevTy : undefined);

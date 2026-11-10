@@ -3,6 +3,7 @@
 import './config.js';
 import './world/buildings.js';
 import './world/map.js';
+import './world/multimap.js';
 import './render/tiles.js';
 import './render/town-fixtures.js';
 import './render/buildings.js';

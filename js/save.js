@@ -72,6 +72,8 @@ function stowHeld(){
 /* 生成一份存档数据（纯 JSON 对象） */
 function serializeState(){
   stowHeld();
+  const _worldMap = (typeof currentMap !== 'undefined') ? currentMap : 'valley';
+  if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays('valley');
   const cs = [];
   for(let i=0;i<crops.length;i++){
     const c = crops[i];
@@ -86,10 +88,11 @@ function serializeState(){
   }
   const rs = [];
   for(let i=0;i<roads.length;i++) if(roads[i]) rs.push((i % MAP_W) + ',' + ((i / MAP_W) | 0));
-  return {
+  const out = {
     v: CONFIG.SAVE.VERSION,
     at: Date.now(),
     seed: CONFIG.SEED,
+    world: { map: _worldMap, player: { x: player.x, y: player.y } },
     player: (window.farmhouseActive && typeof farmhouseSavePos === 'function' && farmhouseSavePos())
       ? farmhouseSavePos() : {x: player.x, y: player.y},
     gold: gold,
@@ -149,11 +152,15 @@ function serializeState(){
     soil: Math.round(soilFert),
     vs: visitSerialize()
   };
+  if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(_worldMap);
+  return out;
 }
 /* 读入一份存档数据（覆盖当前状态） */
 function deserializeState(d){
   if(!d || typeof d !== 'object') return false;
   try{
+    if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
+      worldUseArrays('valley');
     /* 地图：按存档里的种子重新生成底图，再叠加 diff */
     const seed = (typeof d.seed === 'number') ? d.seed : CONFIG.SEED;
     genMap(seed);
@@ -217,6 +224,7 @@ function deserializeState(d){
       }
     /* 第 25 轮：镇上的家具（preset）不存档 —— 读档后按 BUILDING_DEFS 重新盖一遍 */
     stampTownFixtures();
+    if(typeof worldRegisterValley === 'function') worldRegisterValley();
     if(Array.isArray(d.roads))
       for(const k of d.roads){
         const p = String(k).split(',');
@@ -358,6 +366,10 @@ function deserializeState(d){
       if(sd % Math.max(1, CONFIG.GATHER.EVERY_DAYS) === 1) spawnGather(true);
     }
     /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
+    if(d.world && d.world.map && d.world.map !== 'valley' && typeof worldActivate === 'function'){
+      const wp = d.world.player || d.player || { x: player.x, y: player.y };
+      worldActivate(d.world.map, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
+    }
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
     const sky0 = skyAt(skyHour());
@@ -511,11 +523,14 @@ function wipeSave(){
 /* 全新一局：删掉旧档、从头开始 */
 function newGame(){
   deleteSave();
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
+    worldUseArrays('valley');
   genMap(CONFIG.SEED);
   snapshotBaseMap();
   initInventory();
   buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);
   stampTownFixtures();                        /* 第 25 轮：镇上的家具重新盖一遍（静态配置，不存档） */
+  if(typeof worldRegisterValley === 'function') worldRegisterValley();
   dropFx = [];
   clock.day = 1; clock.min = 0; clock.hold = 0;
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;

@@ -217,6 +217,7 @@ function npcPos(d){
 }
 /* 玩家与 NPC 的距离（格）：不在同一片区域就看不见（隔着墙不算） */
 function npcDist(d){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return Infinity;
   const p = npcPos(d);
   if(!p) return Infinity;
   if(npcRoomIdAt(p.x, p.y) !== playerRoomWide()) return Infinity;
@@ -233,6 +234,7 @@ function npcNear(){
 }
 /* 这个 NPC 现在看不见（不在玩家所在的那片区域：屋里 / 街上各算一片） */
 function npcHidden(d){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return true;
   const p = npcPos(d);
   if(!p) return true;
   return npcRoomIdAt(p.x, p.y) !== playerRoomWide();

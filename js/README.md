@@ -93,6 +93,7 @@ import './world/buildings.js';
 | --- | --- |
 | 数值、价格、作物生长天数、NPC 日程数据 | `js/config.js` |
 | 地图生成、地形 | `js/world/map.js` |
+| 多地图切换、森林 / 山地 / 海滩 | `js/world/multimap.js` |
 | 建筑外观/布局 | `js/world/buildings.js` + `js/render/buildings.js` + `js/render/buildings-anim.js` |
 | 地面/作物/实体怎么画 | `js/render/` 下对应文件；作物美术在 `js/anim/sdv-crops.js` |
 | 玩家移动、碰撞、体力 | `js/systems/collision.js`、`js/systems/stamina.js` |

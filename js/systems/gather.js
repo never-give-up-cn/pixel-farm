@@ -49,6 +49,7 @@ function clearGatherTiles(){
 /* 在农田周围半径内找干净草地刷采集物；避开作物 / 建造物 / 石板路 / 玩家 / 建筑与 NPC */
 function spawnGather(quiet){
   if(!CONFIG.GATHER.ENABLED) return 0;
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return 0;
   const season = seasonName();
   const types = CONFIG.GATHER.TYPES.filter(t => t.seasons.indexOf(season) >= 0);
   if(!types.length){ clearGatherTiles(); return 0; }

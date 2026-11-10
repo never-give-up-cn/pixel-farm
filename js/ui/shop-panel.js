@@ -321,7 +321,8 @@ function drawUI(g){
 
   /* 左上角：季节 · 第几天 · 时刻 · 天气（今天有人过生日就带个 🎂；第 28 轮 + 明日预报） */
   const bdNpc = npcBirthdayToday();
-  const dA = seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
+  const mapTag = (typeof mapDisplayName !== 'undefined') ? (mapDisplayName + ' · ') : '';
+  const dA = mapTag + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ';
   const dB = ' ' + weather.name;
   const dC = bdNpc ? (bdNpc.name + ' 生日') : '';
   const fcT = fcTomorrow();                       /* 第 28 轮：明天的天气（预报队列头） */

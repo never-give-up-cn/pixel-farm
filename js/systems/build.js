@@ -181,6 +181,10 @@ function buildingAt(tx,ty){
 function toggleBuild(on){
   const want = (on === undefined) ? !buildMode : !!on;
   if(want === buildMode) return;
+  if(want && typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+    toast('只能在农场 / 小镇建造');
+    return;
+  }
   buildMode = want;
   if(buildMode){
     if(packOpen) togglePack(false);

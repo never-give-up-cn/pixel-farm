@@ -13,6 +13,8 @@ import { DISH_MAP, drawDish } from '../anim/dishes.js';
 import { PROD_MAP, drawProductIcon } from '../anim/products.js';
 import { RES_MAP, drawResourceIcon } from '../anim/resources.js';
 import { EQUIP_MAP, drawEquipment } from '../anim/equipment.js';
+import { INTERIOR_MAP, drawInteriorIcon } from '../anim/interior.js';
+import { MISC_MAP, drawMiscIcon } from '../anim/misc.js';
 
 const TOOL_ALIAS = {
   hoe: 'hoe', can: 'watering_can', axe: 'axe',
@@ -77,7 +79,11 @@ function buildIcon(id) {
     if (PROD_MAP[base]) { drawProductIcon(g, PROD_MAP[base], 0.25); drew = true; }
   } else if (d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots') {
     if (EQUIP_MAP[base]) { drawEquipment(g, EQUIP_MAP[base], 0.25); drew = true; }
-  } else if (d.kind === 'material' || d.kind === 'gather') {
+  } else if (d.kind === 'furniture' || d.kind === 'wallpaper' || d.kind === 'flooring') {
+    if (INTERIOR_MAP[base]) { drawInteriorIcon(g, INTERIOR_MAP[base], 0.25); drew = true; }
+  } else if (d.kind === 'misc') {
+    if (MISC_MAP[base]) { drawMiscIcon(g, MISC_MAP[base], 0.25); drew = true; }
+  } else if (d.kind === 'material' || d.kind === 'gather' || d.kind === 'artifact') {
     if (RES_MAP[base]) { drawResourceIcon(g, RES_MAP[base], 0.25); drew = true; }
   } else if (d.kind === 'tool') {
     const key = TOOL_ALIAS[base];

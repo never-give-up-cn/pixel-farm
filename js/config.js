@@ -13,6 +13,10 @@ import { BUNDLES as ANIM_BUNDLES, BUNDLE_ROOMS, bundleRoomName } from './anim/bu
 import { NPCS as ANIM_NPCS } from './anim/npcs.js';
 import { SPECIAL_NPCS as ANIM_SPECIAL_NPCS } from './anim/special-npcs.js';
 import { WEAPONS, RINGS, BOOTS } from './anim/equipment.js';
+import { INTERIOR } from './anim/interior.js';
+import { RESOURCES } from './anim/resources.js';
+import { PRODUCTS } from './anim/products.js';
+import { MISC } from './anim/misc.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1902,6 +1906,32 @@ const CONFIG = {
       kind: 'boots', price: 400 + (b.def | 0) * 120, defense: b.def, immunity: b.imm
     };
   }
+})();
+
+
+/* 第 32 轮：剩余图鉴内容一次性接入物品表 —— 室内 152 / 资源 100 / 产品 24 / 杂项 44。
+ * 已有 id 会跳过；新条目统一加入商店，保证可获得。 */
+(function addRemainingItems(){
+  const push = (id, name, icon, kind, price) => {
+    if (CONFIG.ITEMS[id]) return;
+    CONFIG.ITEMS[id] = { id, name, icon, stack: true, max: 99, kind, price };
+    CONFIG.SHOP.BUY.push({ id, price });
+  };
+
+  INTERIOR.forEach((it, i) => {
+    const kind = it.group === 'wallpaper' ? 'wallpaper' : (it.group === 'floor' ? 'flooring' : 'furniture');
+    const icon = kind === 'wallpaper' ? '🧱' : (kind === 'flooring' ? '🟫' : '🪑');
+    push(it.id, it.name, icon, kind, kind === 'furniture' ? 200 + (i % 20) * 30 : 140);
+  });
+
+  const GROUP_PRICE = { tool:120, ore:70, mine:70, material:40, forage:50, artifact:220 };
+  RESOURCES.forEach((it, i) => {
+    push(it.id, it.name, '🪨', it.group === 'artifact' ? 'artifact' : 'material',
+      GROUP_PRICE[it.group] || (50 + (i % 10) * 10));
+  });
+
+  PRODUCTS.forEach((it, i) => push(it.id, it.name, '🧺', 'animal', 60 + i * 15));
+  MISC.forEach((it, i) => push(it.id, it.name, '📜', 'misc', 80 + (i % 10) * 10));
 })();
 
 

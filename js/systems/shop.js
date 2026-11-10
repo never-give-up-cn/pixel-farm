@@ -31,7 +31,9 @@ function basePrice(id){
   }
   if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' ||
      d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral' ||
-     d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots') return d.price || 0;
+     d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots' ||
+     d.kind === 'furniture' || d.kind === 'wallpaper' || d.kind === 'flooring' ||
+     d.kind === 'misc' || d.kind === 'artifact') return d.price || 0;
   return 0;
 }
 /* 当前价格（含季节系数与 ±15% 浮动） */
@@ -57,7 +59,9 @@ function isSellable(id){
   if(!d) return false;
   return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' ||
          d.kind === 'gather' || d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral' ||
-         d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots';
+         d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots' ||
+         d.kind === 'furniture' || d.kind === 'wallpaper' || d.kind === 'flooring' ||
+         d.kind === 'misc' || d.kind === 'artifact';
 }
 /* 工具是否已经拥有（一次性商品） */
 function toolOwned(id){

@@ -150,9 +150,10 @@ const CONFIG = {
     HOTBAR: 8,            // 快捷栏格数（= 背包前 8 格，联动方案）
     STACK_MAX: 99,        // 默认最大堆叠数
     /* 初始物品（按顺序填入背包前几格；前 8 格即快捷栏）
-     * 第 8 轮起只送锄头和水壶：斧头/镐/镰刀改成商店里的商品（一次性购买） */
+     * 第 31 轮：参考星露谷官方开局，六件工具直接给齐（锄头 / 水壶 / 斧头 / 镐 / 镰刀 / 鱼竿） */
     START_LOADOUT: [
-      { id:'hoe', n:1 }, { id:'can', n:1 },
+      { id:'hoe', n:1 }, { id:'can', n:1 }, { id:'axe', n:1 },
+      { id:'pick', n:1 }, { id:'sickle', n:1 }, { id:'rod', n:1 },
       { id:'seed_radish', n:10 }, { id:'seed_potato', n:5 },
       { id:'seed_tomato', n:5 }, { id:'seed_pumpkin', n:5 }
     ]

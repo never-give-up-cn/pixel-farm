@@ -754,7 +754,9 @@ const CONFIG = {
        * 晚上回家做饭，21 点就睡（睡得早 → 早上起得早） */
       aunt: { open:{from:10, to:19}, house:'home_aunt', work:'shop', sched:[
         {from:6,  to:10,  type:'home',   at:'table'},
-        {from:10, to:14,  type:'work',   at:'counter'},
+        {from:10, to:12,  type:'work',   at:'counter'},
+        {from:12, to:13,  type:'wander', area:{x:34, y:41, w:20, h:2}, label:'街上'},
+        {from:13, to:14,  type:'work',   at:'counter'},
         {from:14, to:19,  type:'work',   at:'counter'},
         {from:19, to:21,  type:'home',   at:'stove'},
         {from:21, to:30,  type:'sleep',  at:'bed'}          /* 跨午夜到早上 6 点 */
@@ -764,15 +766,15 @@ const CONFIG = {
         {from:6,  to:7,   type:'home',   at:'bench'},
         {from:7,  to:11,  type:'work',   at:'bench'},
         {from:11, to:14,  type:'work',   at:'bench'},
-        {from:14, to:17,  type:'home',   at:'bench'},   /* 收拾工具 */
-        {from:17, to:26,  type:'home',   at:'table'},   /* 23:00~2:00 也在家（睡不着就坐一会儿） */
+        {from:14, to:18,  type:'wander', area:{x:36, y:41, w:16, h:2}, label:'街上'},   /* 下午出门转转 */
+        {from:18, to:26,  type:'home',   at:'table'},   /* 23:00~2:00 也在家（睡不着就坐一会儿） */
         {from:26, to:30,  type:'sleep',  at:'bed'}      /* 2:00~6:00 */
       ]},
       /* 邻家女孩：下午班 14:00~22:00（自己家的花摊），上午在家看书 / 上午出门，
        * 晚上在家看书看到很晚（2 点才睡）→ 夜里也总有人找得到 */
       girl: { open:{from:14, to:22}, house:'home_girl', work:'home_girl', sched:[
-        {from:6,  to:10,  type:'home',   at:'desk'},
-        {from:10, to:13,  type:'wander', area:{x:40, y:42, w:16, h:1}, label:'街上'},
+        {from:6,  to:9,   type:'home',   at:'desk'},
+        {from:9,  to:13,  type:'wander', area:{x:40, y:42, w:16, h:1}, label:'街上'},
         {from:13, to:14,  type:'home',   at:'desk'},
         {from:14, to:18,  type:'work',   at:'flowerstand'},
         {from:18, to:22,  type:'work',   at:'flowerstand'},
@@ -1821,8 +1823,8 @@ const CONFIG = {
       house: HOMES[k % HOMES.length],
       work: HOMES[k % HOMES.length],
       sched: [
-        { from:6,  to:9,  type:'home',   at:'table' },
-        { from:9,  to:12, type:'wander', area:{ x:34, y:41, w:20, h:2 }, label:'镇上' },
+        { from:6,  to:8,  type:'home',   at:'table' },
+        { from:8,  to:12, type:'wander', area:{ x:34, y:41, w:20, h:2 }, label:'镇上' },
         { from:12, to:13, type:'wander', area:{ x:38, y:41, w:14, h:2 }, label:'广场' },
         { from:13, to:18, type:'wander', area:{ x:34, y:41, w:20, h:2 }, label:'街上' },
         { from:18, to:21, type:'wander', area:{ x:40, y:41, w:14, h:2 }, label:'广场' },
@@ -1869,8 +1871,8 @@ const CONFIG = {
       house: HOMES[k % HOMES.length],
       work: HOMES[k % HOMES.length],
       sched: [
-        { from:6,  to:10, type:'home',   at:'table' },
-        { from:10, to:14, type:'wander', area:{ x:36, y:41, w:18, h:2 }, label:'镇上' },
+        { from:6,  to:9,  type:'home',   at:'table' },
+        { from:9,  to:14, type:'wander', area:{ x:36, y:41, w:18, h:2 }, label:'镇上' },
         { from:14, to:18, type:'wander', area:{ x:42, y:41, w:12, h:2 }, label:'广场' },
         { from:18, to:22, type:'wander', area:{ x:36, y:41, w:18, h:2 }, label:'街上' },
         { from:22, to:30, type:'away',   label:'离开了' }

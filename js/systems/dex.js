@@ -4,11 +4,12 @@
 'use strict';
 
 import { MINERALS } from '../anim/minerals.js';
+import { MONSTERS } from '../anim/monsters.js';
 
-const dexState = { f: [], g: 0, m: [], c: [], a: [] };
+const dexState = { f: [], g: 0, m: [], c: [], a: [], mo: [] };
 function dexTotal(){
   return CONFIG.FISHING.LIST.length + CONFIG.GATHER.TYPES.length + MINERALS.length
-    + CONFIG.CROPS.length + CONFIG.ANIMALS.TYPES.length;
+    + CONFIG.CROPS.length + CONFIG.ANIMALS.TYPES.length + MONSTERS.length;
 }
 function dexPopcount(n){
   n = n | 0; let c = 0;
@@ -17,9 +18,9 @@ function dexPopcount(n){
 }
 function dexCollected(){
   return dexState.f.length + dexPopcount(dexState.g) + dexState.m.length
-    + dexState.c.length + dexState.a.length;
+    + dexState.c.length + dexState.a.length + dexState.mo.length;
 }
-function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; dexState.c = []; dexState.a = []; }
+function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; dexState.c = []; dexState.a = []; dexState.mo = []; }
 function dexAllEntries(){
   const out = [];
   for(let i=0;i<CONFIG.FISHING.LIST.length;i++){
@@ -42,6 +43,10 @@ function dexAllEntries(){
     const a = CONFIG.ANIMALS.TYPES[i];
     out.push({kind:'animal', idx:i, id:a.id, name:a.name, icon:a.icon});
   }
+  for(let i=0;i<MONSTERS.length;i++){
+    const m = MONSTERS[i];
+    out.push({kind:'monster', idx:i, id:m.id, name:m.name, icon:'👾'});
+  }
   return out;
 }
 function arrFor(kind){
@@ -49,6 +54,7 @@ function arrFor(kind){
   if(kind === 'mineral') return dexState.m;
   if(kind === 'crop') return dexState.c;
   if(kind === 'animal') return dexState.a;
+  if(kind === 'monster') return dexState.mo;
   return null;
 }
 function dexHas(kind, idx){
@@ -62,6 +68,7 @@ function dexHas(kind, idx){
   if(kind === 'mineral'){ const m = MINERALS[idx]; return !!(m && arr.indexOf(m.id) >= 0); }
   if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; return !!(c && arr.indexOf(c.id) >= 0); }
   if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; return !!(a && arr.indexOf(a.id) >= 0); }
+  if(kind === 'monster'){ const m = MONSTERS[idx]; return !!(m && arr.indexOf(m.id) >= 0); }
   return false;
 }
 function dexUnlock(kind, idx){
@@ -80,6 +87,7 @@ function dexUnlock(kind, idx){
     else if(kind === 'mineral'){ const m = MINERALS[idx]; id = m && m.id; }
     else if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; id = c && c.id; }
     else if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; id = a && a.id; }
+    else if(kind === 'monster'){ const m = MONSTERS[idx]; id = m && m.id; }
     if(!id || arr.indexOf(id) >= 0) return false;
     arr.push(id);
   }

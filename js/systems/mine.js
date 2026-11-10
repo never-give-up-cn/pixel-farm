@@ -313,6 +313,8 @@ function resolveAttack() {
     if (mon.hp <= 0) {
       mine.monsters = mine.monsters.filter(m => m !== mon);
       mine.dying.push({ ...mon, timer: 0.5 });
+      const mi = MONSTERS.findIndex(m => m.id === mon.type);
+      if (mi >= 0 && typeof dexUnlock === 'function') dexUnlock('monster', mi);
       mine.ore += 2;
       burst(t.x, t.y, '#ffe060', 16);
       dropItem('stone', 1);

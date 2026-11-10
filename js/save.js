@@ -2,6 +2,7 @@
 'use strict';
 
 import { MINERALS } from './anim/minerals.js';
+import { MONSTERS } from './anim/monsters.js';
 
 /* === 7.存档 === */
 /* 浏览器本地存档：localStorage 单档位，键名 CONFIG.SAVE.KEY（farm_save_v1）
@@ -122,7 +123,7 @@ function serializeState(){
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
     dex: {f: dexState.f.slice(), g: dexState.g >>> 0, m: dexState.m.slice(),
-          c: dexState.c.slice(), a: dexState.a.slice()},
+          c: dexState.c.slice(), a: dexState.a.slice(), mo: dexState.mo.slice()},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
     pet: (typeof petSerialize === 'function') ? petSerialize() : null,
@@ -312,6 +313,10 @@ function deserializeState(d){
       if(Array.isArray(d.dex.a)){
         const valid = new Set(CONFIG.ANIMALS.TYPES.map(a => a.id));
         dexState.a = [...new Set(d.dex.a.filter(id => valid.has(id)))];
+      }
+      if(Array.isArray(d.dex.mo)){
+        const valid = new Set(MONSTERS.map(m => m.id));
+        dexState.mo = [...new Set(d.dex.mo.filter(id => valid.has(id)))];
       }
     }
     /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */

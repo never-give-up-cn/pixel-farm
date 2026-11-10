@@ -4,6 +4,7 @@
 import { MINERALS, drawMineral } from '../anim/minerals.js';
 import { FISH_MAP, drawFishIcon, FISH_W, FISH_H } from '../anim/fish.js';
 import { ANIMAL_MAP, drawAnimal, ANIMAL_W, ANIMAL_H } from '../anim/animals.js';
+import { MONSTER_MAP, drawMonster, MONSTER_W, MONSTER_H } from '../anim/monsters.js';
 
 /* === 6.UI === */
 /* --- 面板开合动画：开 = 200ms 缩放淡入；关 = 先播淡出，动画结束才真正隐藏 --- */
@@ -110,7 +111,21 @@ function buildDexGrid(){
         ic.appendChild(cv);
       }
     }
-    /* 作物：复用物品像素图标 */
+    /* 怪物：用 anim 站立帧 */
+    if(e.kind === 'monster' && MONSTER_MAP[e.id]){
+      const ic = cell.querySelector('.ic');
+      if(ic){
+        const cv = document.createElement('canvas');
+        cv.width = MONSTER_W; cv.height = MONSTER_H;
+        cv.style.width = '34px'; cv.style.height = '27px';
+        cv.style.imageRendering = 'pixelated';
+        const g = cv.getContext('2d');
+        g.imageSmoothingEnabled = false;
+        drawMonster(g, MONSTER_MAP[e.id], 0.25);
+        ic.appendChild(cv);
+      }
+    }
+
     if(e.kind === 'crop' && typeof itemIconCanvas === 'function'){
       const ic = cell.querySelector('.ic');
       const src = itemIconCanvas(e.id);
@@ -214,7 +229,7 @@ function sortInventory(){
 function refreshPackGrid(){
   /* 图鉴页签：只刷图鉴，不碰背包格子 */
   if(packTab === 'dex' && packMode !== 'gift'){
-    if(packInfo) packInfo.textContent = '已收集 ' + dexCollected() + '/' + dexTotal() + '　（鱼 + 采集物 + 矿物 + 作物 + 动物）';
+    if(packInfo) packInfo.textContent = '已收集 ' + dexCollected() + '/' + dexTotal() + '　（鱼 + 采集物 + 矿物 + 作物 + 动物 + 怪物）';
     if(packFoot) packFoot.textContent = '点亮 = 已钓到 / 已采集 / 已挖到 · 剪影 = 还没见过 · Esc 关闭';
     refreshDexGrid();
     return;

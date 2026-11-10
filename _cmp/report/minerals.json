@@ -1,0 +1,1274 @@
+[
+ {
+  "iou": 0.6973,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.4431,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.5962,
+  "score": 70.96,
+  "ours_box": [
+   14,
+   21
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "prismatic_shard",
+  "name": "五彩碎片",
+  "en": "Prismatic Shard",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Prismatic_Shard.png"
+ },
+ {
+  "iou": 0.7873,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.5013,
+  "aspect_sim": 0.7944,
+  "size_sim": 0.0,
+  "score": 74.08,
+  "ours_box": [
+   13,
+   15
+  ],
+  "wiki_box": [
+   36,
+   33
+  ],
+  "id": "diamond",
+  "name": "钻石",
+  "en": "Diamond",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Diamond.png"
+ },
+ {
+  "iou": 0.761,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4436,
+  "aspect_sim": 0.78,
+  "size_sim": 0.2327,
+  "score": 72.82,
+  "ours_box": [
+   13,
+   15
+  ],
+  "wiki_box": [
+   10,
+   9
+  ],
+  "id": "emerald",
+  "name": "绿宝石",
+  "en": "Emerald",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Emerald.png"
+ },
+ {
+  "iou": 0.8562,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.9076,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 79.72,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   24,
+   36
+  ],
+  "id": "ruby",
+  "name": "红宝石",
+  "en": "Ruby",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ruby.png"
+ },
+ {
+  "iou": 0.6156,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.7537,
+  "aspect_sim": 0.8654,
+  "size_sim": 0.4132,
+  "score": 76.43,
+  "ours_box": [
+   13,
+   15
+  ],
+  "wiki_box": [
+   9,
+   12
+  ],
+  "id": "jade",
+  "name": "翡翠",
+  "en": "Jade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jade.png"
+ },
+ {
+  "iou": 0.8742,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.8576,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 81.9,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   33,
+   33
+  ],
+  "id": "aquamarine",
+  "name": "海蓝宝石",
+  "en": "Aquamarine",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Aquamarine.png"
+ },
+ {
+  "iou": 0.7853,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.5841,
+  "aspect_sim": 0.4622,
+  "size_sim": 0.9018,
+  "score": 73.33,
+  "ours_box": [
+   10,
+   17
+  ],
+  "wiki_box": [
+   14,
+   11
+  ],
+  "id": "amethyst",
+  "name": "紫水晶",
+  "en": "Amethyst",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Amethyst.png"
+ },
+ {
+  "iou": 0.9089,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.8884,
+  "aspect_sim": 0.75,
+  "size_sim": 0.0,
+  "score": 79.97,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   36,
+   27
+  ],
+  "id": "topaz",
+  "name": "黄玉",
+  "en": "Topaz",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Topaz.png"
+ },
+ {
+  "iou": 0.7082,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.2047,
+  "aspect_sim": 0.7824,
+  "size_sim": 0.5967,
+  "score": 71.06,
+  "ours_box": [
+   18,
+   13
+  ],
+  "wiki_box": [
+   13,
+   12
+  ],
+  "id": "quartz",
+  "name": "石英",
+  "en": "Quartz",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Quartz.png"
+ },
+ {
+  "iou": 0.706,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6251,
+  "aspect_sim": 0.7222,
+  "size_sim": 0.0,
+  "score": 68.72,
+  "ours_box": [
+   18,
+   13
+  ],
+  "wiki_box": [
+   30,
+   30
+  ],
+  "id": "earth_crystal",
+  "name": "地晶",
+  "en": "Earth Crystal",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Earth_Crystal.png"
+ },
+ {
+  "iou": 0.8106,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6031,
+  "aspect_sim": 0.5056,
+  "size_sim": 0.0,
+  "score": 73.42,
+  "ours_box": [
+   18,
+   13
+  ],
+  "wiki_box": [
+   7,
+   10
+  ],
+  "id": "frozen_tear",
+  "name": "冰泪",
+  "en": "Frozen Tear",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Frozen_Tear.png"
+ },
+ {
+  "iou": 0.6941,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.8452,
+  "aspect_sim": 0.7824,
+  "size_sim": 0.5967,
+  "score": 79.62,
+  "ours_box": [
+   18,
+   13
+  ],
+  "wiki_box": [
+   13,
+   12
+  ],
+  "id": "fire_quartz",
+  "name": "火石英",
+  "en": "Fire Quartz",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fire_Quartz.png"
+ },
+ {
+  "iou": 0.4458,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2279,
+  "aspect_sim": 0.96,
+  "size_sim": 0.0,
+  "score": 58.27,
+  "ours_box": [
+   15,
+   18
+  ],
+  "wiki_box": [
+   36,
+   45
+  ],
+  "id": "star_shards",
+  "name": "星之碎片",
+  "en": "Star Shards",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Star_Shards.png"
+ },
+ {
+  "iou": 0.8814,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.1826,
+  "aspect_sim": 0.8497,
+  "size_sim": 0.0,
+  "score": 68.3,
+  "ours_box": [
+   10,
+   17
+  ],
+  "wiki_box": [
+   27,
+   39
+  ],
+  "id": "helvite",
+  "name": "日光榴石",
+  "en": "Helvite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Helvite.png"
+ },
+ {
+  "iou": 0.3726,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7371,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 64.73,
+  "ours_box": [
+   18,
+   18
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "neptunite",
+  "name": "柱星叶石",
+  "en": "Neptunite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Neptunite.png"
+ },
+ {
+  "iou": 0.8906,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.1996,
+  "aspect_sim": 0.9883,
+  "size_sim": 0.0,
+  "score": 74.28,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   27
+  ],
+  "id": "fire_opal",
+  "name": "火蛋白石",
+  "en": "Fire Opal",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fire_Opal.png"
+ },
+ {
+  "iou": 0.7708,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.5751,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.0,
+  "score": 69.63,
+  "ours_box": [
+   19,
+   12
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "dolomite",
+  "name": "白云石",
+  "en": "Dolomite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dolomite.png"
+ },
+ {
+  "iou": 0.8363,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.7367,
+  "aspect_sim": 0.6061,
+  "size_sim": 0.0,
+  "score": 75.32,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   30,
+   33
+  ],
+  "id": "bixite",
+  "name": "铋晶石",
+  "en": "Bixite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bixite.png"
+ },
+ {
+  "iou": 0.8922,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6754,
+  "aspect_sim": 0.8363,
+  "size_sim": 0.0,
+  "score": 76.82,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   33,
+   27
+  ],
+  "id": "tigerseye",
+  "name": "虎眼石",
+  "en": "Tigerseye",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tigerseye.png"
+ },
+ {
+  "iou": 0.4996,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.6396,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 64.89,
+  "ours_box": [
+   15,
+   18
+  ],
+  "wiki_box": [
+   30,
+   36
+  ],
+  "id": "kyanite",
+  "name": "蓝晶石",
+  "en": "Kyanite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Kyanite.png"
+ },
+ {
+  "iou": 0.8213,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.1995,
+  "aspect_sim": 0.6353,
+  "size_sim": 0.0,
+  "score": 63.98,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "fairy_stone",
+  "name": "仙石",
+  "en": "Fairy Stone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fairy_Stone.png"
+ },
+ {
+  "iou": 0.8304,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.5788,
+  "aspect_sim": 0.7982,
+  "size_sim": 0.0,
+  "score": 71.89,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "ocean_stone",
+  "name": "海洋石",
+  "en": "Ocean Stone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ocean_Stone.png"
+ },
+ {
+  "iou": 0.7581,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.3283,
+  "aspect_sim": 0.5229,
+  "size_sim": 0.0,
+  "score": 64.77,
+  "ours_box": [
+   10,
+   17
+  ],
+  "wiki_box": [
+   27,
+   24
+  ],
+  "id": "lemon_stone",
+  "name": "柠檬石",
+  "en": "Lemon Stone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Lemon_Stone.png"
+ },
+ {
+  "iou": 0.5405,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.3741,
+  "aspect_sim": 0.9722,
+  "size_sim": 0.0,
+  "score": 60.3,
+  "ours_box": [
+   18,
+   14
+  ],
+  "wiki_box": [
+   45,
+   36
+  ],
+  "id": "ghost_crystal",
+  "name": "幽灵水晶",
+  "en": "Ghost Crystal",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ghost_Crystal.png"
+ },
+ {
+  "iou": 0.7221,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4398,
+  "aspect_sim": 0.3939,
+  "size_sim": 0.071,
+  "score": 63.8,
+  "ours_box": [
+   18,
+   13
+  ],
+  "wiki_box": [
+   18,
+   33
+  ],
+  "id": "fluorapatite",
+  "name": "氟磷灰石",
+  "en": "Fluorapatite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fluorapatite.png"
+ },
+ {
+  "iou": 0.5101,
+  "dhash_sim": 0.4219,
+  "palette_cov": 1.0,
+  "color_sim": 0.7009,
+  "aspect_sim": 0.9091,
+  "size_sim": 0.0,
+  "score": 63.34,
+  "ours_box": [
+   15,
+   18
+  ],
+  "wiki_box": [
+   33,
+   36
+  ],
+  "id": "obsidian",
+  "name": "黑曜石",
+  "en": "Obsidian",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Obsidian.png"
+ },
+ {
+  "iou": 0.6751,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.793,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.0,
+  "score": 70.55,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   42,
+   42
+  ],
+  "id": "lunarite",
+  "name": "月石",
+  "en": "Lunarite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Lunarite.png"
+ },
+ {
+  "iou": 0.7901,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.7948,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.0,
+  "score": 74.34,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   42,
+   42
+  ],
+  "id": "basalt",
+  "name": "玄武岩",
+  "en": "Basalt",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Basalt.png"
+ },
+ {
+  "iou": 0.8906,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4896,
+  "aspect_sim": 0.9883,
+  "size_sim": 0.0,
+  "score": 74.88,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   27
+  ],
+  "id": "opal",
+  "name": "蛋白石",
+  "en": "Opal",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Opal.png"
+ },
+ {
+  "iou": 0.6208,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.784,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 68.61,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "jamborite",
+  "name": "水镍矿",
+  "en": "Jamborite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Jamborite.png"
+ },
+ {
+  "iou": 0.8585,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6676,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.4159,
+  "score": 76.53,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   10,
+   12
+  ],
+  "id": "jasper",
+  "name": "碧玉",
+  "en": "Jasper",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jasper.png"
+ },
+ {
+  "iou": 0.7614,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5947,
+  "aspect_sim": 0.9286,
+  "size_sim": 0.789,
+  "score": 77.81,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "geminite",
+  "name": "双生石",
+  "en": "Geminite",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Geminite.png"
+ },
+ {
+  "iou": 0.8132,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.4195,
+  "aspect_sim": 0.7273,
+  "size_sim": 0.0,
+  "score": 71.71,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   36,
+   33
+  ],
+  "id": "hematite",
+  "name": "赤铁矿",
+  "en": "Hematite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hematite.png"
+ },
+ {
+  "iou": 0.7182,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5514,
+  "aspect_sim": 0.7385,
+  "size_sim": 0.0,
+  "score": 70.33,
+  "ours_box": [
+   12,
+   15
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "alamite",
+  "name": "阿拉米石",
+  "en": "Alamite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Alamite.png"
+ },
+ {
+  "iou": 0.8101,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.7341,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.0,
+  "score": 72.25,
+  "ours_box": [
+   19,
+   12
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "aerinite",
+  "name": "青铝石",
+  "en": "Aerinite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Aerinite.png"
+ },
+ {
+  "iou": 0.4671,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.8538,
+  "aspect_sim": 0.6111,
+  "size_sim": 0.0,
+  "score": 62.31,
+  "ours_box": [
+   18,
+   14
+  ],
+  "wiki_box": [
+   33,
+   42
+  ],
+  "id": "celestine",
+  "name": "天青石",
+  "en": "Celestine",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Celestine.png"
+ },
+ {
+  "iou": 0.8138,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.7726,
+  "aspect_sim": 0.7222,
+  "size_sim": 0.0,
+  "score": 75.1,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "pyrite",
+  "name": "黄铁矿",
+  "en": "Pyrite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pyrite.png"
+ },
+ {
+  "iou": 0.6905,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5785,
+  "aspect_sim": 0.8824,
+  "size_sim": 0.0,
+  "score": 70.71,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   33,
+   33
+  ],
+  "id": "petrified_slime",
+  "name": "石化史莱姆",
+  "en": "Petrified Slime",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Petrified_Slime.png"
+ },
+ {
+  "iou": 0.8101,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.778,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 72.64,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "soapstone",
+  "name": "滑石",
+  "en": "Soapstone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Soapstone.png"
+ },
+ {
+  "iou": 0.8327,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4643,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.5968,
+  "score": 73.16,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "jagoite",
+  "name": "贾戈石",
+  "en": "Jagoite",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jagoite.png"
+ },
+ {
+  "iou": 0.8389,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.6129,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 75.71,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "marble",
+  "name": "大理石",
+  "en": "Marble",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Marble.png"
+ },
+ {
+  "iou": 0.9098,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.5652,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.1017,
+  "score": 77.19,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "thunder_egg",
+  "name": "雷蛋",
+  "en": "Thunder Egg",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Thunder_Egg.png"
+ },
+ {
+  "iou": 0.7312,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5525,
+  "aspect_sim": 0.7412,
+  "size_sim": 0.0,
+  "score": 69.82,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "esperite",
+  "name": "埃斯佩石",
+  "en": "Esperite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Esperite.png"
+ },
+ {
+  "iou": 0.909,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.778,
+  "aspect_sim": 0.9883,
+  "size_sim": 0.0,
+  "score": 83.2,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   27
+  ],
+  "id": "malachite",
+  "name": "孔雀石",
+  "en": "Malachite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Malachite.png"
+ },
+ {
+  "iou": 0.7659,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6665,
+  "aspect_sim": 0.8086,
+  "size_sim": 0.0,
+  "score": 73.25,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   33
+  ],
+  "id": "slate",
+  "name": "板岩",
+  "en": "Slate",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Slate.png"
+ },
+ {
+  "iou": 0.682,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.7477,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.0,
+  "score": 67.99,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "orpiment",
+  "name": "雌黄",
+  "en": "Orpiment",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Orpiment.png"
+ },
+ {
+  "iou": 0.893,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.3901,
+  "aspect_sim": 0.4977,
+  "size_sim": 0.0,
+  "score": 69.49,
+  "ours_box": [
+   10,
+   17
+  ],
+  "wiki_box": [
+   39,
+   33
+  ],
+  "id": "nekoite",
+  "name": "猫石",
+  "en": "Nekoite",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Nekoite.png"
+ },
+ {
+  "iou": 0.8078,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.9901,
+  "aspect_sim": 0.7273,
+  "size_sim": 0.5105,
+  "score": 82.98,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   12,
+   11
+  ],
+  "id": "granite",
+  "name": "花岗岩",
+  "en": "Granite",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Granite.png"
+ },
+ {
+  "iou": 0.6568,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.5394,
+  "aspect_sim": 0.6272,
+  "size_sim": 0.3769,
+  "score": 65.33,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   11,
+   12
+  ],
+  "id": "calcite",
+  "name": "方解石",
+  "en": "Calcite",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Calcite.png"
+ },
+ {
+  "iou": 0.8188,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.8225,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.0,
+  "score": 79.68,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   33,
+   33
+  ],
+  "id": "sandstone",
+  "name": "砂岩",
+  "en": "Sandstone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sandstone.png"
+ },
+ {
+  "iou": 0.6881,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.0,
+  "score": 58.73,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   33,
+   33
+  ],
+  "id": "baryte",
+  "name": "重晶石",
+  "en": "Baryte",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Baryte.png"
+ },
+ {
+  "iou": 0.7751,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.7346,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.0,
+  "score": 71.74,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "mudstone",
+  "name": "泥岩",
+  "en": "Mudstone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mudstone.png"
+ },
+ {
+  "iou": 0.9215,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.735,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.1814,
+  "score": 80.27,
+  "ours_box": [
+   19,
+   12
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "limestone",
+  "name": "石灰岩",
+  "en": "Limestone",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Limestone.png"
+ }
+]

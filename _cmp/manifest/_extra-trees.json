@@ -1,0 +1,200 @@
+{
+  "cat": "trees",
+  "note": "File names are the real wiki File: page titles, URL-encoded form (spaces -> underscores). Wiki path = /mediawiki/images/en/{md5[0]}/{md5[0..1]}/{name}.png . Source: https://stardewvalleywiki.com/Special:PrefixIndex/File:<prefix> (verified), plus Special:Export of the wiki pages.",
+  "items": {
+    "oak": [
+      "Oak_Stage_1.png",
+      "Oak_Stage_2.png",
+      "Oak_Stage_3.png",
+      "Oak_Stage_4.png",
+      "Oak_Stage_5.png",
+      "Oak_tree_portrait.png",
+      "Oak_stump_Spring.png",
+      "Oak_stump_Winter.png"
+    ],
+    "maple": [
+      "Maple_Stage_1.png",
+      "Maple_Stage_2.png",
+      "Maple_Stage_3.png",
+      "Maple_Stage_4.png",
+      "Maple_Stage_5.png",
+      "Maple_tree_portrait.png",
+      "Maple_stump_Spring.png",
+      "Maple_stump_Summer.png",
+      "Maple_stump_Fall.png",
+      "Maple_stump_Winter.png"
+    ],
+    "pine": [
+      "Pine_Stage_1.png",
+      "Pine_Stage_2.png",
+      "Pine_Stage_3.png",
+      "Pine_Stage_4.png",
+      "Pine_Stage_5.png",
+      "Pine_tree_portrait.png",
+      "Pine_stump_Spring.png",
+      "Pine_stump_Fall.png",
+      "Pine_stump_Winter.png"
+    ],
+    "mahogany": [
+      "Mahogany_Stage_1.png",
+      "Mahogany_Stage_2.png",
+      "Mahogany_Stage_3.png",
+      "Mahogany_Stage_4.png",
+      "Mahogany_Stage_5.png",
+      "Mahogany_Tree_Portrait.png",
+      "Mahogany_stump_Spring.png",
+      "Mahogany_stump_Summer.png",
+      "Mahogany_stump_Fall.png",
+      "Mahogany_stump_Winter.png"
+    ],
+    "palm": [
+      "Palm_Stage_1.png",
+      "Palm_Stage_2.png",
+      "Palm_Stage_3.png",
+      "Palm_tree_portrait.png",
+      "Palm_Tree_Island_Portrait.png",
+      "Palm_Tree_Island_Portrait_Fruit.png",
+      "Palm_stump.png"
+    ],
+    "mushroom": [
+      "MushroomTree_Stage_1.png",
+      "MushroomTree_Stage_2.png",
+      "MushroomTree_Stage_3.png",
+      "MushroomTree_Stage_4.png",
+      "MushroomTree_Stage_5.png",
+      "Mushroom_tree_portrait.png"
+    ],
+    "mystic": [
+      "Mystic_Tree_Stage_1.png",
+      "Mystic_Tree_Stage_2.png",
+      "Mystic_Tree_Stage_3.png",
+      "Mystic_Tree_Stage_4.png",
+      "Mystic_Tree_Stage_5.png",
+      "Mystic_Tree_Portrait.png",
+      "Mystic_Tree_Stump.png"
+    ],
+    "mossy_oak": [
+      "Wild_Tree_Stage_1.png",
+      "Wild_Tree_Stage_2.png",
+      "Wild_Tree_Stage_3.png",
+      "Wild_Tree_Stage_4.png",
+      "Wild_Tree_Stage_5.png",
+      "Wild_Tree_Portrait.png",
+      "Wild_Tree_stump_Spring.png",
+      "Wild_Tree_stump_Fall.png",
+      "Wild_Tree_stump_Winter.png"
+    ],
+    "mossy_pine": [
+      "Fiddlehead_Stalk_Stage_1.png",
+      "Fiddlehead_Stalk_Stage_2.png",
+      "Fiddlehead_Stalk_Stage_3.png",
+      "Fiddlehead_Stalk_Stage_4.png",
+      "Fiddlehead_Stalk_Stage_5.png",
+      "Fiddlehead_Stalk_Portrait.png",
+      "Fiddlehead_Stalk_stump_Spring.png",
+      "Fiddlehead_Stalk_stump_Fall.png",
+      "Fiddlehead_Stalk_stump_Winter.png"
+    ],
+    "greenrain": [
+      "Lush_Wild_Tree_Stage_1.png",
+      "Lush_Wild_Tree_Stage_2.png",
+      "Lush_Wild_Tree_Stage_3.png",
+      "Lush_Wild_Tree_Stage_4.png",
+      "Lush_Wild_Tree_Stage_5.png",
+      "Lush_Wild_Tree_Portrait.png",
+      "Lush_Wild_Tree_stump_Spring.png",
+      "Lush_Wild_Tree_stump_Fall.png",
+      "Lush_Wild_Tree_stump_Winter.png"
+    ],
+    "apple": [
+      "Apple_Stage_1.png",
+      "Apple_Stage_2.png",
+      "Apple_Stage_3.png",
+      "Apple_Stage_4.png",
+      "Apple_Stage_5.png",
+      "Apple_Stage_5_Fruit.png",
+      "Apple.png",
+      "Apple_Sapling.png"
+    ],
+    "apricot": [
+      "Apricot_Stage_1.png",
+      "Apricot_Stage_2.png",
+      "Apricot_Stage_3.png",
+      "Apricot_Stage_4.png",
+      "Apricot_Stage_5.png",
+      "Apricot_Stage_5_Fruit.png",
+      "Apricot.png",
+      "Apricot_Sapling.png"
+    ],
+    "cherry": [
+      "Cherry_Stage_1.png",
+      "Cherry_Stage_2.png",
+      "Cherry_Stage_3.png",
+      "Cherry_Stage_4.png",
+      "Cherry_Stage_5.png",
+      "Cherry_Stage_5_Fruit.png",
+      "Cherry.png",
+      "Cherry_Sapling.png"
+    ],
+    "orange": [
+      "Orange_Stage_1.png",
+      "Orange_Stage_2.png",
+      "Orange_Stage_3.png",
+      "Orange_Stage_4.png",
+      "Orange_Stage_5.png",
+      "Orange_Stage_5_Fruit.png",
+      "Orange.png",
+      "Orange_Sapling.png"
+    ],
+    "peach": [
+      "Peach_Stage_1.png",
+      "Peach_Stage_2.png",
+      "Peach_Stage_3.png",
+      "Peach_Stage_4.png",
+      "Peach_Stage_5.png",
+      "Peach_Stage_5_Fruit.png",
+      "Peach.png",
+      "Peach_Sapling.png"
+    ],
+    "banana": [
+      "Banana_Stage_1.png",
+      "Banana_Stage_2.png",
+      "Banana_Stage_3.png",
+      "Banana_Stage_4.png",
+      "Banana_Stage_5.png",
+      "Banana_Stage_5_Fruit.png",
+      "Banana.png",
+      "Banana_Sapling.png"
+    ],
+    "mango": [
+      "Mango_Stage_1.png",
+      "Mango_Stage_2.png",
+      "Mango_Stage_3.png",
+      "Mango_Stage_4.png",
+      "Mango_Stage_5.png",
+      "Mango_Stage_5_Fruit.png",
+      "Mango.png",
+      "Mango_Sapling.png"
+    ],
+    "pomegranate": [
+      "Pomegranate_Stage_1.png",
+      "Pomegranate_Stage_2.png",
+      "Pomegranate_Stage_3.png",
+      "Pomegranate_Stage_4.png",
+      "Pomegranate_Stage_5.png",
+      "Pomegranate_Stage_5_Fruit.png",
+      "Pomegranate.png",
+      "Pomegranate_Sapling.png"
+    ]
+  },
+  "mapping_notes": {
+    "mossy_oak": "wiki has NO 'Mossy Oak' tree file (File:Mossy prefix only contains Mossy_Seed.png). Closest official art = Green Rain Tree type 1, whose files are named 'Wild Tree Stage N.png'. Oak/Maple trees turn into this type in Fall.",
+    "mossy_pine": "wiki has NO 'Mossy Pine' tree file. Closest official art = Green Rain Tree type 3, the pine-shaped one, files named 'Fiddlehead Stalk Stage N.png'.",
+    "greenrain": "'Green Rain Tree' is not a file name on the wiki. The three official variants are: type 1 = 'Wild Tree ...', type 2 = 'Lush Wild Tree ...', type 3 = 'Fiddlehead Stalk ...'. Type 2 is used here so greenrain does not duplicate mossy_oak; type 1 -> mossy_oak, type 3 -> mossy_pine.",
+    "mushroom": "stage files are 'MushroomTree Stage N.png' (no space, no 'Tree' word) while the portrait is 'Mushroom tree portrait.png'.",
+    "mystic": "uses 'Mystic Tree Stage N.png' (with the word 'Tree'), unlike oak/maple/pine/mahogany which omit it.",
+    "mahogany": "portrait is capitalised 'Mahogany Tree Portrait.png' while the stages are 'Mahogany Stage N.png'.",
+    "palm": "only 3 growth stages exist; portraits: 'Palm tree portrait.png' (desert) and 'Palm Tree Island Portrait.png' + 'Palm Tree Island Portrait Fruit.png' (island).",
+    "fruit_trees": "no '<Fruit> Tree.png' single sprite exists. Each fruit tree = '<Fruit> Stage 1..5.png' + '<Fruit> Stage 5 Fruit.png' (mature tree carrying fruit), plus the fruit item '<Fruit>.png' and the sapling '<Fruit> Sapling.png'."
+  }
+}

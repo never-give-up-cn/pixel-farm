@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(8, 96px);width:768px}
+.cell{width:96px;height:96px;position:relative;overflow:hidden}
+canvas{position:absolute;image-rendering:pixelated}
+img{position:absolute;left:0;top:0;image-rendering:pixelated}
+</style></head><body>
+<div id="ours" class="grid"></div>
+<div id="wiki" class="grid"></div>
+<script type="module">
+const MANIFEST = [{"id":"wine","name":"葡萄酒","en":"Wine","wikiPath":"/mediawiki/images/en/6/69/Wine.png","wikiSize":[48,48],"wikiFile":"Wine.png"},{"id":"juice","name":"果汁","en":"Juice","wikiPath":"/mediawiki/images/en/f/f1/Juice.png","wikiSize":[48,48],"wikiFile":"Juice.png"},{"id":"beer","name":"啤酒","en":"Beer","wikiPath":"/mediawiki/images/en/b/b3/Beer.png","wikiSize":[48,48],"wikiFile":"Beer.png"},{"id":"pale_ale","name":"淡啤酒","en":"Pale Ale","wikiPath":"/mediawiki/images/en/7/78/Pale_Ale.png","wikiSize":[48,48],"wikiFile":"Pale_Ale.png"},{"id":"mead","name":"蜂蜜酒","en":"Mead","wikiPath":"/mediawiki/images/en/8/84/Mead.png","wikiSize":[48,48],"wikiFile":"Mead.png"},{"id":"coffee","name":"咖啡","en":"Coffee","wikiPath":"/mediawiki/images/en/e/e9/Coffee.png","wikiSize":[48,48],"wikiFile":"Coffee.png"},{"id":"green_tea","name":"绿茶","en":"Green Tea","wikiPath":"/mediawiki/images/en/8/8f/Green_Tea.png","wikiSize":[48,48],"wikiFile":"Green_Tea.png"},{"id":"jelly","name":"果酱","en":"Jelly","wikiPath":"/mediawiki/images/en/0/05/Jelly.png","wikiSize":[48,48],"wikiFile":"Jelly.png"},{"id":"pickles","name":"腌菜","en":"Pickles","wikiPath":"/mediawiki/images/en/c/c7/Pickles.png","wikiSize":[48,48],"wikiFile":"Pickles.png"},{"id":"honey","name":"蜂蜜","en":"Honey","wikiPath":"/mediawiki/images/en/c/c6/Honey.png","wikiSize":[48,48],"wikiFile":"Honey.png"},{"id":"vinegar","name":"醋","en":"Vinegar","wikiPath":"/mediawiki/images/en/f/fe/Vinegar.png","wikiSize":[48,48],"wikiFile":"Vinegar.png"},{"id":"cheese","name":"奶酪","en":"Cheese","wikiPath":"/mediawiki/images/en/a/a5/Cheese.png","wikiSize":[48,48],"wikiFile":"Cheese.png"},{"id":"goat_cheese","name":"山羊奶酪","en":"Goat Cheese","wikiPath":"/mediawiki/images/en/c/c8/Goat_Cheese.png","wikiSize":[48,48],"wikiFile":"Goat_Cheese.png"},{"id":"mayonnaise","name":"蛋黄酱","en":"Mayonnaise","wikiPath":"/mediawiki/images/en/4/4e/Mayonnaise.png","wikiSize":[48,48],"wikiFile":"Mayonnaise.png"},{"id":"duck_mayonnaise","name":"鸭蛋黄酱","en":"Duck Mayonnaise","wikiPath":"/mediawiki/images/en/2/23/Duck_Mayonnaise.png","wikiSize":[48,48],"wikiFile":"Duck_Mayonnaise.png"},{"id":"cloth","name":"布","en":"Cloth","wikiPath":"/mediawiki/images/en/5/51/Cloth.png","wikiSize":[48,48],"wikiFile":"Cloth.png"},{"id":"oil","name":"油","en":"Oil","wikiPath":"/mediawiki/images/en/0/06/Oil.png","wikiSize":[48,48],"wikiFile":"Oil.png"},{"id":"truffle_oil","name":"松露油","en":"Truffle Oil","wikiPath":"/mediawiki/images/en/3/3d/Truffle_Oil.png","wikiSize":[48,48],"wikiFile":"Truffle_Oil.png"},{"id":"rice","name":"大米","en":"Rice","wikiPath":"/mediawiki/images/en/d/da/Rice.png","wikiSize":[48,48],"wikiFile":"Rice.png"},{"id":"sugar","name":"糖","en":"Sugar","wikiPath":"/mediawiki/images/en/a/a9/Sugar.png","wikiSize":[48,48],"wikiFile":"Sugar.png"},{"id":"flour","name":"面粉","en":"Flour","wikiPath":"/mediawiki/images/en/2/2c/Wheat_Flour.png","wikiSize":[48,48],"wikiFile":"Wheat_Flour.png"},{"id":"dried_fruit","name":"水果干","en":"Dried Fruit","wikiPath":"/mediawiki/images/en/6/66/Dried_Fruit.png","wikiSize":[48,48],"wikiFile":"Dried_Fruit.png"},{"id":"dried_mushrooms","name":"蘑菇干","en":"Dried Mushrooms","wikiPath":"/mediawiki/images/en/1/1a/Dried_Mushrooms.png","wikiSize":[48,48],"wikiFile":"Dried_Mushrooms.png"},{"id":"raisins","name":"葡萄干","en":"Raisins","wikiPath":"/mediawiki/images/en/0/06/Raisins.png","wikiSize":[48,48],"wikiFile":"Raisins.png"},{"id":"roe","name":"鱼籽","en":"Roe","wikiPath":"/mediawiki/images/en/5/56/Roe.png","wikiSize":[48,48],"wikiFile":"Roe.png"},{"id":"aged_roe","name":"陈年鱼籽","en":"Aged Roe","wikiPath":"/mediawiki/images/en/0/0e/Aged_Roe.png","wikiSize":[48,48],"wikiFile":"Aged_Roe.png"},{"id":"caviar","name":"鱼子酱","en":"Caviar","wikiPath":"/mediawiki/images/en/8/89/Caviar.png","wikiSize":[48,48],"wikiFile":"Caviar.png"},{"id":"smoked_fish","name":"熏鱼","en":"Smoked Fish","wikiPath":"/mediawiki/images/en/4/4c/Smoked_Fish.png","wikiSize":[48,48],"wikiFile":"Smoked_Fish.png"}];
+const CFG = {"mod":"../../js/anim/artisan.js","list":"ARTISANS","w":"ARTISAN_W","h":"ARTISAN_H","draw":"drawArtisan","drawExpr":"mod.drawArtisan(g, item, 0.25)"};
+const CELL = 96, PERROW = 8, BATCH = 16;
+const mod = await import(CFG.mod);
+const list = CFG.list ? mod[CFG.list] : [];
+const map = Object.fromEntries(list.map(x => [x.id, x]));
+const W = mod[CFG.w], H = mod[CFG.h];
+const gOurs = document.getElementById('ours'), gWiki = document.getElementById('wiki');
+const OX = Math.floor((CELL - W) / 2), OY = Math.floor((CELL - H) / 2);
+
+const ours = MANIFEST.map(m => {
+  const item = map[m.id];
+  const c1 = document.createElement('div'); c1.className = 'cell';
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (item && CFG.draw) { try { eval(CFG.drawExpr); } catch (e) { console.error('draw', m.id, e); } }
+  cv.style.left = OX + 'px'; cv.style.top = OY + 'px';
+  c1.appendChild(cv); gOurs.appendChild(c1);
+  return c1;
+});
+
+const wiki = [];
+for (let i = 0; i < MANIFEST.length; i += BATCH) {
+  const batch = [];
+  for (let j = i; j < Math.min(i + BATCH, MANIFEST.length); j++) {
+    const m = MANIFEST[j];
+    const c2 = document.createElement('div'); c2.className = 'cell';
+    const img = document.createElement('img');
+    c2.appendChild(img); gWiki.appendChild(c2);
+    batch.push(new Promise(resolve => {
+      img.onload = resolve; img.onerror = resolve;
+      img.src = 'https://stardewvalleywiki.com' + m.wikiPath;
+    }));
+  }
+  await Promise.all(batch);
+}
+document.title = 'READY';
+</script></body></html>

@@ -1,0 +1,2642 @@
+[
+ {
+  "iou": 0.5912,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.8373,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 76.43,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "rusty_sword",
+  "name": "生锈的剑",
+  "en": "Rusty Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rusty_Sword.png"
+ },
+ {
+  "iou": 0.594,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.6359,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 72.87,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "steel_smallsword",
+  "name": "钢制短剑",
+  "en": "Steel Smallsword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Steel_Smallsword.png"
+ },
+ {
+  "iou": 0.6343,
+  "dhash_sim": 0.8906,
+  "palette_cov": 1.0,
+  "color_sim": 0.7189,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 76.58,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "wooden_blade",
+  "name": "木剑",
+  "en": "Wooden Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wooden_Blade.png"
+ },
+ {
+  "iou": 0.6189,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.6704,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 73.2,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "pirates_sword",
+  "name": "海盗剑",
+  "en": "Pirate's Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pirate's_Sword.png"
+ },
+ {
+  "iou": 0.6109,
+  "dhash_sim": 0.875,
+  "palette_cov": 1.0,
+  "color_sim": 0.5051,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 72.35,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "silver_saber",
+  "name": "银军刀",
+  "en": "Silver Saber",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Silver_Saber.png"
+ },
+ {
+  "iou": 0.58,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.5525,
+  "aspect_sim": 0.8691,
+  "size_sim": 0.0962,
+  "score": 69.55,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "cutlass",
+  "name": "弯刀",
+  "en": "Cutlass",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cutlass.png"
+ },
+ {
+  "iou": 0.5808,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.6493,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 71.74,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "forest_sword",
+  "name": "森林剑",
+  "en": "Forest Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Forest_Sword.png"
+ },
+ {
+  "iou": 0.7207,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.575,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.1161,
+  "score": 75.91,
+  "ours_box": [
+   23,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "iron_edge",
+  "name": "铁刃",
+  "en": "Iron Edge",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Iron_Edge.png"
+ },
+ {
+  "iou": 0.2364,
+  "dhash_sim": 0.4219,
+  "palette_cov": 1.0,
+  "color_sim": 0.6791,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.032,
+  "score": 54.02,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "insect_head",
+  "name": "昆虫头部",
+  "en": "Insect Head",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Insect_Head.png"
+ },
+ {
+  "iou": 0.5718,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.6762,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 73.44,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "bone_sword",
+  "name": "骨剑",
+  "en": "Bone Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bone_Sword.png"
+ },
+ {
+  "iou": 0.6458,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.6721,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.1161,
+  "score": 74.49,
+  "ours_box": [
+   23,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "claymore",
+  "name": "双手剑",
+  "en": "Claymore",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Claymore.png"
+ },
+ {
+  "iou": 0.5754,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.8224,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 74.17,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "neptunes_glaive",
+  "name": "海神之刃",
+  "en": "Neptune's Glaive",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Neptune's_Glaive.png"
+ },
+ {
+  "iou": 0.6677,
+  "dhash_sim": 0.9062,
+  "palette_cov": 1.0,
+  "color_sim": 0.1436,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.032,
+  "score": 68.62,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "templars_blade",
+  "name": "圣殿骑士之刃",
+  "en": "Templar's Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Templar's_Blade.png"
+ },
+ {
+  "iou": 0.6352,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.6923,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 73.71,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "obsidian_edge",
+  "name": "黑曜石之刃",
+  "en": "Obsidian Edge",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Obsidian_Edge.png"
+ },
+ {
+  "iou": 0.6033,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.5848,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.1161,
+  "score": 72.53,
+  "ours_box": [
+   23,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "ossified_blade",
+  "name": "骨化之刃",
+  "en": "Ossified Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ossified_Blade.png"
+ },
+ {
+  "iou": 0.6582,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.3514,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 71.15,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "holy_blade",
+  "name": "神圣之刃",
+  "en": "Holy Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Holy_Blade.png"
+ },
+ {
+  "iou": 0.6879,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.1276,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.1161,
+  "score": 68.84,
+  "ours_box": [
+   23,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "tempered_broadsword",
+  "name": "精炼阔剑",
+  "en": "Tempered Broadsword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tempered_Broadsword.png"
+ },
+ {
+  "iou": 0.5779,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.7163,
+  "aspect_sim": 0.8691,
+  "size_sim": 0.0962,
+  "score": 72.57,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "yeti_tooth",
+  "name": "雪怪之牙",
+  "en": "Yeti Tooth",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Yeti_Tooth.png"
+ },
+ {
+  "iou": 0.6485,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.265,
+  "aspect_sim": 0.8691,
+  "size_sim": 0.0962,
+  "score": 69.16,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "steel_falchion",
+  "name": "钢制弯刀",
+  "en": "Steel Falchion",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Steel_Falchion.png"
+ },
+ {
+  "iou": 0.6014,
+  "dhash_sim": 0.875,
+  "palette_cov": 1.0,
+  "color_sim": 0.7248,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 75.36,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "dark_sword",
+  "name": "黑暗之剑",
+  "en": "Dark Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dark_Sword.png"
+ },
+ {
+  "iou": 0.4966,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.509,
+  "aspect_sim": 0.8462,
+  "size_sim": 0.1982,
+  "score": 67.92,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lava_katana",
+  "name": "熔岩武士刀",
+  "en": "Lava Katana",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lava_Katana.png"
+ },
+ {
+  "iou": 0.5709,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.4677,
+  "aspect_sim": 0.8691,
+  "size_sim": 0.0,
+  "score": 68.46,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   45,
+   48
+  ],
+  "id": "dragontooth_cutlass",
+  "name": "龙牙弯刀",
+  "en": "Dragontooth Cutlass",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dragontooth_Cutlass.png"
+ },
+ {
+  "iou": 0.6586,
+  "dhash_sim": 0.8438,
+  "palette_cov": 1.0,
+  "color_sim": 0.6325,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 75.07,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "dwarf_sword",
+  "name": "矮人之剑",
+  "en": "Dwarf Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dwarf_Sword.png"
+ },
+ {
+  "iou": 0.5951,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.4969,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 70.2,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "galaxy_sword",
+  "name": "银河剑",
+  "en": "Galaxy Sword",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Galaxy_Sword.png"
+ },
+ {
+  "iou": 0.5418,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.5342,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.1605,
+  "score": 69.15,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "infinity_blade",
+  "name": "无限之刃",
+  "en": "Infinity Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Infinity_Blade.png"
+ },
+ {
+  "iou": 0.2908,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8235,
+  "aspect_sim": 0.9138,
+  "size_sim": 0.0,
+  "score": 64.28,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   47,
+   48
+  ],
+  "id": "haleys_iron",
+  "name": "海莉的熨斗",
+  "en": "Haley's Iron",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Haley's_Iron.png"
+ },
+ {
+  "iou": 0.5259,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.7423,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.0,
+  "score": 71.11,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "leahs_whittler",
+  "name": "莉亚的雕刻刀",
+  "en": "Leah's Whittler",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Leah's_Whittler.png"
+ },
+ {
+  "iou": 0.582,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.8267,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.1161,
+  "score": 75.52,
+  "ours_box": [
+   23,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "meowmere",
+  "name": "喵喵剑",
+  "en": "Meowmere",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Meowmere.png"
+ },
+ {
+  "iou": 0.6234,
+  "dhash_sim": 0.8125,
+  "palette_cov": 1.0,
+  "color_sim": 0.6069,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 74.06,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "carving_knife",
+  "name": "雕刻刀",
+  "en": "Carving Knife",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Carving_Knife.png"
+ },
+ {
+  "iou": 0.5573,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.3093,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 66.67,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "iron_dirk",
+  "name": "铁匕首",
+  "en": "Iron Dirk",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Iron_Dirk.png"
+ },
+ {
+  "iou": 0.6082,
+  "dhash_sim": 0.8438,
+  "palette_cov": 1.0,
+  "color_sim": 0.5715,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 73.69,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "wind_spire",
+  "name": "风之尖刺",
+  "en": "Wind Spire",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wind_Spire.png"
+ },
+ {
+  "iou": 0.5419,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.7205,
+  "aspect_sim": 0.9231,
+  "size_sim": 0.0623,
+  "score": 70.98,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   12,
+   13
+  ],
+  "id": "elf_blade",
+  "name": "精灵之刃",
+  "en": "Elf Blade",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Elf_Blade.png"
+ },
+ {
+  "iou": 0.648,
+  "dhash_sim": 0.9062,
+  "palette_cov": 1.0,
+  "color_sim": 0.8146,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 79.78,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "burglars_shank",
+  "name": "盗贼短刀",
+  "en": "Burglar's Shank",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Burglar's_Shank.png"
+ },
+ {
+  "iou": 0.561,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.6986,
+  "aspect_sim": 1.0,
+  "size_sim": 0.1418,
+  "score": 75.21,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   13,
+   13
+  ],
+  "id": "crystal_dagger",
+  "name": "水晶匕首",
+  "en": "Crystal Dagger",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Crystal_Dagger.png"
+ },
+ {
+  "iou": 0.5964,
+  "dhash_sim": 0.8438,
+  "palette_cov": 1.0,
+  "color_sim": 0.8515,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 77.54,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "shadow_dagger",
+  "name": "暗影匕首",
+  "en": "Shadow Dagger",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Shadow_Dagger.png"
+ },
+ {
+  "iou": 0.189,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.2545,
+  "aspect_sim": 0.4829,
+  "size_sim": 0.4226,
+  "score": 46.43,
+  "ours_box": [
+   13,
+   25
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "broken_trident",
+  "name": "断裂的三叉戟",
+  "en": "Broken Trident",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Broken_Trident.png"
+ },
+ {
+  "iou": 0.6154,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.5017,
+  "aspect_sim": 1.0,
+  "size_sim": 0.2892,
+  "score": 74.62,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "wicked_kris",
+  "name": "邪恶波纹刃",
+  "en": "Wicked Kris",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wicked_Kris.png"
+ },
+ {
+  "iou": 0.5132,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.5429,
+  "aspect_sim": 1.0,
+  "size_sim": 0.1418,
+  "score": 68.0,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   13,
+   13
+  ],
+  "id": "galaxy_dagger",
+  "name": "银河匕首",
+  "en": "Galaxy Dagger",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Galaxy_Dagger.png"
+ },
+ {
+  "iou": 0.5474,
+  "dhash_sim": 0.8125,
+  "palette_cov": 1.0,
+  "color_sim": 0.7035,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 73.22,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "dwarf_dagger",
+  "name": "矮人匕首",
+  "en": "Dwarf Dagger",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dwarf_Dagger.png"
+ },
+ {
+  "iou": 0.54,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.5355,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 69.86,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   33,
+   33
+  ],
+  "id": "dragontooth_shiv",
+  "name": "龙牙短刃",
+  "en": "Dragontooth Shiv",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dragontooth_Shiv.png"
+ },
+ {
+  "iou": 0.4762,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.5273,
+  "aspect_sim": 0.6957,
+  "size_sim": 0.0659,
+  "score": 65.42,
+  "ours_box": [
+   16,
+   23
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "iridium_needle",
+  "name": "铱针",
+  "en": "Iridium Needle",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Iridium_Needle.png"
+ },
+ {
+  "iou": 0.5408,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.5725,
+  "aspect_sim": 1.0,
+  "size_sim": 0.2892,
+  "score": 70.63,
+  "ours_box": [
+   20,
+   20
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "infinity_dagger",
+  "name": "无限匕首",
+  "en": "Infinity Dagger",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Infinity_Dagger.png"
+ },
+ {
+  "iou": 0.689,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.4993,
+  "aspect_sim": 0.72,
+  "size_sim": 0.0,
+  "score": 71.92,
+  "ours_box": [
+   18,
+   25
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "elliott_pencil",
+  "name": "艾利欧特的铅笔",
+  "en": "Elliott's Pencil",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Elliott's_Pencil.png"
+ },
+ {
+  "iou": 0.5584,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5032,
+  "aspect_sim": 0.9,
+  "size_sim": 0.0879,
+  "score": 66.24,
+  "ours_box": [
+   20,
+   18
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "abbys_planchette",
+  "name": "阿比盖尔的笔仙板",
+  "en": "Abby's Planchette",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Abby's_Planchette.png"
+ },
+ {
+  "iou": 0.5337,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6454,
+  "aspect_sim": 0.7506,
+  "size_sim": 0.2426,
+  "score": 69.41,
+  "ours_box": [
+   19,
+   27
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "femur",
+  "name": "股骨",
+  "en": "Femur",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Femur.png"
+ },
+ {
+  "iou": 0.3357,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.8931,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.6398,
+  "score": 66.55,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "wood_club",
+  "name": "木棒",
+  "en": "Wood Club",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wood_Club.png"
+ },
+ {
+  "iou": 0.3054,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7588,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 64.89,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "wood_mallet",
+  "name": "木槌",
+  "en": "Wood Mallet",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wood_Mallet.png"
+ },
+ {
+  "iou": 0.7512,
+  "dhash_sim": 0.8594,
+  "palette_cov": 1.0,
+  "color_sim": 0.0682,
+  "aspect_sim": 0.68,
+  "size_sim": 0.4946,
+  "score": 70.02,
+  "ours_box": [
+   17,
+   25
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lead_rod",
+  "name": "铅棒",
+  "en": "Lead Rod",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lead_Rod.png"
+ },
+ {
+  "iou": 0.3229,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4895,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 61.07,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "kudgel",
+  "name": "粗棒",
+  "en": "Kudgel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Kudgel.png"
+ },
+ {
+  "iou": 0.3423,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2986,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 59.41,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "the_slammer",
+  "name": "猛击者",
+  "en": "The Slammer",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "The_Slammer.png"
+ },
+ {
+  "iou": 0.4077,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.6726,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 64.8,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "galaxy_hammer",
+  "name": "银河锤",
+  "en": "Galaxy Hammer",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Galaxy_Hammer.png"
+ },
+ {
+  "iou": 0.3104,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6032,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 63.34,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "dwarf_hammer",
+  "name": "矮人锤",
+  "en": "Dwarf Hammer",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dwarf_Hammer.png"
+ },
+ {
+  "iou": 0.4949,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.4197,
+  "aspect_sim": 0.6154,
+  "size_sim": 0.516,
+  "score": 63.94,
+  "ours_box": [
+   16,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "dragontooth_club",
+  "name": "龙牙棒",
+  "en": "Dragontooth Club",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dragontooth_Club.png"
+ },
+ {
+  "iou": 0.4077,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.6757,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 65.78,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "infinity_gavel",
+  "name": "无限锤",
+  "en": "Infinity Gavel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Infinity_Gavel.png"
+ },
+ {
+  "iou": 0.5563,
+  "dhash_sim": 0.8906,
+  "palette_cov": 1.0,
+  "color_sim": 0.8808,
+  "aspect_sim": 0.625,
+  "size_sim": 0.6602,
+  "score": 77.26,
+  "ours_box": [
+   15,
+   24
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "alex_bat",
+  "name": "亚历克斯的球棒",
+  "en": "Alex's Bat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Alex's_Bat.png"
+ },
+ {
+  "iou": 0.3275,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.6118,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.0,
+  "score": 58.57,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "harvey_mallet",
+  "name": "哈维的锤子",
+  "en": "Harvey's Mallet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Harvey's_Mallet.png"
+ },
+ {
+  "iou": 0.5888,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.3985,
+  "aspect_sim": 0.6,
+  "size_sim": 0.6195,
+  "score": 66.8,
+  "ours_box": [
+   15,
+   25
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "maru_wrench",
+  "name": "玛鲁的扳手",
+  "en": "Maru's Wrench",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Maru's_Wrench.png"
+ },
+ {
+  "iou": 0.6115,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.8695,
+  "aspect_sim": 0.8356,
+  "size_sim": 0.0,
+  "score": 75.05,
+  "ours_box": [
+   18,
+   22
+  ],
+  "wiki_box": [
+   47,
+   48
+  ],
+  "id": "penny_fryer",
+  "name": "潘妮的煎锅",
+  "en": "Penny's Fryer",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Penny's_Fryer.png"
+ },
+ {
+  "iou": 0.4538,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.9134,
+  "aspect_sim": 0.8881,
+  "size_sim": 0.0,
+  "score": 68.07,
+  "ours_box": [
+   20,
+   23
+  ],
+  "wiki_box": [
+   47,
+   48
+  ],
+  "id": "sam_guitar",
+  "name": "山姆的旧吉他",
+  "en": "Sam's Old Guitar",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sam's_Old_Guitar.png"
+ },
+ {
+  "iou": 0.3657,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.9232,
+  "aspect_sim": 0.6786,
+  "size_sim": 0.2706,
+  "score": 65.46,
+  "ours_box": [
+   19,
+   28
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "seb_mace",
+  "name": "塞巴斯蒂安的钉锤",
+  "en": "Seb's Lost Mace",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Seb's_Lost_Mace.png"
+ },
+ {
+  "iou": 0.3456,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.8315,
+  "aspect_sim": 0.48,
+  "size_sim": 0.2691,
+  "score": 60.86,
+  "ours_box": [
+   14,
+   25
+  ],
+  "wiki_box": [
+   14,
+   12
+  ],
+  "id": "slingshot",
+  "name": "弹弓",
+  "en": "Slingshot",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Slingshot.png"
+ },
+ {
+  "iou": 0.5125,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.5253,
+  "aspect_sim": 0.6627,
+  "size_sim": 0.1764,
+  "score": 65.77,
+  "ours_box": [
+   16,
+   26
+  ],
+  "wiki_box": [
+   13,
+   14
+  ],
+  "id": "master_slingshot",
+  "name": "大师弹弓",
+  "en": "Master Slingshot",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Master_Slingshot.png"
+ },
+ {
+  "iou": 0.4624,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.8583,
+  "aspect_sim": 0.6345,
+  "size_sim": 0.0,
+  "score": 67.47,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   8,
+   10
+  ],
+  "id": "small_glow_ring",
+  "name": "小发光戒指",
+  "en": "Small Glow Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Small_Glow_Ring.png"
+ },
+ {
+  "iou": 0.4529,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.8121,
+  "aspect_sim": 0.5287,
+  "size_sim": 0.0,
+  "score": 66.68,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "glow_ring",
+  "name": "发光戒指",
+  "en": "Glow Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Glow_Ring.png"
+ },
+ {
+  "iou": 0.5819,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.7444,
+  "aspect_sim": 0.9896,
+  "size_sim": 0.0,
+  "score": 72.27,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   8,
+   10
+  ],
+  "id": "small_magnet_ring",
+  "name": "小磁铁戒指",
+  "en": "Small Magnet Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Small_Magnet_Ring.png"
+ },
+ {
+  "iou": 0.5293,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.4616,
+  "aspect_sim": 0.8421,
+  "size_sim": 0.0,
+  "score": 64.66,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "magnet_ring",
+  "name": "磁铁戒指",
+  "en": "Magnet Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Magnet_Ring.png"
+ },
+ {
+  "iou": 0.6508,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.6682,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.0,
+  "score": 71.34,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "slime_charmer_ring",
+  "name": "史莱姆克星戒指",
+  "en": "Slime Charmer Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Slime_Charmer_Ring.png"
+ },
+ {
+  "iou": 0.399,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7111,
+  "aspect_sim": 0.7917,
+  "size_sim": 0.0,
+  "score": 61.49,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "warrior_ring",
+  "name": "战士戒指",
+  "en": "Warrior Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Warrior_Ring.png"
+ },
+ {
+  "iou": 0.6108,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.7921,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.0,
+  "score": 71.68,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "vampire_ring",
+  "name": "吸血鬼戒指",
+  "en": "Vampire Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Vampire_Ring.png"
+ },
+ {
+  "iou": 0.6392,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.6477,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.0,
+  "score": 70.99,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "savage_ring",
+  "name": "野蛮戒指",
+  "en": "Savage Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Savage_Ring.png"
+ },
+ {
+  "iou": 0.4797,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.0288,
+  "aspect_sim": 0.7931,
+  "size_sim": 0.0,
+  "score": 56.5,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "ring_of_yoba",
+  "name": "约巴戒指",
+  "en": "Ring of Yoba",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ring_of_Yoba.png"
+ },
+ {
+  "iou": 0.5801,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6469,
+  "aspect_sim": 0.7368,
+  "size_sim": 0.0,
+  "score": 67.29,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "sturdy_ring",
+  "name": "坚固戒指",
+  "en": "Sturdy Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sturdy_Ring.png"
+ },
+ {
+  "iou": 0.6725,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.6866,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.0,
+  "score": 72.89,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "burglars_ring",
+  "name": "盗贼戒指",
+  "en": "Burglar's Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Burglar's_Ring.png"
+ },
+ {
+  "iou": 0.4049,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4348,
+  "aspect_sim": 0.7931,
+  "size_sim": 0.0,
+  "score": 58.79,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "iridium_band",
+  "name": "铱环",
+  "en": "Iridium Band",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Iridium_Band.png"
+ },
+ {
+  "iou": 0.3449,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.2334,
+  "aspect_sim": 0.627,
+  "size_sim": 0.0,
+  "score": 53.87,
+  "ours_box": [
+   29,
+   25
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "jukebox_ring",
+  "name": "点唱机戒指",
+  "en": "Jukebox Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jukebox_Ring.png"
+ },
+ {
+  "iou": 0.6082,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.4695,
+  "aspect_sim": 0.7368,
+  "size_sim": 0.0,
+  "score": 66.72,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "amethyst_ring",
+  "name": "紫水晶戒指",
+  "en": "Amethyst Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Amethyst_Ring.png"
+ },
+ {
+  "iou": 0.673,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.6864,
+  "aspect_sim": 0.8421,
+  "size_sim": 0.0,
+  "score": 73.6,
+  "ours_box": [
+   19,
+   22
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "topaz_ring",
+  "name": "黄玉戒指",
+  "en": "Topaz Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Topaz_Ring.png"
+ },
+ {
+  "iou": 0.5094,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3368,
+  "aspect_sim": 0.9684,
+  "size_sim": 0.0,
+  "score": 62.52,
+  "ours_box": [
+   19,
+   23
+  ],
+  "wiki_box": [
+   8,
+   10
+  ],
+  "id": "aquamarine_ring",
+  "name": "海蓝宝石戒指",
+  "en": "Aquamarine Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Aquamarine_Ring.png"
+ },
+ {
+  "iou": 0.6419,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.317,
+  "aspect_sim": 0.7368,
+  "size_sim": 0.0,
+  "score": 65.13,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "jade_ring",
+  "name": "翡翠戒指",
+  "en": "Jade Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jade_Ring.png"
+ },
+ {
+  "iou": 0.6733,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.4298,
+  "aspect_sim": 0.807,
+  "size_sim": 0.0,
+  "score": 69.72,
+  "ours_box": [
+   19,
+   23
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "emerald_ring",
+  "name": "绿宝石戒指",
+  "en": "Emerald Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Emerald_Ring.png"
+ },
+ {
+  "iou": 0.588,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.7099,
+  "aspect_sim": 0.8421,
+  "size_sim": 0.0,
+  "score": 70.77,
+  "ours_box": [
+   19,
+   22
+  ],
+  "wiki_box": [
+   8,
+   11
+  ],
+  "id": "ruby_ring",
+  "name": "红宝石戒指",
+  "en": "Ruby Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ruby_Ring.png"
+ },
+ {
+  "iou": 0.5138,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5887,
+  "aspect_sim": 0.8016,
+  "size_sim": 0.0775,
+  "score": 65.15,
+  "ours_box": [
+   19,
+   22
+  ],
+  "wiki_box": [
+   27,
+   39
+  ],
+  "id": "wedding_ring",
+  "name": "结婚戒指",
+  "en": "Wedding Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Wedding_Ring.png"
+ },
+ {
+  "iou": 0.5815,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3819,
+  "aspect_sim": 0.9211,
+  "size_sim": 0.0,
+  "score": 64.88,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   10,
+   12
+  ],
+  "id": "crabshell_ring",
+  "name": "蟹壳戒指",
+  "en": "Crabshell Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Crabshell_Ring.png"
+ },
+ {
+  "iou": 0.4428,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.68,
+  "aspect_sim": 0.8233,
+  "size_sim": 0.0,
+  "score": 66.09,
+  "ours_box": [
+   19,
+   25
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "napalm_ring",
+  "name": "凝固汽油戒指",
+  "en": "Napalm Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Napalm_Ring.png"
+ },
+ {
+  "iou": 0.3824,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5522,
+  "aspect_sim": 0.8261,
+  "size_sim": 0.0,
+  "score": 60.83,
+  "ours_box": [
+   19,
+   23
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "thorns_ring",
+  "name": "荆棘戒指",
+  "en": "Thorns Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Thorns_Ring.png"
+ },
+ {
+  "iou": 0.6062,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.4824,
+  "aspect_sim": 0.7018,
+  "size_sim": 0.0,
+  "score": 65.88,
+  "ours_box": [
+   19,
+   20
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "lucky_ring",
+  "name": "幸运戒指",
+  "en": "Lucky Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lucky_Ring.png"
+ },
+ {
+  "iou": 0.6135,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6398,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.3156,
+  "score": 69.81,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   24,
+   33
+  ],
+  "id": "hot_java_ring",
+  "name": "热咖啡戒指",
+  "en": "Hot Java Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hot_Java_Ring.png"
+ },
+ {
+  "iou": 0.5548,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6304,
+  "aspect_sim": 0.8842,
+  "size_sim": 0.0,
+  "score": 68.07,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   8,
+   10
+  ],
+  "id": "protection_ring",
+  "name": "保护戒指",
+  "en": "Protection Ring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Protection_Ring.png"
+ },
+ {
+  "iou": 0.5996,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.2898,
+  "aspect_sim": 0.8038,
+  "size_sim": 0.3156,
+  "score": 64.76,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   24,
+   33
+  ],
+  "id": "soul_sapper_ring",
+  "name": "灵魂汲取戒指",
+  "en": "Soul Sapper Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Soul_Sapper_Ring.png"
+ },
+ {
+  "iou": 0.3437,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5102,
+  "aspect_sim": 0.76,
+  "size_sim": 0.0,
+  "score": 58.38,
+  "ours_box": [
+   19,
+   25
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "phoenix_ring",
+  "name": "凤凰戒指",
+  "en": "Phoenix Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Phoenix_Ring.png"
+ },
+ {
+  "iou": 0.3579,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4802,
+  "aspect_sim": 0.7572,
+  "size_sim": 0.0014,
+  "score": 57.08,
+  "ours_box": [
+   19,
+   23
+  ],
+  "wiki_box": [
+   36,
+   33
+  ],
+  "id": "immunity_band",
+  "name": "免疫环",
+  "en": "Immunity Band",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Immunity_Band.png"
+ },
+ {
+  "iou": 0.3552,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.3501,
+  "aspect_sim": 0.705,
+  "size_sim": 0.9711,
+  "score": 59.69,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   24,
+   27
+  ],
+  "id": "glowstone_ring",
+  "name": "辉光石戒指",
+  "en": "Glowstone Ring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Glowstone_Ring.png"
+ },
+ {
+  "iou": 0.6024,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.5509,
+  "score": 61.58,
+  "ours_box": [
+   18,
+   11
+  ],
+  "wiki_box": [
+   14,
+   9
+  ],
+  "id": "sneakers",
+  "name": "运动鞋",
+  "en": "Sneakers",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sneakers.png"
+ },
+ {
+  "iou": 0.4978,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.1009,
+  "aspect_sim": 0.8319,
+  "size_sim": 0.3166,
+  "score": 58.22,
+  "ours_box": [
+   17,
+   18
+  ],
+  "wiki_box": [
+   11,
+   14
+  ],
+  "id": "rubber_boots",
+  "name": "橡胶靴",
+  "en": "Rubber Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rubber_Boots.png"
+ },
+ {
+  "iou": 0.5624,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.5184,
+  "aspect_sim": 0.7395,
+  "size_sim": 0.434,
+  "score": 64.84,
+  "ours_box": [
+   17,
+   16
+  ],
+  "wiki_box": [
+   11,
+   14
+  ],
+  "id": "leather_boots",
+  "name": "皮靴",
+  "en": "Leather Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Leather_Boots.png"
+ },
+ {
+  "iou": 0.5271,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6019,
+  "aspect_sim": 0.7563,
+  "size_sim": 0.5847,
+  "score": 66.89,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "work_boots",
+  "name": "工作靴",
+  "en": "Work Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Work_Boots.png"
+ },
+ {
+  "iou": 0.6058,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.876,
+  "aspect_sim": 0.8,
+  "size_sim": 0.5286,
+  "score": 73.52,
+  "ours_box": [
+   17,
+   17
+  ],
+  "wiki_box": [
+   12,
+   15
+  ],
+  "id": "combat_boots",
+  "name": "战斗靴",
+  "en": "Combat Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Combat_Boots.png"
+ },
+ {
+  "iou": 0.5393,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3881,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.6082,
+  "score": 66.83,
+  "ours_box": [
+   17,
+   17
+  ],
+  "wiki_box": [
+   13,
+   15
+  ],
+  "id": "tundra_boots",
+  "name": "冻原靴",
+  "en": "Tundra Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tundra_Boots.png"
+ },
+ {
+  "iou": 0.62,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.557,
+  "aspect_sim": 0.9107,
+  "size_sim": 0.2149,
+  "score": 70.89,
+  "ours_box": [
+   17,
+   14
+  ],
+  "wiki_box": [
+   12,
+   9
+  ],
+  "id": "leprechaun_shoes",
+  "name": "矮妖精鞋",
+  "en": "Leprechaun Shoes",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Leprechaun_Shoes.png"
+ },
+ {
+  "iou": 0.6099,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2508,
+  "aspect_sim": 1.0,
+  "size_sim": 0.6133,
+  "score": 67.63,
+  "ours_box": [
+   17,
+   17
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "thermal_boots",
+  "name": "保暖靴",
+  "en": "Thermal Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Thermal_Boots.png"
+ },
+ {
+  "iou": 0.5858,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.321,
+  "aspect_sim": 0.8824,
+  "size_sim": 0.738,
+  "score": 67.09,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "cowboy_boots",
+  "name": "牛仔靴",
+  "en": "Cowboy Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cowboy_Boots.png"
+ },
+ {
+  "iou": 0.615,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6859,
+  "aspect_sim": 0.8782,
+  "size_sim": 0.2627,
+  "score": 71.65,
+  "ours_box": [
+   17,
+   19
+  ],
+  "wiki_box": [
+   11,
+   14
+  ],
+  "id": "dark_boots",
+  "name": "黑暗靴",
+  "en": "Dark Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dark_Boots.png"
+ },
+ {
+  "iou": 0.4835,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.1348,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.2115,
+  "score": 58.39,
+  "ours_box": [
+   17,
+   20
+  ],
+  "wiki_box": [
+   11,
+   14
+  ],
+  "id": "firewalker_boots",
+  "name": "踏火靴",
+  "en": "Firewalker Boots",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Firewalker_Boots.png"
+ },
+ {
+  "iou": 0.6141,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.3135,
+  "aspect_sim": 0.9,
+  "size_sim": 0.0887,
+  "score": 65.38,
+  "ours_box": [
+   20,
+   15
+  ],
+  "wiki_box": [
+   12,
+   10
+  ],
+  "id": "genie_shoes",
+  "name": "精灵鞋",
+  "en": "Genie Shoes",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Genie_Shoes.png"
+ },
+ {
+  "iou": 0.5224,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.326,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 56.92,
+  "ours_box": [
+   18,
+   18
+  ],
+  "wiki_box": [
+   30,
+   45
+  ],
+  "id": "space_boots",
+  "name": "太空靴",
+  "en": "Space Boots",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Space_Boots.png"
+ },
+ {
+  "iou": 0.4799,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.6919,
+  "aspect_sim": 0.9952,
+  "size_sim": 0.0,
+  "score": 65.04,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   39,
+   33
+  ],
+  "id": "crystal_shoes",
+  "name": "水晶鞋",
+  "en": "Crystal Shoes",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Crystal_Shoes.png"
+ },
+ {
+  "iou": 0.5374,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.1722,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 55.85,
+  "ours_box": [
+   18,
+   15
+  ],
+  "wiki_box": [
+   36,
+   42
+  ],
+  "id": "emily_magic_boots",
+  "name": "艾米丽的魔法靴",
+  "en": "Emily's Magic Boots",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Emily's_Magic_Boots.png"
+ },
+ {
+  "iou": 0.4307,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4574,
+  "aspect_sim": 0.6056,
+  "size_sim": 0.0,
+  "score": 57.4,
+  "ours_box": [
+   23,
+   15
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "cinderclown_shoes",
+  "name": "煤灰小丑鞋",
+  "en": "Cinderclown Shoes",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cinderclown_Shoes.png"
+ },
+ {
+  "iou": 0.6339,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.4787,
+  "aspect_sim": 0.8673,
+  "size_sim": 0.0,
+  "score": 68.31,
+  "ours_box": [
+   21,
+   17
+  ],
+  "wiki_box": [
+   45,
+   42
+  ],
+  "id": "mermaid_boots",
+  "name": "美人鱼靴",
+  "en": "Mermaid Boots",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mermaid_Boots.png"
+ },
+ {
+  "iou": 0.5874,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4439,
+  "aspect_sim": 0.8308,
+  "size_sim": 0.0,
+  "score": 64.15,
+  "ours_box": [
+   19,
+   17
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "dragonscale_boots",
+  "name": "龙鳞靴",
+  "en": "Dragonscale Boots",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dragonscale_Boots.png"
+ }
+]

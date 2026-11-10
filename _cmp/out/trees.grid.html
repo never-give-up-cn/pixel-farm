@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(8, 259px);width:2072px}
+.cell{width:259px;height:259px;position:relative;overflow:hidden}
+canvas{position:absolute;image-rendering:pixelated}
+img{position:absolute;left:0;top:0;image-rendering:pixelated}
+</style></head><body>
+<div id="ours" class="grid"></div>
+<div id="wiki" class="grid"></div>
+<script type="module">
+const MANIFEST = [{"id":"oak","name":"橡树","en":"Oak Tree","wikiPath":"/mediawiki/images/en/d/d3/Oak_Stage_5.png","wikiSize":[255,188],"wikiFile":"Oak_Stage_5.png"},{"id":"maple","name":"枫树","en":"Maple Tree","wikiPath":"/mediawiki/images/en/3/3b/Maple_Stage_5.png","wikiSize":[255,190],"wikiFile":"Maple_Stage_5.png"},{"id":"pine","name":"松树","en":"Pine Tree","wikiPath":"/mediawiki/images/en/b/b3/Pine_Stage_5.png","wikiSize":[255,182],"wikiFile":"Pine_Stage_5.png"},{"id":"mahogany","name":"桃花心木","en":"Mahogany Tree","wikiPath":"/mediawiki/images/en/d/d6/Mahogany_Stage_5.png","wikiSize":[255,182],"wikiFile":"Mahogany_Stage_5.png"},{"id":"palm","name":"棕榈树","en":"Palm Tree","wikiPath":"/mediawiki/images/en/5/56/Palm_Stage_3.png","wikiSize":[135,219],"wikiFile":"Palm_Stage_3.png"},{"id":"mushroom","name":"蘑菇树","en":"Mushroom Tree","wikiPath":"/mediawiki/images/en/2/28/MushroomTree_Stage_5.png","wikiSize":[144,240],"wikiFile":"MushroomTree_Stage_5.png"},{"id":"mystic","name":"神秘树","en":"Mystic Tree","wikiPath":"/mediawiki/images/en/6/67/Mystic_Tree_Stage_5.png","wikiSize":[48,97],"wikiFile":"Mystic_Tree_Stage_5.png"},{"id":"mossy_oak","name":"苔藓橡树","en":"Mossy Oak","wikiPath":"/mediawiki/images/en/f/f2/Wild_Tree_Stage_5.png","wikiSize":[255,255],"wikiFile":"Wild_Tree_Stage_5.png"},{"id":"mossy_pine","name":"苔藓松树","en":"Mossy Pine","wikiPath":"/mediawiki/images/en/8/89/Fiddlehead_Stalk_Stage_5.png","wikiSize":[255,255],"wikiFile":"Fiddlehead_Stalk_Stage_5.png"},{"id":"greenrain","name":"绿雨树","en":"Green Rain Tree","wikiPath":"/mediawiki/images/en/4/40/Lush_Wild_Tree_Stage_5.png","wikiSize":[255,255],"wikiFile":"Lush_Wild_Tree_Stage_5.png"},{"id":"apple","name":"苹果树","en":"Apple Tree","wikiPath":"/mediawiki/images/en/3/3b/Apple_Stage_5.png","wikiSize":[255,160],"wikiFile":"Apple_Stage_5.png"},{"id":"apricot","name":"杏树","en":"Apricot Tree","wikiPath":"/mediawiki/images/en/5/51/Apricot_Stage_5.png","wikiSize":[255,160],"wikiFile":"Apricot_Stage_5.png"},{"id":"cherry","name":"樱桃树","en":"Cherry Tree","wikiPath":"/mediawiki/images/en/2/2d/Cherry_Stage_5.png","wikiSize":[255,160],"wikiFile":"Cherry_Stage_5.png"},{"id":"orange","name":"橙树","en":"Orange Tree","wikiPath":"/mediawiki/images/en/c/c2/Orange_Stage_5.png","wikiSize":[255,160],"wikiFile":"Orange_Stage_5.png"},{"id":"peach","name":"桃树","en":"Peach Tree","wikiPath":"/mediawiki/images/en/a/a4/Peach_Stage_5.png","wikiSize":[255,160],"wikiFile":"Peach_Stage_5.png"},{"id":"banana","name":"香蕉树","en":"Banana Tree","wikiPath":"/mediawiki/images/en/2/2c/Banana_Stage_5.png","wikiSize":[255,160],"wikiFile":"Banana_Stage_5.png"},{"id":"mango","name":"芒果树","en":"Mango Tree","wikiPath":"/mediawiki/images/en/d/d8/Mango_Stage_5.png","wikiSize":[255,160],"wikiFile":"Mango_Stage_5.png"},{"id":"pomegranate","name":"石榴树","en":"Pomegranate Tree","wikiPath":"/mediawiki/images/en/9/9c/Pomegranate_Stage_5.png","wikiSize":[255,160],"wikiFile":"Pomegranate_Stage_5.png"}];
+const CFG = {"mod":"../../js/anim/trees.js","list":"TREES","w":"TREE_W","h":"TREE_H","draw":"drawTree","drawExpr":"mod.drawTree(g, item, 4, '春', 0.25)"};
+const CELL = 259, PERROW = 8, BATCH = 16;
+const mod = await import(CFG.mod);
+const list = CFG.list ? mod[CFG.list] : [];
+const map = Object.fromEntries(list.map(x => [x.id, x]));
+const W = mod[CFG.w], H = mod[CFG.h];
+const gOurs = document.getElementById('ours'), gWiki = document.getElementById('wiki');
+const OX = Math.floor((CELL - W) / 2), OY = Math.floor((CELL - H) / 2);
+
+const ours = MANIFEST.map(m => {
+  const item = map[m.id];
+  const c1 = document.createElement('div'); c1.className = 'cell';
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (item && CFG.draw) { try { eval(CFG.drawExpr); } catch (e) { console.error('draw', m.id, e); } }
+  cv.style.left = OX + 'px'; cv.style.top = OY + 'px';
+  c1.appendChild(cv); gOurs.appendChild(c1);
+  return c1;
+});
+
+const wiki = [];
+for (let i = 0; i < MANIFEST.length; i += BATCH) {
+  const batch = [];
+  for (let j = i; j < Math.min(i + BATCH, MANIFEST.length); j++) {
+    const m = MANIFEST[j];
+    const c2 = document.createElement('div'); c2.className = 'cell';
+    const img = document.createElement('img');
+    c2.appendChild(img); gWiki.appendChild(c2);
+    batch.push(new Promise(resolve => {
+      img.onload = resolve; img.onerror = resolve;
+      img.src = 'https://stardewvalleywiki.com' + m.wikiPath;
+    }));
+  }
+  await Promise.all(batch);
+}
+document.title = 'READY';
+</script></body></html>

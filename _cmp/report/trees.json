@@ -1,0 +1,434 @@
+[
+ {
+  "iou": 0.6146,
+  "dhash_sim": 0.5729,
+  "palette_cov": 1.0,
+  "color_sim": 0.5515,
+  "aspect_sim": 0.6137,
+  "size_sim": 0.0,
+  "score": 64.3067,
+  "ours_box": [
+   33,
+   46
+  ],
+  "wiki_box": [
+   96,
+   184
+  ],
+  "id": "oak",
+  "name": "橡树",
+  "en": "Oak Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Oak_Stage_5.png"
+ },
+ {
+  "iou": 0.5866,
+  "dhash_sim": 0.6771,
+  "palette_cov": 1.0,
+  "color_sim": 0.5053,
+  "aspect_sim": 0.7385,
+  "size_sim": 0.0,
+  "score": 66.1067,
+  "ours_box": [
+   31,
+   51
+  ],
+  "wiki_box": [
+   94,
+   180
+  ],
+  "id": "maple",
+  "name": "枫树",
+  "en": "Maple Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Maple_Stage_5.png"
+ },
+ {
+  "iou": 0.2865,
+  "dhash_sim": 0.5313,
+  "palette_cov": 1.0,
+  "color_sim": 0.8675,
+  "aspect_sim": 0.4845,
+  "size_sim": 0.0,
+  "score": 57.08,
+  "ours_box": [
+   37,
+   40
+  ],
+  "wiki_box": [
+   96,
+   180
+  ],
+  "id": "pine",
+  "name": "松树",
+  "en": "Pine Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Pine_Stage_5.png"
+ },
+ {
+  "iou": 0.5778,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8086,
+  "aspect_sim": 0.7809,
+  "size_sim": 0.0,
+  "score": 71.3333,
+  "ours_box": [
+   27,
+   51
+  ],
+  "wiki_box": [
+   96,
+   182
+  ],
+  "id": "mahogany",
+  "name": "桃花心木",
+  "en": "Mahogany Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Mahogany_Stage_5.png"
+ },
+ {
+  "iou": 0.3324,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.9291,
+  "aspect_sim": 0.9658,
+  "size_sim": 0.1546,
+  "score": 67.78,
+  "ours_box": [
+   30,
+   47
+  ],
+  "wiki_box": [
+   45,
+   73
+  ],
+  "id": "palm",
+  "name": "棕榈树",
+  "en": "Palm Tree",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Palm_Stage_3.png"
+ },
+ {
+  "iou": 0.7901,
+  "dhash_sim": 0.875,
+  "palette_cov": 1.0,
+  "color_sim": 0.7442,
+  "aspect_sim": 0.7875,
+  "size_sim": 0.0,
+  "score": 80.24,
+  "ours_box": [
+   32,
+   42
+  ],
+  "wiki_box": [
+   48,
+   80
+  ],
+  "id": "mushroom",
+  "name": "蘑菇树",
+  "en": "Mushroom Tree",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "MushroomTree_Stage_5.png"
+ },
+ {
+  "iou": 0.5212,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6688,
+  "aspect_sim": 0.8141,
+  "size_sim": 0.0,
+  "score": 66.93,
+  "ours_box": [
+   31,
+   51
+  ],
+  "wiki_box": [
+   48,
+   97
+  ],
+  "id": "mystic",
+  "name": "神秘树",
+  "en": "Mystic Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mystic_Tree_Stage_5.png"
+ },
+ {
+  "iou": 0.4153,
+  "dhash_sim": 0.5416,
+  "palette_cov": 1.0,
+  "color_sim": 0.6512,
+  "aspect_sim": 0.3583,
+  "size_sim": 0.0,
+  "score": 56.6433,
+  "ours_box": [
+   37,
+   42
+  ],
+  "wiki_box": [
+   75,
+   250
+  ],
+  "id": "mossy_oak",
+  "name": "苔藓橡树",
+  "en": "Mossy Oak",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Wild_Tree_Stage_5.png"
+ },
+ {
+  "iou": 0.2984,
+  "dhash_sim": 0.5391,
+  "palette_cov": 1.0,
+  "color_sim": 0.8129,
+  "aspect_sim": 0.4869,
+  "size_sim": 0.0,
+  "score": 56.795,
+  "ours_box": [
+   37,
+   39
+  ],
+  "wiki_box": [
+   155,
+   255
+  ],
+  "id": "mossy_pine",
+  "name": "苔藓松树",
+  "en": "Mossy Pine",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 2,
+  "wikiFile": "Fiddlehead_Stalk_Stage_5.png"
+ },
+ {
+  "iou": 0.393,
+  "dhash_sim": 0.5573,
+  "palette_cov": 1.0,
+  "color_sim": 0.433,
+  "aspect_sim": 0.633,
+  "size_sim": 0.0,
+  "score": 55.76,
+  "ours_box": [
+   27,
+   51
+  ],
+  "wiki_box": [
+   85,
+   251
+  ],
+  "id": "greenrain",
+  "name": "绿雨树",
+  "en": "Green Rain Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Lush_Wild_Tree_Stage_5.png"
+ },
+ {
+  "iou": 0.523,
+  "dhash_sim": 0.4948,
+  "palette_cov": 1.0,
+  "color_sim": 0.698,
+  "aspect_sim": 0.7792,
+  "size_sim": 0.0,
+  "score": 63.8467,
+  "ours_box": [
+   30,
+   44
+  ],
+  "wiki_box": [
+   85,
+   160
+  ],
+  "id": "apple",
+  "name": "苹果树",
+  "en": "Apple Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Apple_Stage_5.png"
+ },
+ {
+  "iou": 0.4966,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4973,
+  "aspect_sim": 0.7589,
+  "size_sim": 0.0,
+  "score": 60.8833,
+  "ours_box": [
+   28,
+   40
+  ],
+  "wiki_box": [
+   85,
+   160
+  ],
+  "id": "apricot",
+  "name": "杏树",
+  "en": "Apricot Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Apricot_Stage_5.png"
+ },
+ {
+  "iou": 0.4664,
+  "dhash_sim": 0.5104,
+  "palette_cov": 1.0,
+  "color_sim": 0.5139,
+  "aspect_sim": 0.6198,
+  "size_sim": 0.0,
+  "score": 58.1067,
+  "ours_box": [
+   36,
+   42
+  ],
+  "wiki_box": [
+   85,
+   160
+  ],
+  "id": "cherry",
+  "name": "樱桃树",
+  "en": "Cherry Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Cherry_Stage_5.png"
+ },
+ {
+  "iou": 0.6894,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7005,
+  "aspect_sim": 0.7844,
+  "size_sim": 0.0,
+  "score": 71.22,
+  "ours_box": [
+   30,
+   45
+  ],
+  "wiki_box": [
+   94,
+   160
+  ],
+  "id": "orange",
+  "name": "橙树",
+  "en": "Orange Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Orange_Stage_5.png"
+ },
+ {
+  "iou": 0.6114,
+  "dhash_sim": 0.5365,
+  "palette_cov": 1.0,
+  "color_sim": 0.7174,
+  "aspect_sim": 0.675,
+  "size_sim": 0.0,
+  "score": 66.58,
+  "ours_box": [
+   33,
+   41
+  ],
+  "wiki_box": [
+   94,
+   154
+  ],
+  "id": "peach",
+  "name": "桃树",
+  "en": "Peach Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Peach_Stage_5.png"
+ },
+ {
+  "iou": 0.1728,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.5675,
+  "aspect_sim": 0.3872,
+  "size_sim": 0.0,
+  "score": 46.32,
+  "ours_box": [
+   29,
+   47
+  ],
+  "wiki_box": [
+   255,
+   160
+  ],
+  "id": "banana",
+  "name": "香蕉树",
+  "en": "Banana Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Banana_Stage_5.png"
+ },
+ {
+  "iou": 0.5168,
+  "dhash_sim": 0.5417,
+  "palette_cov": 1.0,
+  "color_sim": 0.8123,
+  "aspect_sim": 0.7083,
+  "size_sim": 0.0,
+  "score": 65.6033,
+  "ours_box": [
+   33,
+   44
+  ],
+  "wiki_box": [
+   85,
+   160
+  ],
+  "id": "mango",
+  "name": "芒果树",
+  "en": "Mango Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Mango_Stage_5.png"
+ },
+ {
+  "iou": 0.5511,
+  "dhash_sim": 0.5573,
+  "palette_cov": 1.0,
+  "color_sim": 0.7602,
+  "aspect_sim": 0.9051,
+  "size_sim": 0.0,
+  "score": 68.1333,
+  "ours_box": [
+   27,
+   46
+  ],
+  "wiki_box": [
+   85,
+   160
+  ],
+  "id": "pomegranate",
+  "name": "石榴树",
+  "en": "Pomegranate Tree",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 3,
+  "wikiFile": "Pomegranate_Stage_5.png"
+ }
+]

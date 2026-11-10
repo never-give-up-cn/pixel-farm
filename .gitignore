@@ -1,0 +1,5 @@
+# 比对工具的临时产物
+__pycache__/
+_cmp/out/.chrome/
+_cmp/out/wiki-*.html
+_cmp/pending.json

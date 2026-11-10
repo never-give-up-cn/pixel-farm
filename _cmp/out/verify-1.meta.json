@@ -1,0 +1,2571 @@
+{
+ "chunk": 1,
+ "count": 256,
+ "cell": 48,
+ "perRow": 16,
+ "rows": 16,
+ "w": 768,
+ "h": 768,
+ "items": [
+  {
+   "cat": "fish",
+   "id": "son_of_crimsonfish",
+   "name": "绯红鱼之子",
+   "en": "Son of Crimsonfish",
+   "file": "绯红鱼之子.png",
+   "path": "/mediawiki/images/en/3/3d/绯红鱼之子.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "spook_fish",
+   "name": "幽灵鱼",
+   "en": "Spook Fish",
+   "file": "Spook_Fish_Fish.png",
+   "path": "/mediawiki/images/en/7/74/Spook_Fish_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "spook_fish",
+   "name": "幽灵鱼",
+   "en": "Spook Fish",
+   "file": "幽灵鱼.png",
+   "path": "/mediawiki/images/en/3/37/幽灵鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "squid",
+   "name": "鱿鱼",
+   "en": "Squid",
+   "file": "Squid_Fish.png",
+   "path": "/mediawiki/images/en/6/62/Squid_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "squid",
+   "name": "鱿鱼",
+   "en": "Squid",
+   "file": "鱿鱼.png",
+   "path": "/mediawiki/images/en/f/f3/鱿鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "stingray",
+   "name": "黄貂鱼",
+   "en": "Stingray",
+   "file": "Stingray_Fish.png",
+   "path": "/mediawiki/images/en/3/37/Stingray_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "stingray",
+   "name": "黄貂鱼",
+   "en": "Stingray",
+   "file": "黄貂鱼.png",
+   "path": "/mediawiki/images/en/5/59/黄貂鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "stonefish",
+   "name": "石头鱼",
+   "en": "Stonefish",
+   "file": "Stonefish_Fish.png",
+   "path": "/mediawiki/images/en/5/52/Stonefish_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "stonefish",
+   "name": "石头鱼",
+   "en": "Stonefish",
+   "file": "石头鱼.png",
+   "path": "/mediawiki/images/en/2/27/石头鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "sturgeon",
+   "name": "鲟鱼",
+   "en": "Sturgeon",
+   "file": "Sturgeon_Fish.png",
+   "path": "/mediawiki/images/en/d/d7/Sturgeon_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "sturgeon",
+   "name": "鲟鱼",
+   "en": "Sturgeon",
+   "file": "鲟鱼.png",
+   "path": "/mediawiki/images/en/f/f2/鲟鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "sunfish",
+   "name": "太阳鱼",
+   "en": "Sunfish",
+   "file": "Sunfish_Fish.png",
+   "path": "/mediawiki/images/en/0/0a/Sunfish_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "sunfish",
+   "name": "太阳鱼",
+   "en": "Sunfish",
+   "file": "太阳鱼.png",
+   "path": "/mediawiki/images/en/8/84/太阳鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "super_cucumber",
+   "name": "超级海参",
+   "en": "Super Cucumber",
+   "file": "Super_Cucumber_Fish.png",
+   "path": "/mediawiki/images/en/6/63/Super_Cucumber_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "super_cucumber",
+   "name": "超级海参",
+   "en": "Super Cucumber",
+   "file": "超级海参.png",
+   "path": "/mediawiki/images/en/e/e6/超级海参.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tiger_trout",
+   "name": "虎鳟",
+   "en": "Tiger Trout",
+   "file": "Tiger_Trout_Fish.png",
+   "path": "/mediawiki/images/en/b/bf/Tiger_Trout_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tiger_trout",
+   "name": "虎鳟",
+   "en": "Tiger Trout",
+   "file": "虎鳟.png",
+   "path": "/mediawiki/images/en/0/0e/虎鳟.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tilapia",
+   "name": "罗非鱼",
+   "en": "Tilapia",
+   "file": "Tilapia_Fish.png",
+   "path": "/mediawiki/images/en/6/6f/Tilapia_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tilapia",
+   "name": "罗非鱼",
+   "en": "Tilapia",
+   "file": "罗非鱼.png",
+   "path": "/mediawiki/images/en/5/5d/罗非鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tuna",
+   "name": "金枪鱼",
+   "en": "Tuna",
+   "file": "Tuna_Fish.png",
+   "path": "/mediawiki/images/en/7/7a/Tuna_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "tuna",
+   "name": "金枪鱼",
+   "en": "Tuna",
+   "file": "金枪鱼.png",
+   "path": "/mediawiki/images/en/3/3a/金枪鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "void_salmon",
+   "name": "虚空鲑鱼",
+   "en": "Void Salmon",
+   "file": "Void_Salmon_Fish.png",
+   "path": "/mediawiki/images/en/e/ec/Void_Salmon_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "void_salmon",
+   "name": "虚空鲑鱼",
+   "en": "Void Salmon",
+   "file": "虚空鲑鱼.png",
+   "path": "/mediawiki/images/en/f/fa/虚空鲑鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "walleye",
+   "name": "大眼狮鲈",
+   "en": "Walleye",
+   "file": "Walleye_Fish.png",
+   "path": "/mediawiki/images/en/6/69/Walleye_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "walleye",
+   "name": "大眼狮鲈",
+   "en": "Walleye",
+   "file": "大眼狮鲈.png",
+   "path": "/mediawiki/images/en/b/b5/大眼狮鲈.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "woodskip",
+   "name": "木跃鱼",
+   "en": "Woodskip",
+   "file": "Woodskip_Fish.png",
+   "path": "/mediawiki/images/en/1/1f/Woodskip_Fish.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "fish",
+   "id": "woodskip",
+   "name": "木跃鱼",
+   "en": "Woodskip",
+   "file": "木跃鱼.png",
+   "path": "/mediawiki/images/en/a/ab/木跃鱼.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "prismatic_shard",
+   "name": "五彩碎片",
+   "en": "Prismatic Shard",
+   "file": "五彩碎片.png",
+   "path": "/mediawiki/images/en/0/02/五彩碎片.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "diamond",
+   "name": "钻石",
+   "en": "Diamond",
+   "file": "钻石.png",
+   "path": "/mediawiki/images/en/8/8a/钻石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "emerald",
+   "name": "绿宝石",
+   "en": "Emerald",
+   "file": "绿宝石.png",
+   "path": "/mediawiki/images/en/8/8f/绿宝石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "ruby",
+   "name": "红宝石",
+   "en": "Ruby",
+   "file": "红宝石.png",
+   "path": "/mediawiki/images/en/5/5e/红宝石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "jade",
+   "name": "翡翠",
+   "en": "Jade",
+   "file": "翡翠.png",
+   "path": "/mediawiki/images/en/e/ec/翡翠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "aquamarine",
+   "name": "海蓝宝石",
+   "en": "Aquamarine",
+   "file": "海蓝宝石.png",
+   "path": "/mediawiki/images/en/d/d4/海蓝宝石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "amethyst",
+   "name": "紫水晶",
+   "en": "Amethyst",
+   "file": "紫水晶.png",
+   "path": "/mediawiki/images/en/d/da/紫水晶.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "topaz",
+   "name": "黄玉",
+   "en": "Topaz",
+   "file": "黄玉.png",
+   "path": "/mediawiki/images/en/1/14/黄玉.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "quartz",
+   "name": "石英",
+   "en": "Quartz",
+   "file": "石英.png",
+   "path": "/mediawiki/images/en/e/e1/石英.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "earth_crystal",
+   "name": "地晶",
+   "en": "Earth Crystal",
+   "file": "地晶.png",
+   "path": "/mediawiki/images/en/7/7f/地晶.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "frozen_tear",
+   "name": "冰泪",
+   "en": "Frozen Tear",
+   "file": "冰泪.png",
+   "path": "/mediawiki/images/en/b/b9/冰泪.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "fire_quartz",
+   "name": "火石英",
+   "en": "Fire Quartz",
+   "file": "火石英.png",
+   "path": "/mediawiki/images/en/c/cc/火石英.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "star_shards",
+   "name": "星之碎片",
+   "en": "Star Shards",
+   "file": "星之碎片.png",
+   "path": "/mediawiki/images/en/9/90/星之碎片.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "helvite",
+   "name": "日光榴石",
+   "en": "Helvite",
+   "file": "日光榴石.png",
+   "path": "/mediawiki/images/en/8/8d/日光榴石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "neptunite",
+   "name": "柱星叶石",
+   "en": "Neptunite",
+   "file": "柱星叶石.png",
+   "path": "/mediawiki/images/en/1/12/柱星叶石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "fire_opal",
+   "name": "火蛋白石",
+   "en": "Fire Opal",
+   "file": "火蛋白石.png",
+   "path": "/mediawiki/images/en/0/0e/火蛋白石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "dolomite",
+   "name": "白云石",
+   "en": "Dolomite",
+   "file": "白云石.png",
+   "path": "/mediawiki/images/en/6/6d/白云石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "bixite",
+   "name": "铋晶石",
+   "en": "Bixite",
+   "file": "铋晶石.png",
+   "path": "/mediawiki/images/en/6/6a/铋晶石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "tigerseye",
+   "name": "虎眼石",
+   "en": "Tigerseye",
+   "file": "虎眼石.png",
+   "path": "/mediawiki/images/en/9/93/虎眼石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "kyanite",
+   "name": "蓝晶石",
+   "en": "Kyanite",
+   "file": "蓝晶石.png",
+   "path": "/mediawiki/images/en/c/cf/蓝晶石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "fairy_stone",
+   "name": "仙石",
+   "en": "Fairy Stone",
+   "file": "仙石.png",
+   "path": "/mediawiki/images/en/5/5a/仙石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "ocean_stone",
+   "name": "海洋石",
+   "en": "Ocean Stone",
+   "file": "海洋石.png",
+   "path": "/mediawiki/images/en/0/04/海洋石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "lemon_stone",
+   "name": "柠檬石",
+   "en": "Lemon Stone",
+   "file": "柠檬石.png",
+   "path": "/mediawiki/images/en/7/7d/柠檬石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "ghost_crystal",
+   "name": "幽灵水晶",
+   "en": "Ghost Crystal",
+   "file": "幽灵水晶.png",
+   "path": "/mediawiki/images/en/5/50/幽灵水晶.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "fluorapatite",
+   "name": "氟磷灰石",
+   "en": "Fluorapatite",
+   "file": "氟磷灰石.png",
+   "path": "/mediawiki/images/en/f/f7/氟磷灰石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "obsidian",
+   "name": "黑曜石",
+   "en": "Obsidian",
+   "file": "黑曜石.png",
+   "path": "/mediawiki/images/en/0/00/黑曜石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "lunarite",
+   "name": "月石",
+   "en": "Lunarite",
+   "file": "月石.png",
+   "path": "/mediawiki/images/en/2/26/月石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "basalt",
+   "name": "玄武岩",
+   "en": "Basalt",
+   "file": "玄武岩.png",
+   "path": "/mediawiki/images/en/c/c9/玄武岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "opal",
+   "name": "蛋白石",
+   "en": "Opal",
+   "file": "蛋白石.png",
+   "path": "/mediawiki/images/en/3/36/蛋白石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "jamborite",
+   "name": "水镍矿",
+   "en": "Jamborite",
+   "file": "水镍矿.png",
+   "path": "/mediawiki/images/en/b/b5/水镍矿.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "jasper",
+   "name": "碧玉",
+   "en": "Jasper",
+   "file": "碧玉.png",
+   "path": "/mediawiki/images/en/b/b3/碧玉.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "geminite",
+   "name": "双生石",
+   "en": "Geminite",
+   "file": "双生石.png",
+   "path": "/mediawiki/images/en/f/f3/双生石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "hematite",
+   "name": "赤铁矿",
+   "en": "Hematite",
+   "file": "赤铁矿.png",
+   "path": "/mediawiki/images/en/0/01/赤铁矿.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "alamite",
+   "name": "阿拉米石",
+   "en": "Alamite",
+   "file": "阿拉米石.png",
+   "path": "/mediawiki/images/en/d/d4/阿拉米石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "aerinite",
+   "name": "青铝石",
+   "en": "Aerinite",
+   "file": "青铝石.png",
+   "path": "/mediawiki/images/en/5/5e/青铝石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "celestine",
+   "name": "天青石",
+   "en": "Celestine",
+   "file": "天青石.png",
+   "path": "/mediawiki/images/en/e/e2/天青石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "pyrite",
+   "name": "黄铁矿",
+   "en": "Pyrite",
+   "file": "黄铁矿.png",
+   "path": "/mediawiki/images/en/3/35/黄铁矿.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "petrified_slime",
+   "name": "石化史莱姆",
+   "en": "Petrified Slime",
+   "file": "石化史莱姆.png",
+   "path": "/mediawiki/images/en/8/8b/石化史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "soapstone",
+   "name": "滑石",
+   "en": "Soapstone",
+   "file": "滑石.png",
+   "path": "/mediawiki/images/en/a/a5/滑石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "jagoite",
+   "name": "贾戈石",
+   "en": "Jagoite",
+   "file": "贾戈石.png",
+   "path": "/mediawiki/images/en/9/97/贾戈石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "marble",
+   "name": "大理石",
+   "en": "Marble",
+   "file": "大理石.png",
+   "path": "/mediawiki/images/en/4/44/大理石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "thunder_egg",
+   "name": "雷蛋",
+   "en": "Thunder Egg",
+   "file": "雷蛋.png",
+   "path": "/mediawiki/images/en/7/72/雷蛋.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "esperite",
+   "name": "埃斯佩石",
+   "en": "Esperite",
+   "file": "埃斯佩石.png",
+   "path": "/mediawiki/images/en/4/47/埃斯佩石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "malachite",
+   "name": "孔雀石",
+   "en": "Malachite",
+   "file": "孔雀石.png",
+   "path": "/mediawiki/images/en/c/c3/孔雀石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "slate",
+   "name": "板岩",
+   "en": "Slate",
+   "file": "板岩.png",
+   "path": "/mediawiki/images/en/b/bc/板岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "orpiment",
+   "name": "雌黄",
+   "en": "Orpiment",
+   "file": "雌黄.png",
+   "path": "/mediawiki/images/en/b/b7/雌黄.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "nekoite",
+   "name": "猫石",
+   "en": "Nekoite",
+   "file": "猫石.png",
+   "path": "/mediawiki/images/en/4/4c/猫石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "granite",
+   "name": "花岗岩",
+   "en": "Granite",
+   "file": "花岗岩.png",
+   "path": "/mediawiki/images/en/b/bc/花岗岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "calcite",
+   "name": "方解石",
+   "en": "Calcite",
+   "file": "方解石.png",
+   "path": "/mediawiki/images/en/7/7f/方解石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "sandstone",
+   "name": "砂岩",
+   "en": "Sandstone",
+   "file": "砂岩.png",
+   "path": "/mediawiki/images/en/2/2a/砂岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "baryte",
+   "name": "重晶石",
+   "en": "Baryte",
+   "file": "重晶石.png",
+   "path": "/mediawiki/images/en/0/0b/重晶石.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "mudstone",
+   "name": "泥岩",
+   "en": "Mudstone",
+   "file": "泥岩.png",
+   "path": "/mediawiki/images/en/2/25/泥岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "minerals",
+   "id": "limestone",
+   "name": "石灰岩",
+   "en": "Limestone",
+   "file": "石灰岩.png",
+   "path": "/mediawiki/images/en/1/1b/石灰岩.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "green_slime",
+   "name": "绿色史莱姆",
+   "en": "Green Slime",
+   "file": "绿色史莱姆.png",
+   "path": "/mediawiki/images/en/b/b4/绿色史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "blue_slime",
+   "name": "蓝色史莱姆",
+   "en": "Blue Slime",
+   "file": "Blue_Slime.png",
+   "path": "/mediawiki/images/en/d/da/Blue_Slime.png",
+   "role": "icon",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "blue_slime",
+   "name": "蓝色史莱姆",
+   "en": "Blue Slime",
+   "file": "蓝色史莱姆.png",
+   "path": "/mediawiki/images/en/9/99/蓝色史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "red_slime",
+   "name": "红色史莱姆",
+   "en": "Red Slime",
+   "file": "Red_Slime.png",
+   "path": "/mediawiki/images/en/8/87/Red_Slime.png",
+   "role": "icon",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "red_slime",
+   "name": "红色史莱姆",
+   "en": "Red Slime",
+   "file": "红色史莱姆.png",
+   "path": "/mediawiki/images/en/5/56/红色史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "purple_slime",
+   "name": "紫色史莱姆",
+   "en": "Purple Slime",
+   "file": "紫色史莱姆.png",
+   "path": "/mediawiki/images/en/4/4c/紫色史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "copper_slime",
+   "name": "铜史莱姆",
+   "en": "Copper Slime",
+   "file": "铜史莱姆.png",
+   "path": "/mediawiki/images/en/a/a6/铜史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "iron_slime",
+   "name": "铁史莱姆",
+   "en": "Iron Slime",
+   "file": "铁史莱姆.png",
+   "path": "/mediawiki/images/en/3/33/铁史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "tiger_slime",
+   "name": "老虎史莱姆",
+   "en": "Tiger Slime",
+   "file": "老虎史莱姆.png",
+   "path": "/mediawiki/images/en/1/16/老虎史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "big_slime",
+   "name": "大史莱姆",
+   "en": "Big Slime",
+   "file": "Big_Slime.png",
+   "path": "/mediawiki/images/en/b/bc/Big_Slime.png",
+   "role": "icon",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "big_slime",
+   "name": "大史莱姆",
+   "en": "Big Slime",
+   "file": "大史莱姆.png",
+   "path": "/mediawiki/images/en/a/a8/大史莱姆.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "metal_head",
+   "name": "金属头",
+   "en": "Metal Head",
+   "file": "金属头.png",
+   "path": "/mediawiki/images/en/9/98/金属头.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "bat",
+   "name": "蝙蝠",
+   "en": "Bat",
+   "file": "蝙蝠.png",
+   "path": "/mediawiki/images/en/c/c4/蝙蝠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "frost_bat",
+   "name": "冰霜蝙蝠",
+   "en": "Frost Bat",
+   "file": "冰霜蝙蝠.png",
+   "path": "/mediawiki/images/en/6/64/冰霜蝙蝠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "lava_bat",
+   "name": "岩浆蝙蝠",
+   "en": "Lava Bat",
+   "file": "岩浆蝙蝠.png",
+   "path": "/mediawiki/images/en/e/e0/岩浆蝙蝠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "iridium_bat",
+   "name": "铱蝙蝠",
+   "en": "Iridium Bat",
+   "file": "铱蝙蝠.png",
+   "path": "/mediawiki/images/en/e/ee/铱蝙蝠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "bug",
+   "name": "甲虫",
+   "en": "Bug",
+   "file": "甲虫.png",
+   "path": "/mediawiki/images/en/8/8b/甲虫.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "cave_fly",
+   "name": "洞穴苍蝇",
+   "en": "Cave Fly",
+   "file": "洞穴苍蝇.png",
+   "path": "/mediawiki/images/en/b/b3/洞穴苍蝇.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "grub",
+   "name": "蛆虫",
+   "en": "Grub",
+   "file": "蛆虫.png",
+   "path": "/mediawiki/images/en/3/35/蛆虫.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "mutant_fly",
+   "name": "变异苍蝇",
+   "en": "Mutant Fly",
+   "file": "变异苍蝇.png",
+   "path": "/mediawiki/images/en/7/73/变异苍蝇.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "mutant_grub",
+   "name": "变异蛆虫",
+   "en": "Mutant Grub",
+   "file": "变异蛆虫.png",
+   "path": "/mediawiki/images/en/0/06/变异蛆虫.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "armored_bug",
+   "name": "装甲甲虫",
+   "en": "Armored Bug",
+   "file": "装甲甲虫.png",
+   "path": "/mediawiki/images/en/c/cd/装甲甲虫.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "duggy",
+   "name": "地鼠",
+   "en": "Duggy",
+   "file": "地鼠.png",
+   "path": "/mediawiki/images/en/e/e8/地鼠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "magma_duggy",
+   "name": "岩浆地鼠",
+   "en": "Magma Duggy",
+   "file": "岩浆地鼠.png",
+   "path": "/mediawiki/images/en/2/20/岩浆地鼠.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "dust_sprite",
+   "name": "尘埃精灵",
+   "en": "Dust Sprite",
+   "file": "尘埃精灵.png",
+   "path": "/mediawiki/images/en/b/bc/尘埃精灵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "magma_sprite",
+   "name": "岩浆精灵",
+   "en": "Magma Sprite",
+   "file": "岩浆精灵.png",
+   "path": "/mediawiki/images/en/f/f8/岩浆精灵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "magma_sparker",
+   "name": "岩浆火花",
+   "en": "Magma Sparker",
+   "file": "岩浆火花.png",
+   "path": "/mediawiki/images/en/5/52/岩浆火花.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "rock_crab",
+   "name": "岩石蟹",
+   "en": "Rock Crab",
+   "file": "岩石蟹.png",
+   "path": "/mediawiki/images/en/7/74/岩石蟹.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "lava_crab",
+   "name": "岩浆蟹",
+   "en": "Lava Crab",
+   "file": "岩浆蟹.png",
+   "path": "/mediawiki/images/en/b/b4/岩浆蟹.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "iridium_crab",
+   "name": "铱蟹",
+   "en": "Iridium Crab",
+   "file": "铱蟹.png",
+   "path": "/mediawiki/images/en/f/f8/铱蟹.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "truffle_crab",
+   "name": "松露蟹",
+   "en": "Truffle Crab",
+   "file": "松露蟹.png",
+   "path": "/mediawiki/images/en/3/3c/松露蟹.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "ghost",
+   "name": "幽灵",
+   "en": "Ghost",
+   "file": "幽灵.png",
+   "path": "/mediawiki/images/en/3/30/幽灵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "carbon_ghost",
+   "name": "碳幽灵",
+   "en": "Carbon Ghost",
+   "file": "碳幽灵.png",
+   "path": "/mediawiki/images/en/2/25/碳幽灵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "putrid_ghost",
+   "name": "腐臭幽灵",
+   "en": "Putrid Ghost",
+   "file": "腐臭幽灵.png",
+   "path": "/mediawiki/images/en/e/e8/腐臭幽灵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "skeleton",
+   "name": "骷髅",
+   "en": "Skeleton",
+   "file": "骷髅.png",
+   "path": "/mediawiki/images/en/5/5f/骷髅.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "skeleton_mage",
+   "name": "骷髅法师",
+   "en": "Skeleton Mage",
+   "file": "骷髅法师.png",
+   "path": "/mediawiki/images/en/4/42/骷髅法师.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "skeleton_warrior",
+   "name": "骷髅战士",
+   "en": "Skeleton Warrior",
+   "file": "Skeleton_Warrior.png",
+   "path": "/mediawiki/images/en/c/ce/Skeleton_Warrior.png",
+   "role": "icon",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "skeleton_warrior",
+   "name": "骷髅战士",
+   "en": "Skeleton Warrior",
+   "file": "骷髅战士.png",
+   "path": "/mediawiki/images/en/b/b5/骷髅战士.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "shadow_brute",
+   "name": "暗影狂徒",
+   "en": "Shadow Brute",
+   "file": "暗影狂徒.png",
+   "path": "/mediawiki/images/en/7/70/暗影狂徒.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "shadow_shaman",
+   "name": "暗影萨满",
+   "en": "Shadow Shaman",
+   "file": "暗影萨满.png",
+   "path": "/mediawiki/images/en/a/a3/暗影萨满.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "shadow_sniper",
+   "name": "暗影狙击手",
+   "en": "Shadow Sniper",
+   "file": "暗影狙击手.png",
+   "path": "/mediawiki/images/en/0/02/暗影狙击手.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "shadow_guy",
+   "name": "暗影人",
+   "en": "Shadow Guy",
+   "file": "Shadow_Guy.png",
+   "path": "/mediawiki/images/en/9/98/Shadow_Guy.png",
+   "role": "icon",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "shadow_guy",
+   "name": "暗影人",
+   "en": "Shadow Guy",
+   "file": "暗影人.png",
+   "path": "/mediawiki/images/en/d/de/暗影人.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "mummy",
+   "name": "木乃伊",
+   "en": "Mummy",
+   "file": "木乃伊.png",
+   "path": "/mediawiki/images/en/b/b2/木乃伊.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "serpent",
+   "name": "蛇",
+   "en": "Serpent",
+   "file": "蛇.png",
+   "path": "/mediawiki/images/en/d/d2/蛇.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "royal_serpent",
+   "name": "皇家蛇",
+   "en": "Royal Serpent",
+   "file": "皇家蛇.png",
+   "path": "/mediawiki/images/en/e/e9/皇家蛇.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "pepper_rex",
+   "name": "霸王龙",
+   "en": "Pepper Rex",
+   "file": "霸王龙.png",
+   "path": "/mediawiki/images/en/b/be/霸王龙.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "haunted_skull",
+   "name": "闹鬼骷髅",
+   "en": "Haunted Skull",
+   "file": "闹鬼骷髅.png",
+   "path": "/mediawiki/images/en/4/4c/闹鬼骷髅.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "squid_kid",
+   "name": "鱿鱼娃",
+   "en": "Squid Kid",
+   "file": "鱿鱼娃.png",
+   "path": "/mediawiki/images/en/5/5d/鱿鱼娃.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "blue_squid",
+   "name": "蓝鱿鱼",
+   "en": "Blue Squid",
+   "file": "蓝鱿鱼.png",
+   "path": "/mediawiki/images/en/d/d8/蓝鱿鱼.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "stone_golem",
+   "name": "石头傀儡",
+   "en": "Stone Golem",
+   "file": "石头傀儡.png",
+   "path": "/mediawiki/images/en/9/92/石头傀儡.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "wilderness_golem",
+   "name": "荒野傀儡",
+   "en": "Wilderness Golem",
+   "file": "荒野傀儡.png",
+   "path": "/mediawiki/images/en/7/72/荒野傀儡.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "iridium_golem",
+   "name": "铱傀儡",
+   "en": "Iridium Golem",
+   "file": "铱傀儡.png",
+   "path": "/mediawiki/images/en/a/a4/铱傀儡.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "monsters",
+   "id": "dwarvish_sentry",
+   "name": "矮人哨兵",
+   "en": "Dwarvish Sentry",
+   "file": "矮人哨兵.png",
+   "path": "/mediawiki/images/en/4/40/矮人哨兵.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "small_glow_ring",
+   "name": "小发光戒指",
+   "en": "Small Glow Ring",
+   "file": "Small_Glow_Ring_Ring.png",
+   "path": "/mediawiki/images/en/c/ca/Small_Glow_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "small_glow_ring",
+   "name": "小发光戒指",
+   "en": "Small Glow Ring",
+   "file": "Ring_Small_Glow_Ring.png",
+   "path": "/mediawiki/images/en/a/af/Ring_Small_Glow_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "glow_ring",
+   "name": "发光戒指",
+   "en": "Glow Ring",
+   "file": "Glow_Ring_Ring.png",
+   "path": "/mediawiki/images/en/7/7a/Glow_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "glow_ring",
+   "name": "发光戒指",
+   "en": "Glow Ring",
+   "file": "Ring_Glow_Ring.png",
+   "path": "/mediawiki/images/en/1/17/Ring_Glow_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "small_magnet_ring",
+   "name": "小磁铁戒指",
+   "en": "Small Magnet Ring",
+   "file": "Small_Magnet_Ring_Ring.png",
+   "path": "/mediawiki/images/en/4/4f/Small_Magnet_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "small_magnet_ring",
+   "name": "小磁铁戒指",
+   "en": "Small Magnet Ring",
+   "file": "Ring_Small_Magnet_Ring.png",
+   "path": "/mediawiki/images/en/f/fd/Ring_Small_Magnet_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "magnet_ring",
+   "name": "磁铁戒指",
+   "en": "Magnet Ring",
+   "file": "Magnet_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/61/Magnet_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "magnet_ring",
+   "name": "磁铁戒指",
+   "en": "Magnet Ring",
+   "file": "Ring_Magnet_Ring.png",
+   "path": "/mediawiki/images/en/7/70/Ring_Magnet_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "slime_charmer_ring",
+   "name": "史莱姆克星戒指",
+   "en": "Slime Charmer Ring",
+   "file": "Slime_Charmer_Ring_Ring.png",
+   "path": "/mediawiki/images/en/f/f0/Slime_Charmer_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "slime_charmer_ring",
+   "name": "史莱姆克星戒指",
+   "en": "Slime Charmer Ring",
+   "file": "Ring_Slime_Charmer_Ring.png",
+   "path": "/mediawiki/images/en/f/f2/Ring_Slime_Charmer_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "warrior_ring",
+   "name": "战士戒指",
+   "en": "Warrior Ring",
+   "file": "Warrior_Ring_Ring.png",
+   "path": "/mediawiki/images/en/1/19/Warrior_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "warrior_ring",
+   "name": "战士戒指",
+   "en": "Warrior Ring",
+   "file": "Ring_Warrior_Ring.png",
+   "path": "/mediawiki/images/en/a/ae/Ring_Warrior_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "vampire_ring",
+   "name": "吸血鬼戒指",
+   "en": "Vampire Ring",
+   "file": "Vampire_Ring_Ring.png",
+   "path": "/mediawiki/images/en/d/d1/Vampire_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "vampire_ring",
+   "name": "吸血鬼戒指",
+   "en": "Vampire Ring",
+   "file": "Ring_Vampire_Ring.png",
+   "path": "/mediawiki/images/en/1/1f/Ring_Vampire_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "savage_ring",
+   "name": "野蛮戒指",
+   "en": "Savage Ring",
+   "file": "Savage_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/6a/Savage_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "savage_ring",
+   "name": "野蛮戒指",
+   "en": "Savage Ring",
+   "file": "Ring_Savage_Ring.png",
+   "path": "/mediawiki/images/en/b/b7/Ring_Savage_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "ring_of_yoba",
+   "name": "约巴戒指",
+   "en": "Ring of Yoba",
+   "file": "Ring_of_Yoba_Ring.png",
+   "path": "/mediawiki/images/en/4/47/Ring_of_Yoba_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "ring_of_yoba",
+   "name": "约巴戒指",
+   "en": "Ring of Yoba",
+   "file": "Ring_Ring_of_Yoba.png",
+   "path": "/mediawiki/images/en/8/8a/Ring_Ring_of_Yoba.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "sturdy_ring",
+   "name": "坚固戒指",
+   "en": "Sturdy Ring",
+   "file": "Sturdy_Ring_Ring.png",
+   "path": "/mediawiki/images/en/a/a8/Sturdy_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "sturdy_ring",
+   "name": "坚固戒指",
+   "en": "Sturdy Ring",
+   "file": "Ring_Sturdy_Ring.png",
+   "path": "/mediawiki/images/en/4/44/Ring_Sturdy_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "burglars_ring",
+   "name": "盗贼戒指",
+   "en": "Burglar's Ring",
+   "file": "Burglar's_Ring_Ring.png",
+   "path": "/mediawiki/images/en/3/30/Burglar's_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "burglars_ring",
+   "name": "盗贼戒指",
+   "en": "Burglar's Ring",
+   "file": "Ring_Burglar's_Ring.png",
+   "path": "/mediawiki/images/en/6/6a/Ring_Burglar's_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "iridium_band",
+   "name": "铱环",
+   "en": "Iridium Band",
+   "file": "Iridium_Band_Ring.png",
+   "path": "/mediawiki/images/en/2/2a/Iridium_Band_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "iridium_band",
+   "name": "铱环",
+   "en": "Iridium Band",
+   "file": "Ring_Iridium_Band.png",
+   "path": "/mediawiki/images/en/1/1e/Ring_Iridium_Band.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "jukebox_ring",
+   "name": "点唱机戒指",
+   "en": "Jukebox Ring",
+   "file": "Jukebox_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/6d/Jukebox_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "jukebox_ring",
+   "name": "点唱机戒指",
+   "en": "Jukebox Ring",
+   "file": "Ring_Jukebox_Ring.png",
+   "path": "/mediawiki/images/en/e/e0/Ring_Jukebox_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "amethyst_ring",
+   "name": "紫水晶戒指",
+   "en": "Amethyst Ring",
+   "file": "Amethyst_Ring_Ring.png",
+   "path": "/mediawiki/images/en/1/10/Amethyst_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "amethyst_ring",
+   "name": "紫水晶戒指",
+   "en": "Amethyst Ring",
+   "file": "Ring_Amethyst_Ring.png",
+   "path": "/mediawiki/images/en/a/a5/Ring_Amethyst_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "topaz_ring",
+   "name": "黄玉戒指",
+   "en": "Topaz Ring",
+   "file": "Topaz_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/6d/Topaz_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "topaz_ring",
+   "name": "黄玉戒指",
+   "en": "Topaz Ring",
+   "file": "Ring_Topaz_Ring.png",
+   "path": "/mediawiki/images/en/a/ac/Ring_Topaz_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "aquamarine_ring",
+   "name": "海蓝宝石戒指",
+   "en": "Aquamarine Ring",
+   "file": "Aquamarine_Ring_Ring.png",
+   "path": "/mediawiki/images/en/9/9b/Aquamarine_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "aquamarine_ring",
+   "name": "海蓝宝石戒指",
+   "en": "Aquamarine Ring",
+   "file": "Ring_Aquamarine_Ring.png",
+   "path": "/mediawiki/images/en/2/2c/Ring_Aquamarine_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "jade_ring",
+   "name": "翡翠戒指",
+   "en": "Jade Ring",
+   "file": "Jade_Ring_Ring.png",
+   "path": "/mediawiki/images/en/8/83/Jade_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "jade_ring",
+   "name": "翡翠戒指",
+   "en": "Jade Ring",
+   "file": "Ring_Jade_Ring.png",
+   "path": "/mediawiki/images/en/8/8a/Ring_Jade_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "emerald_ring",
+   "name": "绿宝石戒指",
+   "en": "Emerald Ring",
+   "file": "Emerald_Ring_Ring.png",
+   "path": "/mediawiki/images/en/5/54/Emerald_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "emerald_ring",
+   "name": "绿宝石戒指",
+   "en": "Emerald Ring",
+   "file": "Ring_Emerald_Ring.png",
+   "path": "/mediawiki/images/en/5/52/Ring_Emerald_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "ruby_ring",
+   "name": "红宝石戒指",
+   "en": "Ruby Ring",
+   "file": "Ruby_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/64/Ruby_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "ruby_ring",
+   "name": "红宝石戒指",
+   "en": "Ruby Ring",
+   "file": "Ring_Ruby_Ring.png",
+   "path": "/mediawiki/images/en/e/ea/Ring_Ruby_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "wedding_ring",
+   "name": "结婚戒指",
+   "en": "Wedding Ring",
+   "file": "Wedding_Ring_Ring.png",
+   "path": "/mediawiki/images/en/5/5b/Wedding_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "wedding_ring",
+   "name": "结婚戒指",
+   "en": "Wedding Ring",
+   "file": "Ring_Wedding_Ring.png",
+   "path": "/mediawiki/images/en/0/0b/Ring_Wedding_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "crabshell_ring",
+   "name": "蟹壳戒指",
+   "en": "Crabshell Ring",
+   "file": "Crabshell_Ring_Ring.png",
+   "path": "/mediawiki/images/en/2/26/Crabshell_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "crabshell_ring",
+   "name": "蟹壳戒指",
+   "en": "Crabshell Ring",
+   "file": "Ring_Crabshell_Ring.png",
+   "path": "/mediawiki/images/en/d/d0/Ring_Crabshell_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "napalm_ring",
+   "name": "凝固汽油戒指",
+   "en": "Napalm Ring",
+   "file": "Napalm_Ring_Ring.png",
+   "path": "/mediawiki/images/en/5/57/Napalm_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "napalm_ring",
+   "name": "凝固汽油戒指",
+   "en": "Napalm Ring",
+   "file": "Ring_Napalm_Ring.png",
+   "path": "/mediawiki/images/en/0/0d/Ring_Napalm_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "thorns_ring",
+   "name": "荆棘戒指",
+   "en": "Thorns Ring",
+   "file": "Thorns_Ring_Ring.png",
+   "path": "/mediawiki/images/en/2/20/Thorns_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "thorns_ring",
+   "name": "荆棘戒指",
+   "en": "Thorns Ring",
+   "file": "Ring_Thorns_Ring.png",
+   "path": "/mediawiki/images/en/2/2a/Ring_Thorns_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "lucky_ring",
+   "name": "幸运戒指",
+   "en": "Lucky Ring",
+   "file": "Lucky_Ring_Ring.png",
+   "path": "/mediawiki/images/en/6/60/Lucky_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "lucky_ring",
+   "name": "幸运戒指",
+   "en": "Lucky Ring",
+   "file": "Ring_Lucky_Ring.png",
+   "path": "/mediawiki/images/en/b/be/Ring_Lucky_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "hot_java_ring",
+   "name": "热咖啡戒指",
+   "en": "Hot Java Ring",
+   "file": "Hot_Java_Ring_Ring.png",
+   "path": "/mediawiki/images/en/b/b2/Hot_Java_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "hot_java_ring",
+   "name": "热咖啡戒指",
+   "en": "Hot Java Ring",
+   "file": "Ring_Hot_Java_Ring.png",
+   "path": "/mediawiki/images/en/e/e1/Ring_Hot_Java_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "protection_ring",
+   "name": "保护戒指",
+   "en": "Protection Ring",
+   "file": "Protection_Ring_Ring.png",
+   "path": "/mediawiki/images/en/c/c6/Protection_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "protection_ring",
+   "name": "保护戒指",
+   "en": "Protection Ring",
+   "file": "Ring_Protection_Ring.png",
+   "path": "/mediawiki/images/en/4/4e/Ring_Protection_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "soul_sapper_ring",
+   "name": "灵魂汲取戒指",
+   "en": "Soul Sapper Ring",
+   "file": "Soul_Sapper_Ring_Ring.png",
+   "path": "/mediawiki/images/en/4/4f/Soul_Sapper_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "soul_sapper_ring",
+   "name": "灵魂汲取戒指",
+   "en": "Soul Sapper Ring",
+   "file": "Ring_Soul_Sapper_Ring.png",
+   "path": "/mediawiki/images/en/2/25/Ring_Soul_Sapper_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "phoenix_ring",
+   "name": "凤凰戒指",
+   "en": "Phoenix Ring",
+   "file": "Phoenix_Ring_Ring.png",
+   "path": "/mediawiki/images/en/f/f4/Phoenix_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "phoenix_ring",
+   "name": "凤凰戒指",
+   "en": "Phoenix Ring",
+   "file": "Ring_Phoenix_Ring.png",
+   "path": "/mediawiki/images/en/e/e6/Ring_Phoenix_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "immunity_band",
+   "name": "免疫环",
+   "en": "Immunity Band",
+   "file": "Immunity_Band_Ring.png",
+   "path": "/mediawiki/images/en/5/5a/Immunity_Band_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "immunity_band",
+   "name": "免疫环",
+   "en": "Immunity Band",
+   "file": "Ring_Immunity_Band.png",
+   "path": "/mediawiki/images/en/3/36/Ring_Immunity_Band.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "glowstone_ring",
+   "name": "辉光石戒指",
+   "en": "Glowstone Ring",
+   "file": "Glowstone_Ring_Ring.png",
+   "path": "/mediawiki/images/en/b/be/Glowstone_Ring_Ring.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "glowstone_ring",
+   "name": "辉光石戒指",
+   "en": "Glowstone Ring",
+   "file": "Ring_Glowstone_Ring.png",
+   "path": "/mediawiki/images/en/9/9c/Ring_Glowstone_Ring.png",
+   "role": "icon3",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "sneakers",
+   "name": "运动鞋",
+   "en": "Sneakers",
+   "file": "Sneakers_Boots.png",
+   "path": "/mediawiki/images/en/d/d9/Sneakers_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "rubber_boots",
+   "name": "橡胶靴",
+   "en": "Rubber Boots",
+   "file": "Rubber_Boots_Boots.png",
+   "path": "/mediawiki/images/en/4/49/Rubber_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "leather_boots",
+   "name": "皮靴",
+   "en": "Leather Boots",
+   "file": "Leather_Boots_Boots.png",
+   "path": "/mediawiki/images/en/e/e3/Leather_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "work_boots",
+   "name": "工作靴",
+   "en": "Work Boots",
+   "file": "Work_Boots_Boots.png",
+   "path": "/mediawiki/images/en/4/43/Work_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "combat_boots",
+   "name": "战斗靴",
+   "en": "Combat Boots",
+   "file": "Combat_Boots_Boots.png",
+   "path": "/mediawiki/images/en/a/a9/Combat_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "tundra_boots",
+   "name": "冻原靴",
+   "en": "Tundra Boots",
+   "file": "Tundra_Boots_Boots.png",
+   "path": "/mediawiki/images/en/3/35/Tundra_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "leprechaun_shoes",
+   "name": "矮妖精鞋",
+   "en": "Leprechaun Shoes",
+   "file": "Leprechaun_Shoes_Boots.png",
+   "path": "/mediawiki/images/en/f/f7/Leprechaun_Shoes_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "thermal_boots",
+   "name": "保暖靴",
+   "en": "Thermal Boots",
+   "file": "Thermal_Boots_Boots.png",
+   "path": "/mediawiki/images/en/1/17/Thermal_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "cowboy_boots",
+   "name": "牛仔靴",
+   "en": "Cowboy Boots",
+   "file": "Cowboy_Boots_Boots.png",
+   "path": "/mediawiki/images/en/e/ec/Cowboy_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "dark_boots",
+   "name": "黑暗靴",
+   "en": "Dark Boots",
+   "file": "Dark_Boots_Boots.png",
+   "path": "/mediawiki/images/en/3/31/Dark_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "firewalker_boots",
+   "name": "踏火靴",
+   "en": "Firewalker Boots",
+   "file": "Firewalker_Boots_Boots.png",
+   "path": "/mediawiki/images/en/3/33/Firewalker_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "genie_shoes",
+   "name": "精灵鞋",
+   "en": "Genie Shoes",
+   "file": "Genie_Shoes_Boots.png",
+   "path": "/mediawiki/images/en/9/92/Genie_Shoes_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "space_boots",
+   "name": "太空靴",
+   "en": "Space Boots",
+   "file": "Space_Boots_Boots.png",
+   "path": "/mediawiki/images/en/8/84/Space_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "crystal_shoes",
+   "name": "水晶鞋",
+   "en": "Crystal Shoes",
+   "file": "Crystal_Shoes_Boots.png",
+   "path": "/mediawiki/images/en/3/34/Crystal_Shoes_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "emily_magic_boots",
+   "name": "艾米丽的魔法靴",
+   "en": "Emily's Magic Boots",
+   "file": "Emily's_Magic_Boots_Boots.png",
+   "path": "/mediawiki/images/en/6/6e/Emily's_Magic_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "cinderclown_shoes",
+   "name": "煤灰小丑鞋",
+   "en": "Cinderclown Shoes",
+   "file": "Cinderclown_Shoes_Boots.png",
+   "path": "/mediawiki/images/en/5/5d/Cinderclown_Shoes_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "mermaid_boots",
+   "name": "美人鱼靴",
+   "en": "Mermaid Boots",
+   "file": "Mermaid_Boots_Boots.png",
+   "path": "/mediawiki/images/en/5/59/Mermaid_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "equipment",
+   "id": "dragonscale_boots",
+   "name": "龙鳞靴",
+   "en": "Dragonscale Boots",
+   "file": "Dragonscale_Boots_Boots.png",
+   "path": "/mediawiki/images/en/f/fc/Dragonscale_Boots_Boots.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowboy_hat",
+   "name": "牛仔帽",
+   "en": "Cowboy Hat",
+   "file": "Hat_Cowboy_Hat.png",
+   "path": "/mediawiki/images/en/f/f9/Hat_Cowboy_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowboy_hat",
+   "name": "牛仔帽",
+   "en": "Cowboy Hat",
+   "file": "Cowboy_Hat (hat).png",
+   "path": "/mediawiki/images/en/6/6a/Cowboy_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "bowler_hat",
+   "name": "圆顶礼帽",
+   "en": "Bowler Hat",
+   "file": "Hat_Bowler_Hat.png",
+   "path": "/mediawiki/images/en/c/c2/Hat_Bowler_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "bowler_hat",
+   "name": "圆顶礼帽",
+   "en": "Bowler Hat",
+   "file": "Bowler_Hat (hat).png",
+   "path": "/mediawiki/images/en/c/c5/Bowler_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "top_hat",
+   "name": "高顶礼帽",
+   "en": "Top Hat",
+   "file": "Hat_Top_Hat.png",
+   "path": "/mediawiki/images/en/0/0a/Hat_Top_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "top_hat",
+   "name": "高顶礼帽",
+   "en": "Top Hat",
+   "file": "Top_Hat (hat).png",
+   "path": "/mediawiki/images/en/b/b1/Top_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "sombrero",
+   "name": "墨西哥草帽",
+   "en": "Sombrero",
+   "file": "Hat_Sombrero.png",
+   "path": "/mediawiki/images/en/a/ab/Hat_Sombrero.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "sombrero",
+   "name": "墨西哥草帽",
+   "en": "Sombrero",
+   "file": "Sombrero (hat).png",
+   "path": "/mediawiki/images/en/1/12/Sombrero_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "straw_hat",
+   "name": "草帽",
+   "en": "Straw Hat",
+   "file": "Hat_Straw_Hat.png",
+   "path": "/mediawiki/images/en/8/88/Hat_Straw_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "straw_hat",
+   "name": "草帽",
+   "en": "Straw Hat",
+   "file": "Straw_Hat (hat).png",
+   "path": "/mediawiki/images/en/7/7b/Straw_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "official_cap",
+   "name": "制服帽",
+   "en": "Official Cap",
+   "file": "Hat_Official_Cap.png",
+   "path": "/mediawiki/images/en/2/2e/Hat_Official_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "official_cap",
+   "name": "制服帽",
+   "en": "Official Cap",
+   "file": "Official_Cap (hat).png",
+   "path": "/mediawiki/images/en/1/14/Official_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "blue_bonnet",
+   "name": "蓝色软帽",
+   "en": "Blue Bonnet",
+   "file": "Hat_Blue_Bonnet.png",
+   "path": "/mediawiki/images/en/3/36/Hat_Blue_Bonnet.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "blue_bonnet",
+   "name": "蓝色软帽",
+   "en": "Blue Bonnet",
+   "file": "Blue_Bonnet (hat).png",
+   "path": "/mediawiki/images/en/b/b0/Blue_Bonnet_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "plum_chapeau",
+   "name": "梅子帽",
+   "en": "Plum Chapeau",
+   "file": "Hat_Plum_Chapeau.png",
+   "path": "/mediawiki/images/en/3/33/Hat_Plum_Chapeau.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "plum_chapeau",
+   "name": "梅子帽",
+   "en": "Plum Chapeau",
+   "file": "Plum_Chapeau (hat).png",
+   "path": "/mediawiki/images/en/9/90/Plum_Chapeau_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "earmuffs",
+   "name": "耳罩",
+   "en": "Earmuffs",
+   "file": "Hat_Earmuffs.png",
+   "path": "/mediawiki/images/en/3/34/Hat_Earmuffs.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "earmuffs",
+   "name": "耳罩",
+   "en": "Earmuffs",
+   "file": "Earmuffs (hat).png",
+   "path": "/mediawiki/images/en/2/24/Earmuffs_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "hunters_cap",
+   "name": "猎人帽",
+   "en": "Hunter's Cap",
+   "file": "Hat_Hunter's_Cap.png",
+   "path": "/mediawiki/images/en/6/61/Hat_Hunter's_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "hunters_cap",
+   "name": "猎人帽",
+   "en": "Hunter's Cap",
+   "file": "Hunter's_Cap (hat).png",
+   "path": "/mediawiki/images/en/8/83/Hunter's_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "trucker_hat",
+   "name": "卡车帽",
+   "en": "Trucker Hat",
+   "file": "Hat_Trucker_Hat.png",
+   "path": "/mediawiki/images/en/c/c1/Hat_Trucker_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "trucker_hat",
+   "name": "卡车帽",
+   "en": "Trucker Hat",
+   "file": "Trucker_Hat (hat).png",
+   "path": "/mediawiki/images/en/a/aa/Trucker_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "sailors_cap",
+   "name": "水手帽",
+   "en": "Sailor's Cap",
+   "file": "Hat_Sailor's_Cap.png",
+   "path": "/mediawiki/images/en/6/68/Hat_Sailor's_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "sailors_cap",
+   "name": "水手帽",
+   "en": "Sailor's Cap",
+   "file": "Sailor's_Cap (hat).png",
+   "path": "/mediawiki/images/en/5/5c/Sailor's_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "good_ol_cap",
+   "name": "旧棒球帽",
+   "en": "Good Ol' Cap",
+   "file": "Hat_Good_Ol'_Cap.png",
+   "path": "/mediawiki/images/en/8/84/Hat_Good_Ol'_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "good_ol_cap",
+   "name": "旧棒球帽",
+   "en": "Good Ol' Cap",
+   "file": "Good_Ol'_Cap (hat).png",
+   "path": "/mediawiki/images/en/2/2b/Good_Ol'_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "fedora",
+   "name": "软呢帽",
+   "en": "Fedora",
+   "file": "Hat_Fedora.png",
+   "path": "/mediawiki/images/en/3/3e/Hat_Fedora.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "fedora",
+   "name": "软呢帽",
+   "en": "Fedora",
+   "file": "Fedora (hat).png",
+   "path": "/mediawiki/images/en/2/2f/Fedora_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cool_cap",
+   "name": "酷帽",
+   "en": "Cool Cap",
+   "file": "Hat_Cool_Cap.png",
+   "path": "/mediawiki/images/en/a/a4/Hat_Cool_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cool_cap",
+   "name": "酷帽",
+   "en": "Cool Cap",
+   "file": "Cool_Cap (hat).png",
+   "path": "/mediawiki/images/en/0/03/Cool_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "gnomes_cap",
+   "name": "地精帽",
+   "en": "Gnome's Cap",
+   "file": "Hat_Gnome's_Cap.png",
+   "path": "/mediawiki/images/en/f/f3/Hat_Gnome's_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "gnomes_cap",
+   "name": "地精帽",
+   "en": "Gnome's Cap",
+   "file": "Gnome's_Cap (hat).png",
+   "path": "/mediawiki/images/en/f/f7/Gnome's_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "santa_hat",
+   "name": "圣诞帽",
+   "en": "Santa Hat",
+   "file": "Hat_Santa_Hat.png",
+   "path": "/mediawiki/images/en/e/e9/Hat_Santa_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "santa_hat",
+   "name": "圣诞帽",
+   "en": "Santa Hat",
+   "file": "Santa_Hat (hat).png",
+   "path": "/mediawiki/images/en/1/1e/Santa_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "hard_hat",
+   "name": "安全帽",
+   "en": "Hard Hat",
+   "file": "Hat_Hard_Hat.png",
+   "path": "/mediawiki/images/en/9/97/Hat_Hard_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "hard_hat",
+   "name": "安全帽",
+   "en": "Hard Hat",
+   "file": "Hard_Hat (hat).png",
+   "path": "/mediawiki/images/en/b/bc/Hard_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "souwester",
+   "name": "防水帽",
+   "en": "Sou'wester",
+   "file": "Hat_Sou'wester.png",
+   "path": "/mediawiki/images/en/1/1b/Hat_Sou'wester.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "souwester",
+   "name": "防水帽",
+   "en": "Sou'wester",
+   "file": "Sou'wester (hat).png",
+   "path": "/mediawiki/images/en/b/b8/Sou'wester_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowgal_hat",
+   "name": "女牛仔帽",
+   "en": "Cowgal Hat",
+   "file": "Hat_Cowgal_Hat.png",
+   "path": "/mediawiki/images/en/6/65/Hat_Cowgal_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowgal_hat",
+   "name": "女牛仔帽",
+   "en": "Cowgal Hat",
+   "file": "Cowgal_Hat (hat).png",
+   "path": "/mediawiki/images/en/9/91/Cowgal_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowpoke_hat",
+   "name": "牧牛帽",
+   "en": "Cowpoke Hat",
+   "file": "Hat_Cowpoke_Hat.png",
+   "path": "/mediawiki/images/en/f/f9/Hat_Cowpoke_Hat.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "cowpoke_hat",
+   "name": "牧牛帽",
+   "en": "Cowpoke Hat",
+   "file": "Cowpoke_Hat (hat).png",
+   "path": "/mediawiki/images/en/0/08/Cowpoke_Hat_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "archers_cap",
+   "name": "弓箭手帽",
+   "en": "Archer's Cap",
+   "file": "Hat_Archer's_Cap.png",
+   "path": "/mediawiki/images/en/3/30/Hat_Archer's_Cap.png",
+   "role": "icon2",
+   "ci": 0
+  },
+  {
+   "cat": "hats",
+   "id": "archers_cap",
+   "name": "弓箭手帽",
+   "en": "Archer's Cap",
+   "file": "Archer's_Cap (hat).png",
+   "path": "/mediawiki/images/en/5/5a/Archer's_Cap_%28hat%29.png",
+   "role": "hatvar",
+   "ci": 0
+  }
+ ]
+}

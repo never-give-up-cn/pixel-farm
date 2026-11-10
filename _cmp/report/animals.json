@@ -1,0 +1,146 @@
+[
+ {
+  "iou": 0.4907,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.2292,
+  "aspect_sim": 0.913,
+  "size_sim": 0.367,
+  "score": 61.94,
+  "ours_box": [
+   21,
+   23
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "chicken",
+  "name": "鸡",
+  "en": "Chicken",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "White_Chicken.png"
+ },
+ {
+  "iou": 0.3865,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.0616,
+  "aspect_sim": 0.8533,
+  "size_sim": 0.2682,
+  "score": 55.52,
+  "ours_box": [
+   25,
+   20
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "duck",
+  "name": "鸭",
+  "en": "Duck",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Duck.png"
+ },
+ {
+  "iou": 0.6484,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.4262,
+  "aspect_sim": 0.9677,
+  "size_sim": 0.9673,
+  "score": 74.42,
+  "ours_box": [
+   31,
+   23
+  ],
+  "wiki_box": [
+   30,
+   23
+  ],
+  "id": "cow",
+  "name": "牛",
+  "en": "Cow",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "White_Cow.png"
+ },
+ {
+  "iou": 0.5277,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7313,
+  "aspect_sim": 0.9783,
+  "size_sim": 0.7429,
+  "score": 71.86,
+  "ours_box": [
+   24,
+   20
+  ],
+  "wiki_box": [
+   27,
+   23
+  ],
+  "id": "sheep",
+  "name": "羊",
+  "en": "Sheep",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sheep.png"
+ },
+ {
+  "iou": 0.563,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5711,
+  "aspect_sim": 0.9394,
+  "size_sim": 0.6618,
+  "score": 70.97,
+  "ours_box": [
+   27,
+   18
+  ],
+  "wiki_box": [
+   31,
+   22
+  ],
+  "id": "pig",
+  "name": "猪",
+  "en": "Pig",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pig.png"
+ },
+ {
+  "iou": 0.4536,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.2934,
+  "aspect_sim": 0.9545,
+  "size_sim": 0.4113,
+  "score": 63.98,
+  "ours_box": [
+   21,
+   22
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "rabbit",
+  "name": "兔",
+  "en": "Rabbit",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rabbit.png"
+ }
+]

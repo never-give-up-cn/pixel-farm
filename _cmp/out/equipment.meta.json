@@ -1,0 +1,1223 @@
+{
+ "cat": "equipment",
+ "count": 110,
+ "cell": 96,
+ "perRow": 8,
+ "rows": 14,
+ "gridW": 768,
+ "gridH": 1344,
+ "oursW": "EQUIP_W",
+ "oursH": "EQUIP_H",
+ "items": [
+  {
+   "id": "rusty_sword",
+   "name": "生锈的剑",
+   "en": "Rusty Sword",
+   "wikiPath": "/mediawiki/images/en/d/d7/Rusty_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rusty_Sword.png"
+  },
+  {
+   "id": "steel_smallsword",
+   "name": "钢制短剑",
+   "en": "Steel Smallsword",
+   "wikiPath": "/mediawiki/images/en/d/da/Steel_Smallsword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Steel_Smallsword.png"
+  },
+  {
+   "id": "wooden_blade",
+   "name": "木剑",
+   "en": "Wooden Blade",
+   "wikiPath": "/mediawiki/images/en/0/06/Wooden_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wooden_Blade.png"
+  },
+  {
+   "id": "pirates_sword",
+   "name": "海盗剑",
+   "en": "Pirate's Sword",
+   "wikiPath": "/mediawiki/images/en/1/19/Pirate's_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pirate's_Sword.png"
+  },
+  {
+   "id": "silver_saber",
+   "name": "银军刀",
+   "en": "Silver Saber",
+   "wikiPath": "/mediawiki/images/en/b/b0/Silver_Saber.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Silver_Saber.png"
+  },
+  {
+   "id": "cutlass",
+   "name": "弯刀",
+   "en": "Cutlass",
+   "wikiPath": "/mediawiki/images/en/1/1e/Cutlass.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cutlass.png"
+  },
+  {
+   "id": "forest_sword",
+   "name": "森林剑",
+   "en": "Forest Sword",
+   "wikiPath": "/mediawiki/images/en/1/17/Forest_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Forest_Sword.png"
+  },
+  {
+   "id": "iron_edge",
+   "name": "铁刃",
+   "en": "Iron Edge",
+   "wikiPath": "/mediawiki/images/en/3/3c/Iron_Edge.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iron_Edge.png"
+  },
+  {
+   "id": "insect_head",
+   "name": "昆虫头部",
+   "en": "Insect Head",
+   "wikiPath": "/mediawiki/images/en/3/35/Insect_Head.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Insect_Head.png"
+  },
+  {
+   "id": "bone_sword",
+   "name": "骨剑",
+   "en": "Bone Sword",
+   "wikiPath": "/mediawiki/images/en/2/29/Bone_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bone_Sword.png"
+  },
+  {
+   "id": "claymore",
+   "name": "双手剑",
+   "en": "Claymore",
+   "wikiPath": "/mediawiki/images/en/0/0c/Claymore.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Claymore.png"
+  },
+  {
+   "id": "neptunes_glaive",
+   "name": "海神之刃",
+   "en": "Neptune's Glaive",
+   "wikiPath": "/mediawiki/images/en/2/26/Neptune's_Glaive.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Neptune's_Glaive.png"
+  },
+  {
+   "id": "templars_blade",
+   "name": "圣殿骑士之刃",
+   "en": "Templar's Blade",
+   "wikiPath": "/mediawiki/images/en/e/e4/Templar's_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Templar's_Blade.png"
+  },
+  {
+   "id": "obsidian_edge",
+   "name": "黑曜石之刃",
+   "en": "Obsidian Edge",
+   "wikiPath": "/mediawiki/images/en/7/73/Obsidian_Edge.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Obsidian_Edge.png"
+  },
+  {
+   "id": "ossified_blade",
+   "name": "骨化之刃",
+   "en": "Ossified Blade",
+   "wikiPath": "/mediawiki/images/en/3/30/Ossified_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ossified_Blade.png"
+  },
+  {
+   "id": "holy_blade",
+   "name": "神圣之刃",
+   "en": "Holy Blade",
+   "wikiPath": "/mediawiki/images/en/a/ab/Holy_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Holy_Blade.png"
+  },
+  {
+   "id": "tempered_broadsword",
+   "name": "精炼阔剑",
+   "en": "Tempered Broadsword",
+   "wikiPath": "/mediawiki/images/en/5/51/Tempered_Broadsword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tempered_Broadsword.png"
+  },
+  {
+   "id": "yeti_tooth",
+   "name": "雪怪之牙",
+   "en": "Yeti Tooth",
+   "wikiPath": "/mediawiki/images/en/4/4d/Yeti_Tooth.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Yeti_Tooth.png"
+  },
+  {
+   "id": "steel_falchion",
+   "name": "钢制弯刀",
+   "en": "Steel Falchion",
+   "wikiPath": "/mediawiki/images/en/e/ee/Steel_Falchion.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Steel_Falchion.png"
+  },
+  {
+   "id": "dark_sword",
+   "name": "黑暗之剑",
+   "en": "Dark Sword",
+   "wikiPath": "/mediawiki/images/en/2/2e/Dark_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dark_Sword.png"
+  },
+  {
+   "id": "lava_katana",
+   "name": "熔岩武士刀",
+   "en": "Lava Katana",
+   "wikiPath": "/mediawiki/images/en/a/a0/Lava_Katana.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lava_Katana.png"
+  },
+  {
+   "id": "dragontooth_cutlass",
+   "name": "龙牙弯刀",
+   "en": "Dragontooth Cutlass",
+   "wikiPath": "/mediawiki/images/en/e/e8/Dragontooth_Cutlass.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dragontooth_Cutlass.png"
+  },
+  {
+   "id": "dwarf_sword",
+   "name": "矮人之剑",
+   "en": "Dwarf Sword",
+   "wikiPath": "/mediawiki/images/en/3/38/Dwarf_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dwarf_Sword.png"
+  },
+  {
+   "id": "galaxy_sword",
+   "name": "银河剑",
+   "en": "Galaxy Sword",
+   "wikiPath": "/mediawiki/images/en/4/44/Galaxy_Sword.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Galaxy_Sword.png"
+  },
+  {
+   "id": "infinity_blade",
+   "name": "无限之刃",
+   "en": "Infinity Blade",
+   "wikiPath": "/mediawiki/images/en/4/40/Infinity_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Infinity_Blade.png"
+  },
+  {
+   "id": "haleys_iron",
+   "name": "海莉的熨斗",
+   "en": "Haley's Iron",
+   "wikiPath": "/mediawiki/images/en/6/66/Haley's_Iron.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Haley's_Iron.png"
+  },
+  {
+   "id": "leahs_whittler",
+   "name": "莉亚的雕刻刀",
+   "en": "Leah's Whittler",
+   "wikiPath": "/mediawiki/images/en/6/69/Leah's_Whittler.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Leah's_Whittler.png"
+  },
+  {
+   "id": "meowmere",
+   "name": "喵喵剑",
+   "en": "Meowmere",
+   "wikiPath": "/mediawiki/images/en/6/63/Meowmere.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Meowmere.png"
+  },
+  {
+   "id": "carving_knife",
+   "name": "雕刻刀",
+   "en": "Carving Knife",
+   "wikiPath": "/mediawiki/images/en/6/6d/Carving_Knife.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Carving_Knife.png"
+  },
+  {
+   "id": "iron_dirk",
+   "name": "铁匕首",
+   "en": "Iron Dirk",
+   "wikiPath": "/mediawiki/images/en/b/bb/Iron_Dirk.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iron_Dirk.png"
+  },
+  {
+   "id": "wind_spire",
+   "name": "风之尖刺",
+   "en": "Wind Spire",
+   "wikiPath": "/mediawiki/images/en/0/00/Wind_Spire.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wind_Spire.png"
+  },
+  {
+   "id": "elf_blade",
+   "name": "精灵之刃",
+   "en": "Elf Blade",
+   "wikiPath": "/mediawiki/images/en/f/f2/Elf_Blade.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Elf_Blade.png"
+  },
+  {
+   "id": "burglars_shank",
+   "name": "盗贼短刀",
+   "en": "Burglar's Shank",
+   "wikiPath": "/mediawiki/images/en/7/7c/Burglar's_Shank.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Burglar's_Shank.png"
+  },
+  {
+   "id": "crystal_dagger",
+   "name": "水晶匕首",
+   "en": "Crystal Dagger",
+   "wikiPath": "/mediawiki/images/en/8/8a/Crystal_Dagger.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crystal_Dagger.png"
+  },
+  {
+   "id": "shadow_dagger",
+   "name": "暗影匕首",
+   "en": "Shadow Dagger",
+   "wikiPath": "/mediawiki/images/en/4/47/Shadow_Dagger.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Shadow_Dagger.png"
+  },
+  {
+   "id": "broken_trident",
+   "name": "断裂的三叉戟",
+   "en": "Broken Trident",
+   "wikiPath": "/mediawiki/images/en/3/3f/Broken_Trident.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Broken_Trident.png"
+  },
+  {
+   "id": "wicked_kris",
+   "name": "邪恶波纹刃",
+   "en": "Wicked Kris",
+   "wikiPath": "/mediawiki/images/en/9/94/Wicked_Kris.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wicked_Kris.png"
+  },
+  {
+   "id": "galaxy_dagger",
+   "name": "银河匕首",
+   "en": "Galaxy Dagger",
+   "wikiPath": "/mediawiki/images/en/6/68/Galaxy_Dagger.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Galaxy_Dagger.png"
+  },
+  {
+   "id": "dwarf_dagger",
+   "name": "矮人匕首",
+   "en": "Dwarf Dagger",
+   "wikiPath": "/mediawiki/images/en/9/99/Dwarf_Dagger.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dwarf_Dagger.png"
+  },
+  {
+   "id": "dragontooth_shiv",
+   "name": "龙牙短刃",
+   "en": "Dragontooth Shiv",
+   "wikiPath": "/mediawiki/images/en/9/95/Dragontooth_Shiv.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dragontooth_Shiv.png"
+  },
+  {
+   "id": "iridium_needle",
+   "name": "铱针",
+   "en": "Iridium Needle",
+   "wikiPath": "/mediawiki/images/en/6/62/Iridium_Needle.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iridium_Needle.png"
+  },
+  {
+   "id": "infinity_dagger",
+   "name": "无限匕首",
+   "en": "Infinity Dagger",
+   "wikiPath": "/mediawiki/images/en/d/d6/Infinity_Dagger.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Infinity_Dagger.png"
+  },
+  {
+   "id": "elliott_pencil",
+   "name": "艾利欧特的铅笔",
+   "en": "Elliott's Pencil",
+   "wikiPath": "/mediawiki/images/en/7/70/Elliott's_Pencil.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Elliott's_Pencil.png"
+  },
+  {
+   "id": "abbys_planchette",
+   "name": "阿比盖尔的笔仙板",
+   "en": "Abby's Planchette",
+   "wikiPath": "/mediawiki/images/en/7/72/Abby's_Planchette.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Abby's_Planchette.png"
+  },
+  {
+   "id": "femur",
+   "name": "股骨",
+   "en": "Femur",
+   "wikiPath": "/mediawiki/images/en/e/e4/Femur.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Femur.png"
+  },
+  {
+   "id": "wood_club",
+   "name": "木棒",
+   "en": "Wood Club",
+   "wikiPath": "/mediawiki/images/en/5/51/Wood_Club.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wood_Club.png"
+  },
+  {
+   "id": "wood_mallet",
+   "name": "木槌",
+   "en": "Wood Mallet",
+   "wikiPath": "/mediawiki/images/en/a/ac/Wood_Mallet.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wood_Mallet.png"
+  },
+  {
+   "id": "lead_rod",
+   "name": "铅棒",
+   "en": "Lead Rod",
+   "wikiPath": "/mediawiki/images/en/3/36/Lead_Rod.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lead_Rod.png"
+  },
+  {
+   "id": "kudgel",
+   "name": "粗棒",
+   "en": "Kudgel",
+   "wikiPath": "/mediawiki/images/en/e/e0/Kudgel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Kudgel.png"
+  },
+  {
+   "id": "the_slammer",
+   "name": "猛击者",
+   "en": "The Slammer",
+   "wikiPath": "/mediawiki/images/en/c/c7/The_Slammer.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "The_Slammer.png"
+  },
+  {
+   "id": "galaxy_hammer",
+   "name": "银河锤",
+   "en": "Galaxy Hammer",
+   "wikiPath": "/mediawiki/images/en/8/8a/Galaxy_Hammer.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Galaxy_Hammer.png"
+  },
+  {
+   "id": "dwarf_hammer",
+   "name": "矮人锤",
+   "en": "Dwarf Hammer",
+   "wikiPath": "/mediawiki/images/en/d/d5/Dwarf_Hammer.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dwarf_Hammer.png"
+  },
+  {
+   "id": "dragontooth_club",
+   "name": "龙牙棒",
+   "en": "Dragontooth Club",
+   "wikiPath": "/mediawiki/images/en/1/18/Dragontooth_Club.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dragontooth_Club.png"
+  },
+  {
+   "id": "infinity_gavel",
+   "name": "无限锤",
+   "en": "Infinity Gavel",
+   "wikiPath": "/mediawiki/images/en/8/87/Infinity_Gavel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Infinity_Gavel.png"
+  },
+  {
+   "id": "alex_bat",
+   "name": "亚历克斯的球棒",
+   "en": "Alex's Bat",
+   "wikiPath": "/mediawiki/images/en/1/17/Alex's_Bat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Alex's_Bat.png"
+  },
+  {
+   "id": "harvey_mallet",
+   "name": "哈维的锤子",
+   "en": "Harvey's Mallet",
+   "wikiPath": "/mediawiki/images/en/0/09/Harvey's_Mallet.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Harvey's_Mallet.png"
+  },
+  {
+   "id": "maru_wrench",
+   "name": "玛鲁的扳手",
+   "en": "Maru's Wrench",
+   "wikiPath": "/mediawiki/images/en/6/6f/Maru's_Wrench.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Maru's_Wrench.png"
+  },
+  {
+   "id": "penny_fryer",
+   "name": "潘妮的煎锅",
+   "en": "Penny's Fryer",
+   "wikiPath": "/mediawiki/images/en/9/9c/Penny's_Fryer.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Penny's_Fryer.png"
+  },
+  {
+   "id": "sam_guitar",
+   "name": "山姆的旧吉他",
+   "en": "Sam's Old Guitar",
+   "wikiPath": "/mediawiki/images/en/d/dc/Sam's_Old_Guitar.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sam's_Old_Guitar.png"
+  },
+  {
+   "id": "seb_mace",
+   "name": "塞巴斯蒂安的钉锤",
+   "en": "Seb's Lost Mace",
+   "wikiPath": "/mediawiki/images/en/3/37/Seb's_Lost_Mace.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Seb's_Lost_Mace.png"
+  },
+  {
+   "id": "slingshot",
+   "name": "弹弓",
+   "en": "Slingshot",
+   "wikiPath": "/mediawiki/images/en/3/3f/Slingshot.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Slingshot.png"
+  },
+  {
+   "id": "master_slingshot",
+   "name": "大师弹弓",
+   "en": "Master Slingshot",
+   "wikiPath": "/mediawiki/images/en/6/63/Master_Slingshot.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Master_Slingshot.png"
+  },
+  {
+   "id": "small_glow_ring",
+   "name": "小发光戒指",
+   "en": "Small Glow Ring",
+   "wikiPath": "/mediawiki/images/en/6/6c/Small_Glow_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Small_Glow_Ring.png"
+  },
+  {
+   "id": "glow_ring",
+   "name": "发光戒指",
+   "en": "Glow Ring",
+   "wikiPath": "/mediawiki/images/en/0/01/Glow_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Glow_Ring.png"
+  },
+  {
+   "id": "small_magnet_ring",
+   "name": "小磁铁戒指",
+   "en": "Small Magnet Ring",
+   "wikiPath": "/mediawiki/images/en/2/25/Small_Magnet_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Small_Magnet_Ring.png"
+  },
+  {
+   "id": "magnet_ring",
+   "name": "磁铁戒指",
+   "en": "Magnet Ring",
+   "wikiPath": "/mediawiki/images/en/0/04/Magnet_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Magnet_Ring.png"
+  },
+  {
+   "id": "slime_charmer_ring",
+   "name": "史莱姆克星戒指",
+   "en": "Slime Charmer Ring",
+   "wikiPath": "/mediawiki/images/en/5/51/Slime_Charmer_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Slime_Charmer_Ring.png"
+  },
+  {
+   "id": "warrior_ring",
+   "name": "战士戒指",
+   "en": "Warrior Ring",
+   "wikiPath": "/mediawiki/images/en/1/13/Warrior_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Warrior_Ring.png"
+  },
+  {
+   "id": "vampire_ring",
+   "name": "吸血鬼戒指",
+   "en": "Vampire Ring",
+   "wikiPath": "/mediawiki/images/en/a/a8/Vampire_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Vampire_Ring.png"
+  },
+  {
+   "id": "savage_ring",
+   "name": "野蛮戒指",
+   "en": "Savage Ring",
+   "wikiPath": "/mediawiki/images/en/5/55/Savage_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Savage_Ring.png"
+  },
+  {
+   "id": "ring_of_yoba",
+   "name": "约巴戒指",
+   "en": "Ring of Yoba",
+   "wikiPath": "/mediawiki/images/en/2/21/Ring_of_Yoba.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ring_of_Yoba.png"
+  },
+  {
+   "id": "sturdy_ring",
+   "name": "坚固戒指",
+   "en": "Sturdy Ring",
+   "wikiPath": "/mediawiki/images/en/7/7e/Sturdy_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sturdy_Ring.png"
+  },
+  {
+   "id": "burglars_ring",
+   "name": "盗贼戒指",
+   "en": "Burglar's Ring",
+   "wikiPath": "/mediawiki/images/en/8/8b/Burglar's_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Burglar's_Ring.png"
+  },
+  {
+   "id": "iridium_band",
+   "name": "铱环",
+   "en": "Iridium Band",
+   "wikiPath": "/mediawiki/images/en/7/77/Iridium_Band.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iridium_Band.png"
+  },
+  {
+   "id": "jukebox_ring",
+   "name": "点唱机戒指",
+   "en": "Jukebox Ring",
+   "wikiPath": "/mediawiki/images/en/1/13/Jukebox_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Jukebox_Ring.png"
+  },
+  {
+   "id": "amethyst_ring",
+   "name": "紫水晶戒指",
+   "en": "Amethyst Ring",
+   "wikiPath": "/mediawiki/images/en/f/f9/Amethyst_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Amethyst_Ring.png"
+  },
+  {
+   "id": "topaz_ring",
+   "name": "黄玉戒指",
+   "en": "Topaz Ring",
+   "wikiPath": "/mediawiki/images/en/8/8a/Topaz_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Topaz_Ring.png"
+  },
+  {
+   "id": "aquamarine_ring",
+   "name": "海蓝宝石戒指",
+   "en": "Aquamarine Ring",
+   "wikiPath": "/mediawiki/images/en/8/8d/Aquamarine_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Aquamarine_Ring.png"
+  },
+  {
+   "id": "jade_ring",
+   "name": "翡翠戒指",
+   "en": "Jade Ring",
+   "wikiPath": "/mediawiki/images/en/d/d8/Jade_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Jade_Ring.png"
+  },
+  {
+   "id": "emerald_ring",
+   "name": "绿宝石戒指",
+   "en": "Emerald Ring",
+   "wikiPath": "/mediawiki/images/en/8/8a/Emerald_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Emerald_Ring.png"
+  },
+  {
+   "id": "ruby_ring",
+   "name": "红宝石戒指",
+   "en": "Ruby Ring",
+   "wikiPath": "/mediawiki/images/en/d/d3/Ruby_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ruby_Ring.png"
+  },
+  {
+   "id": "wedding_ring",
+   "name": "结婚戒指",
+   "en": "Wedding Ring",
+   "wikiPath": "/mediawiki/images/en/f/fe/Wedding_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wedding_Ring.png"
+  },
+  {
+   "id": "crabshell_ring",
+   "name": "蟹壳戒指",
+   "en": "Crabshell Ring",
+   "wikiPath": "/mediawiki/images/en/e/eb/Crabshell_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crabshell_Ring.png"
+  },
+  {
+   "id": "napalm_ring",
+   "name": "凝固汽油戒指",
+   "en": "Napalm Ring",
+   "wikiPath": "/mediawiki/images/en/8/82/Napalm_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Napalm_Ring.png"
+  },
+  {
+   "id": "thorns_ring",
+   "name": "荆棘戒指",
+   "en": "Thorns Ring",
+   "wikiPath": "/mediawiki/images/en/5/5b/Thorns_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Thorns_Ring.png"
+  },
+  {
+   "id": "lucky_ring",
+   "name": "幸运戒指",
+   "en": "Lucky Ring",
+   "wikiPath": "/mediawiki/images/en/4/4c/Lucky_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lucky_Ring.png"
+  },
+  {
+   "id": "hot_java_ring",
+   "name": "热咖啡戒指",
+   "en": "Hot Java Ring",
+   "wikiPath": "/mediawiki/images/en/a/af/Hot_Java_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Hot_Java_Ring.png"
+  },
+  {
+   "id": "protection_ring",
+   "name": "保护戒指",
+   "en": "Protection Ring",
+   "wikiPath": "/mediawiki/images/en/1/16/Protection_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Protection_Ring.png"
+  },
+  {
+   "id": "soul_sapper_ring",
+   "name": "灵魂汲取戒指",
+   "en": "Soul Sapper Ring",
+   "wikiPath": "/mediawiki/images/en/c/c8/Soul_Sapper_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Soul_Sapper_Ring.png"
+  },
+  {
+   "id": "phoenix_ring",
+   "name": "凤凰戒指",
+   "en": "Phoenix Ring",
+   "wikiPath": "/mediawiki/images/en/e/e3/Phoenix_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Phoenix_Ring.png"
+  },
+  {
+   "id": "immunity_band",
+   "name": "免疫环",
+   "en": "Immunity Band",
+   "wikiPath": "/mediawiki/images/en/0/09/Immunity_Band.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Immunity_Band.png"
+  },
+  {
+   "id": "glowstone_ring",
+   "name": "辉光石戒指",
+   "en": "Glowstone Ring",
+   "wikiPath": "/mediawiki/images/en/6/65/Glowstone_Ring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Glowstone_Ring.png"
+  },
+  {
+   "id": "sneakers",
+   "name": "运动鞋",
+   "en": "Sneakers",
+   "wikiPath": "/mediawiki/images/en/a/ad/Sneakers.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sneakers.png"
+  },
+  {
+   "id": "rubber_boots",
+   "name": "橡胶靴",
+   "en": "Rubber Boots",
+   "wikiPath": "/mediawiki/images/en/e/e8/Rubber_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rubber_Boots.png"
+  },
+  {
+   "id": "leather_boots",
+   "name": "皮靴",
+   "en": "Leather Boots",
+   "wikiPath": "/mediawiki/images/en/f/fd/Leather_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Leather_Boots.png"
+  },
+  {
+   "id": "work_boots",
+   "name": "工作靴",
+   "en": "Work Boots",
+   "wikiPath": "/mediawiki/images/en/5/53/Work_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Work_Boots.png"
+  },
+  {
+   "id": "combat_boots",
+   "name": "战斗靴",
+   "en": "Combat Boots",
+   "wikiPath": "/mediawiki/images/en/6/63/Combat_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Combat_Boots.png"
+  },
+  {
+   "id": "tundra_boots",
+   "name": "冻原靴",
+   "en": "Tundra Boots",
+   "wikiPath": "/mediawiki/images/en/9/93/Tundra_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tundra_Boots.png"
+  },
+  {
+   "id": "leprechaun_shoes",
+   "name": "矮妖精鞋",
+   "en": "Leprechaun Shoes",
+   "wikiPath": "/mediawiki/images/en/e/e0/Leprechaun_Shoes.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Leprechaun_Shoes.png"
+  },
+  {
+   "id": "thermal_boots",
+   "name": "保暖靴",
+   "en": "Thermal Boots",
+   "wikiPath": "/mediawiki/images/en/4/4e/Thermal_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Thermal_Boots.png"
+  },
+  {
+   "id": "cowboy_boots",
+   "name": "牛仔靴",
+   "en": "Cowboy Boots",
+   "wikiPath": "/mediawiki/images/en/1/15/Cowboy_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cowboy_Boots.png"
+  },
+  {
+   "id": "dark_boots",
+   "name": "黑暗靴",
+   "en": "Dark Boots",
+   "wikiPath": "/mediawiki/images/en/8/8d/Dark_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dark_Boots.png"
+  },
+  {
+   "id": "firewalker_boots",
+   "name": "踏火靴",
+   "en": "Firewalker Boots",
+   "wikiPath": "/mediawiki/images/en/f/fa/Firewalker_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Firewalker_Boots.png"
+  },
+  {
+   "id": "genie_shoes",
+   "name": "精灵鞋",
+   "en": "Genie Shoes",
+   "wikiPath": "/mediawiki/images/en/9/98/Genie_Shoes.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Genie_Shoes.png"
+  },
+  {
+   "id": "space_boots",
+   "name": "太空靴",
+   "en": "Space Boots",
+   "wikiPath": "/mediawiki/images/en/6/6e/Space_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Space_Boots.png"
+  },
+  {
+   "id": "crystal_shoes",
+   "name": "水晶鞋",
+   "en": "Crystal Shoes",
+   "wikiPath": "/mediawiki/images/en/6/69/Crystal_Shoes.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crystal_Shoes.png"
+  },
+  {
+   "id": "emily_magic_boots",
+   "name": "艾米丽的魔法靴",
+   "en": "Emily's Magic Boots",
+   "wikiPath": "/mediawiki/images/en/a/ac/Emily's_Magic_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Emily's_Magic_Boots.png"
+  },
+  {
+   "id": "cinderclown_shoes",
+   "name": "煤灰小丑鞋",
+   "en": "Cinderclown Shoes",
+   "wikiPath": "/mediawiki/images/en/9/94/Cinderclown_Shoes.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cinderclown_Shoes.png"
+  },
+  {
+   "id": "mermaid_boots",
+   "name": "美人鱼靴",
+   "en": "Mermaid Boots",
+   "wikiPath": "/mediawiki/images/en/9/98/Mermaid_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mermaid_Boots.png"
+  },
+  {
+   "id": "dragonscale_boots",
+   "name": "龙鳞靴",
+   "en": "Dragonscale Boots",
+   "wikiPath": "/mediawiki/images/en/f/fb/Dragonscale_Boots.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dragonscale_Boots.png"
+  }
+ ]
+}

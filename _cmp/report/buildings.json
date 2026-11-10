@@ -1,0 +1,602 @@
+[
+ {
+  "iou": 0.4751,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.3055,
+  "aspect_sim": 0.745,
+  "size_sim": 0.1384,
+  "score": 56.98,
+  "ours_box": [
+   64,
+   46
+  ],
+  "wiki_box": [
+   85,
+   82
+  ],
+  "id": "farmhouse",
+  "name": "农舍",
+  "en": "Farmhouse",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "House_(tier_1).png"
+ },
+ {
+  "iou": 0.814,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7056,
+  "aspect_sim": 0.8052,
+  "size_sim": 0.0,
+  "score": 74.0,
+  "ours_box": [
+   48,
+   44
+  ],
+  "wiki_box": [
+   224,
+   255
+  ],
+  "id": "greenhouse",
+  "name": "温室",
+  "en": "Greenhouse",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Greenhouse.png"
+ },
+ {
+  "iou": 0.8057,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.2072,
+  "aspect_sim": 0.7518,
+  "size_sim": 0.0,
+  "score": 67.61,
+  "ours_box": [
+   30,
+   53
+  ],
+  "wiki_box": [
+   192,
+   255
+  ],
+  "id": "silo",
+  "name": "筒仓",
+  "en": "Silo",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Silo.png"
+ },
+ {
+  "iou": 0.7469,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5401,
+  "aspect_sim": 0.6275,
+  "size_sim": 0.0,
+  "score": 69.28,
+  "ours_box": [
+   48,
+   32
+  ],
+  "wiki_box": [
+   80,
+   85
+  ],
+  "id": "cabin",
+  "name": "小屋",
+  "en": "Cabin",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Plank_Cabin_Stage_1.png"
+ },
+ {
+  "iou": 0.7633,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8425,
+  "aspect_sim": 0.9707,
+  "size_sim": 0.7439,
+  "score": 80.21,
+  "ours_box": [
+   26,
+   25
+  ],
+  "wiki_box": [
+   30,
+   28
+  ],
+  "id": "shipping_bin",
+  "name": "出货箱",
+  "en": "Shipping Bin",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "ShippingBox.png"
+ },
+ {
+  "iou": 0.4946,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.6011,
+  "aspect_sim": 0.976,
+  "size_sim": 0.0,
+  "score": 63.61,
+  "ours_box": [
+   27,
+   35
+  ],
+  "wiki_box": [
+   192,
+   255
+  ],
+  "id": "well",
+  "name": "水井",
+  "en": "Well",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Well.png"
+ },
+ {
+  "iou": 0.6205,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.5854,
+  "aspect_sim": 0.9611,
+  "size_sim": 0.1851,
+  "score": 67.93,
+  "ours_box": [
+   30,
+   57
+  ],
+  "wiki_box": [
+   46,
+   84
+  ],
+  "id": "mill",
+  "name": "磨坊",
+  "en": "Mill",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mill.png"
+ },
+ {
+  "iou": 0.7054,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.4439,
+  "aspect_sim": 0.5614,
+  "size_sim": 0.0,
+  "score": 68.12,
+  "ours_box": [
+   57,
+   32
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "coop",
+  "name": "鸡舍",
+  "en": "Coop",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Coop.png"
+ },
+ {
+  "iou": 0.6383,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5281,
+  "aspect_sim": 0.6308,
+  "size_sim": 0.0,
+  "score": 65.57,
+  "ours_box": [
+   47,
+   30
+  ],
+  "wiki_box": [
+   252,
+   255
+  ],
+  "id": "fish_pond",
+  "name": "鱼塘",
+  "en": "Fish Pond",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fish_Pond.png"
+ },
+ {
+  "iou": 0.5569,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.3903,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.4607,
+  "score": 66.07,
+  "ours_box": [
+   28,
+   20
+  ],
+  "wiki_box": [
+   31,
+   31
+  ],
+  "id": "pet_bowl",
+  "name": "宠物碗",
+  "en": "Pet Bowl",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pet_Bowl_Wood.png"
+ },
+ {
+  "iou": 0.724,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.8273,
+  "aspect_sim": 0.6445,
+  "size_sim": 0.0,
+  "score": 71.2,
+  "ours_box": [
+   61,
+   37
+  ],
+  "wiki_box": [
+   85,
+   80
+  ],
+  "id": "barn",
+  "name": "畜棚",
+  "en": "Barn",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Barn.png"
+ },
+ {
+  "iou": 0.7518,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7485,
+  "aspect_sim": 0.4667,
+  "size_sim": 0.0,
+  "score": 69.38,
+  "ours_box": [
+   50,
+   35
+  ],
+  "wiki_box": [
+   64,
+   96
+  ],
+  "id": "stable",
+  "name": "马厩",
+  "en": "Stable",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Horse_Stable.png"
+ },
+ {
+  "iou": 0.7894,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.6319,
+  "aspect_sim": 0.5918,
+  "size_sim": 0.0,
+  "score": 67.83,
+  "ours_box": [
+   49,
+   29
+  ],
+  "wiki_box": [
+   85,
+   85
+  ],
+  "id": "slime_hutch",
+  "name": "史莱姆屋",
+  "en": "Slime Hutch",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Slime_Hutch.png"
+ },
+ {
+  "iou": 0.5632,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.3535,
+  "aspect_sim": 0.6833,
+  "size_sim": 0.0,
+  "score": 60.59,
+  "ours_box": [
+   60,
+   41
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "big_coop",
+  "name": "大鸡舍",
+  "en": "Big Coop",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Big_Coop.png"
+ },
+ {
+  "iou": 0.6013,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.734,
+  "aspect_sim": 0.7072,
+  "size_sim": 0.0862,
+  "score": 66.24,
+  "ours_box": [
+   64,
+   41
+  ],
+  "wiki_box": [
+   85,
+   77
+  ],
+  "id": "big_barn",
+  "name": "大畜棚",
+  "en": "Big Barn",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Big_Barn.png"
+ },
+ {
+  "iou": 0.6524,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5413,
+  "aspect_sim": 0.5375,
+  "size_sim": 0.0,
+  "score": 64.32,
+  "ours_box": [
+   54,
+   28
+  ],
+  "wiki_box": [
+   85,
+   82
+  ],
+  "id": "shed",
+  "name": "小屋",
+  "en": "Shed",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Shed.png"
+ },
+ {
+  "iou": 0.821,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.2971,
+  "aspect_sim": 0.7154,
+  "size_sim": 0.0,
+  "score": 66.55,
+  "ours_box": [
+   33,
+   30
+  ],
+  "wiki_box": [
+   48,
+   61
+  ],
+  "id": "junimo_hut",
+  "name": "祝尼魔屋",
+  "en": "Junimo Hut",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Junimo_Hut.png"
+ },
+ {
+  "iou": 0.55,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2912,
+  "aspect_sim": 0.6833,
+  "size_sim": 0.0,
+  "score": 58.95,
+  "ours_box": [
+   60,
+   41
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "deluxe_coop",
+  "name": "豪华鸡舍",
+  "en": "Deluxe Coop",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Deluxe_Coop.png"
+ },
+ {
+  "iou": 0.6559,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.5952,
+  "aspect_sim": 0.5247,
+  "size_sim": 0.0,
+  "score": 64.16,
+  "ours_box": [
+   54,
+   28
+  ],
+  "wiki_box": [
+   85,
+   84
+  ],
+  "id": "big_shed",
+  "name": "大屋子",
+  "en": "Big Shed",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Big_Shed.png"
+ },
+ {
+  "iou": 0.5795,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.7384,
+  "aspect_sim": 0.6719,
+  "size_sim": 0.035,
+  "score": 65.35,
+  "ours_box": [
+   64,
+   43
+  ],
+  "wiki_box": [
+   85,
+   85
+  ],
+  "id": "deluxe_barn",
+  "name": "豪华畜棚",
+  "en": "Deluxe Barn",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Deluxe_Barn.png"
+ },
+ {
+  "iou": 0.4992,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5603,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.0178,
+  "score": 64.9,
+  "ours_box": [
+   28,
+   50
+  ],
+  "wiki_box": [
+   44,
+   85
+  ],
+  "id": "earth_obelisk",
+  "name": "大地图腾柱",
+  "en": "Earth Obelisk",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Earth_Obelisk.png"
+ },
+ {
+  "iou": 0.4992,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7833,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.0178,
+  "score": 68.87,
+  "ours_box": [
+   28,
+   50
+  ],
+  "wiki_box": [
+   44,
+   85
+  ],
+  "id": "water_obelisk",
+  "name": "水之图腾柱",
+  "en": "Water Obelisk",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Water_Obelisk.png"
+ },
+ {
+  "iou": 0.4992,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.572,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.0178,
+  "score": 66.95,
+  "ours_box": [
+   28,
+   50
+  ],
+  "wiki_box": [
+   44,
+   85
+  ],
+  "id": "desert_obelisk",
+  "name": "沙漠图腾柱",
+  "en": "Desert Obelisk",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Desert_Obelisk.png"
+ },
+ {
+  "iou": 0.4992,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4024,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.0178,
+  "score": 62.53,
+  "ours_box": [
+   28,
+   50
+  ],
+  "wiki_box": [
+   44,
+   85
+  ],
+  "id": "island_obelisk",
+  "name": "姜岛图腾柱",
+  "en": "Island Obelisk",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Island_Obelisk.png"
+ },
+ {
+  "iou": 0.7536,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.9116,
+  "aspect_sim": 0.9,
+  "size_sim": 0.0,
+  "score": 76.53,
+  "ours_box": [
+   30,
+   45
+  ],
+  "wiki_box": [
+   144,
+   240
+  ],
+  "id": "gold_clock",
+  "name": "黄金时钟",
+  "en": "Gold Clock",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Gold_Clock.png"
+ }
+]

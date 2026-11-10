@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(8, 97px);width:776px}
+.cell{width:97px;height:97px;position:relative;overflow:hidden}
+canvas{position:absolute;image-rendering:pixelated}
+img{position:absolute;left:0;top:0;image-rendering:pixelated}
+</style></head><body>
+<div id="ours" class="grid"></div>
+<div id="wiki" class="grid"></div>
+<script type="module">
+const MANIFEST = [{"id":"chicken","name":"鸡","en":"Chicken","wikiPath":"/mediawiki/images/en/2/22/White_Chicken.png","wikiSize":[48,48],"wikiFile":"White_Chicken.png"},{"id":"duck","name":"鸭","en":"Duck","wikiPath":"/mediawiki/images/en/3/38/Duck.png","wikiSize":[48,45],"wikiFile":"Duck.png"},{"id":"cow","name":"牛","en":"Cow","wikiPath":"/mediawiki/images/en/3/36/White_Cow.png","wikiSize":[90,69],"wikiFile":"White_Cow.png"},{"id":"sheep","name":"羊","en":"Sheep","wikiPath":"/mediawiki/images/en/c/cc/Sheep.png","wikiSize":[81,69],"wikiFile":"Sheep.png"},{"id":"pig","name":"猪","en":"Pig","wikiPath":"/mediawiki/images/en/3/30/Pig.png","wikiSize":[93,66],"wikiFile":"Pig.png"},{"id":"rabbit","name":"兔","en":"Rabbit","wikiPath":"/mediawiki/images/en/f/fd/Rabbit.png","wikiSize":[48,48],"wikiFile":"Rabbit.png"}];
+const CFG = {"mod":"../../js/anim/animals.js","list":"ANIMALS","w":"ANIMAL_W","h":"ANIMAL_H","draw":"drawAnimal","drawExpr":"mod.drawAnimal(g, item.id, 'idle', 0, 1)"};
+const CELL = 97, PERROW = 8, BATCH = 16;
+const mod = await import(CFG.mod);
+const list = CFG.list ? mod[CFG.list] : [];
+const map = Object.fromEntries(list.map(x => [x.id, x]));
+const W = mod[CFG.w], H = mod[CFG.h];
+const gOurs = document.getElementById('ours'), gWiki = document.getElementById('wiki');
+const OX = Math.floor((CELL - W) / 2), OY = Math.floor((CELL - H) / 2);
+
+const ours = MANIFEST.map(m => {
+  const item = map[m.id];
+  const c1 = document.createElement('div'); c1.className = 'cell';
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (item && CFG.draw) { try { eval(CFG.drawExpr); } catch (e) { console.error('draw', m.id, e); } }
+  cv.style.left = OX + 'px'; cv.style.top = OY + 'px';
+  c1.appendChild(cv); gOurs.appendChild(c1);
+  return c1;
+});
+
+const wiki = [];
+for (let i = 0; i < MANIFEST.length; i += BATCH) {
+  const batch = [];
+  for (let j = i; j < Math.min(i + BATCH, MANIFEST.length); j++) {
+    const m = MANIFEST[j];
+    const c2 = document.createElement('div'); c2.className = 'cell';
+    const img = document.createElement('img');
+    c2.appendChild(img); gWiki.appendChild(c2);
+    batch.push(new Promise(resolve => {
+      img.onload = resolve; img.onerror = resolve;
+      img.src = 'https://stardewvalleywiki.com' + m.wikiPath;
+    }));
+  }
+  await Promise.all(batch);
+}
+document.title = 'READY';
+</script></body></html>

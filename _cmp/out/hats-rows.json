@@ -1,0 +1,793 @@
+[
+ {
+  "name": "Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/9/99/Cowboy_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Bowler Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/e1/Bowler_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Top Hat",
+  "imgs": [
+   "/mediawiki/images/en/8/8d/Top_Hat.png",
+   "/mediawiki/images/en/thumb/6/6c/QiCoin.png/24px-QiCoin.png"
+  ]
+ },
+ {
+  "name": "Sombrero",
+  "imgs": [
+   "/mediawiki/images/en/1/1c/Sombrero.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Straw Hat",
+  "imgs": [
+   "/mediawiki/images/en/b/b2/Straw_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Official Cap",
+  "imgs": [
+   "/mediawiki/images/en/b/b4/Official_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Blue Bonnet",
+  "imgs": [
+   "/mediawiki/images/en/b/ba/Blue_Bonnet.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Plum Chapeau",
+  "imgs": [
+   "/mediawiki/images/en/9/99/Plum_Chapeau.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Skeleton Mask",
+  "imgs": [
+   "/mediawiki/images/en/1/12/Skeleton_Mask.png"
+  ]
+ },
+ {
+  "name": "Goblin Mask",
+  "imgs": [
+   "/mediawiki/images/en/9/91/Goblin_Mask.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Chicken Mask",
+  "imgs": [
+   "/mediawiki/images/en/9/99/Chicken_Mask.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Earmuffs",
+  "imgs": [
+   "/mediawiki/images/en/c/ca/Earmuffs.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Delicate Bow",
+  "imgs": [
+   "/mediawiki/images/en/3/38/Delicate_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Tropiclip",
+  "imgs": [
+   "/mediawiki/images/en/5/5a/Tropiclip.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Butterfly Bow",
+  "imgs": [
+   "/mediawiki/images/en/0/01/Butterfly_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Hunter's Cap",
+  "imgs": [
+   "/mediawiki/images/en/c/c9/Hunter's_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Trucker Hat",
+  "imgs": [
+   "/mediawiki/images/en/2/2f/Trucker_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Sailor's Cap",
+  "imgs": [
+   "/mediawiki/images/en/4/45/Sailor's_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Good Ol' Cap",
+  "imgs": [
+   "/mediawiki/images/en/1/1e/Good_Ol'_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Fedora",
+  "imgs": [
+   "/mediawiki/images/en/5/5e/Fedora.png",
+   "/mediawiki/images/en/thumb/2/29/Token.png/24px-Token.png"
+  ]
+ },
+ {
+  "name": "Cool Cap",
+  "imgs": [
+   "/mediawiki/images/en/6/69/Cool_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Lucky Bow",
+  "imgs": [
+   "/mediawiki/images/en/7/71/Lucky_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Polka Bow",
+  "imgs": [
+   "/mediawiki/images/en/b/b6/Polka_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Gnome's Cap",
+  "imgs": [
+   "/mediawiki/images/en/2/26/Gnome's_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Eye Patch",
+  "imgs": [
+   "/mediawiki/images/en/f/fb/Eye_Patch.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Santa Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/e6/Santa_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Tiara",
+  "imgs": [
+   "/mediawiki/images/en/6/6c/Tiara.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Hard Hat",
+  "imgs": [
+   "/mediawiki/images/en/0/08/Hard_Hat.png"
+  ]
+ },
+ {
+  "name": "Sou'wester",
+  "imgs": [
+   "/mediawiki/images/en/f/f0/Sou'wester.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Daisy",
+  "imgs": [
+   "/mediawiki/images/en/c/c1/Daisy.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Watermelon Band",
+  "imgs": [
+   "/mediawiki/images/en/b/b7/Watermelon_Band.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Mouse Ears",
+  "imgs": [
+   "/mediawiki/images/en/0/05/Mouse_Ears.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Cat Ears",
+  "imgs": [
+   "/mediawiki/images/en/a/ab/Cat_Ears.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Cowgal Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/e7/Cowgal_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Cowpoke Hat",
+  "imgs": [
+   "/mediawiki/images/en/4/4e/Cowpoke_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Archer's Cap",
+  "imgs": [
+   "/mediawiki/images/en/1/18/Archer's_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Panda Hat",
+  "imgs": [
+   "/mediawiki/images/en/3/3a/Panda_Hat.png"
+  ]
+ },
+ {
+  "name": "Blue Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/7/73/Blue_Cowboy_Hat.png"
+  ]
+ },
+ {
+  "name": "Red Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/f/fc/Red_Cowboy_Hat.png"
+  ]
+ },
+ {
+  "name": "Cone Hat",
+  "imgs": [
+   "/mediawiki/images/en/d/d5/Cone_Hat.png"
+  ]
+ },
+ {
+  "name": "Living Hat",
+  "imgs": [
+   "/mediawiki/images/en/9/95/Living_Hat.png"
+  ]
+ },
+ {
+  "name": "Emily's Magic Hat",
+  "imgs": [
+   "/mediawiki/images/en/a/a4/Emily's_Magic_Hat.png"
+  ]
+ },
+ {
+  "name": "Mushroom Cap",
+  "imgs": [
+   "/mediawiki/images/en/7/71/Mushroom_Cap.png"
+  ]
+ },
+ {
+  "name": "Dinosaur Hat",
+  "imgs": [
+   "/mediawiki/images/en/2/25/Dinosaur_Hat.png"
+  ]
+ },
+ {
+  "name": "Totem Mask",
+  "imgs": [
+   "/mediawiki/images/en/c/cc/Totem_Mask.png"
+  ]
+ },
+ {
+  "name": "Logo Cap",
+  "imgs": [
+   "/mediawiki/images/en/c/ca/Logo_Cap.png"
+  ]
+ },
+ {
+  "name": "Wearable Dwarf Helm",
+  "imgs": [
+   "/mediawiki/images/en/3/36/Wearable_Dwarf_Helm.png"
+  ]
+ },
+ {
+  "name": "Fashion Hat",
+  "imgs": [
+   "/mediawiki/images/en/6/69/Fashion_Hat.png"
+  ]
+ },
+ {
+  "name": "Pumpkin Mask",
+  "imgs": [
+   "/mediawiki/images/en/b/ba/Pumpkin_Mask.png"
+  ]
+ },
+ {
+  "name": "Hair Bone",
+  "imgs": [
+   "/mediawiki/images/en/c/cb/Hair_Bone.png"
+  ]
+ },
+ {
+  "name": "Knight's Helmet",
+  "imgs": [
+   "/mediawiki/images/en/6/62/Knight's_Helmet.png"
+  ]
+ },
+ {
+  "name": "Squire's Helmet",
+  "imgs": [
+   "/mediawiki/images/en/7/70/Squire's_Helmet.png"
+  ]
+ },
+ {
+  "name": "Spotted Headscarf",
+  "imgs": [
+   "/mediawiki/images/en/a/a7/Spotted_Headscarf.png"
+  ]
+ },
+ {
+  "name": "Beanie",
+  "imgs": [
+   "/mediawiki/images/en/5/51/Beanie.png"
+  ]
+ },
+ {
+  "name": "Floppy Beanie",
+  "imgs": [
+   "/mediawiki/images/en/0/0d/Floppy_Beanie.png"
+  ]
+ },
+ {
+  "name": "Fishing Hat",
+  "imgs": [
+   "/mediawiki/images/en/d/d8/Fishing_Hat.png"
+  ]
+ },
+ {
+  "name": "Blobfish Mask",
+  "imgs": [
+   "/mediawiki/images/en/a/a5/Blobfish_Mask.png"
+  ]
+ },
+ {
+  "name": "Party Hat",
+  "imgs": [
+   "/mediawiki/images/en/9/96/Party_Hat_(red).png"
+  ]
+ },
+ {
+  "name": "Party Hat",
+  "imgs": [
+   "/mediawiki/images/en/f/fe/Party_Hat_(blue).png"
+  ]
+ },
+ {
+  "name": "Party Hat",
+  "imgs": [
+   "/mediawiki/images/en/c/c5/Party_Hat_(green).png"
+  ]
+ },
+ {
+  "name": "Arcane Hat",
+  "imgs": [
+   "/mediawiki/images/en/c/c7/Arcane_Hat.png"
+  ]
+ },
+ {
+  "name": "Chef Hat",
+  "imgs": [
+   "/mediawiki/images/en/3/3b/Chef_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Pirate Hat",
+  "imgs": [
+   "/mediawiki/images/en/0/04/Pirate_Hat.png"
+  ]
+ },
+ {
+  "name": "Flat Topped Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/e0/Flat_Topped_Hat.png"
+  ]
+ },
+ {
+  "name": "Elegant Turban",
+  "imgs": [
+   "/mediawiki/images/en/3/3d/Elegant_Turban.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "White Turban",
+  "imgs": [
+   "/mediawiki/images/en/6/60/White_Turban.png"
+  ]
+ },
+ {
+  "name": "Garbage Hat",
+  "imgs": [
+   "/mediawiki/images/en/a/a9/Garbage_Hat.png"
+  ]
+ },
+ {
+  "name": "Golden Mask",
+  "imgs": [
+   "/mediawiki/images/en/c/c7/Golden_Mask_(hat).png"
+  ]
+ },
+ {
+  "name": "Propeller Hat",
+  "imgs": [
+   "/mediawiki/images/en/9/96/Propeller_Hat.png"
+  ]
+ },
+ {
+  "name": "Bridal Veil",
+  "imgs": [
+   "/mediawiki/images/en/0/05/Bridal_Veil.png"
+  ]
+ },
+ {
+  "name": "Witch Hat",
+  "imgs": [
+   "/mediawiki/images/en/1/18/Witch_Hat.png"
+  ]
+ },
+ {
+  "name": "Copper Pan (hat)",
+  "imgs": [
+   "/mediawiki/images/en/f/fc/Copper_Pan_(hat).png"
+  ]
+ },
+ {
+  "name": "Green Turban",
+  "imgs": [
+   "/mediawiki/images/en/d/d0/Green_Turban.png"
+  ]
+ },
+ {
+  "name": "Magic Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/6/60/Magic_Cowboy_Hat.png"
+  ]
+ },
+ {
+  "name": "Magic Turban",
+  "imgs": [
+   "/mediawiki/images/en/6/65/Magic_Turban.png"
+  ]
+ },
+ {
+  "name": "Golden Helmet",
+  "imgs": [
+   "/mediawiki/images/en/c/c6/Golden_Helmet.png"
+  ]
+ },
+ {
+  "name": "Deluxe Pirate Hat",
+  "imgs": [
+   "/mediawiki/images/en/c/cb/Deluxe_Pirate_Hat.png"
+  ]
+ },
+ {
+  "name": "Pink Bow",
+  "imgs": [
+   "/mediawiki/images/en/4/4e/Pink_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Frog Hat",
+  "imgs": [
+   "/mediawiki/images/en/d/d1/Frog_Hat.png"
+  ]
+ },
+ {
+  "name": "Small Cap",
+  "imgs": [
+   "/mediawiki/images/en/1/1a/Small_Cap.png"
+  ]
+ },
+ {
+  "name": "Bluebird Mask",
+  "imgs": [
+   "/mediawiki/images/en/2/2b/Bluebird_Mask.png"
+  ]
+ },
+ {
+  "name": "Deluxe Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/b/b9/Deluxe_Cowboy_Hat.png"
+  ]
+ },
+ {
+  "name": "Mr. Qi's Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/ed/Mr._Qi's_Hat.png",
+   "/mediawiki/images/en/thumb/7/78/Qi_Gem.png/24px-Qi_Gem.png"
+  ]
+ },
+ {
+  "name": "Dark Cowboy Hat",
+  "imgs": [
+   "/mediawiki/images/en/d/d5/Dark_Cowboy_Hat.png"
+  ]
+ },
+ {
+  "name": "Radioactive Goggles",
+  "imgs": [
+   "/mediawiki/images/en/4/4d/Radioactive_Goggles.png"
+  ]
+ },
+ {
+  "name": "Swashbuckler Hat",
+  "imgs": [
+   "/mediawiki/images/en/c/c4/Swashbuckler_Hat.png"
+  ]
+ },
+ {
+  "name": "Qi Mask",
+  "imgs": [
+   "/mediawiki/images/en/d/dd/Qi_Mask.png"
+  ]
+ },
+ {
+  "name": "Star Helmet",
+  "imgs": [
+   "/mediawiki/images/en/2/2a/Star_Helmet.png"
+  ]
+ },
+ {
+  "name": "Sunglasses",
+  "imgs": [
+   "/mediawiki/images/en/9/92/Sunglasses.png"
+  ]
+ },
+ {
+  "name": "Goggles",
+  "imgs": [
+   "/mediawiki/images/en/1/1a/Goggles.png"
+  ]
+ },
+ {
+  "name": "Forager's Hat",
+  "imgs": [
+   "/mediawiki/images/en/3/30/Forager's_Hat.png"
+  ]
+ },
+ {
+  "name": "Tiger Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/e2/Tiger_Hat.png"
+  ]
+ },
+ {
+  "name": "Warrior Helmet",
+  "imgs": [
+   "/mediawiki/images/en/6/68/Warrior_Helmet.png"
+  ]
+ },
+ {
+  "name": "???",
+  "imgs": [
+   "/mediawiki/images/en/1/1a/ConcernedApe_Hat.png"
+  ]
+ },
+ {
+  "name": "Abigail's Bow",
+  "imgs": [
+   "/mediawiki/images/en/0/02/Abigail's_Bow.png",
+   "/mediawiki/images/en/thumb/d/da/Calico_Egg.png/24px-Calico_Egg.png"
+  ]
+ },
+ {
+  "name": "Tricorn Hat",
+  "imgs": [
+   "/mediawiki/images/en/0/02/Tricorn_Hat.png",
+   "/mediawiki/images/en/thumb/d/da/Calico_Egg.png/24px-Calico_Egg.png"
+  ]
+ },
+ {
+  "name": "Joja Cap",
+  "imgs": [
+   "/mediawiki/images/en/5/55/Joja_Cap.png"
+  ]
+ },
+ {
+  "name": "Laurel Wreath Crown",
+  "imgs": [
+   "/mediawiki/images/en/1/1f/Laurel_Wreath_Crown.png"
+  ]
+ },
+ {
+  "name": "Gil's Hat",
+  "imgs": [
+   "/mediawiki/images/en/5/54/Gil's_Hat.png"
+  ]
+ },
+ {
+  "name": "Blue Bow",
+  "imgs": [
+   "/mediawiki/images/en/b/bb/Blue_Bow.png",
+   "/mediawiki/images/en/thumb/d/da/Calico_Egg.png/24px-Calico_Egg.png"
+  ]
+ },
+ {
+  "name": "Dark Velvet Bow",
+  "imgs": [
+   "/mediawiki/images/en/6/63/Dark_Velvet_Bow.png",
+   "/mediawiki/images/en/thumb/d/da/Calico_Egg.png/24px-Calico_Egg.png"
+  ]
+ },
+ {
+  "name": "Mummy Mask",
+  "imgs": [
+   "/mediawiki/images/en/c/c1/Mummy_Mask.png",
+   "/mediawiki/images/en/thumb/d/da/Calico_Egg.png/24px-Calico_Egg.png"
+  ]
+ },
+ {
+  "name": "Bucket Hat",
+  "imgs": [
+   "/mediawiki/images/en/2/2e/Bucket_Hat.png"
+  ]
+ },
+ {
+  "name": "Squid Hat",
+  "imgs": [
+   "/mediawiki/images/en/0/0d/Squid_Hat.png"
+  ]
+ },
+ {
+  "name": "Sports Cap",
+  "imgs": [
+   "/mediawiki/images/en/4/4a/Sports_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Red Fez",
+  "imgs": [
+   "/mediawiki/images/en/2/26/Red_Fez.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Raccoon Hat",
+  "imgs": [
+   "/mediawiki/images/en/b/bc/Raccoon_Hat.png"
+  ]
+ },
+ {
+  "name": "Steel Pan (hat)",
+  "imgs": [
+   "/mediawiki/images/en/4/43/Steel_Pan_(hat).png"
+  ]
+ },
+ {
+  "name": "Gold Pan (hat)",
+  "imgs": [
+   "/mediawiki/images/en/c/c8/Gold_Pan_(hat).png"
+  ]
+ },
+ {
+  "name": "Iridium Pan (hat)",
+  "imgs": [
+   "/mediawiki/images/en/a/ac/Iridium_Pan_(hat).png"
+  ]
+ },
+ {
+  "name": "Mystery Hat",
+  "imgs": [
+   "/mediawiki/images/en/e/ea/Mystery_Hat.png"
+  ]
+ },
+ {
+  "name": "Dark Ballcap",
+  "imgs": [
+   "/mediawiki/images/en/6/64/Dark_Ballcap.png"
+  ]
+ },
+ {
+  "name": "Leprechaun Hat",
+  "imgs": [
+   "/mediawiki/images/en/4/49/Leprechaun_Hat.png"
+  ]
+ },
+ {
+  "name": "Junimo Hat",
+  "imgs": [
+   "/mediawiki/images/en/4/4b/Junimo_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Paper Hat",
+  "imgs": [
+   "/mediawiki/images/en/5/5f/Paper_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Pageboy Cap",
+  "imgs": [
+   "/mediawiki/images/en/4/4b/Pageboy_Cap.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Jester Hat",
+  "imgs": [
+   "/mediawiki/images/en/9/9b/Jester_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Blue Ribbon",
+  "imgs": [
+   "/mediawiki/images/en/2/2c/Blue_Ribbon.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Governor's Hat",
+  "imgs": [
+   "/mediawiki/images/en/2/2e/Governor's_Hat.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "White Bow",
+  "imgs": [
+   "/mediawiki/images/en/3/30/White_Bow.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Space Helmet",
+  "imgs": [
+   "/mediawiki/images/en/1/1c/Space_Helmet.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ },
+ {
+  "name": "Infinity Crown",
+  "imgs": [
+   "/mediawiki/images/en/9/91/Infinity_Crown.png",
+   "/mediawiki/images/en/thumb/1/10/Gold.png/18px-Gold.png"
+  ]
+ }
+]

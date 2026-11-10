@@ -1,0 +1,530 @@
+{
+ "cat": "monsters",
+ "count": 47,
+ "cell": 212,
+ "perRow": 8,
+ "rows": 6,
+ "gridW": 1696,
+ "gridH": 1272,
+ "oursW": "MONSTER_W",
+ "oursH": "MONSTER_H",
+ "items": [
+  {
+   "id": "green_slime",
+   "name": "绿色史莱姆",
+   "en": "Green Slime",
+   "wikiPath": "/mediawiki/images/en/7/7b/Green_Slime.png",
+   "wikiSize": [
+    65,
+    67
+   ],
+   "wikiFile": "Green_Slime.png"
+  },
+  {
+   "id": "blue_slime",
+   "name": "蓝色史莱姆",
+   "en": "Blue Slime",
+   "wikiPath": "/mediawiki/images/en/9/9d/Frost_Jelly.png",
+   "wikiSize": [
+    65,
+    67
+   ],
+   "wikiFile": "Frost_Jelly.png"
+  },
+  {
+   "id": "red_slime",
+   "name": "红色史莱姆",
+   "en": "Red Slime",
+   "wikiPath": "/mediawiki/images/en/b/ba/Red_Sludge.png",
+   "wikiSize": [
+    65,
+    67
+   ],
+   "wikiFile": "Red_Sludge.png"
+  },
+  {
+   "id": "purple_slime",
+   "name": "紫色史莱姆",
+   "en": "Purple Slime",
+   "wikiPath": "/mediawiki/images/en/2/27/Purple_Slime.png",
+   "wikiSize": [
+    65,
+    67
+   ],
+   "wikiFile": "Purple_Slime.png"
+  },
+  {
+   "id": "copper_slime",
+   "name": "铜史莱姆",
+   "en": "Copper Slime",
+   "wikiPath": "/mediawiki/images/en/a/af/Copper_Slime.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Copper_Slime.png"
+  },
+  {
+   "id": "iron_slime",
+   "name": "铁史莱姆",
+   "en": "Iron Slime",
+   "wikiPath": "/mediawiki/images/en/4/4d/Iron_Slime.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Iron_Slime.png"
+  },
+  {
+   "id": "tiger_slime",
+   "name": "老虎史莱姆",
+   "en": "Tiger Slime",
+   "wikiPath": "/mediawiki/images/en/5/57/Tiger_Slime.png",
+   "wikiSize": [
+    65,
+    67
+   ],
+   "wikiFile": "Tiger_Slime.png"
+  },
+  {
+   "id": "big_slime",
+   "name": "大史莱姆",
+   "en": "Big Slime",
+   "wikiPath": "/mediawiki/images/en/7/7a/Big_Green_Slime.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Big_Green_Slime.png"
+  },
+  {
+   "id": "metal_head",
+   "name": "金属头",
+   "en": "Metal Head",
+   "wikiPath": "/mediawiki/images/en/e/e5/Metal_Head.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Metal_Head.png"
+  },
+  {
+   "id": "bat",
+   "name": "蝙蝠",
+   "en": "Bat",
+   "wikiPath": "/mediawiki/images/en/a/ad/Bat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bat.png"
+  },
+  {
+   "id": "frost_bat",
+   "name": "冰霜蝙蝠",
+   "en": "Frost Bat",
+   "wikiPath": "/mediawiki/images/en/3/36/Frost_Bat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Frost_Bat.png"
+  },
+  {
+   "id": "lava_bat",
+   "name": "岩浆蝙蝠",
+   "en": "Lava Bat",
+   "wikiPath": "/mediawiki/images/en/c/c5/Lava_Bat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lava_Bat.png"
+  },
+  {
+   "id": "iridium_bat",
+   "name": "铱蝙蝠",
+   "en": "Iridium Bat",
+   "wikiPath": "/mediawiki/images/en/d/d5/Iridium_Bat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iridium_Bat.png"
+  },
+  {
+   "id": "bug",
+   "name": "甲虫",
+   "en": "Bug",
+   "wikiPath": "/mediawiki/images/en/7/7d/Bug.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bug.png"
+  },
+  {
+   "id": "cave_fly",
+   "name": "洞穴苍蝇",
+   "en": "Cave Fly",
+   "wikiPath": "/mediawiki/images/en/8/8f/Cave_Fly.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Cave_Fly.png"
+  },
+  {
+   "id": "grub",
+   "name": "蛆虫",
+   "en": "Grub",
+   "wikiPath": "/mediawiki/images/en/0/0c/Grub.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Grub.png"
+  },
+  {
+   "id": "mutant_fly",
+   "name": "变异苍蝇",
+   "en": "Mutant Fly",
+   "wikiPath": "/mediawiki/images/en/6/69/Mutant_Fly.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Mutant_Fly.png"
+  },
+  {
+   "id": "mutant_grub",
+   "name": "变异蛆虫",
+   "en": "Mutant Grub",
+   "wikiPath": "/mediawiki/images/en/6/62/Mutant_Grub.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Mutant_Grub.png"
+  },
+  {
+   "id": "armored_bug",
+   "name": "装甲甲虫",
+   "en": "Armored Bug",
+   "wikiPath": "/mediawiki/images/en/1/19/Armored_Bug.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Armored_Bug.png"
+  },
+  {
+   "id": "duggy",
+   "name": "地鼠",
+   "en": "Duggy",
+   "wikiPath": "/mediawiki/images/en/3/3a/Duggy.png",
+   "wikiSize": [
+    113,
+    112
+   ],
+   "wikiFile": "Duggy.png"
+  },
+  {
+   "id": "magma_duggy",
+   "name": "岩浆地鼠",
+   "en": "Magma Duggy",
+   "wikiPath": "/mediawiki/images/en/4/41/Magma_Duggy.png",
+   "wikiSize": [
+    112,
+    112
+   ],
+   "wikiFile": "Magma_Duggy.png"
+  },
+  {
+   "id": "dust_sprite",
+   "name": "尘埃精灵",
+   "en": "Dust Sprite",
+   "wikiPath": "/mediawiki/images/en/9/9a/Dust_Sprite.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Dust_Sprite.png"
+  },
+  {
+   "id": "magma_sprite",
+   "name": "岩浆精灵",
+   "en": "Magma Sprite",
+   "wikiPath": "/mediawiki/images/en/f/f2/Magma_Sprite.png",
+   "wikiSize": [
+    48,
+    52
+   ],
+   "wikiFile": "Magma_Sprite.png"
+  },
+  {
+   "id": "magma_sparker",
+   "name": "岩浆火花",
+   "en": "Magma Sparker",
+   "wikiPath": "/mediawiki/images/en/5/58/Magma_Sparker.png",
+   "wikiSize": [
+    48,
+    52
+   ],
+   "wikiFile": "Magma_Sparker.png"
+  },
+  {
+   "id": "rock_crab",
+   "name": "岩石蟹",
+   "en": "Rock Crab",
+   "wikiPath": "/mediawiki/images/en/d/d4/Rock_Crab.png",
+   "wikiSize": [
+    64,
+    72
+   ],
+   "wikiFile": "Rock_Crab.png"
+  },
+  {
+   "id": "lava_crab",
+   "name": "岩浆蟹",
+   "en": "Lava Crab",
+   "wikiPath": "/mediawiki/images/en/1/1b/Lava_Crab.png",
+   "wikiSize": [
+    64,
+    72
+   ],
+   "wikiFile": "Lava_Crab.png"
+  },
+  {
+   "id": "iridium_crab",
+   "name": "铱蟹",
+   "en": "Iridium Crab",
+   "wikiPath": "/mediawiki/images/en/e/ef/Iridium_Crab.png",
+   "wikiSize": [
+    64,
+    76
+   ],
+   "wikiFile": "Iridium_Crab.png"
+  },
+  {
+   "id": "truffle_crab",
+   "name": "松露蟹",
+   "en": "Truffle Crab",
+   "wikiPath": "/mediawiki/images/en/4/41/Truffle_Crab.png",
+   "wikiSize": [
+    64,
+    76
+   ],
+   "wikiFile": "Truffle_Crab.png"
+  },
+  {
+   "id": "ghost",
+   "name": "幽灵",
+   "en": "Ghost",
+   "wikiPath": "/mediawiki/images/en/a/ab/Ghost.png",
+   "wikiSize": [
+    56,
+    80
+   ],
+   "wikiFile": "Ghost.png"
+  },
+  {
+   "id": "carbon_ghost",
+   "name": "碳幽灵",
+   "en": "Carbon Ghost",
+   "wikiPath": "/mediawiki/images/en/5/5b/Carbon_Ghost.png",
+   "wikiSize": [
+    56,
+    84
+   ],
+   "wikiFile": "Carbon_Ghost.png"
+  },
+  {
+   "id": "putrid_ghost",
+   "name": "腐臭幽灵",
+   "en": "Putrid Ghost",
+   "wikiPath": "/mediawiki/images/en/4/42/Putrid_Ghost.png",
+   "wikiSize": [
+    52,
+    80
+   ],
+   "wikiFile": "Putrid_Ghost.png"
+  },
+  {
+   "id": "skeleton",
+   "name": "骷髅",
+   "en": "Skeleton",
+   "wikiPath": "/mediawiki/images/en/2/23/Skeleton.png",
+   "wikiSize": [
+    64,
+    116
+   ],
+   "wikiFile": "Skeleton.png"
+  },
+  {
+   "id": "skeleton_mage",
+   "name": "骷髅法师",
+   "en": "Skeleton Mage",
+   "wikiPath": "/mediawiki/images/en/d/d3/Skeleton_Mage.png",
+   "wikiSize": [
+    60,
+    116
+   ],
+   "wikiFile": "Skeleton_Mage.png"
+  },
+  {
+   "id": "shadow_brute",
+   "name": "暗影狂徒",
+   "en": "Shadow Brute",
+   "wikiPath": "/mediawiki/images/en/e/e0/Shadow_Brute.png",
+   "wikiSize": [
+    64,
+    116
+   ],
+   "wikiFile": "Shadow_Brute.png"
+  },
+  {
+   "id": "shadow_shaman",
+   "name": "暗影萨满",
+   "en": "Shadow Shaman",
+   "wikiPath": "/mediawiki/images/en/1/11/Shadow_Shaman.png",
+   "wikiSize": [
+    56,
+    96
+   ],
+   "wikiFile": "Shadow_Shaman.png"
+  },
+  {
+   "id": "shadow_sniper",
+   "name": "暗影狙击手",
+   "en": "Shadow Sniper",
+   "wikiPath": "/mediawiki/images/en/a/a4/Shadow_Sniper.png",
+   "wikiSize": [
+    52,
+    116
+   ],
+   "wikiFile": "Shadow_Sniper.png"
+  },
+  {
+   "id": "mummy",
+   "name": "木乃伊",
+   "en": "Mummy",
+   "wikiPath": "/mediawiki/images/en/7/70/Mummy.png",
+   "wikiSize": [
+    112,
+    208
+   ],
+   "wikiFile": "Mummy.png"
+  },
+  {
+   "id": "serpent",
+   "name": "蛇",
+   "en": "Serpent",
+   "wikiPath": "/mediawiki/images/en/8/89/Serpent.png",
+   "wikiSize": [
+    58,
+    64
+   ],
+   "wikiFile": "Serpent.png"
+  },
+  {
+   "id": "royal_serpent",
+   "name": "皇家蛇",
+   "en": "Royal Serpent",
+   "wikiPath": "/mediawiki/images/en/2/28/Royal_Serpent.png",
+   "wikiSize": [
+    54,
+    72
+   ],
+   "wikiFile": "Royal_Serpent.png"
+  },
+  {
+   "id": "pepper_rex",
+   "name": "霸王龙",
+   "en": "Pepper Rex",
+   "wikiPath": "/mediawiki/images/en/6/67/Pepper_Rex.png",
+   "wikiSize": [
+    96,
+    78
+   ],
+   "wikiFile": "Pepper_Rex.png"
+  },
+  {
+   "id": "haunted_skull",
+   "name": "闹鬼骷髅",
+   "en": "Haunted Skull",
+   "wikiPath": "/mediawiki/images/en/1/14/Haunted_Skull.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Haunted_Skull.png"
+  },
+  {
+   "id": "squid_kid",
+   "name": "鱿鱼娃",
+   "en": "Squid Kid",
+   "wikiPath": "/mediawiki/images/en/6/69/Squid_Kid.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Squid_Kid.png"
+  },
+  {
+   "id": "blue_squid",
+   "name": "蓝鱿鱼",
+   "en": "Blue Squid",
+   "wikiPath": "/mediawiki/images/en/7/79/Blue_Squid.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Blue_Squid.png"
+  },
+  {
+   "id": "stone_golem",
+   "name": "石头傀儡",
+   "en": "Stone Golem",
+   "wikiPath": "/mediawiki/images/en/d/d4/Stone_Golem.png",
+   "wikiSize": [
+    128,
+    192
+   ],
+   "wikiFile": "Stone_Golem.png"
+  },
+  {
+   "id": "wilderness_golem",
+   "name": "荒野傀儡",
+   "en": "Wilderness Golem",
+   "wikiPath": "/mediawiki/images/en/8/83/Wilderness_Golem.png",
+   "wikiSize": [
+    52,
+    96
+   ],
+   "wikiFile": "Wilderness_Golem.png"
+  },
+  {
+   "id": "iridium_golem",
+   "name": "铱傀儡",
+   "en": "Iridium Golem",
+   "wikiPath": "/mediawiki/images/en/d/d3/Iridium_Golem.png",
+   "wikiSize": [
+    52,
+    92
+   ],
+   "wikiFile": "Iridium_Golem.png"
+  },
+  {
+   "id": "dwarvish_sentry",
+   "name": "矮人哨兵",
+   "en": "Dwarvish Sentry",
+   "wikiPath": "/mediawiki/images/en/2/27/Dwarvish_Sentry.png",
+   "wikiSize": [
+    56,
+    92
+   ],
+   "wikiFile": "Dwarvish_Sentry.png"
+  }
+ ]
+}

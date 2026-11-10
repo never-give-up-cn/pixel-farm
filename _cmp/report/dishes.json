@@ -1,0 +1,1946 @@
+[
+ {
+  "iou": 0.7551,
+  "dhash_sim": 0.4219,
+  "palette_cov": 1.0,
+  "color_sim": 0.7464,
+  "aspect_sim": 0.7778,
+  "size_sim": 0.0,
+  "score": 70.07,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "algae_soup",
+  "name": "海藻汤",
+  "en": "Algae Soup",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Algae_Soup.png"
+ },
+ {
+  "iou": 0.6367,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6408,
+  "aspect_sim": 0.8485,
+  "size_sim": 0.3564,
+  "score": 71.79,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   14,
+   11
+  ],
+  "id": "artichoke_dip",
+  "name": "洋蓟蘸酱",
+  "en": "Artichoke Dip",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Artichoke_Dip.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.5967,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 75.86,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "autumn_bounty",
+  "name": "秋日恩赐",
+  "en": "Autumn's Bounty",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Autumn's_Bounty.png"
+ },
+ {
+  "iou": 0.4051,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5317,
+  "aspect_sim": 0.6066,
+  "size_sim": 0.7516,
+  "score": 62.14,
+  "ours_box": [
+   17,
+   11
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "baked_fish",
+  "name": "烤鱼",
+  "en": "Baked Fish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Baked_Fish.png"
+ },
+ {
+  "iou": 0.7052,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5791,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.0,
+  "score": 70.08,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "banana_pudding",
+  "name": "香蕉布丁",
+  "en": "Banana Pudding",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Banana_Pudding.png"
+ },
+ {
+  "iou": 0.7818,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.5189,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 73.9,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "bean_hotpot",
+  "name": "豆类火锅",
+  "en": "Bean Hotpot",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bean_Hotpot.png"
+ },
+ {
+  "iou": 0.8661,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6118,
+  "aspect_sim": 0.6632,
+  "size_sim": 0.8013,
+  "score": 78.92,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   14,
+   10
+  ],
+  "id": "blackberry_cobbler",
+  "name": "黑莓馅饼",
+  "en": "Blackberry Cobbler",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blackberry_Cobbler.png"
+ },
+ {
+  "iou": 0.4283,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.468,
+  "aspect_sim": 0.683,
+  "size_sim": 0.0,
+  "score": 58.26,
+  "ours_box": [
+   17,
+   14
+  ],
+  "wiki_box": [
+   48,
+   27
+  ],
+  "id": "blueberry_tart",
+  "name": "蓝莓挞",
+  "en": "Blueberry Tart",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blueberry_Tart.png"
+ },
+ {
+  "iou": 0.316,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7018,
+  "aspect_sim": 0.5515,
+  "size_sim": 0.6569,
+  "score": 61.31,
+  "ours_box": [
+   17,
+   10
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "bread",
+  "name": "面包",
+  "en": "Bread",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bread.png"
+ },
+ {
+  "iou": 0.4144,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4903,
+  "aspect_sim": 0.6364,
+  "size_sim": 0.0,
+  "score": 58.65,
+  "ours_box": [
+   18,
+   9
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "bruschetta",
+  "name": "意式烤面包",
+  "en": "Bruschetta",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bruschetta.png"
+ },
+ {
+  "iou": 0.6595,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.6417,
+  "aspect_sim": 0.7033,
+  "size_sim": 0.8089,
+  "score": 74.24,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   16,
+   13
+  ],
+  "id": "carp_surprise",
+  "name": "鲤鱼惊喜",
+  "en": "Carp Surprise",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Carp_Surprise.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.69,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 77.26,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "cheese_cauliflower",
+  "name": "奶酪花椰菜",
+  "en": "Cheese Cauliflower",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cheese_Cauliflower.png"
+ },
+ {
+  "iou": 0.7284,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.3386,
+  "aspect_sim": 0.8891,
+  "size_sim": 0.0,
+  "score": 68.01,
+  "ours_box": [
+   14,
+   13
+  ],
+  "wiki_box": [
+   45,
+   47
+  ],
+  "id": "chocolate_cake",
+  "name": "巧克力蛋糕",
+  "en": "Chocolate Cake",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Chocolate_Cake.png"
+ },
+ {
+  "iou": 0.6861,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.3296,
+  "aspect_sim": 0.7222,
+  "size_sim": 0.0,
+  "score": 64.62,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "chowder",
+  "name": "海鲜杂烩汤",
+  "en": "Chowder",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Chowder.png"
+ },
+ {
+  "iou": 0.7489,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.344,
+  "aspect_sim": 0.619,
+  "size_sim": 0.0,
+  "score": 67.26,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   39,
+   30
+  ],
+  "id": "coleslaw",
+  "name": "凉拌卷心菜",
+  "en": "Coleslaw",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Coleslaw.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7271,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 77.19,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "complete_breakfast",
+  "name": "完整早餐",
+  "en": "Complete Breakfast",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Complete_Breakfast.png"
+ },
+ {
+  "iou": 0.5862,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6893,
+  "aspect_sim": 0.8021,
+  "size_sim": 0.9537,
+  "score": 72.59,
+  "ours_box": [
+   16,
+   11
+  ],
+  "wiki_box": [
+   14,
+   12
+  ],
+  "id": "cookies",
+  "name": "曲奇",
+  "en": "Cookies",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cookie.png"
+ },
+ {
+  "iou": 0.7369,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6548,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 74.07,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   45,
+   42
+  ],
+  "id": "crab_cakes",
+  "name": "蟹黄糕",
+  "en": "Crab Cakes",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Crab_Cakes.png"
+ },
+ {
+  "iou": 0.7588,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.1878,
+  "aspect_sim": 0.5952,
+  "size_sim": 0.0,
+  "score": 62.47,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   45,
+   36
+  ],
+  "id": "cranberry_sauce",
+  "name": "蔓越莓酱",
+  "en": "Cranberry Sauce",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cranberry_Sauce.png"
+ },
+ {
+  "iou": 0.7103,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.6263,
+  "aspect_sim": 0.3894,
+  "size_sim": 0.794,
+  "score": 72.63,
+  "ours_box": [
+   13,
+   9
+  ],
+  "wiki_box": [
+   9,
+   16
+  ],
+  "id": "cranberry_candy",
+  "name": "蔓越莓糖果",
+  "en": "Cranberry Candy",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cranberry_Candy.png"
+ },
+ {
+  "iou": 0.7889,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.6101,
+  "aspect_sim": 0.4571,
+  "size_sim": 0.0,
+  "score": 67.7,
+  "ours_box": [
+   21,
+   9
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "crispy_bass",
+  "name": "香脆鲈鱼",
+  "en": "Crispy Bass",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Crispy_Bass.png"
+ },
+ {
+  "iou": 0.6547,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6119,
+  "aspect_sim": 0.6531,
+  "size_sim": 0.8827,
+  "score": 72.89,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "dish_o_the_sea",
+  "name": "海之菜肴",
+  "en": "Dish O' The Sea",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dish_O'_The_Sea.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.601,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 75.92,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "eggplant_parmesan",
+  "name": "茄子帕尔马",
+  "en": "Eggplant Parmesan",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Eggplant_Parmesan.png"
+ },
+ {
+  "iou": 0.6229,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5272,
+  "aspect_sim": 0.6753,
+  "size_sim": 0.4364,
+  "score": 68.65,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   13,
+   11
+  ],
+  "id": "escargot",
+  "name": "法式蜗牛",
+  "en": "Escargot",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Escargot.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.3522,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.0,
+  "score": 68.48,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "farmers_lunch",
+  "name": "农夫午餐",
+  "en": "Farmer's Lunch",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Farmer's_Lunch.png"
+ },
+ {
+  "iou": 0.7879,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5841,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.0,
+  "score": 73.88,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   39,
+   30
+  ],
+  "id": "fiddlehead_risotto",
+  "name": "蕨菜烩饭",
+  "en": "Fiddlehead Risotto",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fiddlehead_Risotto.png"
+ },
+ {
+  "iou": 0.7538,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3195,
+  "aspect_sim": 0.7778,
+  "size_sim": 0.0,
+  "score": 68.31,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "fish_stew",
+  "name": "鱼汤",
+  "en": "Fish Stew",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fish_Stew.png"
+ },
+ {
+  "iou": 0.674,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.562,
+  "aspect_sim": 0.7386,
+  "size_sim": 0.3672,
+  "score": 67.87,
+  "ours_box": [
+   10,
+   11
+  ],
+  "wiki_box": [
+   16,
+   13
+  ],
+  "id": "fish_taco",
+  "name": "鱼肉卷",
+  "en": "Fish Taco",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fish_Taco.png"
+ },
+ {
+  "iou": 0.6453,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.5859,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 69.25,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "fried_calamari",
+  "name": "炸鱿鱼",
+  "en": "Fried Calamari",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fried_Calamari.png"
+ },
+ {
+  "iou": 0.6554,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8219,
+  "aspect_sim": 0.6095,
+  "size_sim": 0.9514,
+  "score": 75.34,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "fried_eel",
+  "name": "炸鳗鱼",
+  "en": "Fried Eel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fried_Eel.png"
+ },
+ {
+  "iou": 0.7635,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4232,
+  "aspect_sim": 0.6754,
+  "size_sim": 0.0,
+  "score": 68.82,
+  "ours_box": [
+   19,
+   11
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "fried_egg",
+  "name": "煎蛋",
+  "en": "Fried Egg",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fried_Egg.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.682,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 76.82,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "fried_mushroom",
+  "name": "炸蘑菇",
+  "en": "Fried Mushroom",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fried_Mushroom.png"
+ },
+ {
+  "iou": 0.5786,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4132,
+  "aspect_sim": 0.5333,
+  "size_sim": 0.8185,
+  "score": 65.17,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   14,
+   15
+  ],
+  "id": "fruit_salad",
+  "name": "水果沙拉",
+  "en": "Fruit Salad",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fruit_Salad.png"
+ },
+ {
+  "iou": 0.6239,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.0018,
+  "aspect_sim": 0.5625,
+  "size_sim": 0.0,
+  "score": 56.56,
+  "ours_box": [
+   13,
+   13
+  ],
+  "wiki_box": [
+   27,
+   48
+  ],
+  "id": "ginger_ale",
+  "name": "姜汁汽水",
+  "en": "Ginger Ale",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ginger_Ale.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.672,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 76.36,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "glazed_yams",
+  "name": "蜜汁山药",
+  "en": "Glazed Yams",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Glazed_Yams.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6991,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.0,
+  "score": 71.81,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "hashbrowns",
+  "name": "薯饼",
+  "en": "Hashbrowns",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hashbrowns.png"
+ },
+ {
+  "iou": 0.7059,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.4286,
+  "size_sim": 0.7299,
+  "score": 62.24,
+  "ours_box": [
+   14,
+   12
+  ],
+  "wiki_box": [
+   8,
+   16
+  ],
+  "id": "ice_cream",
+  "name": "冰淇淋",
+  "en": "Ice Cream",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ice_Cream.png"
+ },
+ {
+  "iou": 0.7601,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8155,
+  "aspect_sim": 0.7879,
+  "size_sim": 0.0,
+  "score": 76.98,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   39,
+   33
+  ],
+  "id": "lobster_bisque",
+  "name": "龙虾浓汤",
+  "en": "Lobster Bisque",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Lobster_Bisque.png"
+ },
+ {
+  "iou": 0.7903,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8097,
+  "aspect_sim": 0.5442,
+  "size_sim": 0.9358,
+  "score": 78.48,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "lucky_lunch",
+  "name": "幸运午餐",
+  "en": "Lucky Lunch",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lucky_Lunch.png"
+ },
+ {
+  "iou": 0.5499,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.4412,
+  "size_sim": 0.0,
+  "score": 49.66,
+  "ours_box": [
+   17,
+   6
+  ],
+  "wiki_box": [
+   45,
+   36
+  ],
+  "id": "maki_roll",
+  "name": "寿司卷",
+  "en": "Maki Roll",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Maki_Roll.png"
+ },
+ {
+  "iou": 0.7524,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.3693,
+  "aspect_sim": 0.5495,
+  "size_sim": 0.0,
+  "score": 64.55,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   45,
+   39
+  ],
+  "id": "mango_sticky_rice",
+  "name": "芒果糯米饭",
+  "en": "Mango Sticky Rice",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mango_Sticky_Rice.png"
+ },
+ {
+  "iou": 0.6976,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.5604,
+  "aspect_sim": 0.7765,
+  "size_sim": 0.5593,
+  "score": 73.65,
+  "ours_box": [
+   17,
+   11
+  ],
+  "wiki_box": [
+   12,
+   10
+  ],
+  "id": "maple_bar",
+  "name": "枫糖棒",
+  "en": "Maple Bar",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Maple_Bar.png"
+ },
+ {
+  "iou": 0.6466,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.8477,
+  "aspect_sim": 0.4125,
+  "size_sim": 0.0,
+  "score": 67.8,
+  "ours_box": [
+   16,
+   11
+  ],
+  "wiki_box": [
+   27,
+   45
+  ],
+  "id": "miners_treat",
+  "name": "矿工特供",
+  "en": "Miner's Treat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Miner's_Treat.png"
+ },
+ {
+  "iou": 0.7679,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3,
+  "aspect_sim": 0.6154,
+  "size_sim": 0.0,
+  "score": 64.94,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "moss_soup",
+  "name": "苔藓汤",
+  "en": "Moss Soup",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Moss_Soup.png"
+ },
+ {
+  "iou": 0.9112,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.5423,
+  "aspect_sim": 0.5867,
+  "size_sim": 0.0,
+  "score": 76.02,
+  "ours_box": [
+   20,
+   11
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "omelet",
+  "name": "煎蛋卷",
+  "en": "Omelet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Omelet.png"
+ },
+ {
+  "iou": 0.7551,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.821,
+  "aspect_sim": 0.7778,
+  "size_sim": 0.4429,
+  "score": 76.52,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   14,
+   12
+  ],
+  "id": "pale_broth",
+  "name": "清汤",
+  "en": "Pale Broth",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pale_Broth.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.6271,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 77.25,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "pancakes",
+  "name": "煎饼",
+  "en": "Pancakes",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pancakes.png"
+ },
+ {
+  "iou": 0.7772,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.1733,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 64.77,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "parsnip_soup",
+  "name": "防风草汤",
+  "en": "Parsnip Soup",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Parsnip_Soup.png"
+ },
+ {
+  "iou": 0.6504,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.5887,
+  "aspect_sim": 0.6095,
+  "size_sim": 0.9514,
+  "score": 70.13,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "pepper_poppers",
+  "name": "辣椒爆浆",
+  "en": "Pepper Poppers",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pepper_Poppers.png"
+ },
+ {
+  "iou": 0.5884,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.7606,
+  "aspect_sim": 0.7169,
+  "size_sim": 0.9179,
+  "score": 71.13,
+  "ours_box": [
+   17,
+   13
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "pink_cake",
+  "name": "粉色蛋糕",
+  "en": "Pink Cake",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pink_Cake.png"
+ },
+ {
+  "iou": 0.5398,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7606,
+  "aspect_sim": 0.7857,
+  "size_sim": 0.76,
+  "score": 71.45,
+  "ours_box": [
+   16,
+   11
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "pizza",
+  "name": "披萨",
+  "en": "Pizza",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pizza.png"
+ },
+ {
+  "iou": 0.768,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.3697,
+  "aspect_sim": 0.9479,
+  "size_sim": 0.7876,
+  "score": 75.75,
+  "ours_box": [
+   16,
+   13
+  ],
+  "wiki_box": [
+   14,
+   12
+  ],
+  "id": "plum_pudding",
+  "name": "李子布丁",
+  "en": "Plum Pudding",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Plum_Pudding.png"
+ },
+ {
+  "iou": 0.7639,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.5555,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.0,
+  "score": 68.67,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "poi",
+  "name": "芋泥",
+  "en": "Poi",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Poi.png"
+ },
+ {
+  "iou": 0.7526,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.2852,
+  "aspect_sim": 0.8089,
+  "size_sim": 0.0,
+  "score": 64.95,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "poppyseed_muffin",
+  "name": "罂粟籽松饼",
+  "en": "Poppyseed Muffin",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Poppyseed_Muffin.png"
+ },
+ {
+  "iou": 0.605,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.8355,
+  "aspect_sim": 0.8333,
+  "size_sim": 0.8187,
+  "score": 74.05,
+  "ours_box": [
+   16,
+   10
+  ],
+  "wiki_box": [
+   16,
+   12
+  ],
+  "id": "pumpkin_pie",
+  "name": "南瓜派",
+  "en": "Pumpkin Pie",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pumpkin_Pie.png"
+ },
+ {
+  "iou": 0.7657,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4862,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.7336,
+  "score": 71.54,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "pumpkin_soup",
+  "name": "南瓜汤",
+  "en": "Pumpkin Soup",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pumpkin_Soup.png"
+ },
+ {
+  "iou": 0.826,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4572,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.4923,
+  "score": 73.07,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   14,
+   9
+  ],
+  "id": "radish_salad",
+  "name": "萝卜沙拉",
+  "en": "Radish Salad",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Radish_Salad.png"
+ },
+ {
+  "iou": 0.6453,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.8118,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 73.26,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "red_plate",
+  "name": "红色拼盘",
+  "en": "Red Plate",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Red_Plate.png"
+ },
+ {
+  "iou": 0.8149,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.516,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.0,
+  "score": 69.44,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   48,
+   36
+  ],
+  "id": "rhubarb_pie",
+  "name": "大黄派",
+  "en": "Rhubarb Pie",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rhubarb_Pie.png"
+ },
+ {
+  "iou": 0.7381,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.3565,
+  "aspect_sim": 0.7179,
+  "size_sim": 0.5225,
+  "score": 69.47,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "rice_pudding",
+  "name": "大米布丁",
+  "en": "Rice Pudding",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rice_Pudding.png"
+ },
+ {
+  "iou": 0.5817,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.0222,
+  "aspect_sim": 0.6154,
+  "size_sim": 0.6761,
+  "score": 60.13,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "roasted_hazelnuts",
+  "name": "烤榛子",
+  "en": "Roasted Hazelnuts",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Roasted_Hazelnuts.png"
+ },
+ {
+  "iou": 0.6453,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.8438,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 73.74,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "roots_platter",
+  "name": "根菜拼盘",
+  "en": "Roots Platter",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Roots_Platter.png"
+ },
+ {
+  "iou": 0.8067,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.4603,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 73.65,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "salad",
+  "name": "沙拉",
+  "en": "Salad",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Salad.png"
+ },
+ {
+  "iou": 0.6175,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3867,
+  "aspect_sim": 0.8205,
+  "size_sim": 0.6554,
+  "score": 68.31,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   13
+  ],
+  "id": "salmon_dinner",
+  "name": "鲑鱼晚餐",
+  "en": "Salmon Dinner",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Salmon_Dinner.png"
+ },
+ {
+  "iou": 0.7256,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7759,
+  "aspect_sim": 0.4667,
+  "size_sim": 0.6861,
+  "score": 73.69,
+  "ours_box": [
+   20,
+   7
+  ],
+  "wiki_box": [
+   16,
+   12
+  ],
+  "id": "sashimi",
+  "name": "刺身",
+  "en": "Sashimi",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sashimi.png"
+ },
+ {
+  "iou": 0.8345,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3859,
+  "aspect_sim": 0.5417,
+  "size_sim": 0.0,
+  "score": 69.37,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   39,
+   48
+  ],
+  "id": "seafoam_pudding",
+  "name": "海沫布丁",
+  "en": "Seafoam Pudding",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Seafoam_Pudding.png"
+ },
+ {
+  "iou": 0.6322,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.2586,
+  "aspect_sim": 0.6968,
+  "size_sim": 0.0,
+  "score": 60.44,
+  "ours_box": [
+   11,
+   17
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "shrimp_cocktail",
+  "name": "虾鸡尾酒",
+  "en": "Shrimp Cocktail",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Shrimp_Cocktail.png"
+ },
+ {
+  "iou": 0.8067,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6387,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.0,
+  "score": 71.67,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "spaghetti",
+  "name": "意大利面",
+  "en": "Spaghetti",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Spaghetti.png"
+ },
+ {
+  "iou": 0.8018,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.6542,
+  "aspect_sim": 0.5079,
+  "size_sim": 0.8671,
+  "score": 77.03,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "spicy_eel",
+  "name": "香辣鳗鱼",
+  "en": "Spicy Eel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spicy_Eel.png"
+ },
+ {
+  "iou": 0.6368,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.4088,
+  "aspect_sim": 0.5333,
+  "size_sim": 0.0,
+  "score": 60.26,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "squid_ink_ravioli",
+  "name": "墨汁饺",
+  "en": "Squid Ink Ravioli",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Squid_Ink_Ravioli.png"
+ },
+ {
+  "iou": 0.7706,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2412,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.778,
+  "score": 68.68,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   14,
+   12
+  ],
+  "id": "stir_fry",
+  "name": "炒菜",
+  "en": "Stir Fry",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Stir_Fry.png"
+ },
+ {
+  "iou": 0.7462,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6415,
+  "aspect_sim": 0.5392,
+  "size_sim": 0.5593,
+  "score": 73.01,
+  "ours_box": [
+   17,
+   11
+  ],
+  "wiki_box": [
+   10,
+   12
+  ],
+  "id": "strange_bun",
+  "name": "奇怪小包",
+  "en": "Strange Bun",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Strange_Bun.png"
+ },
+ {
+  "iou": 0.752,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2878,
+  "aspect_sim": 0.4762,
+  "size_sim": 0.9313,
+  "score": 68.17,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "stuffing",
+  "name": "填料",
+  "en": "Stuffing",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Stuffing.png"
+ },
+ {
+  "iou": 0.6453,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.4831,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 66.46,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "super_meal",
+  "name": "超级大餐",
+  "en": "Super Meal",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Super_Meal.png"
+ },
+ {
+  "iou": 0.5766,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.8121,
+  "aspect_sim": 0.4392,
+  "size_sim": 0.0,
+  "score": 63.87,
+  "ours_box": [
+   17,
+   7
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "survival_burger",
+  "name": "生存汉堡",
+  "en": "Survival Burger",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Survival_Burger.png"
+ },
+ {
+  "iou": 0.782,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.2833,
+  "aspect_sim": 0.7179,
+  "size_sim": 0.5225,
+  "score": 70.63,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "tom_kha_soup",
+  "name": "冬阴功汤",
+  "en": "Tom Kha Soup",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tom_Kha_Soup.png"
+ },
+ {
+  "iou": 0.5592,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8014,
+  "aspect_sim": 0.5983,
+  "size_sim": 0.0,
+  "score": 67.28,
+  "ours_box": [
+   18,
+   10
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "tortilla",
+  "name": "玉米饼",
+  "en": "Tortilla",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tortilla.png"
+ },
+ {
+  "iou": 0.4851,
+  "dhash_sim": 0.4219,
+  "palette_cov": 1.0,
+  "color_sim": 0.3949,
+  "aspect_sim": 0.7647,
+  "size_sim": 0.8805,
+  "score": 60.96,
+  "ours_box": [
+   13,
+   17
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "triple_shot_espresso",
+  "name": "三倍浓缩咖啡",
+  "en": "Triple Shot Espresso",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Triple_Shot_Espresso.png"
+ },
+ {
+  "iou": 0.7596,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4815,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 69.18,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "tropical_curry",
+  "name": "热带咖喱",
+  "en": "Tropical Curry",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tropical_Curry.png"
+ },
+ {
+  "iou": 0.782,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.123,
+  "aspect_sim": 0.7179,
+  "size_sim": 0.5225,
+  "score": 67.91,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "trout_soup",
+  "name": "鳟鱼汤",
+  "en": "Trout Soup",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Trout_Soup.png"
+ },
+ {
+  "iou": 0.8058,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.812,
+  "aspect_sim": 0.7111,
+  "size_sim": 0.7978,
+  "score": 79.02,
+  "ours_box": [
+   21,
+   14
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "vegetable_stew",
+  "name": "蔬菜炖汤",
+  "en": "Vegetable Stew",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Vegetable_Medley.png"
+ }
+]

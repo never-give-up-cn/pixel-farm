@@ -1,0 +1,2162 @@
+[
+ {
+  "iou": 0.4755,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.3095,
+  "aspect_sim": 0.6429,
+  "size_sim": 0.0,
+  "score": 59.09,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   54,
+   30
+  ],
+  "id": "cowboy_hat",
+  "name": "牛仔帽",
+  "en": "Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.6474,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.5736,
+  "aspect_sim": 0.4308,
+  "size_sim": 0.0,
+  "score": 67.65,
+  "ours_box": [
+   26,
+   8
+  ],
+  "wiki_box": [
+   42,
+   30
+  ],
+  "id": "bowler_hat",
+  "name": "圆顶礼帽",
+  "en": "Bowler Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bowler_Hat.png"
+ },
+ {
+  "iou": 0.5564,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6718,
+  "aspect_sim": 0.7343,
+  "size_sim": 0.0,
+  "score": 69.11,
+  "ours_box": [
+   22,
+   15
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "top_hat",
+  "name": "高顶礼帽",
+  "en": "Top Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Top_Hat.png"
+ },
+ {
+  "iou": 0.4021,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.2817,
+  "aspect_sim": 0.5114,
+  "size_sim": 0.7317,
+  "score": 58.19,
+  "ours_box": [
+   32,
+   9
+  ],
+  "wiki_box": [
+   20,
+   11
+  ],
+  "id": "sombrero",
+  "name": "墨西哥草帽",
+  "en": "Sombrero",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sombrero.png"
+ },
+ {
+  "iou": 0.5014,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.3861,
+  "aspect_sim": 0.45,
+  "size_sim": 0.415,
+  "score": 60.84,
+  "ours_box": [
+   32,
+   9
+  ],
+  "wiki_box": [
+   16,
+   10
+  ],
+  "id": "straw_hat",
+  "name": "草帽",
+  "en": "Straw Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Straw_Hat.png"
+ },
+ {
+  "iou": 0.5353,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.1013,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 61.95,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   36,
+   24
+  ],
+  "id": "official_cap",
+  "name": "制服帽",
+  "en": "Official Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Official_Cap.png"
+ },
+ {
+  "iou": 0.3857,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4891,
+  "aspect_sim": 0.3125,
+  "size_sim": 0.0,
+  "score": 53.91,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   42,
+   48
+  ],
+  "id": "blue_bonnet",
+  "name": "蓝色软帽",
+  "en": "Blue Bonnet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blue_Bonnet.png"
+ },
+ {
+  "iou": 0.4869,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.3742,
+  "aspect_sim": 0.6429,
+  "size_sim": 0.0,
+  "score": 59.46,
+  "ours_box": [
+   14,
+   5
+  ],
+  "wiki_box": [
+   54,
+   30
+  ],
+  "id": "plum_chapeau",
+  "name": "梅子帽",
+  "en": "Plum Chapeau",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Plum_Chapeau.png"
+ },
+ {
+  "iou": 0.442,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.3874,
+  "size_sim": 0.0,
+  "score": 51.51,
+  "ours_box": [
+   23,
+   7
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "earmuffs",
+  "name": "耳罩",
+  "en": "Earmuffs",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Earmuffs.png"
+ },
+ {
+  "iou": 0.5556,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.4793,
+  "aspect_sim": 0.8889,
+  "size_sim": 0.0,
+  "score": 66.5,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   36,
+   27
+  ],
+  "id": "hunters_cap",
+  "name": "猎人帽",
+  "en": "Hunter's Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hunter's_Cap.png"
+ },
+ {
+  "iou": 0.7305,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4959,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 71.14,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "trucker_hat",
+  "name": "卡车帽",
+  "en": "Trucker Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Trucker_Hat.png"
+ },
+ {
+  "iou": 0.5931,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2152,
+  "aspect_sim": 0.9643,
+  "size_sim": 0.0,
+  "score": 62.54,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   42,
+   27
+  ],
+  "id": "sailors_cap",
+  "name": "水手帽",
+  "en": "Sailor's Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sailor's_Cap.png"
+ },
+ {
+  "iou": 0.596,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.2527,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 61.27,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "good_ol_cap",
+  "name": "旧棒球帽",
+  "en": "Good Ol' Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Good_Ol'_Cap.png"
+ },
+ {
+  "iou": 0.4936,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.254,
+  "aspect_sim": 0.4196,
+  "size_sim": 0.0,
+  "score": 56.56,
+  "ours_box": [
+   26,
+   10
+  ],
+  "wiki_box": [
+   36,
+   33
+  ],
+  "id": "fedora",
+  "name": "软呢帽",
+  "en": "Fedora",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fedora.png"
+ },
+ {
+  "iou": 0.6028,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7608,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 69.4,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "cool_cap",
+  "name": "酷帽",
+  "en": "Cool Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cool_Cap.png"
+ },
+ {
+  "iou": 0.6614,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.2481,
+  "aspect_sim": 0.9697,
+  "size_sim": 0.0,
+  "score": 68.88,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   33,
+   30
+  ],
+  "id": "gnomes_cap",
+  "name": "地精帽",
+  "en": "Gnome's Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Gnome's_Cap.png"
+ },
+ {
+  "iou": 0.4487,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5245,
+  "aspect_sim": 0.5,
+  "size_sim": 0.0,
+  "score": 59.14,
+  "ours_box": [
+   24,
+   13
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "santa_hat",
+  "name": "圣诞帽",
+  "en": "Santa Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Santa_Hat.png"
+ },
+ {
+  "iou": 0.76,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.4021,
+  "aspect_sim": 0.9524,
+  "size_sim": 0.0,
+  "score": 71.79,
+  "ours_box": [
+   14,
+   10
+  ],
+  "wiki_box": [
+   36,
+   27
+  ],
+  "id": "hard_hat",
+  "name": "安全帽",
+  "en": "Hard Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hard_Hat.png"
+ },
+ {
+  "iou": 0.5638,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.4768,
+  "aspect_sim": 0.3182,
+  "size_sim": 0.0,
+  "score": 62.56,
+  "ours_box": [
+   28,
+   7
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "souwester",
+  "name": "防水帽",
+  "en": "Sou'wester",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sou'wester.png"
+ },
+ {
+  "iou": 0.4755,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.5412,
+  "aspect_sim": 0.6429,
+  "size_sim": 0.0,
+  "score": 62.87,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   54,
+   30
+  ],
+  "id": "cowgal_hat",
+  "name": "女牛仔帽",
+  "en": "Cowgal Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cowgal_Hat.png"
+ },
+ {
+  "iou": 0.4755,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.7738,
+  "aspect_sim": 0.6429,
+  "size_sim": 0.5601,
+  "score": 69.79,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   18,
+   10
+  ],
+  "id": "cowpoke_hat",
+  "name": "牧牛帽",
+  "en": "Cowpoke Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cowpoke_Hat.png"
+ },
+ {
+  "iou": 0.5996,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.3286,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 63.76,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "archers_cap",
+  "name": "弓箭手帽",
+  "en": "Archer's Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Archer's_Cap.png"
+ },
+ {
+  "iou": 0.4649,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.2392,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.443,
+  "score": 60.46,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   16,
+   10
+  ],
+  "id": "blue_cowboy_hat",
+  "name": "蓝色牛仔帽",
+  "en": "Blue Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blue_Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.4649,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.4161,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.443,
+  "score": 62.81,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   16,
+   10
+  ],
+  "id": "red_cowboy_hat",
+  "name": "红色牛仔帽",
+  "en": "Red Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Red_Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.7199,
+  "dhash_sim": 0.8281,
+  "palette_cov": 1.0,
+  "color_sim": 0.4663,
+  "aspect_sim": 0.7812,
+  "size_sim": 0.0,
+  "score": 72.97,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   30,
+   36
+  ],
+  "id": "cone_hat",
+  "name": "锥帽",
+  "en": "Cone Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cone_Hat.png"
+ },
+ {
+  "iou": 0.3816,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4451,
+  "aspect_sim": 0.6094,
+  "size_sim": 0.0,
+  "score": 54.84,
+  "ours_box": [
+   32,
+   13
+  ],
+  "wiki_box": [
+   48,
+   32
+  ],
+  "id": "living_hat",
+  "name": "活草帽",
+  "en": "Living Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Living_Hat.png"
+ },
+ {
+  "iou": 0.4381,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.103,
+  "aspect_sim": 0.8392,
+  "size_sim": 0.0,
+  "score": 55.58,
+  "ours_box": [
+   22,
+   15
+  ],
+  "wiki_box": [
+   48,
+   39
+  ],
+  "id": "emily_magic_hat",
+  "name": "艾米丽的魔法帽",
+  "en": "Emily's Magic Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Emily's_Magic_Hat.png"
+ },
+ {
+  "iou": 0.9401,
+  "dhash_sim": 0.8125,
+  "palette_cov": 1.0,
+  "color_sim": 0.6878,
+  "aspect_sim": 0.7879,
+  "size_sim": 0.0,
+  "score": 82.65,
+  "ours_box": [
+   21,
+   13
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "mushroom_cap",
+  "name": "蘑菇帽",
+  "en": "Mushroom Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mushroom_Cap.png"
+ },
+ {
+  "iou": 0.5944,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6381,
+  "aspect_sim": 0.7273,
+  "size_sim": 0.0,
+  "score": 66.24,
+  "ours_box": [
+   15,
+   10
+  ],
+  "wiki_box": [
+   36,
+   33
+  ],
+  "id": "dinosaur_hat",
+  "name": "恐龙帽",
+  "en": "Dinosaur Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dinosaur_Hat.png"
+ },
+ {
+  "iou": 0.596,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8149,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 70.01,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "logo_cap",
+  "name": "标志帽",
+  "en": "Logo Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Logo_Cap.png"
+ },
+ {
+  "iou": 0.4794,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.0997,
+  "aspect_sim": 0.7615,
+  "size_sim": 0.0,
+  "score": 55.06,
+  "ours_box": [
+   26,
+   11
+  ],
+  "wiki_box": [
+   54,
+   30
+  ],
+  "id": "fashion_hat",
+  "name": "时尚帽",
+  "en": "Fashion Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fashion_Hat.png"
+ },
+ {
+  "iou": 0.6443,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.4371,
+  "aspect_sim": 0.8,
+  "size_sim": 0.7789,
+  "score": 71.53,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   12,
+   10
+  ],
+  "id": "beanie",
+  "name": "毛线帽",
+  "en": "Beanie",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Beanie.png"
+ },
+ {
+  "iou": 0.5761,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.1336,
+  "aspect_sim": 0.6,
+  "size_sim": 0.9359,
+  "score": 63.4,
+  "ours_box": [
+   15,
+   9
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "floppy_beanie",
+  "name": "松垮毛线帽",
+  "en": "Floppy Beanie",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Floppy_Beanie.png"
+ },
+ {
+  "iou": 0.6236,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.197,
+  "aspect_sim": 0.4444,
+  "size_sim": 0.0,
+  "score": 60.17,
+  "ours_box": [
+   28,
+   7
+  ],
+  "wiki_box": [
+   48,
+   27
+  ],
+  "id": "fishing_hat",
+  "name": "钓鱼帽",
+  "en": "Fishing Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fishing_Hat.png"
+ },
+ {
+  "iou": 0.4767,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.2416,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.0,
+  "score": 57.39,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   48,
+   30
+  ],
+  "id": "arcane_hat",
+  "name": "奥术帽",
+  "en": "Arcane Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Arcane_Hat.png"
+ },
+ {
+  "iou": 0.7645,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.4629,
+  "aspect_sim": 0.9231,
+  "size_sim": 0.0,
+  "score": 72.86,
+  "ours_box": [
+   17,
+   12
+  ],
+  "wiki_box": [
+   51,
+   39
+  ],
+  "id": "chef_hat",
+  "name": "厨师帽",
+  "en": "Chef Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Chef_Hat.png"
+ },
+ {
+  "iou": 0.6957,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.962,
+  "aspect_sim": 0.526,
+  "size_sim": 0.0,
+  "score": 76.19,
+  "ours_box": [
+   28,
+   9
+  ],
+  "wiki_box": [
+   54,
+   33
+  ],
+  "id": "pirate_hat",
+  "name": "海盗帽",
+  "en": "Pirate Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pirate_Hat.png"
+ },
+ {
+  "iou": 0.6288,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.7231,
+  "aspect_sim": 0.4734,
+  "size_sim": 0.0,
+  "score": 67.57,
+  "ours_box": [
+   26,
+   10
+  ],
+  "wiki_box": [
+   48,
+   39
+  ],
+  "id": "flat_topped_hat",
+  "name": "平顶帽",
+  "en": "Flat Topped Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Flat_Topped_Hat.png"
+ },
+ {
+  "iou": 0.3654,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.1238,
+  "aspect_sim": 0.6564,
+  "size_sim": 0.0,
+  "score": 53.13,
+  "ours_box": [
+   30,
+   16
+  ],
+  "wiki_box": [
+   48,
+   39
+  ],
+  "id": "witch_hat",
+  "name": "女巫帽",
+  "en": "Witch Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Witch_Hat.png"
+ },
+ {
+  "iou": 0.4649,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8925,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.0,
+  "score": 67.11,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   48,
+   30
+  ],
+  "id": "dark_cowboy_hat",
+  "name": "黑暗牛仔帽",
+  "en": "Dark Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dark_Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.4649,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.8122,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.0,
+  "score": 65.28,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   48,
+   30
+  ],
+  "id": "magic_cowboy_hat",
+  "name": "魔法牛仔帽",
+  "en": "Magic Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Magic_Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.4327,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.1508,
+  "aspect_sim": 0.4545,
+  "size_sim": 0.0,
+  "score": 53.54,
+  "ours_box": [
+   28,
+   10
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "deluxe_cowboy_hat",
+  "name": "豪华牛仔帽",
+  "en": "Deluxe Cowboy Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Deluxe_Cowboy_Hat.png"
+ },
+ {
+  "iou": 0.6423,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.2189,
+  "aspect_sim": 0.8333,
+  "size_sim": 0.8197,
+  "score": 69.36,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   10,
+   8
+  ],
+  "id": "small_cap",
+  "name": "小帽子",
+  "en": "Small Cap",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Small_Cap.png"
+ },
+ {
+  "iou": 0.6022,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.1768,
+  "aspect_sim": 0.3889,
+  "size_sim": 0.0,
+  "score": 59.29,
+  "ours_box": [
+   28,
+   7
+  ],
+  "wiki_box": [
+   42,
+   27
+  ],
+  "id": "bucket_hat",
+  "name": "渔夫帽",
+  "en": "Bucket Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bucket_Hat.png"
+ },
+ {
+  "iou": 0.596,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.407,
+  "aspect_sim": 0.7407,
+  "size_sim": 0.0,
+  "score": 63.89,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   27
+  ],
+  "id": "sports_cap",
+  "name": "运动帽",
+  "en": "Sports Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sports_Cap.png"
+ },
+ {
+  "iou": 0.6643,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.4936,
+  "aspect_sim": 0.6818,
+  "size_sim": 0.0,
+  "score": 64.15,
+  "ours_box": [
+   12,
+   9
+  ],
+  "wiki_box": [
+   30,
+   33
+  ],
+  "id": "red_fez",
+  "name": "红色土耳其毡帽",
+  "en": "Red Fez",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Red_Fez.png"
+ },
+ {
+  "iou": 0.6162,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.618,
+  "aspect_sim": 0.6,
+  "size_sim": 0.0493,
+  "score": 67.75,
+  "ours_box": [
+   25,
+   10
+  ],
+  "wiki_box": [
+   12,
+   8
+  ],
+  "id": "raccoon_hat",
+  "name": "浣熊帽",
+  "en": "Raccoon Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Raccoon_Hat.png"
+ },
+ {
+  "iou": 0.5369,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.6252,
+  "aspect_sim": 0.7343,
+  "size_sim": 0.0,
+  "score": 66.27,
+  "ours_box": [
+   22,
+   15
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "leprechaun_hat",
+  "name": "矮妖精帽",
+  "en": "Leprechaun Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Leprechaun_Hat.png"
+ },
+ {
+  "iou": 0.4461,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.8678,
+  "size_sim": 0.0,
+  "score": 54.87,
+  "ours_box": [
+   22,
+   15
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "governor_hat",
+  "name": "州长帽",
+  "en": "Governor's Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Governor's_Hat.png"
+ },
+ {
+  "iou": 0.6423,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6576,
+  "aspect_sim": 0.8333,
+  "size_sim": 0.0,
+  "score": 72.47,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   30,
+   24
+  ],
+  "id": "pageboy_cap",
+  "name": "报童帽",
+  "en": "Pageboy Cap",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pageboy_Cap.png"
+ },
+ {
+  "iou": 0.4601,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7923,
+  "aspect_sim": 0.5128,
+  "size_sim": 0.6982,
+  "score": 66.81,
+  "ours_box": [
+   26,
+   10
+  ],
+  "wiki_box": [
+   16,
+   12
+  ],
+  "id": "mr_qi_hat",
+  "name": "齐先生帽",
+  "en": "Mr. Qi's Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mr._Qi's_Hat.png"
+ },
+ {
+  "iou": 0.703,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.5819,
+  "aspect_sim": 0.4148,
+  "size_sim": 0.0,
+  "score": 67.4,
+  "ours_box": [
+   30,
+   8
+  ],
+  "wiki_box": [
+   42,
+   27
+  ],
+  "id": "tricorn_hat",
+  "name": "三角帽",
+  "en": "Tricorn Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tricorn_Hat.png"
+ },
+ {
+  "iou": 0.2607,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2787,
+  "aspect_sim": 0.8874,
+  "size_sim": 0.0,
+  "score": 52.13,
+  "ours_box": [
+   28,
+   17
+  ],
+  "wiki_box": [
+   57,
+   39
+  ],
+  "id": "deluxe_pirate_hat",
+  "name": "豪华海盗帽",
+  "en": "Deluxe Pirate Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Deluxe_Pirate_Hat.png"
+ },
+ {
+  "iou": 0.7388,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.7336,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.9596,
+  "score": 78.7,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "joja_cap",
+  "name": "Joja 帽",
+  "en": "Joja Cap",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Joja_Cap.png"
+ },
+ {
+  "iou": 0.5057,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.5729,
+  "aspect_sim": 0.4,
+  "size_sim": 0.0,
+  "score": 62.45,
+  "ours_box": [
+   28,
+   7
+  ],
+  "wiki_box": [
+   48,
+   30
+  ],
+  "id": "foragers_hat",
+  "name": "采集者帽",
+  "en": "Forager's Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Forager's_Hat.png"
+ },
+ {
+  "iou": 0.8331,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.629,
+  "aspect_sim": 0.8,
+  "size_sim": 0.0,
+  "score": 72.74,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "skeleton_mask",
+  "name": "骷髅面具",
+  "en": "Skeleton Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Skeleton_Mask.png"
+ },
+ {
+  "iou": 0.7566,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.8529,
+  "aspect_sim": 0.9066,
+  "size_sim": 0.0,
+  "score": 75.49,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "goblin_mask",
+  "name": "哥布林面具",
+  "en": "Goblin Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Goblin_Mask.png"
+ },
+ {
+  "iou": 0.7664,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.9286,
+  "size_sim": 0.789,
+  "score": 66.85,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "chicken_mask",
+  "name": "小鸡面具",
+  "en": "Chicken Mask",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Chicken_Mask.png"
+ },
+ {
+  "iou": 0.7344,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7356,
+  "aspect_sim": 0.8,
+  "size_sim": 0.6494,
+  "score": 75.87,
+  "ours_box": [
+   12,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "totem_mask",
+  "name": "图腾面具",
+  "en": "Totem Mask",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Totem_Mask.png"
+ },
+ {
+  "iou": 0.8695,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.8157,
+  "aspect_sim": 0.8203,
+  "size_sim": 0.9313,
+  "score": 83.37,
+  "ours_box": [
+   15,
+   16
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "pumpkin_mask",
+  "name": "南瓜面具",
+  "en": "Pumpkin Mask",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pumpkin_Mask.png"
+ },
+ {
+  "iou": 0.846,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7812,
+  "aspect_sim": 0.8235,
+  "size_sim": 0.0,
+  "score": 76.27,
+  "ours_box": [
+   17,
+   13
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "blobfish_mask",
+  "name": "水滴鱼面具",
+  "en": "Blobfish Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blobfish_Mask.png"
+ },
+ {
+  "iou": 0.847,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.4311,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.0,
+  "score": 70.23,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "mummy_mask",
+  "name": "木乃伊面具",
+  "en": "Mummy Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mummy_Mask.png"
+ },
+ {
+  "iou": 0.6822,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6745,
+  "aspect_sim": 0.9333,
+  "size_sim": 0.0,
+  "score": 71.79,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "golden_mask",
+  "name": "黄金面具",
+  "en": "Golden Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Golden_Mask (hat).png"
+ },
+ {
+  "iou": 0.6837,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3389,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.0,
+  "score": 66.76,
+  "ours_box": [
+   15,
+   15
+  ],
+  "wiki_box": [
+   39,
+   45
+  ],
+  "id": "bluebird_mask",
+  "name": "蓝鸟面具",
+  "en": "Bluebird Mask",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bluebird_Mask.png"
+ },
+ {
+  "iou": 0.8749,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6651,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.729,
+  "score": 79.78,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "qi_mask",
+  "name": "齐先生面具",
+  "en": "Qi Mask",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Qi_Mask.png"
+ },
+ {
+  "iou": 0.6952,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.3188,
+  "aspect_sim": 0.75,
+  "size_sim": 0.0,
+  "score": 66.57,
+  "ours_box": [
+   21,
+   16
+  ],
+  "wiki_box": [
+   14,
+   8
+  ],
+  "id": "panda_hat",
+  "name": "熊猫帽",
+  "en": "Panda Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Panda_Hat.png"
+ },
+ {
+  "iou": 0.4105,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8881,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.0,
+  "score": 63.85,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   9,
+   9
+  ],
+  "id": "delicate_bow",
+  "name": "精致蝴蝶结",
+  "en": "Delicate Bow",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Delicate_Bow.png"
+ },
+ {
+  "iou": 0.3813,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.1922,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.1755,
+  "score": 53.41,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   24,
+   24
+  ],
+  "id": "butterfly_bow",
+  "name": "蝴蝶结",
+  "en": "Butterfly Bow",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Butterfly_Bow.png"
+ },
+ {
+  "iou": 0.4395,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 54.75,
+  "ours_box": [
+   21,
+   12
+  ],
+  "wiki_box": [
+   42,
+   24
+  ],
+  "id": "lucky_bow",
+  "name": "幸运蝴蝶结",
+  "en": "Lucky Bow",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Lucky_Bow.png"
+ },
+ {
+  "iou": 0.5323,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6726,
+  "aspect_sim": 0.9244,
+  "size_sim": 0.0,
+  "score": 66.55,
+  "ours_box": [
+   25,
+   13
+  ],
+  "wiki_box": [
+   48,
+   27
+  ],
+  "id": "pink_bow",
+  "name": "粉色大蝴蝶结",
+  "en": "Pink Bow",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pink_Bow.png"
+ },
+ {
+  "iou": 0.731,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.7592,
+  "aspect_sim": 0.7692,
+  "size_sim": 0.8985,
+  "score": 80.5,
+  "ours_box": [
+   13,
+   10
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "daisy",
+  "name": "雏菊",
+  "en": "Daisy",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Daisy.png"
+ },
+ {
+  "iou": 0.3987,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6803,
+  "aspect_sim": 0.3175,
+  "size_sim": 0.0,
+  "score": 58.15,
+  "ours_box": [
+   18,
+   4
+  ],
+  "wiki_box": [
+   30,
+   21
+  ],
+  "id": "watermelon_band",
+  "name": "西瓜发带",
+  "en": "Watermelon Band",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Watermelon_Band.png"
+ },
+ {
+  "iou": 0.5099,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6799,
+  "aspect_sim": 0.4615,
+  "size_sim": 0.9625,
+  "score": 67.43,
+  "ours_box": [
+   18,
+   9
+  ],
+  "wiki_box": [
+   12,
+   13
+  ],
+  "id": "spotted_headscarf",
+  "name": "波点头巾",
+  "en": "Spotted Headscarf",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spotted_Headscarf.png"
+ },
+ {
+  "iou": 0.5371,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.3,
+  "aspect_sim": 0.9474,
+  "size_sim": 0.0,
+  "score": 63.84,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   48,
+   24
+  ],
+  "id": "hair_bone",
+  "name": "骨头发饰",
+  "en": "Hair Bone",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hair_Bone.png"
+ },
+ {
+  "iou": 0.5378,
+  "dhash_sim": 0.4531,
+  "palette_cov": 1.0,
+  "color_sim": 0.7115,
+  "aspect_sim": 0.45,
+  "size_sim": 0.4152,
+  "score": 62.45,
+  "ours_box": [
+   15,
+   10
+  ],
+  "wiki_box": [
+   30,
+   9
+  ],
+  "id": "tiara",
+  "name": "皇冠",
+  "en": "Tiara",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tiara.png"
+ },
+ {
+  "iou": 0.5002,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2863,
+  "aspect_sim": 0.9882,
+  "size_sim": 0.0,
+  "score": 62.62,
+  "ours_box": [
+   17,
+   7
+  ],
+  "wiki_box": [
+   36,
+   15
+  ],
+  "id": "laurel_crown",
+  "name": "月桂花冠",
+  "en": "Laurel Wreath Crown",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Laurel_Wreath_Crown.png"
+ },
+ {
+  "iou": 0.6535,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.268,
+  "aspect_sim": 0.7563,
+  "size_sim": 0.0,
+  "score": 61.19,
+  "ours_box": [
+   14,
+   15
+  ],
+  "wiki_box": [
+   36,
+   51
+  ],
+  "id": "knights_helmet",
+  "name": "骑士头盔",
+  "en": "Knight's Helmet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Knight's_Helmet.png"
+ },
+ {
+  "iou": 0.626,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.8008,
+  "aspect_sim": 0.7333,
+  "size_sim": 0.0,
+  "score": 70.31,
+  "ours_box": [
+   14,
+   15
+  ],
+  "wiki_box": [
+   42,
+   33
+  ],
+  "id": "golden_helmet",
+  "name": "黄金头盔",
+  "en": "Golden Helmet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Golden_Helmet.png"
+ },
+ {
+  "iou": 0.7426,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.7316,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 78.25,
+  "ours_box": [
+   14,
+   13
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "star_helmet",
+  "name": "星星头盔",
+  "en": "Star Helmet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Star_Helmet.png"
+ },
+ {
+  "iou": 0.6413,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.5983,
+  "size_sim": 0.0,
+  "score": 58.03,
+  "ours_box": [
+   18,
+   10
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "space_helmet",
+  "name": "太空头盔",
+  "en": "Space Helmet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Space_Helmet.png"
+ },
+ {
+  "iou": 0.6457,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.0171,
+  "aspect_sim": 0.7955,
+  "size_sim": 0.0,
+  "score": 56.96,
+  "ours_box": [
+   14,
+   11
+  ],
+  "wiki_box": [
+   48,
+   30
+  ],
+  "id": "warrior_helmet",
+  "name": "战士头盔",
+  "en": "Warrior Helmet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Warrior_Helmet.png"
+ },
+ {
+  "iou": 0.6846,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.6931,
+  "aspect_sim": 0.6944,
+  "size_sim": 0.0,
+  "score": 72.25,
+  "ours_box": [
+   18,
+   5
+  ],
+  "wiki_box": [
+   30,
+   12
+  ],
+  "id": "sunglasses",
+  "name": "墨镜",
+  "en": "Sunglasses",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sunglasses.png"
+ },
+ {
+  "iou": 0.4355,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.6891,
+  "aspect_sim": 0.7857,
+  "size_sim": 0.7605,
+  "score": 70.69,
+  "ours_box": [
+   12,
+   14
+  ],
+  "wiki_box": [
+   12,
+   11
+  ],
+  "id": "propeller_hat",
+  "name": "螺旋桨帽",
+  "en": "Propeller Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Propeller_Hat.png"
+ },
+ {
+  "iou": 0.1092,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7921,
+  "aspect_sim": 0.8333,
+  "size_sim": 0.947,
+  "score": 61.04,
+  "ours_box": [
+   18,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "bridal_veil",
+  "name": "新娘头纱",
+  "en": "Bridal Veil",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bridal_Veil.png"
+ },
+ {
+  "iou": 0.8194,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.881,
+  "aspect_sim": 0.6061,
+  "size_sim": 0.6916,
+  "score": 82.31,
+  "ours_box": [
+   21,
+   10
+  ],
+  "wiki_box": [
+   14,
+   11
+  ],
+  "id": "garbage_hat",
+  "name": "垃圾桶盖帽",
+  "en": "Garbage Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Garbage_Hat.png"
+ },
+ {
+  "iou": 0.5395,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.6592,
+  "aspect_sim": 0.6446,
+  "size_sim": 0.2309,
+  "score": 64.3,
+  "ours_box": [
+   22,
+   13
+  ],
+  "wiki_box": [
+   12,
+   11
+  ],
+  "id": "copper_pan",
+  "name": "铜锅帽",
+  "en": "Copper Pan",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Copper_Pan (hat).png"
+ },
+ {
+  "iou": 0.4257,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.3766,
+  "aspect_sim": 0.77,
+  "size_sim": 0.0,
+  "score": 56.12,
+  "ours_box": [
+   21,
+   15
+  ],
+  "wiki_box": [
+   60,
+   33
+  ],
+  "id": "jester_hat",
+  "name": "小丑帽",
+  "en": "Jester Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Jester_Hat.png"
+ },
+ {
+  "iou": 0.6773,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7563,
+  "aspect_sim": 0.7982,
+  "size_sim": 0.6165,
+  "score": 74.29,
+  "ours_box": [
+   13,
+   19
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "junimo_hat",
+  "name": "祝尼魔帽",
+  "en": "Junimo Hat",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Junimo_Hat.png"
+ },
+ {
+  "iou": 0.6462,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.894,
+  "aspect_sim": 0.8974,
+  "size_sim": 0.0,
+  "score": 75.52,
+  "ours_box": [
+   12,
+   14
+  ],
+  "wiki_box": [
+   30,
+   39
+  ],
+  "id": "party_hat_red",
+  "name": "派对帽（红）",
+  "en": "Party Hat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Party_Hat_(red).png"
+ },
+ {
+  "iou": 0.5623,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.1199,
+  "aspect_sim": 0.8889,
+  "size_sim": 0.8829,
+  "score": 63.22,
+  "ours_box": [
+   18,
+   10
+  ],
+  "wiki_box": [
+   16,
+   10
+  ],
+  "id": "infinity_crown",
+  "name": "无限皇冠",
+  "en": "Infinity Crown",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Infinity_Crown.png"
+ }
+]

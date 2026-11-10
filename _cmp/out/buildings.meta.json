@@ -1,0 +1,288 @@
+{
+ "cat": "buildings",
+ "count": 25,
+ "cell": 259,
+ "perRow": 8,
+ "rows": 4,
+ "gridW": 2072,
+ "gridH": 1036,
+ "oursW": "BUILDING_W",
+ "oursH": "BUILDING_H",
+ "items": [
+  {
+   "id": "farmhouse",
+   "name": "农舍",
+   "en": "Farmhouse",
+   "wikiPath": "/mediawiki/images/en/3/30/House_%28tier_1%29.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "House_(tier_1).png"
+  },
+  {
+   "id": "greenhouse",
+   "name": "温室",
+   "en": "Greenhouse",
+   "wikiPath": "/mediawiki/images/en/9/93/Greenhouse.png",
+   "wikiSize": [
+    224,
+    255
+   ],
+   "wikiFile": "Greenhouse.png"
+  },
+  {
+   "id": "silo",
+   "name": "筒仓",
+   "en": "Silo",
+   "wikiPath": "/mediawiki/images/en/5/5f/Silo.png",
+   "wikiSize": [
+    192,
+    255
+   ],
+   "wikiFile": "Silo.png"
+  },
+  {
+   "id": "cabin",
+   "name": "小屋",
+   "en": "Cabin",
+   "wikiPath": "/mediawiki/images/en/a/ad/Plank_Cabin_Stage_1.png",
+   "wikiSize": [
+    240,
+    255
+   ],
+   "wikiFile": "Plank_Cabin_Stage_1.png"
+  },
+  {
+   "id": "shipping_bin",
+   "name": "出货箱",
+   "en": "Shipping Bin",
+   "wikiPath": "/mediawiki/images/en/5/52/ShippingBox.png",
+   "wikiSize": [
+    120,
+    112
+   ],
+   "wikiFile": "ShippingBox.png"
+  },
+  {
+   "id": "well",
+   "name": "水井",
+   "en": "Well",
+   "wikiPath": "/mediawiki/images/en/4/41/Well.png",
+   "wikiSize": [
+    192,
+    255
+   ],
+   "wikiFile": "Well.png"
+  },
+  {
+   "id": "mill",
+   "name": "磨坊",
+   "en": "Mill",
+   "wikiPath": "/mediawiki/images/en/9/90/Mill.png",
+   "wikiSize": [
+    192,
+    255
+   ],
+   "wikiFile": "Mill.png"
+  },
+  {
+   "id": "coop",
+   "name": "鸡舍",
+   "en": "Coop",
+   "wikiPath": "/mediawiki/images/en/4/48/Coop.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Coop.png"
+  },
+  {
+   "id": "fish_pond",
+   "name": "鱼塘",
+   "en": "Fish Pond",
+   "wikiPath": "/mediawiki/images/en/6/65/Fish_Pond.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Fish_Pond.png"
+  },
+  {
+   "id": "pet_bowl",
+   "name": "宠物碗",
+   "en": "Pet Bowl",
+   "wikiPath": "/mediawiki/images/en/0/05/Pet_Bowl_Wood.png",
+   "wikiSize": [
+    96,
+    96
+   ],
+   "wikiFile": "Pet_Bowl_Wood.png"
+  },
+  {
+   "id": "barn",
+   "name": "畜棚",
+   "en": "Barn",
+   "wikiPath": "/mediawiki/images/en/f/f8/Barn.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Barn.png"
+  },
+  {
+   "id": "stable",
+   "name": "马厩",
+   "en": "Stable",
+   "wikiPath": "/mediawiki/images/en/2/24/Horse_Stable.png",
+   "wikiSize": [
+    128,
+    192
+   ],
+   "wikiFile": "Horse_Stable.png"
+  },
+  {
+   "id": "slime_hutch",
+   "name": "史莱姆屋",
+   "en": "Slime Hutch",
+   "wikiPath": "/mediawiki/images/en/2/22/Slime_Hutch.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Slime_Hutch.png"
+  },
+  {
+   "id": "big_coop",
+   "name": "大鸡舍",
+   "en": "Big Coop",
+   "wikiPath": "/mediawiki/images/en/d/d5/Big_Coop.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Big_Coop.png"
+  },
+  {
+   "id": "big_barn",
+   "name": "大畜棚",
+   "en": "Big Barn",
+   "wikiPath": "/mediawiki/images/en/8/81/Big_Barn.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Big_Barn.png"
+  },
+  {
+   "id": "shed",
+   "name": "小屋",
+   "en": "Shed",
+   "wikiPath": "/mediawiki/images/en/1/15/Shed.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Shed.png"
+  },
+  {
+   "id": "junimo_hut",
+   "name": "祝尼魔屋",
+   "en": "Junimo Hut",
+   "wikiPath": "/mediawiki/images/en/7/73/Junimo_Hut.png",
+   "wikiSize": [
+    144,
+    192
+   ],
+   "wikiFile": "Junimo_Hut.png"
+  },
+  {
+   "id": "deluxe_coop",
+   "name": "豪华鸡舍",
+   "en": "Deluxe Coop",
+   "wikiPath": "/mediawiki/images/en/5/51/Deluxe_Coop.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Deluxe_Coop.png"
+  },
+  {
+   "id": "big_shed",
+   "name": "大屋子",
+   "en": "Big Shed",
+   "wikiPath": "/mediawiki/images/en/d/d0/Big_Shed.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Big_Shed.png"
+  },
+  {
+   "id": "deluxe_barn",
+   "name": "豪华畜棚",
+   "en": "Deluxe Barn",
+   "wikiPath": "/mediawiki/images/en/3/3d/Deluxe_Barn.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Deluxe_Barn.png"
+  },
+  {
+   "id": "earth_obelisk",
+   "name": "大地图腾柱",
+   "en": "Earth Obelisk",
+   "wikiPath": "/mediawiki/images/en/3/3c/Earth_Obelisk.png",
+   "wikiSize": [
+    144,
+    255
+   ],
+   "wikiFile": "Earth_Obelisk.png"
+  },
+  {
+   "id": "water_obelisk",
+   "name": "水之图腾柱",
+   "en": "Water Obelisk",
+   "wikiPath": "/mediawiki/images/en/b/b7/Water_Obelisk.png",
+   "wikiSize": [
+    144,
+    255
+   ],
+   "wikiFile": "Water_Obelisk.png"
+  },
+  {
+   "id": "desert_obelisk",
+   "name": "沙漠图腾柱",
+   "en": "Desert Obelisk",
+   "wikiPath": "/mediawiki/images/en/6/60/Desert_Obelisk.png",
+   "wikiSize": [
+    144,
+    255
+   ],
+   "wikiFile": "Desert_Obelisk.png"
+  },
+  {
+   "id": "island_obelisk",
+   "name": "姜岛图腾柱",
+   "en": "Island Obelisk",
+   "wikiPath": "/mediawiki/images/en/1/18/Island_Obelisk.png",
+   "wikiSize": [
+    144,
+    255
+   ],
+   "wikiFile": "Island_Obelisk.png"
+  },
+  {
+   "id": "gold_clock",
+   "name": "黄金时钟",
+   "en": "Gold Clock",
+   "wikiPath": "/mediawiki/images/en/b/b5/Gold_Clock.png",
+   "wikiSize": [
+    144,
+    240
+   ],
+   "wikiFile": "Gold_Clock.png"
+  }
+ ]
+}

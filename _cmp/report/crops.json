@@ -1,0 +1,1202 @@
+[
+ {
+  "iou": 0.3394,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.7269,
+  "aspect_sim": 0.7895,
+  "size_sim": 0.0619,
+  "score": 63.66,
+  "ours_box": [
+   19,
+   30
+  ],
+  "wiki_box": [
+   27,
+   54
+  ],
+  "id": "blue_jazz",
+  "name": "蓝调爵士",
+  "en": "Blue Jazz",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blue_Jazz_Stage_5.png"
+ },
+ {
+  "iou": 0.4243,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.7396,
+  "aspect_sim": 0.7875,
+  "size_sim": 0.2201,
+  "score": 68.42,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "carrot",
+  "name": "胡萝卜",
+  "en": "Carrot",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Carrot_Stage_4.png"
+ },
+ {
+  "iou": 0.5999,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4052,
+  "aspect_sim": 0.5101,
+  "size_sim": 0.9475,
+  "score": 65.79,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "cauliflower",
+  "name": "花椰菜",
+  "en": "Cauliflower",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cauliflower_Stage_6.png"
+ },
+ {
+  "iou": 0.7054,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6617,
+  "aspect_sim": 0.5614,
+  "size_sim": 0.7671,
+  "score": 72.1,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   16,
+   24
+  ],
+  "id": "coffee_bean",
+  "name": "咖啡豆",
+  "en": "Coffee Bean",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Coffee_Stage_6.png"
+ },
+ {
+  "iou": 0.5307,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.4971,
+  "aspect_sim": 0.7583,
+  "size_sim": 0.0,
+  "score": 65.02,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   39,
+   54
+  ],
+  "id": "garlic",
+  "name": "大蒜",
+  "en": "Garlic",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Garlic_Stage_5.png"
+ },
+ {
+  "iou": 0.4347,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7185,
+  "aspect_sim": 0.5322,
+  "size_sim": 0.8722,
+  "score": 64.75,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   13,
+   27
+  ],
+  "id": "green_bean",
+  "name": "青豆",
+  "en": "Green Bean",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Green_Bean_Stage_7.png"
+ },
+ {
+  "iou": 0.4206,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.7856,
+  "aspect_sim": 0.3478,
+  "size_sim": 0.0,
+  "score": 59.75,
+  "ours_box": [
+   23,
+   10
+  ],
+  "wiki_box": [
+   48,
+   60
+  ],
+  "id": "kale",
+  "name": "羽衣甘蓝",
+  "en": "Kale",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Kale_Stage_5.png"
+ },
+ {
+  "iou": 0.4276,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.4588,
+  "aspect_sim": 0.9844,
+  "size_sim": 0.0,
+  "score": 59.87,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   45,
+   48
+  ],
+  "id": "parsnip",
+  "name": "防风草",
+  "en": "Parsnip",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Parsnip_Stage_5.png"
+ },
+ {
+  "iou": 0.413,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.744,
+  "aspect_sim": 0.4942,
+  "size_sim": 0.0,
+  "score": 59.12,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   54
+  ],
+  "id": "potato",
+  "name": "土豆",
+  "en": "Potato",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Potato_Stage_6.png"
+ },
+ {
+  "iou": 0.563,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5341,
+  "aspect_sim": 0.3272,
+  "size_sim": 0.0,
+  "score": 59.42,
+  "ours_box": [
+   23,
+   13
+  ],
+  "wiki_box": [
+   33,
+   57
+  ],
+  "id": "rhubarb",
+  "name": "大黄",
+  "en": "Rhubarb",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rhubarb_Stage_6.png"
+ },
+ {
+  "iou": 0.6148,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.5185,
+  "aspect_sim": 0.7091,
+  "size_sim": 1.0,
+  "score": 72.69,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   16,
+   19
+  ],
+  "id": "strawberry",
+  "name": "草莓",
+  "en": "Strawberry",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Strawberry_Stage_6.png"
+ },
+ {
+  "iou": 0.2662,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7389,
+  "aspect_sim": 0.8684,
+  "size_sim": 0.0,
+  "score": 59.0,
+  "ours_box": [
+   19,
+   28
+  ],
+  "wiki_box": [
+   33,
+   56
+  ],
+  "id": "tulip",
+  "name": "郁金香",
+  "en": "Tulip",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tulip_Stage_6.png"
+ },
+ {
+  "iou": 0.4082,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6985,
+  "aspect_sim": 0.9222,
+  "size_sim": 0.3237,
+  "score": 64.5,
+  "ours_box": [
+   19,
+   31
+  ],
+  "wiki_box": [
+   13,
+   23
+  ],
+  "id": "unmilled_rice",
+  "name": "未碾米",
+  "en": "Unmilled Rice",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Unmilled_Rice_Stage_5.png"
+ },
+ {
+  "iou": 0.446,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7115,
+  "aspect_sim": 0.9524,
+  "size_sim": 0.5064,
+  "score": 67.67,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "wild_horseradish",
+  "name": "野山葵",
+  "en": "Wild Horseradish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wild_Horseradish.png"
+ },
+ {
+  "iou": 0.6739,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6436,
+  "aspect_sim": 0.5492,
+  "size_sim": 0.0,
+  "score": 66.93,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   45,
+   69
+  ],
+  "id": "blueberry",
+  "name": "蓝莓",
+  "en": "Blueberry",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blueberry_Stage_6.png"
+ },
+ {
+  "iou": 0.3702,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6595,
+  "aspect_sim": 0.8275,
+  "size_sim": 0.0,
+  "score": 61.15,
+  "ours_box": [
+   19,
+   29
+  ],
+  "wiki_box": [
+   45,
+   83
+  ],
+  "id": "hops",
+  "name": "啤酒花",
+  "en": "Hops",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hops_Stage_7.png"
+ },
+ {
+  "iou": 0.4728,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5961,
+  "aspect_sim": 0.9474,
+  "size_sim": 0.0,
+  "score": 65.73,
+  "ours_box": [
+   19,
+   27
+  ],
+  "wiki_box": [
+   42,
+   63
+  ],
+  "id": "hot_pepper",
+  "name": "辣椒",
+  "en": "Hot Pepper",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hot_Pepper_Stage_5.png"
+ },
+ {
+  "iou": 0.6339,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5516,
+  "aspect_sim": 0.36,
+  "size_sim": 0.0,
+  "score": 64.02,
+  "ours_box": [
+   25,
+   12
+  ],
+  "wiki_box": [
+   45,
+   60
+  ],
+  "id": "melon",
+  "name": "甜瓜",
+  "en": "Melon",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Melon_Stage_6.png"
+ },
+ {
+  "iou": 0.6205,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.3171,
+  "aspect_sim": 0.4406,
+  "size_sim": 0.916,
+  "score": 63.92,
+  "ours_box": [
+   22,
+   18
+  ],
+  "wiki_box": [
+   14,
+   26
+  ],
+  "id": "pineapple",
+  "name": "菠萝",
+  "en": "Pineapple",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pineapple_Stage_6.png"
+ },
+ {
+  "iou": 0.2151,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6607,
+  "aspect_sim": 0.9318,
+  "size_sim": 0.0,
+  "score": 57.87,
+  "ours_box": [
+   19,
+   30
+  ],
+  "wiki_box": [
+   36,
+   61
+  ],
+  "id": "poppy",
+  "name": "虞美人",
+  "en": "Poppy",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Poppy_Stage_6.png"
+ },
+ {
+  "iou": 0.4687,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6016,
+  "aspect_sim": 0.9625,
+  "size_sim": 0.0,
+  "score": 65.52,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   33,
+   36
+  ],
+  "id": "radish",
+  "name": "萝卜",
+  "en": "Radish",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Radish_Stage_5.png"
+ },
+ {
+  "iou": 0.5862,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5433,
+  "aspect_sim": 0.4251,
+  "size_sim": 0.8709,
+  "score": 66.84,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   16,
+   18
+  ],
+  "id": "red_cabbage",
+  "name": "红甘蓝",
+  "en": "Red Cabbage",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Red_Cabbage_Stage_6.png"
+ },
+ {
+  "iou": 0.7342,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.5279,
+  "aspect_sim": 0.8421,
+  "size_sim": 0.7002,
+  "score": 75.62,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "spice_berry",
+  "name": "香料浆果",
+  "en": "Spice Berry",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spice_Berry.png"
+ },
+ {
+  "iou": 0.5878,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.4827,
+  "aspect_sim": 0.5958,
+  "size_sim": 0.0,
+  "score": 63.96,
+  "ours_box": [
+   20,
+   26
+  ],
+  "wiki_box": [
+   33,
+   72
+  ],
+  "id": "starfruit",
+  "name": "杨桃",
+  "en": "Starfruit",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Starfruit_Stage_6.png"
+ },
+ {
+  "iou": 0.3207,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.8847,
+  "aspect_sim": 0.8684,
+  "size_sim": 0.0508,
+  "score": 64.64,
+  "ours_box": [
+   19,
+   30
+  ],
+  "wiki_box": [
+   11,
+   20
+  ],
+  "id": "summer_spangle",
+  "name": "夏日亮片",
+  "en": "Summer Spangle",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Summer_Spangle_Stage_5.png"
+ },
+ {
+  "iou": 0.6002,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3643,
+  "aspect_sim": 0.36,
+  "size_sim": 0.0,
+  "score": 58.32,
+  "ours_box": [
+   25,
+   12
+  ],
+  "wiki_box": [
+   48,
+   64
+  ],
+  "id": "summer_squash",
+  "name": "夏南瓜",
+  "en": "Summer Squash",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Summer_Squash_Stage_6.png"
+ },
+ {
+  "iou": 0.408,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.8123,
+  "aspect_sim": 0.3801,
+  "size_sim": 0.5071,
+  "score": 62.32,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   15,
+   27
+  ],
+  "id": "taro_root",
+  "name": "芋头",
+  "en": "Taro Root",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Taro_Stage_5.png"
+ },
+ {
+  "iou": 0.5077,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5689,
+  "aspect_sim": 0.866,
+  "size_sim": 0.0,
+  "score": 63.67,
+  "ours_box": [
+   19,
+   27
+  ],
+  "wiki_box": [
+   39,
+   64
+  ],
+  "id": "tomato",
+  "name": "番茄",
+  "en": "Tomato",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tomato_Stage_6.png"
+ },
+ {
+  "iou": 0.421,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6333,
+  "aspect_sim": 0.7034,
+  "size_sim": 0.0,
+  "score": 61.35,
+  "ours_box": [
+   20,
+   34
+  ],
+  "wiki_box": [
+   36,
+   87
+  ],
+  "id": "corn",
+  "name": "玉米",
+  "en": "Corn",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Corn_Stage_6.png"
+ },
+ {
+  "iou": 0.3963,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.8037,
+  "aspect_sim": 0.8531,
+  "size_sim": 0.0,
+  "score": 64.35,
+  "ours_box": [
+   20,
+   35
+  ],
+  "wiki_box": [
+   39,
+   80
+  ],
+  "id": "sunflower",
+  "name": "向日葵",
+  "en": "Sunflower",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sunflower_Stage_5.png"
+ },
+ {
+  "iou": 0.3113,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.5558,
+  "aspect_sim": 0.996,
+  "size_sim": 0.0,
+  "score": 58.26,
+  "ours_box": [
+   19,
+   31
+  ],
+  "wiki_box": [
+   48,
+   78
+  ],
+  "id": "wheat",
+  "name": "小麦",
+  "en": "Wheat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Wheat_Stage_5.png"
+ },
+ {
+  "iou": 0.3642,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6887,
+  "aspect_sim": 0.7917,
+  "size_sim": 0.4238,
+  "score": 63.48,
+  "ours_box": [
+   19,
+   36
+  ],
+  "wiki_box": [
+   16,
+   24
+  ],
+  "id": "amaranth",
+  "name": "苋菜",
+  "en": "Amaranth",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Amaranth_Stage_5.png"
+ },
+ {
+  "iou": 0.6608,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6025,
+  "aspect_sim": 0.3327,
+  "size_sim": 0.0,
+  "score": 65.31,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   48,
+   69
+  ],
+  "id": "artichoke",
+  "name": "洋蓟",
+  "en": "Artichoke",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Artichoke_Stage_6.png"
+ },
+ {
+  "iou": 0.4281,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.6911,
+  "aspect_sim": 0.8791,
+  "size_sim": 0.0,
+  "score": 62.31,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "beet",
+  "name": "甜菜",
+  "en": "Beet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Beet_Stage_5.png"
+ },
+ {
+  "iou": 0.6485,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.3155,
+  "aspect_sim": 0.4783,
+  "size_sim": 0.0,
+  "score": 61.16,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "bok_choy",
+  "name": "小白菜",
+  "en": "Bok Choy",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bok_Choy_Stage_5.png"
+ },
+ {
+  "iou": 0.587,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7583,
+  "aspect_sim": 0.3657,
+  "size_sim": 0.8653,
+  "score": 67.91,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   13,
+   17
+  ],
+  "id": "broccoli",
+  "name": "西兰花",
+  "en": "Broccoli",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Broccoli_Stage_5.png"
+ },
+ {
+  "iou": 0.4376,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.0739,
+  "aspect_sim": 0.7368,
+  "size_sim": 0.0,
+  "score": 53.79,
+  "ours_box": [
+   19,
+   14
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "common_mushroom",
+  "name": "普通蘑菇",
+  "en": "Common Mushroom",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Common_Mushroom.png"
+ },
+ {
+  "iou": 0.6921,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7142,
+  "aspect_sim": 0.6737,
+  "size_sim": 0.0,
+  "score": 71.03,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   48,
+   60
+  ],
+  "id": "cranberries",
+  "name": "蔓越莓",
+  "en": "Cranberries",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cranberry_Stage_6.png"
+ },
+ {
+  "iou": 0.7338,
+  "dhash_sim": 0.4531,
+  "palette_cov": 1.0,
+  "color_sim": 0.8598,
+  "aspect_sim": 0.5404,
+  "size_sim": 0.0,
+  "score": 69.38,
+  "ours_box": [
+   19,
+   14
+  ],
+  "wiki_box": [
+   44,
+   60
+  ],
+  "id": "eggplant",
+  "name": "茄子",
+  "en": "Eggplant",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Eggplant_Stage_6.png"
+ },
+ {
+  "iou": 0.2944,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.5884,
+  "aspect_sim": 0.7895,
+  "size_sim": 0.0,
+  "score": 55.86,
+  "ours_box": [
+   19,
+   30
+  ],
+  "wiki_box": [
+   36,
+   72
+  ],
+  "id": "fairy_rose",
+  "name": "仙女玫瑰",
+  "en": "Fairy Rose",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fairy_Rose_Stage_5.png"
+ },
+ {
+  "iou": 0.3649,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.7371,
+  "aspect_sim": 0.8421,
+  "size_sim": 0.8285,
+  "score": 64.57,
+  "ours_box": [
+   19,
+   29
+  ],
+  "wiki_box": [
+   16,
+   29
+  ],
+  "id": "grape",
+  "name": "葡萄",
+  "en": "Grape",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Grape_Stage_6.png"
+ },
+ {
+  "iou": 0.4917,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6517,
+  "aspect_sim": 0.5333,
+  "size_sim": 0.0,
+  "score": 60.8,
+  "ours_box": [
+   25,
+   15
+  ],
+  "wiki_box": [
+   48,
+   54
+  ],
+  "id": "pumpkin",
+  "name": "南瓜",
+  "en": "Pumpkin",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pumpkin_Stage_6.png"
+ },
+ {
+  "iou": 0.5343,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6797,
+  "aspect_sim": 0.7042,
+  "size_sim": 0.4905,
+  "score": 67.9,
+  "ours_box": [
+   20,
+   26
+  ],
+  "wiki_box": [
+   13,
+   24
+  ],
+  "id": "sweet_gem_berry",
+  "name": "甜宝石浆果",
+  "en": "Sweet Gem Berry",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Sweet_Gem_Berry_Stage_6.png"
+ },
+ {
+  "iou": 0.37,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7528,
+  "aspect_sim": 0.593,
+  "size_sim": 0.0,
+  "score": 60.51,
+  "ours_box": [
+   19,
+   13
+  ],
+  "wiki_box": [
+   39,
+   45
+  ],
+  "id": "yam",
+  "name": "山药",
+  "en": "Yam",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Yam_Stage_5.png"
+ },
+ {
+  "iou": 0.5747,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.1722,
+  "aspect_sim": 0.3429,
+  "size_sim": 0.0,
+  "score": 55.44,
+  "ours_box": [
+   25,
+   12
+  ],
+  "wiki_box": [
+   45,
+   63
+  ],
+  "id": "powdermelon",
+  "name": "霜瓜",
+  "en": "Powdermelon",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Powdermelon_Stage_6.png"
+ },
+ {
+  "iou": 0.3497,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3155,
+  "aspect_sim": 0.6,
+  "size_sim": 0.0,
+  "score": 53.72,
+  "ours_box": [
+   20,
+   21
+  ],
+  "wiki_box": [
+   8,
+   14
+  ],
+  "id": "winter_root",
+  "name": "冬根",
+  "en": "Winter Root",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Winter_Root.png"
+ },
+ {
+  "iou": 0.3919,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.6002,
+  "aspect_sim": 0.5804,
+  "size_sim": 0.6833,
+  "score": 63.42,
+  "ours_box": [
+   20,
+   25
+  ],
+  "wiki_box": [
+   13,
+   28
+  ],
+  "id": "ancient_fruit",
+  "name": "上古水果",
+  "en": "Ancient Fruit",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Ancient_Fruit_Stage_6.png"
+ },
+ {
+  "iou": 0.557,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6681,
+  "aspect_sim": 0.5926,
+  "size_sim": 0.8209,
+  "score": 68.64,
+  "ours_box": [
+   19,
+   19
+  ],
+  "wiki_box": [
+   16,
+   27
+  ],
+  "id": "cactus_fruit",
+  "name": "仙人掌果",
+  "en": "Cactus Fruit",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cactus_Stage_6.png"
+ },
+ {
+  "iou": 0.3739,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.6029,
+  "aspect_sim": 0.6316,
+  "size_sim": 0.9868,
+  "score": 61.2,
+  "ours_box": [
+   19,
+   20
+  ],
+  "wiki_box": [
+   15,
+   25
+  ],
+  "id": "fiber",
+  "name": "纤维",
+  "en": "Fiber",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fiber_Stage_5.png"
+ },
+ {
+  "iou": 0.6066,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4619,
+  "aspect_sim": 0.4678,
+  "size_sim": 0.0,
+  "score": 62.31,
+  "ours_box": [
+   19,
+   16
+  ],
+  "wiki_box": [
+   45,
+   81
+  ],
+  "id": "qi_fruit",
+  "name": "齐瓜",
+  "en": "Qi Fruit",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Qi_Fruit_Stage_5.png"
+ }
+]

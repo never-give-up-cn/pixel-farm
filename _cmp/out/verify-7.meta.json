@@ -1,0 +1,311 @@
+{
+ "chunk": 7,
+ "count": 30,
+ "cell": 48,
+ "perRow": 16,
+ "rows": 2,
+ "w": 768,
+ "h": 96,
+ "items": [
+  {
+   "cat": "npcs",
+   "id": "robin",
+   "name": "罗宾",
+   "en": "Robin",
+   "ci": 2,
+   "role": "icon3",
+   "file": "Robin_Portrait.png",
+   "path": "/mediawiki/images/en/6/6b/Robin_Portrait.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "sandy",
+   "name": "桑迪",
+   "en": "Sandy",
+   "ci": 0,
+   "role": "icon",
+   "file": "Sandy.png",
+   "path": "/mediawiki/images/en/4/4e/Sandy.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "sandy",
+   "name": "桑迪",
+   "en": "Sandy",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Portrait_Sandy.png",
+   "path": "/mediawiki/images/en/4/40/Portrait_Sandy.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "sandy",
+   "name": "桑迪",
+   "en": "Sandy",
+   "ci": 2,
+   "role": "icon3",
+   "file": "Sandy_Portrait.png",
+   "path": "/mediawiki/images/en/e/e3/Sandy_Portrait.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "vincent",
+   "name": "文森特",
+   "en": "Vincent",
+   "ci": 0,
+   "role": "icon",
+   "file": "Vincent.png",
+   "path": "/mediawiki/images/en/f/f1/Vincent.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "vincent",
+   "name": "文森特",
+   "en": "Vincent",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Portrait_Vincent.png",
+   "path": "/mediawiki/images/en/d/d7/Portrait_Vincent.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "vincent",
+   "name": "文森特",
+   "en": "Vincent",
+   "ci": 2,
+   "role": "icon3",
+   "file": "Vincent_Portrait.png",
+   "path": "/mediawiki/images/en/6/6e/Vincent_Portrait.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "willy",
+   "name": "威利",
+   "en": "Willy",
+   "ci": 0,
+   "role": "icon",
+   "file": "Willy.png",
+   "path": "/mediawiki/images/en/8/82/Willy.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "willy",
+   "name": "威利",
+   "en": "Willy",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Portrait_Willy.png",
+   "path": "/mediawiki/images/en/0/09/Portrait_Willy.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "willy",
+   "name": "威利",
+   "en": "Willy",
+   "ci": 2,
+   "role": "icon3",
+   "file": "Willy_Portrait.png",
+   "path": "/mediawiki/images/en/6/64/Willy_Portrait.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "wizard",
+   "name": "法师",
+   "en": "Wizard",
+   "ci": 0,
+   "role": "icon",
+   "file": "Wizard.png",
+   "path": "/mediawiki/images/en/c/c7/Wizard.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "wizard",
+   "name": "法师",
+   "en": "Wizard",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Portrait_Wizard.png",
+   "path": "/mediawiki/images/en/d/dd/Portrait_Wizard.png"
+  },
+  {
+   "cat": "npcs",
+   "id": "wizard",
+   "name": "法师",
+   "en": "Wizard",
+   "ci": 2,
+   "role": "icon3",
+   "file": "Wizard_Portrait.png",
+   "path": "/mediawiki/images/en/5/5f/Wizard_Portrait.png"
+  },
+  {
+   "cat": "animals",
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "ci": 0,
+   "role": "icon",
+   "file": "Chicken.png",
+   "path": "/mediawiki/images/en/a/a3/Chicken.png"
+  },
+  {
+   "cat": "animals",
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Chicken_Animal.png",
+   "path": "/mediawiki/images/en/3/3b/Chicken_Animal.png"
+  },
+  {
+   "cat": "animals",
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "ci": 2,
+   "role": "extra",
+   "file": "White_Chicken.png",
+   "path": "/mediawiki/images/en/2/22/White_Chicken.png"
+  },
+  {
+   "cat": "animals",
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "ci": 3,
+   "role": "extra",
+   "file": "Brown_Chicken.png",
+   "path": "/mediawiki/images/en/f/fd/Brown_Chicken.png"
+  },
+  {
+   "cat": "animals",
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "ci": 4,
+   "role": "extra",
+   "file": "Blue_Chicken.png",
+   "path": "/mediawiki/images/en/6/61/Blue_Chicken.png"
+  },
+  {
+   "cat": "animals",
+   "id": "duck",
+   "name": "鸭",
+   "en": "Duck",
+   "ci": 0,
+   "role": "icon",
+   "file": "Duck.png",
+   "path": "/mediawiki/images/en/3/38/Duck.png"
+  },
+  {
+   "cat": "animals",
+   "id": "duck",
+   "name": "鸭",
+   "en": "Duck",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Duck_Animal.png",
+   "path": "/mediawiki/images/en/f/f0/Duck_Animal.png"
+  },
+  {
+   "cat": "animals",
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "ci": 0,
+   "role": "icon",
+   "file": "Cow.png",
+   "path": "/mediawiki/images/en/8/84/Cow.png"
+  },
+  {
+   "cat": "animals",
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Cow_Animal.png",
+   "path": "/mediawiki/images/en/f/f5/Cow_Animal.png"
+  },
+  {
+   "cat": "animals",
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "ci": 2,
+   "role": "extra",
+   "file": "White_Cow.png",
+   "path": "/mediawiki/images/en/3/36/White_Cow.png"
+  },
+  {
+   "cat": "animals",
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "ci": 3,
+   "role": "extra",
+   "file": "Brown_Cow.png",
+   "path": "/mediawiki/images/en/3/3e/Brown_Cow.png"
+  },
+  {
+   "cat": "animals",
+   "id": "sheep",
+   "name": "羊",
+   "en": "Sheep",
+   "ci": 0,
+   "role": "icon",
+   "file": "Sheep.png",
+   "path": "/mediawiki/images/en/c/cc/Sheep.png"
+  },
+  {
+   "cat": "animals",
+   "id": "sheep",
+   "name": "羊",
+   "en": "Sheep",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Sheep_Animal.png",
+   "path": "/mediawiki/images/en/b/b1/Sheep_Animal.png"
+  },
+  {
+   "cat": "animals",
+   "id": "pig",
+   "name": "猪",
+   "en": "Pig",
+   "ci": 0,
+   "role": "icon",
+   "file": "Pig.png",
+   "path": "/mediawiki/images/en/3/30/Pig.png"
+  },
+  {
+   "cat": "animals",
+   "id": "pig",
+   "name": "猪",
+   "en": "Pig",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Pig_Animal.png",
+   "path": "/mediawiki/images/en/9/9e/Pig_Animal.png"
+  },
+  {
+   "cat": "animals",
+   "id": "rabbit",
+   "name": "兔",
+   "en": "Rabbit",
+   "ci": 0,
+   "role": "icon",
+   "file": "Rabbit.png",
+   "path": "/mediawiki/images/en/f/fd/Rabbit.png"
+  },
+  {
+   "cat": "animals",
+   "id": "rabbit",
+   "name": "兔",
+   "en": "Rabbit",
+   "ci": 1,
+   "role": "icon2",
+   "file": "Rabbit_Animal.png",
+   "path": "/mediawiki/images/en/d/d0/Rabbit_Animal.png"
+  }
+ ]
+}

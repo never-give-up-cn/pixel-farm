@@ -1,0 +1,674 @@
+[
+ {
+  "iou": 0.4116,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7554,
+  "aspect_sim": 0.6,
+  "size_sim": 0.0,
+  "score": 62.49,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "wine",
+  "name": "葡萄酒",
+  "en": "Wine",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Wine.png"
+ },
+ {
+  "iou": 0.8682,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.3597,
+  "aspect_sim": 0.84,
+  "size_sim": 0.464,
+  "score": 74.35,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   10,
+   14
+  ],
+  "id": "juice",
+  "name": "果汁",
+  "en": "Juice",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Juice.png"
+ },
+ {
+  "iou": 0.7432,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.866,
+  "aspect_sim": 0.6,
+  "size_sim": 0.9357,
+  "score": 76.28,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "beer",
+  "name": "啤酒",
+  "en": "Beer",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Beer.png"
+ },
+ {
+  "iou": 0.6529,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4774,
+  "aspect_sim": 0.8182,
+  "size_sim": 0.0,
+  "score": 66.8,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   33,
+   45
+  ],
+  "id": "pale_ale",
+  "name": "淡啤酒",
+  "en": "Pale Ale",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Pale_Ale.png"
+ },
+ {
+  "iou": 0.5191,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.4088,
+  "aspect_sim": 0.5625,
+  "size_sim": 1.0,
+  "score": 62.33,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "mead",
+  "name": "蜂蜜酒",
+  "en": "Mead",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mead.png"
+ },
+ {
+  "iou": 0.5534,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.9065,
+  "aspect_sim": 0.9208,
+  "size_sim": 0.2244,
+  "score": 73.34,
+  "ours_box": [
+   17,
+   20
+  ],
+  "wiki_box": [
+   12,
+   13
+  ],
+  "id": "coffee",
+  "name": "咖啡",
+  "en": "Coffee",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Coffee.png"
+ },
+ {
+  "iou": 0.4904,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8919,
+  "aspect_sim": 0.68,
+  "size_sim": 0.3666,
+  "score": 70.79,
+  "ours_box": [
+   17,
+   20
+  ],
+  "wiki_box": [
+   15,
+   12
+  ],
+  "id": "green_tea",
+  "name": "绿茶",
+  "en": "Green Tea",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Green_Tea.png"
+ },
+ {
+  "iou": 0.8609,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.2953,
+  "aspect_sim": 0.8654,
+  "size_sim": 0.2088,
+  "score": 71.51,
+  "ours_box": [
+   16,
+   18
+  ],
+  "wiki_box": [
+   10,
+   13
+  ],
+  "id": "jelly",
+  "name": "果酱",
+  "en": "Jelly",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jelly.png"
+ },
+ {
+  "iou": 0.804,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.403,
+  "aspect_sim": 0.8654,
+  "size_sim": 0.2088,
+  "score": 71.74,
+  "ours_box": [
+   16,
+   18
+  ],
+  "wiki_box": [
+   10,
+   13
+  ],
+  "id": "pickles",
+  "name": "腌菜",
+  "en": "Pickles",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pickles.png"
+ },
+ {
+  "iou": 0.8169,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.873,
+  "aspect_sim": 0.8654,
+  "size_sim": 0.0,
+  "score": 79.69,
+  "ours_box": [
+   16,
+   18
+  ],
+  "wiki_box": [
+   30,
+   39
+  ],
+  "id": "honey",
+  "name": "蜂蜜",
+  "en": "Honey",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Honey.png"
+ },
+ {
+  "iou": 0.8038,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.249,
+  "aspect_sim": 0.9,
+  "size_sim": 0.0,
+  "score": 69.04,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   30,
+   45
+  ],
+  "id": "vinegar",
+  "name": "醋",
+  "en": "Vinegar",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Vinegar.png"
+ },
+ {
+  "iou": 0.7248,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8448,
+  "aspect_sim": 0.6462,
+  "size_sim": 0.0,
+  "score": 73.38,
+  "ours_box": [
+   20,
+   14
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "cheese",
+  "name": "奶酪",
+  "en": "Cheese",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cheese.png"
+ },
+ {
+  "iou": 0.6428,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.8422,
+  "aspect_sim": 0.8167,
+  "size_sim": 0.0,
+  "score": 68.83,
+  "ours_box": [
+   20,
+   14
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "goat_cheese",
+  "name": "山羊奶酪",
+  "en": "Goat Cheese",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Goat_Cheese.png"
+ },
+ {
+  "iou": 0.8466,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2939,
+  "aspect_sim": 0.7788,
+  "size_sim": 0.0,
+  "score": 71.03,
+  "ours_box": [
+   16,
+   18
+  ],
+  "wiki_box": [
+   27,
+   39
+  ],
+  "id": "mayonnaise",
+  "name": "蛋黄酱",
+  "en": "Mayonnaise",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mayonnaise.png"
+ },
+ {
+  "iou": 0.8409,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.4592,
+  "aspect_sim": 0.9519,
+  "size_sim": 0.3034,
+  "score": 78.15,
+  "ours_box": [
+   16,
+   18
+  ],
+  "wiki_box": [
+   11,
+   13
+  ],
+  "id": "duck_mayonnaise",
+  "name": "鸭蛋黄酱",
+  "en": "Duck Mayonnaise",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Duck_Mayonnaise.png"
+ },
+ {
+  "iou": 0.6914,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4163,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.8308,
+  "score": 70.62,
+  "ours_box": [
+   18,
+   12
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "cloth",
+  "name": "布",
+  "en": "Cloth",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cloth.png"
+ },
+ {
+  "iou": 0.8636,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.6665,
+  "aspect_sim": 0.8333,
+  "size_sim": 0.0,
+  "score": 73.93,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   24,
+   48
+  ],
+  "id": "oil",
+  "name": "油",
+  "en": "Oil",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Oil.png"
+ },
+ {
+  "iou": 0.8241,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.6852,
+  "aspect_sim": 0.9524,
+  "size_sim": 0.2426,
+  "score": 80.74,
+  "ours_box": [
+   12,
+   20
+  ],
+  "wiki_box": [
+   8,
+   14
+  ],
+  "id": "truffle_oil",
+  "name": "松露油",
+  "en": "Truffle Oil",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Truffle_Oil.png"
+ },
+ {
+  "iou": 0.8165,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4029,
+  "aspect_sim": 0.9744,
+  "size_sim": 0.0,
+  "score": 74.66,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "rice",
+  "name": "大米",
+  "en": "Rice",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rice.png"
+ },
+ {
+  "iou": 0.8351,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.7841,
+  "size_sim": 0.0,
+  "score": 66.33,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   45,
+   39
+  ],
+  "id": "sugar",
+  "name": "糖",
+  "en": "Sugar",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sugar.png"
+ },
+ {
+  "iou": 0.7843,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.0068,
+  "aspect_sim": 0.9352,
+  "size_sim": 0.0,
+  "score": 65.17,
+  "ours_box": [
+   19,
+   21
+  ],
+  "wiki_box": [
+   33,
+   39
+  ],
+  "id": "flour",
+  "name": "面粉",
+  "en": "Flour",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Wheat_Flour.png"
+ },
+ {
+  "iou": 0.4253,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.5915,
+  "aspect_sim": 0.3733,
+  "size_sim": 0.0,
+  "score": 56.3,
+  "ours_box": [
+   20,
+   8
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "dried_fruit",
+  "name": "水果干",
+  "en": "Dried Fruit",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dried_Fruit.png"
+ },
+ {
+  "iou": 0.4562,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.534,
+  "aspect_sim": 0.3733,
+  "size_sim": 0.0,
+  "score": 57.62,
+  "ours_box": [
+   20,
+   8
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "dried_mushrooms",
+  "name": "蘑菇干",
+  "en": "Dried Mushrooms",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dried_Mushrooms.png"
+ },
+ {
+  "iou": 0.4137,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.8516,
+  "aspect_sim": 0.4308,
+  "size_sim": 0.0,
+  "score": 59.49,
+  "ours_box": [
+   20,
+   8
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "raisins",
+  "name": "葡萄干",
+  "en": "Raisins",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Raisins.png"
+ },
+ {
+  "iou": 0.5372,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4668,
+  "aspect_sim": 0.4737,
+  "size_sim": 0.8292,
+  "score": 62.63,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "roe",
+  "name": "鱼籽",
+  "en": "Roe",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Roe.png"
+ },
+ {
+  "iou": 0.626,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.3392,
+  "aspect_sim": 0.3722,
+  "size_sim": 0.8959,
+  "score": 61.76,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   11,
+   14
+  ],
+  "id": "aged_roe",
+  "name": "陈年鱼籽",
+  "en": "Aged Roe",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Aged_Roe.png"
+ },
+ {
+  "iou": 0.6485,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4198,
+  "aspect_sim": 0.4737,
+  "size_sim": 0.8643,
+  "score": 65.43,
+  "ours_box": [
+   19,
+   9
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "caviar",
+  "name": "鱼子酱",
+  "en": "Caviar",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Caviar.png"
+ },
+ {
+  "iou": 0.3858,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2972,
+  "aspect_sim": 0.6957,
+  "size_sim": 0.6383,
+  "score": 59.62,
+  "ours_box": [
+   23,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "smoked_fish",
+  "name": "熏鱼",
+  "en": "Smoked Fish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Smoked_Fish.png"
+ }
+]

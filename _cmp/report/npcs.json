@@ -1,0 +1,818 @@
+[
+ {
+  "iou": 0.7733,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7447,
+  "aspect_sim": 0.9503,
+  "size_sim": 0.789,
+  "score": 79.07,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   52,
+   57
+  ],
+  "id": "abigail",
+  "name": "阿比盖尔",
+  "en": "Abigail",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Abigail.png"
+ },
+ {
+  "iou": 0.6541,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7089,
+  "aspect_sim": 0.9176,
+  "size_sim": 0.5743,
+  "score": 75.12,
+  "ours_box": [
+   48,
+   54
+  ],
+  "wiki_box": [
+   62,
+   64
+  ],
+  "id": "alex",
+  "name": "亚历克斯",
+  "en": "Alex",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Alex.png"
+ },
+ {
+  "iou": 0.8022,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.7886,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 79.7,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "elliott",
+  "name": "艾利欧特",
+  "en": "Elliott",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Elliott.png"
+ },
+ {
+  "iou": 0.6974,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.7795,
+  "aspect_sim": 0.9392,
+  "size_sim": 0.6651,
+  "score": 78.77,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   55,
+   61
+  ],
+  "id": "emily",
+  "name": "艾米丽",
+  "en": "Emily",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Emily.png"
+ },
+ {
+  "iou": 0.8209,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.9159,
+  "aspect_sim": 0.96,
+  "size_sim": 0.5616,
+  "score": 81.09,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   61,
+   61
+  ],
+  "id": "haley",
+  "name": "海莉",
+  "en": "Haley",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Haley.png"
+ },
+ {
+  "iou": 0.7781,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8464,
+  "aspect_sim": 0.9354,
+  "size_sim": 0.5876,
+  "score": 82.39,
+  "ours_box": [
+   48,
+   53
+  ],
+  "wiki_box": [
+   61,
+   63
+  ],
+  "id": "harvey",
+  "name": "哈维",
+  "en": "Harvey",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Harvey.png"
+ },
+ {
+  "iou": 0.6505,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.7306,
+  "aspect_sim": 0.9519,
+  "size_sim": 0.7526,
+  "score": 77.51,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   53,
+   58
+  ],
+  "id": "leah",
+  "name": "莉亚",
+  "en": "Leah",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Leah.png"
+ },
+ {
+  "iou": 0.716,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7788,
+  "aspect_sim": 0.8407,
+  "size_sim": 0.6297,
+  "score": 76.91,
+  "ours_box": [
+   48,
+   58
+  ],
+  "wiki_box": [
+   63,
+   64
+  ],
+  "id": "maru",
+  "name": "玛鲁",
+  "en": "Maru",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Maru.png"
+ },
+ {
+  "iou": 0.6137,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8478,
+  "aspect_sim": 0.6779,
+  "size_sim": 0.9265,
+  "score": 73.79,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   41,
+   63
+  ],
+  "id": "penny",
+  "name": "潘妮",
+  "en": "Penny",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Penny.png"
+ },
+ {
+  "iou": 0.7273,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7615,
+  "aspect_sim": 0.9333,
+  "size_sim": 0.6228,
+  "score": 77.88,
+  "ours_box": [
+   48,
+   54
+  ],
+  "wiki_box": [
+   60,
+   63
+  ],
+  "id": "sam",
+  "name": "山姆",
+  "en": "Sam",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Sam.png"
+ },
+ {
+  "iou": 0.7744,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.8724,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 80.75,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "sebastian",
+  "name": "塞巴斯蒂安",
+  "en": "Sebastian",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Sebastian.png"
+ },
+ {
+  "iou": 0.8108,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.8575,
+  "aspect_sim": 0.96,
+  "size_sim": 0.5291,
+  "score": 85.06,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   62,
+   62
+  ],
+  "id": "shane",
+  "name": "谢恩",
+  "en": "Shane",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Shane.png"
+ },
+ {
+  "iou": 0.8136,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8694,
+  "aspect_sim": 0.9425,
+  "size_sim": 0.5972,
+  "score": 83.92,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   57,
+   63
+  ],
+  "id": "caroline",
+  "name": "卡洛琳",
+  "en": "Caroline",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Caroline.png"
+ },
+ {
+  "iou": 0.7476,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.8224,
+  "aspect_sim": 0.915,
+  "size_sim": 0.5136,
+  "score": 79.92,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   61
+  ],
+  "id": "clint",
+  "name": "克林特",
+  "en": "Clint",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Clint.png"
+ },
+ {
+  "iou": 0.7595,
+  "dhash_sim": 0.7812,
+  "palette_cov": 1.0,
+  "color_sim": 0.7885,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 82.17,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "demetrius",
+  "name": "德米特里厄斯",
+  "en": "Demetrius",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Demetrius.png"
+ },
+ {
+  "iou": 0.6947,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.2265,
+  "aspect_sim": 0.7763,
+  "size_sim": 0.7881,
+  "score": 65.63,
+  "ours_box": [
+   48,
+   53
+  ],
+  "wiki_box": [
+   49,
+   42
+  ],
+  "id": "dwarf",
+  "name": "矮人",
+  "en": "Dwarf",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Dwarf.png"
+ },
+ {
+  "iou": 0.7138,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.5786,
+  "aspect_sim": 0.8933,
+  "size_sim": 0.0,
+  "score": 73.09,
+  "ours_box": [
+   48,
+   59
+  ],
+  "wiki_box": [
+   102,
+   112
+  ],
+  "id": "evelyn",
+  "name": "艾芙琳",
+  "en": "Evelyn",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Evelyn.png"
+ },
+ {
+  "iou": 0.8316,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.8655,
+  "aspect_sim": 0.9683,
+  "size_sim": 0.8139,
+  "score": 85.12,
+  "ours_box": [
+   52,
+   50
+  ],
+  "wiki_box": [
+   58,
+   54
+  ],
+  "id": "george",
+  "name": "乔治",
+  "en": "George",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "George.png"
+ },
+ {
+  "iou": 0.7656,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.7384,
+  "aspect_sim": 0.945,
+  "size_sim": 0.4814,
+  "score": 79.34,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   63
+  ],
+  "id": "gus",
+  "name": "格斯",
+  "en": "Gus",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Gus.png"
+ },
+ {
+  "iou": 0.6485,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.8087,
+  "aspect_sim": 0.9734,
+  "size_sim": 0.6294,
+  "score": 75.4,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   57,
+   61
+  ],
+  "id": "jas",
+  "name": "贾斯",
+  "en": "Jas",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Jas.png"
+ },
+ {
+  "iou": 0.7529,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.8538,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 80.45,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "jodi",
+  "name": "乔迪",
+  "en": "Jodi",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Jodi.png"
+ },
+ {
+  "iou": 0.7828,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.863,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 83.67,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "kent",
+  "name": "肯特",
+  "en": "Kent",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Kent.png"
+ },
+ {
+  "iou": 0.6313,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7678,
+  "aspect_sim": 0.9432,
+  "size_sim": 0.3781,
+  "score": 73.97,
+  "ours_box": [
+   37,
+   43
+  ],
+  "wiki_box": [
+   52,
+   57
+  ],
+  "id": "krobus",
+  "name": "科罗布斯",
+  "en": "Krobus",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Krobus.png"
+ },
+ {
+  "iou": 0.7424,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6221,
+  "aspect_sim": 0.9295,
+  "size_sim": 0.0,
+  "score": 74.02,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   126,
+   122
+  ],
+  "id": "leo",
+  "name": "雷欧",
+  "en": "Leo",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Leo.png"
+ },
+ {
+  "iou": 0.7358,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.7359,
+  "aspect_sim": 0.8182,
+  "size_sim": 0.6254,
+  "score": 79.74,
+  "ours_box": [
+   48,
+   55
+  ],
+  "wiki_box": [
+   64,
+   60
+  ],
+  "id": "lewis",
+  "name": "刘易斯",
+  "en": "Lewis",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Lewis.png"
+ },
+ {
+  "iou": 0.8818,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.7944,
+  "aspect_sim": 0.945,
+  "size_sim": 0.4814,
+  "score": 81.16,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   63
+  ],
+  "id": "linus",
+  "name": "莱纳斯",
+  "en": "Linus",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Linus.png"
+ },
+ {
+  "iou": 0.7224,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7853,
+  "aspect_sim": 0.9937,
+  "size_sim": 0.6628,
+  "score": 79.2,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   57,
+   59
+  ],
+  "id": "marnie",
+  "name": "玛妮",
+  "en": "Marnie",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Marnie.png"
+ },
+ {
+  "iou": 0.6758,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.646,
+  "aspect_sim": 0.876,
+  "size_sim": 0.6532,
+  "score": 73.55,
+  "ours_box": [
+   48,
+   53
+  ],
+  "wiki_box": [
+   61,
+   59
+  ],
+  "id": "pam",
+  "name": "潘姆",
+  "en": "Pam",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Pam.png"
+ },
+ {
+  "iou": 0.7224,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.7044,
+  "aspect_sim": 0.96,
+  "size_sim": 0.4656,
+  "score": 78.85,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "pierre",
+  "name": "皮埃尔",
+  "en": "Pierre",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Pierre.png"
+ },
+ {
+  "iou": 0.7535,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.6741,
+  "aspect_sim": 0.9755,
+  "size_sim": 0.5627,
+  "score": 79.66,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   59,
+   63
+  ],
+  "id": "robin",
+  "name": "罗宾",
+  "en": "Robin",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Robin.png"
+ },
+ {
+  "iou": 0.7545,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.7347,
+  "aspect_sim": 0.9445,
+  "size_sim": 0.5454,
+  "score": 79.58,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   62,
+   61
+  ],
+  "id": "sandy",
+  "name": "桑迪",
+  "en": "Sandy",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Sandy.png"
+ },
+ {
+  "iou": 0.5637,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6453,
+  "aspect_sim": 0.8301,
+  "size_sim": 0.6926,
+  "score": 71.48,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   51,
+   64
+  ],
+  "id": "vincent",
+  "name": "文森特",
+  "en": "Vincent",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Vincent.png"
+ },
+ {
+  "iou": 0.8182,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3564,
+  "aspect_sim": 0.9295,
+  "size_sim": 0.5294,
+  "score": 74.96,
+  "ours_box": [
+   48,
+   50
+  ],
+  "wiki_box": [
+   63,
+   61
+  ],
+  "id": "willy",
+  "name": "威利",
+  "en": "Willy",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Willy.png"
+ },
+ {
+  "iou": 0.6871,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7581,
+  "aspect_sim": 0.7869,
+  "size_sim": 0.6644,
+  "score": 75.99,
+  "ours_box": [
+   48,
+   61
+  ],
+  "wiki_box": [
+   64,
+   64
+  ],
+  "id": "wizard",
+  "name": "法师",
+  "en": "Wizard",
+  "status": "ok",
+  "wiki_scale": 2,
+  "variants": 1,
+  "wikiFile": "Wizard.png"
+ }
+]

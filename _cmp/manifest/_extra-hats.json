@@ -1,0 +1,25 @@
+{
+  "hats": {
+    "golden_mask": [
+      "Golden Mask (hat).png"
+    ],
+    "copper_pan": [
+      "Copper Pan (hat).png"
+    ]
+  },
+  "_primary": {
+    "golden_mask": "Golden Mask (hat).png",
+    "copper_pan": "Copper Pan (hat).png"
+  },
+  "_note": {
+    "golden_mask": "wiki 上同时存在 Golden Mask.png (48x48, 沙漠神器 Artifact 的图标) 和 Golden Mask (hat).png (54x54, 帽子本体)。/Hats 页面的 'Golden Mask (hat)' 行用的是后者。项目画的是帽子，所以必须用 Golden Mask (hat).png -> /mediawiki/images/en/c/c7/Golden_Mask_%28hat%29.png",
+    "copper_pan": "同理：Copper Pan.png (48x48, 厨房厨具工具的图标) vs Copper Pan (hat).png (54x54, 帽子本体)。/Hats 页面的 'Copper Pan (hat)' 行用的是后者 -> /mediawiki/images/en/f/fc/Copper_Pan_%28hat%29.png",
+    "why": "wiki 上帽子的图片文件名有三种命名：1) 普通名 'X.png'（绝大多数）2) 带前缀 'Hat_X.png'（少数）3) 带括号后缀 'X (hat).png'（用来和同名道具区分，如 Golden Mask / Copper Pan / Gold Pan / Iron Pan / Steel Pan / Iridium Pan）。候选生成器只试了前两种，所以这 2 顶帽子被匹配成了同名道具的图标。",
+    "verified": "两个新路径都已用无头 Chrome 直接打开验证：Golden_Mask_(hat).png (54x54)、Copper_Pan_(hat).png (54x54) 均能正常加载出图；同时 Hat_Golden_Mask.png / Hat_Copper_Pan.png 在 wiki 上不存在。",
+    "sources": [
+      "https://stardewvalleywiki.com/Hats  (渲染后 HTML 的表格行里直接给出 /mediawiki/images/en/c/c7/Golden_Mask_%28hat%29.png 与 /mediawiki/images/en/f/fc/Copper_Pan_%28hat%29.png)",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Golden%20Mask  (列出 Golden Mask.png 和 Golden Mask (hat).png 两个文件)",
+      "https://stardewvalleywiki.com/File:Golden_Mask.png  (确认 48x48 是神器图，路径 /mediawiki/images/en/7/7e/Golden_Mask.png)"
+    ]
+  }
+}

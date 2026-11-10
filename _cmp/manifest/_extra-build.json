@@ -1,0 +1,60 @@
+{
+  "buildings": {
+    "farmhouse": ["House_(tier_1).png", "House_(tier_2).png", "House_(tier_3).png", "Farmhouse_with_Attic.png", "Farmhouse_with_Cubby.png"],
+    "cabin": ["Plank_Cabin_Stage_1.png", "Plank_Cabin_Stage_2.png", "Plank_Cabin_Stage_3.png"],
+    "shipping_bin": ["ShippingBox.png", "Shipping.png"],
+    "pet_bowl": ["Pet_Bowl_Wood.png", "Pet_Bowl_Stone.png", "Pet_Bowl_Hay.png", "Pet_Bowl_empty.png", "Pet_Bowl_full.png"],
+    "stable": ["Horse_Stable.png"]
+  },
+  "animals": {
+    "chicken": ["White_Chicken.png", "Brown_Chicken.png", "Blue_Chicken.png"],
+    "cow": ["White_Cow.png", "Brown_Cow.png"]
+  },
+  "_primary": {
+    "farmhouse": "House_(tier_1).png",
+    "cabin": "Plank_Cabin_Stage_1.png",
+    "shipping_bin": "ShippingBox.png",
+    "pet_bowl": "Pet_Bowl_Wood.png",
+    "stable": "Horse_Stable.png",
+    "chicken": "White_Chicken.png",
+    "cow": "White_Cow.png"
+  },
+  "_resolved_paths": {
+    "farmhouse": ["/mediawiki/images/en/3/30/House_%28tier_1%29.png", "/mediawiki/images/en/5/5d/House_%28tier_2%29.png", "/mediawiki/images/en/5/51/House_%28tier_3%29.png", "/mediawiki/images/en/e/ee/Farmhouse_with_Attic.png", "/mediawiki/images/en/6/61/Farmhouse_with_Cubby.png"],
+    "cabin": ["/mediawiki/images/en/a/ad/Plank_Cabin_Stage_1.png", "/mediawiki/images/en/0/09/Plank_Cabin_Stage_2.png", "/mediawiki/images/en/7/71/Plank_Cabin_Stage_3.png"],
+    "shipping_bin": ["/mediawiki/images/en/5/52/ShippingBox.png", "/mediawiki/images/en/8/82/Shipping.png"],
+    "pet_bowl": ["/mediawiki/images/en/0/05/Pet_Bowl_Wood.png", "/mediawiki/images/en/a/a8/Pet_Bowl_Stone.png", "/mediawiki/images/en/3/3f/Pet_Bowl_Hay.png", "/mediawiki/images/en/6/63/Pet_Bowl_empty.png", "/mediawiki/images/en/a/af/Pet_Bowl_full.png"],
+    "stable": ["/mediawiki/images/en/2/24/Horse_Stable.png"],
+    "chicken": ["/mediawiki/images/en/2/22/White_Chicken.png", "/mediawiki/images/en/f/fd/Brown_Chicken.png", "/mediawiki/images/en/6/61/Blue_Chicken.png"],
+    "cow": ["/mediawiki/images/en/3/36/White_Cow.png", "/mediawiki/images/en/3/3e/Brown_Cow.png"]
+  },
+  "_note": {
+    "filename_form": "文件名用 MediaWiki 存储形式（空格已换成下划线），与已有清单里 Fish_Pond.png / Big_Coop.png 等写法一致；md5 就是对这份下划线形式算的，直接可用。",
+    "farmhouse": "wiki 上没有 Farmhouse.png。基础农舍 exterior 的官方文件名是 House (tier 1).png（见 /Farmhouse 的 Infobox building = House (tier 1).png）；House (tier 2)/(tier 3) 是两次升级后的外观。Farmhouse with Attic.png / with Cubby.png 是装修变体。",
+    "cabin": "wiki 上没有 Cabin.png。官方文件名是 Plank Cabin Stage 1.png（见 /Carpenter's Shop 的 Farm Buildings 表格），Stage 2/3 是升级外观。",
+    "shipping_bin": "官方建筑图是 ShippingBox.png（Carpenter's Shop 表格中 Shipping Bin 一行用的就是它）。Shipping.png 也存在（出货界面/其它语境）。",
+    "pet_bowl": "官方建筑图是 Pet Bowl Wood.png（Carpenter's Shop 表格）。1.6 增加了三种材质变体：Wood / Stone / Hay。Pet Bowl empty.png / full.png 是碗里的空/满状态，不是建筑本体。",
+    "stable": "官方建筑图是 Horse Stable.png（注意不是 Stable.png，wiki 上 File:Stable 前缀下只有 Stable PaintMask.png）。",
+    "chicken": "wiki 上没有 Chicken.png（File:Chicken 前缀下只有 Decal / Mask / Statue 等）。鸡的官方精灵是按颜色分文件：White Chicken.png（白色，官方主图）/ Brown Chicken.png / Blue Chicken.png。",
+    "cow": "wiki 上没有 Cow.png（File:Cow 前缀下只有 Cow Decal / Cowboy Boots 等）。牛的官方精灵按颜色分文件：White Cow.png / Brown Cow.png。",
+    "sources": [
+      "https://stardewvalleywiki.com/Carpenter%27s_Shop?action=raw  (Farm Buildings 表格 -> 全部农场建筑的文件名)",
+      "https://stardewvalleywiki.com/Wizard%27s_Tower?action=raw  (魔法建筑表格)",
+      "https://stardewvalleywiki.com/Farmhouse?action=raw  (Infobox building = House (tier 1).png)",
+      "https://stardewvalleywiki.com/Chicken  (渲染页 -> White/Brown/Blue Chicken.png 实际路径)",
+      "https://stardewvalleywiki.com/File:House_(tier_1).png  (确认 /mediawiki/images/en/3/30/House_%28tier_1%29.png，432x432)",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Farmhouse",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Cabin",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Shipping",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Pet%20Bowl",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Stable",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Horse",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Chicken",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Cow",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:White",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Brown",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:House",
+      "https://stardewvalleywiki.com/Special:PrefixIndex/File:Plank"
+    ]
+  }
+}

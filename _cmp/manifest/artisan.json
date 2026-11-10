@@ -1,0 +1,342 @@
+{
+ "category": "artisan",
+ "items": [
+  {
+   "id": "wine",
+   "name": "葡萄酒",
+   "en": "Wine",
+   "wikiIcon": "/mediawiki/images/en/6/69/Wine.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wine.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "juice",
+   "name": "果汁",
+   "en": "Juice",
+   "wikiIcon": "/mediawiki/images/en/f/f1/Juice.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Juice.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "beer",
+   "name": "啤酒",
+   "en": "Beer",
+   "wikiIcon": "/mediawiki/images/en/b/b3/Beer.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Beer.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pale_ale",
+   "name": "淡啤酒",
+   "en": "Pale Ale",
+   "wikiIcon": "/mediawiki/images/en/7/78/Pale_Ale.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pale_Ale.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mead",
+   "name": "蜂蜜酒",
+   "en": "Mead",
+   "wikiIcon": "/mediawiki/images/en/8/84/Mead.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mead.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "coffee",
+   "name": "咖啡",
+   "en": "Coffee",
+   "wikiIcon": "/mediawiki/images/en/e/e9/Coffee.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Coffee.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "green_tea",
+   "name": "绿茶",
+   "en": "Green Tea",
+   "wikiIcon": "/mediawiki/images/en/8/8f/Green_Tea.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Green_Tea.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "jelly",
+   "name": "果酱",
+   "en": "Jelly",
+   "wikiIcon": "/mediawiki/images/en/0/05/Jelly.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Jelly.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pickles",
+   "name": "腌菜",
+   "en": "Pickles",
+   "wikiIcon": "/mediawiki/images/en/c/c7/Pickles.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pickles.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "honey",
+   "name": "蜂蜜",
+   "en": "Honey",
+   "wikiIcon": "/mediawiki/images/en/c/c6/Honey.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Honey.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vinegar",
+   "name": "醋",
+   "en": "Vinegar",
+   "wikiIcon": "/mediawiki/images/en/f/fe/Vinegar.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Vinegar.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "cheese",
+   "name": "奶酪",
+   "en": "Cheese",
+   "wikiIcon": "/mediawiki/images/en/a/a5/Cheese.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cheese.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "goat_cheese",
+   "name": "山羊奶酪",
+   "en": "Goat Cheese",
+   "wikiIcon": "/mediawiki/images/en/c/c8/Goat_Cheese.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Goat_Cheese.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mayonnaise",
+   "name": "蛋黄酱",
+   "en": "Mayonnaise",
+   "wikiIcon": "/mediawiki/images/en/4/4e/Mayonnaise.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mayonnaise.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "duck_mayonnaise",
+   "name": "鸭蛋黄酱",
+   "en": "Duck Mayonnaise",
+   "wikiIcon": "/mediawiki/images/en/2/23/Duck_Mayonnaise.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Duck_Mayonnaise.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "cloth",
+   "name": "布",
+   "en": "Cloth",
+   "wikiIcon": "/mediawiki/images/en/5/51/Cloth.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cloth.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "oil",
+   "name": "油",
+   "en": "Oil",
+   "wikiIcon": "/mediawiki/images/en/0/06/Oil.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Oil.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "truffle_oil",
+   "name": "松露油",
+   "en": "Truffle Oil",
+   "wikiIcon": "/mediawiki/images/en/3/3d/Truffle_Oil.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Truffle_Oil.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "rice",
+   "name": "大米",
+   "en": "Rice",
+   "wikiIcon": "/mediawiki/images/en/d/da/Rice.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rice.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sugar",
+   "name": "糖",
+   "en": "Sugar",
+   "wikiIcon": "/mediawiki/images/en/a/a9/Sugar.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sugar.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "flour",
+   "name": "面粉",
+   "en": "Flour",
+   "wikiIcon": "/mediawiki/images/en/2/2c/Wheat_Flour.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wheat_Flour.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dried_fruit",
+   "name": "水果干",
+   "en": "Dried Fruit",
+   "wikiIcon": "/mediawiki/images/en/6/66/Dried_Fruit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dried_Fruit.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dried_mushrooms",
+   "name": "蘑菇干",
+   "en": "Dried Mushrooms",
+   "wikiIcon": "/mediawiki/images/en/1/1a/Dried_Mushrooms.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dried_Mushrooms.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "raisins",
+   "name": "葡萄干",
+   "en": "Raisins",
+   "wikiIcon": "/mediawiki/images/en/0/06/Raisins.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Raisins.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "roe",
+   "name": "鱼籽",
+   "en": "Roe",
+   "wikiIcon": "/mediawiki/images/en/5/56/Roe.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Roe.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "aged_roe",
+   "name": "陈年鱼籽",
+   "en": "Aged Roe",
+   "wikiIcon": "/mediawiki/images/en/0/0e/Aged_Roe.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Aged_Roe.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "caviar",
+   "name": "鱼子酱",
+   "en": "Caviar",
+   "wikiIcon": "/mediawiki/images/en/8/89/Caviar.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Caviar.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "smoked_fish",
+   "name": "熏鱼",
+   "en": "Smoked Fish",
+   "wikiIcon": "/mediawiki/images/en/4/4c/Smoked_Fish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Smoked_Fish.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

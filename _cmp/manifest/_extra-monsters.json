@@ -1,0 +1,30 @@
+{
+  "cat": "monsters",
+  "items": {
+    "blue_slime": ["Frost Jelly.png", "Blue Slime Dangerous.png"],
+    "red_slime": ["Red Sludge.png", "Red Slime Dangerous.png"],
+    "big_slime": ["Big Green Slime.png", "Big Purple Slime.png", "Big Blue Slime.png", "Big Red Slime.png", "Big Slime Sprite.png"],
+    "shadow_guy": ["Shadowguy.png"]
+  },
+  "missing": [
+    {
+      "id": "skeleton_warrior",
+      "en": "Skeleton Warrior",
+      "reason": "wiki 上不存在 Skeleton Warrior 这个怪物（/Skeleton_Warrior 为 404，Special:PrefixIndex/File:Skeleton 下 9 个文件里没有它，/Monsters 的完整怪物清单里也没有）。官方只有 Skeleton / Skeleton (dangerous) / Skeleton Mage / Skeleton Mage (dangerous)。"
+    }
+  ],
+  "notes": {
+    "blue_slime": "wiki 上蓝色史莱姆就叫 'Blue Slime (Frost Jelly)'，官方像素图是 Frost Jelly.png（不是 Blue Slime.png，wiki 没这个文件）；另有 Blue Slime Dangerous.png 是危险变体。",
+    "red_slime": "wiki 上红色史莱姆就叫 'Red Slime (Sludge)'，官方像素图是 Red Sludge.png（不是 Red Slime.png）；另有 Red Slime Dangerous.png 是危险变体。",
+    "big_slime": "wiki 的 Big Slime 按颜色拆成 4 张图：Big Green / Big Blue / Big Red / Big Purple Slime.png，另有汇总图 Big Slime Sprite.png。项目 big_slime 的 hp=60 与 wiki 的 Big Green Slime (HP 60) 一致，故排在首位；项目标 loc='skull' 对应的则是 Big Purple Slime (HP 240)。",
+    "shadow_guy": "wiki 上 Shadow Guy 是墓地/谜语 NPC 而非矿井怪物，全 wiki 只有一个 Shadowguy.png（925×537 的大图，不是小精灵图），分类为 Pelican Town images / Krobus images，仅被 Secret Notes 引用。",
+    "skeleton_warrior": "官方没有对应怪物，最接近的官方像素图是 Skeleton Dangerous.png（8/8c）和 Skeleton Mage Dangerous.png（f/f5），但二者是不同怪物，未放入 items。"
+  },
+  "verified_paths": {
+    "Frost Jelly.png": "/mediawiki/images/en/9/9d/Frost_Jelly.png",
+    "Red Sludge.png": "/mediawiki/images/en/b/ba/Red_Sludge.png",
+    "Big Purple Slime.png": "/mediawiki/images/en/9/95/Big_Purple_Slime.png",
+    "Shadowguy.png": "/mediawiki/images/en/f/fb/Shadowguy.png",
+    "Green Slime.png": "/mediawiki/images/en/7/7b/Green_Slime.png"
+  }
+}

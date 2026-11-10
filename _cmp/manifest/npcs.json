@@ -1,0 +1,479 @@
+{
+ "category": "npcs",
+ "items": [
+  {
+   "id": "abigail",
+   "name": "阿比盖尔",
+   "en": "Abigail",
+   "wikiIcon": "/mediawiki/images/en/8/88/Abigail.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Abigail.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/0/08/Abigail_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "alex",
+   "name": "亚历克斯",
+   "en": "Alex",
+   "wikiIcon": "/mediawiki/images/en/0/04/Alex.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Alex.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/5/5e/Alex_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "elliott",
+   "name": "艾利欧特",
+   "en": "Elliott",
+   "wikiIcon": "/mediawiki/images/en/b/bd/Elliott.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Elliott.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/a/a1/Elliott_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "emily",
+   "name": "艾米丽",
+   "en": "Emily",
+   "wikiIcon": "/mediawiki/images/en/2/28/Emily.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Emily.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/f/f9/Emily_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "haley",
+   "name": "海莉",
+   "en": "Haley",
+   "wikiIcon": "/mediawiki/images/en/1/1b/Haley.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Haley.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/d4/Haley_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "harvey",
+   "name": "哈维",
+   "en": "Harvey",
+   "wikiIcon": "/mediawiki/images/en/9/95/Harvey.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Harvey.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/a/a7/Harvey_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "leah",
+   "name": "莉亚",
+   "en": "Leah",
+   "wikiIcon": "/mediawiki/images/en/e/e6/Leah.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Leah.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/6/63/Leah_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "maru",
+   "name": "玛鲁",
+   "en": "Maru",
+   "wikiIcon": "/mediawiki/images/en/f/f8/Maru.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Maru.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/c/c9/Maru_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "penny",
+   "name": "潘妮",
+   "en": "Penny",
+   "wikiIcon": "/mediawiki/images/en/a/ab/Penny.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Penny.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/8/8d/Penny_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "sam",
+   "name": "山姆",
+   "en": "Sam",
+   "wikiIcon": "/mediawiki/images/en/9/94/Sam.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Sam.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/f/fc/Sam_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "sebastian",
+   "name": "塞巴斯蒂安",
+   "en": "Sebastian",
+   "wikiIcon": "/mediawiki/images/en/a/a8/Sebastian.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Sebastian.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/dd/Sebastian_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "shane",
+   "name": "谢恩",
+   "en": "Shane",
+   "wikiIcon": "/mediawiki/images/en/8/8b/Shane.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Shane.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/1/15/Shane_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "caroline",
+   "name": "卡洛琳",
+   "en": "Caroline",
+   "wikiIcon": "/mediawiki/images/en/8/87/Caroline.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Caroline.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "clint",
+   "name": "克林特",
+   "en": "Clint",
+   "wikiIcon": "/mediawiki/images/en/3/31/Clint.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Clint.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "demetrius",
+   "name": "德米特里厄斯",
+   "en": "Demetrius",
+   "wikiIcon": "/mediawiki/images/en/f/f9/Demetrius.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Demetrius.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dwarf",
+   "name": "矮人",
+   "en": "Dwarf",
+   "wikiIcon": "/mediawiki/images/en/e/ed/Dwarf.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Dwarf.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "evelyn",
+   "name": "艾芙琳",
+   "en": "Evelyn",
+   "wikiIcon": "/mediawiki/images/en/8/8e/Evelyn.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Evelyn.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "george",
+   "name": "乔治",
+   "en": "George",
+   "wikiIcon": "/mediawiki/images/en/7/78/George.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "George.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "gus",
+   "name": "格斯",
+   "en": "Gus",
+   "wikiIcon": "/mediawiki/images/en/5/52/Gus.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Gus.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "jas",
+   "name": "贾斯",
+   "en": "Jas",
+   "wikiIcon": "/mediawiki/images/en/5/55/Jas.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Jas.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "jodi",
+   "name": "乔迪",
+   "en": "Jodi",
+   "wikiIcon": "/mediawiki/images/en/4/41/Jodi.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Jodi.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "kent",
+   "name": "肯特",
+   "en": "Kent",
+   "wikiIcon": "/mediawiki/images/en/9/99/Kent.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Kent.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "krobus",
+   "name": "科罗布斯",
+   "en": "Krobus",
+   "wikiIcon": "/mediawiki/images/en/7/71/Krobus.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Krobus.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/8/87/Krobus_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "leo",
+   "name": "雷欧",
+   "en": "Leo",
+   "wikiIcon": "/mediawiki/images/en/1/1d/Leo.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Leo.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lewis",
+   "name": "刘易斯",
+   "en": "Lewis",
+   "wikiIcon": "/mediawiki/images/en/2/2b/Lewis.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Lewis.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "linus",
+   "name": "莱纳斯",
+   "en": "Linus",
+   "wikiIcon": "/mediawiki/images/en/3/31/Linus.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Linus.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "marnie",
+   "name": "玛妮",
+   "en": "Marnie",
+   "wikiIcon": "/mediawiki/images/en/5/52/Marnie.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Marnie.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pam",
+   "name": "潘姆",
+   "en": "Pam",
+   "wikiIcon": "/mediawiki/images/en/d/da/Pam.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Pam.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pierre",
+   "name": "皮埃尔",
+   "en": "Pierre",
+   "wikiIcon": "/mediawiki/images/en/7/7e/Pierre.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Pierre.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "robin",
+   "name": "罗宾",
+   "en": "Robin",
+   "wikiIcon": "/mediawiki/images/en/1/1b/Robin.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Robin.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sandy",
+   "name": "桑迪",
+   "en": "Sandy",
+   "wikiIcon": "/mediawiki/images/en/4/4e/Sandy.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Sandy.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vincent",
+   "name": "文森特",
+   "en": "Vincent",
+   "wikiIcon": "/mediawiki/images/en/f/f1/Vincent.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Vincent.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "willy",
+   "name": "威利",
+   "en": "Willy",
+   "wikiIcon": "/mediawiki/images/en/8/82/Willy.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Willy.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "wizard",
+   "name": "法师",
+   "en": "Wizard",
+   "wikiIcon": "/mediawiki/images/en/c/c7/Wizard.png",
+   "wikiSize": [
+    128,
+    128
+   ],
+   "wikiFile": "Wizard.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

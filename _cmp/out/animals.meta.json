@@ -1,0 +1,79 @@
+{
+ "cat": "animals",
+ "count": 6,
+ "cell": 97,
+ "perRow": 8,
+ "rows": 1,
+ "gridW": 776,
+ "gridH": 97,
+ "oursW": "ANIMAL_W",
+ "oursH": "ANIMAL_H",
+ "items": [
+  {
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "wikiPath": "/mediawiki/images/en/2/22/White_Chicken.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "White_Chicken.png"
+  },
+  {
+   "id": "duck",
+   "name": "鸭",
+   "en": "Duck",
+   "wikiPath": "/mediawiki/images/en/3/38/Duck.png",
+   "wikiSize": [
+    48,
+    45
+   ],
+   "wikiFile": "Duck.png"
+  },
+  {
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "wikiPath": "/mediawiki/images/en/3/36/White_Cow.png",
+   "wikiSize": [
+    90,
+    69
+   ],
+   "wikiFile": "White_Cow.png"
+  },
+  {
+   "id": "sheep",
+   "name": "羊",
+   "en": "Sheep",
+   "wikiPath": "/mediawiki/images/en/c/cc/Sheep.png",
+   "wikiSize": [
+    81,
+    69
+   ],
+   "wikiFile": "Sheep.png"
+  },
+  {
+   "id": "pig",
+   "name": "猪",
+   "en": "Pig",
+   "wikiPath": "/mediawiki/images/en/3/30/Pig.png",
+   "wikiSize": [
+    93,
+    66
+   ],
+   "wikiFile": "Pig.png"
+  },
+  {
+   "id": "rabbit",
+   "name": "兔",
+   "en": "Rabbit",
+   "wikiPath": "/mediawiki/images/en/f/fd/Rabbit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rabbit.png"
+  }
+ ]
+}

@@ -1,0 +1,592 @@
+{
+ "category": "trees",
+ "items": [
+  {
+   "id": "oak",
+   "name": "橡树",
+   "en": "Oak Tree",
+   "wikiIcon": "/mediawiki/images/en/d/d3/Oak_Stage_5.png",
+   "wikiSize": [
+    255,
+    188
+   ],
+   "wikiFile": "Oak_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/8/8f/Oak_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/c6/Oak_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/94/Oak_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/9/9d/Oak_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/4/42/Oak_tree_portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "maple",
+   "name": "枫树",
+   "en": "Maple Tree",
+   "wikiIcon": "/mediawiki/images/en/3/3b/Maple_Stage_5.png",
+   "wikiSize": [
+    255,
+    190
+   ],
+   "wikiFile": "Maple_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/c8/Maple_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/e7/Maple_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/7b/Maple_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/a/ae/Maple_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/4/40/Maple_tree_portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "pine",
+   "name": "松树",
+   "en": "Pine Tree",
+   "wikiIcon": "/mediawiki/images/en/b/b3/Pine_Stage_5.png",
+   "wikiSize": [
+    255,
+    182
+   ],
+   "wikiFile": "Pine_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/3/36/Pine_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/7/75/Pine_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/8/89/Pine_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/9/9b/Pine_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/1/1f/Pine_tree_portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "mahogany",
+   "name": "桃花心木",
+   "en": "Mahogany Tree",
+   "wikiIcon": "/mediawiki/images/en/d/d6/Mahogany_Stage_5.png",
+   "wikiSize": [
+    255,
+    182
+   ],
+   "wikiFile": "Mahogany_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/5/51/Mahogany_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/5/5b/Mahogany_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/11/Mahogany_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/0/04/Mahogany_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/5/55/Mahogany_Tree_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "palm",
+   "name": "棕榈树",
+   "en": "Palm Tree",
+   "wikiIcon": "/mediawiki/images/en/5/56/Palm_Stage_3.png",
+   "wikiSize": [
+    135,
+    219
+   ],
+   "wikiFile": "Palm_Stage_3.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/99/Palm_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/e/e9/Palm_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/3/36/Palm_tree_portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "mushroom",
+   "name": "蘑菇树",
+   "en": "Mushroom Tree",
+   "wikiIcon": "/mediawiki/images/en/2/28/MushroomTree_Stage_5.png",
+   "wikiSize": [
+    144,
+    240
+   ],
+   "wikiFile": "MushroomTree_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/a9/MushroomTree_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/3/3b/MushroomTree_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/e/ec/MushroomTree_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/5/58/MushroomTree_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/d/df/Mushroom_tree_portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "mystic",
+   "name": "神秘树",
+   "en": "Mystic Tree",
+   "wikiIcon": "/mediawiki/images/en/6/67/Mystic_Tree_Stage_5.png",
+   "wikiSize": [
+    48,
+    97
+   ],
+   "wikiFile": "Mystic_Tree_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/4/43/Mystic_Tree_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/7/7c/Mystic_Tree_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/0e/Mystic_Tree_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/3f/Mystic_Tree_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/d/dd/Mystic_Tree_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "mossy_oak",
+   "name": "苔藓橡树",
+   "en": "Mossy Oak",
+   "wikiIcon": "/mediawiki/images/en/f/f2/Wild_Tree_Stage_5.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Wild_Tree_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/2/2b/Wild_Tree_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/1c/Wild_Tree_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/6/6a/Wild_Tree_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/38/Wild_Tree_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/0/09/Wild_Tree_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "mossy_pine",
+   "name": "苔藓松树",
+   "en": "Mossy Pine",
+   "wikiIcon": "/mediawiki/images/en/8/89/Fiddlehead_Stalk_Stage_5.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Fiddlehead_Stalk_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/c7/Fiddlehead_Stalk_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/6/6d/Fiddlehead_Stalk_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/8/8e/Fiddlehead_Stalk_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/e/eb/Fiddlehead_Stalk_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/b/b2/Fiddlehead_Stalk_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "greenrain",
+   "name": "绿雨树",
+   "en": "Green Rain Tree",
+   "wikiIcon": "/mediawiki/images/en/4/40/Lush_Wild_Tree_Stage_5.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Lush_Wild_Tree_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/8/88/Lush_Wild_Tree_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/2/2d/Lush_Wild_Tree_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/73/Lush_Wild_Tree_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/21/Lush_Wild_Tree_Stage_1.png"
+    },
+    {
+     "label": "Portrait",
+     "path": "/mediawiki/images/en/0/02/Lush_Wild_Tree_Portrait.png"
+    }
+   ]
+  },
+  {
+   "id": "apple",
+   "name": "苹果树",
+   "en": "Apple Tree",
+   "wikiIcon": "/mediawiki/images/en/3/3b/Apple_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Apple_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/0/0b/Apple_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/c8/Apple_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/a/a7/Apple_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/b3/Apple_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/f/f2/Apple_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "apricot",
+   "name": "杏树",
+   "en": "Apricot Tree",
+   "wikiIcon": "/mediawiki/images/en/5/51/Apricot_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Apricot_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/3/3f/Apricot_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/9/95/Apricot_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/cc/Apricot_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/e/e7/Apricot_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/8/87/Apricot_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "cherry",
+   "name": "樱桃树",
+   "en": "Cherry Tree",
+   "wikiIcon": "/mediawiki/images/en/2/2d/Cherry_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Cherry_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/b/b3/Cherry_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/7/7f/Cherry_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/8/84/Cherry_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/14/Cherry_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/23/Cherry_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "orange",
+   "name": "橙树",
+   "en": "Orange Tree",
+   "wikiIcon": "/mediawiki/images/en/c/c2/Orange_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Orange_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/b/b8/Orange_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/0/03/Orange_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/17/Orange_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/e/e6/Orange_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/7/79/Orange_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "peach",
+   "name": "桃树",
+   "en": "Peach Tree",
+   "wikiIcon": "/mediawiki/images/en/a/a4/Peach_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Peach_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/5/59/Peach_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/dd/Peach_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/d5/Peach_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/77/Peach_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/b/b1/Peach_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "banana",
+   "name": "香蕉树",
+   "en": "Banana Tree",
+   "wikiIcon": "/mediawiki/images/en/2/2c/Banana_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Banana_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/3/3b/Banana_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/d8/Banana_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/2/2f/Banana_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/14/Banana_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/9/9e/Banana_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "mango",
+   "name": "芒果树",
+   "en": "Mango Tree",
+   "wikiIcon": "/mediawiki/images/en/d/d8/Mango_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Mango_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/5/56/Mango_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/b5/Mango_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/4/44/Mango_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/a/a6/Mango_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/f/fd/Mango_Stage_1.png"
+    }
+   ]
+  },
+  {
+   "id": "pomegranate",
+   "name": "石榴树",
+   "en": "Pomegranate Tree",
+   "wikiIcon": "/mediawiki/images/en/9/9c/Pomegranate_Stage_5.png",
+   "wikiSize": [
+    255,
+    160
+   ],
+   "wikiFile": "Pomegranate_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/7/75/Pomegranate_Stage_5_Fruit.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/d4/Pomegranate_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/c7/Pomegranate_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/4/43/Pomegranate_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/f/ff/Pomegranate_Stage_1.png"
+    }
+   ]
+  }
+ ],
+ "missing": []
+}

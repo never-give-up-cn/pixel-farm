@@ -1,0 +1,1768 @@
+{
+ "category": "crops",
+ "items": [
+  {
+   "id": "blue_jazz",
+   "name": "蓝调爵士",
+   "en": "Blue Jazz",
+   "wikiIcon": "/mediawiki/images/en/7/7a/Blue_Jazz_Stage_5.png",
+   "wikiSize": [
+    56,
+    56
+   ],
+   "wikiFile": "Blue_Jazz_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/c5/Blue_Jazz_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/f/f8/Blue_Jazz_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/6/68/Blue_Jazz_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/c/ca/Blue_Jazz_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/2/2f/Blue_Jazz.png"
+    }
+   ]
+  },
+  {
+   "id": "carrot",
+   "name": "胡萝卜",
+   "en": "Carrot",
+   "wikiIcon": "/mediawiki/images/en/1/1b/Carrot_Stage_4.png",
+   "wikiSize": [
+    48,
+    64
+   ],
+   "wikiFile": "Carrot_Stage_4.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/d0/Carrot_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/bd/Carrot_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/0/09/Carrot_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/c/c3/Carrot.png"
+    }
+   ]
+  },
+  {
+   "id": "cauliflower",
+   "name": "花椰菜",
+   "en": "Cauliflower",
+   "wikiIcon": "/mediawiki/images/en/d/d7/Cauliflower_Stage_6.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cauliflower_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/2/2f/Cauliflower_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/1/16/Cauliflower_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/e5/Cauliflower_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/14/Cauliflower_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/4/45/Cauliflower_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/a/aa/Cauliflower.png"
+    }
+   ]
+  },
+  {
+   "id": "coffee_bean",
+   "name": "咖啡豆",
+   "en": "Coffee Bean",
+   "wikiIcon": "/mediawiki/images/en/9/90/Coffee_Stage_6.png",
+   "wikiSize": [
+    48,
+    81
+   ],
+   "wikiFile": "Coffee_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/1/1d/Coffee_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/2/2f/Coffee_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/af/Coffee_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/8/8a/Coffee_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/2/25/Coffee_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/4/43/Coffee_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/3/33/Coffee_Bean.png"
+    }
+   ]
+  },
+  {
+   "id": "garlic",
+   "name": "大蒜",
+   "en": "Garlic",
+   "wikiIcon": "/mediawiki/images/en/6/6f/Garlic_Stage_5.png",
+   "wikiSize": [
+    56,
+    56
+   ],
+   "wikiFile": "Garlic_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/e/e5/Garlic_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/7/7c/Garlic_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/d/dc/Garlic_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/5/5a/Garlic_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/c/cc/Garlic.png"
+    }
+   ]
+  },
+  {
+   "id": "green_bean",
+   "name": "青豆",
+   "en": "Green Bean",
+   "wikiIcon": "/mediawiki/images/en/2/28/Green_Bean_Stage_7.png",
+   "wikiSize": [
+    39,
+    81
+   ],
+   "wikiFile": "Green_Bean_Stage_7.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 8",
+     "path": "/mediawiki/images/en/3/3c/Green_Bean_Stage_8.png"
+    },
+    {
+     "label": "Stage 6",
+     "path": "/mediawiki/images/en/7/75/Green_Bean_Stage_6.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/a/ab/Green_Bean_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/2/24/Green_Bean_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/5/50/Green_Bean_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/bf/Green_Bean_Stage_2.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/5/5c/Green_Bean.png"
+    }
+   ]
+  },
+  {
+   "id": "kale",
+   "name": "羽衣甘蓝",
+   "en": "Kale",
+   "wikiIcon": "/mediawiki/images/en/e/e9/Kale_Stage_5.png",
+   "wikiSize": [
+    60,
+    60
+   ],
+   "wikiFile": "Kale_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/b6/Kale_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/a/a3/Kale_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/5/59/Kale_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/8/86/Kale_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/d/d1/Kale.png"
+    }
+   ]
+  },
+  {
+   "id": "parsnip",
+   "name": "防风草",
+   "en": "Parsnip",
+   "wikiIcon": "/mediawiki/images/en/2/21/Parsnip_Stage_5.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Parsnip_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/1/19/Parsnip_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/6/69/Parsnip_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/b4/Parsnip_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/6/66/Parsnip_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/d/db/Parsnip.png"
+    }
+   ]
+  },
+  {
+   "id": "potato",
+   "name": "土豆",
+   "en": "Potato",
+   "wikiIcon": "/mediawiki/images/en/e/e2/Potato_Stage_6.png",
+   "wikiSize": [
+    56,
+    56
+   ],
+   "wikiFile": "Potato_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/0/0f/Potato_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/0/0e/Potato_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/f/f5/Potato_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/f/f0/Potato_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/a/a5/Potato_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/c/c2/Potato.png"
+    }
+   ]
+  },
+  {
+   "id": "rhubarb",
+   "name": "大黄",
+   "en": "Rhubarb",
+   "wikiIcon": "/mediawiki/images/en/4/48/Rhubarb_Stage_6.png",
+   "wikiSize": [
+    48,
+    60
+   ],
+   "wikiFile": "Rhubarb_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/4/4c/Rhubarb_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/6/6d/Rhubarb_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/3/3c/Rhubarb_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/4/4c/Rhubarb_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/7/7d/Rhubarb_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/6/6e/Rhubarb.png"
+    }
+   ]
+  },
+  {
+   "id": "strawberry",
+   "name": "草莓",
+   "en": "Strawberry",
+   "wikiIcon": "/mediawiki/images/en/4/48/Strawberry_Stage_6.png",
+   "wikiSize": [
+    48,
+    57
+   ],
+   "wikiFile": "Strawberry_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/d/d6/Strawberry_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/6/65/Strawberry_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/8/8e/Strawberry_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/d6/Strawberry_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/7b/Strawberry_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/2c/Strawberry_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/6/6d/Strawberry.png"
+    }
+   ]
+  },
+  {
+   "id": "tulip",
+   "name": "郁金香",
+   "en": "Tulip",
+   "wikiIcon": "/mediawiki/images/en/b/b4/Tulip_Stage_6.png",
+   "wikiSize": [
+    56,
+    56
+   ],
+   "wikiFile": "Tulip_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/7/71/Tulip_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/3/35/Tulip_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/bd/Tulip_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/3e/Tulip_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/c/cf/Tulip.png"
+    }
+   ]
+  },
+  {
+   "id": "unmilled_rice",
+   "name": "未碾米",
+   "en": "Unmilled Rice",
+   "wikiIcon": "/mediawiki/images/en/2/29/Unmilled_Rice_Stage_5.png",
+   "wikiSize": [
+    48,
+    72
+   ],
+   "wikiFile": "Unmilled_Rice_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/a8/Unmilled_Rice_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/6/6c/Unmilled_Rice_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/3/32/Unmilled_Rice_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/0/0f/Unmilled_Rice_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/fe/Unmilled_Rice.png"
+    }
+   ]
+  },
+  {
+   "id": "wild_horseradish",
+   "name": "野山葵",
+   "en": "Wild Horseradish",
+   "wikiIcon": "/mediawiki/images/en/9/90/Wild_Horseradish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wild_Horseradish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "blueberry",
+   "name": "蓝莓",
+   "en": "Blueberry",
+   "wikiIcon": "/mediawiki/images/en/8/84/Blueberry_Stage_6.png",
+   "wikiSize": [
+    55,
+    80
+   ],
+   "wikiFile": "Blueberry_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/1/19/Blueberry_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/6/69/Blueberry_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/b1/Blueberry_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/5/54/Blueberry_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/3/32/Blueberry_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/2c/Blueberry_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/9/9e/Blueberry.png"
+    }
+   ]
+  },
+  {
+   "id": "hops",
+   "name": "啤酒花",
+   "en": "Hops",
+   "wikiIcon": "/mediawiki/images/en/f/fe/Hops_Stage_7.png",
+   "wikiSize": [
+    45,
+    85
+   ],
+   "wikiFile": "Hops_Stage_7.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 8",
+     "path": "/mediawiki/images/en/b/b0/Hops_Stage_8.png"
+    },
+    {
+     "label": "Stage 6",
+     "path": "/mediawiki/images/en/0/0d/Hops_Stage_6.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/f/ff/Hops_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/e/e4/Hops_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/5/5a/Hops_Stage_3.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/32/Hops_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/5/59/Hops.png"
+    }
+   ]
+  },
+  {
+   "id": "hot_pepper",
+   "name": "辣椒",
+   "en": "Hot Pepper",
+   "wikiIcon": "/mediawiki/images/en/9/96/Hot_Pepper_Stage_5.png",
+   "wikiSize": [
+    42,
+    64
+   ],
+   "wikiFile": "Hot_Pepper_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 6",
+     "path": "/mediawiki/images/en/7/79/Hot_Pepper_Stage_6.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/8/85/Hot_Pepper_Stage_4.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/af/Hot_Pepper_Stage_4b.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/8/8a/Hot_Pepper_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/13/Hot_Pepper_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/1/18/Hot_Pepper_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/f1/Hot_Pepper.png"
+    }
+   ]
+  },
+  {
+   "id": "melon",
+   "name": "甜瓜",
+   "en": "Melon",
+   "wikiIcon": "/mediawiki/images/en/d/d9/Melon_Stage_6.png",
+   "wikiSize": [
+    48,
+    63
+   ],
+   "wikiFile": "Melon_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/6/6d/Melon_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/cf/Melon_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/a/aa/Melon_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/3/36/Melon_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/8/80/Melon_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/1/19/Melon.png"
+    }
+   ]
+  },
+  {
+   "id": "pineapple",
+   "name": "菠萝",
+   "en": "Pineapple",
+   "wikiIcon": "/mediawiki/images/en/0/06/Pineapple_Stage_6.png",
+   "wikiSize": [
+    48,
+    81
+   ],
+   "wikiFile": "Pineapple_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/9/9b/Pineapple_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/3/34/Pineapple_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/2/20/Pineapple_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/8/83/Pineapple_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/8/85/Pineapple_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/3b/Pineapple_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/fb/Pineapple.png"
+    }
+   ]
+  },
+  {
+   "id": "poppy",
+   "name": "虞美人",
+   "en": "Poppy",
+   "wikiIcon": "/mediawiki/images/en/e/ee/Poppy_Stage_6.png",
+   "wikiSize": [
+    42,
+    64
+   ],
+   "wikiFile": "Poppy_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/6/67/Poppy_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/9/96/Poppy_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/a/a9/Poppy_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/25/Poppy_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/3/37/Poppy.png"
+    }
+   ]
+  },
+  {
+   "id": "radish",
+   "name": "萝卜",
+   "en": "Radish",
+   "wikiIcon": "/mediawiki/images/en/e/ec/Radish_Stage_5.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Radish_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/5/55/Radish_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/16/Radish_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/c/ce/Radish_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/b/b7/Radish_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/d/d5/Radish.png"
+    }
+   ]
+  },
+  {
+   "id": "red_cabbage",
+   "name": "红甘蓝",
+   "en": "Red Cabbage",
+   "wikiIcon": "/mediawiki/images/en/8/8a/Red_Cabbage_Stage_6.png",
+   "wikiSize": [
+    48,
+    57
+   ],
+   "wikiFile": "Red_Cabbage_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/0/0d/Red_Cabbage_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/b9/Red_Cabbage_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/3/3d/Red_Cabbage_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/8/8d/Red_Cabbage_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/d/df/Red_Cabbage_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/2/2d/Red_Cabbage.png"
+    }
+   ]
+  },
+  {
+   "id": "spice_berry",
+   "name": "香料浆果",
+   "en": "Spice Berry",
+   "wikiIcon": "/mediawiki/images/en/c/c6/Spice_Berry.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Spice_Berry.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "starfruit",
+   "name": "杨桃",
+   "en": "Starfruit",
+   "wikiIcon": "/mediawiki/images/en/c/c4/Starfruit_Stage_6.png",
+   "wikiSize": [
+    50,
+    80
+   ],
+   "wikiFile": "Starfruit_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/f/f6/Starfruit_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/bf/Starfruit_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/c1/Starfruit_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/03/Starfruit_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/c/cf/Starfruit_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/d/db/Starfruit.png"
+    }
+   ]
+  },
+  {
+   "id": "summer_spangle",
+   "name": "夏日亮片",
+   "en": "Summer Spangle",
+   "wikiIcon": "/mediawiki/images/en/0/06/Summer_Spangle_Stage_5.png",
+   "wikiSize": [
+    33,
+    60
+   ],
+   "wikiFile": "Summer_Spangle_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/7/7a/Summer_Spangle_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/7/79/Summer_Spangle_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/e/eb/Summer_Spangle_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/32/Summer_Spangle_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/9/9f/Summer_Spangle.png"
+    }
+   ]
+  },
+  {
+   "id": "summer_squash",
+   "name": "夏南瓜",
+   "en": "Summer Squash",
+   "wikiIcon": "/mediawiki/images/en/2/28/Summer_Squash_Stage_6.png",
+   "wikiSize": [
+    48,
+    64
+   ],
+   "wikiFile": "Summer_Squash_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/0/0d/Summer_Squash_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/c/c3/Summer_Squash_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/1/16/Summer_Squash_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/e1/Summer_Squash_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/7c/Summer_Squash_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/7/76/Summer_Squash_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/4/43/Summer_Squash.png"
+    }
+   ]
+  },
+  {
+   "id": "taro_root",
+   "name": "芋头",
+   "en": "Taro Root",
+   "wikiIcon": "/mediawiki/images/en/9/98/Taro_Stage_5.png",
+   "wikiSize": [
+    45,
+    81
+   ],
+   "wikiFile": "Taro_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/9/94/Taro_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/5/58/Taro_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/98/Taro_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/4/45/Taro_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/0/01/Taro_Root.png"
+    }
+   ]
+  },
+  {
+   "id": "tomato",
+   "name": "番茄",
+   "en": "Tomato",
+   "wikiIcon": "/mediawiki/images/en/b/bb/Tomato_Stage_6.png",
+   "wikiSize": [
+    42,
+    64
+   ],
+   "wikiFile": "Tomato_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/5/56/Tomato_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/c/c2/Tomato_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/6/6d/Tomato_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/e7/Tomato_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/7d/Tomato_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/1/1f/Tomato_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/9/9d/Tomato.png"
+    }
+   ]
+  },
+  {
+   "id": "corn",
+   "name": "玉米",
+   "en": "Corn",
+   "wikiIcon": "/mediawiki/images/en/9/9d/Corn_Stage_6.png",
+   "wikiSize": [
+    41,
+    91
+   ],
+   "wikiFile": "Corn_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/2/29/Corn_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/4/4d/Corn_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/1/11/Corn_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/db/Corn_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/97/Corn_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/5/57/Corn_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/f8/Corn.png"
+    }
+   ]
+  },
+  {
+   "id": "sunflower",
+   "name": "向日葵",
+   "en": "Sunflower",
+   "wikiIcon": "/mediawiki/images/en/e/ed/Sunflower_Stage_5.png",
+   "wikiSize": [
+    50,
+    80
+   ],
+   "wikiFile": "Sunflower_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/3/30/Sunflower_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/4/49/Sunflower_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/08/Sunflower_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/2/21/Sunflower_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/8/81/Sunflower.png"
+    }
+   ]
+  },
+  {
+   "id": "wheat",
+   "name": "小麦",
+   "en": "Wheat",
+   "wikiIcon": "/mediawiki/images/en/f/f5/Wheat_Stage_5.png",
+   "wikiSize": [
+    50,
+    80
+   ],
+   "wikiFile": "Wheat_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/6/64/Wheat_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/3/34/Wheat_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/4/4b/Wheat_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/f/f9/Wheat_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/e/e2/Wheat.png"
+    }
+   ]
+  },
+  {
+   "id": "amaranth",
+   "name": "苋菜",
+   "en": "Amaranth",
+   "wikiIcon": "/mediawiki/images/en/7/74/Amaranth_Stage_5.png",
+   "wikiSize": [
+    48,
+    72
+   ],
+   "wikiFile": "Amaranth_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/4/41/Amaranth_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/ec/Amaranth_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/7/73/Amaranth_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/9/9d/Amaranth_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/f6/Amaranth.png"
+    }
+   ]
+  },
+  {
+   "id": "artichoke",
+   "name": "洋蓟",
+   "en": "Artichoke",
+   "wikiIcon": "/mediawiki/images/en/0/0b/Artichoke_Stage_6.png",
+   "wikiSize": [
+    50,
+    70
+   ],
+   "wikiFile": "Artichoke_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/d/d4/Artichoke_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/2/2b/Artichoke_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/2/29/Artichoke_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/0a/Artichoke_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/b/b0/Artichoke_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/d/dd/Artichoke.png"
+    }
+   ]
+  },
+  {
+   "id": "beet",
+   "name": "甜菜",
+   "en": "Beet",
+   "wikiIcon": "/mediawiki/images/en/7/7c/Beet_Stage_5.png",
+   "wikiSize": [
+    45,
+    60
+   ],
+   "wikiFile": "Beet_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/5/54/Beet_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/1a/Beet_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/6/6a/Beet_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/30/Beet_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/a/a4/Beet.png"
+    }
+   ]
+  },
+  {
+   "id": "bok_choy",
+   "name": "小白菜",
+   "en": "Bok Choy",
+   "wikiIcon": "/mediawiki/images/en/5/50/Bok_Choy_Stage_5.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bok_Choy_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/c7/Bok_Choy_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/8/88/Bok_Choy_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/00/Bok_Choy_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/3d/Bok_Choy_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/4/40/Bok_Choy.png"
+    }
+   ]
+  },
+  {
+   "id": "broccoli",
+   "name": "西兰花",
+   "en": "Broccoli",
+   "wikiIcon": "/mediawiki/images/en/2/2d/Broccoli_Stage_5.png",
+   "wikiSize": [
+    45,
+    51
+   ],
+   "wikiFile": "Broccoli_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/b/b1/Broccoli_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/cf/Broccoli_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/f/f3/Broccoli_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/4/4d/Broccoli_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/f/f1/Broccoli.png"
+    }
+   ]
+  },
+  {
+   "id": "common_mushroom",
+   "name": "普通蘑菇",
+   "en": "Common Mushroom",
+   "wikiIcon": "/mediawiki/images/en/2/2e/Common_Mushroom.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Common_Mushroom.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "cranberries",
+   "name": "蔓越莓",
+   "en": "Cranberries",
+   "wikiIcon": "/mediawiki/images/en/5/5a/Cranberry_Stage_6.png",
+   "wikiSize": [
+    50,
+    60
+   ],
+   "wikiFile": "Cranberry_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/a/ac/Cranberry_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/c/c3/Cranberry_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/5/57/Cranberry_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/16/Cranberry_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/b8/Cranberry_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/a/ae/Cranberry_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/6/6e/Cranberries.png"
+    }
+   ]
+  },
+  {
+   "id": "eggplant",
+   "name": "茄子",
+   "en": "Eggplant",
+   "wikiIcon": "/mediawiki/images/en/1/17/Eggplant_Stage_6.png",
+   "wikiSize": [
+    45,
+    60
+   ],
+   "wikiFile": "Eggplant_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/5/55/Eggplant_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/0/01/Eggplant_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/a1/Eggplant_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/d6/Eggplant_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/c/ca/Eggplant_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/9/97/Eggplant_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/8/8f/Eggplant.png"
+    }
+   ]
+  },
+  {
+   "id": "fairy_rose",
+   "name": "仙女玫瑰",
+   "en": "Fairy Rose",
+   "wikiIcon": "/mediawiki/images/en/4/43/Fairy_Rose_Stage_5.png",
+   "wikiSize": [
+    50,
+    80
+   ],
+   "wikiFile": "Fairy_Rose_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/d4/Fairy_Rose_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/0/09/Fairy_Rose_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/0/05/Fairy_Rose_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/5/52/Fairy_Rose_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/5/5c/Fairy_Rose.png"
+    }
+   ]
+  },
+  {
+   "id": "grape",
+   "name": "葡萄",
+   "en": "Grape",
+   "wikiIcon": "/mediawiki/images/en/1/12/Grape_Stage_6.png",
+   "wikiSize": [
+    48,
+    87
+   ],
+   "wikiFile": "Grape_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/5/54/Grape_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/e/ea/Grape_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/e/e7/Grape_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/f/fa/Grape_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/9f/Grape_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/b/be/Grape_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/c/c2/Grape.png"
+    }
+   ]
+  },
+  {
+   "id": "pumpkin",
+   "name": "南瓜",
+   "en": "Pumpkin",
+   "wikiIcon": "/mediawiki/images/en/9/9d/Pumpkin_Stage_6.png",
+   "wikiSize": [
+    48,
+    72
+   ],
+   "wikiFile": "Pumpkin_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/d/dd/Pumpkin_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/a/ab/Pumpkin_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/cf/Pumpkin_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/1b/Pumpkin_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/0/09/Pumpkin_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/6/64/Pumpkin.png"
+    }
+   ]
+  },
+  {
+   "id": "sweet_gem_berry",
+   "name": "甜宝石浆果",
+   "en": "Sweet Gem Berry",
+   "wikiIcon": "/mediawiki/images/en/f/f0/Sweet_Gem_Berry_Stage_6.png",
+   "wikiSize": [
+    26,
+    56
+   ],
+   "wikiFile": "Sweet_Gem_Berry_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/9/93/Sweet_Gem_Berry_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/8/8f/Sweet_Gem_Berry_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/2/26/Sweet_Gem_Berry_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/b/b0/Sweet_Gem_Berry_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/0/09/Sweet_Gem_Berry_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/8/88/Sweet_Gem_Berry.png"
+    }
+   ]
+  },
+  {
+   "id": "yam",
+   "name": "山药",
+   "en": "Yam",
+   "wikiIcon": "/mediawiki/images/en/6/64/Yam_Stage_5.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Yam_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/9/9d/Yam_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/c/c7/Yam_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/5/5c/Yam_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/d/d4/Yam_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/5/52/Yam.png"
+    }
+   ]
+  },
+  {
+   "id": "powdermelon",
+   "name": "霜瓜",
+   "en": "Powdermelon",
+   "wikiIcon": "/mediawiki/images/en/f/fd/Powdermelon_Stage_6.png",
+   "wikiSize": [
+    48,
+    63
+   ],
+   "wikiFile": "Powdermelon_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/d/db/Powdermelon_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/0/0d/Powdermelon_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/d/d7/Powdermelon_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/c/c7/Powdermelon_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/6/6f/Powdermelon_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/a/aa/Powdermelon.png"
+    }
+   ]
+  },
+  {
+   "id": "winter_root",
+   "name": "冬根",
+   "en": "Winter Root",
+   "wikiIcon": "/mediawiki/images/en/1/11/Winter_Root.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Winter_Root.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ancient_fruit",
+   "name": "上古水果",
+   "en": "Ancient Fruit",
+   "wikiIcon": "/mediawiki/images/en/5/5a/Ancient_Fruit_Stage_6.png",
+   "wikiSize": [
+    26,
+    56
+   ],
+   "wikiFile": "Ancient_Fruit_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/c/ca/Ancient_Fruit_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/6/6a/Ancient_Fruit_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/4/49/Ancient_Fruit_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/4/4a/Ancient_Fruit_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/1/18/Ancient_Fruit_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/7/77/Ancient_Fruit_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/0/01/Ancient_Fruit.png"
+    }
+   ]
+  },
+  {
+   "id": "cactus_fruit",
+   "name": "仙人掌果",
+   "en": "Cactus Fruit",
+   "wikiIcon": "/mediawiki/images/en/4/4c/Cactus_Stage_6.png",
+   "wikiSize": [
+    48,
+    81
+   ],
+   "wikiFile": "Cactus_Stage_6.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 7",
+     "path": "/mediawiki/images/en/b/b0/Cactus_Stage_7.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/3/3d/Cactus_Stage_5.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/c/cc/Cactus_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/e/ed/Cactus_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/8/8b/Cactus_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/3/32/Cactus_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/3/32/Cactus_Fruit.png"
+    }
+   ]
+  },
+  {
+   "id": "fiber",
+   "name": "纤维",
+   "en": "Fiber",
+   "wikiIcon": "/mediawiki/images/en/2/22/Fiber_Stage_5.png",
+   "wikiSize": [
+    45,
+    75
+   ],
+   "wikiFile": "Fiber_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/a/a3/Fiber_Stage_5_Fall.png"
+    },
+    {
+     "label": "Stage 5",
+     "path": "/mediawiki/images/en/e/ec/Fiber_Stage_5_Winter.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/dd/Fiber_Stage_4.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/d/d0/Fiber_Stage_4_Fall.png"
+    },
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/e/e7/Fiber_Stage_4_Winter.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/4/46/Fiber_Stage_3.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/1/10/Fiber_Stage_3_Fall.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/a/a8/Fiber_Stage_3_Winter.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/e/e0/Fiber_Stage_2.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/9c/Fiber_Stage_2_Fall.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/9/90/Fiber_Stage_2_Winter.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/c/c9/Fiber_Stage_1.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/8/8c/Fiber_Stage_1_Fall.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/f/fc/Fiber_Stage_1_Winter.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/4/45/Fiber.png"
+    }
+   ]
+  },
+  {
+   "id": "qi_fruit",
+   "name": "齐瓜",
+   "en": "Qi Fruit",
+   "wikiIcon": "/mediawiki/images/en/1/16/Qi_Fruit_Stage_5.png",
+   "wikiSize": [
+    48,
+    81
+   ],
+   "wikiFile": "Qi_Fruit_Stage_5.png",
+   "wikiExtra": [
+    {
+     "label": "Stage 4",
+     "path": "/mediawiki/images/en/2/27/Qi_Fruit_Stage_4.png"
+    },
+    {
+     "label": "Stage 3",
+     "path": "/mediawiki/images/en/9/96/Qi_Fruit_Stage_3.png"
+    },
+    {
+     "label": "Stage 2",
+     "path": "/mediawiki/images/en/a/a6/Qi_Fruit_Stage_2.png"
+    },
+    {
+     "label": "Stage 1",
+     "path": "/mediawiki/images/en/8/88/Qi_Fruit_Stage_1.png"
+    },
+    {
+     "label": "Item",
+     "path": "/mediawiki/images/en/b/b9/Qi_Fruit.png"
+    }
+   ]
+  }
+ ],
+ "missing": []
+}

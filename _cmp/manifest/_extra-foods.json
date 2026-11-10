@@ -1,0 +1,22 @@
+{
+  "hats": {
+    "party_hat_red": [
+      "Party Hat (red).png",
+      "Party Hat (blue).png",
+      "Party Hat (green).png"
+    ]
+  },
+  "artisan": {
+    "flour": [
+      "Wheat Flour.png"
+    ]
+  },
+  "dishes": {
+    "cookies": [
+      "Cookie.png"
+    ],
+    "vegetable_stew": [
+      "Vegetable Medley.png"
+    ]
+  }
+}

@@ -1,0 +1,127 @@
+{
+ "hats": {
+  "ok": 90,
+  "total": 90,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Hats.html"
+  ]
+ },
+ "equipment": {
+  "ok": 110,
+  "total": 110,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Weapons.html",
+   "wiki-Rings.html",
+   "wiki-Footwear.html"
+  ]
+ },
+ "minerals": {
+  "ok": 53,
+  "total": 53,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Minerals.html"
+  ]
+ },
+ "fish": {
+  "ok": 71,
+  "total": 72,
+  "not_on_page": [
+   "sea_urchin"
+  ],
+  "pages": [
+   "wiki-Fish.html"
+  ]
+ },
+ "dishes": {
+  "ok": 81,
+  "total": 81,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Cooking.html"
+  ]
+ },
+ "artisan": {
+  "ok": 26,
+  "total": 28,
+  "not_on_page": [
+   "sugar",
+   "flour"
+  ],
+  "pages": [
+   "wiki-Artisan_Goods.html"
+  ]
+ },
+ "monsters": {
+  "ok": 45,
+  "total": 47,
+  "not_on_page": [
+   "big_slime",
+   "skeleton_mage"
+  ],
+  "pages": [
+   "wiki-Monsters.html"
+  ]
+ },
+ "animals": {
+  "ok": 6,
+  "total": 6,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Animals.html",
+   "wiki-Coop.html"
+  ]
+ },
+ "npcs": {
+  "ok": 34,
+  "total": 34,
+  "not_on_page": [],
+  "pages": [
+   "wiki-NPC.html"
+  ]
+ },
+ "trees": {
+  "ok": 18,
+  "total": 18,
+  "not_on_page": [],
+  "pages": [
+   "wiki-Trees.html",
+   "wiki-FruitTrees.html"
+  ]
+ },
+ "crops": {
+  "ok": 45,
+  "total": 50,
+  "not_on_page": [
+   "wild_horseradish",
+   "spice_berry",
+   "common_mushroom",
+   "winter_root",
+   "qi_fruit"
+  ],
+  "pages": [
+   "wiki-Crops.html",
+   "wiki-FruitTrees.html"
+  ]
+ },
+ "buildings": {
+  "ok": 17,
+  "total": 25,
+  "not_on_page": [
+   "farmhouse",
+   "greenhouse",
+   "junimo_hut",
+   "earth_obelisk",
+   "water_obelisk",
+   "desert_obelisk",
+   "island_obelisk",
+   "gold_clock"
+  ],
+  "pages": [
+   "wiki-CarpentersShop.html",
+   "wiki-Buildings.html"
+  ]
+ }
+}

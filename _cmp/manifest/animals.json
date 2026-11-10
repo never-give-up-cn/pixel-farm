@@ -1,0 +1,100 @@
+{
+ "category": "animals",
+ "items": [
+  {
+   "id": "chicken",
+   "name": "鸡",
+   "en": "Chicken",
+   "wikiIcon": "/mediawiki/images/en/2/22/White_Chicken.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "White_Chicken.png",
+   "wikiExtra": [
+    {
+     "label": "Auto",
+     "path": "/mediawiki/images/en/2/22/White_Chicken.png"
+    },
+    {
+     "label": "extra",
+     "path": "/mediawiki/images/en/f/fd/Brown_Chicken.png"
+    },
+    {
+     "label": "extra",
+     "path": "/mediawiki/images/en/6/61/Blue_Chicken.png"
+    }
+   ]
+  },
+  {
+   "id": "duck",
+   "name": "鸭",
+   "en": "Duck",
+   "wikiIcon": "/mediawiki/images/en/3/38/Duck.png",
+   "wikiSize": [
+    48,
+    45
+   ],
+   "wikiFile": "Duck.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "cow",
+   "name": "牛",
+   "en": "Cow",
+   "wikiIcon": "/mediawiki/images/en/3/36/White_Cow.png",
+   "wikiSize": [
+    90,
+    69
+   ],
+   "wikiFile": "White_Cow.png",
+   "wikiExtra": [
+    {
+     "label": "Auto",
+     "path": "/mediawiki/images/en/3/36/White_Cow.png"
+    },
+    {
+     "label": "extra",
+     "path": "/mediawiki/images/en/3/3e/Brown_Cow.png"
+    }
+   ]
+  },
+  {
+   "id": "sheep",
+   "name": "羊",
+   "en": "Sheep",
+   "wikiIcon": "/mediawiki/images/en/c/cc/Sheep.png",
+   "wikiSize": [
+    81,
+    69
+   ],
+   "wikiFile": "Sheep.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pig",
+   "name": "猪",
+   "en": "Pig",
+   "wikiIcon": "/mediawiki/images/en/3/30/Pig.png",
+   "wikiSize": [
+    93,
+    66
+   ],
+   "wikiFile": "Pig.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "rabbit",
+   "name": "兔",
+   "en": "Rabbit",
+   "wikiIcon": "/mediawiki/images/en/f/fd/Rabbit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rabbit.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

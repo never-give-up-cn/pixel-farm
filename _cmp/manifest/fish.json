@@ -1,0 +1,870 @@
+{
+ "category": "fish",
+ "items": [
+  {
+   "id": "albacore",
+   "name": "长鳍金枪鱼",
+   "en": "Albacore",
+   "wikiIcon": "/mediawiki/images/en/e/e1/Albacore.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Albacore.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "anchovy",
+   "name": "鳀鱼",
+   "en": "Anchovy",
+   "wikiIcon": "/mediawiki/images/en/7/79/Anchovy.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Anchovy.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "angler",
+   "name": "鮟鱇鱼",
+   "en": "Angler",
+   "wikiIcon": "/mediawiki/images/en/b/bf/Angler.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Angler.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "blobfish",
+   "name": "水滴鱼",
+   "en": "Blobfish",
+   "wikiIcon": "/mediawiki/images/en/7/7f/Blobfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Blobfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "blue_discus",
+   "name": "蓝盘鱼",
+   "en": "Blue Discus",
+   "wikiIcon": "/mediawiki/images/en/e/ee/Blue_Discus.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Blue_Discus.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "bream",
+   "name": "鲷鱼",
+   "en": "Bream",
+   "wikiIcon": "/mediawiki/images/en/8/82/Bream.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bream.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "bullhead",
+   "name": "牛头鲶",
+   "en": "Bullhead",
+   "wikiIcon": "/mediawiki/images/en/d/db/Bullhead.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bullhead.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "carp",
+   "name": "鲤鱼",
+   "en": "Carp",
+   "wikiIcon": "/mediawiki/images/en/a/a8/Carp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Carp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "catfish",
+   "name": "鲶鱼",
+   "en": "Catfish",
+   "wikiIcon": "/mediawiki/images/en/9/99/Catfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Catfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "chub",
+   "name": "圆腹雅罗鱼",
+   "en": "Chub",
+   "wikiIcon": "/mediawiki/images/en/b/bd/Chub.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Chub.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "clam",
+   "name": "蛤蜊",
+   "en": "Clam",
+   "wikiIcon": "/mediawiki/images/en/e/ed/Clam.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Clam.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "cockle",
+   "name": "鸟蛤",
+   "en": "Cockle",
+   "wikiIcon": "/mediawiki/images/en/a/ad/Cockle.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cockle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "crab",
+   "name": "螃蟹",
+   "en": "Crab",
+   "wikiIcon": "/mediawiki/images/en/6/63/Crab.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crab.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "crayfish",
+   "name": "小龙虾",
+   "en": "Crayfish",
+   "wikiIcon": "/mediawiki/images/en/5/53/Crayfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crayfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "crimsonfish",
+   "name": "绯红鱼",
+   "en": "Crimsonfish",
+   "wikiIcon": "/mediawiki/images/en/d/dc/Crimsonfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Crimsonfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dorado",
+   "name": "鲯鳅",
+   "en": "Dorado",
+   "wikiIcon": "/mediawiki/images/en/1/18/Dorado.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dorado.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "eel",
+   "name": "鳗鱼",
+   "en": "Eel",
+   "wikiIcon": "/mediawiki/images/en/9/91/Eel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Eel.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "flounder",
+   "name": "比目鱼",
+   "en": "Flounder",
+   "wikiIcon": "/mediawiki/images/en/8/85/Flounder.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Flounder.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ghostfish",
+   "name": "幽灵鱼",
+   "en": "Ghostfish",
+   "wikiIcon": "/mediawiki/images/en/7/72/Ghostfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ghostfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "glacierfish",
+   "name": "冰川鱼",
+   "en": "Glacierfish",
+   "wikiIcon": "/mediawiki/images/en/f/fd/Glacierfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Glacierfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "glacierfish_jr",
+   "name": "小冰川鱼",
+   "en": "Glacierfish Jr.",
+   "wikiIcon": "/mediawiki/images/en/d/db/Glacierfish_Jr..png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Glacierfish_Jr..png",
+   "wikiExtra": []
+  },
+  {
+   "id": "goby",
+   "name": "虾虎鱼",
+   "en": "Goby",
+   "wikiIcon": "/mediawiki/images/en/6/67/Goby.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Goby.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "halibut",
+   "name": "大比目鱼",
+   "en": "Halibut",
+   "wikiIcon": "/mediawiki/images/en/0/02/Halibut.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Halibut.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "herring",
+   "name": "鲱鱼",
+   "en": "Herring",
+   "wikiIcon": "/mediawiki/images/en/f/f1/Herring.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Herring.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ice_pip",
+   "name": "冰柱鱼",
+   "en": "Ice Pip",
+   "wikiIcon": "/mediawiki/images/en/6/63/Ice_Pip.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ice_Pip.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "largemouth_bass",
+   "name": "大口黑鲈",
+   "en": "Largemouth Bass",
+   "wikiIcon": "/mediawiki/images/en/1/11/Largemouth_Bass.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Largemouth_Bass.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lava_eel",
+   "name": "岩浆鳗",
+   "en": "Lava Eel",
+   "wikiIcon": "/mediawiki/images/en/1/12/Lava_Eel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lava_Eel.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "legend",
+   "name": "传说之鱼",
+   "en": "Legend",
+   "wikiIcon": "/mediawiki/images/en/1/10/Legend.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Legend.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "legend_ii",
+   "name": "传说之鱼二代",
+   "en": "Legend II",
+   "wikiIcon": "/mediawiki/images/en/7/7a/Legend_II.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Legend_II.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lingcod",
+   "name": "长蛇齿鱼",
+   "en": "Lingcod",
+   "wikiIcon": "/mediawiki/images/en/8/87/Lingcod.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lingcod.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lionfish",
+   "name": "狮子鱼",
+   "en": "Lionfish",
+   "wikiIcon": "/mediawiki/images/en/b/bb/Lionfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lionfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lobster",
+   "name": "龙虾",
+   "en": "Lobster",
+   "wikiIcon": "/mediawiki/images/en/9/9f/Lobster.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Lobster.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "midnight_carp",
+   "name": "午夜鲤鱼",
+   "en": "Midnight Carp",
+   "wikiIcon": "/mediawiki/images/en/3/33/Midnight_Carp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Midnight_Carp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "midnight_squid",
+   "name": "午夜鱿鱼",
+   "en": "Midnight Squid",
+   "wikiIcon": "/mediawiki/images/en/8/83/Midnight_Squid.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Midnight_Squid.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ms_angler",
+   "name": "鮟鱇鱼女士",
+   "en": "Ms. Angler",
+   "wikiIcon": "/mediawiki/images/en/b/bb/Ms._Angler.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ms._Angler.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mussel",
+   "name": "贻贝",
+   "en": "Mussel",
+   "wikiIcon": "/mediawiki/images/en/a/aa/Mussel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mussel.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mutant_carp",
+   "name": "变异鲤鱼",
+   "en": "Mutant Carp",
+   "wikiIcon": "/mediawiki/images/en/c/cb/Mutant_Carp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mutant_Carp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "octopus",
+   "name": "章鱼",
+   "en": "Octopus",
+   "wikiIcon": "/mediawiki/images/en/5/5a/Octopus.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Octopus.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "oyster",
+   "name": "牡蛎",
+   "en": "Oyster",
+   "wikiIcon": "/mediawiki/images/en/5/54/Oyster.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Oyster.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "perch",
+   "name": "河鲈",
+   "en": "Perch",
+   "wikiIcon": "/mediawiki/images/en/4/43/Perch.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Perch.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "periwinkle",
+   "name": "滨螺",
+   "en": "Periwinkle",
+   "wikiIcon": "/mediawiki/images/en/1/1d/Periwinkle.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Periwinkle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pike",
+   "name": "狗鱼",
+   "en": "Pike",
+   "wikiIcon": "/mediawiki/images/en/3/31/Pike.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pike.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "pufferfish",
+   "name": "河豚",
+   "en": "Pufferfish",
+   "wikiIcon": "/mediawiki/images/en/b/ba/Pufferfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pufferfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "radioactive_carp",
+   "name": "放射性鲤鱼",
+   "en": "Radioactive Carp",
+   "wikiIcon": "/mediawiki/images/en/5/57/Radioactive_Carp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Radioactive_Carp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "rainbow_trout",
+   "name": "虹鳟鱼",
+   "en": "Rainbow Trout",
+   "wikiIcon": "/mediawiki/images/en/1/14/Rainbow_Trout.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rainbow_Trout.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "red_mullet",
+   "name": "红鲻鱼",
+   "en": "Red Mullet",
+   "wikiIcon": "/mediawiki/images/en/f/f2/Red_Mullet.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Red_Mullet.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "red_snapper",
+   "name": "红鲷鱼",
+   "en": "Red Snapper",
+   "wikiIcon": "/mediawiki/images/en/d/d3/Red_Snapper.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Red_Snapper.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "salmon",
+   "name": "鲑鱼",
+   "en": "Salmon",
+   "wikiIcon": "/mediawiki/images/en/e/e0/Salmon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Salmon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sandfish",
+   "name": "沙鱼",
+   "en": "Sandfish",
+   "wikiIcon": "/mediawiki/images/en/b/bb/Sandfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sandfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sardine",
+   "name": "沙丁鱼",
+   "en": "Sardine",
+   "wikiIcon": "/mediawiki/images/en/0/04/Sardine.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sardine.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "scorpion_carp",
+   "name": "蝎子鲤鱼",
+   "en": "Scorpion Carp",
+   "wikiIcon": "/mediawiki/images/en/7/76/Scorpion_Carp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Scorpion_Carp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sea_cucumber",
+   "name": "海参",
+   "en": "Sea Cucumber",
+   "wikiIcon": "/mediawiki/images/en/a/a9/Sea_Cucumber.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sea_Cucumber.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sea_urchin",
+   "name": "海胆",
+   "en": "Sea Urchin",
+   "wikiIcon": "/mediawiki/images/en/e/e7/Sea_Urchin.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sea_Urchin.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "shad",
+   "name": "美洲西鲱",
+   "en": "Shad",
+   "wikiIcon": "/mediawiki/images/en/e/ef/Shad.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Shad.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "shrimp",
+   "name": "虾",
+   "en": "Shrimp",
+   "wikiIcon": "/mediawiki/images/en/9/91/Shrimp.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Shrimp.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "slimejack",
+   "name": "史莱姆鱼",
+   "en": "Slimejack",
+   "wikiIcon": "/mediawiki/images/en/3/34/Slimejack.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Slimejack.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "smallmouth_bass",
+   "name": "小口黑鲈",
+   "en": "Smallmouth Bass",
+   "wikiIcon": "/mediawiki/images/en/a/a5/Smallmouth_Bass.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Smallmouth_Bass.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "snail",
+   "name": "蜗牛",
+   "en": "Snail",
+   "wikiIcon": "/mediawiki/images/en/d/d2/Snail.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Snail.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "son_of_crimsonfish",
+   "name": "绯红鱼之子",
+   "en": "Son of Crimsonfish",
+   "wikiIcon": "/mediawiki/images/en/1/12/Son_of_Crimsonfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Son_of_Crimsonfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "spook_fish",
+   "name": "幽灵鱼",
+   "en": "Spook Fish",
+   "wikiIcon": "/mediawiki/images/en/8/8c/Spook_Fish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Spook_Fish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "squid",
+   "name": "鱿鱼",
+   "en": "Squid",
+   "wikiIcon": "/mediawiki/images/en/8/81/Squid.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Squid.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "stingray",
+   "name": "黄貂鱼",
+   "en": "Stingray",
+   "wikiIcon": "/mediawiki/images/en/3/3a/Stingray.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Stingray.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "stonefish",
+   "name": "石头鱼",
+   "en": "Stonefish",
+   "wikiIcon": "/mediawiki/images/en/0/03/Stonefish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Stonefish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sturgeon",
+   "name": "鲟鱼",
+   "en": "Sturgeon",
+   "wikiIcon": "/mediawiki/images/en/4/42/Sturgeon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sturgeon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "sunfish",
+   "name": "太阳鱼",
+   "en": "Sunfish",
+   "wikiIcon": "/mediawiki/images/en/5/56/Sunfish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sunfish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "super_cucumber",
+   "name": "超级海参",
+   "en": "Super Cucumber",
+   "wikiIcon": "/mediawiki/images/en/d/d5/Super_Cucumber.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Super_Cucumber.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "tiger_trout",
+   "name": "虎鳟",
+   "en": "Tiger Trout",
+   "wikiIcon": "/mediawiki/images/en/0/01/Tiger_Trout.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tiger_Trout.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "tilapia",
+   "name": "罗非鱼",
+   "en": "Tilapia",
+   "wikiIcon": "/mediawiki/images/en/7/73/Tilapia.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tilapia.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "tuna",
+   "name": "金枪鱼",
+   "en": "Tuna",
+   "wikiIcon": "/mediawiki/images/en/c/c5/Tuna.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tuna.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "void_salmon",
+   "name": "虚空鲑鱼",
+   "en": "Void Salmon",
+   "wikiIcon": "/mediawiki/images/en/a/ad/Void_Salmon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Void_Salmon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "walleye",
+   "name": "大眼狮鲈",
+   "en": "Walleye",
+   "wikiIcon": "/mediawiki/images/en/0/05/Walleye.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Walleye.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "woodskip",
+   "name": "木跃鱼",
+   "en": "Woodskip",
+   "wikiIcon": "/mediawiki/images/en/9/97/Woodskip.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Woodskip.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

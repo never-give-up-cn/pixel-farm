@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(8, 96px);width:768px}
+.cell{width:96px;height:96px;position:relative;overflow:hidden}
+canvas{position:absolute;image-rendering:pixelated}
+img{position:absolute;left:0;top:0;image-rendering:pixelated}
+</style></head><body>
+<div id="ours" class="grid"></div>
+<div id="wiki" class="grid"></div>
+<script type="module">
+const MANIFEST = [{"id":"prismatic_shard","name":"五彩碎片","en":"Prismatic Shard","wikiPath":"/mediawiki/images/en/5/56/Prismatic_Shard.png","wikiSize":[48,48],"wikiFile":"Prismatic_Shard.png"},{"id":"diamond","name":"钻石","en":"Diamond","wikiPath":"/mediawiki/images/en/e/ea/Diamond.png","wikiSize":[48,48],"wikiFile":"Diamond.png"},{"id":"emerald","name":"绿宝石","en":"Emerald","wikiPath":"/mediawiki/images/en/6/6a/Emerald.png","wikiSize":[48,48],"wikiFile":"Emerald.png"},{"id":"ruby","name":"红宝石","en":"Ruby","wikiPath":"/mediawiki/images/en/a/a9/Ruby.png","wikiSize":[48,48],"wikiFile":"Ruby.png"},{"id":"jade","name":"翡翠","en":"Jade","wikiPath":"/mediawiki/images/en/7/7e/Jade.png","wikiSize":[48,48],"wikiFile":"Jade.png"},{"id":"aquamarine","name":"海蓝宝石","en":"Aquamarine","wikiPath":"/mediawiki/images/en/a/a2/Aquamarine.png","wikiSize":[48,48],"wikiFile":"Aquamarine.png"},{"id":"amethyst","name":"紫水晶","en":"Amethyst","wikiPath":"/mediawiki/images/en/2/2e/Amethyst.png","wikiSize":[48,48],"wikiFile":"Amethyst.png"},{"id":"topaz","name":"黄玉","en":"Topaz","wikiPath":"/mediawiki/images/en/a/a5/Topaz.png","wikiSize":[48,48],"wikiFile":"Topaz.png"},{"id":"quartz","name":"石英","en":"Quartz","wikiPath":"/mediawiki/images/en/c/cf/Quartz.png","wikiSize":[48,48],"wikiFile":"Quartz.png"},{"id":"earth_crystal","name":"地晶","en":"Earth Crystal","wikiPath":"/mediawiki/images/en/7/74/Earth_Crystal.png","wikiSize":[48,48],"wikiFile":"Earth_Crystal.png"},{"id":"frozen_tear","name":"冰泪","en":"Frozen Tear","wikiPath":"/mediawiki/images/en/e/ec/Frozen_Tear.png","wikiSize":[48,48],"wikiFile":"Frozen_Tear.png"},{"id":"fire_quartz","name":"火石英","en":"Fire Quartz","wikiPath":"/mediawiki/images/en/5/5b/Fire_Quartz.png","wikiSize":[48,48],"wikiFile":"Fire_Quartz.png"},{"id":"star_shards","name":"星之碎片","en":"Star Shards","wikiPath":"/mediawiki/images/en/3/3f/Star_Shards.png","wikiSize":[48,48],"wikiFile":"Star_Shards.png"},{"id":"helvite","name":"日光榴石","en":"Helvite","wikiPath":"/mediawiki/images/en/3/3f/Helvite.png","wikiSize":[48,48],"wikiFile":"Helvite.png"},{"id":"neptunite","name":"柱星叶石","en":"Neptunite","wikiPath":"/mediawiki/images/en/0/05/Neptunite.png","wikiSize":[48,48],"wikiFile":"Neptunite.png"},{"id":"fire_opal","name":"火蛋白石","en":"Fire Opal","wikiPath":"/mediawiki/images/en/6/60/Fire_Opal.png","wikiSize":[48,48],"wikiFile":"Fire_Opal.png"},{"id":"dolomite","name":"白云石","en":"Dolomite","wikiPath":"/mediawiki/images/en/d/d4/Dolomite.png","wikiSize":[48,48],"wikiFile":"Dolomite.png"},{"id":"bixite","name":"铋晶石","en":"Bixite","wikiPath":"/mediawiki/images/en/9/98/Bixite.png","wikiSize":[48,48],"wikiFile":"Bixite.png"},{"id":"tigerseye","name":"虎眼石","en":"Tigerseye","wikiPath":"/mediawiki/images/en/6/6e/Tigerseye.png","wikiSize":[48,48],"wikiFile":"Tigerseye.png"},{"id":"kyanite","name":"蓝晶石","en":"Kyanite","wikiPath":"/mediawiki/images/en/e/e4/Kyanite.png","wikiSize":[48,48],"wikiFile":"Kyanite.png"},{"id":"fairy_stone","name":"仙石","en":"Fairy Stone","wikiPath":"/mediawiki/images/en/d/d9/Fairy_Stone.png","wikiSize":[48,48],"wikiFile":"Fairy_Stone.png"},{"id":"ocean_stone","name":"海洋石","en":"Ocean Stone","wikiPath":"/mediawiki/images/en/f/f1/Ocean_Stone.png","wikiSize":[48,48],"wikiFile":"Ocean_Stone.png"},{"id":"lemon_stone","name":"柠檬石","en":"Lemon Stone","wikiPath":"/mediawiki/images/en/3/31/Lemon_Stone.png","wikiSize":[48,48],"wikiFile":"Lemon_Stone.png"},{"id":"ghost_crystal","name":"幽灵水晶","en":"Ghost Crystal","wikiPath":"/mediawiki/images/en/d/d0/Ghost_Crystal.png","wikiSize":[48,48],"wikiFile":"Ghost_Crystal.png"},{"id":"fluorapatite","name":"氟磷灰石","en":"Fluorapatite","wikiPath":"/mediawiki/images/en/4/4a/Fluorapatite.png","wikiSize":[48,48],"wikiFile":"Fluorapatite.png"},{"id":"obsidian","name":"黑曜石","en":"Obsidian","wikiPath":"/mediawiki/images/en/2/23/Obsidian.png","wikiSize":[48,48],"wikiFile":"Obsidian.png"},{"id":"lunarite","name":"月石","en":"Lunarite","wikiPath":"/mediawiki/images/en/0/06/Lunarite.png","wikiSize":[48,48],"wikiFile":"Lunarite.png"},{"id":"basalt","name":"玄武岩","en":"Basalt","wikiPath":"/mediawiki/images/en/2/22/Basalt.png","wikiSize":[48,48],"wikiFile":"Basalt.png"},{"id":"opal","name":"蛋白石","en":"Opal","wikiPath":"/mediawiki/images/en/3/3c/Opal.png","wikiSize":[48,48],"wikiFile":"Opal.png"},{"id":"jamborite","name":"水镍矿","en":"Jamborite","wikiPath":"/mediawiki/images/en/4/4b/Jamborite.png","wikiSize":[48,48],"wikiFile":"Jamborite.png"},{"id":"jasper","name":"碧玉","en":"Jasper","wikiPath":"/mediawiki/images/en/9/9b/Jasper.png","wikiSize":[48,48],"wikiFile":"Jasper.png"},{"id":"geminite","name":"双生石","en":"Geminite","wikiPath":"/mediawiki/images/en/5/54/Geminite.png","wikiSize":[48,48],"wikiFile":"Geminite.png"},{"id":"hematite","name":"赤铁矿","en":"Hematite","wikiPath":"/mediawiki/images/en/b/b1/Hematite.png","wikiSize":[48,48],"wikiFile":"Hematite.png"},{"id":"alamite","name":"阿拉米石","en":"Alamite","wikiPath":"/mediawiki/images/en/7/7c/Alamite.png","wikiSize":[48,48],"wikiFile":"Alamite.png"},{"id":"aerinite","name":"青铝石","en":"Aerinite","wikiPath":"/mediawiki/images/en/6/6b/Aerinite.png","wikiSize":[48,48],"wikiFile":"Aerinite.png"},{"id":"celestine","name":"天青石","en":"Celestine","wikiPath":"/mediawiki/images/en/1/19/Celestine.png","wikiSize":[48,48],"wikiFile":"Celestine.png"},{"id":"pyrite","name":"黄铁矿","en":"Pyrite","wikiPath":"/mediawiki/images/en/6/64/Pyrite.png","wikiSize":[48,48],"wikiFile":"Pyrite.png"},{"id":"petrified_slime","name":"石化史莱姆","en":"Petrified Slime","wikiPath":"/mediawiki/images/en/2/24/Petrified_Slime.png","wikiSize":[48,48],"wikiFile":"Petrified_Slime.png"},{"id":"soapstone","name":"滑石","en":"Soapstone","wikiPath":"/mediawiki/images/en/8/81/Soapstone.png","wikiSize":[48,48],"wikiFile":"Soapstone.png"},{"id":"jagoite","name":"贾戈石","en":"Jagoite","wikiPath":"/mediawiki/images/en/c/c3/Jagoite.png","wikiSize":[48,48],"wikiFile":"Jagoite.png"},{"id":"marble","name":"大理石","en":"Marble","wikiPath":"/mediawiki/images/en/8/82/Marble.png","wikiSize":[48,48],"wikiFile":"Marble.png"},{"id":"thunder_egg","name":"雷蛋","en":"Thunder Egg","wikiPath":"/mediawiki/images/en/1/14/Thunder_Egg.png","wikiSize":[48,48],"wikiFile":"Thunder_Egg.png"},{"id":"esperite","name":"埃斯佩石","en":"Esperite","wikiPath":"/mediawiki/images/en/a/aa/Esperite.png","wikiSize":[48,48],"wikiFile":"Esperite.png"},{"id":"malachite","name":"孔雀石","en":"Malachite","wikiPath":"/mediawiki/images/en/a/ad/Malachite.png","wikiSize":[48,48],"wikiFile":"Malachite.png"},{"id":"slate","name":"板岩","en":"Slate","wikiPath":"/mediawiki/images/en/9/97/Slate.png","wikiSize":[48,48],"wikiFile":"Slate.png"},{"id":"orpiment","name":"雌黄","en":"Orpiment","wikiPath":"/mediawiki/images/en/4/41/Orpiment.png","wikiSize":[48,48],"wikiFile":"Orpiment.png"},{"id":"nekoite","name":"猫石","en":"Nekoite","wikiPath":"/mediawiki/images/en/5/53/Nekoite.png","wikiSize":[48,48],"wikiFile":"Nekoite.png"},{"id":"granite","name":"花岗岩","en":"Granite","wikiPath":"/mediawiki/images/en/4/4a/Granite.png","wikiSize":[48,48],"wikiFile":"Granite.png"},{"id":"calcite","name":"方解石","en":"Calcite","wikiPath":"/mediawiki/images/en/9/97/Calcite.png","wikiSize":[48,48],"wikiFile":"Calcite.png"},{"id":"sandstone","name":"砂岩","en":"Sandstone","wikiPath":"/mediawiki/images/en/d/d6/Sandstone.png","wikiSize":[48,48],"wikiFile":"Sandstone.png"},{"id":"baryte","name":"重晶石","en":"Baryte","wikiPath":"/mediawiki/images/en/a/aa/Baryte.png","wikiSize":[48,48],"wikiFile":"Baryte.png"},{"id":"mudstone","name":"泥岩","en":"Mudstone","wikiPath":"/mediawiki/images/en/5/52/Mudstone.png","wikiSize":[48,48],"wikiFile":"Mudstone.png"},{"id":"limestone","name":"石灰岩","en":"Limestone","wikiPath":"/mediawiki/images/en/4/4e/Limestone.png","wikiSize":[48,48],"wikiFile":"Limestone.png"}];
+const CFG = {"mod":"../../js/anim/minerals.js","list":"MINERALS","w":"MINERAL_W","h":"MINERAL_H","draw":"drawMineral","drawExpr":"mod.drawMineral(g, item, 0.25)"};
+const CELL = 96, PERROW = 8, BATCH = 16;
+const mod = await import(CFG.mod);
+const list = CFG.list ? mod[CFG.list] : [];
+const map = Object.fromEntries(list.map(x => [x.id, x]));
+const W = mod[CFG.w], H = mod[CFG.h];
+const gOurs = document.getElementById('ours'), gWiki = document.getElementById('wiki');
+const OX = Math.floor((CELL - W) / 2), OY = Math.floor((CELL - H) / 2);
+
+const ours = MANIFEST.map(m => {
+  const item = map[m.id];
+  const c1 = document.createElement('div'); c1.className = 'cell';
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (item && CFG.draw) { try { eval(CFG.drawExpr); } catch (e) { console.error('draw', m.id, e); } }
+  cv.style.left = OX + 'px'; cv.style.top = OY + 'px';
+  c1.appendChild(cv); gOurs.appendChild(c1);
+  return c1;
+});
+
+const wiki = [];
+for (let i = 0; i < MANIFEST.length; i += BATCH) {
+  const batch = [];
+  for (let j = i; j < Math.min(i + BATCH, MANIFEST.length); j++) {
+    const m = MANIFEST[j];
+    const c2 = document.createElement('div'); c2.className = 'cell';
+    const img = document.createElement('img');
+    c2.appendChild(img); gWiki.appendChild(c2);
+    batch.push(new Promise(resolve => {
+      img.onload = resolve; img.onerror = resolve;
+      img.src = 'https://stardewvalleywiki.com' + m.wikiPath;
+    }));
+  }
+  await Promise.all(batch);
+}
+document.title = 'READY';
+</script></body></html>

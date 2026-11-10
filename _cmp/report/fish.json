@@ -1,0 +1,1730 @@
+[
+ {
+  "iou": 0.4646,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7671,
+  "aspect_sim": 0.5172,
+  "size_sim": 0.4714,
+  "score": 64.22,
+  "ours_box": [
+   29,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "albacore",
+  "name": "长鳍金枪鱼",
+  "en": "Albacore",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Albacore.png"
+ },
+ {
+  "iou": 0.4517,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.581,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.5964,
+  "score": 63.48,
+  "ours_box": [
+   21,
+   13
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "anchovy",
+  "name": "鳀鱼",
+  "en": "Anchovy",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Anchovy.png"
+ },
+ {
+  "iou": 0.6014,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7395,
+  "aspect_sim": 0.9655,
+  "size_sim": 0.0,
+  "score": 70.04,
+  "ours_box": [
+   29,
+   21
+  ],
+  "wiki_box": [
+   16,
+   12
+  ],
+  "id": "angler",
+  "name": "鮟鱇鱼",
+  "en": "Angler",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Angler.png"
+ },
+ {
+  "iou": 0.8013,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.4555,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.7933,
+  "score": 75.11,
+  "ours_box": [
+   21,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "blobfish",
+  "name": "水滴鱼",
+  "en": "Blobfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blobfish.png"
+ },
+ {
+  "iou": 0.6116,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7025,
+  "aspect_sim": 0.6349,
+  "size_sim": 0.4097,
+  "score": 68.53,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "blue_discus",
+  "name": "蓝盘鱼",
+  "en": "Blue Discus",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blue_Discus.png"
+ },
+ {
+  "iou": 0.4727,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.5549,
+  "aspect_sim": 0.56,
+  "size_sim": 0.5597,
+  "score": 61.53,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "bream",
+  "name": "鲷鱼",
+  "en": "Bream",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bream.png"
+ },
+ {
+  "iou": 0.4386,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7214,
+  "aspect_sim": 0.5911,
+  "size_sim": 0.2098,
+  "score": 62.5,
+  "ours_box": [
+   29,
+   16
+  ],
+  "wiki_box": [
+   15,
+   14
+  ],
+  "id": "bullhead",
+  "name": "牛头鲶",
+  "en": "Bullhead",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bullhead.png"
+ },
+ {
+  "iou": 0.4498,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.8574,
+  "aspect_sim": 0.56,
+  "size_sim": 0.6883,
+  "score": 66.02,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "carp",
+  "name": "鲤鱼",
+  "en": "Carp",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Carp.png"
+ },
+ {
+  "iou": 0.4724,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.9422,
+  "aspect_sim": 0.5333,
+  "size_sim": 0.3732,
+  "score": 67.38,
+  "ours_box": [
+   30,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "catfish",
+  "name": "鲶鱼",
+  "en": "Catfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Catfish.png"
+ },
+ {
+  "iou": 0.4476,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.8884,
+  "aspect_sim": 0.6087,
+  "size_sim": 0.6429,
+  "score": 68.87,
+  "ours_box": [
+   23,
+   14
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "chub",
+  "name": "圆腹雅罗鱼",
+  "en": "Chub",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Chub.png"
+ },
+ {
+  "iou": 0.6068,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.5893,
+  "aspect_sim": 0.4864,
+  "size_sim": 0.7627,
+  "score": 69.78,
+  "ours_box": [
+   21,
+   11
+  ],
+  "wiki_box": [
+   13,
+   14
+  ],
+  "id": "clam",
+  "name": "蛤蜊",
+  "en": "Clam",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Clam.png"
+ },
+ {
+  "iou": 0.5026,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.1095,
+  "aspect_sim": 0.4835,
+  "size_sim": 0.6095,
+  "score": 56.79,
+  "ours_box": [
+   21,
+   11
+  ],
+  "wiki_box": [
+   12,
+   13
+  ],
+  "id": "cockle",
+  "name": "鸟蛤",
+  "en": "Cockle",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cockle.png"
+ },
+ {
+  "iou": 0.4004,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.6873,
+  "aspect_sim": 0.5,
+  "size_sim": 0.944,
+  "score": 62.35,
+  "ours_box": [
+   22,
+   11
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "crab",
+  "name": "螃蟹",
+  "en": "Crab",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Crab.png"
+ },
+ {
+  "iou": 0.327,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.5766,
+  "aspect_sim": 0.4667,
+  "size_sim": 0.1144,
+  "score": 57.14,
+  "ours_box": [
+   15,
+   7
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "crayfish",
+  "name": "小龙虾",
+  "en": "Crayfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Crayfish.png"
+ },
+ {
+  "iou": 0.5395,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.8234,
+  "aspect_sim": 0.6053,
+  "size_sim": 0.0,
+  "score": 67.71,
+  "ours_box": [
+   38,
+   23
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "crimsonfish",
+  "name": "绯红鱼",
+  "en": "Crimsonfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Crimsonfish.png"
+ },
+ {
+  "iou": 0.5585,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5102,
+  "aspect_sim": 0.5161,
+  "size_sim": 0.3405,
+  "score": 64.4,
+  "ours_box": [
+   31,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "dorado",
+  "name": "鲯鳅",
+  "en": "Dorado",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Dorado.png"
+ },
+ {
+  "iou": 0.3419,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.57,
+  "aspect_sim": 0.4444,
+  "size_sim": 0.7653,
+  "score": 57.08,
+  "ours_box": [
+   27,
+   12
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "eel",
+  "name": "鳗鱼",
+  "en": "Eel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Eel.png"
+ },
+ {
+  "iou": 0.4119,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6207,
+  "aspect_sim": 0.4483,
+  "size_sim": 0.6142,
+  "score": 60.16,
+  "ours_box": [
+   29,
+   13
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "flounder",
+  "name": "比目鱼",
+  "en": "Flounder",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Flounder.png"
+ },
+ {
+  "iou": 0.626,
+  "dhash_sim": 0.4062,
+  "palette_cov": 1.0,
+  "color_sim": 0.5561,
+  "aspect_sim": 0.8889,
+  "size_sim": 0.7541,
+  "score": 67.91,
+  "ours_box": [
+   18,
+   16
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "ghostfish",
+  "name": "幽灵鱼",
+  "en": "Ghostfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ghostfish.png"
+ },
+ {
+  "iou": 0.5298,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3097,
+  "aspect_sim": 0.6456,
+  "size_sim": 0.0959,
+  "score": 60.6,
+  "ours_box": [
+   38,
+   23
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "glacierfish",
+  "name": "冰川鱼",
+  "en": "Glacierfish",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Glacierfish.png"
+ },
+ {
+  "iou": 0.5968,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2539,
+  "aspect_sim": 0.5806,
+  "size_sim": 0.2229,
+  "score": 60.51,
+  "ours_box": [
+   31,
+   18
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "glacierfish_jr",
+  "name": "小冰川鱼",
+  "en": "Glacierfish Jr.",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Glacierfish_Jr..png"
+ },
+ {
+  "iou": 0.5147,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6193,
+  "aspect_sim": 0.619,
+  "size_sim": 0.9359,
+  "score": 67.47,
+  "ours_box": [
+   21,
+   13
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "goby",
+  "name": "虾虎鱼",
+  "en": "Goby",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Goby.png"
+ },
+ {
+  "iou": 0.4421,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4111,
+  "aspect_sim": 0.4545,
+  "size_sim": 0.214,
+  "score": 59.42,
+  "ours_box": [
+   33,
+   15
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "halibut",
+  "name": "大比目鱼",
+  "en": "Halibut",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Halibut.png"
+ },
+ {
+  "iou": 0.4627,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.7994,
+  "aspect_sim": 0.6087,
+  "size_sim": 0.5056,
+  "score": 65.11,
+  "ours_box": [
+   23,
+   14
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "herring",
+  "name": "鲱鱼",
+  "en": "Herring",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Herring.png"
+ },
+ {
+  "iou": 0.4257,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2214,
+  "aspect_sim": 0.8667,
+  "size_sim": 0.8576,
+  "score": 62.48,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "ice_pip",
+  "name": "冰柱鱼",
+  "en": "Ice Pip",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ice_Pip.png"
+ },
+ {
+  "iou": 0.456,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7339,
+  "aspect_sim": 0.5172,
+  "size_sim": 0.4714,
+  "score": 63.78,
+  "ours_box": [
+   29,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "largemouth_bass",
+  "name": "大口黑鲈",
+  "en": "Largemouth Bass",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Largemouth_Bass.png"
+ },
+ {
+  "iou": 0.3896,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6294,
+  "aspect_sim": 0.4138,
+  "size_sim": 0.694,
+  "score": 59.99,
+  "ours_box": [
+   29,
+   12
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lava_eel",
+  "name": "岩浆鳗",
+  "en": "Lava Eel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lava_Eel.png"
+ },
+ {
+  "iou": 0.5545,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6032,
+  "aspect_sim": 0.6,
+  "size_sim": 0.0,
+  "score": 64.5,
+  "ours_box": [
+   40,
+   24
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "legend",
+  "name": "传说之鱼",
+  "en": "Legend",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Legend.png"
+ },
+ {
+  "iou": 0.5498,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.6498,
+  "aspect_sim": 0.5833,
+  "size_sim": 0.0,
+  "score": 64.89,
+  "ours_box": [
+   36,
+   21
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "legend_ii",
+  "name": "传说之鱼二代",
+  "en": "Legend II",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Legend_II.png"
+ },
+ {
+  "iou": 0.439,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7347,
+  "aspect_sim": 0.5161,
+  "size_sim": 0.3405,
+  "score": 63.56,
+  "ours_box": [
+   31,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lingcod",
+  "name": "长蛇齿鱼",
+  "en": "Lingcod",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lingcod.png"
+ },
+ {
+  "iou": 0.5599,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.9098,
+  "aspect_sim": 0.76,
+  "size_sim": 0.3837,
+  "score": 70.59,
+  "ours_box": [
+   25,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lionfish",
+  "name": "狮子鱼",
+  "en": "Lionfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lionfish.png"
+ },
+ {
+  "iou": 0.456,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.7376,
+  "aspect_sim": 0.4167,
+  "size_sim": 0.9357,
+  "score": 67.02,
+  "ours_box": [
+   24,
+   10
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "lobster",
+  "name": "龙虾",
+  "en": "Lobster",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Lobster.png"
+ },
+ {
+  "iou": 0.4956,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7469,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.5427,
+  "score": 66.53,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "midnight_carp",
+  "name": "午夜鲤鱼",
+  "en": "Midnight Carp",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Midnight_Carp.png"
+ },
+ {
+  "iou": 0.4839,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.5926,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.9644,
+  "score": 66.95,
+  "ours_box": [
+   13,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "midnight_squid",
+  "name": "午夜鱿鱼",
+  "en": "Midnight Squid",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Midnight_Squid.png"
+ },
+ {
+  "iou": 0.5478,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.7808,
+  "aspect_sim": 0.8912,
+  "size_sim": 0.0,
+  "score": 66.75,
+  "ours_box": [
+   29,
+   21
+  ],
+  "wiki_box": [
+   16,
+   13
+  ],
+  "id": "ms_angler",
+  "name": "鮟鱇鱼女士",
+  "en": "Ms. Angler",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ms._Angler.png"
+ },
+ {
+  "iou": 0.5622,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.894,
+  "aspect_sim": 0.5238,
+  "size_sim": 0.0,
+  "score": 68.64,
+  "ours_box": [
+   21,
+   11
+  ],
+  "wiki_box": [
+   8,
+   8
+  ],
+  "id": "mussel",
+  "name": "贻贝",
+  "en": "Mussel",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mussel.png"
+ },
+ {
+  "iou": 0.4736,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.7271,
+  "aspect_sim": 0.6723,
+  "size_sim": 0.0,
+  "score": 61.53,
+  "ours_box": [
+   34,
+   20
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "mutant_carp",
+  "name": "变异鲤鱼",
+  "en": "Mutant Carp",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mutant_Carp.png"
+ },
+ {
+  "iou": 0.4815,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.3325,
+  "aspect_sim": 1.0,
+  "size_sim": 0.6574,
+  "score": 63.03,
+  "ours_box": [
+   19,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "octopus",
+  "name": "章鱼",
+  "en": "Octopus",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Octopus.png"
+ },
+ {
+  "iou": 0.6338,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6213,
+  "aspect_sim": 0.4762,
+  "size_sim": 0.2628,
+  "score": 65.66,
+  "ours_box": [
+   21,
+   11
+  ],
+  "wiki_box": [
+   10,
+   11
+  ],
+  "id": "oyster",
+  "name": "牡蛎",
+  "en": "Oyster",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Oyster.png"
+ },
+ {
+  "iou": 0.4072,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.773,
+  "aspect_sim": 0.56,
+  "size_sim": 0.6883,
+  "score": 64.41,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "perch",
+  "name": "河鲈",
+  "en": "Perch",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Perch.png"
+ },
+ {
+  "iou": 0.4127,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.7157,
+  "aspect_sim": 0.4365,
+  "size_sim": 0.3491,
+  "score": 63.6,
+  "ours_box": [
+   21,
+   11
+  ],
+  "wiki_box": [
+   10,
+   12
+  ],
+  "id": "periwinkle",
+  "name": "滨螺",
+  "en": "Periwinkle",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Periwinkle.png"
+ },
+ {
+  "iou": 0.5,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7334,
+  "aspect_sim": 0.5161,
+  "size_sim": 0.3405,
+  "score": 64.12,
+  "ours_box": [
+   31,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "pike",
+  "name": "狗鱼",
+  "en": "Pike",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pike.png"
+ },
+ {
+  "iou": 0.5924,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.645,
+  "aspect_sim": 0.7647,
+  "size_sim": 0.8536,
+  "score": 70.93,
+  "ours_box": [
+   17,
+   13
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "pufferfish",
+  "name": "河豚",
+  "en": "Pufferfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pufferfish.png"
+ },
+ {
+  "iou": 0.4782,
+  "dhash_sim": 0.4531,
+  "palette_cov": 1.0,
+  "color_sim": 0.684,
+  "aspect_sim": 0.6275,
+  "size_sim": 0.0,
+  "score": 59.94,
+  "ours_box": [
+   34,
+   20
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "radioactive_carp",
+  "name": "放射性鲤鱼",
+  "en": "Radioactive Carp",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Radioactive_Carp.png"
+ },
+ {
+  "iou": 0.5002,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2977,
+  "aspect_sim": 0.5208,
+  "size_sim": 0.4784,
+  "score": 58.32,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "rainbow_trout",
+  "name": "虹鳟鱼",
+  "en": "Rainbow Trout",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rainbow_Trout.png"
+ },
+ {
+  "iou": 0.5269,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.9005,
+  "aspect_sim": 0.56,
+  "size_sim": 0.5597,
+  "score": 68.34,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "red_mullet",
+  "name": "红鲻鱼",
+  "en": "Red Mullet",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Red_Mullet.png"
+ },
+ {
+  "iou": 0.4874,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.9576,
+  "aspect_sim": 0.5172,
+  "size_sim": 0.0,
+  "score": 65.72,
+  "ours_box": [
+   29,
+   15
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "red_snapper",
+  "name": "红鲷鱼",
+  "en": "Red Snapper",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Red_Snapper.png"
+ },
+ {
+  "iou": 0.4099,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.4567,
+  "aspect_sim": 0.4839,
+  "size_sim": 0.2762,
+  "score": 55.68,
+  "ours_box": [
+   31,
+   16
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "salmon",
+  "name": "鲑鱼",
+  "en": "Salmon",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Salmon.png"
+ },
+ {
+  "iou": 0.5005,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6971,
+  "aspect_sim": 0.56,
+  "size_sim": 0.4224,
+  "score": 64.12,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "sandfish",
+  "name": "沙鱼",
+  "en": "Sandfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sandfish.png"
+ },
+ {
+  "iou": 0.4533,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.7016,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.5964,
+  "score": 66.58,
+  "ours_box": [
+   21,
+   13
+  ],
+  "wiki_box": [
+   14,
+   13
+  ],
+  "id": "sardine",
+  "name": "沙丁鱼",
+  "en": "Sardine",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sardine.png"
+ },
+ {
+  "iou": 0.4586,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7914,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.5427,
+  "score": 65.15,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "scorpion_carp",
+  "name": "蝎子鲤鱼",
+  "en": "Scorpion Carp",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Scorpion_Carp.png"
+ },
+ {
+  "iou": 0.5577,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4495,
+  "aspect_sim": 0.6471,
+  "size_sim": 0.6874,
+  "score": 65.26,
+  "ours_box": [
+   17,
+   11
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "sea_cucumber",
+  "name": "海参",
+  "en": "Sea Cucumber",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sea_Cucumber.png"
+ },
+ {
+  "iou": 0.5037,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6239,
+  "aspect_sim": 0.9333,
+  "size_sim": 0.0,
+  "score": 65.68,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "sea_urchin",
+  "name": "海胆",
+  "en": "Sea Urchin",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sea_Urchin.png"
+ },
+ {
+  "iou": 0.4966,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4844,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.5427,
+  "score": 62.62,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "shad",
+  "name": "美洲西鲱",
+  "en": "Shad",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Shad.png"
+ },
+ {
+  "iou": 0.3078,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.6332,
+  "aspect_sim": 0.5333,
+  "size_sim": 0.5126,
+  "score": 58.82,
+  "ours_box": [
+   15,
+   8
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "shrimp",
+  "name": "虾",
+  "en": "Shrimp",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Shrimp.png"
+ },
+ {
+  "iou": 0.686,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.3059,
+  "aspect_sim": 0.7619,
+  "size_sim": 0.7291,
+  "score": 68.31,
+  "ours_box": [
+   21,
+   15
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "slimejack",
+  "name": "史莱姆鱼",
+  "en": "Slimejack",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Slimejack.png"
+ },
+ {
+  "iou": 0.4728,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.7645,
+  "aspect_sim": 0.56,
+  "size_sim": 0.4224,
+  "score": 64.93,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "smallmouth_bass",
+  "name": "小口黑鲈",
+  "en": "Smallmouth Bass",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Smallmouth_Bass.png"
+ },
+ {
+  "iou": 0.5964,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4508,
+  "aspect_sim": 0.6,
+  "size_sim": 0.7993,
+  "score": 66.84,
+  "ours_box": [
+   14,
+   7
+  ],
+  "wiki_box": [
+   12,
+   10
+  ],
+  "id": "snail",
+  "name": "蜗牛",
+  "en": "Snail",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Snail.png"
+ },
+ {
+  "iou": 0.5422,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.8601,
+  "aspect_sim": 0.6053,
+  "size_sim": 0.0,
+  "score": 68.35,
+  "ours_box": [
+   38,
+   23
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "son_of_crimsonfish",
+  "name": "绯红鱼之子",
+  "en": "Son of Crimsonfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Son_of_Crimsonfish.png"
+ },
+ {
+  "iou": 0.6639,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.1685,
+  "aspect_sim": 0.8947,
+  "size_sim": 0.7683,
+  "score": 64.92,
+  "ours_box": [
+   19,
+   17
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "spook_fish",
+  "name": "幽灵鱼",
+  "en": "Spook Fish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spook_Fish.png"
+ },
+ {
+  "iou": 0.4179,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.4421,
+  "aspect_sim": 0.6842,
+  "size_sim": 0.9644,
+  "score": 62.08,
+  "ours_box": [
+   13,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "squid",
+  "name": "鱿鱼",
+  "en": "Squid",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Squid.png"
+ },
+ {
+  "iou": 0.4953,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.3836,
+  "aspect_sim": 0.4571,
+  "size_sim": 0.2194,
+  "score": 59.1,
+  "ours_box": [
+   35,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "stingray",
+  "name": "黄貂鱼",
+  "en": "Stingray",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Stingray.png"
+ },
+ {
+  "iou": 0.7865,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4431,
+  "aspect_sim": 0.8205,
+  "size_sim": 0.2324,
+  "score": 71.8,
+  "ours_box": [
+   12,
+   8
+  ],
+  "wiki_box": [
+   16,
+   13
+  ],
+  "id": "stonefish",
+  "name": "石头鱼",
+  "en": "Stonefish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Stonefish.png"
+ },
+ {
+  "iou": 0.454,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7747,
+  "aspect_sim": 0.5495,
+  "size_sim": 0.1533,
+  "score": 63.69,
+  "ours_box": [
+   33,
+   17
+  ],
+  "wiki_box": [
+   16,
+   15
+  ],
+  "id": "sturgeon",
+  "name": "鲟鱼",
+  "en": "Sturgeon",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sturgeon.png"
+ },
+ {
+  "iou": 0.545,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.0707,
+  "aspect_sim": 0.7,
+  "size_sim": 0.0,
+  "score": 55.35,
+  "ours_box": [
+   10,
+   7
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "sunfish",
+  "name": "太阳鱼",
+  "en": "Sunfish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Sunfish.png"
+ },
+ {
+  "iou": 0.6019,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.3522,
+  "aspect_sim": 0.4783,
+  "size_sim": 0.9883,
+  "score": 64.0,
+  "ours_box": [
+   23,
+   11
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "super_cucumber",
+  "name": "超级海参",
+  "en": "Super Cucumber",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Super_Cucumber.png"
+ },
+ {
+  "iou": 0.4631,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4776,
+  "aspect_sim": 0.5208,
+  "size_sim": 0.4784,
+  "score": 59.59,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "tiger_trout",
+  "name": "虎鳟",
+  "en": "Tiger Trout",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tiger_Trout.png"
+ },
+ {
+  "iou": 0.5853,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.685,
+  "aspect_sim": 0.56,
+  "size_sim": 0.5597,
+  "score": 68.11,
+  "ours_box": [
+   25,
+   14
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "tilapia",
+  "name": "罗非鱼",
+  "en": "Tilapia",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tilapia.png"
+ },
+ {
+  "iou": 0.5215,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.5822,
+  "aspect_sim": 0.5152,
+  "size_sim": 0.2176,
+  "score": 61.55,
+  "ours_box": [
+   33,
+   17
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "tuna",
+  "name": "金枪鱼",
+  "en": "Tuna",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tuna.png"
+ },
+ {
+  "iou": 0.4628,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6387,
+  "aspect_sim": 0.5161,
+  "size_sim": 0.3405,
+  "score": 61.89,
+  "ours_box": [
+   31,
+   16
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "void_salmon",
+  "name": "虚空鲑鱼",
+  "en": "Void Salmon",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Void_Salmon.png"
+ },
+ {
+  "iou": 0.4781,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.8888,
+  "aspect_sim": 0.5172,
+  "size_sim": 0.4714,
+  "score": 65.83,
+  "ours_box": [
+   29,
+   15
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "walleye",
+  "name": "大眼狮鲈",
+  "en": "Walleye",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Walleye.png"
+ },
+ {
+  "iou": 0.4794,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6991,
+  "aspect_sim": 0.5556,
+  "size_sim": 0.4142,
+  "score": 63.74,
+  "ours_box": [
+   27,
+   15
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "woodskip",
+  "name": "木跃鱼",
+  "en": "Woodskip",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Woodskip.png"
+ }
+]

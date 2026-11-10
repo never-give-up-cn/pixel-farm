@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(8, 132px);width:1056px}
+.cell{width:132px;height:132px;position:relative;overflow:hidden}
+canvas{position:absolute;image-rendering:pixelated}
+img{position:absolute;left:0;top:0;image-rendering:pixelated}
+</style></head><body>
+<div id="ours" class="grid"></div>
+<div id="wiki" class="grid"></div>
+<script type="module">
+const MANIFEST = [{"id":"abigail","name":"阿比盖尔","en":"Abigail","wikiPath":"/mediawiki/images/en/8/88/Abigail.png","wikiSize":[128,128],"wikiFile":"Abigail.png"},{"id":"alex","name":"亚历克斯","en":"Alex","wikiPath":"/mediawiki/images/en/0/04/Alex.png","wikiSize":[128,128],"wikiFile":"Alex.png"},{"id":"elliott","name":"艾利欧特","en":"Elliott","wikiPath":"/mediawiki/images/en/b/bd/Elliott.png","wikiSize":[128,128],"wikiFile":"Elliott.png"},{"id":"emily","name":"艾米丽","en":"Emily","wikiPath":"/mediawiki/images/en/2/28/Emily.png","wikiSize":[128,128],"wikiFile":"Emily.png"},{"id":"haley","name":"海莉","en":"Haley","wikiPath":"/mediawiki/images/en/1/1b/Haley.png","wikiSize":[128,128],"wikiFile":"Haley.png"},{"id":"harvey","name":"哈维","en":"Harvey","wikiPath":"/mediawiki/images/en/9/95/Harvey.png","wikiSize":[128,128],"wikiFile":"Harvey.png"},{"id":"leah","name":"莉亚","en":"Leah","wikiPath":"/mediawiki/images/en/e/e6/Leah.png","wikiSize":[128,128],"wikiFile":"Leah.png"},{"id":"maru","name":"玛鲁","en":"Maru","wikiPath":"/mediawiki/images/en/f/f8/Maru.png","wikiSize":[128,128],"wikiFile":"Maru.png"},{"id":"penny","name":"潘妮","en":"Penny","wikiPath":"/mediawiki/images/en/a/ab/Penny.png","wikiSize":[128,128],"wikiFile":"Penny.png"},{"id":"sam","name":"山姆","en":"Sam","wikiPath":"/mediawiki/images/en/9/94/Sam.png","wikiSize":[128,128],"wikiFile":"Sam.png"},{"id":"sebastian","name":"塞巴斯蒂安","en":"Sebastian","wikiPath":"/mediawiki/images/en/a/a8/Sebastian.png","wikiSize":[128,128],"wikiFile":"Sebastian.png"},{"id":"shane","name":"谢恩","en":"Shane","wikiPath":"/mediawiki/images/en/8/8b/Shane.png","wikiSize":[128,128],"wikiFile":"Shane.png"},{"id":"caroline","name":"卡洛琳","en":"Caroline","wikiPath":"/mediawiki/images/en/8/87/Caroline.png","wikiSize":[128,128],"wikiFile":"Caroline.png"},{"id":"clint","name":"克林特","en":"Clint","wikiPath":"/mediawiki/images/en/3/31/Clint.png","wikiSize":[128,128],"wikiFile":"Clint.png"},{"id":"demetrius","name":"德米特里厄斯","en":"Demetrius","wikiPath":"/mediawiki/images/en/f/f9/Demetrius.png","wikiSize":[128,128],"wikiFile":"Demetrius.png"},{"id":"dwarf","name":"矮人","en":"Dwarf","wikiPath":"/mediawiki/images/en/e/ed/Dwarf.png","wikiSize":[128,128],"wikiFile":"Dwarf.png"},{"id":"evelyn","name":"艾芙琳","en":"Evelyn","wikiPath":"/mediawiki/images/en/8/8e/Evelyn.png","wikiSize":[128,128],"wikiFile":"Evelyn.png"},{"id":"george","name":"乔治","en":"George","wikiPath":"/mediawiki/images/en/7/78/George.png","wikiSize":[128,128],"wikiFile":"George.png"},{"id":"gus","name":"格斯","en":"Gus","wikiPath":"/mediawiki/images/en/5/52/Gus.png","wikiSize":[128,128],"wikiFile":"Gus.png"},{"id":"jas","name":"贾斯","en":"Jas","wikiPath":"/mediawiki/images/en/5/55/Jas.png","wikiSize":[128,128],"wikiFile":"Jas.png"},{"id":"jodi","name":"乔迪","en":"Jodi","wikiPath":"/mediawiki/images/en/4/41/Jodi.png","wikiSize":[128,128],"wikiFile":"Jodi.png"},{"id":"kent","name":"肯特","en":"Kent","wikiPath":"/mediawiki/images/en/9/99/Kent.png","wikiSize":[128,128],"wikiFile":"Kent.png"},{"id":"krobus","name":"科罗布斯","en":"Krobus","wikiPath":"/mediawiki/images/en/7/71/Krobus.png","wikiSize":[128,128],"wikiFile":"Krobus.png"},{"id":"leo","name":"雷欧","en":"Leo","wikiPath":"/mediawiki/images/en/1/1d/Leo.png","wikiSize":[128,128],"wikiFile":"Leo.png"},{"id":"lewis","name":"刘易斯","en":"Lewis","wikiPath":"/mediawiki/images/en/2/2b/Lewis.png","wikiSize":[128,128],"wikiFile":"Lewis.png"},{"id":"linus","name":"莱纳斯","en":"Linus","wikiPath":"/mediawiki/images/en/3/31/Linus.png","wikiSize":[128,128],"wikiFile":"Linus.png"},{"id":"marnie","name":"玛妮","en":"Marnie","wikiPath":"/mediawiki/images/en/5/52/Marnie.png","wikiSize":[128,128],"wikiFile":"Marnie.png"},{"id":"pam","name":"潘姆","en":"Pam","wikiPath":"/mediawiki/images/en/d/da/Pam.png","wikiSize":[128,128],"wikiFile":"Pam.png"},{"id":"pierre","name":"皮埃尔","en":"Pierre","wikiPath":"/mediawiki/images/en/7/7e/Pierre.png","wikiSize":[128,128],"wikiFile":"Pierre.png"},{"id":"robin","name":"罗宾","en":"Robin","wikiPath":"/mediawiki/images/en/1/1b/Robin.png","wikiSize":[128,128],"wikiFile":"Robin.png"},{"id":"sandy","name":"桑迪","en":"Sandy","wikiPath":"/mediawiki/images/en/4/4e/Sandy.png","wikiSize":[128,128],"wikiFile":"Sandy.png"},{"id":"vincent","name":"文森特","en":"Vincent","wikiPath":"/mediawiki/images/en/f/f1/Vincent.png","wikiSize":[128,128],"wikiFile":"Vincent.png"},{"id":"willy","name":"威利","en":"Willy","wikiPath":"/mediawiki/images/en/8/82/Willy.png","wikiSize":[128,128],"wikiFile":"Willy.png"},{"id":"wizard","name":"法师","en":"Wizard","wikiPath":"/mediawiki/images/en/c/c7/Wizard.png","wikiSize":[128,128],"wikiFile":"Wizard.png"}];
+const CFG = {"mod":"../../js/anim/npcs.js","list":"NPCS","w":"PORTRAIT_W","h":"PORTRAIT_H","draw":"drawNpcPortrait","drawExpr":"mod.drawNpcPortrait(g, item)"};
+const CELL = 132, PERROW = 8, BATCH = 16;
+const mod = await import(CFG.mod);
+const list = CFG.list ? mod[CFG.list] : [];
+const map = Object.fromEntries(list.map(x => [x.id, x]));
+const W = mod[CFG.w], H = mod[CFG.h];
+const gOurs = document.getElementById('ours'), gWiki = document.getElementById('wiki');
+const OX = Math.floor((CELL - W) / 2), OY = Math.floor((CELL - H) / 2);
+
+const ours = MANIFEST.map(m => {
+  const item = map[m.id];
+  const c1 = document.createElement('div'); c1.className = 'cell';
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (item && CFG.draw) { try { eval(CFG.drawExpr); } catch (e) { console.error('draw', m.id, e); } }
+  cv.style.left = OX + 'px'; cv.style.top = OY + 'px';
+  c1.appendChild(cv); gOurs.appendChild(c1);
+  return c1;
+});
+
+const wiki = [];
+for (let i = 0; i < MANIFEST.length; i += BATCH) {
+  const batch = [];
+  for (let j = i; j < Math.min(i + BATCH, MANIFEST.length); j++) {
+    const m = MANIFEST[j];
+    const c2 = document.createElement('div'); c2.className = 'cell';
+    const img = document.createElement('img');
+    c2.appendChild(img); gWiki.appendChild(c2);
+    batch.push(new Promise(resolve => {
+      img.onload = resolve; img.onerror = resolve;
+      img.src = 'https://stardewvalleywiki.com' + m.wikiPath;
+    }));
+  }
+  await Promise.all(batch);
+}
+document.title = 'READY';
+</script></body></html>

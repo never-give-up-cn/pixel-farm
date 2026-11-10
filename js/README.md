@@ -116,6 +116,7 @@ import './world/buildings.js';
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
 | 成就/统计 | `js/systems/stats.js` |
 | 加工台 | `js/systems/maker.js` |
+| 工匠品 / 加工配方 | `js/systems/maker.js` + `js/anim/artisan.js` + `js/config.js` |
 | 评级/终局结算 | `js/systems/endgame.js` |
 | 输入、按键、暂停 | `js/systems/input.js`（含长按左键连续使用工具） |
 | NPC 日程/站位 | `js/npc/schedule.js` |

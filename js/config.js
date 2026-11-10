@@ -5,6 +5,7 @@ import { CROPS as ANIM_CROPS } from './anim/sdv-crops.js';
 import { FRUIT_TREES } from './anim/trees.js';
 import { MINERALS } from './anim/minerals.js';
 import { FISH as ANIM_FISH } from './anim/fish.js';
+import { ARTISANS } from './anim/artisan.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1411,6 +1412,108 @@ const CONFIG = {
   for (const [id, name, cost, gold] of EXTRA) {
     if (CONFIG.BUILD.RECIPES.some(r => r.id === id)) continue;
     CONFIG.BUILD.RECIPES.push({ id, name, cost, gold, solid: true });
+  }
+})();
+
+
+/* 第 32 轮：28 种工匠品接入物品表与加工台配方 */
+(function addArtisanGoods(){
+  const META = {
+    wine:            ['🍷', 300, 'food'],
+    juice:           ['🧃', 250, 'food'],
+    beer:            ['🍺', 200, 'food'],
+    pale_ale:        ['🍺', 250, 'food'],
+    mead:            ['🍯', 300, 'food'],
+    coffee:          ['☕', 150, 'food'],
+    green_tea:       ['🍵', 150, 'food'],
+    jelly:           ['🍯', 220, 'food'],
+    pickles:         ['🫙', 200, 'food'],
+    honey:           ['🍯', 100, 'food'],
+    vinegar:         ['🫙', 120, 'food'],
+    goat_cheese:     ['🧀', 250, 'food'],
+    mayonnaise:      ['🫙', 190, 'food'],
+    duck_mayonnaise: ['🫙', 220, 'food'],
+    cloth:           ['🧵', 700, 'material'],
+    oil:             ['🫙', 200, 'food'],
+    truffle_oil:     ['🫙', 1100, 'food'],
+    rice:            ['🍚', 100, 'material'],
+    sugar:           ['🧂', 100, 'material'],
+    flour:           ['🌾', 100, 'material'],
+    dried_fruit:     ['🍇', 150, 'food'],
+    dried_mushrooms: ['🍄', 130, 'food'],
+    raisins:         ['🍇', 180, 'food'],
+    roe:             ['🐟', 120, 'food'],
+    aged_roe:        ['🐟', 200, 'food'],
+    caviar:          ['🫙', 500, 'food'],
+    smoked_fish:     ['🐟', 200, 'food']
+  };
+  for (const a of ARTISANS) {
+    if (CONFIG.ITEMS[a.id]) continue;             /* 奶酪等已有物品保留原数值 */
+    const m = META[a.id] || ['🫙', 150, 'food'];
+    CONFIG.ITEMS[a.id] = {
+      id: a.id, name: a.name, icon: m[0], stack: true, max: 99,
+      kind: m[2], price: m[1], artisan: a.cat, desc: a.desc
+    };
+  }
+
+  const RECIPES = [
+    ['wine',            '葡萄酒',   { grape:3 },                 4],
+    ['juice',           '果汁',     { tomato:3 },                3],
+    ['beer',            '啤酒',     { wheat:3 },                 4],
+    ['pale_ale',        '淡啤酒',   { hops:3 },                  4],
+    ['mead',            '蜂蜜酒',   { honey:2 },                 6],
+    ['coffee',          '咖啡',     { coffee_bean:3 },           1],
+    ['green_tea',       '绿茶',     { kale:2 },                  1],
+    ['jelly',           '果酱',     { strawberry:3 },            3],
+    ['pickles',         '腌菜',     { potato:3 },                3],
+    ['honey',           '蜂蜜',     { wildflower:5 },            4],
+    ['vinegar',         '醋',       { unmilled_rice:2 },         3],
+    ['goat_cheese',     '山羊奶酪', { milk:3 },                  3],
+    ['mayonnaise',      '蛋黄酱',   { egg:1 },                   2],
+    ['duck_mayonnaise', '鸭蛋黄酱', { duck_egg:1 },              2],
+    ['cloth',           '布',       { wool:1 },                  4],
+    ['oil',             '油',       { corn:3 },                   3],
+    ['truffle_oil',     '松露油',   { truffle:1 },               4],
+    ['rice',            '大米',     { unmilled_rice:3 },         2],
+    ['sugar',           '糖',       { beet:2 },                  2],
+    ['flour',           '面粉',     { wheat:2 },                 2],
+    ['dried_fruit',     '水果干',   { apple:2 },                 3],
+    ['dried_mushrooms', '蘑菇干',   { common_mushroom:3 },       3],
+    ['raisins',         '葡萄干',   { grape:3 },                 3],
+    ['roe',             '鱼籽',     { fish_crucian:2 },          2],
+    ['aged_roe',        '陈年鱼籽', { roe:1 },                   6],
+    ['caviar',          '鱼子酱',   { roe:2 },                   6],
+    ['smoked_fish',     '熏鱼',     { fish_carp:2 },             3]
+  ];
+  for (const [id, name, inputs, hours] of RECIPES) {
+    if (CONFIG.RECIPE.LIST.some(r => r.id === id)) continue;
+    const d = CONFIG.ITEMS[id];
+    CONFIG.RECIPE.LIST.push({
+      id, name, icon: d ? d.icon : '🫙', inputs,
+      out: { id, n: 1 }, hours, unlock: null
+    });
+  }
+
+  /* 成品价至少是原料总价的 1.6 倍，避免倒贴钱。
+   * 多跑几轮，让「蜂蜜 → 蜂蜜酒」这类链式配方也能吃到上游涨价。 */
+  const itemPrice = id => {
+    const d = CONFIG.ITEMS[id];
+    if (!d) return 0;
+    if (typeof d.price === 'number') return d.price;
+    if (d.kind === 'crop') {
+      const c = CONFIG.CROPS.find(x => x.id === d.crop);
+      return c ? c.sell : 0;
+    }
+    return 0;
+  };
+  for (let pass = 0; pass < 3; pass++) {
+    for (const [id, , inputs] of RECIPES) {
+      let cost = 0;
+      for (const k in inputs) cost += itemPrice(k) * inputs[k];
+      if (cost > 0 && CONFIG.ITEMS[id]) {
+        CONFIG.ITEMS[id].price = Math.max(CONFIG.ITEMS[id].price || 0, Math.round(cost * 1.6));
+      }
+    }
   }
 })();
 

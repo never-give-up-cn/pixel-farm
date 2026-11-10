@@ -27,6 +27,7 @@ import { initSpecialNpcPanel } from './anim-demo-special-npcs.js';
 import { initAchievementPanel } from './anim-demo-achievements.js';
 import { initBundlePanel } from './anim-demo-bundles.js';
 import { initUiPanel } from './anim-demo-ui.js';
+import { initRecipePanel } from './anim-demo-recipes.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -529,6 +530,8 @@ function tick(dt) {
     bundlePanel.tick(dt);
   } else if (state.tab === 'ui') {
     uiPanel.tick(dt);
+  } else if (state.tab === 'recipes') {
+    recipePanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -563,10 +566,11 @@ const specialNpcPanel = initSpecialNpcPanel();
 const achievementPanel = initAchievementPanel();
 const bundlePanel = initBundlePanel();
 const uiPanel = initUiPanel();
+const recipePanel = initRecipePanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui', 'recipes'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -593,6 +597,7 @@ function setTab(name) {
   else if (name === 'achievements') achievementPanel.activate();
   else if (name === 'bundles') bundlePanel.activate();
   else if (name === 'ui') uiPanel.activate();
+  else if (name === 'recipes') recipePanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -638,5 +643,6 @@ window.__animDemo = {
   achievementPanel,
   bundlePanel,
   uiPanel,
+  recipePanel,
   setTab
 };

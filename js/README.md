@@ -47,7 +47,7 @@ import './world/buildings.js';
 | `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、终局等 |
 | `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
-| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内 / 资源 / 宠物 / 产品 / 特殊 NPC / 成就 / 收集包 / UI、像素绘制、帧缓存与播放器 |
+| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内 / 资源 / 宠物 / 产品 / 特殊 NPC / 成就 / 收集包 / UI / 食谱、像素绘制、帧缓存与播放器 |
 | `js/anim-demo.js` | 动画测试页入口与标签切换（不进 `main.js`） |
 | `js/anim-demo-plants.js` | 植物图鉴测试面板 |
 | `js/anim-demo-animals.js` | 动物图鉴测试面板 |
@@ -70,6 +70,7 @@ import './world/buildings.js';
 | `js/anim-demo-achievements.js` | 49 个成就徽章面板 |
 | `js/anim-demo-bundles.js` | 社区中心收集包面板 |
 | `js/anim-demo-ui.js` | UI 图标设计稿面板 |
+| `js/anim-demo-recipes.js` | 81 张食谱卡面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -112,7 +113,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子、80 件衣物、152 件室内物品、100 种资源、15 只宠物、24 种动物产品、12 位特殊 NPC、49 个成就、30 个收集包与 60 个 UI 图标二十二套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子、80 件衣物、152 件室内物品、100 种资源、15 只宠物、24 种动物产品、12 位特殊 NPC、49 个成就、30 个收集包、60 个 UI 图标与 81 张食谱卡二十三套精灵，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -141,6 +142,7 @@ import './world/buildings.js';
 | `js/anim/achievements.js` | 49 个成就徽章；`drawAchievementIcon(ctx, achievement, phase)`，32×32 |
 | `js/anim/bundles.js` | 30 个社区中心收集包；`drawBundleIcon(ctx, bundle, phase)`，32×32 |
 | `js/anim/ui-icons.js` | 60 个 UI 图标；`drawUiIcon(ctx, icon, phase)`，32×32 |
+| `js/anim/recipes.js` | 81 张食谱卡数据，含配料、增益与菜系 |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js

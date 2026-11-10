@@ -8,6 +8,7 @@ import { FISH as ANIM_FISH } from './anim/fish.js';
 import { ARTISANS } from './anim/artisan.js';
 import { DISHES, DISH_MAP } from './anim/dishes.js';
 import { RECIPES as ANIM_RECIPES } from './anim/recipes.js';
+import { ACHIEVEMENTS as ANIM_ACHIEVEMENTS } from './anim/achievements.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1618,6 +1619,46 @@ const CONFIG = {
   }
 
   CONFIG.DISH_DEBUG = { added, total: ANIM_RECIPES.length };
+})();
+
+
+/* 第 32 轮：成就补到 32 个（刚好填满位掩码），并给全部成就分配 anim 徽章 */
+(function addMoreAchievements(){
+  const EXTRA = [
+    {id:'mineral_first', cat:'explore', icon:'💎', name:'矿物入门', desc:'收集 1 种矿物',       kind:'mineralKinds', need:1},
+    {id:'mineral_10',    cat:'explore', icon:'💎', name:'矿物收藏', desc:'收集 10 种矿物',      kind:'mineralKinds', need:10},
+    {id:'mineral_25',    cat:'explore', icon:'💎', name:'矿物学家', desc:'收集 25 种矿物',      kind:'mineralKinds', need:25},
+    {id:'mineral_all',   cat:'explore', icon:'🏅', name:'矿物全鉴', desc:'集齐 53 种矿物',      kind:'mineralKinds', need:53},
+    {id:'fish_25',       cat:'explore', icon:'🐟', name:'鱼类行家', desc:'钓到 25 种鱼',        kind:'fishKinds',    need:25},
+    {id:'fish_50',       cat:'explore', icon:'🐟', name:'鱼类大师', desc:'钓到 50 种鱼',        kind:'fishKinds',    need:50},
+    {id:'crops_10',      cat:'farm',    icon:'🌱', name:'十全十美', desc:'收获 10 种作物',      kind:'cropKinds',    need:10},
+    {id:'crops_20',      cat:'farm',    icon:'🌾', name:'作物百科', desc:'收获 20 种作物',      kind:'cropKinds',    need:20},
+    {id:'build_50',      cat:'gold',    icon:'🏗', name:'建筑巨匠', desc:'累计建造 50 次',      kind:'stat', key:'bd', need:50},
+    {id:'income_20000',  cat:'gold',    icon:'💎', name:'富甲一方', desc:'累计收入达到 20000 金币', kind:'stat', key:'inc', need:20000}
+  ];
+  for (const a of EXTRA) {
+    if (!CONFIG.ACHIEVEMENT.LIST.some(x => x.id === a.id)) CONFIG.ACHIEVEMENT.LIST.push(a);
+  }
+  /* 按分类挑徽章：农业用 farming 徽章、经济用 wealth/building、探索用 museum/fishing… */
+  const pools = {};
+  for (const a of ANIM_ACHIEVEMENTS) {
+    (pools[a.group] || (pools[a.group] = [])).push(a.id);
+  }
+  const catPool = {
+    farm:    [].concat(pools.farming || [], pools.cooking || []),
+    gold:    [].concat(pools.wealth || [], pools.building || []),
+    social:  [].concat(pools.social || []),
+    explore: [].concat(pools.museum || [], pools.fishing || [], pools.adventure || [], pools.quest || [], pools.island || [])
+  };
+  const used = {};
+  CONFIG.ACHIEVEMENT.LIST.forEach(a => {
+    if (a.badge) return;
+    const pool = catPool[a.cat] || [];
+    if (!pool.length) return;
+    const k = used[a.cat] = (used[a.cat] || 0);
+    a.badge = pool[k % pool.length];
+    used[a.cat] = k + 1;
+  });
 })();
 
 

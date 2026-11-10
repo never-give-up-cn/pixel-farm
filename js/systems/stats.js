@@ -1,6 +1,23 @@
 /* js/systems/stats.js —— 由 index.html 拆分，原行 10723–11085 */
 'use strict';
 
+import { ACH_MAP as ANIM_ACH_MAP, drawAchievementIcon } from '../anim/achievements.js';
+
+/* 成就徽章：有 anim 徽章就画像素图，没有就退回 emoji */
+function achBadgeCanvas(a, size) {
+  const def = a && a.badge ? ANIM_ACH_MAP[a.badge] : null;
+  if (!def) return null;
+  const cv = document.createElement('canvas');
+  cv.width = 32; cv.height = 32;
+  cv.style.width = size + 'px';
+  cv.style.height = size + 'px';
+  cv.style.imageRendering = 'pixelated';
+  const g = cv.getContext('2d');
+  g.imageSmoothingEnabled = false;
+  drawAchievementIcon(g, def, 0.25);
+  return cv;
+}
+
 /* === 19.统计 / 成就 / 年度总结（第 18 轮） ===
  * 统计字段全部是数字（存档里是一个 16 长度的数字数组），增量更新、不重算全量。
  * 成就用一个 32 位掩码存（最多 32 个），解锁时右上角滑入卡片 + 音效，Esc 菜单里看成就墙。
@@ -122,6 +139,8 @@ function achValue(a){
     case 'dailyGold':   return statsDailyIncome();
     case 'crops':       return achPopcount(statsState.cv);
     case 'fishKinds':   return dexState.f.length;
+    case 'mineralKinds':return dexState.m.length;
+    case 'cropKinds':   return achPopcount(statsState.cv);
     case 'gatherKinds': return achPopcount(dexState.g);
     case 'friends':     return achFriends();
     case 'year':        return clock.day > YEAR_DAYS ? 1 : 0;
@@ -186,7 +205,11 @@ function achShowNextCard(){
   const a = achQueue.shift();
   if(!a) return false;
   achCardT = 0;
-  if(achCardIcon) achCardIcon.textContent = a.icon;
+  if(achCardIcon){
+    const badge = achBadgeCanvas(a, 30);
+    achCardIcon.textContent = '';
+    if(badge) achCardIcon.appendChild(badge); else achCardIcon.textContent = a.icon;
+  }
   if(achCardName) achCardName.textContent = a.name;
   if(achCardDesc) achCardDesc.textContent = a.desc;
   layoutAchCard();
@@ -248,7 +271,9 @@ function achRenderWall(){
       const on = achHasUnlocked(i);
       const row = document.createElement('div');
       row.className = 'arow ' + (on ? 'on' : 'off');
-      const ico = document.createElement('div'); ico.className = 'aico'; ico.textContent = a.icon;
+      const ico = document.createElement('div'); ico.className = 'aico';
+      const badge = achBadgeCanvas(a, 24);
+      if (badge) ico.appendChild(badge); else ico.textContent = a.icon;
       const info = document.createElement('div'); info.className = 'ainfo';
       const nm = document.createElement('div'); nm.className = 'aname'; nm.textContent = a.name;
       const ds = document.createElement('div'); ds.className = 'adesc'; ds.textContent = a.desc;
@@ -339,7 +364,8 @@ function annualClosePanel(){
 /* --- 成就：存档 / 读档 / 重置 --- */
 function achSerialize(){ return {u: achState.unl >>> 0}; }
 function achDeserialize(d){
-  const max = (1 << CONFIG.ACHIEVEMENT.LIST.length) - 1;
+  const n = CONFIG.ACHIEVEMENT.LIST.length;
+  const max = n >= 32 ? 0xFFFFFFFF : ((1 << n) - 1);
   const u = (d && typeof d === 'object' && typeof d.u === 'number') ? d.u : 0;
   achState = {unl: (u & max) >>> 0};
   achQueue = [];

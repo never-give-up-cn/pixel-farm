@@ -115,7 +115,7 @@ import './world/buildings.js';
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
-| 成就/统计 | `js/systems/stats.js` |
+| 成就/统计 | `js/systems/stats.js`（32 个成就，徽章走 `js/anim/achievements.js`） |
 | 加工台 | `js/systems/maker.js` |
 | 工匠品 / 加工配方 | `js/systems/maker.js` + `js/anim/artisan.js` + `js/config.js` |
 | 料理 / 食谱 | `js/anim/dishes.js` + `js/anim/recipes.js` + `js/config.js`（烹饪复用加工台） |

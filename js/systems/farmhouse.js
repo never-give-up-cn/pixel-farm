@@ -165,12 +165,15 @@ function farmhouseIndoorRemove(tx, ty) {
 }
 
 function updateFarmhouse(dt) {
+  const locked = (typeof playerAnimBusy === 'function' && playerAnimBusy());
   const k = (typeof keys !== 'undefined') ? keys : {};
   let ix = 0, iy = 0;
-  if (k['a'] || k['arrowleft']) ix -= 1;
-  if (k['d'] || k['arrowright']) ix += 1;
-  if (k['w'] || k['arrowup']) iy -= 1;
-  if (k['s'] || k['arrowdown']) iy += 1;
+  if (!locked) {
+    if (k['a'] || k['arrowleft']) ix -= 1;
+    if (k['d'] || k['arrowright']) ix += 1;
+    if (k['w'] || k['arrowup']) iy -= 1;
+    if (k['s'] || k['arrowdown']) iy += 1;
+  }
 
   if (ix || iy) {
     const len = Math.hypot(ix, iy) || 1;

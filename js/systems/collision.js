@@ -55,6 +55,14 @@ function unstickPlayer(){
   return false;
 }
 function updatePlayer(dt){
+  /* 工具 / 收获 / 吃东西的动画期间锁住脚步：动画播完再恢复移动 */
+  if(typeof playerAnimBusy === 'function' && playerAnimBusy()){
+    player.moving = false;
+    player.vx = 0; player.vy = 0;
+    player.running = false;
+    player.frame = 0; player.animT = 0;
+    return;
+  }
   /* 兜底：位置与实心格重叠时先脱困（静止时也要处理，否则会被永久卡住） */
   if(boxHitsSolid(player.x, player.y + BOX_OFF_Y)) unstickPlayer();
 

@@ -127,6 +127,8 @@ window.addEventListener('keydown', e=>{
     if((k === ' ' || k === 'enter') && !e.repeat) fishingPress();
     return;
   }
+  /* 工具 / 收获 / 吃东西的动画播完之前，不接受新的世界操作 */
+  if(actionBusy()) return;
   /* B：进出建造模式 */
   if(k === 'b'){ if(!e.repeat) toggleBuild(); ensureAudio(); return; }
   /* G：农场评级 / 雇工（第 20 轮） */
@@ -164,8 +166,16 @@ window.addEventListener('keydown', e=>{
       else{
         const tr = (typeof fruitTreeNear === 'function') ? fruitTreeNear() : null;
         const g = gatherNear();
-        if(tr){ harvestFruit(tr.tx, tr.ty); }    /* 第 32 轮：果树结果 → E 采摘 */
-        else if(g){ pickGather(g.tx, g.ty); }    /* 第 14 轮：脚边有野花/蘑菇/浆果 → 采走 */
+        if(tr){
+          if(typeof playerPerformAction === 'function')
+            playerPerformAction('harvest', ()=>harvestFruit(tr.tx, tr.ty), { hitAt: 0.5 });
+          else harvestFruit(tr.tx, tr.ty);
+        }
+        else if(g){
+          if(typeof playerPerformAction === 'function')
+            playerPerformAction('harvest', ()=>pickGather(g.tx, g.ty), { hitAt: 0.5 });
+          else pickGather(g.tx, g.ty);
+        }
         else{
           /* 都不是 → 提示靠近最近的那个（小屋 / 商店 / 居民） */
           const dh = houseDist(), ds = shopDist();
@@ -192,6 +202,9 @@ const hover = {tx:-1, ty:-1};
 let mouseHeld = false;
 let holdCd = 0;
 const HOLD_INTERVAL = 0.32;
+function actionBusy(){
+  return typeof playerAnimBusy === 'function' && playerAnimBusy();
+}
 function toLogical(e){
   const r = canvas.getBoundingClientRect();
   return {x:(e.clientX - r.left) * (VIEW_W / r.width),
@@ -254,13 +267,27 @@ canvas.addEventListener('mousedown', e=>{
     placeBuilding(tx,ty);
     return;
   }
+  /* 动作动画播放期间，不再接受新的世界操作（HUD / 快捷栏仍可点） */
+  if(actionBusy()) return;
   if(e.button === 2){
     ensureAudio();
     /* 第 19 轮：手持成品 → 右键吃一份回体力（每天限 3 次）；否则还是给水壶补水 */
     const selFood = selectedSlot();
     const fd = selFood ? itemDef(selFood.id) : null;
-    if(fd && fd.kind === 'food'){ eatFood(selFood.id); if(typeof playerPlayAction === 'function') playerPlayAction('eat'); return; }
-    refillCan(); return;
+    if(fd && fd.kind === 'food'){
+      if(typeof playerPerformAction === 'function')
+        playerPerformAction('eat', ()=>eatFood(selFood.id), { duration: 1.0, hitAt: 0.55, oneShot: true });
+      else eatFood(selFood.id);
+      return;
+    }
+    const hasCan = typeof countItem === 'function' && countItem('can') > 0;
+    const canFull = hasCan && typeof canCapacity === 'function' && canWater >= canCapacity();
+    if(hasCan && !canFull && typeof findWaterNear === 'function' && findWaterNear()){
+      if(typeof playerPerformAction === 'function')
+        playerPerformAction('water', ()=>refillCan(), { duration: 0.6, hitAt: 0.65, oneShot: true });
+      else refillCan();
+    } else refillCan();
+    return;
   }
   if(e.button !== 0) return;
   ensureAudio();
@@ -271,15 +298,24 @@ canvas.addEventListener('mousedown', e=>{
     if(idx >= 0 && idx < CONFIG.INVENTORY.HOTBAR) selectHot(idx);
     return;
   }
-  /* 手持鱼竿 → 抛竿（钓到鱼才进背包，不再走 useTool） */
+  /* 手持鱼竿 → 先播抛竿动作，动画播完才进入等待鱼咬钩 */
   const selNow = selectedSlot();
-  if(selNow && selNow.id === CONFIG.FISHING.ROD_ID){ startFishing(); return; }
-  /* 第 30 轮：面向点击的格子并播放对应工具 / 收获动作 */
+  if(selNow && selNow.id === CONFIG.FISHING.ROD_ID){
+    if(typeof playerPerformAction === 'function'){
+      playerPerformAction('fish', null, { duration: 0.55, hitAt: 1, oneShot: true, onEnd: startFishing });
+    } else startFishing();
+    return;
+  }
+  /* 第 30 轮：面向点击的格子，播对应动作；命中帧才执行 useTool */
   if(typeof playerFaceTile === 'function') playerFaceTile(tx, ty);
-  if(typeof playerActionFromItem === 'function') playerActionFromItem();
+  const act = (typeof playerActionForTile === 'function') ? playerActionForTile(tx, ty) : 'harvest';
   mouseHeld = true;               /* 按住不放 → 连续使用 */
   holdCd = HOLD_INTERVAL;
-  useTool(tx, ty);
+  if(typeof playerPerformAction === 'function'){
+    playerPerformAction(act, () => useTool(tx, ty), { hitAt: 0.5 });
+  } else {
+    useTool(tx, ty);
+  }
 });
 canvas.addEventListener('contextmenu', e=> e.preventDefault());
 
@@ -299,14 +335,21 @@ function updateHoldUse(dt){
   if(hover.tx < 0 || hover.ty < 0) return;
 
   if(holdCd > 0) holdCd = Math.max(0, holdCd - dt);
-  if(typeof playerAnimBusy === 'function' && playerAnimBusy()) return;
+  if(actionBusy()) return;
   if(holdCd > 0) return;
 
   holdCd = HOLD_INTERVAL;
   if(typeof playerFaceTile === 'function') playerFaceTile(hover.tx, hover.ty);
-  if(typeof playerActionFromItem === 'function') playerActionFromItem();
-  const ok = useTool(hover.tx, hover.ty);
-  if(ok === false) mouseHeld = false;      /* 用不了就停下，避免重复弹提示 */
+  const act = (typeof playerActionForTile === 'function') ? playerActionForTile(hover.tx, hover.ty) : 'harvest';
+  if(typeof playerPerformAction === 'function'){
+    playerPerformAction(act, () => {
+      const ok = useTool(hover.tx, hover.ty);
+      if(ok === false) mouseHeld = false;      /* 用不了就停下，避免重复弹提示 */
+    }, { hitAt: 0.5 });
+  } else {
+    const ok = useTool(hover.tx, hover.ty);
+    if(ok === false) mouseHeld = false;
+  }
 }
 /* 建造模式：滚轮换配方 */
 canvas.addEventListener('wheel', e=>{

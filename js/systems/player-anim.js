@@ -5,6 +5,10 @@
  *   2. 驱动一次性动作（锄地、挥斧、吃东西…）的进度；
  *   3. 在世界里按脚底对齐绘制 drawFarmer。
  *
+ * 第 34 轮：世界操作改为「先播动画、命中帧结算」。
+ * 工具 / 播种 / 收获 / 吃东西 / 补水 / 采集 / 抛竿都通过 playerPerformAction 排队，
+ * 动画播完前锁步，操作不会在点击瞬间生效。
+ *
  * 不改变 player 的位置、碰撞和存档；旧 drawPlayer 保留作回退。
  */
 
@@ -35,7 +39,11 @@ const anim = {
   timer: 0,        /* 一次性动作剩余时间 */
   duration: 0,
   oneShot: false,
-  lastDir: DIR_DOWN
+  lastDir: DIR_DOWN,
+  hitAt: 0.5,      /* 动作进行到多少比例时结算（0~1） */
+  hitDone: false,
+  onHit: null,     /* 结算回调：动画到命中帧才真正执行操作 */
+  onEnd: null      /* 收尾回调：动画完整播完后执行 */
 };
 
 function metaOf(action) {
@@ -48,15 +56,43 @@ function scaleOf() {
 }
 
 /** 播放一次性动作（工具 / 收获 / 吃东西）。 */
-export function playerPlayAction(id) {
+export function playerPlayAction(id, opts = {}) {
   const meta = ACTION_MAP[id];
   if (!meta) return false;
+  const duration = opts.duration || (meta.frames / meta.fps);
   anim.action = id;
   anim.phase = 0;
-  anim.oneShot = !meta.loop;
-  anim.duration = meta.frames / meta.fps;
+  anim.oneShot = (opts.oneShot !== undefined) ? !!opts.oneShot : !meta.loop;
+  anim.duration = Math.max(0.05, duration);
   anim.timer = anim.duration;
+  anim.hitAt = Math.max(0, Math.min(1, opts.hitAt === undefined ? 0.5 : opts.hitAt));
+  anim.hitDone = false;
+  anim.onHit = typeof opts.onHit === 'function' ? opts.onHit : null;
+  anim.onEnd = typeof opts.onEnd === 'function' ? opts.onEnd : null;
   return true;
+}
+
+/** 播放动作，并在命中帧执行 onHit；动画播完前操作不算完成。 */
+export function playerPerformAction(id, onHit, opts = {}) {
+  if (playerAnimBusy()) return false;
+  return playerPlayAction(id, {
+    ...opts,
+    oneShot: opts.oneShot === undefined ? true : opts.oneShot,
+    onHit
+  });
+}
+
+/** 根据目标地块和手持物品决定该播哪个动作（收获优先于工具）。 */
+export function playerActionForTile(tx, ty) {
+  const c = (typeof cropAt === 'function') ? cropAt(tx, ty) : null;
+  if (c && c.mature) return 'harvest';
+  const slot = typeof selectedSlot === 'function' ? selectedSlot() : null;
+  const item = slot && typeof itemDef === 'function' ? itemDef(slot.id) : null;
+  if (item) {
+    if (item.kind === 'seed') return 'harvest';
+    if (item.tool && TOOL_ACTIONS[item.tool]) return TOOL_ACTIONS[item.tool];
+  }
+  return 'harvest';
 }
 
 /** 根据当前手持物品决定动作；种子 / 收获 / 食物走收获姿势。 */
@@ -84,22 +120,29 @@ export function playerFaceTile(tx, ty) {
 
 /** 每帧推进动作。 */
 export function updatePlayerAnim(dt) {
-  /* 移动会打断工具 / 收获动作，避免一边走一边挥锄头 */
-  if (anim.oneShot && typeof player !== 'undefined' && player.moving) {
-    anim.oneShot = false;
-    anim.action = 'idle';
-    anim.timer = 0;
-    anim.phase = 0;
-  }
-
   if (anim.oneShot) {
     anim.timer -= dt;
     const total = anim.duration || 0.0001;
-    anim.phase = 1 - Math.max(0, anim.timer) / total;
+    anim.phase = clamp01(1 - Math.max(0, anim.timer) / total);
+
+    /* 命中帧：动画挥到该到的地方，操作才真正生效 */
+    if (!anim.hitDone && anim.onHit && anim.phase >= anim.hitAt - 1e-6) {
+      anim.hitDone = true;
+      try { anim.onHit(); } catch (err) { console.error('[player-action]', err); }
+    }
+
     if (anim.timer <= 0) {
+      const onEnd = anim.onEnd;
       anim.oneShot = false;
       anim.action = 'idle';
       anim.phase = 0;
+      anim.timer = 0;
+      anim.hitDone = false;
+      anim.onHit = null;
+      anim.onEnd = null;
+      if (onEnd) {
+        try { onEnd(); } catch (err) { console.error('[player-action]', err); }
+      }
     }
     return;
   }
@@ -119,6 +162,8 @@ export function updatePlayerAnim(dt) {
     anim.phase = loopPhase('idle');
   }
 }
+
+function clamp01(v) { return Math.max(0, Math.min(1, v)); }
 
 function loopPhase(action) {
   const meta = metaOf(action);
@@ -159,6 +204,8 @@ export function playerAnimBusy() {
 
 Object.assign(window, {
   playerPlayAction,
+  playerPerformAction,
+  playerActionForTile,
   playerActionFromItem,
   playerFaceTile,
   updatePlayerAnim,

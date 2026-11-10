@@ -180,7 +180,7 @@ import './world/buildings.js';
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 | `js/anim/atlas.js` | 图集导出：`buildAtlas` / `buildFarmerAtlas` / `buildCatalogAtlas` / `downloadAtlas`（PNG + JSON） |
 | `js/systems/mine.js` | 游戏本体的矿井模式：按 `J` 进入，移动 / 攻击 / 矿石 / 怪物 / 下一层，接管更新与渲染 |
-| `js/systems/player-anim.js` | 玩家动画状态机：移动 / 奔跑 / 钓鱼 / 工具 / 收获 / 吃东西，用 `drawFarmer` 按脚底对齐绘制 |
+| `js/systems/player-anim.js` | 玩家动画状态机：移动 / 奔跑 / 钓鱼 / 工具 / 收获 / 吃东西；动作命中帧才结算操作，播放期间锁步 |
 | `js/systems/drops.js` | 地面掉落物：随机散落、落地弹跳、靠近吸附、自动进背包与拾取飘字 |
 | `js/systems/forest.js` | 砍树：3 段受击、摇晃、绕根部倒下、木材抛散与木屑粒子 |
 | `js/systems/trees.js` | 地图树木：10 种野生树 + 8 种果树按坐标分树种，果树结果 / 采摘 / 再结果 |

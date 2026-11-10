@@ -62,8 +62,8 @@ function renderShopBuy(){
       else if(full){ label = sh.name + '已满'; off = true; }
       else if(gold < price){ label = '金币不够'; off = true; }
       else { label = '购买'; off = false; }
-      const sub = sh.name + ' ' + have + '/' + cap + ' · ' + t.matureDays + ' 天成熟 · 每日产' +
-                  (t.produce === 'egg' ? '蛋' : '奶');
+      const prodName = itemDef(t.produce) ? itemDef(t.produce).name : '产品';
+      const sub = sh.name + ' ' + have + '/' + cap + ' · ' + t.matureDays + ' 天成熟 · 每日产' + prodName;
       shopBody.appendChild(shopRow(t.icon, t.name, sub, priceHtml(id),
         [{label:label, off:off, fn:()=>{ shopBuyClick(id); }}]));
       continue;

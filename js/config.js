@@ -1298,6 +1298,31 @@ const CONFIG = {
 })();
 
 
+/* 第 32 轮：补齐鸭子 / 羊 / 猪 / 兔，与 anim 图鉴的 6 种动物对齐 */
+(function addMoreAnimals(){
+  const EXTRA = [
+    { id:'duck',   name:'鸭', icon:'🦆', price:200,  matureDays:4, produce:'duck_egg',   hqProduce:'duck_egg_hq',   shelter:'coop' },
+    { id:'sheep',  name:'羊', icon:'🐑', price:800,  matureDays:3, produce:'wool',       hqProduce:'wool_hq',       shelter:'barn' },
+    { id:'pig',    name:'猪', icon:'🐖', price:1600, matureDays:5, produce:'truffle',    hqProduce:'truffle_hq',    shelter:'barn' },
+    { id:'rabbit', name:'兔', icon:'🐇', price:400,  matureDays:6, produce:'rabbit_foot',hqProduce:'rabbit_foot_hq',shelter:'coop' }
+  ];
+  const PRODUCTS = [
+    ['duck_egg',    '鸭蛋',       '🥚', 95,  190],
+    ['wool',        '羊毛',       '🧶', 340, 612],
+    ['truffle',     '松露',       '🍄', 625, 1125],
+    ['rabbit_foot', '兔脚',       '🐇', 565, 1017]
+  ];
+  for (const t of EXTRA) {
+    if (!CONFIG.ANIMALS.TYPES.some(x => x.id === t.id)) CONFIG.ANIMALS.TYPES.push(t);
+    CONFIG.SHOP.BUY.push({ id: t.id, price: t.price, animal: t.id });
+  }
+  for (const [id, name, icon, price, hq] of PRODUCTS) {
+    CONFIG.ITEMS[id] = { id, name, icon, stack: true, max: 99, kind: 'animal', price };
+    CONFIG.ITEMS[id + '_hq'] = { id: id + '_hq', name: '优质' + name, icon, stack: true, max: 99, kind: 'animal', price: hq };
+  }
+})();
+
+
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
 Object.assign(window, { T, CONFIG });
 export { T, CONFIG };

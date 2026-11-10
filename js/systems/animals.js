@@ -1,6 +1,11 @@
 /* js/systems/animals.js —— 由 index.html 拆分，原行 9471–9930 */
 'use strict';
 
+import {
+  drawAnimal as drawAnimAnimal,
+  ANIMAL_W, ANIMAL_BASE
+} from '../anim/animals.js';
+
 /* === 13.动物系统（第 15 轮）：鸡 / 牛 + 棚舍 + 每日好感与产出 ===
  * 每只动物：{type, home:[tx,ty], aff, fed, petDay, produced, age, mature,
  *            x, y, vx, vy, t, walkFor, wait}
@@ -385,25 +390,40 @@ function drawAnimal(g, a, near){
   if(!t) return;
   const px = a.x - cam.x, py = a.y - cam.y;
   if(px < -TILE || px > VIEW_W + TILE || py < -TILE || py > VIEW_H + TILE) return;
-  const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
-  /* 影子 */
+
+  /* 影子（anim 动物本身不带影子） */
   g.fillStyle = 'rgba(0,0,0,.22)';
-  g.fillRect(px - 7, py - 2, 14, 3);
-  /* 立绘（动物用 emoji，和 NPC 同一套约定） */
-  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
-  g.font = (a.type === 'cow' ? '20px ' : '16px ') + FONT_EMOJI;
-  g.fillText(t.icon, px, py - 2);
+  g.fillRect(Math.round(px - 9), Math.round(py - 2), 18, 3);
+
+  /* 第 32 轮：改用 anim 图鉴的 6 种动物动画 */
+  const moving = !!(a.vx || a.vy);
+  if(moving) a.face = a.vx < 0 ? -1 : (a.vx > 0 ? 1 : (a.face || 1));
+  const h = (typeof skyHour === 'function') ? skyHour() : 12;
+  const sleeping = !moving && (h >= 18 || h < 6);
+  const action = moving ? 'walk' : (sleeping ? 'sleep' : 'idle');
+  const phase = moving
+    ? (a.t * 2.2) % 1
+    : ((typeof animTime !== 'undefined' ? animTime : 0) * 0.6) % 1;
+
+  g.save();
+  g.imageSmoothingEnabled = false;
+  g.translate(Math.round(px - ANIMAL_W / 2), Math.round(py - ANIMAL_BASE));
+  drawAnimAnimal(g, a.type, action, phase, a.face || 1);
+  g.restore();
+
   /* 靠近 → 头顶冒 E（near 由 drawEntities 每帧算一次传进来） */
   if(near === undefined ? (animalNear() === a) : (near === a)){
+    const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
     g.fillStyle = 'rgba(8,10,16,.85)';
-    g.fillRect(px - 6, py - 32, 12, 13);
+    g.fillRect(px - 6, py - 38, 12, 13);
     g.strokeStyle = CONFIG.COLORS.hudAccent;
-    g.strokeRect(px - 5.5, py - 31.5, 11, 12);
+    g.strokeRect(px - 5.5, py - 37.5, 11, 12);
     g.fillStyle = CONFIG.COLORS.hudAccent;
+    g.textAlign = 'center'; g.textBaseline = 'alphabetic';
     g.font = '11px ' + FONT_CJK;
-    g.fillText('E', px, py - 22);
+    g.fillText('E', px, py - 28);
+    g.font = oldFont; g.textAlign = oldAlign; g.textBaseline = oldBase;
   }
-  g.font = oldFont; g.textAlign = oldAlign; g.textBaseline = oldBase;
 }
 
 /* --- 存档：紧凑结构（每只约 80 字节） --- */

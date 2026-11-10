@@ -107,7 +107,7 @@ import './world/buildings.js';
 | 睡觉/跨天 | `js/systems/sleep.js` |
 | 钓鱼 | `js/systems/fishing.js` |
 | 矿井 / 战斗 | `js/systems/mine.js` + `js/anim/monsters.js` + `js/anim/farmer.js` |
-| 动物/鸡舍/牛棚 | `js/systems/animals.js` |
+| 动物/鸡舍/牛棚 | `js/systems/animals.js`（6 种动物，绘制走 `js/anim/animals.js`） |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |

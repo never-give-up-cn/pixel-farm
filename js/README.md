@@ -129,6 +129,7 @@ import './world/buildings.js';
 | NPC 日程/站位 | `js/npc/schedule.js` |
 | NPC 连续移动/寻路 | `js/npc/runtime.js` |
 | NPC 对话/送礼/好感 | `js/npc/dialog.js`、`js/npc/gift.js`、`js/npc/perks.js` |
+| 村民立绘 / 头像 / 日程 | `js/npc/draw.js`、`js/npc/dialog.js`、`js/config.js`（34 位 demo 村民） |
 | NPC 来访农场 | `js/npc/visit.js` |
 | 存档 | `js/save.js`、`js/npc/save.js` |
 | 启动流程 | `js/boot.js` |

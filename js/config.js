@@ -10,6 +10,7 @@ import { DISHES, DISH_MAP } from './anim/dishes.js';
 import { RECIPES as ANIM_RECIPES } from './anim/recipes.js';
 import { ACHIEVEMENTS as ANIM_ACHIEVEMENTS } from './anim/achievements.js';
 import { BUNDLES as ANIM_BUNDLES, BUNDLE_ROOMS, bundleRoomName } from './anim/bundles.js';
+import { NPCS as ANIM_NPCS } from './anim/npcs.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1735,6 +1736,94 @@ const CONFIG = {
   });
   CONFIG.BUNDLE_MAP = Object.fromEntries(CONFIG.BUNDLES.map(b => [b.id, b]));
   CONFIG.BUNDLE_ROOMS = BUNDLE_ROOMS;
+})();
+
+
+/* 第 32 轮：按 demo 补齐 34 位村民，并给原有 3 位也分配 anim 立绘。
+ * 所有村民共用镇上的 3 个住宅 + 街道日程；台词按职业生成。 */
+(function addDemoVillagers(){
+  const SPRITE_OVERRIDE = { aunt:'sandy', carpenter:'robin', girl:'abigail' };
+  for (const d of CONFIG.NPC.LIST) {
+    if (!d.sprite) d.sprite = SPRITE_OVERRIDE[d.id] || null;
+  }
+
+  const byName = new Map();
+  for (const id in CONFIG.ITEMS) {
+    const it = CONFIG.ITEMS[id];
+    if (it && it.name && !byName.has(it.name)) byName.set(it.name, id);
+  }
+
+  function parseBday(s) {
+    const m = String(s || '').match(/([春夏秋冬])\s*(\d+)/);
+    if (!m) return { season:'春', day:1 };
+    return { season:m[1], day:Math.max(1, Math.min(28, parseInt(m[2], 10) || 1)) };
+  }
+
+  function linesOf(n) {
+    const job = n.job || '居民';
+    return {
+      stranger: [
+        '你好，我是' + n.name + '。',
+        '我平时做' + job + '。',
+        '镇上今天挺热闹的。'
+      ],
+      known: [
+        '又见面了。',
+        job + '这活儿，做久了也就顺手了。',
+        '有空来家里坐坐。'
+      ],
+      friend: [
+        '你来啦！',
+        '最近' + job + '还算顺利。',
+        '需要帮忙就说一声。'
+      ],
+      best: [
+        '跟你聊天总是很轻松。',
+        '下次我带你看看' + job + '的门道。',
+        '别客气，咱们谁跟谁。'
+      ]
+    };
+  }
+
+  const HOMES = ['home_aunt', 'home_carpenter', 'home_girl'];
+  let k = 0;
+  for (const n of ANIM_NPCS) {
+    if (CONFIG.NPC.LIST.some(x => x.id === n.id)) continue;
+    const loved = byName.get(n.loved);
+    const x = 34 + (k * 3) % 22;
+    CONFIG.NPC.LIST.push({
+      id: n.id,
+      name: n.name,
+      icon: '🧑',
+      color: n.shirt,
+      sprite: n.id,
+      like: [loved || 'wildflower', 'wildflower', 'berry'],
+      dislike: ['stone', 'pick'],
+      bday: parseBday(n.birthday),
+      sched: [
+        { from:0, to:24, x, y:42 },
+        { from:0, to:24, x:36 + (k * 5) % 18, y:42 },
+        { from:0, to:24, x:40 + (k * 7) % 14, y:42 }
+      ],
+      lines: linesOf(n)
+    });
+
+    CONFIG.NPC_SCHED.LIST[n.id] = {
+      open: { from:9, to:17 },
+      house: HOMES[k % HOMES.length],
+      work: HOMES[k % HOMES.length],
+      sched: [
+        { from:6,  to:9,  type:'home',   at:'table' },
+        { from:9,  to:12, type:'wander', area:{ x:34, y:41, w:20, h:2 }, label:'镇上' },
+        { from:12, to:13, type:'wander', area:{ x:38, y:41, w:14, h:2 }, label:'广场' },
+        { from:13, to:18, type:'wander', area:{ x:34, y:41, w:20, h:2 }, label:'街上' },
+        { from:18, to:21, type:'wander', area:{ x:40, y:41, w:14, h:2 }, label:'广场' },
+        { from:21, to:30, type:'away',   label:'回家了' }
+      ]
+    };
+    k++;
+  }
+  CONFIG.DEMO_VILLAGERS = k;
 })();
 
 

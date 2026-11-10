@@ -1,7 +1,9 @@
 /* js/npc/draw.js —— 由 index.html 拆分，原行 9050–9100 */
 'use strict';
 
-/* --- 画 NPC（emoji 立绘 + 身体 + 名字 + 靠近时的 E 提示） --- */
+import { NPC_MAP as ANIM_NPC_MAP, drawNpcWalk, drawNpcPortrait } from '../anim/npcs.js';
+
+/* --- 画 NPC（anim 立绘 + 名字 + 靠近时的 E 提示） --- */
 function drawNpc(g, d, px, py){
   const rt = npcRuntime[d.id];
   const ox = Math.round(px - cam.x - 8);
@@ -9,18 +11,29 @@ function drawNpc(g, d, px, py){
   /* 第 27 轮：走着的时候上下轻轻浮动 */
   if(rt && rt.moving) oy += Math.round(Math.sin(rt.animT * 15) * 1.5);
   const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
-  /* 影子 */
-  g.fillStyle = CONFIG.COLORS.shadow;
-  g.fillRect(ox + 2, oy + 22, 12, 2);
-  /* 身体 */
-  g.fillStyle = d.color;
-  g.fillRect(ox + 3, oy + 12, 10, 12);
-  g.fillStyle = 'rgba(0,0,0,.18)';
-  g.fillRect(ox + 3, oy + 12, 10, 3);
-  /* 头（emoji 立绘） */
-  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
-  g.font = '16px ' + FONT_EMOJI;
-  g.fillText(d.icon, ox + 8, oy + 12);
+
+  const sprite = d.sprite ? ANIM_NPC_MAP[d.sprite] : null;
+  if(sprite){
+    const frame = (rt && rt.moving) ? Math.floor((rt.animT || 0) * 6) % 4 : 0;
+    g.save();
+    g.imageSmoothingEnabled = false;
+    g.translate(Math.round(px - cam.x - 12), Math.round(py - cam.y - 18));
+    drawNpcWalk(g, sprite, rt ? (rt.dir | 0) : 0, frame);
+    g.restore();
+  }else{
+    /* 影子 */
+    g.fillStyle = CONFIG.COLORS.shadow;
+    g.fillRect(ox + 2, oy + 22, 12, 2);
+    /* 身体 */
+    g.fillStyle = d.color;
+    g.fillRect(ox + 3, oy + 12, 10, 12);
+    g.fillStyle = 'rgba(0,0,0,.18)';
+    g.fillRect(ox + 3, oy + 12, 10, 3);
+    /* 头（emoji 兜底） */
+    g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.font = '16px ' + FONT_EMOJI;
+    g.fillText(d.icon, ox + 8, oy + 12);
+  }
   /* 名字 */
   g.font = '11px ' + FONT_CJK;
   const nw = g.measureText(d.name).width;

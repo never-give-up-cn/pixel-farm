@@ -1,6 +1,8 @@
 /* js/npc/dialog.js —— 由 index.html 拆分，原行 8582–8716 */
 'use strict';
 
+import { NPC_MAP as ANIM_NPC_MAP, drawNpcPortrait } from '../anim/npcs.js';
+
 /* --- 对话 --- */
 /* 按当前好感档位随机挑 2~3 句（不重复） */
 function npcPickLines(d){
@@ -95,7 +97,20 @@ function renderNpcDialog(){
   if(!d) return;
   const aff = npcAff(d.id);
   const tier = npcTierOf(aff);
-  if(npcIcon)   npcIcon.textContent   = d.icon;
+  if(npcIcon){
+  npcIcon.textContent = '';
+  const portrait = d.sprite ? ANIM_NPC_MAP[d.sprite] : null;
+  if(portrait){
+    const cv = document.createElement('canvas');
+    cv.width = 64; cv.height = 64;
+    cv.style.width = '48px'; cv.style.height = '48px';
+    cv.style.imageRendering = 'pixelated';
+    drawNpcPortrait(cv.getContext('2d'), portrait);
+    npcIcon.appendChild(cv);
+  }else{
+    npcIcon.textContent = d.icon;
+  }
+}
   if(npcName)   npcName.textContent   = d.name;
   if(npcTierEl) npcTierEl.textContent = tier.name;
   if(npcAffEl)  npcAffEl.textContent  = '好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX;

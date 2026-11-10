@@ -129,6 +129,8 @@ function buyAnimal(typeId){
   }
   changeGold(-price);
   animals.push(makeAnimal(typeId, [home.tx, home.ty]));
+  const ai = CONFIG.ANIMALS.TYPES.findIndex(x => x.id === typeId);
+  if(ai >= 0 && typeof dexUnlock === 'function') dexUnlock('animal', ai);
   ratingInvalidate();                          /* 第 21 轮：动物数变化 → 评级缓存失效 */
   toast('买下了一只' + t.name + '（住进' + sh.name + '，' + t.matureDays + ' 天长成）');
   playSfx(1174, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);

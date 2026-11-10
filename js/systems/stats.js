@@ -98,6 +98,7 @@ function statsHarvest(type){
   statsState.hv += 1;
   const i = CONFIG.CROPS.findIndex(c => c.id === type);
   if(i >= 0 && i < 31) statsState.cv = (statsState.cv | (1 << i)) >>> 0;
+  if(i >= 0 && typeof dexUnlock === 'function') dexUnlock('crop', i);
   achCheck();
 }
 function statsFish(){ statsState.fs += 1; achCheck(); }

@@ -1,19 +1,25 @@
-/* js/systems/dex.js —— 由 index.html 拆分，原行 9101–9146
- * 图鉴：鱼 / 采集物用位掩码，矿物用 id 数组（50+ 种，超过 32 位）。 */
+/* js/systems/dex.js —— 图鉴：鱼 / 采集物 / 矿物 / 作物 / 动物。
+ * 鱼、矿物、作物、动物用 id 数组（条目超过 32），采集物用位掩码。 */
 
 'use strict';
 
 import { MINERALS } from '../anim/minerals.js';
 
-const dexState = { f: [], g: 0, m: [] };
-function dexTotal(){ return CONFIG.FISHING.LIST.length + CONFIG.GATHER.TYPES.length + MINERALS.length; }
+const dexState = { f: [], g: 0, m: [], c: [], a: [] };
+function dexTotal(){
+  return CONFIG.FISHING.LIST.length + CONFIG.GATHER.TYPES.length + MINERALS.length
+    + CONFIG.CROPS.length + CONFIG.ANIMALS.TYPES.length;
+}
 function dexPopcount(n){
   n = n | 0; let c = 0;
   while(n){ n &= n - 1; c++; }
   return c;
 }
-function dexCollected(){ return dexState.f.length + dexPopcount(dexState.g) + dexState.m.length; }
-function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; }
+function dexCollected(){
+  return dexState.f.length + dexPopcount(dexState.g) + dexState.m.length
+    + dexState.c.length + dexState.a.length;
+}
+function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; dexState.c = []; dexState.a = []; }
 function dexAllEntries(){
   const out = [];
   for(let i=0;i<CONFIG.FISHING.LIST.length;i++){
@@ -28,39 +34,55 @@ function dexAllEntries(){
     const m = MINERALS[i];
     out.push({kind:'mineral', idx:i, id:m.id, name:m.name, icon:m.type === 'gem' ? '💎' : (m.type === 'foraged' ? '🔮' : '🪨')});
   }
+  for(let i=0;i<CONFIG.CROPS.length;i++){
+    const c = CONFIG.CROPS[i];
+    out.push({kind:'crop', idx:i, id:c.id, name:c.name, icon:c.icon});
+  }
+  for(let i=0;i<CONFIG.ANIMALS.TYPES.length;i++){
+    const a = CONFIG.ANIMALS.TYPES[i];
+    out.push({kind:'animal', idx:i, id:a.id, name:a.name, icon:a.icon});
+  }
   return out;
 }
+function arrFor(kind){
+  if(kind === 'fish') return dexState.f;
+  if(kind === 'mineral') return dexState.m;
+  if(kind === 'crop') return dexState.c;
+  if(kind === 'animal') return dexState.a;
+  return null;
+}
 function dexHas(kind, idx){
-  if(kind === 'mineral'){
-    const m = MINERALS[idx];
-    return !!(m && dexState.m.indexOf(m.id) >= 0);
+  if(kind === 'gather'){
+    if(idx < 0 || idx > 31) return false;
+    return !!(dexState.g & (1 << idx));
   }
-  if(kind === 'fish'){
-    const f = CONFIG.FISHING.LIST[idx];
-    return !!(f && dexState.f.indexOf(f.id) >= 0);
-  }
-  if(idx < 0 || idx > 31) return false;
-  const bit = 1 << idx;
-  return !!(dexState.g & bit);
+  const arr = arrFor(kind);
+  if(!arr) return false;
+  if(kind === 'fish'){ const f = CONFIG.FISHING.LIST[idx]; return !!(f && arr.indexOf(f.id) >= 0); }
+  if(kind === 'mineral'){ const m = MINERALS[idx]; return !!(m && arr.indexOf(m.id) >= 0); }
+  if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; return !!(c && arr.indexOf(c.id) >= 0); }
+  if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; return !!(a && arr.indexOf(a.id) >= 0); }
+  return false;
 }
 function dexUnlock(kind, idx){
   const e = dexAllEntries().find(x => x.kind === kind && x.idx === idx);
 
-  if(kind === 'mineral'){
-    const m = MINERALS[idx];
-    if(!m || dexState.m.indexOf(m.id) >= 0) return false;
-    dexState.m.push(m.id);
-  }else if(kind === 'fish'){
-    const f = CONFIG.FISHING.LIST[idx];
-    if(!f || dexState.f.indexOf(f.id) >= 0) return false;
-    dexState.f.push(f.id);
-  }else if(idx >= 0 && idx <= 31){
+  if(kind === 'gather'){
+    if(idx < 0 || idx > 31) return false;
     const bit = 1 << idx;
-    if(kind === 'gather'){
-      if(dexState.g & bit) return false;
-      dexState.g = (dexState.g | bit) >>> 0;
-    }else return false;
-  }else return false;
+    if(dexState.g & bit) return false;
+    dexState.g = (dexState.g | bit) >>> 0;
+  }else{
+    const arr = arrFor(kind);
+    if(!arr) return false;
+    let id = null;
+    if(kind === 'fish'){ const f = CONFIG.FISHING.LIST[idx]; id = f && f.id; }
+    else if(kind === 'mineral'){ const m = MINERALS[idx]; id = m && m.id; }
+    else if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; id = c && c.id; }
+    else if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; id = a && a.id; }
+    if(!id || arr.indexOf(id) >= 0) return false;
+    arr.push(id);
+  }
 
   toast('📖 图鉴新增：' + (e ? e.name : '？'));
   playSfx(1174, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);

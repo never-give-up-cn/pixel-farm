@@ -29,6 +29,7 @@ import { initBundlePanel } from './anim-demo-bundles.js';
 import { initUiPanel } from './anim-demo-ui.js';
 import { initRecipePanel } from './anim-demo-recipes.js';
 import { initCropItemPanel } from './anim-demo-crop-items.js';
+import { initMiscPanel } from './anim-demo-misc.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -535,6 +536,8 @@ function tick(dt) {
     recipePanel.tick(dt);
   } else if (state.tab === 'cropitems') {
     cropItemPanel.tick(dt);
+  } else if (state.tab === 'misc') {
+    miscPanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -571,10 +574,11 @@ const bundlePanel = initBundlePanel();
 const uiPanel = initUiPanel();
 const recipePanel = initRecipePanel();
 const cropItemPanel = initCropItemPanel();
+const miscPanel = initMiscPanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui', 'recipes', 'cropitems'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui', 'recipes', 'cropitems', 'misc'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -603,6 +607,7 @@ function setTab(name) {
   else if (name === 'ui') uiPanel.activate();
   else if (name === 'recipes') recipePanel.activate();
   else if (name === 'cropitems') cropItemPanel.activate();
+  else if (name === 'misc') miscPanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -650,5 +655,6 @@ window.__animDemo = {
   uiPanel,
   recipePanel,
   cropItemPanel,
+  miscPanel,
   setTab
 };

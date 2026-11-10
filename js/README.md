@@ -112,7 +112,7 @@ import './world/buildings.js';
 | 成就/统计 | `js/systems/stats.js` |
 | 加工台 | `js/systems/maker.js` |
 | 评级/终局结算 | `js/systems/endgame.js` |
-| 输入、按键、暂停 | `js/systems/input.js` |
+| 输入、按键、暂停 | `js/systems/input.js`（含长按左键连续使用工具） |
 | NPC 日程/站位 | `js/npc/schedule.js` |
 | NPC 连续移动/寻路 | `js/npc/runtime.js` |
 | NPC 对话/送礼/好感 | `js/npc/dialog.js`、`js/npc/gift.js`、`js/npc/perks.js` |

@@ -147,11 +147,15 @@ window.addEventListener('keydown', e=>{
   if(k === CONFIG.PAUSE_KEY) togglePauseMenu();   /* 第 29 轮：P 打开 / 关闭暂停菜单 */
 });
 window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
-window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
+window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; mouseHeld = false; });
 
 /* --- 鼠标 → 指向的瓦片（换算与 CSS 缩放无关） --- */
 const mouse = {x:0, y:0, inside:false};
 const hover = {tx:-1, ty:-1};
+/* 第 31 轮：长按左键连续使用工具（砍树 / 锄地 / 浇水…） */
+let mouseHeld = false;
+let holdCd = 0;
+const HOLD_INTERVAL = 0.32;
 function toLogical(e){
   const r = canvas.getBoundingClientRect();
   return {x:(e.clientX - r.left) * (VIEW_W / r.width),
@@ -165,11 +169,14 @@ canvas.addEventListener('mousemove', e=>{
   /* 第 28 轮：悬停 HUD 可点区域（日期 / 评分 / 小地图）时变手型 */
   canvas.style.cursor = (hitHudDate(p) || hitHudRating(p) || hitHudMini(p)) ? 'pointer' : '';
 });
-canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; });
+canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; mouseHeld = false; });
+/* 松开左键：停止连续使用 */
+window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; holdCd = 0; } });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen) return;
+  if(e.button === 0) mouseHeld = false;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */
   if(e.button === 0 && hitHudDate(p)){ ensureAudio(); toggleCalendar(); return; }
@@ -179,6 +186,7 @@ canvas.addEventListener('mousedown', e=>{
   if(e.button === 0 && hitHudMini(p)){ ensureAudio(); toggleBigmap(true); return; }
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
+  hover.tx = tx; hover.ty = ty;    /* 长按连续使用时以最后指向的格子为准 */
   /* 钓鱼中：左键 = 收杆/拉杆，右键 = 收竿 */
   if(fishingActive()){
     ensureAudio();
@@ -217,9 +225,37 @@ canvas.addEventListener('mousedown', e=>{
   /* 第 30 轮：面向点击的格子并播放对应工具 / 收获动作 */
   if(typeof playerFaceTile === 'function') playerFaceTile(tx, ty);
   if(typeof playerActionFromItem === 'function') playerActionFromItem();
+  mouseHeld = true;               /* 按住不放 → 连续使用 */
+  holdCd = HOLD_INTERVAL;
   useTool(tx, ty);
 });
 canvas.addEventListener('contextmenu', e=> e.preventDefault());
+
+/* 长按左键：上一次工具动作结束后自动接下一次（砍树 / 锄地 / 浇水…） */
+function updateHoldUse(dt){
+  if(!mouseHeld) return;
+  if(window.mineActive){ mouseHeld = false; return; }
+  if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
+     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen ||
+     buildMode || fishingActive()){ mouseHeld = false; return; }
+
+  const slot = typeof selectedSlot === 'function' ? selectedSlot() : null;
+  const item = slot && typeof itemDef === 'function' ? itemDef(slot.id) : null;
+  /* 只有工具会连续触发；种子 / 食物 / 空手不连发，避免刷提示 */
+  if(!item || !item.tool || item.tool === 'rod'){ mouseHeld = false; return; }
+  if(typeof player !== 'undefined' && player.moving) return;   /* 走路时不隔空挥工具 */
+  if(hover.tx < 0 || hover.ty < 0) return;
+
+  if(holdCd > 0) holdCd = Math.max(0, holdCd - dt);
+  if(typeof playerAnimBusy === 'function' && playerAnimBusy()) return;
+  if(holdCd > 0) return;
+
+  holdCd = HOLD_INTERVAL;
+  if(typeof playerFaceTile === 'function') playerFaceTile(hover.tx, hover.ty);
+  if(typeof playerActionFromItem === 'function') playerActionFromItem();
+  const ok = useTool(hover.tx, hover.ty);
+  if(ok === false) mouseHeld = false;      /* 用不了就停下，避免重复弹提示 */
+}
 /* 建造模式：滚轮换配方 */
 canvas.addEventListener('wheel', e=>{
   if(!buildMode) return;
@@ -230,5 +266,5 @@ canvas.addEventListener('wheel', e=>{
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { keys, mouse, hover, setPaused, toLogical });
-export { keys, mouse, hover, setPaused, toLogical };
+Object.assign(window, { keys, mouse, hover, setPaused, toLogical, updateHoldUse });
+export { keys, mouse, hover, setPaused, toLogical, updateHoldUse };

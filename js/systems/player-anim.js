@@ -145,11 +145,17 @@ export function playerAnimState() {
   return { ...anim };
 }
 
+/** 是否有一次性动作正在播放（长按连续使用时用来对齐节奏）。 */
+export function playerAnimBusy() {
+  return anim.oneShot;
+}
+
 Object.assign(window, {
   playerPlayAction,
   playerActionFromItem,
   playerFaceTile,
   updatePlayerAnim,
   drawPlayerAnim,
-  playerAnimState
+  playerAnimState,
+  playerAnimBusy
 });

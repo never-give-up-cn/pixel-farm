@@ -64,6 +64,7 @@ function update(dt){
   }
   updatePlayer(dt);
   updatePlayerAnim(dt);              /* 第 30 轮：农夫动作状态机 */
+  updateHoldUse(dt);                 /* 第 31 轮：长按左键连续使用工具 */
   updateForest(dt);                  /* 第 31 轮：树木摇晃 / 倒下 / 木屑 */
   updateDrops(dt);                   /* 第 31 轮：地面掉落物与自动吸附 */
   updateAnimals(dt);                 /* 第 15 轮：动物在围栏里随便走走 */

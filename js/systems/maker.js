@@ -226,7 +226,8 @@ function makerRenderPanel(){
       const d = itemDef(s.id);
       const row = document.createElement('div');
       row.className = 'mout';
-      const ic = document.createElement('div'); ic.className = 'mico'; ic.textContent = d ? d.icon : '❔';
+      const ic = document.createElement('div'); ic.className = 'mico';
+      if(!(typeof paintItemIcon === 'function' && paintItemIcon(ic, s.id, 20))) ic.textContent = d ? d.icon : '❔';
       const info = document.createElement('div'); info.className = 'minfo';
       const nm = document.createElement('div'); nm.className = 'mname';
       nm.textContent = (d ? d.name : s.id) + ' ×' + s.n;
@@ -251,7 +252,8 @@ function makerRenderPanel(){
       const can = u.ok && !miss.length && !busy && makerCanStore(b, r.out.id, r.out.n);
       const row = document.createElement('div');
       row.className = 'mrow' + (u.ok ? '' : ' locked');
-      const ic = document.createElement('div'); ic.className = 'mico'; ic.textContent = r.icon;
+      const ic = document.createElement('div'); ic.className = 'mico';
+      if(!(r.out && typeof paintItemIcon === 'function' && paintItemIcon(ic, r.out.id, 20))) ic.textContent = r.icon;
       const info = document.createElement('div'); info.className = 'minfo';
       const nm = document.createElement('div'); nm.className = 'mname'; nm.textContent = r.name;
       const meta = document.createElement('div'); meta.className = 'mmeta';

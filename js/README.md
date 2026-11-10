@@ -50,7 +50,7 @@ import './world/buildings.js';
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
 | `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内 / 资源 / 宠物 / 产品 / 特殊 NPC / 成就 / 收集包 / UI / 食谱 / 种子 / 杂项、像素绘制、帧缓存、播放器与图集导出 |
 | `js/anim-demo-catalog.js` | 通用图鉴面板：列表 / 筛选 / 计数 / 图鉴网格 / 单图导出 |
-| `js/ui/item-icons.js` | 背包 / 快捷栏 / 木箱 / 商店 / 手持预览的 anim 像素物品图标（按 kind 分发到各图鉴绘制函数） |
+| `js/ui/item-icons.js` | 背包 / 快捷栏 / 木箱 / 商店 / 收集包 / 加工列表 / 手持预览的 anim 像素物品图标 |
 | `js/anim-demo.js` | 动画测试页入口与标签切换（不进 `main.js`） |
 | `js/anim-demo-plants.js` | 植物图鉴测试面板 |
 | `js/anim-demo-animals.js` | 动物图鉴测试面板 |

@@ -40,7 +40,16 @@ function bundleRender() {
       const full = got >= it.n;
       const btn = document.createElement('button');
       const name = itemDef(it.id) ? itemDef(it.id).name : it.id;
-      btn.textContent = name + ' ' + Math.min(got, it.n) + '/' + it.n;
+      btn.style.display = 'inline-flex';
+      btn.style.alignItems = 'center';
+      btn.style.gap = '4px';
+      const ico = document.createElement('span');
+      ico.style.cssText = 'width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center';
+      if(!(typeof paintItemIcon === 'function' && paintItemIcon(ico, it.id, 16))) ico.textContent = '•';
+      const label = document.createElement('span');
+      label.textContent = name + ' ' + Math.min(got, it.n) + '/' + it.n;
+      btn.appendChild(ico);
+      btn.appendChild(label);
       btn.title = full ? '已交满' : ('背包里有 ' + have + ' 个，点击交付');
       btn.className = done || full ? 'full' : (have > 0 ? 'ok' : 'off');
       btn.disabled = done || full;

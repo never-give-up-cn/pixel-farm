@@ -31,6 +31,7 @@ import { initRecipePanel } from './anim-demo-recipes.js';
 import { initCropItemPanel } from './anim-demo-crop-items.js';
 import { initMiscPanel } from './anim-demo-misc.js';
 import { initBattlePanel } from './anim-demo-battle.js';
+import { initMinePanel } from './anim-demo-mine.js';
 
 const STAGE_W = 480;
 const STAGE_H = 520;
@@ -541,6 +542,8 @@ function tick(dt) {
     miscPanel.tick(dt);
   } else if (state.tab === 'battle') {
     battlePanel.tick(dt);
+  } else if (state.tab === 'mine') {
+    minePanel.tick(dt);
   } else {
     animalPanel.tick(dt);
   }
@@ -579,10 +582,11 @@ const recipePanel = initRecipePanel();
 const cropItemPanel = initCropItemPanel();
 const miscPanel = initMiscPanel();
 const battlePanel = initBattlePanel();
+const minePanel = initMinePanel();
 
 const tabButtons = [...document.querySelectorAll('.tabs button')];
 function setTab(name) {
-  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui', 'recipes', 'cropitems', 'misc', 'battle'].includes(name)) return;
+  if (!['farmer', 'plants', 'trees', 'minerals', 'fish', 'buildings', 'artisan', 'dishes', 'npcs', 'animals', 'monsters', 'equipment', 'hats', 'clothes', 'interior', 'resources', 'pets', 'products', 'specials', 'achievements', 'bundles', 'ui', 'recipes', 'cropitems', 'misc', 'battle', 'mine'].includes(name)) return;
   state.tab = name;
   for (const b of tabButtons) b.classList.toggle('active', b.dataset.tab === name);
   for (const p of document.querySelectorAll('.tab-panel')) {
@@ -613,6 +617,7 @@ function setTab(name) {
   else if (name === 'cropitems') cropItemPanel.activate();
   else if (name === 'misc') miscPanel.activate();
   else if (name === 'battle') battlePanel.activate();
+  else if (name === 'mine') minePanel.activate();
   else animalPanel.activate();
 }
 for (const b of tabButtons) b.addEventListener('click', () => setTab(b.dataset.tab));
@@ -662,5 +667,6 @@ window.__animDemo = {
   cropItemPanel,
   miscPanel,
   battlePanel,
+  minePanel,
   setTab
 };

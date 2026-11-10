@@ -197,6 +197,26 @@
   .breq button.ok{border-color:#5a8a4a;color:#9fe08a}
   .breq button.full{border-color:#6b5a2a;color:#ffd76a}
   .breq button.off{opacity:.45;cursor:default}
+  /* 衣柜换装 */
+  #wardrobe{position:fixed;inset:0;z-index:53;display:none;align-items:center;justify-content:center}
+  #wardrobe.open{display:flex}
+  #wardrobeMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #wardrobePanel{position:relative;width:680px;max-width:calc(100vw - 24px);max-height:88vh;display:flex;flex-direction:column}
+  #wardrobeHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #wardrobeHead span{color:#8fa3bd;font-size:11px}
+  #wardrobeTabs{display:flex;gap:6px;margin-bottom:8px}
+  #wardrobeTabs button{background:#1a2130;border:1px solid #2c3a4e;border-radius:4px;color:#8fa3bd;
+    font:12px/1 Consolas,"Microsoft YaHei",monospace;padding:5px 12px;cursor:pointer}
+  #wardrobeTabs button.on{background:#2a3450;border-color:#7a6a30;color:#ffd76a}
+  #wardrobeBody{display:flex;gap:10px;min-height:0}
+  #wardrobePreview{flex:0 0 auto;background:#141b16;border:1px solid #2c3a4e;border-radius:4px;image-rendering:pixelated}
+  #wardrobeGrid{flex:1;overflow-y:auto;max-height:56vh;display:grid;grid-template-columns:repeat(7,50px);gap:5px;align-content:start;padding-right:4px}
+  .wcell{width:50px;height:56px;background:#1a2130;border:2px solid #2c3a4e;border-radius:4px;
+    display:flex;flex-direction:column;align-items:center;padding-top:3px;cursor:pointer}
+  .wcell:hover{background:#232c3e}
+  .wcell.on{border-color:#7a6a30;background:#202a3a}
+  .wcell b{font-size:9px;font-weight:400;color:#cfe3ff;white-space:nowrap;overflow:hidden;max-width:46px;line-height:1.2}
+  .wcell canvas{image-rendering:pixelated}
   .srow{
     display:flex;align-items:center;gap:8px;padding:5px 6px;
     border-bottom:1px solid #232c3e;
@@ -839,6 +859,24 @@
     <div id="bundleHead">社区中心 <span id="bundleProg">0/30</span></div>
     <div id="bundleList"></div>
     <div id="bundleFoot">点击物品交付 · 交满自动领取金币 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- 衣柜换装面板 -->
+<div id="wardrobe">
+  <div id="wardrobeMask"></div>
+  <div id="wardrobePanel" class="panel">
+    <div id="wardrobeHead">衣柜 <span id="wardrobeInfo"></span></div>
+    <div id="wardrobeTabs">
+      <button class="tab on" data-wtab="hat">帽子</button>
+      <button class="tab" data-wtab="shirt">上衣</button>
+      <button class="tab" data-wtab="pants">下装</button>
+    </div>
+    <div id="wardrobeBody">
+      <canvas id="wardrobePreview" width="96" height="120"></canvas>
+      <div id="wardrobeGrid"></div>
+    </div>
+    <div id="wardrobeFoot">点击试穿，再点一次脱下 · Esc 关闭</div>
   </div>
 </div>
 

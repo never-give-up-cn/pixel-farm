@@ -118,6 +118,7 @@ import './world/buildings.js';
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
 | 收集包 / 社区中心 | `js/systems/bundles.js` + `js/ui/bundle-panel.js` |
+| 换装 / 衣柜 | `js/systems/wardrobe.js` + `js/ui/wardrobe-panel.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
 | 成就/统计 | `js/systems/stats.js`（32 个成就，徽章走 `js/anim/achievements.js`） |
 | 加工台 | `js/systems/maker.js`（加工台 / 灶台共用一套面板，按 `cook` 过滤配方） |
@@ -179,6 +180,8 @@ import './world/buildings.js';
 | `js/systems/trees.js` | 地图树木：10 种野生树 + 8 种果树按坐标分树种，果树结果 / 采摘 / 再结果 |
 | `js/systems/pet.js` | 宠物：15 种 anim 宠物在农舍附近游荡，E 抚摸，宠物碗切换品种 |
 | `js/systems/bundles.js` | 社区中心收集包：交付进度 / 完成状态 / 金币奖励 / 存档 |
+| `js/systems/wardrobe.js` | 换装状态：帽子 / 上衣 / 下装，提供 drawFarmer 的 outfit 参数与存档 |
+| `js/ui/wardrobe-panel.js` | 衣柜面板：90 帽子 / 64 上衣 / 16 下装试穿与实时预览 |
 | `js/ui/bundle-panel.js` | 收集包 DOM 面板：30 个收集包、逐件交付与完成标记 |
 | `js/systems/harvest-fx.js` | 采集反馈：岩石摇晃 / 碎裂、野花倒伏、锄地扬土、浇水涟漪、收获碎叶 |
 

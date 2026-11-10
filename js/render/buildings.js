@@ -177,12 +177,25 @@ function drawStove(g,x,y){
   g.fillStyle = '#f0c050'; g.fillRect(x+15, y+25+f, 2, 2);
 }
 
+/* 衣柜：木柜 + 双开门 + 铜把手 */
+function drawWardrobe(g,x,y){
+  g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(x+4, y+28, 24, 3);
+  g.fillStyle = '#6a4426'; g.fillRect(x+5, y+4, 22, 26);
+  g.fillStyle = '#8a5a32'; g.fillRect(x+6, y+5, 20, 24);
+  g.fillStyle = '#5a3a20'; g.fillRect(x+15, y+6, 2, 22);
+  g.fillStyle = '#b08040';
+  g.fillRect(x+12, y+15, 2, 3);
+  g.fillRect(x+18, y+15, 2, 3);
+  g.fillStyle = '#9a7040'; g.fillRect(x+6, y+2, 20, 3);
+}
+
 function drawBuilding(g,b,x,y){
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
   else if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(b.type === 'stove') drawStove(g,x,y);
+  else if(b.type === 'wardrobe') drawWardrobe(g,x,y);
   else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
   else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);

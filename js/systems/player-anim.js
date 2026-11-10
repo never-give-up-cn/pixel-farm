@@ -12,6 +12,7 @@
 
 import { drawFarmer } from '../anim/farmer.js';
 import { ACTION_MAP } from '../anim/animator.js';
+import { HAT_MAP, drawHatOnFarmer } from '../anim/hats.js';
 import { DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP } from '../anim/pixel.js';
 
 /* 精灵格 32×40，脚底在 y≈36；世界里的脚点约定是 player.y + BODY_H/2 */
@@ -137,7 +138,13 @@ export function drawPlayerAnim(g) {
   g.imageSmoothingEnabled = false;
   g.translate(ox, oy);
   if (scale !== 1) g.scale(scale, scale);
-  drawFarmer(g, anim.action, player.dir, anim.phase);
+  const fit = (typeof playerOutfitOpts === 'function') ? playerOutfitOpts() : null;
+  drawFarmer(g, anim.action, player.dir, anim.phase, fit
+    ? { noHat: fit.noHat, outfit: fit.outfit }
+    : undefined);
+  if (fit && fit.hat && HAT_MAP[fit.hat]) {
+    drawHatOnFarmer(g, HAT_MAP[fit.hat], player.dir, anim.phase);
+  }
   g.restore();
 }
 

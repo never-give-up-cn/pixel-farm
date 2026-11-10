@@ -19,6 +19,7 @@ function drawBuildPreview(g){
   else if(r.id === 'chest')     drawChest(g,x,y,false);
   else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(r.id === 'stove')     drawStove(g,x,y);
+  else if(r.id === 'wardrobe')  drawWardrobe(g,x,y);
   else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
   else if(r.id === 'maker')     drawMaker(g,x,y,null);
   else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
@@ -53,6 +54,11 @@ function drawBuildIcon(g,id,x,y){
     g.fillStyle = '#4a4a4a'; g.fillRect(x+3, y+4, 8, 2);
     g.fillStyle = '#3a3a42'; g.fillRect(x+5, y+1, 4, 3);
     g.fillStyle = '#e07a2a'; g.fillRect(x+6, y+11, 2, 2);
+  }else if(id === 'wardrobe'){
+    g.fillStyle = '#6a4426'; g.fillRect(x+2, y+1, 10, 12);
+    g.fillStyle = '#8a5a32'; g.fillRect(x+3, y+2, 8, 10);
+    g.fillStyle = '#5a3a20'; g.fillRect(x+6, y+2, 2, 10);
+    g.fillStyle = '#b08040'; g.fillRect(x+5, y+7, 1, 1); g.fillRect(x+8, y+7, 1, 1);
   }else if(id === 'coop'){
     if(!(typeof drawAnimStructureIcon === 'function' && drawAnimStructureIcon(g, id, x+1, y+1, 13))){
       g.fillStyle = C.coopRoof;  g.fillRect(x+1, y+2, 12, 3);

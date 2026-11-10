@@ -29,6 +29,7 @@ function update(dt){
   if(npcOpen) return;                 /* NPC 对话：整个游戏冻结（时间停住） */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */
   if(bundleOpen) return;             /* 收集包面板：整体冻结 */
+  if(wardrobeOpen) return;           /* 衣柜面板：整体冻结 */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
   if(makerOpen) return;              /* 加工台打开：同样整体冻结（时间停住，加工也不走） */

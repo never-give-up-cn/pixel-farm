@@ -126,6 +126,7 @@ function serializeState(){
     animals: animalSerialize(),
     pet: (typeof petSerialize === 'function') ? petSerialize() : null,
     bundle: (typeof bundleSerialize === 'function') ? bundleSerialize() : null,
+    outfit: (typeof wardrobeSerialize === 'function') ? wardrobeSerialize() : null,
     /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
     quest: questSerialize(),
     /* 第 17 轮新增：节日（渔获赛积分 / 当天日期 / 已领奖标记 / 横幅已弹标记） */
@@ -308,6 +309,7 @@ function deserializeState(d){
     animalDeserialize(d.animals);
     if(typeof petDeserialize === 'function') petDeserialize(d.pet);
     if(typeof bundleDeserialize === 'function') bundleDeserialize(d.bundle);
+    if(typeof wardrobeDeserialize === 'function') wardrobeDeserialize(d.outfit);
     /* 委托板（老存档没这个字段 → 按当天重新生成，信誉归零） */
     questDeserialize(d.quest);
     /* 节日（老存档没这个字段 → 节日状态归零；若今天正是节日，效果 / 装饰立即续上） */
@@ -505,6 +507,7 @@ function newGame(){
   animalResetState();                           /* 新游戏：清空动物 */
   if(typeof petResetState === 'function') petResetState();   /* 新游戏：清空宠物 */
   if(typeof bundleResetState === 'function') bundleResetState();   /* 新游戏：清空收集包 */
+  if(typeof wardrobeResetState === 'function') wardrobeResetState();   /* 新游戏：清空换装 */
   questResetState();                            /* 新游戏：清空委托 / 信誉 */
   festivalResetState();                         /* 新游戏：清空节日状态 / 横幅 / 环境音 */
   statsResetState();                            /* 第 18 轮：统计从 0 开始（第 1 天算 1 天） */

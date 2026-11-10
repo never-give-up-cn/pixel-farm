@@ -116,6 +116,20 @@ function demolishAt(tx,ty){
     return false;
   }
   const b = buildings[bi], r = buildRecipe(b.type);
+  /* 装修家具：拆回背包 */
+  if(b.type.indexOf('furn_') === 0){
+    const id = b.type.slice(5);
+    buildings.splice(bi, 1);
+    buildIndex.fill(-1);
+    for(let k=0;k<buildings.length;k++){
+      const bb = buildings[k];
+      buildIndex[bb.ty*MAP_W+bb.tx] = k;
+    }
+    if(id) addItem(id, 1);
+    toast('收起了家具');
+    playSfx(320, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.7);
+    return true;
+  }
   /* 第 25 轮：镇上的家具拆不了 */
   if(b.preset){
     toast('镇上的东西，拆不了');

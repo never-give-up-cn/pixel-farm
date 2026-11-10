@@ -179,7 +179,7 @@ function deserializeState(d){
     roads = new Uint8Array(MAP_W*MAP_H);
     if(Array.isArray(d.buildings))
       for(const b of d.buildings){
-        if(!b || !buildRecipe(b.type)) continue;
+        if(!b || (!buildRecipe(b.type) && b.type.indexOf('furn_') !== 0)) continue;
         const x = b.x|0, y = b.y|0;
         if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
         const nb = {type:b.type, tx:x, ty:y};
@@ -211,7 +211,7 @@ function deserializeState(d){
           if(nb.job && nb.job.left <= 0) makerFinish(nb, true);   /* 存档时刚好做完 → 读档即完成 */
         }
         buildings.push(nb);
-        buildIndex[y*MAP_W+x] = buildings.length - 1;
+        if(nb.type.indexOf('furn_') !== 0) buildIndex[y*MAP_W+x] = buildings.length - 1;
       }
     /* 第 25 轮：镇上的家具（preset）不存档 —— 读档后按 BUILDING_DEFS 重新盖一遍 */
     stampTownFixtures();

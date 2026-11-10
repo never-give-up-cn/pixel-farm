@@ -61,6 +61,12 @@ window.addEventListener('keydown', e=>{
   if(k === 'j' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
     toggleMine(); ensureAudio(); return;
   }
+  /* H：装修模式（选中家具后左键放置 / 右键拆除） */
+  if(k === 'h' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
+    toggleDecor(); ensureAudio(); return;
+  }
+  /* 装修模式：只允许 Esc 退出 */
+  if(decorMode && k !== 'escape') return;
   /* 收集包面板：只允许 Esc 关闭 */
   if(bundleOpen && k !== 'escape') return;
   /* 衣柜面板：只允许 Esc 关闭 */
@@ -68,6 +74,7 @@ window.addEventListener('keydown', e=>{
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
+    if(decorMode){ toggleDecor(false); return; }
     if(bundleOpen){ bundleClosePanel(); return; }
     if(wardrobeOpen){ wardrobeClosePanel(); return; }
     if(pauseMenuOpen){ togglePauseMenu(false); return; }   /* 第 29 轮：先关暂停菜单 */
@@ -201,6 +208,12 @@ canvas.addEventListener('mousedown', e=>{
   const tx = Math.floor((cam.x + p.x) / TILE);
   const ty = Math.floor((cam.y + p.y) / TILE);
   hover.tx = tx; hover.ty = ty;    /* 长按连续使用时以最后指向的格子为准 */
+  /* 装修模式：左键放置 / 右键拆回 */
+  if(window.decorMode){
+    if(e.button === 0) placeDecor(tx, ty);
+    else if(e.button === 2) removeDecor(tx, ty);
+    return;
+  }
   /* 钓鱼中：左键 = 收杆/拉杆，右键 = 收竿 */
   if(fishingActive()){
     ensureAudio();

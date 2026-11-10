@@ -66,6 +66,7 @@ import './systems/animals.js';
 import './systems/pet.js';
 import './systems/bundles.js';
 import './systems/wardrobe.js';
+import './systems/decor.js';
 import './systems/quests.js';
 import './systems/festival.js';
 import './systems/stats.js';

@@ -104,6 +104,7 @@ function render(){
   }
   drawBuildPreview(ctx);                   /* 建造预览（半透明幽灵） */
   drawEntities(ctx, x0, y0, x1, y1);       /* 按 Y 排序：小屋 / 商店 / 作物 / 物件 / 建造物 / 玩家 */
+  if(typeof drawDecorPreview === 'function') drawDecorPreview(ctx);   /* 装修模式：家具预览 */
   drawRoofs(ctx);                           /* 第 26 轮：屋顶（纯渲染层 —— 盖住屋里的东西） */
   drawDropFx(ctx);                         /* 洒水器的小水滴 */
   drawWeather(ctx);

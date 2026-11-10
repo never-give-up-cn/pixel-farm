@@ -1,6 +1,8 @@
 /* js/render/buildings.js —— 由 index.html 拆分，原行 2889–3278 */
 'use strict';
 
+import { INTERIOR_MAP, drawFurnitureIcon } from '../anim/interior.js';
+
 /* --- 建造物：木栅栏 / 木箱 / 洒水器 --- */
 function drawFence(g,x,y){
   const C = CONFIG.TILE_COLORS;
@@ -189,8 +191,20 @@ function drawWardrobe(g,x,y){
   g.fillStyle = '#9a7040'; g.fillRect(x+6, y+2, 20, 3);
 }
 
+/* 摆放的家具：40×40 图标，底边对齐地块 */
+function drawPlacedFurniture(g, id, x, y) {
+  const def = INTERIOR_MAP[id];
+  if (!def) return;
+  g.save();
+  g.imageSmoothingEnabled = false;
+  g.translate(Math.round(x - 4), Math.round(y - 8));
+  drawFurnitureIcon(g, def, (typeof animTime !== 'undefined' ? animTime : 0) * 0.2);
+  g.restore();
+}
+
 function drawBuilding(g,b,x,y){
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
+  else if(b.type.indexOf('furn_') === 0) drawPlacedFurniture(g, b.type.slice(5), x, y);
   else if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);

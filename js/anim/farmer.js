@@ -4,7 +4,7 @@
 import {
   CELL_W, CELL_H, DIR_LEFT, DIR_RIGHT, DIR_UP, PALETTE, TAU, lerp, sampleKeys
 } from './pixel.js';
-import { basePose, drawStanding, drawSleeping } from './farmer-body.js';
+import { basePose, drawStanding, drawSleeping, drawFainted } from './farmer-body.js';
 import { drawTool, drawEffect, impactDust, waterDrops } from './farmer-tools.js';
 
 const TOOL_CFG = {
@@ -130,6 +130,38 @@ function poseTool(action, view, side, t) {
   return p;
 }
 
+function poseEat(view, side, t) {
+  const p = basePose(view, 0, side ? 1 : 0);
+  const cx = p.cx;
+  /* 咀嚼节奏：抬手 → 送到嘴边 → 放下 */
+  const lift = Math.abs(Math.sin(t * TAU));
+  const mouth = { x: cx + (side ? 4 : 2), y: 20 + p.bob };
+  p.handR = {
+    x: lerp(cx + 5, mouth.x, 0.25 + 0.55 * lift),
+    y: lerp(25, mouth.y + 1, 0.25 + 0.55 * lift)
+  };
+  p.handL = { x: cx - 4, y: 25 };
+  p.hold = lift > 0.35 ? 'crop' : null;
+  /* 咬下的碎屑 */
+  for (let i = 0; i < 3; i++) {
+    const q = (t * 2 + i * 0.31) % 1;
+    p.effects.push({
+      x: mouth.x + 2 + q * 3,
+      y: mouth.y + Math.round(q * 4),
+      c: i % 2 ? PALETTE.crop : PALETTE.leaf,
+      size: 1
+    });
+  }
+  return p;
+}
+
+function poseFaint(view, side, t) {
+  const p = basePose(view, 0, 0);
+  p.faint = true;
+  p.phase = t;
+  return p;
+}
+
 function poseHurt(view, side, t) {
   const p = basePose(view, 0, side ? 1 : 0);
   p.hurt = true;
@@ -153,6 +185,8 @@ function actionPose(action, dir, phase) {
     return p;
   }
   if (action === 'hurt') return poseHurt(view, side, t);
+  if (action === 'faint') return poseFaint(view, side, t);
+  if (action === 'eat') return poseEat(view, side, t);
   if (action === 'idle') return poseIdle(view, side, t);
   if (action === 'walk') return poseWalk(view, side, t, false);
   if (action === 'run') return poseWalk(view, side, t, true);
@@ -181,6 +215,8 @@ export function drawFarmer(g, action, dir, phase, opts = {}) {
 
   if (p.asleep) {
     drawSleeping(g, phase);
+  } else if (p.faint) {
+    drawFainted(g, phase);
   } else {
     drawStanding(g, p);
     if (p.tool) drawTool(g, p.tool);

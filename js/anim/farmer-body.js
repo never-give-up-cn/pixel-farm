@@ -422,3 +422,59 @@ export function drawSleeping(g, phase) {
   drawZ(g, 25, 7, a * 0.8);
   drawZ(g, 19, 2, a * 0.6);
 }
+
+/* 倒地：横躺、X 眼、草帽滚落、头顶转圈星星。朝左时由 drawFarmer 水平翻转。 */
+export function drawFainted(g, phase) {
+  ellipse(g, 16, 37, 13, 3, PALETTE.shadow);
+
+  /* 腿和靴子 */
+  R(g, 6, 33, 11, 3, PALETTE.overalls);
+  R(g, 6, 33, 11, 1, PALETTE.overallsShade);
+  R(g, 3, 34, 4, 2, PALETTE.boot);
+  R(g, 3, 36, 4, 1, PALETTE.bootShade);
+
+  /* 身体 */
+  R(g, 12, 29, 9, 7, PALETTE.shirt);
+  R(g, 12, 35, 9, 1, PALETTE.shirtShade);
+  R(g, 15, 31, 6, 5, PALETTE.overalls);
+  R(g, 15, 31, 6, 1, PALETTE.overallsShade);
+
+  /* 摊开的手臂 */
+  line(g, 14, 31, 9, 26, PALETTE.shirtShade, 2);
+  R(g, 8, 25, 3, 2, PALETTE.skin);
+  line(g, 19, 31, 24, 25, PALETTE.shirt, 2);
+  R(g, 23, 24, 3, 2, PALETTE.skin);
+
+  /* 头 */
+  R(g, 21, 28, 8, 8, PALETTE.skin);
+  R(g, 21, 28, 8, 1, PALETTE.skinShade);
+  R(g, 20, 26, 9, 3, PALETTE.hair);
+  R(g, 20, 29, 2, 5, PALETTE.hair);
+  R(g, 28, 31, 1, 3, PALETTE.skinShade);
+
+  /* X 眼 */
+  line(g, 23, 30, 25, 32, PALETTE.eye, 1);
+  line(g, 25, 30, 23, 32, PALETTE.eye, 1);
+  line(g, 26, 30, 28, 32, PALETTE.eye, 1);
+  line(g, 28, 30, 26, 32, PALETTE.eye, 1);
+
+  /* 张开的嘴 */
+  R(g, 24, 34, 3, 2, PALETTE.skinShade);
+  R(g, 25, 35, 1, 1, PALETTE.eye);
+
+  /* 滚落到一旁的草帽 */
+  R(g, 2, 29, 10, 2, PALETTE.hat);
+  R(g, 2, 31, 10, 1, PALETTE.hatShade);
+  R(g, 4, 27, 6, 3, PALETTE.hat);
+  R(g, 4, 30, 6, 1, PALETTE.hatBand);
+
+  /* 头顶转圈的星星 */
+  const a = phase * Math.PI * 2;
+  for (let i = 0; i < 3; i++) {
+    const ang = a + i * (Math.PI * 2 / 3);
+    const sx = Math.round(25 + Math.cos(ang) * 6);
+    const sy = Math.round(20 + Math.sin(ang) * 3);
+    R(g, sx, sy - 1, 1, 3, PALETTE.white);
+    R(g, sx - 1, sy, 3, 1, PALETTE.white);
+  }
+}

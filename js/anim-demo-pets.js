@@ -5,6 +5,7 @@ import {
   PETS, PET_MAP, PET_CATS, petKindName, drawPet, drawPetIcon, PET_W, PET_H
 } from './anim/pets.js';
 import { DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP, R, mulberry32, ellipse, line, TAU } from './anim/pixel.js';
+import { createCatalog, exportItemPng } from './anim-demo-catalog.js';
 
 const W = 480;
 const H = 520;
@@ -140,53 +141,37 @@ export function initPetPanel() {
   })();
 
   /* ---------- 筛选 / 列表 ---------- */
-  for (const cat of PET_CATS) {
-    const b = document.createElement('button');
-    b.textContent = cat.name;
-    b.dataset.filter = cat.id;
-    b.addEventListener('click', () => {
-      state.filter = cat.id;
-      applyFilter();
+  const catalog = createCatalog({
+    prefix: 'pet',
+    items: PETS,
+    map: PET_MAP,
+    key: 'pet',
+    filterGroups: PET_CATS,
+    groupOf: p => p.kind,
+    nameOf: p => p.name,
+    titleOf: p => `${p.en} · ${petKindName(p.kind)}`,
+    gallery: {
+      w: PET_W,
+      h: PET_H,
+      gridClass: 'pgrid',
+      cellClass: 'pcell',
+      draw: (g, p) => drawPetIcon(g, p, 0.25),
+      labelOf: p => p.name,
+      metaOf: p => petKindName(p.kind)
+    },
+    onSelect: id => {
+      state.pet = id;
       sync();
-    });
-    filterHost.appendChild(b);
-  }
-
-  for (const p of PETS) {
-    const b = document.createElement('button');
-    b.textContent = p.name;
-    b.dataset.pet = p.id;
-    b.title = `${p.en} · ${petKindName(p.kind)}`;
-    b.addEventListener('click', () => selectPet(p.id));
-    listHost.appendChild(b);
-  }
-
-  function applyFilter() {
-    let n = 0;
-    for (const b of listHost.children) {
-      const p = PET_MAP[b.dataset.pet];
-      const show = state.filter === 'all' || p.kind === state.filter;
-      b.style.display = show ? '' : 'none';
-      if (show) n++;
+      render();
     }
-    countEl.textContent = `（${n}）`;
-    for (const b of filterHost.children) {
-      b.classList.toggle('active', b.dataset.filter === state.filter);
-    }
-  }
+  });
 
-  function selectPet(id) {
-    if (!PET_MAP[id]) return;
-    state.pet = id;
-    sync();
-    const b = listHost.querySelector('button.active');
-    if (b) b.scrollIntoView({ block: 'nearest' });
-    render();
-  }
+  function selectItem(id) { catalog.select(id); }
+  function applyFilter() { catalog.applyFilter(); }
 
   function sync() {
     const p = PET_MAP[state.pet];
-    for (const b of listHost.children) b.classList.toggle('active', b.dataset.pet === state.pet);
+    catalog.sync(state.pet);
     zoomInput.value = String(state.zoom);
     zoomOut.textContent = `${state.zoom}×`;
     noteEl.textContent = `${petKindName(p.kind)} · ${state.action === 'walk' ? '走路' : '站立'}`;
@@ -268,16 +253,8 @@ export function initPetPanel() {
 
   function exportPng() {
     const p = PET_MAP[state.pet];
-    const cell = makeCanvas(PET_W, PET_H);
-    drawPetIcon(cell.ctx, p, 0.5);
-    const scale = 8;
-    const out = document.createElement('canvas');
-    out.width = PET_W * scale;
-    out.height = PET_H * scale;
-    const g = out.getContext('2d');
-    g.imageSmoothingEnabled = false;
-    g.drawImage(cell.canvas, 0, 0, out.width, out.height);
-    download(out, `sdv-pet-${p.id}.png`);
+    exportItemPng(p, PET_W, PET_H, (g, item) => drawPetIcon(g, item, 0.5),
+      `sdv-pet-${p.id}.png`, 8);
   }
 
   idleBtn.addEventListener('click', () => { state.action = 'idle'; sync(); render(); });
@@ -292,40 +269,7 @@ export function initPetPanel() {
   document.getElementById('pet-png').addEventListener('click', exportPng);
 
   /* ---------- 图鉴 ---------- */
-  function buildGallery() {
-    const host = document.getElementById('pet-gallery');
-    host.innerHTML = '';
-    const grid = document.createElement('div');
-    grid.className = 'pgrid';
-
-    for (const p of PETS) {
-      const cell = document.createElement('div');
-      cell.className = 'pcell';
-      cell.title = `${p.en} · ${petKindName(p.kind)}`;
-      const cv = document.createElement('canvas');
-      cv.width = PET_W;
-      cv.height = PET_H;
-      const g = cv.getContext('2d');
-      g.imageSmoothingEnabled = false;
-      drawPetIcon(g, p, 0.25);
-      const name = document.createElement('b');
-      name.textContent = p.name;
-      const meta = document.createElement('span');
-      meta.textContent = petKindName(p.kind);
-      cell.appendChild(cv);
-      cell.appendChild(name);
-      cell.appendChild(meta);
-      cell.addEventListener('click', () => {
-        state.pet = p.id;
-        sync();
-        render();
-        canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      grid.appendChild(cell);
-    }
-
-    host.appendChild(grid);
-  }
+  function buildGallery() { catalog.buildGallery(); }
 
   function tick(dt) {
     state.time += dt;
@@ -343,13 +287,4 @@ export function initPetPanel() {
   };
 }
 
-function download(canvas, name) {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-}
+

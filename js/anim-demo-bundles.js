@@ -5,6 +5,7 @@ import {
   drawBundleIcon, BUNDLE_W, BUNDLE_H
 } from './anim/bundles.js';
 import { R, mulberry32, ellipse, line, TAU } from './anim/pixel.js';
+import { createCatalog, exportItemPng } from './anim-demo-catalog.js';
 
 const W = 480;
 const H = 520;
@@ -132,53 +133,37 @@ export function initBundlePanel() {
   })();
 
   /* ---------- 筛选 / 列表 ---------- */
-  for (const room of BUNDLE_ROOMS) {
-    const b = document.createElement('button');
-    b.textContent = room.name;
-    b.dataset.filter = room.id;
-    b.addEventListener('click', () => {
-      state.filter = room.id;
-      applyFilter();
+  const catalog = createCatalog({
+    prefix: 'bundle',
+    items: BUNDLES,
+    map: BUNDLE_MAP,
+    key: 'item',
+    filterGroups: BUNDLE_ROOMS,
+    groupOf: it => it.room,
+    nameOf: it => it.name,
+    titleOf: it => `${it.en} · ${bundleRoomName(it.room)}`,
+    gallery: {
+      w: BUNDLE_W,
+      h: BUNDLE_H,
+      gridClass: 'bgrid',
+      cellClass: 'bcell',
+      draw: (g, it) => drawBundleIcon(g, it, 0.25),
+      labelOf: it => it.name,
+      metaOf: it => bundleRoomName(it.room)
+    },
+    onSelect: id => {
+      state.item = id;
       sync();
-    });
-    filterHost.appendChild(b);
-  }
-
-  for (const it of BUNDLES) {
-    const b = document.createElement('button');
-    b.textContent = it.name;
-    b.dataset.item = it.id;
-    b.title = `${it.en} · ${bundleRoomName(it.room)}`;
-    b.addEventListener('click', () => selectItem(it.id));
-    listHost.appendChild(b);
-  }
-
-  function applyFilter() {
-    let n = 0;
-    for (const b of listHost.children) {
-      const it = BUNDLE_MAP[b.dataset.item];
-      const show = state.filter === 'all' || it.room === state.filter;
-      b.style.display = show ? '' : 'none';
-      if (show) n++;
+      render();
     }
-    countEl.textContent = `（${n}）`;
-    for (const b of filterHost.children) {
-      b.classList.toggle('active', b.dataset.filter === state.filter);
-    }
-  }
+  });
 
-  function selectItem(id) {
-    if (!BUNDLE_MAP[id]) return;
-    state.item = id;
-    sync();
-    const b = listHost.querySelector('button.active');
-    if (b) b.scrollIntoView({ block: 'nearest' });
-    render();
-  }
+  function selectItem(id) { catalog.select(id); }
+  function applyFilter() { catalog.applyFilter(); }
 
   function sync() {
     const it = BUNDLE_MAP[state.item];
-    for (const b of listHost.children) b.classList.toggle('active', b.dataset.item === state.item);
+    catalog.sync(state.item);
     zoomInput.value = String(state.zoom);
     zoomOut.textContent = `${state.zoom}×`;
     noteEl.textContent = `${bundleRoomName(it.room)} · ${it.reward}`;
@@ -269,16 +254,8 @@ export function initBundlePanel() {
 
   function exportPng() {
     const it = BUNDLE_MAP[state.item];
-    const cell = makeCanvas(BUNDLE_W, BUNDLE_H);
-    drawBundleIcon(cell.ctx, it, 0.5);
-    const scale = 8;
-    const out = document.createElement('canvas');
-    out.width = BUNDLE_W * scale;
-    out.height = BUNDLE_H * scale;
-    const g = out.getContext('2d');
-    g.imageSmoothingEnabled = false;
-    g.drawImage(cell.canvas, 0, 0, out.width, out.height);
-    download(out, `sdv-bundle-${it.id}.png`);
+    exportItemPng(it, BUNDLE_W, BUNDLE_H, (g, item) => drawBundleIcon(g, item, 0.5),
+      `sdv-bundle-${it.id}.png`, 8);
   }
 
   zoomInput.addEventListener('input', () => {
@@ -290,40 +267,7 @@ export function initBundlePanel() {
   document.getElementById('bundle-png').addEventListener('click', exportPng);
 
   /* ---------- 图鉴 ---------- */
-  function buildGallery() {
-    const host = document.getElementById('bundle-gallery');
-    host.innerHTML = '';
-    const grid = document.createElement('div');
-    grid.className = 'bgrid';
-
-    for (const it of BUNDLES) {
-      const cell = document.createElement('div');
-      cell.className = 'bcell';
-      cell.title = `${it.en} · ${bundleRoomName(it.room)}`;
-      const cv = document.createElement('canvas');
-      cv.width = BUNDLE_W;
-      cv.height = BUNDLE_H;
-      const g = cv.getContext('2d');
-      g.imageSmoothingEnabled = false;
-      drawBundleIcon(g, it, 0.25);
-      const name = document.createElement('b');
-      name.textContent = it.name;
-      const meta = document.createElement('span');
-      meta.textContent = bundleRoomName(it.room);
-      cell.appendChild(cv);
-      cell.appendChild(name);
-      cell.appendChild(meta);
-      cell.addEventListener('click', () => {
-        state.item = it.id;
-        sync();
-        render();
-        canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      grid.appendChild(cell);
-    }
-
-    host.appendChild(grid);
-  }
+  function buildGallery() { catalog.buildGallery(); }
 
   function tick(dt) {
     state.time += dt;
@@ -341,13 +285,4 @@ export function initBundlePanel() {
   };
 }
 
-function download(canvas, name) {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-}
+

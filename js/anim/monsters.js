@@ -391,12 +391,21 @@ function metalhead(g, m, phase) {
 
 /* ---------------- 主入口 ---------------- */
 
-export function drawMonster(g, monster, phase = 0.25) {
-  const m = typeof monster === 'string' ? MONSTER_MAP[monster] : monster;
-  if (!m) return;
-  g.save();
-  g.imageSmoothingEnabled = false;
-  const p = phase;
+/* 受击 / 死亡需要整体染色，先画到同一块离屏尺寸再合成，避免污染场景背景。 */
+let scratch = null;
+function getScratch() {
+  if (!scratch) {
+    const c = document.createElement('canvas');
+    c.width = MONSTER_W;
+    c.height = MONSTER_H;
+    const g = c.getContext('2d');
+    g.imageSmoothingEnabled = false;
+    scratch = { canvas: c, ctx: g };
+  }
+  return scratch;
+}
+
+function drawShape(g, m, p) {
   if (m.shape === 'slime') slime(g, m, p, false);
   else if (m.shape === 'bigslime') slime(g, m, p, true);
   else if (m.shape === 'bat') bat(g, m, p);
@@ -420,5 +429,59 @@ export function drawMonster(g, monster, phase = 0.25) {
   else if (m.shape === 'spider') spider(g, m, p);
   else if (m.shape === 'stick') stick(g, m, p);
   else if (m.shape === 'metalhead') metalhead(g, m, p);
+}
+
+/**
+ * opts.state: 'idle' | 'attack' | 'hurt' | 'die'
+ * opts.t:     状态进度 0~1（攻击前摇/受击闪白/死亡消散）
+ * 状态只做整体挤压、抖动、染色和淡出，49 套单体形象无需各写一遍。
+ */
+export function drawMonster(g, monster, phase = 0.25, opts = {}) {
+  const m = typeof monster === 'string' ? MONSTER_MAP[monster] : monster;
+  if (!m) return;
+  const state = opts.state || 'idle';
+  const t = Math.max(0, Math.min(1, opts.t ?? 0));
+
+  g.save();
+  g.imageSmoothingEnabled = false;
+  const p = phase;
+
+  if (state === 'hurt' || state === 'die') {
+    const s = getScratch();
+    s.ctx.clearRect(0, 0, MONSTER_W, MONSTER_H);
+    drawShape(s.ctx, m, p);
+    /* 只在已绘制的像素上染色 */
+    s.ctx.save();
+    s.ctx.globalCompositeOperation = 'source-atop';
+    s.ctx.fillStyle = state === 'die'
+      ? `rgba(90, 12, 12, ${0.35 + 0.45 * t})`
+      : `rgba(255, 70, 70, ${0.72 * (1 - t * 0.55)})`;
+    s.ctx.fillRect(0, 0, MONSTER_W, MONSTER_H);
+    s.ctx.restore();
+
+    if (state === 'hurt') {
+      g.translate(Math.round(Math.sin(t * Math.PI * 3) * 2), 0);
+      g.drawImage(s.canvas, 0, 0);
+    } else {
+      /* 死亡：压扁 + 下沉 + 淡出 */
+      g.globalAlpha = Math.max(0, 1 - t);
+      const k = t;
+      g.translate(0, Math.round(k * 5));
+      g.scale(1 + k * 0.12, 1 - k * 0.35);
+      g.drawImage(s.canvas, 0, 0);
+      g.globalAlpha = 1;
+    }
+    g.restore();
+    return;
+  }
+
+  if (state === 'attack') {
+    /* 前摇上仰 → 收招：挤压 + 轻微前冲 */
+    const k = Math.sin(t * Math.PI);
+    g.translate(0, Math.round(-k * 3));
+    g.scale(1 + k * 0.10, 1 - k * 0.06);
+  }
+
+  drawShape(g, m, p);
   g.restore();
 }

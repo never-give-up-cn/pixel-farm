@@ -44,10 +44,11 @@ import './world/buildings.js';
 | `js/config.js` | `CONFIG` 全部可调参数、地块类型 `T`、物品/作物/商店/NPC 日程等配置 |
 | `js/world/` | 地图生成、建筑定义 |
 | `js/render/` | 瓦片、建筑、作物、实体、建造预览的 Canvas 绘制 |
-| `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、终局等 |
+| `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、矿井、终局等 |
 | `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
-| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内 / 资源 / 宠物 / 产品 / 特殊 NPC / 成就 / 收集包 / UI / 食谱 / 种子 / 杂项、像素绘制、帧缓存与播放器 |
+| `js/anim/` | 可复用的像素动画：农夫 / 作物 / 树木 / 矿物 / 鱼 / 建筑 / 工匠品 / 料理 / 村民 / 动物 / 怪物 / 装备 / 帽子 / 衣物 / 室内 / 资源 / 宠物 / 产品 / 特殊 NPC / 成就 / 收集包 / UI / 食谱 / 种子 / 杂项、像素绘制、帧缓存、播放器与图集导出 |
+| `js/anim-demo-catalog.js` | 通用图鉴面板：列表 / 筛选 / 计数 / 图鉴网格 / 单图导出 |
 | `js/anim-demo.js` | 动画测试页入口与标签切换（不进 `main.js`） |
 | `js/anim-demo-plants.js` | 植物图鉴测试面板 |
 | `js/anim-demo-animals.js` | 动物图鉴测试面板 |
@@ -100,6 +101,7 @@ import './world/buildings.js';
 | 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
 | 睡觉/跨天 | `js/systems/sleep.js` |
 | 钓鱼 | `js/systems/fishing.js` |
+| 矿井 / 战斗 | `js/systems/mine.js` + `js/anim/monsters.js` + `js/anim/farmer.js` |
 | 动物/鸡舍/牛棚 | `js/systems/animals.js` |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
@@ -125,7 +127,7 @@ import './world/buildings.js';
 | `js/anim/pixel.js` | 32×40 精灵格常量、调色板、`R/px/line/ellipse`、缓动与关键帧插值 |
 | `js/anim/farmer-body.js` | 关节基础姿势、站立/睡觉绘制、草帽与手臂 |
 | `js/anim/farmer-tools.js` | 锄头/斧头/镐/镰刀/水壶/鱼竿，土屑与水滴粒子 |
-| `js/anim/farmer.js` | 全部动作姿势；`drawFarmer(ctx, action, dir, phase)` |
+| `js/anim/farmer.js` | 15 个动作姿势（含挥剑 / 吃东西 / 倒地）；`drawFarmer(ctx, action, dir, phase)` |
 | `js/anim/sdv-crops.js` | 星露谷 50 种作物 × 逐日生长；`drawCrop(ctx, type, day, phase)`，一帧 = 一天；`drawWithered(ctx)` 为所有作物共用的枯萎帧 |
 | `js/anim/animals.js` | 6 种动物 × 4 个动作、帧缓存；`drawAnimal` / `AnimalAnimator` |
 | `js/anim/trees.js` | 10 种野生树 + 8 种果树；`drawTree(ctx, tree, stage, season, phase)`，48×56 |
@@ -135,7 +137,7 @@ import './world/buildings.js';
 | `js/anim/npcs.js` | 34 位村民头像与四方向行走；外观参考官方 Wiki 村民肖像，程序化重绘 |
 | `js/anim/artisan.js` | 28 种工匠品图标；`drawArtisan(ctx, item, phase)`，32×32 |
 | `js/anim/dishes.js` | 81 道料理图标；`drawDish(ctx, dish, phase)`，32×32 |
-| `js/anim/monsters.js` | 49 种怪物图标；`drawMonster(ctx, monster, phase)`，40×32 |
+| `js/anim/monsters.js` | 49 种怪物图标；`drawMonster(ctx, monster, phase, { state, t })`，支持 idle / attack / hurt / die，40×32 |
 | `js/anim/equipment.js` | 110 件装备图标（62 武器 / 30 戒指 / 18 靴子）；`drawEquipment(ctx, item, phase)`，32×32 |
 | `js/anim/hats.js` | 90 顶帽子图标；`drawHatIcon(ctx, hat, phase)`（32×32）与 `drawHatOnFarmer(ctx, hat, dir, phase)` 试戴叠加 |
 | `js/anim/clothes.js` | 80 件衣物图标（64 衬衫 / 16 裤子）；`drawClothingIcon` 与 `makeOutfit(shirt, pants)` 纸娃娃参数 |
@@ -154,6 +156,8 @@ import './world/buildings.js';
 | `js/anim-demo-mine.js` | 可操作矿井：13×9 房间、移动、攻击、矿石、怪物与下一层 |
 | `js/anim-demo-town.js` | 小镇日程：12 位村民按时间移动、头像与职业查看 |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
+| `js/anim/atlas.js` | 图集导出：`buildAtlas` / `buildFarmerAtlas` / `buildCatalogAtlas` / `downloadAtlas`（PNG + JSON） |
+| `js/systems/mine.js` | 游戏本体的矿井模式：按 `J` 进入，移动 / 攻击 / 矿石 / 怪物 / 下一层，接管更新与渲染 |
 
 ```js
 import { Animator, DIR_DOWN } from './anim/animator.js';

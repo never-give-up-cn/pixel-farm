@@ -10,6 +10,7 @@ export const ACTIONS = [
   { id: 'idle',    name: '站立',  frames: 4, fps: 4,  loop: true  },
   { id: 'walk',    name: '走路',  frames: 6, fps: 10, loop: true  },
   { id: 'run',     name: '奔跑',  frames: 6, fps: 14, loop: true  },
+  { id: 'attack',  name: '挥剑',  frames: 8, fps: 14, loop: false },
   { id: 'hoe',     name: '锄地',  frames: 8, fps: 12, loop: false },
   { id: 'water',   name: '浇水',  frames: 6, fps: 8,  loop: true  },
   { id: 'axe',     name: '砍树',  frames: 8, fps: 12, loop: false },
@@ -17,8 +18,10 @@ export const ACTIONS = [
   { id: 'sickle',  name: '割草',  frames: 8, fps: 12, loop: false },
   { id: 'harvest', name: '收获',  frames: 8, fps: 10, loop: false },
   { id: 'fish',    name: '钓鱼',  frames: 4, fps: 4,  loop: true  },
+  { id: 'eat',     name: '吃东西', frames: 8, fps: 8,  loop: true  },
   { id: 'sleep',   name: '睡觉',  frames: 4, fps: 3,  loop: true  },
-  { id: 'hurt',    name: '受击',  frames: 4, fps: 10, loop: false }
+  { id: 'hurt',    name: '受击',  frames: 4, fps: 10, loop: false },
+  { id: 'faint',   name: '倒地',  frames: 6, fps: 6,  loop: false }
 ];
 
 export const ACTION_MAP = Object.fromEntries(ACTIONS.map(a => [a.id, a]));

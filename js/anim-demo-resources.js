@@ -5,6 +5,7 @@ import {
   drawResourceIcon, RES_W, RES_H
 } from './anim/resources.js';
 import { mulberry32, ellipse, TAU } from './anim/pixel.js';
+import { createCatalog, exportItemPng } from './anim-demo-catalog.js';
 
 const W = 480;
 const H = 520;
@@ -161,53 +162,37 @@ export function initResourcePanel() {
   })();
 
   /* ---------- 筛选 / 列表 ---------- */
-  for (const cat of RES_CATS) {
-    const b = document.createElement('button');
-    b.textContent = cat.name;
-    b.dataset.filter = cat.id;
-    b.addEventListener('click', () => {
-      state.filter = cat.id;
-      applyFilter();
+  const catalog = createCatalog({
+    prefix: 'resource',
+    items: RESOURCES,
+    map: RES_MAP,
+    key: 'item',
+    filterGroups: RES_CATS,
+    groupOf: it => it.group,
+    nameOf: it => it.name,
+    titleOf: it => `${it.en} · ${resCatName(it.group)}`,
+    gallery: {
+      w: RES_W,
+      h: RES_H,
+      gridClass: 'rgrid',
+      cellClass: 'rcell',
+      draw: (g, it) => drawResourceIcon(g, it, 0.25),
+      labelOf: it => it.name,
+      metaOf: it => resCatName(it.group)
+    },
+    onSelect: id => {
+      state.item = id;
       sync();
-    });
-    filterHost.appendChild(b);
-  }
-
-  for (const it of RESOURCES) {
-    const b = document.createElement('button');
-    b.textContent = it.name;
-    b.dataset.item = it.id;
-    b.title = `${it.en} · ${resCatName(it.group)}`;
-    b.addEventListener('click', () => selectItem(it.id));
-    listHost.appendChild(b);
-  }
-
-  function applyFilter() {
-    let n = 0;
-    for (const b of listHost.children) {
-      const it = RES_MAP[b.dataset.item];
-      const show = state.filter === 'all' || it.group === state.filter;
-      b.style.display = show ? '' : 'none';
-      if (show) n++;
+      render();
     }
-    countEl.textContent = `（${n}）`;
-    for (const b of filterHost.children) {
-      b.classList.toggle('active', b.dataset.filter === state.filter);
-    }
-  }
+  });
 
-  function selectItem(id) {
-    if (!RES_MAP[id]) return;
-    state.item = id;
-    sync();
-    const b = listHost.querySelector('button.active');
-    if (b) b.scrollIntoView({ block: 'nearest' });
-    render();
-  }
+  function selectItem(id) { catalog.select(id); }
+  function applyFilter() { catalog.applyFilter(); }
 
   function sync() {
     const it = RES_MAP[state.item];
-    for (const b of listHost.children) b.classList.toggle('active', b.dataset.item === state.item);
+    catalog.sync(state.item);
     zoomInput.value = String(state.zoom);
     zoomOut.textContent = `${state.zoom}×`;
     noteEl.textContent = `${resCatName(it.group)} · ${it.en}`;
@@ -269,16 +254,8 @@ export function initResourcePanel() {
 
   function exportPng() {
     const it = RES_MAP[state.item];
-    const cell = makeCanvas(RES_W, RES_H);
-    drawResourceIcon(cell.ctx, it, 0.5);
-    const scale = 8;
-    const out = document.createElement('canvas');
-    out.width = RES_W * scale;
-    out.height = RES_H * scale;
-    const g = out.getContext('2d');
-    g.imageSmoothingEnabled = false;
-    g.drawImage(cell.canvas, 0, 0, out.width, out.height);
-    download(out, `sdv-resource-${it.id}.png`);
+    exportItemPng(it, RES_W, RES_H, (g, item) => drawResourceIcon(g, item, 0.5),
+      `sdv-resource-${it.id}.png`, 8);
   }
 
   zoomInput.addEventListener('input', () => {
@@ -290,40 +267,7 @@ export function initResourcePanel() {
   document.getElementById('resource-png').addEventListener('click', exportPng);
 
   /* ---------- 图鉴 ---------- */
-  function buildGallery() {
-    const host = document.getElementById('resource-gallery');
-    host.innerHTML = '';
-    const grid = document.createElement('div');
-    grid.className = 'rgrid';
-
-    for (const it of RESOURCES) {
-      const cell = document.createElement('div');
-      cell.className = 'rcell';
-      cell.title = `${it.en} · ${resCatName(it.group)}`;
-      const cv = document.createElement('canvas');
-      cv.width = RES_W;
-      cv.height = RES_H;
-      const g = cv.getContext('2d');
-      g.imageSmoothingEnabled = false;
-      drawResourceIcon(g, it, 0.25);
-      const name = document.createElement('b');
-      name.textContent = it.name;
-      const meta = document.createElement('span');
-      meta.textContent = resCatName(it.group);
-      cell.appendChild(cv);
-      cell.appendChild(name);
-      cell.appendChild(meta);
-      cell.addEventListener('click', () => {
-        state.item = it.id;
-        sync();
-        render();
-        canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      grid.appendChild(cell);
-    }
-
-    host.appendChild(grid);
-  }
+  function buildGallery() { catalog.buildGallery(); }
 
   function tick(dt) {
     state.time += dt;
@@ -341,13 +285,4 @@ export function initResourcePanel() {
   };
 }
 
-function download(canvas, name) {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-}
+

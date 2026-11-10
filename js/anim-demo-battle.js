@@ -54,6 +54,9 @@ export function initBattlePanel() {
     shake: 0,
     respawn: 0,
     farmerDown: 0,
+    monsterAtk: -1,
+    monsterHurt: 0,
+    monsterDie: 0,
     combo: 0,
     kills: 0,
     pops: [],
@@ -216,6 +219,9 @@ export function initBattlePanel() {
     state.shake = 0;
     state.respawn = 0;
     state.farmerDown = 0;
+    state.monsterAtk = -1;
+    state.monsterHurt = 0;
+    state.monsterDie = 0;
     state.combo = 0;
     state.kills = 0;
     state.pops = [];
@@ -259,12 +265,14 @@ export function initBattlePanel() {
     if (crit) dmg = Math.round(dmg * 2);
     state.monsterHp -= dmg;
     state.hitFlash = 0.18;
+    state.monsterHurt = 0.22;
     state.shake = 0.2;
     addPop(332 + Math.random() * 20, 240, `${dmg}${crit ? '!' : ''}`, crit ? '#ffe060' : '#ff8060');
     addSparks(330, 260, crit ? '#ffe060' : '#ffffff', crit ? 14 : 8);
     state.combo++;
     if (state.monsterHp <= 0) {
       state.monsterHp = 0;
+      state.monsterDie = 0.8;
       state.kills++;
       state.respawn = 1.1;
       addPop(330, 220, 'K.O.', '#ffe060');
@@ -312,8 +320,13 @@ export function initBattlePanel() {
 
       state.counterTimer += dt;
       const m = MONSTER_MAP[state.monster];
+      /* 攻击前摇 0.5s，让怪物先蓄力再造成伤害 */
+      state.monsterAtk = state.counterTimer >= 1.2
+        ? Math.min(1, (state.counterTimer - 1.2) / 0.5)
+        : -1;
       if (state.counterTimer >= 1.7) {
         state.counterTimer = 0;
+        state.monsterAtk = -1;
         state.farmerHp -= m.dmg;
         addPop(140, 250, `-${m.dmg}`, '#ff6070');
         addSparks(150, 280, '#ff6070', 6);
@@ -340,6 +353,8 @@ export function initBattlePanel() {
     }
     state.sparks = state.sparks.filter(s => s.life > 0);
     state.hitFlash = Math.max(0, state.hitFlash - dt);
+    state.monsterHurt = Math.max(0, state.monsterHurt - dt);
+    state.monsterDie = Math.max(0, state.monsterDie - dt);
     state.shake = Math.max(0, state.shake - dt);
   }
 
@@ -365,7 +380,11 @@ export function initBattlePanel() {
     ctx.save();
     ctx.translate(70, 192);
     ctx.scale(5, 5);
-    drawFarmer(ctx, attacking ? 'attack' : 'idle', DIR_RIGHT, attacking ? state.attackPhase : state.time * 0.5);
+    const farmerAction = state.farmerDown > 0 ? 'faint' : (attacking ? 'attack' : 'idle');
+    const farmerPhase = state.farmerDown > 0
+      ? 1 - state.farmerDown / 1.5
+      : (attacking ? state.attackPhase : state.time * 0.5);
+    drawFarmer(ctx, farmerAction, DIR_RIGHT, farmerPhase);
     ctx.restore();
 
     /* 剑光 */
@@ -388,6 +407,18 @@ export function initBattlePanel() {
 
     /* 怪物 */
     const alpha = state.respawn > 0 ? Math.max(0.15, state.respawn / 1.1) : 1;
+    let mState = 'idle';
+    let mT = 0;
+    if (state.monsterDie > 0) {
+      mState = 'die';
+      mT = 1 - state.monsterDie / 0.8;
+    } else if (state.monsterHurt > 0) {
+      mState = 'hurt';
+      mT = 1 - state.monsterHurt / 0.22;
+    } else if (state.monsterAtk >= 0) {
+      mState = 'attack';
+      mT = state.monsterAtk;
+    }
     ctx.save();
     ctx.globalAlpha = alpha;
     if (state.hitFlash > 0) {
@@ -396,7 +427,7 @@ export function initBattlePanel() {
     }
     ctx.translate(308, 242);
     ctx.scale(4, 4);
-    drawMonster(ctx, m, state.time * 0.5);
+    drawMonster(ctx, m, state.time * 0.5, { state: mState, t: mT });
     ctx.restore();
 
     /* 火花 */
@@ -510,6 +541,18 @@ export function initBattlePanel() {
 
   return {
     activate() { render(); },
-    tick
+    tick,
+    getState() {
+      return {
+        monster: state.monster,
+        farmerHp: state.farmerHp,
+        monsterHp: state.monsterHp,
+        combo: state.combo,
+        kills: state.kills,
+        monsterAtk: state.monsterAtk,
+        monsterHurt: state.monsterHurt,
+        monsterDie: state.monsterDie
+      };
+    }
   };
 }

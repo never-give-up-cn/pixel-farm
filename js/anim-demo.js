@@ -6,6 +6,7 @@ import {
   CELL_W, CELL_H, DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP
 } from './anim/animator.js';
 import { mulberry32, ellipse } from './anim/pixel.js';
+import { buildFarmerAtlas, downloadAtlas } from './anim/atlas.js';
 import { initPlantPanel } from './anim-demo-plants.js';
 import { initAnimalPanel } from './anim-demo-animals.js';
 import { initTreePanel } from './anim-demo-trees.js';
@@ -419,6 +420,17 @@ bgBtn.addEventListener('click', () => {
 });
 
 document.getElementById('btn-png').addEventListener('click', exportPng);
+document.getElementById('btn-atlas').addEventListener('click', () => {
+  const atlas = buildFarmerAtlas({ scale: 2, name: 'sdv-farmer' });
+  downloadAtlas(atlas, 'sdv-farmer');
+  toastish(`已导出 ${atlas.meta.frames.filter(f => !f.empty).length} 帧 PNG + JSON`);
+});
+
+function toastish(msg) {
+  const note = document.getElementById('farmer-note');
+  if (!note) return;
+  note.textContent = msg;
+}
 
 function exportPng() {
   const cell = getFrame(animator.action, animator.dir, Math.round(animator.frame));

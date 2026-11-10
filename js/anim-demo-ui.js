@@ -5,6 +5,7 @@ import {
   drawUiIcon, UI_W, UI_H
 } from './anim/ui-icons.js';
 import { mulberry32, ellipse, TAU } from './anim/pixel.js';
+import { createCatalog, exportItemPng } from './anim-demo-catalog.js';
 
 const W = 480;
 const H = 520;
@@ -125,53 +126,37 @@ export function initUiPanel() {
   })();
 
   /* ---------- 筛选 / 列表 ---------- */
-  for (const group of UI_GROUPS) {
-    const b = document.createElement('button');
-    b.textContent = group.name;
-    b.dataset.filter = group.id;
-    b.addEventListener('click', () => {
-      state.filter = group.id;
-      applyFilter();
+  const catalog = createCatalog({
+    prefix: 'ui',
+    items: UI_ICONS,
+    map: UI_MAP,
+    key: 'item',
+    filterGroups: UI_GROUPS,
+    groupOf: it => it.group,
+    nameOf: it => it.name,
+    titleOf: it => `${it.en} · ${uiGroupName(it.group)} · ${it.desc}`,
+    gallery: {
+      w: UI_W,
+      h: UI_H,
+      gridClass: 'uigrid',
+      cellClass: 'uicell',
+      draw: (g, it) => drawUiIcon(g, it, 0.25),
+      labelOf: it => it.name,
+      metaOf: it => uiGroupName(it.group)
+    },
+    onSelect: id => {
+      state.item = id;
       sync();
-    });
-    filterHost.appendChild(b);
-  }
-
-  for (const it of UI_ICONS) {
-    const b = document.createElement('button');
-    b.textContent = it.name;
-    b.dataset.item = it.id;
-    b.title = `${it.en} · ${uiGroupName(it.group)}`;
-    b.addEventListener('click', () => selectItem(it.id));
-    listHost.appendChild(b);
-  }
-
-  function applyFilter() {
-    let n = 0;
-    for (const b of listHost.children) {
-      const it = UI_MAP[b.dataset.item];
-      const show = state.filter === 'all' || it.group === state.filter;
-      b.style.display = show ? '' : 'none';
-      if (show) n++;
+      render();
     }
-    countEl.textContent = `（${n}）`;
-    for (const b of filterHost.children) {
-      b.classList.toggle('active', b.dataset.filter === state.filter);
-    }
-  }
+  });
 
-  function selectItem(id) {
-    if (!UI_MAP[id]) return;
-    state.item = id;
-    sync();
-    const b = listHost.querySelector('button.active');
-    if (b) b.scrollIntoView({ block: 'nearest' });
-    render();
-  }
+  function selectItem(id) { catalog.select(id); }
+  function applyFilter() { catalog.applyFilter(); }
 
   function sync() {
     const it = UI_MAP[state.item];
-    for (const b of listHost.children) b.classList.toggle('active', b.dataset.item === state.item);
+    catalog.sync(state.item);
     zoomInput.value = String(state.zoom);
     zoomOut.textContent = `${state.zoom}×`;
     noteEl.textContent = `${uiGroupName(it.group)} · ${it.desc}`;
@@ -257,16 +242,8 @@ export function initUiPanel() {
 
   function exportPng() {
     const it = UI_MAP[state.item];
-    const cell = makeCanvas(UI_W, UI_H);
-    drawUiIcon(cell.ctx, it, 0.5);
-    const scale = 8;
-    const out = document.createElement('canvas');
-    out.width = UI_W * scale;
-    out.height = UI_H * scale;
-    const g = out.getContext('2d');
-    g.imageSmoothingEnabled = false;
-    g.drawImage(cell.canvas, 0, 0, out.width, out.height);
-    download(out, `sdv-ui-${it.id}.png`);
+    exportItemPng(it, UI_W, UI_H, (g, item) => drawUiIcon(g, item, 0.5),
+      `sdv-ui-${it.id}.png`, 8);
   }
 
   zoomInput.addEventListener('input', () => {
@@ -278,40 +255,7 @@ export function initUiPanel() {
   document.getElementById('ui-png').addEventListener('click', exportPng);
 
   /* ---------- 图鉴 ---------- */
-  function buildGallery() {
-    const host = document.getElementById('ui-gallery');
-    host.innerHTML = '';
-    const grid = document.createElement('div');
-    grid.className = 'uigrid';
-
-    for (const it of UI_ICONS) {
-      const cell = document.createElement('div');
-      cell.className = 'uicell';
-      cell.title = `${it.en} · ${uiGroupName(it.group)} · ${it.desc}`;
-      const cv = document.createElement('canvas');
-      cv.width = UI_W;
-      cv.height = UI_H;
-      const g = cv.getContext('2d');
-      g.imageSmoothingEnabled = false;
-      drawUiIcon(g, it, 0.25);
-      const name = document.createElement('b');
-      name.textContent = it.name;
-      const meta = document.createElement('span');
-      meta.textContent = uiGroupName(it.group);
-      cell.appendChild(cv);
-      cell.appendChild(name);
-      cell.appendChild(meta);
-      cell.addEventListener('click', () => {
-        state.item = it.id;
-        sync();
-        render();
-        canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      grid.appendChild(cell);
-    }
-
-    host.appendChild(grid);
-  }
+  function buildGallery() { catalog.buildGallery(); }
 
   function tick(dt) {
     state.time += dt;
@@ -329,13 +273,4 @@ export function initUiPanel() {
   };
 }
 
-function download(canvas, name) {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-}
+

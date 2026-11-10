@@ -26,6 +26,7 @@ import './systems/time.js';
 import './systems/sleep.js';
 import './systems/weather.js';
 import './systems/input.js';
+import './systems/mine.js';
 import './ui/panels.js';
 import './ui/shop-panel.js';
 import './ui/crop-tooltip.js';

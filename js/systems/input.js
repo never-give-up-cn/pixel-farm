@@ -14,6 +14,12 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+  /* 第 30 轮：矿井模式接管所有按键（移动由 mine.js 自己的监听处理） */
+  if(window.mineActive){
+    if(k === 'escape'){ if(!e.repeat) exitMine(); return; }
+    if(k === ' '){ if(!e.repeat) mineAttack(); return; }
+    return;
+  }
   /* M：总音量开关（任何面板开着时都能按） */
   if(k === CONFIG.AUDIO.MUTE_KEY){
     if(!e.repeat) toggleMute();
@@ -51,6 +57,10 @@ window.addEventListener('keydown', e=>{
   if(ratingOpen && k !== 'escape' && k !== 'g') return;
   /* 成就墙 / 年度总结 / 好感总览 / 全屏地图：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
   if((achOpen || annualOpen || frendOpen || bigmapOpen) && k !== 'escape') return;
+  /* 第 30 轮：J 进入 / 离开矿井（有面板或建造 / 钓鱼时忽略） */
+  if(k === 'j' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
+    toggleMine(); ensureAudio(); return;
+  }
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){

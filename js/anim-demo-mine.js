@@ -62,6 +62,7 @@ export function initMinePanel() {
       hurt: 0
     },
     monsters: [],
+    dying: [],
     map: [],
     rocks: new Map(),
     ores: new Map(),
@@ -91,6 +92,7 @@ export function initMinePanel() {
     state.rocks.clear();
     state.ores.clear();
     state.monsters = [];
+    state.dying = [];
     state.map = [];
     state.sparkles = [];
 
@@ -153,7 +155,7 @@ export function initMinePanel() {
         type: m.id, tx: x, ty: y, px: 0, py: 0,
         hp, maxHp: hp, dmg: Math.max(1, Math.round(m.dmg / 3)),
         cooldown: 0.5 + rnd() * 1.5, moveTimer: 0.4 + rnd() * 0.8,
-        phase: rnd() * 6.28
+        phase: rnd() * 6.28, hurt: 0
       });
       const c = tileCenter(x, y);
       const mon = state.monsters[state.monsters.length - 1];
@@ -243,9 +245,11 @@ export function initMinePanel() {
     const mon = state.monsters.find(m => m.tx === t.x && m.ty === t.y);
     if (mon) {
       mon.hp -= 9;
+      mon.hurt = 0.22;
       burst(t.x, t.y, '#ff8060', 10);
       if (mon.hp <= 0) {
         state.monsters = state.monsters.filter(m => m !== mon);
+        state.dying.push({ ...mon, timer: 0.5, hurt: 0 });
         state.ore += 2;
         burst(t.x, t.y, '#ffe060', 16);
       }
@@ -326,6 +330,7 @@ export function initMinePanel() {
       m.phase += dt;
       m.cooldown -= dt;
       m.moveTimer -= dt;
+      m.hurt = Math.max(0, m.hurt - dt);
       const dx = p.px - m.px;
       const dy = p.py - m.py;
       const dist = Math.hypot(dx, dy);
@@ -375,6 +380,10 @@ export function initMinePanel() {
       s.vy += 100 * dt;
     }
     state.sparkles = state.sparkles.filter(s => s.life > 0);
+
+    /* 死亡消散 */
+    for (const m of state.dying) m.timer -= dt;
+    state.dying = state.dying.filter(m => m.timer > 0);
   }
 
   /* ---------- 渲染 ---------- */
@@ -446,8 +455,13 @@ export function initMinePanel() {
     /* 怪物 */
     for (const m of state.monsters) {
       ctx.save();
+      /* 靠近玩家且即将出手时播放攻击前摇 */
+      const near = Math.hypot(state.player.px - m.px, state.player.py - m.py) < 44;
+      const winding = near && m.cooldown < 0.3;
+      const mState = m.hurt > 0 ? 'hurt' : (winding ? 'attack' : 'idle');
+      const mT = m.hurt > 0 ? 1 - m.hurt / 0.22 : (winding ? 1 - m.cooldown / 0.3 : 0);
       ctx.translate(m.px - 20, m.py - 34);
-      drawMonster(ctx, m.type, state.time * 0.5 + m.phase);
+      drawMonster(ctx, m.type, state.time * 0.5 + m.phase, { state: mState, t: mT });
       ctx.restore();
       /* 怪物血条 */
       const w = 28;
@@ -455,13 +469,33 @@ export function initMinePanel() {
       R(ctx, m.px - w / 2, m.py - 40, Math.max(0, w * (m.hp / m.maxHp)), 3, '#d04a3a');
     }
 
+    /* 死亡消散 */
+    for (const m of state.dying) {
+      ctx.save();
+      ctx.translate(m.px - 20, m.py - 34);
+      drawMonster(ctx, m.type, state.time * 0.5 + m.phase, { state: 'die', t: 1 - m.timer / 0.5 });
+      ctx.restore();
+    }
+
     /* 玩家 */
     const p = state.player;
     ctx.save();
     if (p.hurt > 0) ctx.globalAlpha = 0.7;
     ctx.translate(p.px - 16, p.py - 36);
-    const action = p.attack > 0 ? 'attack' : (p.moving ? 'walk' : 'idle');
-    const phase = p.attack > 0 ? p.attack / 0.28 : state.time * 1.8;
+    let action = 'idle';
+    let phase = state.time * 1.8;
+    if (state.down > 0) {
+      action = 'faint';
+      phase = 1 - state.down / 1.5;
+    } else if (p.hurt > 0) {
+      action = 'hurt';
+      phase = 1 - p.hurt / 0.2;
+    } else if (p.attack > 0) {
+      action = 'attack';
+      phase = p.attack / 0.28;
+    } else if (p.moving) {
+      action = 'walk';
+    }
     drawFarmer(ctx, action, p.dir, phase);
     ctx.restore();
 

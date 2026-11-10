@@ -21,6 +21,7 @@ import './audio.js';
 import './systems/options.js';
 import './ui/feedback.js';
 import './ui/item-icons.js';
+import './ui/ui-icon-decor.js';
 import './ui/bundle-panel.js';
 import './ui/wardrobe-panel.js';
 import './ui/room-panel.js';

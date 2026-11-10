@@ -107,6 +107,7 @@ import './world/buildings.js';
 | 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
 | 物品图标（背包 / 快捷栏 / 箱子） | `js/ui/item-icons.js` |
 | HUD 金币 / 天气 / 体力图标 | `js/ui/shop-panel.js` + `js/anim/ui-icons.js` |
+| 系统菜单 / 页签 UI 图标 | `js/ui/ui-icon-decor.js` |
 | 商店买卖、价格浮动 | `js/systems/shop.js` + `js/ui/shop-panel.js` |
 | 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
 | 睡觉/跨天 | `js/systems/sleep.js` |
@@ -190,6 +191,7 @@ import './world/buildings.js';
 | `js/systems/room.js` | 房间装修状态：墙纸 / 地板 / 室内家具 / 室内灶台任务与存档 |
 | `js/systems/farmhouse.js` | 可进入的农舍室内：移动、床睡觉、室内家具摆放、灶台烹饪、门口离开 |
 | `js/ui/room-panel.js` | 装修样板面板：3 行墙纸 + 5 行地板的实时房间预览 |
+| `js/ui/ui-icon-decor.js` | 系统菜单 / 背包 / 商店页签 / 音量按钮的 anim UI 像素图标 |
 | `js/ui/wardrobe-panel.js` | 衣柜面板：90 帽子 / 64 上衣 / 16 下装试穿与实时预览 |
 | `js/ui/bundle-panel.js` | 收集包 DOM 面板：30 个收集包、逐件交付与完成标记 |
 | `js/systems/harvest-fx.js` | 采集反馈：岩石摇晃 / 碎裂、野花倒伏、锄地扬土、浇水涟漪、收获碎叶 |

@@ -10,6 +10,7 @@
 'use strict';
 
 import { RES_MAP, drawResourceIcon } from '../anim/resources.js';
+import { MINERALS, MINERAL_MAP, drawMineral } from '../anim/minerals.js';
 
 const groundDrops = [];
 const floatTexts = [];
@@ -56,6 +57,11 @@ function pickUpDrop(d) {
   d.n -= got;
   const def = typeof itemDef === 'function' ? itemDef(d.id) : null;
   addFloatText(`+${got} ${d.icon}${def ? ' ' + def.name : ''}`, d.x, d.y - d.z - 6);
+  if (def && def.kind === 'mineral' && typeof dexUnlock === 'function') {
+    /* 矿物第一次捡到就记进图鉴 */
+    const idx = MINERALS.findIndex(m => m.id === d.id);
+    if (idx >= 0) dexUnlock('mineral', idx);
+  }
   if (typeof playSfx === 'function') playSfx(920, 'triangle', 0.045, CONFIG.AUDIO.VOLUME * 0.35);
   return d.n <= 0;
 }
@@ -132,6 +138,15 @@ function drawGroundDrop(g, d) {
     g.save();
     g.translate(sx - 16, Math.round(sy - 31 - d.z + bob));
     drawResourceIcon(g, icon, typeof animTime !== 'undefined' ? animTime : 0.25);
+    g.restore();
+    return;
+  }
+  /* 矿物：使用 anim 矿物图鉴的 32×32 图标 */
+  const mineral = typeof MINERAL_MAP !== 'undefined' ? MINERAL_MAP[d.id] : null;
+  if (mineral) {
+    g.save();
+    g.translate(sx - 16, Math.round(sy - 31 - d.z + bob));
+    drawMineral(g, mineral, typeof animTime !== 'undefined' ? animTime : 0.25);
     g.restore();
     return;
   }

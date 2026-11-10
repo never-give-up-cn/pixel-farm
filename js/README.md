@@ -100,6 +100,7 @@ import './world/buildings.js';
 | 砍树 / 树木倒下 | `js/systems/forest.js` + `js/render/entities.js` |
 | 树种 / 果树结果与采摘 | `js/systems/trees.js` + `js/anim/trees.js` |
 | 石头 / 野花 / 锄地 / 浇水的交互动画 | `js/systems/harvest-fx.js` |
+| 矿物掉落 / 矿物图鉴 | `js/systems/harvest-fx.js` + `js/systems/dex.js` |
 | 地面掉落物 / 自动拾取 | `js/systems/drops.js` |
 | 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
 | 商店买卖、价格浮动 | `js/systems/shop.js` + `js/ui/shop-panel.js` |

@@ -3,6 +3,7 @@
 
 import { CROPS as ANIM_CROPS } from './anim/sdv-crops.js';
 import { FRUIT_TREES } from './anim/trees.js';
+import { MINERALS } from './anim/minerals.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1319,6 +1320,20 @@ const CONFIG = {
   for (const [id, name, icon, price, hq] of PRODUCTS) {
     CONFIG.ITEMS[id] = { id, name, icon, stack: true, max: 99, kind: 'animal', price };
     CONFIG.ITEMS[id + '_hq'] = { id: id + '_hq', name: '优质' + name, icon, stack: true, max: 99, kind: 'animal', price: hq };
+  }
+})();
+
+
+/* 第 32 轮：53 种矿物（宝石 / 采集矿物 / 晶洞矿物）作为可掉落、可出售的收集品 */
+(function addMineralItems(){
+  const ICON = { gem: '💎', foraged: '🔮', geode: '🪨' };
+  for (const m of MINERALS) {
+    if (CONFIG.ITEMS[m.id]) continue;
+    CONFIG.ITEMS[m.id] = {
+      id: m.id, name: m.name, icon: ICON[m.type] || '💎',
+      stack: true, max: 99, kind: 'mineral', price: m.price,
+      mineralType: m.type
+    };
   }
 })();
 

@@ -1,6 +1,8 @@
 /* js/ui/panels.js —— 由 index.html 拆分，原行 5642–6090 */
 'use strict';
 
+import { MINERALS, drawMineral } from '../anim/minerals.js';
+
 /* === 6.UI === */
 /* --- 面板开合动画：开 = 200ms 缩放淡入；关 = 先播淡出，动画结束才真正隐藏 --- */
 const panelTimers = new Map();       /* 面板 id → 关闭动画定时器 */
@@ -81,7 +83,7 @@ function setPackTab(tab){
   applyPackTabView();
   refreshPackGrid();
 }
-/* 建图鉴格子（8 种鱼 + 3 种采集物） */
+/* 建图鉴格子（8 种鱼 + 3 种采集物 + 53 种矿物） */
 function buildDexGrid(){
   if(!dexGrid || !dexGrid.appendChild) return;
   dexGrid.innerHTML = '';
@@ -91,6 +93,21 @@ function buildDexGrid(){
     cell.className = 'cell';
     cell.innerHTML = '<span class="ic"></span><span class="dn"></span>';
     cell.title = e.name;
+    /* 矿物：用 anim 图鉴的 32×32 像素图标，而不是 emoji */
+    if(e.kind === 'mineral'){
+      const ic = cell.querySelector('.ic');
+      const m = MINERALS.find(x => x.id === e.id);
+      if(ic && m){
+        const cv = document.createElement('canvas');
+        cv.width = 32; cv.height = 32;
+        cv.style.width = '32px'; cv.style.height = '32px';
+        cv.style.imageRendering = 'pixelated';
+        const g = cv.getContext('2d');
+        g.imageSmoothingEnabled = false;
+        drawMineral(g, m, 0.25);
+        ic.appendChild(cv);
+      }
+    }
     dexGrid.appendChild(cell);
   }
   refreshDexGrid();
@@ -113,7 +130,7 @@ function refreshDexGrid(){
       c.classList.toggle('unknown', !got);
     }
     const ic = c.querySelector('.ic'), dn = c.querySelector('.dn');
-    if(ic) ic.textContent = e.icon;
+    if(ic && e.kind !== 'mineral') ic.textContent = e.icon;
     if(dn) dn.textContent = got ? e.name : '？？？';
     c.title = got ? e.name : '未发现';
   }
@@ -152,8 +169,8 @@ function sortInventory(){
 function refreshPackGrid(){
   /* 图鉴页签：只刷图鉴，不碰背包格子 */
   if(packTab === 'dex' && packMode !== 'gift'){
-    if(packInfo) packInfo.textContent = '已收集 ' + dexCollected() + '/' + dexTotal() + '　（鱼 + 采集物）';
-    if(packFoot) packFoot.textContent = '点亮 = 已钓到 / 已采集 · 剪影 = 还没见过 · Esc 关闭';
+    if(packInfo) packInfo.textContent = '已收集 ' + dexCollected() + '/' + dexTotal() + '　（鱼 + 采集物 + 矿物）';
+    if(packFoot) packFoot.textContent = '点亮 = 已钓到 / 已采集 / 已挖到 · 剪影 = 还没见过 · Esc 关闭';
     refreshDexGrid();
     return;
   }
@@ -249,7 +266,7 @@ function showPackTip(i, e){
   const lines = [];
   lines.push(d.name + ' ×' + s.n);
   const kindName = {seed:'种子', crop:'作物', material:'材料', tool:'工具', currency:'货币',
-                    fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品'}[d.kind] || d.kind;
+                    fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品', mineral:'矿物'}[d.kind] || d.kind;
   if(isSellable(d.id)){
     lines.push(kindName + ' · 售价 ' + priceOf(d.id) + ' 💰 ' + priceTrend(d.id));
   }else if(d.kind === 'seed'){

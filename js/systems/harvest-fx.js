@@ -11,6 +11,7 @@
 'use strict';
 
 import { spawnDrop } from './drops.js';
+import { MINERALS } from '../anim/minerals.js';
 
 const ROCK_HITS = 2;
 const ROCK_SHAKE = 0.2;
@@ -74,6 +75,18 @@ function spawnTileFx(kind, tx, ty, color) {
 
 /* ---------- 岩石 ---------- */
 
+/** 按稀有度抽一枚矿物：越贵越难出。 */
+function rollMineral() {
+  let total = 0;
+  for (const m of MINERALS) total += 1 / Math.sqrt(Math.max(1, m.price));
+  let r = Math.random() * total;
+  for (const m of MINERALS) {
+    r -= 1 / Math.sqrt(Math.max(1, m.price));
+    if (r <= 0) return m;
+  }
+  return MINERALS[0];
+}
+
 function mineRock(i, tx, ty) {
   if (map[i] !== T.ROCK) return false;
   if (typeof payStamina === 'function' && !payStamina(staminaCost('pick'))) return false;
@@ -91,6 +104,11 @@ function mineRock(i, tx, ty) {
     setTile(i, T.DIRT);
     burst(tx, ty, 'rockbreak');
     spawnDrop('stone', 2, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 90);
+    /* 35% 概率额外掉一枚矿物，按价格加权 */
+    if (Math.random() < 0.35) {
+      const mineral = rollMineral();
+      spawnDrop(mineral.id, 1, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 78);
+    }
     if (typeof questEmit === 'function') questEmit('material', { id: 'stone', n: 2 });
     if (typeof playSfx === 'function') playSfx(110, 'triangle', 0.1, CONFIG.AUDIO.VOLUME * 0.6);
   }

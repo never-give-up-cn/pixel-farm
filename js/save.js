@@ -1,6 +1,8 @@
 /* js/save.js —— 由 index.html 拆分，原行 7161–7670 */
 'use strict';
 
+import { MINERALS } from './anim/minerals.js';
+
 /* === 7.存档 === */
 /* 浏览器本地存档：localStorage 单档位，键名 CONFIG.SAVE.KEY（farm_save_v1）
  *
@@ -119,7 +121,7 @@ function serializeState(){
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
-    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0},
+    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0, m: dexState.m.slice()},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
     /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
@@ -288,6 +290,10 @@ function deserializeState(d){
       const gMax = (1 << CONFIG.GATHER.TYPES.length) - 1;
       dexState.f = ((d.dex.f | 0) & fMax) >>> 0;
       dexState.g = ((d.dex.g | 0) & gMax) >>> 0;
+      if(Array.isArray(d.dex.m)){
+        const valid = new Set(MINERALS.map(m => m.id));
+        dexState.m = [...new Set(d.dex.m.filter(id => valid.has(id)))];
+      }
     }
     /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */
     animalDeserialize(d.animals);

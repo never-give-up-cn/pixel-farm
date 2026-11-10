@@ -128,8 +128,10 @@ window.addEventListener('keydown', e=>{
       else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
       else{
+        const tr = (typeof fruitTreeNear === 'function') ? fruitTreeNear() : null;
         const g = gatherNear();
-        if(g){ pickGather(g.tx, g.ty); }        /* 第 14 轮：脚边有野花/蘑菇/浆果 → 采走 */
+        if(tr){ harvestFruit(tr.tx, tr.ty); }    /* 第 32 轮：果树结果 → E 采摘 */
+        else if(g){ pickGather(g.tx, g.ty); }    /* 第 14 轮：脚边有野花/蘑菇/浆果 → 采走 */
         else{
           /* 都不是 → 提示靠近最近的那个（小屋 / 商店 / 居民） */
           const dh = houseDist(), ds = shopDist();

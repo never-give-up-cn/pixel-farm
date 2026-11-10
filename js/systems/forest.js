@@ -74,6 +74,7 @@ function updateForest(dt) {
         const ty = (i / MAP_W) | 0;
         treeDamage.delete(i);
         setTile(i, T.GRASS);
+        if (typeof forgetTree === 'function') forgetTree(tx, ty);
         spawnDrop('wood', 2, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 150);
         if (typeof questEmit === 'function') questEmit('material', { id: 'wood', n: 2 });
         if (typeof playSfx === 'function') playSfx(120, 'triangle', 0.14, CONFIG.AUDIO.VOLUME * 0.6);
@@ -93,6 +94,8 @@ function updateForest(dt) {
 
 /** 替换原来的 drawTree：带摇晃 / 倒下。 */
 function drawTreeWithState(g, px, py, i) {
+  const tx = i % MAP_W;
+  const ty = (i / MAP_W) | 0;
   const d = treeDamage.get(i);
 
   if (d && d.fall >= 0) {
@@ -100,12 +103,12 @@ function drawTreeWithState(g, px, py, i) {
     const ease = 1 - Math.pow(1 - t, 2.4);          /* 先慢后快 */
     const angle = ease * (Math.PI / 2 - 0.06) * d.dir;
     const bx = px + TILE / 2;
-    const by = py + TILE - 2;
+    const by = py + TILE - 4;
     g.save();
     g.translate(bx, by);
     g.rotate(angle);
     g.translate(-bx, -by);
-    drawTree(g, px, py);
+    drawGameTree(g, px, py, tx, ty);
     g.restore();
     return;
   }
@@ -114,12 +117,12 @@ function drawTreeWithState(g, px, py, i) {
     const k = d.shake / SHAKE_TIME;
     g.save();
     g.translate(Math.round(Math.sin((SHAKE_TIME - d.shake) * 70) * 2 * k), 0);
-    drawTree(g, px, py);
+    drawGameTree(g, px, py, tx, ty);
     g.restore();
     return;
   }
 
-  drawTree(g, px, py);
+  drawGameTree(g, px, py, tx, ty);
 }
 
 function drawTreeChips(g) {

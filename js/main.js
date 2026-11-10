@@ -24,6 +24,7 @@ import './systems/soil.js';
 import './systems/tools.js';
 import './systems/drops.js';
 import './systems/forest.js';
+import './systems/trees.js';
 import './systems/harvest-fx.js';
 import './systems/shop.js';
 import './systems/time.js';

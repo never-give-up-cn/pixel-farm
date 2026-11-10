@@ -2,6 +2,7 @@
 'use strict';
 
 import { CROPS as ANIM_CROPS } from './anim/sdv-crops.js';
+import { FRUIT_TREES } from './anim/trees.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1270,6 +1271,29 @@ const CONFIG = {
 
     /* 商店只上架当季种子（渲染时再按季节筛） */
     CONFIG.SHOP.BUY.push({ id: 'seed_' + ac.id, price: seedCost });
+  }
+})();
+
+
+/* 第 32 轮：8 种果树的果实物品（果树可 E 采摘） */
+(function addFruitItems(){
+  const META = {
+    apple:       ['苹果',   '🍎', 100],
+    apricot:     ['杏',     '🍑', 90],
+    cherry:      ['樱桃',   '🍒', 120],
+    orange:      ['橙子',   '🍊', 110],
+    peach:       ['桃子',   '🍑', 130],
+    banana:      ['香蕉',   '🍌', 140],
+    mango:       ['芒果',   '🥭', 150],
+    pomegranate: ['石榴',   '🍎', 160]
+  };
+  for (const ft of FRUIT_TREES) {
+    if (CONFIG.ITEMS[ft.id]) continue;
+    const m = META[ft.id] || [ft.name, '🍎', 100];
+    CONFIG.ITEMS[ft.id] = {
+      id: ft.id, name: m[0], icon: m[1], stack: true, max: 99,
+      kind: 'gather', price: m[2]
+    };
   }
 })();
 

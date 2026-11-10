@@ -62,8 +62,8 @@ function drawEntities(g, x0, y0, x1, y1){
         if(c) list.push({y:ty*TILE + TILE, f:()=>drawCrop(g, px, py, c)});
         const t = map[i];
         if(t === T.TREE)      list.push({y:ty*TILE + TILE, f:()=>drawTreeWithState(g, px, py, i)});
-        else if(t === T.ROCK) list.push({y:ty*TILE + TILE, f:()=>drawRock(g, px, py)});
-        else if(t === T.FLOWER) list.push({y:ty*TILE + TILE, f:()=>drawFlower(g, px, py, (hash2(tx,ty)*3)|0)});
+        else if(t === T.ROCK) list.push({y:ty*TILE + TILE, f:()=>drawRockWithState(g, px, py, i)});
+        else if(t === T.FLOWER) list.push({y:ty*TILE + TILE, f:()=>drawFlowerWithState(g, px, py, i, (hash2(tx,ty)*3)|0)});
         /* 第 17 轮：节日装饰（走同一张 Y 排序表） */
         else if(t === T.FEST_BANNER)  list.push({y:ty*TILE + TILE, f:()=>drawFestBanner(g, px, py)});
         else if(t === T.FEST_STALL)   list.push({y:ty*TILE + TILE, f:()=>drawFestStall(g, px, py)});
@@ -80,6 +80,7 @@ function drawEntities(g, x0, y0, x1, y1){
   list.sort((a,b)=>a.y - b.y);
   for(const e of list) e.f();
   if(typeof drawTreeChips === 'function') drawTreeChips(g);
+  if(typeof drawHarvestFx === 'function') drawHarvestFx(g);
 }
 
 

@@ -54,6 +54,7 @@ function sowCrop(tx,ty,type,seedId){
   /* 第 23 轮：轮作（土壤肥力）+ 种子杂交（相邻种不同作物） */
   soilRotate(tx, ty, type);
   hybridCheck(tx, ty, type);
+  if(typeof spawnTileFx === 'function') spawnTileFx('sow', tx, ty);
   return true;
 }
 function waterTile(tx,ty){
@@ -64,6 +65,7 @@ function waterTile(tx,ty){
   if(!payStamina(staminaCost('can'))) return false;   /* 浇水消耗 1 点体力 */
   canWater--;
   setTile(i, T.WATERED);                    /* 视觉变深色（并把这一格标脏重烘焙） */
+  if(typeof spawnTileFx === 'function') spawnTileFx('water', tx, ty);
   const c = crops[i];
   if(c) c.watered = true;
   toast('浇好了水（壶里还剩 ' + canWater + '）');
@@ -100,6 +102,7 @@ function harvestCrop(tx,ty){
     toast('收获 ' + itemName + ' ×1');
   }
   playSfx(1046, 'triangle', 0.16, CONFIG.AUDIO.VOLUME);
+  if(typeof spawnTileFx === 'function') spawnTileFx('harvest', tx, ty, def.ripe);
   return true;
 }
 function clearDeadCrop(tx,ty){
@@ -108,6 +111,7 @@ function clearDeadCrop(tx,ty){
   if(!payStamina(staminaCost('sickle'))) return false;
   crops[i] = null;
   if(map[i] === T.WATERED) setTile(i, T.TILLED);
+  if(typeof spawnTileFx === 'function') spawnTileFx('sickle', tx, ty);
   toast('清理了枯萎的' + def.name);
   playSfx(988, CONFIG.AUDIO.TYPE, CONFIG.AUDIO.DUR, CONFIG.AUDIO.VOLUME);
   return true;

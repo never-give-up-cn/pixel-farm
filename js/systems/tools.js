@@ -47,6 +47,12 @@ function useTool(tx,ty){
   /* 4.5 斧头砍树：多段受击 → 摇晃 → 倒下 → 掉木材（第 31 轮） */
   if(tool.id === 'axe' && t === T.TREE) return chopTree(i, tx, ty);
 
+  /* 4.6 镐敲岩石：两段受击 → 碎裂 → 掉石材 */
+  if(tool.id === 'pick' && t === T.ROCK) return mineRock(i, tx, ty);
+
+  /* 4.7 镰刀割野花 / 草地：倒伏淡出后再变空地 */
+  if(tool.id === 'sickle' && (t === T.FLOWER || t === T.GRASS)) return cutObject(i, tx, ty);
+
   /* 5. 普通工具：按地块类型处理 */
   if(tool.accepts.indexOf(t) < 0){
     toast(item.name + '不能用在' + TILE_NAMES[t] + '上');
@@ -66,6 +72,7 @@ function useTool(tx,ty){
   /* 体力不够就别动这块地（不消耗体力、不改地块） */
   if(!payStamina(staminaCost(tool.id))) return false;
   setTile(i, tool.to);
+  if(typeof spawnTileFx === 'function' && tool.id === 'hoe') spawnTileFx('hoe', tx, ty);
   if(toolOut){
     addItem(toolOut.item, toolOut.n);
     questEmit('material', {id:toolOut.item, n:toolOut.n});   /* 第 16 轮：委托总线（木材 / 石材） */

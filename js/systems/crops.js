@@ -30,9 +30,12 @@ function sowCrop(tx,ty,type,seedId){
   const def = cropDef(type);
   const sid = seedId || ('seed_' + type);
   const season = seasonName();
-  if(season === '冬'){ toast('土地休眠了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   const seasons = cropSeasons(def);            /* 第 23 轮：杂交作物有两个季可种 */
-  if(seasons.indexOf(season) < 0){ toast(def.name + '只能在' + seasons.join('、') + '季种'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  if(seasons.indexOf(season) < 0){
+    toast(season === '冬' ? '土地休眠了' : (def.name + '只能在' + seasons.join('、') + '季种'));
+    playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6);
+    return false;
+  }
   const i = ty*MAP_W+tx;
   if(map[i] !== T.TILLED){ toast('先用锄头把这块地开垦了'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   /* 种子来自背包：播下要扣 1 颗，没种子就不能播 */

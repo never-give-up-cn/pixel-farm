@@ -1233,13 +1233,25 @@ const CONFIG = {
     const seasons = seasonsOf(ac);
     if (!seasons.length) seasons.push('春');
 
+    /* 第 33 轮：作物天数归一化。
+     * anim 数据按「一季 28 天」写生长天数，而游戏一季只有 DAYS_PER_SEASON（10）天。
+     * 单季作物超过 9 天就永远收不到，按比例压到 6~9 天；
+     * 多季作物（上古水果 / 玉米 / 咖啡豆 / 仙人掌果）保留原始长周期，
+     * 让它们靠跨季生长保持「长期投资」的定位。 */
+    let days = ac.days;
+    let regrow = ac.regrow || 0;
+    if (seasons.length <= 1 && days > 9) {
+      days = Math.min(9, Math.max(3, Math.round(days * 9 / 14)));
+      if (regrow > 0) regrow = Math.max(1, Math.round(regrow * 9 / 14));
+    }
+
     /* 已有作物也按 demo 数据同步生长天数、再收间隔与季节 */
     const def = CONFIG.CROPS.find(c => c.id === ac.id);
     if (def) {
       def.season = seasons[0];
       def.seasons = seasons.length > 1 ? seasons : undefined;
-      def.days = ac.days;
-      def.regrow = ac.regrow || 0;
+      def.days = days;
+      def.regrow = regrow;
       def.ripe = ac.produce ? ac.produce.c1 : def.ripe;
       def.unripe = ac.produce ? (ac.produce.c2 || ac.produce.c1) : def.unripe;
       def.leaf = ac.leaf || def.leaf;
@@ -1257,10 +1269,10 @@ const CONFIG = {
       icon,
       season: seasons[0],
       seasons,
-      days: ac.days,
+      days,
       seedCost,
       sell,
-      regrow: ac.regrow || 0,
+      regrow,
       ripe: ac.produce ? ac.produce.c1 : '#e0a040',
       unripe: ac.produce ? (ac.produce.c2 || ac.produce.c1) : '#c8c090',
       leaf: ac.leaf || '#4aa03c'

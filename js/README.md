@@ -75,6 +75,7 @@ import './world/buildings.js';
 | `js/anim-demo-misc.js` | 邮件 / 书籍 / 饰品 / 电影面板 |
 | `js/anim-demo-battle.js` | 实时战斗演示面板 |
 | `js/anim-demo-mine.js` | 可操作矿井探索面板 |
+| `js/anim-demo-town.js` | 鹈鹕镇村民日程面板 |
 | `js/player.js` | 玩家精灵与朝向 |
 | `js/town.js` | 小镇建筑、房间、街道的查询 |
 | `js/audio.js` | 音效与音量 |
@@ -117,7 +118,7 @@ import './world/buildings.js';
 
 ## 动画模块（js/anim/）
 
-独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子、80 件衣物、152 件室内物品、100 种资源、15 只宠物、24 种动物产品、12 位特殊 NPC、49 个成就、30 个收集包、60 个 UI 图标、81 张食谱卡、100 个种子/农产品与 44 项杂项二十五套精灵，以及实时战斗和可操作矿井演示，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
+独立的像素动画层，包含农夫、星露谷 50 种作物、18 棵树、53 种矿物、72 种鱼、25 种建筑、28 种工匠品、81 道料理、34 位村民、6 种动物、49 种怪物、110 件装备、90 顶帽子、80 件衣物、152 件室内物品、100 种资源、15 只宠物、24 种动物产品、12 位特殊 NPC、49 个成就、30 个收集包、60 个 UI 图标、81 张食谱卡、100 个种子/农产品与 44 项杂项二十五套精灵，以及实时战斗、可操作矿井和小镇日程演示，不读写任何游戏全局状态，也不依赖 `CONFIG` / `player`，可以直接被游戏复用。
 
 | 文件 | 负责 |
 | --- | --- |
@@ -151,6 +152,7 @@ import './world/buildings.js';
 | `js/anim/misc.js` | 44 项杂项图标（12 邮件 / 16 书籍 / 8 饰品 / 8 电影） |
 | `js/anim-demo-battle.js` | 实时战斗演示：农夫攻击、怪物反击、伤害数字、血条与连击 |
 | `js/anim-demo-mine.js` | 可操作矿井：13×9 房间、移动、攻击、矿石、怪物与下一层 |
+| `js/anim-demo-town.js` | 小镇日程：12 位村民按时间移动、头像与职业查看 |
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 
 ```js
@@ -185,6 +187,7 @@ cow.draw(ctx, x, y, 4);                          // 40×32 格
 - 室内墙纸/地板用 `drawWallpaperTile` / `drawFloorTile` 生成 32×32 贴图，再通过 `createPattern` 平铺。
 - 战斗演示使用 `drawFarmer(ctx, 'attack', dir, phase)` 的挥剑姿势，武器按 `drawEquipment` 叠加显示。
 - 矿井演示使用 `drawFarmer` 的行走 / 攻击动作，配合 `drawMonster` 与 `drawResourceIcon` 组合场景。
+- 小镇演示用 `drawNpcWalk` 按时间在多个地点之间移动，并用 `drawNpcPortrait` 显示选中村民头像。
 
 测试页入口是根目录的 `anim-demo.html`，由 `js/anim-demo.js` 驱动，不加入 `js/main.js`。作物数据按 Stardew Valley 1.6.15 作物表整理，`day` 从 1 到 `days`，一帧对应一天。
 

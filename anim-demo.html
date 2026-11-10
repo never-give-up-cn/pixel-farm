@@ -66,11 +66,11 @@
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
   .sel{width:100%;background:#161c24;color:var(--text);border:1px solid var(--line);border-radius:3px;padding:6px;font:12px "Microsoft YaHei",monospace}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status,#ui-status,#recipe-status,#cropitem-status,#misc-status,#battle-status,#mine-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd,#ui-status dd,#recipe-status dd,#cropitem-status dd,#misc-status dd,#battle-status dd,#mine-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status,#ui-status,#recipe-status,#cropitem-status,#misc-status,#battle-status,#mine-status,#town-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd,#ui-status dd,#recipe-status dd,#cropitem-status dd,#misc-status dd,#battle-status dd,#mine-status dd,#town-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
-  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#artisan-stage,#dish-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage,#ui-stage,#recipe-stage,#cropitem-stage,#misc-stage,#battle-stage,#mine-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#artisan-stage,#dish-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage,#ui-stage,#recipe-stage,#cropitem-stage,#misc-stage,#battle-stage,#mine-stage,#town-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
@@ -253,7 +253,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · UI · 食谱 · 种子 · 杂项 · 战斗 · 矿井 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · UI · 食谱 · 种子 · 杂项 · 战斗 · 矿井 · 小镇 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -285,6 +285,7 @@
     <button data-tab="misc">杂项</button>
     <button data-tab="battle">战斗</button>
     <button data-tab="mine">矿井</button>
+    <button data-tab="town">小镇</button>
   </nav>
 
   <!-- ================= 农夫 ================= -->
@@ -1512,6 +1513,40 @@
       <section class="stage-wrap">
         <canvas id="mine-stage" width="480" height="520"></canvas>
         <div class="hint">可操作矿井 · 13×9 房间 · 打碎矿石 / 击杀怪物 / 下一层</div>
+      </section>
+    </main>
+  </section>
+
+  <!-- ================= 小镇 ================= -->
+  <section id="tab-town" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>小镇村民</h2>
+          <div id="town-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>时间</h2>
+          <label class="slider">
+            时间 <output id="town-time-out">08:00</output>
+            <input id="town-time" type="range" min="6" max="24" step="0.1" value="8">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="town-play">暂停时间</button>
+          </div>
+          <div id="town-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="town-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="town-stage" width="480" height="520"></canvas>
+        <div class="hint">点击村民查看资料 · 时间变化时会走向新的地点</div>
       </section>
     </main>
   </section>

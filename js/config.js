@@ -4,6 +4,7 @@
 import { CROPS as ANIM_CROPS } from './anim/sdv-crops.js';
 import { FRUIT_TREES } from './anim/trees.js';
 import { MINERALS } from './anim/minerals.js';
+import { FISH as ANIM_FISH } from './anim/fish.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1334,6 +1335,53 @@ const CONFIG = {
       stack: true, max: 99, kind: 'mineral', price: m.price,
       mineralType: m.type
     };
+  }
+})();
+
+
+/* 第 32 轮：把 anim 图鉴的 72 种鱼接进钓鱼池。
+ * 已有 8 种保留；同名鱼（鲤鱼 / 河豚）与已有条目重合时跳过。 */
+(function addMoreFish(){
+  const ICON_BY_TYPE = {
+    ocean:'🐟', river:'🐠', lake:'🐡', mines:'👻',
+    legend:'🐋', crab:'🦀', special:'🐙'
+  };
+  const allSeasons = ['春','夏','秋','冬'];
+  const seasonsOf = s => s === '全年' ? allSeasons.slice()
+    : s.split('').filter(ch => allSeasons.indexOf(ch) >= 0);
+  function strHash(s){
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+    return h >>> 0;
+  }
+
+  const existingNames = new Set(CONFIG.FISHING.LIST.map(f => f.name));
+  for (const f of ANIM_FISH) {
+    if (existingNames.has(f.name)) continue;
+    const id = 'fish_' + f.id;
+    if (CONFIG.FISHING.LIST.some(x => x.id === id)) continue;
+
+    let seasons = seasonsOf(f.seasons);
+    if (!seasons.length) seasons = allSeasons.slice();
+
+    /* 价格越高越稀有；稀有度同时决定售价与拉杆绿区宽度 */
+    const rarity = f.price >= 1000 ? 5 : f.price >= 500 ? 4 : f.price >= 200 ? 3 : f.price >= 80 ? 2 : 1;
+
+    /* 没有原始时段数据：按 id 哈希分昼夜，蟹笼 / 矿井 / 特殊全天 */
+    let from = 6, to = 18;
+    if (f.type === 'crab' || f.type === 'mines' || f.type === 'special') { from = 6; to = 2; }
+    else if (strHash(f.id) % 2) { from = 18; to = 2; }
+
+    const icon = ICON_BY_TYPE[f.type] || '🐟';
+    CONFIG.FISHING.LIST.push({
+      id, name: f.name, icon, rarity, seasons,
+      weather: ['sun', 'rain', 'snow'], from, to, price: f.price
+    });
+    CONFIG.ITEMS[id] = {
+      id, name: f.name, icon, stack: true, max: 99,
+      kind: 'fish', price: f.price
+    };
+    existingNames.add(f.name);
   }
 })();
 

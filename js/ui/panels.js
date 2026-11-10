@@ -2,6 +2,7 @@
 'use strict';
 
 import { MINERALS, drawMineral } from '../anim/minerals.js';
+import { FISH_MAP, drawFishIcon, FISH_W, FISH_H } from '../anim/fish.js';
 
 /* === 6.UI === */
 /* --- 面板开合动画：开 = 200ms 缩放淡入；关 = 先播淡出，动画结束才真正隐藏 --- */
@@ -108,6 +109,22 @@ function buildDexGrid(){
         ic.appendChild(cv);
       }
     }
+    /* 鱼类：用 anim 40×32 像素图标（原有 8 种没有对应形象，保留 emoji） */
+    if(e.kind === 'fish'){
+      const ic = cell.querySelector('.ic');
+      const animId = e.id.indexOf('fish_') === 0 ? e.id.slice(5) : e.id;
+      const f = FISH_MAP[animId];
+      if(ic && f){
+        const cv = document.createElement('canvas');
+        cv.width = FISH_W; cv.height = FISH_H;
+        cv.style.width = '36px'; cv.style.height = '29px';
+        cv.style.imageRendering = 'pixelated';
+        const g = cv.getContext('2d');
+        g.imageSmoothingEnabled = false;
+        drawFishIcon(g, f, 0.25);
+        ic.appendChild(cv);
+      }
+    }
     dexGrid.appendChild(cell);
   }
   refreshDexGrid();
@@ -130,7 +147,7 @@ function refreshDexGrid(){
       c.classList.toggle('unknown', !got);
     }
     const ic = c.querySelector('.ic'), dn = c.querySelector('.dn');
-    if(ic && e.kind !== 'mineral') ic.textContent = e.icon;
+    if(ic && !ic.querySelector('canvas')) ic.textContent = e.icon;
     if(dn) dn.textContent = got ? e.name : '？？？';
     c.title = got ? e.name : '未发现';
   }

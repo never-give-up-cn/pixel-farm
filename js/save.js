@@ -121,7 +121,7 @@ function serializeState(){
     /* 第 13 轮新增：居民好感度 / 当日已送礼标记 / 解锁状态（紧凑结构） */
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
-    dex: {f: dexState.f >>> 0, g: dexState.g >>> 0, m: dexState.m.slice()},
+    dex: {f: dexState.f.slice(), g: dexState.g >>> 0, m: dexState.m.slice()},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
     /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
@@ -283,12 +283,19 @@ function deserializeState(d){
     setInteractHints(d.ih === undefined ? true : !!d.ih, true);
     /* 居民状态（老存档没这个字段 → 当作"刚认识"，其余进度不受影响） */
     npcDeserialize(d.npc);
-    /* 图鉴（老存档没这个字段 → 图鉴为空；超出的位按 0 截断） */
+    /* 图鉴（老存档没这个字段 → 图鉴为空；旧版鱼图鉴是位掩码，按前 8 种鱼还原） */
     dexResetState();
     if(d.dex && typeof d.dex === 'object'){
-      const fMax = (1 << CONFIG.FISHING.LIST.length) - 1;
       const gMax = (1 << CONFIG.GATHER.TYPES.length) - 1;
-      dexState.f = ((d.dex.f | 0) & fMax) >>> 0;
+      const fishIds = new Set(CONFIG.FISHING.LIST.map(f => f.id));
+      if(Array.isArray(d.dex.f)){
+        dexState.f = [...new Set(d.dex.f.filter(id => fishIds.has(id)))];
+      }else if(typeof d.dex.f === 'number'){
+        const mask = d.dex.f | 0;
+        dexState.f = CONFIG.FISHING.LIST
+          .filter((f, i) => i < 32 && (mask & (1 << i)))
+          .map(f => f.id);
+      }
       dexState.g = ((d.dex.g | 0) & gMax) >>> 0;
       if(Array.isArray(d.dex.m)){
         const valid = new Set(MINERALS.map(m => m.id));

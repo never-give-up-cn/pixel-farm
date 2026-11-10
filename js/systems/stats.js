@@ -121,7 +121,7 @@ function achValue(a){
     case 'gold':        return gold | 0;
     case 'dailyGold':   return statsDailyIncome();
     case 'crops':       return achPopcount(statsState.cv);
-    case 'fishKinds':   return achPopcount(dexState.f);
+    case 'fishKinds':   return dexState.f.length;
     case 'gatherKinds': return achPopcount(dexState.g);
     case 'friends':     return achFriends();
     case 'year':        return clock.day > YEAR_DAYS ? 1 : 0;

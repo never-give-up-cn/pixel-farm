@@ -107,6 +107,7 @@ import './world/buildings.js';
 | 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
 | 睡觉/跨天 | `js/systems/sleep.js` |
 | 钓鱼 | `js/systems/fishing.js` |
+| 鱼类 / 钓鱼池 | `js/systems/fishing.js` + `js/anim/fish.js` + `js/config.js` |
 | 矿井 / 战斗 | `js/systems/mine.js` + `js/anim/monsters.js` + `js/anim/farmer.js` |
 | 动物/鸡舍/牛棚 | `js/systems/animals.js`（6 种动物，绘制走 `js/anim/animals.js`） |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |

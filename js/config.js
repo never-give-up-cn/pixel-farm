@@ -112,7 +112,7 @@ const CONFIG = {
 
   /* 季节 */
   SEASONS: ['春','夏','秋','冬'],
-  DAYS_PER_SEASON: 10,      // 每季几天（第 6 轮由 7 调成 10：南瓜 7 天 / 番茄 6+2 天要能在当季走完）
+  DAYS_PER_SEASON: 28,      // 每季 28 天（与星露谷一致：4 季 × 28 = 112 天 / 年）
   SEASON_TINT: {            // 地面色调（覆盖在地面上，越大越明显）；c=颜色 a=不透明度
     '春': {c:'#7fd05a', a:0.10},   // 春：淡绿
     '夏': {c:'#2f8f22', a:0.18},   // 夏：深绿
@@ -872,7 +872,7 @@ const CONFIG = {
   GATHER: {
     ENABLED: true,            // 总开关（关掉就不刷新采集物）
     RANGE: 1.5,               // 按 E 采集的距离（格）
-    EVERY_DAYS: 3,            // 每季每隔几天刷新一次（季内第 1/4/7/10 天）
+    EVERY_DAYS: 3,            // 每季每隔几天刷新一次（28 天季：1/4/7/.../28 天）
     COUNT: 6,                 // 每次刷新在草地上放几株
     RADIUS: 20,               // 刷新范围：以农田中心为圆心的半径（格）
     TYPES: [                  // 各种采集物：对应的物品 / 地块 / 出现的季节
@@ -1019,7 +1019,7 @@ const CONFIG = {
       {id:'gather_all',    cat:'explore', icon:'🌼', name:'采集达人', desc:'集齐所有季节采集物',     kind:'gatherKinds', need:3},
       {id:'sleep_10',      cat:'explore', icon:'😴', name:'安眠',     desc:'累计睡觉 10 次',         kind:'stat', key:'sl', need:10},
       {id:'play_30',       cat:'explore', icon:'📅', name:'农场主',   desc:'游玩 30 天',             kind:'stat', key:'dy', need:30},
-      {id:'year_one',      cat:'explore', icon:'🎊', name:'活过一整年', desc:'度过完整的 40 天',     kind:'year', need:1}
+      {id:'year_one',      cat:'explore', icon:'🎊', name:'活过一整年', desc:'度过完整的 112 天',    kind:'year', need:1}
     ]
   },
 
@@ -1233,25 +1233,13 @@ const CONFIG = {
     const seasons = seasonsOf(ac);
     if (!seasons.length) seasons.push('春');
 
-    /* 第 33 轮：作物天数归一化。
-     * anim 数据按「一季 28 天」写生长天数，而游戏一季只有 DAYS_PER_SEASON（10）天。
-     * 单季作物超过 9 天就永远收不到，按比例压到 6~9 天；
-     * 多季作物（上古水果 / 玉米 / 咖啡豆 / 仙人掌果）保留原始长周期，
-     * 让它们靠跨季生长保持「长期投资」的定位。 */
-    let days = ac.days;
-    let regrow = ac.regrow || 0;
-    if (seasons.length <= 1 && days > 9) {
-      days = Math.min(9, Math.max(3, Math.round(days * 9 / 14)));
-      if (regrow > 0) regrow = Math.max(1, Math.round(regrow * 9 / 14));
-    }
-
     /* 已有作物也按 demo 数据同步生长天数、再收间隔与季节 */
     const def = CONFIG.CROPS.find(c => c.id === ac.id);
     if (def) {
       def.season = seasons[0];
       def.seasons = seasons.length > 1 ? seasons : undefined;
-      def.days = days;
-      def.regrow = regrow;
+      def.days = ac.days;
+      def.regrow = ac.regrow || 0;
       def.ripe = ac.produce ? ac.produce.c1 : def.ripe;
       def.unripe = ac.produce ? (ac.produce.c2 || ac.produce.c1) : def.unripe;
       def.leaf = ac.leaf || def.leaf;
@@ -1269,10 +1257,10 @@ const CONFIG = {
       icon,
       season: seasons[0],
       seasons,
-      days,
+      days: ac.days,
       seedCost,
       sell,
-      regrow,
+      regrow: ac.regrow || 0,
       ripe: ac.produce ? ac.produce.c1 : '#e0a040',
       unripe: ac.produce ? (ac.produce.c2 || ac.produce.c1) : '#c8c090',
       leaf: ac.leaf || '#4aa03c'
@@ -1895,18 +1883,7 @@ const CONFIG = {
   CONFIG.SPECIAL_VILLAGERS = k;
 })();
 
-/* 第 33 轮：生日归一化。
- * anim 数据按「一季 28 天」写生日，而游戏一季只有 DAYS_PER_SEASON（10）天，
- * 11 日以后的居民永远过不到生日。把超过一季的日期等比例压到 1~10，
- * 原本 1~10 日的生日保持不变。 */
-(function normalizeNpcBirthdays(){
-  const D = CONFIG.DAYS_PER_SEASON;
-  for (const d of CONFIG.NPC.LIST) {
-    if (!d.bday) d.bday = { season: '春', day: 1 };
-    const day = Math.max(1, d.bday.day | 0);
-    if (day > D) d.bday.day = Math.max(1, Math.min(D, Math.floor((day - 1) * D / 28) + 1));
-  }
-})();
+/* 第 33 轮：生日沿用 anim 数据（每季 1~28 日）。 */
 
 
 /* 第 32 轮：110 件装备（62 武器 / 30 戒指 / 18 靴子）作为游戏物品。

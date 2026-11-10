@@ -22,7 +22,7 @@ function achBadgeCanvas(a, size) {
  * 统计字段全部是数字（存档里是一个 16 长度的数字数组），增量更新、不重算全量。
  * 成就用一个 32 位掩码存（最多 32 个），解锁时右上角滑入卡片 + 音效，Esc 菜单里看成就墙。
  * 年度总结由「游玩天数 / 日期」派生，只在这一年结束时弹一次（面板打开时世界冻结）。 */
-const YEAR_DAYS = CONFIG.DAYS_PER_SEASON * CONFIG.SEASONS.length;   /* 4 季 × 10 天 = 40 天 */
+const YEAR_DAYS = CONFIG.DAYS_PER_SEASON * CONFIG.SEASONS.length;   /* 4 季 × 28 天 = 112 天 */
 
 /* st 数组布局（16 个数字）：
  * 0 dy 游玩天数   1 hv 累计收获   2 fs 累计钓鱼   3 inc 累计收入   4 bd 建造次数

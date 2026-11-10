@@ -3,7 +3,7 @@
 
 /* === 12.野外采集（第 14 轮） === */
 /* 采集物是地图上的新地块类型（11/12/13）：长在草地上、不挡路，按 E 采走。
- * 刷新写进 map diff，存档后仍然存在；每季第 1/4/7/10 天清掉旧的、重新刷 6 株。 */
+ * 刷新写进 map diff，存档后仍然存在；每 3 天（季内 1/4/7/…/28 天）清掉旧的、重新刷 6 株。 */
 const GATHER_ITEM_BY_TILE = {};
 for(const t of CONFIG.GATHER.TYPES) GATHER_ITEM_BY_TILE[t.tile] = t.item;
 function isGatherTile(t){ return !!GATHER_ITEM_BY_TILE[t]; }
@@ -84,7 +84,7 @@ function spawnGather(quiet){
   if(placed && sessionActive && !quiet) toast('草地上长出了新的采集物');
   return placed;
 }
-/* 新的一天：季内第 1/4/7/10 天刷新一次 */
+/* 新的一天：按 CONFIG.GATHER.EVERY_DAYS 在季内周期性刷新 */
 function gatherDayStart(){
   const seasonDay = ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1;
   if(seasonDay % Math.max(1, CONFIG.GATHER.EVERY_DAYS) === 1) return spawnGather();

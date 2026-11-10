@@ -66,7 +66,7 @@ function rollToNextMorning(faint){
   dlog('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
-  gatherDayStart();                    /* 第 14 轮：每季第 1/4/7/10 天刷新草地采集物（写进 map diff） */
+  gatherDayStart();                    /* 第 14 轮：每 3 天刷新草地采集物（季内 1/4/7/…/28 天，写进 map diff） */
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
   updateTut();                         /* 过了第 1 天就把新手引导收起来 */
   npcDayStart();                       /* 居民：新的天 → 今天谁过生日 */

@@ -74,6 +74,20 @@ function drawFishingRod(g, hand, tip, phase) {
   ellipse(g, bobX, bobY + 1, r + 2, 1, 'rgba(108, 196, 242, 0.22)');
 }
 
+function drawSword(g, hand, tip, px, py, ux, uy) {
+  /* 剑身 */
+  line(g, hand.x, hand.y, tip.x, tip.y, PALETTE.metalShade, 3);
+  line(g, hand.x, hand.y, tip.x, tip.y, PALETTE.metal, 1);
+  R(g, tip.x - 1, tip.y - 1, 3, 2, '#f0f4f8');
+
+  /* 护手 */
+  line(g, hand.x - px * 4, hand.y - py * 4, hand.x + px * 4, hand.y + py * 4, '#c8a050', 2);
+  R(g, hand.x - 1, hand.y - 1, 3, 3, '#e0c060');
+
+  /* 剑柄 */
+  line(g, hand.x - ux * 4, hand.y - uy * 4, hand.x - ux * 7, hand.y - uy * 7, '#5a3a22', 2);
+}
+
 export function drawTool(g, tool) {
   const { hand, tip, kind, phase } = tool;
   const dx = tip.x - hand.x;
@@ -94,7 +108,8 @@ export function drawTool(g, tool) {
   }
 
   drawHandle(g, hand, tip);
-  if (kind === 'hoe') drawHoe(g, tip, px, py, ux, uy);
+  if (kind === 'sword') drawSword(g, hand, tip, px, py, ux, uy);
+  else if (kind === 'hoe') drawHoe(g, tip, px, py, ux, uy);
   else if (kind === 'axe') drawAxe(g, tip, px, py);
   else if (kind === 'pick') drawPick(g, tip, px, py, ux, uy);
   else if (kind === 'sickle') drawSickle(g, tip, px, py, ux, uy);

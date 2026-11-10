@@ -8,6 +8,7 @@ import { basePose, drawStanding, drawSleeping } from './farmer-body.js';
 import { drawTool, drawEffect, impactDust, waterDrops } from './farmer-tools.js';
 
 const TOOL_CFG = {
+  attack: { wind: { x: -4, y: 7 },  hit: { x: 14, y: 27 } },
   hoe:    { wind: { x: -2, y: 7 },  hit: { x: 10, y: 33 } },
   axe:    { wind: { x: 0, y: 6 },   hit: { x: 11, y: 33 } },
   pick:   { wind: { x: 2, y: 7 },   hit: { x: 11, y: 32 } },
@@ -119,7 +120,7 @@ function poseTool(action, view, side, t) {
     x: lerp(p.shL.x, tip.x, 0.28),
     y: lerp(p.shL.y, tip.y, 0.28)
   };
-  p.tool = { kind: action, hand, tip, phase: t };
+  p.tool = { kind: action === 'attack' ? 'sword' : action, hand, tip, phase: t };
 
   const dust = impactDust(cx + cfg.hit.x, cfg.hit.y, t);
   if (action === 'sickle') {

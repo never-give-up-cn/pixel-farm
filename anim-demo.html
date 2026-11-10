@@ -64,12 +64,13 @@
   .slider{display:block;color:var(--muted);font-size:12px;margin-top:4px}
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
+  .sel{width:100%;background:#161c24;color:var(--text);border:1px solid var(--line);border-radius:3px;padding:6px;font:12px "Microsoft YaHei",monospace}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status,#ui-status,#recipe-status,#cropitem-status,#misc-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd,#ui-status dd,#recipe-status dd,#cropitem-status dd,#misc-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status,#ui-status,#recipe-status,#cropitem-status,#misc-status,#battle-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd,#ui-status dd,#recipe-status dd,#cropitem-status dd,#misc-status dd,#battle-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
-  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage,#ui-stage,#recipe-stage,#cropitem-stage,#misc-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage,#ui-stage,#recipe-stage,#cropitem-stage,#misc-stage,#battle-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
@@ -251,7 +252,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · UI · 食谱 · 种子 · 杂项 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · UI · 食谱 · 种子 · 杂项 · 战斗 · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -281,6 +282,7 @@
     <button data-tab="recipes">食谱</button>
     <button data-tab="cropitems">种子</button>
     <button data-tab="misc">杂项</button>
+    <button data-tab="battle">战斗</button>
   </nav>
 
   <!-- ================= 农夫 ================= -->
@@ -1421,6 +1423,51 @@
       <h2>全部杂项 × 分类（点击切换）</h2>
       <div id="misc-gallery"></div>
     </section>
+  </section>
+
+  <!-- ================= 战斗 ================= -->
+  <section id="tab-battle" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>地点</h2>
+          <div id="battle-loc" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>怪物</h2>
+          <div id="battle-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>武器</h2>
+          <select id="battle-weapon" class="sel"></select>
+        </section>
+
+        <section>
+          <h2>控制</h2>
+          <div class="btn-row">
+            <button id="battle-play">暂停</button>
+            <button id="battle-reset">重置</button>
+          </div>
+          <label class="slider">
+            速度 <output id="battle-speed-out">1.0×</output>
+            <input id="battle-speed" type="range" min="0.5" max="2" step="0.1" value="1">
+          </label>
+          <div id="battle-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="battle-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="battle-stage" width="480" height="520"></canvas>
+        <div class="hint">农夫挥剑 vs 选定怪物 · 伤害数字 / 血条 / 连击 / 击杀</div>
+      </section>
+    </main>
   </section>
 </div>
 

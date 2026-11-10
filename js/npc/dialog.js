@@ -2,6 +2,7 @@
 'use strict';
 
 import { NPC_MAP as ANIM_NPC_MAP, drawNpcPortrait } from '../anim/npcs.js';
+import { SPECIAL_MAP as ANIM_SPECIAL_MAP, drawSpecialPortrait } from '../anim/special-npcs.js';
 
 /* --- 对话 --- */
 /* 按当前好感档位随机挑 2~3 句（不重复） */
@@ -99,13 +100,14 @@ function renderNpcDialog(){
   const tier = npcTierOf(aff);
   if(npcIcon){
   npcIcon.textContent = '';
-  const portrait = d.sprite ? ANIM_NPC_MAP[d.sprite] : null;
+  const portrait = d.sprite ? (d.special ? ANIM_SPECIAL_MAP[d.sprite] : ANIM_NPC_MAP[d.sprite]) : null;
   if(portrait){
     const cv = document.createElement('canvas');
     cv.width = 64; cv.height = 64;
     cv.style.width = '48px'; cv.style.height = '48px';
     cv.style.imageRendering = 'pixelated';
-    drawNpcPortrait(cv.getContext('2d'), portrait);
+    if(d.special) drawSpecialPortrait(cv.getContext('2d'), portrait);
+    else drawNpcPortrait(cv.getContext('2d'), portrait);
     npcIcon.appendChild(cv);
   }else{
     npcIcon.textContent = d.icon;

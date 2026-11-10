@@ -2,6 +2,7 @@
 'use strict';
 
 import { NPC_MAP as ANIM_NPC_MAP, drawNpcWalk, drawNpcPortrait } from '../anim/npcs.js';
+import { SPECIAL_MAP as ANIM_SPECIAL_MAP, drawSpecialWalk } from '../anim/special-npcs.js';
 
 /* --- 画 NPC（anim 立绘 + 名字 + 靠近时的 E 提示） --- */
 function drawNpc(g, d, px, py){
@@ -12,13 +13,14 @@ function drawNpc(g, d, px, py){
   if(rt && rt.moving) oy += Math.round(Math.sin(rt.animT * 15) * 1.5);
   const oldFont = g.font, oldAlign = g.textAlign, oldBase = g.textBaseline;
 
-  const sprite = d.sprite ? ANIM_NPC_MAP[d.sprite] : null;
+  const sprite = d.sprite ? (d.special ? ANIM_SPECIAL_MAP[d.sprite] : ANIM_NPC_MAP[d.sprite]) : null;
   if(sprite){
     const frame = (rt && rt.moving) ? Math.floor((rt.animT || 0) * 6) % 4 : 0;
     g.save();
     g.imageSmoothingEnabled = false;
     g.translate(Math.round(px - cam.x - 12), Math.round(py - cam.y - 18));
-    drawNpcWalk(g, sprite, rt ? (rt.dir | 0) : 0, frame);
+    if(d.special) drawSpecialWalk(g, sprite, rt ? (rt.dir | 0) : 0, frame);
+    else drawNpcWalk(g, sprite, rt ? (rt.dir | 0) : 0, frame);
     g.restore();
   }else{
     /* 影子 */

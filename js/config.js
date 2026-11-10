@@ -11,6 +11,7 @@ import { RECIPES as ANIM_RECIPES } from './anim/recipes.js';
 import { ACHIEVEMENTS as ANIM_ACHIEVEMENTS } from './anim/achievements.js';
 import { BUNDLES as ANIM_BUNDLES, BUNDLE_ROOMS, bundleRoomName } from './anim/bundles.js';
 import { NPCS as ANIM_NPCS } from './anim/npcs.js';
+import { SPECIAL_NPCS as ANIM_SPECIAL_NPCS } from './anim/special-npcs.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1824,6 +1825,53 @@ const CONFIG = {
     k++;
   }
   CONFIG.DEMO_VILLAGERS = k;
+})();
+
+/* 第 32 轮：12 位特殊 NPC（博物馆 / 公会 / Joja / 岛屿 / 神秘访客） */
+(function addSpecialNpcs(){
+  const SEASONS = ['春', '夏', '秋', '冬'];
+  const HOMES = ['home_aunt', 'home_carpenter', 'home_girl'];
+  let k = 0;
+  for (const n of ANIM_SPECIAL_NPCS) {
+    if (CONFIG.NPC.LIST.some(x => x.id === n.id)) continue;
+    const job = n.job || '访客';
+    CONFIG.NPC.LIST.push({
+      id: n.id,
+      name: n.name,
+      icon: '🧑',
+      color: n.shirt,
+      sprite: n.id,
+      special: true,
+      like: ['wildflower', 'berry', 'mushroom'],
+      dislike: ['stone', 'pick'],
+      bday: { season: SEASONS[k % 4], day: 2 + (k * 3) % 27 },
+      sched: [
+        { from:0, to:24, x: 36 + (k * 3) % 16, y:42 },
+        { from:0, to:24, x: 42 + (k * 2) % 12, y:42 }
+      ],
+      lines: {
+        stranger: ['我是' + n.name + '。', '我负责' + job + '。', '这里的人大多不认识我。'],
+        known: ['又见面了。', job + '的事，说简单也简单。', '有空再来。'],
+        friend: ['你来了。', '最近' + job + '还算顺利。', '有需要可以找我。'],
+        best: ['跟你说话很省心。', job + '的门道，我可以慢慢讲给你。', '别拘束。']
+      }
+    });
+
+    CONFIG.NPC_SCHED.LIST[n.id] = {
+      open: { from:10, to:16 },
+      house: HOMES[k % HOMES.length],
+      work: HOMES[k % HOMES.length],
+      sched: [
+        { from:6,  to:10, type:'home',   at:'table' },
+        { from:10, to:14, type:'wander', area:{ x:36, y:41, w:18, h:2 }, label:'镇上' },
+        { from:14, to:18, type:'wander', area:{ x:42, y:41, w:12, h:2 }, label:'广场' },
+        { from:18, to:22, type:'wander', area:{ x:36, y:41, w:18, h:2 }, label:'街上' },
+        { from:22, to:30, type:'away',   label:'离开了' }
+      ]
+    };
+    k++;
+  }
+  CONFIG.SPECIAL_VILLAGERS = k;
 })();
 
 

@@ -2111,6 +2111,41 @@ CONFIG.TOWN_PLAN();
   }
 })();
 
+/* 第 35 轮：跨地图工作地点。住宅仍在农场/小镇，但部分居民白天去山地、森林、海滩上班。 */
+(function assignCrossMapJobs(){
+  const JOBS = {
+    robin:     { map:'mountain', x:39, y:81, label:'山地 · 木匠店' },
+    demetrius: { map:'mountain', x:42, y:81, label:'山地 · 木匠店' },
+    maru:      { map:'mountain', x:45, y:81, label:'山地 · 木匠店' },
+    sebastian: { map:'mountain', x:48, y:81, label:'山地 · 木匠店' },
+    marlon:    { map:'mountain', x:82, y:95, label:'山地 · 冒险家公会' },
+    gil:       { map:'mountain', x:85, y:95, label:'山地 · 冒险家公会' },
+    linus:     { map:'mountain', x:58, y:45, label:'山地 · 帐篷附近', wander:true },
+    marnie:    { map:'forest',   x:109, y:43, label:'森林 · 玛妮牧场' },
+    shane:     { map:'forest',   x:112, y:43, label:'森林 · 玛妮牧场' },
+    leah:      { map:'forest',   x:103, y:54, label:'森林 · 莉亚小屋' },
+    wizard:    { map:'forest',   x:70,  y:49, label:'森林 · 法师塔' },
+    willy:     { map:'beach',    x:76,  y:18, label:'海滩 · 威利鱼店' },
+    elliott:   { map:'beach',    x:49,  y:18, label:'海滩 · 艾利欧特小屋' }
+  };
+  for(const id in JOBS){
+    const j = JOBS[id];
+    const S = CONFIG.NPC_SCHED.LIST[id];
+    if(!S) continue;
+    const d = CONFIG.NPC.LIST.find(x => x.id === id);
+    if(d) d.workMap = j.map;
+    for(const slot of S.sched){
+      if(j.wander ? (slot.type === 'wander') : (slot.type === 'work')){
+        slot.map = j.map;
+        slot.x = j.x;
+        slot.y = j.y;
+        slot.label = j.label;
+        delete slot.at;
+      }
+    }
+  }
+})();
+
 /* 第 33 轮：生日沿用 anim 数据（每季 1~28 日）。 */
 
 

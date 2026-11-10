@@ -12,19 +12,26 @@ function npcRuntimeClear(){
   for(const id in npcRuntime) delete npcRuntime[id];
 }
 /* 某个像素坐标属于哪栋房子（含墙 / 门格 —— 宽判定，和 playerRoomWide 同一套） */
-function npcRoomIdAt(x, y){
+function townListForMap(mapId){
+  const st = window.MAP_WORLD && MAP_WORLD[mapId];
+  if(st) return st.townList || [];
+  return mapId === 'valley' ? CONFIG.TOWN.LIST : [];
+}
+function npcRoomIdAt(x, y, mapId){
+  mapId = mapId || 'valley';
+  if(mapId !== 'valley') return null;
   const tx = Math.floor(x/TILE), ty = Math.floor(y/TILE);
   const C = CONFIG.TOWN;
-  for(const b of C.LIST){
+  for(const b of townListForMap(mapId)){
     const row = b.row || C.ROOM_ROW;
     if(tx >= b.x && tx < b.x + b.w && ty >= row && ty < row + C.ROOM_H) return b.id;
   }
   return null;
 }
-/* 门的三个落脚点：门外侧（街上）+ 门内侧（门格）+ 再往屋里一格
- * 多加「屋里那一格」是为了不让斜线贴着墙角拐过去（否则会蹭到后墙） */
-function npcDoorPoints(bid){
-  const b = CONFIG.TOWN.LIST.find(x => x.id === bid);
+/* 门的三个落脚点：门外侧（街上）+ 门内侧（门格）+ 再往屋里一格 */
+function npcDoorPoints(bid, mapId){
+  mapId = mapId || 'valley';
+  const b = townListForMap(mapId).find(x => x.id === bid);
   if(!b) return null;
   const C = CONFIG.TOWN;
   const row = b.row || C.ROOM_ROW;
@@ -43,21 +50,23 @@ function npcDoorPoints(bid){
 function npcLogicalTarget(d){
   const w = npcWhere(d);
   if(!w || w.x === null || w.x === undefined) return null;
-  return {x:(w.x + 0.5)*TILE, y:(w.y + 0.5)*TILE, tx:w.x, ty:w.y,
-          at:w.at, label:w.label, type:w.type, key:w.x + ',' + w.y};
+  const map = w.map || 'valley';
+  return {x:(w.x + 0.5)*TILE, y:(w.y + 0.5)*TILE, tx:w.x, ty:w.y, map:map,
+          at:w.at, label:w.label, type:w.type, key:map + ',' + w.x + ',' + w.y};
 }
-/* 寻路：起点 / 终点在不同房子里 → 必须走门（门 → 街 → 门）
- * 四排住宅之间还要沿南北主路走，不能斜穿房子。 */
-function buildNpcPath(sx, sy, tx, ty){
+/* 寻路：跨屋先走门；四排住宅沿主路走。新地图没有可进入的住宅，直接走。 */
+function buildNpcPath(sx, sy, tx, ty, mapId){
+  mapId = mapId || 'valley';
+  if(mapId !== 'valley') return [{x:tx, y:ty}];
   const C = CONFIG.TOWN;
-  const sBid = npcRoomIdAt(sx, sy), eBid = npcRoomIdAt(tx, ty);
+  const sBid = npcRoomIdAt(sx, sy, mapId), eBid = npcRoomIdAt(tx, ty, mapId);
   const path = [];
   if(sBid && sBid !== eBid){
-    const dp = npcDoorPoints(sBid);
+    const dp = npcDoorPoints(sBid, mapId);
     if(dp){ path.push(dp.inner); path.push(dp.inside); path.push(dp.outside); }
   }
-  const sRow = sBid ? ((CONFIG.TOWN.LIST.find(b => b.id === sBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(sy/TILE);
-  const eRow = eBid ? ((CONFIG.TOWN.LIST.find(b => b.id === eBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(ty/TILE);
+  const sRow = sBid ? ((townListForMap(mapId).find(b => b.id === sBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(sy/TILE);
+  const eRow = eBid ? ((townListForMap(mapId).find(b => b.id === eBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(ty/TILE);
   const streets = C.STREET_ROWS || [C.STREET_ROW];
   const isStreet = (y) => streets.indexOf(y) >= 0;
   let via1 = isStreet(sRow) ? sRow : null;
@@ -70,7 +79,7 @@ function buildNpcPath(sx, sy, tx, ty){
     path.push({x:cx, y:(via2 + 0.5)*TILE});
   }
   if(eBid && eBid !== sBid){
-    const dp = npcDoorPoints(eBid);
+    const dp = npcDoorPoints(eBid, mapId);
     if(dp){ path.push(dp.outside); path.push(dp.inside); path.push(dp.inner); }
   }
   path.push({x:tx, y:ty});
@@ -80,13 +89,13 @@ function buildNpcPath(sx, sy, tx, ty){
 function npcRuntimeOf(d){
   let rt = npcRuntime[d.id];
   if(!rt){
-    rt = {x:0, y:0, dir:0, moving:false, animT:0, path:[], key:null, away:true, ready:false};
+    rt = {x:0, y:0, dir:0, moving:false, animT:0, path:[], key:null, away:true, ready:false, map:'valley'};
     npcRuntime[d.id] = rt;
   }
   if(!rt.ready){
     rt.ready = true;
     const t = npcLogicalTarget(d);
-    if(t){ rt.x = t.x; rt.y = t.y; rt.key = t.key; rt.away = false; }
+    if(t){ rt.x = t.x; rt.y = t.y; rt.key = t.key; rt.map = t.map; rt.away = false; }
   }
   return rt;
 }
@@ -97,9 +106,10 @@ function updateNpcs(dt){
     const rt = npcRuntimeOf(d);
     const t = npcLogicalTarget(d);
     if(!t){ rt.moving = false; rt.away = true; rt.path.length = 0; continue; }
-    /* 从「不在镇上」回来 → 直接出现在落脚点（不用横穿全镇） */
-    if(rt.away){
+    /* 跨地图（去山地 / 森林 / 海滩上班）→ 直接落到目标点；单张地图内仍然走路 */
+    if(rt.away || rt.map !== t.map){
       rt.away = false;
+      rt.map = t.map;
       rt.x = t.x; rt.y = t.y; rt.key = t.key;
       rt.path.length = 0; rt.moving = false;
       continue;
@@ -107,7 +117,7 @@ function updateNpcs(dt){
     const far = Math.hypot(t.x - rt.x, t.y - rt.y);
     if(rt.key !== t.key || (!rt.path.length && far > 4)){
       rt.key = t.key;
-      rt.path = buildNpcPath(rt.x, rt.y, t.x, t.y);
+      rt.path = buildNpcPath(rt.x, rt.y, t.x, t.y, rt.map);
     }
     if(!rt.path.length){ rt.moving = false; continue; }
     const wp = rt.path[0];

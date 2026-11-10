@@ -130,7 +130,8 @@ function townResidentsHere(b){
   for(const d of townResidents(b)){
     const st = npcCurrentState(d);
     if(!st || st.x === null || st.x === undefined) continue;
-    if(npcRoomIdAt((st.x + 0.5)*TILE, (st.y + 0.5)*TILE) === b.id) out.push(d);
+    if((st.map || 'valley') !== 'valley') continue;
+    if(npcRoomIdAt((st.x + 0.5)*TILE, (st.y + 0.5)*TILE, 'valley') === b.id) out.push(d);
   }
   return out;
 }

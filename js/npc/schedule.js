@@ -129,9 +129,9 @@ function npcCurrentState(d, day, hour){
   const h = (hour === undefined || hour === null) ? skyHour() : hour;
   const dy = (day === undefined || day === null) ? clock.day : day;
   const slot = npcSlotOf(d, h);
-  if(!slot) return {id:d.id, type:'away', at:'away', label:'不在镇上', x:null, y:null,
+  if(!slot) return {id:d.id, type:'away', at:'away', map:'valley', label:'不在镇上', x:null, y:null,
                      from:0, to:24, slot:null, day:dy, hour:h};
-  const st = {id:d.id, type:slot.type, at:'home', label:'', x:null, y:null,
+  const st = {id:d.id, type:slot.type, at:'home', map:slot.map || S.map || 'valley', label:'', x:null, y:null,
               from:slot.from, to:slot.to, slot:slot, day:dy, hour:h};
   if(slot.type === 'away'){ st.at = 'away'; st.label = slot.label || '不在镇上'; return st; }
   /* 兼容直接写坐标的日程条目 {from,to,x,y,at?,label?}：
@@ -146,7 +146,7 @@ function npcCurrentState(d, day, hour){
     return st;
   }
   /* 上班时间也可能跑出去摸鱼（确定性哈希，同一天同一时段固定） */
-  if(slot.type === 'work' && npcWandersOnWork(d, dy, slot)){
+  if(slot.type === 'work' && st.map === 'valley' && npcWandersOnWork(d, dy, slot)){
     const w = npcWanderPos(d, dy, h, null);
     st.type = 'wander'; st.at = 'wander';
     st.x = w.x; st.y = w.y; st.label = w.label;
@@ -192,18 +192,19 @@ function townWanderSpot(d, slot){
 function npcWhere(d){
   const h = skyHour();
   const fs = festivalNpcSpot(d);         /* 第 17 轮：秋·丰收节村民都去广场赶集 */
-  if(fs) return {x:fs.x, y:fs.y, at:'festival', label:'广场', from:fs.from, to:fs.to, type:'festival'};
+  if(fs) return {x:fs.x, y:fs.y, map:'valley', at:'festival', label:'广场', from:fs.from, to:fs.to, type:'festival'};
   const vs = visitSpot(d);               /* 第 23 轮：今天来访的居民下午站到农场里 */
-  if(vs) return {x:vs.x, y:vs.y, at:'visit', label:'农场', from:vs.from, to:vs.to, type:'visit'};
+  if(vs) return {x:vs.x, y:vs.y, map:'valley', at:'visit', label:'农场', from:vs.from, to:vs.to, type:'visit'};
   const st = npcCurrentState(d, clock.day, h);
   if(!st || st.x === null || st.x === undefined) return null;
-  return {x:st.x, y:st.y, at:st.at, label:st.label, from:st.from, to:st.to, type:st.type};
+  return {x:st.x, y:st.y, map:st.map || 'valley', at:st.at, label:st.label, from:st.from, to:st.to, type:st.type};
 }
 /* 时刻表：当前这个点在哪儿（null = 今天不出现） */
 function npcSpot(d){
   const w = npcWhere(d);
   if(!w) return null;
-  return {x:w.x, y:w.y, from:(w.from === undefined ? 0 : w.from), to:(w.to === undefined ? 24 : w.to),
+  return {x:w.x, y:w.y, map:w.map || 'valley',
+          from:(w.from === undefined ? 0 : w.from), to:(w.to === undefined ? 24 : w.to),
           at:w.at, label:w.label, type:w.type};
 }
 /* 第 27 轮：NPC 的位置 = 运行时物理坐标（连续移动中的那一格）
@@ -213,14 +214,14 @@ function npcPos(d){
   const t = npcLogicalTarget(d);
   if(!t) return null;                          /* 真的不在镇上 → 不显示 */
   return {x:rt.x, y:rt.y, tx:Math.floor(rt.x/TILE), ty:Math.floor(rt.y/TILE),
-          at:t.at, label:t.label, type:t.type};
+          map:rt.map || t.map || 'valley', at:t.at, label:t.label, type:t.type};
 }
-/* 玩家与 NPC 的距离（格）：不在同一片区域就看不见（隔着墙不算） */
+/* 玩家与 NPC 的距离（格）：不在同一张地图 / 同一片区域就看不见 */
 function npcDist(d){
-  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return Infinity;
   const p = npcPos(d);
   if(!p) return Infinity;
-  if(npcRoomIdAt(p.x, p.y) !== playerRoomWide()) return Infinity;
+  if(typeof currentMap !== 'undefined' && p.map !== currentMap) return Infinity;
+  if(npcRoomIdAt(p.x, p.y, p.map) !== playerRoomWide()) return Infinity;
   return Math.hypot(p.x - player.x, p.y - player.y) / TILE;
 }
 /* 现在站在旁边的那个 NPC（没有就 null） */
@@ -234,10 +235,11 @@ function npcNear(){
 }
 /* 这个 NPC 现在看不见（不在玩家所在的那片区域：屋里 / 街上各算一片） */
 function npcHidden(d){
-  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return true;
   const p = npcPos(d);
   if(!p) return true;
-  return npcRoomIdAt(p.x, p.y) !== playerRoomWide();
+  if(typeof currentMap !== 'undefined' && p.map !== currentMap) return true;
+  if((p.map || 'valley') !== 'valley') return false;
+  return npcRoomIdAt(p.x, p.y, p.map) !== playerRoomWide();
 }
 
 

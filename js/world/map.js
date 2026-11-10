@@ -95,10 +95,11 @@ function rebuildMinimap(){
     miniCtx.fillStyle = M.SHOP;
     miniCtx.fillRect((SHOP_POS.x-ox)*K, (SHOP_POS.y-oy)*K, SHOP_POS.w*K, SHOP_POS.h*K);
   }
-  if(!local){
+  if(true){
     for(const d of CONFIG.NPC.LIST){
       const p = npcPos(d);
       if(!p) continue;
+      if(p.map !== currentMap) continue;
       if(p.tx < ox || p.tx >= ox + TW || p.ty < oy || p.ty >= oy + TH) continue;
       const st = npcWhere(d);
       const col = minimapNpcColor(st);
@@ -180,15 +181,13 @@ function renderBigmap(){
     }
   }
   /* 居民（按当前状态着色：营业黄 / 瞎逛橙 / 在家蓝；睡觉外出不画） */
-  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
-    for(const d of CONFIG.NPC.LIST){
-      const p = npcPos(d);
-      if(!p) continue;
-      const col = minimapNpcColor(npcWhere(d));
-      if(!col) continue;
-      g.fillStyle = col;
-      g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
-    }
+  for(const d of CONFIG.NPC.LIST){
+    const p = npcPos(d);
+    if(!p || p.map !== currentMap) continue;
+    const col = minimapNpcColor(npcWhere(d));
+    if(!col) continue;
+    g.fillStyle = col;
+    g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
   }
   /* 玩家（白点） */
   const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);

@@ -65,15 +65,15 @@
   .slider output{color:var(--text)}
   .slider input{display:block;width:100%;margin-top:5px;accent-color:var(--accent)}
 
-  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
-  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd{color:var(--text);font-variant-numeric:tabular-nums}
+  #status,#plant-status,#tree-status,#mineral-status,#fish-status,#building-status,#artisan-status,#dish-status,#npc-status,#animal-status,#monster-status,#equipment-status,#hat-status,#clothes-status,#interior-status,#resource-status,#pet-status,#product-status,#special-status,#ach-status,#bundle-status,#ui-status{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--muted)}
+  #status dd,#plant-status dd,#tree-status dd,#mineral-status dd,#fish-status dd,#building-status dd,#artisan-status dd,#dish-status dd,#npc-status dd,#animal-status dd,#monster-status dd,#equipment-status dd,#hat-status dd,#clothes-status dd,#interior-status dd,#resource-status dd,#pet-status dd,#product-status dd,#special-status dd,#ach-status dd,#bundle-status dd,#ui-status dd{color:var(--text);font-variant-numeric:tabular-nums}
 
   .stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
-  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
+  #stage,#plant-stage,#tree-stage,#mineral-stage,#fish-stage,#building-stage,#npc-stage,#animal-stage,#monster-stage,#equipment-stage,#hat-stage,#clothes-stage,#interior-stage,#resource-stage,#pet-stage,#product-stage,#special-stage,#ach-stage,#bundle-stage,#ui-stage{width:100%;max-width:520px;min-width:0;height:auto;display:block;border-radius:3px;image-rendering:pixelated;background:#141b16}
   .hint{color:var(--muted);font-size:11px;text-align:center}
 
   .gallery{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px}
-  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery,#pet-gallery,#product-gallery,#special-gallery,#ach-gallery,#bundle-gallery{overflow-x:auto;padding-bottom:4px}
+  #gallery,#plant-gallery,#tree-gallery,#mineral-gallery,#fish-gallery,#building-gallery,#artisan-gallery,#dish-gallery,#npc-gallery,#animal-gallery,#monster-gallery,#equipment-gallery,#hat-gallery,#clothes-gallery,#interior-gallery,#resource-gallery,#pet-gallery,#product-gallery,#special-gallery,#ach-gallery,#bundle-gallery,#ui-gallery{overflow-x:auto;padding-bottom:4px}
 
   /* 农夫画廊 */
   .grow{display:grid;grid-template-columns:44px repeat(12, minmax(46px,1fr));gap:6px;align-items:center;margin-bottom:8px;min-width:760px}
@@ -208,6 +208,12 @@
   .bcell canvas{width:64px;height:64px;display:block;image-rendering:pixelated}
   .bcell b{font-size:9px;color:#e9c96f;font-weight:400;white-space:nowrap}
   .bcell span{font-size:9px;color:var(--muted)}
+  .uigrid{display:grid;grid-template-columns:repeat(8,minmax(64px,1fr));gap:6px;min-width:620px}
+  .uicell{display:flex;flex-direction:column;align-items:center;gap:1px;background:#141a22;border:1px solid #2a3646;border-radius:3px;padding:3px 0;cursor:pointer}
+  .uicell:hover{border-color:#4a6a8a;background:#1a2430}
+  .uicell canvas{width:56px;height:56px;display:block;image-rendering:pixelated}
+  .uicell b{font-size:9px;color:#9ad0f0;font-weight:400;white-space:nowrap}
+  .uicell span{font-size:9px;color:var(--muted)}
 
   /* 动物画廊：行 = 动物，列 = 动作 */
   .agrid{display:grid;grid-template-columns:64px repeat(4, minmax(86px,1fr));gap:6px;align-items:center;min-width:460px}
@@ -227,7 +233,7 @@
 <div id="app">
   <header>
     <h1>像素动画测试</h1>
-    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · 程序化像素绘制</div>
+    <div class="sub">农夫 · 植物 · 树木 · 矿物 · 鱼类 · 建筑 · 工匠品 · 料理 · 村民 · 动物 · 怪物 · 装备 · 帽子 · 衣物 · 室内 · 资源 · 宠物 · 产品 · 特殊 NPC · 成就 · 收集包 · UI · 程序化像素绘制</div>
     <a href="index.html">返回游戏</a>
   </header>
 
@@ -253,6 +259,7 @@
     <button data-tab="specials">特殊 NPC</button>
     <button data-tab="achievements">成就</button>
     <button data-tab="bundles">收集包</button>
+    <button data-tab="ui">UI</button>
   </nav>
 
   <!-- ================= 农夫 ================= -->
@@ -1220,6 +1227,50 @@
     <section class="gallery">
       <h2>全部收集包 × 房间（点击切换）</h2>
       <div id="bundle-gallery"></div>
+    </section>
+  </section>
+
+  <!-- ================= UI 图标 ================= -->
+  <section id="tab-ui" class="tab-panel">
+    <main>
+      <aside class="panel">
+        <section>
+          <h2>分组</h2>
+          <div id="ui-filters" class="btn-row"></div>
+        </section>
+
+        <section>
+          <h2>UI 图标 <span id="ui-count"></span></h2>
+          <div id="ui-list" class="crop-grid"></div>
+        </section>
+
+        <section>
+          <h2>显示</h2>
+          <label class="slider">
+            缩放 <output id="ui-zoom-out">8×</output>
+            <input id="ui-zoom" type="range" min="5" max="10" step="1" value="8">
+          </label>
+          <div class="btn-row" style="margin-top:8px">
+            <button id="ui-png">导出 PNG</button>
+          </div>
+          <div id="ui-note" class="note"></div>
+        </section>
+
+        <section>
+          <h2>状态</h2>
+          <dl id="ui-status"></dl>
+        </section>
+      </aside>
+
+      <section class="stage-wrap">
+        <canvas id="ui-stage" width="480" height="520"></canvas>
+        <div class="hint">60 个 UI 图标 · 状态 / 天气 / 时间 / 技能 / 菜单 / 增益</div>
+      </section>
+    </main>
+
+    <section class="gallery">
+      <h2>全部 UI 图标 × 分组（点击切换）</h2>
+      <div id="ui-gallery"></div>
     </section>
   </section>
 </div>

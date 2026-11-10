@@ -1,6 +1,22 @@
 /* js/ui/shop-panel.js —— 由 index.html 拆分，原行 6091–6655 */
 'use strict';
 
+import { UI_MAP, drawUiIcon } from '../anim/ui-icons.js';
+
+/* 把 32×32 的 UI 图标缩到 HUD 尺寸 */
+function drawHudIcon(g, id, x, y, size) {
+  const def = UI_MAP[id];
+  if (!def) return false;
+  const s = size / 32;
+  g.save();
+  g.imageSmoothingEnabled = false;
+  g.translate(Math.round(x), Math.round(y));
+  g.scale(s, s);
+  drawUiIcon(g, def, (typeof animTime !== 'undefined' ? animTime : 0) * 0.4);
+  g.restore();
+  return true;
+}
+
 /* --- 商店面板（DOM 覆盖层；打开时游戏时间冻结） --- */
 const shopEl   = document.getElementById('shop');
 const shopMask = document.getElementById('shopMask');
@@ -259,7 +275,7 @@ function drawUI(g){
 
   /* 左上角：金币 + 背包提示（资源计数已全部移入背包） */
   g.textBaseline = 'top'; g.textAlign = 'left';
-  g.font = '15px ' + FONT_EMOJI;  const goldIconW = g.measureText('💰').width;
+  g.font = '15px ' + FONT_EMOJI;  const goldIconW = 16;
   /* 金币跳动：买卖后数字弹一下，并飘出 ±N（用 performance.now()，商店打开时照样动） */
   const gp = performance.now() - goldPulseAt;
   const pulse = (gp >= 0 && gp < CONFIG.SHOP.GOLD_PULSE_MS) ? gp / CONFIG.SHOP.GOLD_PULSE_MS : -1;
@@ -275,8 +291,8 @@ function drawUI(g){
   g.fillStyle = CONFIG.COLORS.hudBorder;
   g.fillRect(8, rowY, rowW, 1); g.fillRect(8, rowY+rowH-1, rowW, 1);
   g.fillRect(8, rowY, 1, rowH); g.fillRect(8+rowW-1, rowY, 1, rowH);
-  g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
-  g.fillText('💰', 16, rowY + 4);
+  g.fillStyle = CONFIG.COLORS.hudAccent;
+  drawHudIcon(g, 'gold', 16, rowY + 3, 16);
   const goldNumX = 16 + goldIconW + 4 + preW;
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(goldPre, 16 + goldIconW + 4, rowY + 5);
@@ -312,12 +328,12 @@ function drawUI(g){
   const dF1 = fcT ? ' · 明' : '';
   const dF2 = fcT ? fcT.icon : '';
   g.font = '13px ' + FONT_CJK;   const wA = g.measureText(dA).width;
-  g.font = '15px ' + FONT_EMOJI; const wI = g.measureText(weather.icon).width;
+  const wI = 16;
   g.font = '13px ' + FONT_CJK;   const wB = g.measureText(dB).width;
   g.font = '15px ' + FONT_EMOJI; const wE = bdNpc ? g.measureText('🎂').width : 0;
   g.font = '13px ' + FONT_CJK;   const wC = dC ? g.measureText(dC).width : 0;
   g.font = '13px ' + FONT_CJK;   const wF1 = fcT ? g.measureText(dF1).width : 0;
-  g.font = '15px ' + FONT_EMOJI; const wF2 = fcT ? g.measureText(dF2).width : 0;
+  const wF2 = fcT ? 16 : 0;
   const dW = Math.ceil(wA + wI + wB + wE + wC + wF1 + wF2) + 16 + 20, dH = 24, dY = rowY + rowH + 6;
   hudDateRect = {x:8, y:dY, w:dW, h:dH};   /* 第 17 轮：这个区域可以点开日历 */  g.fillStyle = CONFIG.COLORS.hudBg; g.fillRect(8, dY, dW, dH);
   g.fillStyle = CONFIG.COLORS.hudBorder;
@@ -327,7 +343,7 @@ function drawUI(g){
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dA, 16, dY + 5);
   g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
-  g.fillText(weather.icon, 16 + wA, dY + 4);
+  drawHudIcon(g, weather.id, 16 + wA, dY + 3, 15);
   g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
   g.fillText(dB, 16 + wA + wI, dY + 5);
   let fx0 = 16 + wA + wI + wB;
@@ -342,12 +358,11 @@ function drawUI(g){
   if(fcT){
     g.font = '13px ' + FONT_CJK; g.fillStyle = CONFIG.COLORS.hudText;
     g.fillText(dF1, fx0, dY + 5);
-    g.font = '15px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
-    g.fillText(dF2, fx0 + wF1, dY + 4);
+    drawHudIcon(g, fcT.id, fx0 + wF1, dY + 3, 15);
   }
   /* 第 17 轮：日历入口（点这块区域打开） */
   g.font = '14px ' + FONT_EMOJI; g.fillStyle = CONFIG.COLORS.hudAccent;
-  g.fillText('📅', 8 + dW - 22, dY + 4);
+  drawHudIcon(g, 'journal', 8 + dW - 22, dY + 3, 15);
   /* 第 20 轮：右上角农场评分（点开评级面板） */
   drawRatingHud(g);
   /* 第 19 轮：加工台提醒（有成品待取 / 正在加工） */
@@ -518,7 +533,8 @@ function drawUI(g){
   g.fillRect(sbX - 6, sbY - 19, 1, sbH + 25); g.fillRect(sbX + sbW + 55, sbY - 19, 1, sbH + 25);
   g.font = '13px ' + FONT_CJK; g.textAlign = 'left'; g.textBaseline = 'top';
   g.fillStyle = low ? 'rgba(255,120,100,' + blink.toFixed(2) + ')' : CONFIG.COLORS.hudText;
-  g.fillText('体力', sbX, sbY - 16);
+  drawHudIcon(g, 'energy', sbX, sbY - 18, 14);
+  g.fillText('体力', sbX + 16, sbY - 16);
   g.fillStyle = 'rgba(8,11,18,0.90)'; g.fillRect(sbX, sbY, sbW, sbH);
   const ratio = staminaMax > 0 ? clamp(stamina / staminaMax, 0, 1) : 0;
   g.fillStyle = low ? 'rgba(255,86,70,' + blink.toFixed(2) + ')' : '#7ee08a';

@@ -106,6 +106,7 @@ import './world/buildings.js';
 | 地面掉落物 / 自动拾取 | `js/systems/drops.js` |
 | 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
 | 物品图标（背包 / 快捷栏 / 箱子） | `js/ui/item-icons.js` |
+| HUD 金币 / 天气 / 体力图标 | `js/ui/shop-panel.js` + `js/anim/ui-icons.js` |
 | 商店买卖、价格浮动 | `js/systems/shop.js` + `js/ui/shop-panel.js` |
 | 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
 | 睡觉/跨天 | `js/systems/sleep.js` |

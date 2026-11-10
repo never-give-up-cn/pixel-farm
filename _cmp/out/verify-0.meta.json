@@ -12,2560 +12,2560 @@
    "id": "blue_jazz",
    "name": "蓝调爵士",
    "en": "Blue Jazz",
+   "ci": 0,
+   "role": "stage6",
    "file": "Blue_Jazz_Stage_6.png",
-   "path": "/mediawiki/images/en/5/54/Blue_Jazz_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/54/Blue_Jazz_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "carrot",
    "name": "胡萝卜",
    "en": "Carrot",
+   "ci": 0,
+   "role": "stage5",
    "file": "Carrot_Stage_5.png",
-   "path": "/mediawiki/images/en/b/b4/Carrot_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b4/Carrot_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "carrot",
    "name": "胡萝卜",
    "en": "Carrot",
+   "ci": 0,
+   "role": "stage6",
    "file": "Carrot_Stage_6.png",
-   "path": "/mediawiki/images/en/6/6c/Carrot_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6c/Carrot_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_1.png",
-   "path": "/mediawiki/images/en/3/33/Coffee_Bean_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_1.png",
+   "path": "/mediawiki/images/en/3/33/Coffee_Bean_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_2.png",
-   "path": "/mediawiki/images/en/5/5e/Coffee_Bean_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_2.png",
+   "path": "/mediawiki/images/en/5/5e/Coffee_Bean_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_3.png",
-   "path": "/mediawiki/images/en/7/78/Coffee_Bean_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_3.png",
+   "path": "/mediawiki/images/en/7/78/Coffee_Bean_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_4.png",
-   "path": "/mediawiki/images/en/2/28/Coffee_Bean_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_4.png",
+   "path": "/mediawiki/images/en/2/28/Coffee_Bean_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_5.png",
-   "path": "/mediawiki/images/en/6/6d/Coffee_Bean_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_5.png",
+   "path": "/mediawiki/images/en/6/6d/Coffee_Bean_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "coffee_bean",
    "name": "咖啡豆",
    "en": "Coffee Bean",
-   "file": "Coffee_Bean_Stage_6.png",
-   "path": "/mediawiki/images/en/8/84/Coffee_Bean_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Coffee_Bean_Stage_6.png",
+   "path": "/mediawiki/images/en/8/84/Coffee_Bean_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "garlic",
    "name": "大蒜",
    "en": "Garlic",
-   "file": "Garlic_Stage_6.png",
-   "path": "/mediawiki/images/en/2/25/Garlic_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Garlic_Stage_6.png",
+   "path": "/mediawiki/images/en/2/25/Garlic_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "green_bean",
    "name": "青豆",
    "en": "Green Bean",
-   "file": "Green_Bean_Stage_1.png",
-   "path": "/mediawiki/images/en/e/ed/Green_Bean_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Green_Bean_Stage_1.png",
+   "path": "/mediawiki/images/en/e/ed/Green_Bean_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "kale",
    "name": "羽衣甘蓝",
    "en": "Kale",
-   "file": "Kale_Stage_6.png",
-   "path": "/mediawiki/images/en/1/1b/Kale_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Kale_Stage_6.png",
+   "path": "/mediawiki/images/en/1/1b/Kale_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "parsnip",
    "name": "防风草",
    "en": "Parsnip",
-   "file": "Parsnip_Stage_6.png",
-   "path": "/mediawiki/images/en/2/28/Parsnip_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Parsnip_Stage_6.png",
+   "path": "/mediawiki/images/en/2/28/Parsnip_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "tulip",
    "name": "郁金香",
    "en": "Tulip",
-   "file": "Tulip_Stage_5.png",
-   "path": "/mediawiki/images/en/a/a6/Tulip_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Tulip_Stage_5.png",
+   "path": "/mediawiki/images/en/a/a6/Tulip_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "unmilled_rice",
    "name": "未碾米",
    "en": "Unmilled Rice",
+   "ci": 0,
+   "role": "stage6",
    "file": "Unmilled_Rice_Stage_6.png",
-   "path": "/mediawiki/images/en/a/ac/Unmilled_Rice_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ac/Unmilled_Rice_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_1.png",
-   "path": "/mediawiki/images/en/a/a9/Wild_Horseradish_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_1.png",
+   "path": "/mediawiki/images/en/a/a9/Wild_Horseradish_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_2.png",
-   "path": "/mediawiki/images/en/a/a1/Wild_Horseradish_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_2.png",
+   "path": "/mediawiki/images/en/a/a1/Wild_Horseradish_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_3.png",
-   "path": "/mediawiki/images/en/2/2d/Wild_Horseradish_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_3.png",
+   "path": "/mediawiki/images/en/2/2d/Wild_Horseradish_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_4.png",
-   "path": "/mediawiki/images/en/2/25/Wild_Horseradish_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_4.png",
+   "path": "/mediawiki/images/en/2/25/Wild_Horseradish_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_5.png",
-   "path": "/mediawiki/images/en/c/ca/Wild_Horseradish_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_5.png",
+   "path": "/mediawiki/images/en/c/ca/Wild_Horseradish_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "wild_horseradish",
    "name": "野山葵",
    "en": "Wild Horseradish",
-   "file": "Wild_Horseradish_Stage_6.png",
-   "path": "/mediawiki/images/en/0/05/Wild_Horseradish_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Wild_Horseradish_Stage_6.png",
+   "path": "/mediawiki/images/en/0/05/Wild_Horseradish_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "hops",
    "name": "啤酒花",
    "en": "Hops",
-   "file": "Hops_Stage_2.png",
-   "path": "/mediawiki/images/en/b/b1/Hops_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Hops_Stage_2.png",
+   "path": "/mediawiki/images/en/b/b1/Hops_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "poppy",
    "name": "虞美人",
    "en": "Poppy",
-   "file": "Poppy_Stage_5.png",
-   "path": "/mediawiki/images/en/a/ad/Poppy_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Poppy_Stage_5.png",
+   "path": "/mediawiki/images/en/a/ad/Poppy_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "radish",
    "name": "萝卜",
    "en": "Radish",
+   "ci": 0,
+   "role": "stage6",
    "file": "Radish_Stage_6.png",
-   "path": "/mediawiki/images/en/6/62/Radish_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/62/Radish_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_1.png",
-   "path": "/mediawiki/images/en/9/90/Spice_Berry_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Spice_Berry_Stage_1.png",
+   "path": "/mediawiki/images/en/9/90/Spice_Berry_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_2.png",
-   "path": "/mediawiki/images/en/6/64/Spice_Berry_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Spice_Berry_Stage_2.png",
+   "path": "/mediawiki/images/en/6/64/Spice_Berry_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_3.png",
-   "path": "/mediawiki/images/en/2/22/Spice_Berry_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Spice_Berry_Stage_3.png",
+   "path": "/mediawiki/images/en/2/22/Spice_Berry_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_4.png",
-   "path": "/mediawiki/images/en/3/3e/Spice_Berry_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Spice_Berry_Stage_4.png",
+   "path": "/mediawiki/images/en/3/3e/Spice_Berry_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_5.png",
-   "path": "/mediawiki/images/en/f/fc/Spice_Berry_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Spice_Berry_Stage_5.png",
+   "path": "/mediawiki/images/en/f/fc/Spice_Berry_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "spice_berry",
    "name": "香料浆果",
    "en": "Spice Berry",
-   "file": "Spice_Berry_Stage_6.png",
-   "path": "/mediawiki/images/en/1/18/Spice_Berry_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Spice_Berry_Stage_6.png",
+   "path": "/mediawiki/images/en/1/18/Spice_Berry_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "summer_spangle",
    "name": "夏日亮片",
    "en": "Summer Spangle",
+   "ci": 0,
+   "role": "stage6",
    "file": "Summer_Spangle_Stage_6.png",
-   "path": "/mediawiki/images/en/b/b3/Summer_Spangle_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b3/Summer_Spangle_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_1.png",
-   "path": "/mediawiki/images/en/6/65/Taro_Root_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Taro_Root_Stage_1.png",
+   "path": "/mediawiki/images/en/6/65/Taro_Root_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_2.png",
-   "path": "/mediawiki/images/en/9/9a/Taro_Root_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Taro_Root_Stage_2.png",
+   "path": "/mediawiki/images/en/9/9a/Taro_Root_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_3.png",
-   "path": "/mediawiki/images/en/f/f1/Taro_Root_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Taro_Root_Stage_3.png",
+   "path": "/mediawiki/images/en/f/f1/Taro_Root_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_4.png",
-   "path": "/mediawiki/images/en/c/c5/Taro_Root_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Taro_Root_Stage_4.png",
+   "path": "/mediawiki/images/en/c/c5/Taro_Root_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_5.png",
-   "path": "/mediawiki/images/en/3/36/Taro_Root_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Taro_Root_Stage_5.png",
+   "path": "/mediawiki/images/en/3/36/Taro_Root_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "taro_root",
    "name": "芋头",
    "en": "Taro Root",
-   "file": "Taro_Root_Stage_6.png",
-   "path": "/mediawiki/images/en/7/79/Taro_Root_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Taro_Root_Stage_6.png",
+   "path": "/mediawiki/images/en/7/79/Taro_Root_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "sunflower",
    "name": "向日葵",
    "en": "Sunflower",
-   "file": "Sunflower_Stage_6.png",
-   "path": "/mediawiki/images/en/3/35/Sunflower_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Sunflower_Stage_6.png",
+   "path": "/mediawiki/images/en/3/35/Sunflower_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "wheat",
    "name": "小麦",
    "en": "Wheat",
-   "file": "Wheat_Stage_6.png",
-   "path": "/mediawiki/images/en/f/f3/Wheat_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Wheat_Stage_6.png",
+   "path": "/mediawiki/images/en/f/f3/Wheat_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "amaranth",
    "name": "苋菜",
    "en": "Amaranth",
-   "file": "Amaranth_Stage_6.png",
-   "path": "/mediawiki/images/en/6/6c/Amaranth_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Amaranth_Stage_6.png",
+   "path": "/mediawiki/images/en/6/6c/Amaranth_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "beet",
    "name": "甜菜",
    "en": "Beet",
-   "file": "Beet_Stage_6.png",
-   "path": "/mediawiki/images/en/0/09/Beet_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Beet_Stage_6.png",
+   "path": "/mediawiki/images/en/0/09/Beet_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "bok_choy",
    "name": "小白菜",
    "en": "Bok Choy",
-   "file": "Bok_Choy_Stage_6.png",
-   "path": "/mediawiki/images/en/1/16/Bok_Choy_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Bok_Choy_Stage_6.png",
+   "path": "/mediawiki/images/en/1/16/Bok_Choy_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "broccoli",
    "name": "西兰花",
    "en": "Broccoli",
+   "ci": 0,
+   "role": "stage6",
    "file": "Broccoli_Stage_6.png",
-   "path": "/mediawiki/images/en/a/a7/Broccoli_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a7/Broccoli_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage1",
    "file": "Common_Mushroom_Stage_1.png",
-   "path": "/mediawiki/images/en/0/08/Common_Mushroom_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/08/Common_Mushroom_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage2",
    "file": "Common_Mushroom_Stage_2.png",
-   "path": "/mediawiki/images/en/d/d7/Common_Mushroom_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d7/Common_Mushroom_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage3",
    "file": "Common_Mushroom_Stage_3.png",
-   "path": "/mediawiki/images/en/d/db/Common_Mushroom_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/db/Common_Mushroom_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage4",
    "file": "Common_Mushroom_Stage_4.png",
-   "path": "/mediawiki/images/en/b/b5/Common_Mushroom_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b5/Common_Mushroom_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage5",
    "file": "Common_Mushroom_Stage_5.png",
-   "path": "/mediawiki/images/en/a/a7/Common_Mushroom_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a7/Common_Mushroom_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "common_mushroom",
    "name": "普通蘑菇",
    "en": "Common Mushroom",
+   "ci": 0,
+   "role": "stage6",
    "file": "Common_Mushroom_Stage_6.png",
-   "path": "/mediawiki/images/en/a/ab/Common_Mushroom_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ab/Common_Mushroom_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_1.png",
-   "path": "/mediawiki/images/en/a/a1/Cranberries_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Cranberries_Stage_1.png",
+   "path": "/mediawiki/images/en/a/a1/Cranberries_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_2.png",
-   "path": "/mediawiki/images/en/f/f1/Cranberries_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Cranberries_Stage_2.png",
+   "path": "/mediawiki/images/en/f/f1/Cranberries_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_3.png",
-   "path": "/mediawiki/images/en/b/b5/Cranberries_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Cranberries_Stage_3.png",
+   "path": "/mediawiki/images/en/b/b5/Cranberries_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_4.png",
-   "path": "/mediawiki/images/en/e/e2/Cranberries_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Cranberries_Stage_4.png",
+   "path": "/mediawiki/images/en/e/e2/Cranberries_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_5.png",
-   "path": "/mediawiki/images/en/f/f9/Cranberries_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Cranberries_Stage_5.png",
+   "path": "/mediawiki/images/en/f/f9/Cranberries_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "cranberries",
    "name": "蔓越莓",
    "en": "Cranberries",
-   "file": "Cranberries_Stage_6.png",
-   "path": "/mediawiki/images/en/1/1d/Cranberries_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Cranberries_Stage_6.png",
+   "path": "/mediawiki/images/en/1/1d/Cranberries_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "fairy_rose",
    "name": "仙女玫瑰",
    "en": "Fairy Rose",
-   "file": "Fairy_Rose_Stage_6.png",
-   "path": "/mediawiki/images/en/e/ea/Fairy_Rose_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Fairy_Rose_Stage_6.png",
+   "path": "/mediawiki/images/en/e/ea/Fairy_Rose_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "yam",
    "name": "山药",
    "en": "Yam",
+   "ci": 0,
+   "role": "stage6",
    "file": "Yam_Stage_6.png",
-   "path": "/mediawiki/images/en/f/fd/Yam_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fd/Yam_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage1",
    "file": "Winter_Root_Stage_1.png",
-   "path": "/mediawiki/images/en/c/cd/Winter_Root_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/cd/Winter_Root_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage2",
    "file": "Winter_Root_Stage_2.png",
-   "path": "/mediawiki/images/en/c/c6/Winter_Root_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c6/Winter_Root_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage3",
    "file": "Winter_Root_Stage_3.png",
-   "path": "/mediawiki/images/en/b/b6/Winter_Root_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b6/Winter_Root_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage4",
    "file": "Winter_Root_Stage_4.png",
-   "path": "/mediawiki/images/en/4/49/Winter_Root_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/49/Winter_Root_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage5",
    "file": "Winter_Root_Stage_5.png",
-   "path": "/mediawiki/images/en/d/d0/Winter_Root_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d0/Winter_Root_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "winter_root",
    "name": "冬根",
    "en": "Winter Root",
+   "ci": 0,
+   "role": "stage6",
    "file": "Winter_Root_Stage_6.png",
-   "path": "/mediawiki/images/en/8/8f/Winter_Root_Stage_6.png",
-   "role": "stage6",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8f/Winter_Root_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_1.png",
-   "path": "/mediawiki/images/en/6/6a/Cactus_Fruit_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_1.png",
+   "path": "/mediawiki/images/en/6/6a/Cactus_Fruit_Stage_1.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_2.png",
-   "path": "/mediawiki/images/en/1/1d/Cactus_Fruit_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_2.png",
+   "path": "/mediawiki/images/en/1/1d/Cactus_Fruit_Stage_2.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_3.png",
-   "path": "/mediawiki/images/en/5/5a/Cactus_Fruit_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_3.png",
+   "path": "/mediawiki/images/en/5/5a/Cactus_Fruit_Stage_3.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_4.png",
-   "path": "/mediawiki/images/en/f/f9/Cactus_Fruit_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_4.png",
+   "path": "/mediawiki/images/en/f/f9/Cactus_Fruit_Stage_4.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_5.png",
-   "path": "/mediawiki/images/en/4/43/Cactus_Fruit_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_5.png",
+   "path": "/mediawiki/images/en/4/43/Cactus_Fruit_Stage_5.png"
   },
   {
    "cat": "crops",
    "id": "cactus_fruit",
    "name": "仙人掌果",
    "en": "Cactus Fruit",
-   "file": "Cactus_Fruit_Stage_6.png",
-   "path": "/mediawiki/images/en/b/b9/Cactus_Fruit_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Cactus_Fruit_Stage_6.png",
+   "path": "/mediawiki/images/en/b/b9/Cactus_Fruit_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "fiber",
    "name": "纤维",
    "en": "Fiber",
-   "file": "Fiber_Stage_6.png",
-   "path": "/mediawiki/images/en/f/f4/Fiber_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Fiber_Stage_6.png",
+   "path": "/mediawiki/images/en/f/f4/Fiber_Stage_6.png"
   },
   {
    "cat": "crops",
    "id": "qi_fruit",
    "name": "齐瓜",
    "en": "Qi Fruit",
-   "file": "Qi_Fruit_Stage_6.png",
-   "path": "/mediawiki/images/en/5/55/Qi_Fruit_Stage_6.png",
+   "ci": 0,
    "role": "stage6",
-   "ci": 0
+   "file": "Qi_Fruit_Stage_6.png",
+   "path": "/mediawiki/images/en/5/55/Qi_Fruit_Stage_6.png"
   },
   {
    "cat": "trees",
    "id": "oak",
    "name": "橡树",
    "en": "Oak Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Oak_Tree.png",
-   "path": "/mediawiki/images/en/a/a8/Oak_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a8/Oak_Tree.png"
   },
   {
    "cat": "trees",
    "id": "oak",
    "name": "橡树",
    "en": "Oak Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Oak.png",
-   "path": "/mediawiki/images/en/b/bf/Oak.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/bf/Oak.png"
   },
   {
    "cat": "trees",
    "id": "maple",
    "name": "枫树",
    "en": "Maple Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Maple_Tree.png",
-   "path": "/mediawiki/images/en/1/10/Maple_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/10/Maple_Tree.png"
   },
   {
    "cat": "trees",
    "id": "maple",
    "name": "枫树",
    "en": "Maple Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Maple.png",
-   "path": "/mediawiki/images/en/6/61/Maple.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/61/Maple.png"
   },
   {
    "cat": "trees",
    "id": "pine",
    "name": "松树",
    "en": "Pine Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Pine_Tree.png",
-   "path": "/mediawiki/images/en/d/d4/Pine_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d4/Pine_Tree.png"
   },
   {
    "cat": "trees",
    "id": "pine",
    "name": "松树",
    "en": "Pine Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Pine.png",
-   "path": "/mediawiki/images/en/3/3c/Pine.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/3c/Pine.png"
   },
   {
    "cat": "trees",
    "id": "mahogany",
    "name": "桃花心木",
    "en": "Mahogany Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Mahogany_Tree.png",
-   "path": "/mediawiki/images/en/9/94/Mahogany_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/94/Mahogany_Tree.png"
   },
   {
    "cat": "trees",
    "id": "mahogany",
    "name": "桃花心木",
    "en": "Mahogany Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Mahogany_tree_portrait.png",
-   "path": "/mediawiki/images/en/a/ad/Mahogany_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ad/Mahogany_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "mahogany",
    "name": "桃花心木",
    "en": "Mahogany Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Mahogany.png",
-   "path": "/mediawiki/images/en/4/4d/Mahogany.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/4d/Mahogany.png"
   },
   {
    "cat": "trees",
    "id": "palm",
    "name": "棕榈树",
    "en": "Palm Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Palm_Tree.png",
-   "path": "/mediawiki/images/en/9/99/Palm_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/99/Palm_Tree.png"
   },
   {
    "cat": "trees",
    "id": "palm",
    "name": "棕榈树",
    "en": "Palm Tree",
+   "ci": 0,
+   "role": "stage4",
    "file": "Palm_Stage_4.png",
-   "path": "/mediawiki/images/en/f/f8/Palm_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f8/Palm_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "palm",
    "name": "棕榈树",
    "en": "Palm Tree",
+   "ci": 0,
+   "role": "stage5",
    "file": "Palm_Stage_5.png",
-   "path": "/mediawiki/images/en/f/f0/Palm_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f0/Palm_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "palm",
    "name": "棕榈树",
    "en": "Palm Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Palm.png",
-   "path": "/mediawiki/images/en/7/78/Palm.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/78/Palm.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Mushroom_Tree.png",
-   "path": "/mediawiki/images/en/f/fc/Mushroom_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fc/Mushroom_Tree.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "stage1",
    "file": "Mushroom_Stage_1.png",
-   "path": "/mediawiki/images/en/e/e0/Mushroom_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e0/Mushroom_Stage_1.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "stage2",
    "file": "Mushroom_Stage_2.png",
-   "path": "/mediawiki/images/en/5/56/Mushroom_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/56/Mushroom_Stage_2.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "stage3",
    "file": "Mushroom_Stage_3.png",
-   "path": "/mediawiki/images/en/0/05/Mushroom_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/05/Mushroom_Stage_3.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "stage4",
    "file": "Mushroom_Stage_4.png",
-   "path": "/mediawiki/images/en/3/3e/Mushroom_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/3e/Mushroom_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "stage5",
    "file": "Mushroom_Stage_5.png",
-   "path": "/mediawiki/images/en/b/b6/Mushroom_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b6/Mushroom_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "mushroom",
    "name": "蘑菇树",
    "en": "Mushroom Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Mushroom.png",
-   "path": "/mediawiki/images/en/8/8c/Mushroom.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8c/Mushroom.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Mystic_Tree.png",
-   "path": "/mediawiki/images/en/3/33/Mystic_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/33/Mystic_Tree.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Mystic_tree_portrait.png",
-   "path": "/mediawiki/images/en/0/0e/Mystic_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0e/Mystic_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "stage1",
    "file": "Mystic_Stage_1.png",
-   "path": "/mediawiki/images/en/e/e5/Mystic_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e5/Mystic_Stage_1.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "stage2",
    "file": "Mystic_Stage_2.png",
-   "path": "/mediawiki/images/en/a/a2/Mystic_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a2/Mystic_Stage_2.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "stage3",
    "file": "Mystic_Stage_3.png",
-   "path": "/mediawiki/images/en/0/01/Mystic_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/01/Mystic_Stage_3.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "stage4",
    "file": "Mystic_Stage_4.png",
-   "path": "/mediawiki/images/en/5/58/Mystic_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/58/Mystic_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "stage5",
    "file": "Mystic_Stage_5.png",
-   "path": "/mediawiki/images/en/a/a9/Mystic_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a9/Mystic_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "mystic",
    "name": "神秘树",
    "en": "Mystic Tree",
+   "ci": 0,
+   "role": "fruit",
    "file": "Mystic.png",
-   "path": "/mediawiki/images/en/5/5e/Mystic.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5e/Mystic.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
-   "file": "Mossy_Oak.png",
-   "path": "/mediawiki/images/en/c/c4/Mossy_Oak.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Mossy_Oak.png",
+   "path": "/mediawiki/images/en/c/c4/Mossy_Oak.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "portrait",
    "file": "Mossy_Oak_tree_portrait.png",
-   "path": "/mediawiki/images/en/8/8a/Mossy_Oak_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8a/Mossy_Oak_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "stage1",
    "file": "Mossy_Oak_Stage_1.png",
-   "path": "/mediawiki/images/en/3/37/Mossy_Oak_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/37/Mossy_Oak_Stage_1.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "stage2",
    "file": "Mossy_Oak_Stage_2.png",
-   "path": "/mediawiki/images/en/0/0a/Mossy_Oak_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0a/Mossy_Oak_Stage_2.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "stage3",
    "file": "Mossy_Oak_Stage_3.png",
-   "path": "/mediawiki/images/en/2/28/Mossy_Oak_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/28/Mossy_Oak_Stage_3.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "stage4",
    "file": "Mossy_Oak_Stage_4.png",
-   "path": "/mediawiki/images/en/5/54/Mossy_Oak_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/54/Mossy_Oak_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "stage5",
    "file": "Mossy_Oak_Stage_5.png",
-   "path": "/mediawiki/images/en/a/a8/Mossy_Oak_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a8/Mossy_Oak_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "mossy_oak",
    "name": "苔藓橡树",
    "en": "Mossy Oak",
+   "ci": 0,
+   "role": "fruit",
    "file": "Mossy_Oak.png",
-   "path": "/mediawiki/images/en/c/c4/Mossy_Oak.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c4/Mossy_Oak.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
-   "file": "Mossy_Pine.png",
-   "path": "/mediawiki/images/en/4/48/Mossy_Pine.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Mossy_Pine.png",
+   "path": "/mediawiki/images/en/4/48/Mossy_Pine.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "portrait",
    "file": "Mossy_Pine_tree_portrait.png",
-   "path": "/mediawiki/images/en/b/b7/Mossy_Pine_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b7/Mossy_Pine_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "stage1",
    "file": "Mossy_Pine_Stage_1.png",
-   "path": "/mediawiki/images/en/3/33/Mossy_Pine_Stage_1.png",
-   "role": "stage1",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/33/Mossy_Pine_Stage_1.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "stage2",
    "file": "Mossy_Pine_Stage_2.png",
-   "path": "/mediawiki/images/en/a/a8/Mossy_Pine_Stage_2.png",
-   "role": "stage2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a8/Mossy_Pine_Stage_2.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "stage3",
    "file": "Mossy_Pine_Stage_3.png",
-   "path": "/mediawiki/images/en/8/87/Mossy_Pine_Stage_3.png",
-   "role": "stage3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/87/Mossy_Pine_Stage_3.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "stage4",
    "file": "Mossy_Pine_Stage_4.png",
-   "path": "/mediawiki/images/en/1/16/Mossy_Pine_Stage_4.png",
-   "role": "stage4",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/16/Mossy_Pine_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "stage5",
    "file": "Mossy_Pine_Stage_5.png",
-   "path": "/mediawiki/images/en/d/d9/Mossy_Pine_Stage_5.png",
-   "role": "stage5",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d9/Mossy_Pine_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "mossy_pine",
    "name": "苔藓松树",
    "en": "Mossy Pine",
+   "ci": 0,
+   "role": "fruit",
    "file": "Mossy_Pine.png",
-   "path": "/mediawiki/images/en/4/48/Mossy_Pine.png",
-   "role": "fruit",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/48/Mossy_Pine.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Green_Rain_Tree.png",
-   "path": "/mediawiki/images/en/6/63/Green_Rain_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/63/Green_Rain_Tree.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Green_Rain_tree_portrait.png",
-   "path": "/mediawiki/images/en/f/fd/Green_Rain_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fd/Green_Rain_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain_Stage_1.png",
-   "path": "/mediawiki/images/en/4/48/Green_Rain_Stage_1.png",
+   "ci": 0,
    "role": "stage1",
-   "ci": 0
+   "file": "Green_Rain_Stage_1.png",
+   "path": "/mediawiki/images/en/4/48/Green_Rain_Stage_1.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain_Stage_2.png",
-   "path": "/mediawiki/images/en/8/8b/Green_Rain_Stage_2.png",
+   "ci": 0,
    "role": "stage2",
-   "ci": 0
+   "file": "Green_Rain_Stage_2.png",
+   "path": "/mediawiki/images/en/8/8b/Green_Rain_Stage_2.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain_Stage_3.png",
-   "path": "/mediawiki/images/en/2/2b/Green_Rain_Stage_3.png",
+   "ci": 0,
    "role": "stage3",
-   "ci": 0
+   "file": "Green_Rain_Stage_3.png",
+   "path": "/mediawiki/images/en/2/2b/Green_Rain_Stage_3.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain_Stage_4.png",
-   "path": "/mediawiki/images/en/d/db/Green_Rain_Stage_4.png",
+   "ci": 0,
    "role": "stage4",
-   "ci": 0
+   "file": "Green_Rain_Stage_4.png",
+   "path": "/mediawiki/images/en/d/db/Green_Rain_Stage_4.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain_Stage_5.png",
-   "path": "/mediawiki/images/en/3/31/Green_Rain_Stage_5.png",
+   "ci": 0,
    "role": "stage5",
-   "ci": 0
+   "file": "Green_Rain_Stage_5.png",
+   "path": "/mediawiki/images/en/3/31/Green_Rain_Stage_5.png"
   },
   {
    "cat": "trees",
    "id": "greenrain",
    "name": "绿雨树",
    "en": "Green Rain Tree",
-   "file": "Green_Rain.png",
-   "path": "/mediawiki/images/en/e/e2/Green_Rain.png",
+   "ci": 0,
    "role": "fruit",
-   "ci": 0
+   "file": "Green_Rain.png",
+   "path": "/mediawiki/images/en/e/e2/Green_Rain.png"
   },
   {
    "cat": "trees",
    "id": "apple",
    "name": "苹果树",
    "en": "Apple Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Apple_Tree.png",
-   "path": "/mediawiki/images/en/b/bb/Apple_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/bb/Apple_Tree.png"
   },
   {
    "cat": "trees",
    "id": "apple",
    "name": "苹果树",
    "en": "Apple Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Apple_tree_portrait.png",
-   "path": "/mediawiki/images/en/0/0f/Apple_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0f/Apple_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "apricot",
    "name": "杏树",
    "en": "Apricot Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Apricot_Tree.png",
-   "path": "/mediawiki/images/en/2/2c/Apricot_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/2c/Apricot_Tree.png"
   },
   {
    "cat": "trees",
    "id": "apricot",
    "name": "杏树",
    "en": "Apricot Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Apricot_tree_portrait.png",
-   "path": "/mediawiki/images/en/e/e2/Apricot_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e2/Apricot_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "cherry",
    "name": "樱桃树",
    "en": "Cherry Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Cherry_Tree.png",
-   "path": "/mediawiki/images/en/d/d3/Cherry_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d3/Cherry_Tree.png"
   },
   {
    "cat": "trees",
    "id": "cherry",
    "name": "樱桃树",
    "en": "Cherry Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Cherry_tree_portrait.png",
-   "path": "/mediawiki/images/en/a/a7/Cherry_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a7/Cherry_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "orange",
    "name": "橙树",
    "en": "Orange Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Orange_Tree.png",
-   "path": "/mediawiki/images/en/9/9f/Orange_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/9f/Orange_Tree.png"
   },
   {
    "cat": "trees",
    "id": "orange",
    "name": "橙树",
    "en": "Orange Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Orange_tree_portrait.png",
-   "path": "/mediawiki/images/en/5/5d/Orange_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5d/Orange_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "peach",
    "name": "桃树",
    "en": "Peach Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Peach_Tree.png",
-   "path": "/mediawiki/images/en/d/dd/Peach_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/dd/Peach_Tree.png"
   },
   {
    "cat": "trees",
    "id": "peach",
    "name": "桃树",
    "en": "Peach Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Peach_tree_portrait.png",
-   "path": "/mediawiki/images/en/f/f9/Peach_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f9/Peach_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "banana",
    "name": "香蕉树",
    "en": "Banana Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Banana_Tree.png",
-   "path": "/mediawiki/images/en/e/eb/Banana_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/eb/Banana_Tree.png"
   },
   {
    "cat": "trees",
    "id": "banana",
    "name": "香蕉树",
    "en": "Banana Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Banana_tree_portrait.png",
-   "path": "/mediawiki/images/en/9/99/Banana_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/99/Banana_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "mango",
    "name": "芒果树",
    "en": "Mango Tree",
+   "ci": 0,
+   "role": "icon",
    "file": "Mango_Tree.png",
-   "path": "/mediawiki/images/en/7/7e/Mango_Tree.png",
-   "role": "icon",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/7e/Mango_Tree.png"
   },
   {
    "cat": "trees",
    "id": "mango",
    "name": "芒果树",
    "en": "Mango Tree",
+   "ci": 0,
+   "role": "portrait",
    "file": "Mango_tree_portrait.png",
-   "path": "/mediawiki/images/en/5/5e/Mango_tree_portrait.png",
-   "role": "portrait",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5e/Mango_tree_portrait.png"
   },
   {
    "cat": "trees",
    "id": "pomegranate",
    "name": "石榴树",
    "en": "Pomegranate Tree",
-   "file": "Pomegranate_Tree.png",
-   "path": "/mediawiki/images/en/4/4b/Pomegranate_Tree.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Pomegranate_Tree.png",
+   "path": "/mediawiki/images/en/4/4b/Pomegranate_Tree.png"
   },
   {
    "cat": "trees",
    "id": "pomegranate",
    "name": "石榴树",
    "en": "Pomegranate Tree",
-   "file": "Pomegranate_tree_portrait.png",
-   "path": "/mediawiki/images/en/7/78/Pomegranate_tree_portrait.png",
+   "ci": 0,
    "role": "portrait",
-   "ci": 0
+   "file": "Pomegranate_tree_portrait.png",
+   "path": "/mediawiki/images/en/7/78/Pomegranate_tree_portrait.png"
   },
   {
    "cat": "fish",
    "id": "albacore",
    "name": "长鳍金枪鱼",
    "en": "Albacore",
+   "ci": 0,
+   "role": "icon2",
    "file": "Albacore_Fish.png",
-   "path": "/mediawiki/images/en/8/8c/Albacore_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8c/Albacore_Fish.png"
   },
   {
    "cat": "fish",
    "id": "albacore",
    "name": "长鳍金枪鱼",
    "en": "Albacore",
+   "ci": 0,
+   "role": "icon3",
    "file": "长鳍金枪鱼.png",
-   "path": "/mediawiki/images/en/e/e6/长鳍金枪鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e6/长鳍金枪鱼.png"
   },
   {
    "cat": "fish",
    "id": "anchovy",
    "name": "鳀鱼",
    "en": "Anchovy",
+   "ci": 0,
+   "role": "icon2",
    "file": "Anchovy_Fish.png",
-   "path": "/mediawiki/images/en/c/c7/Anchovy_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c7/Anchovy_Fish.png"
   },
   {
    "cat": "fish",
    "id": "anchovy",
    "name": "鳀鱼",
    "en": "Anchovy",
+   "ci": 0,
+   "role": "icon3",
    "file": "鳀鱼.png",
-   "path": "/mediawiki/images/en/b/b9/鳀鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b9/鳀鱼.png"
   },
   {
    "cat": "fish",
    "id": "angler",
    "name": "鮟鱇鱼",
    "en": "Angler",
+   "ci": 0,
+   "role": "icon2",
    "file": "Angler_Fish.png",
-   "path": "/mediawiki/images/en/a/af/Angler_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/af/Angler_Fish.png"
   },
   {
    "cat": "fish",
    "id": "angler",
    "name": "鮟鱇鱼",
    "en": "Angler",
+   "ci": 0,
+   "role": "icon3",
    "file": "鮟鱇鱼.png",
-   "path": "/mediawiki/images/en/0/07/鮟鱇鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/07/鮟鱇鱼.png"
   },
   {
    "cat": "fish",
    "id": "blobfish",
    "name": "水滴鱼",
    "en": "Blobfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Blobfish_Fish.png",
-   "path": "/mediawiki/images/en/1/13/Blobfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/13/Blobfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "blobfish",
    "name": "水滴鱼",
    "en": "Blobfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "水滴鱼.png",
-   "path": "/mediawiki/images/en/a/af/水滴鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/af/水滴鱼.png"
   },
   {
    "cat": "fish",
    "id": "blue_discus",
    "name": "蓝盘鱼",
    "en": "Blue Discus",
+   "ci": 0,
+   "role": "icon2",
    "file": "Blue_Discus_Fish.png",
-   "path": "/mediawiki/images/en/c/c2/Blue_Discus_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c2/Blue_Discus_Fish.png"
   },
   {
    "cat": "fish",
    "id": "blue_discus",
    "name": "蓝盘鱼",
    "en": "Blue Discus",
+   "ci": 0,
+   "role": "icon3",
    "file": "蓝盘鱼.png",
-   "path": "/mediawiki/images/en/0/01/蓝盘鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/01/蓝盘鱼.png"
   },
   {
    "cat": "fish",
    "id": "bream",
    "name": "鲷鱼",
    "en": "Bream",
+   "ci": 0,
+   "role": "icon2",
    "file": "Bream_Fish.png",
-   "path": "/mediawiki/images/en/a/a6/Bream_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a6/Bream_Fish.png"
   },
   {
    "cat": "fish",
    "id": "bream",
    "name": "鲷鱼",
    "en": "Bream",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲷鱼.png",
-   "path": "/mediawiki/images/en/5/59/鲷鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/59/鲷鱼.png"
   },
   {
    "cat": "fish",
    "id": "bullhead",
    "name": "牛头鲶",
    "en": "Bullhead",
+   "ci": 0,
+   "role": "icon2",
    "file": "Bullhead_Fish.png",
-   "path": "/mediawiki/images/en/6/6a/Bullhead_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6a/Bullhead_Fish.png"
   },
   {
    "cat": "fish",
    "id": "bullhead",
    "name": "牛头鲶",
    "en": "Bullhead",
+   "ci": 0,
+   "role": "icon3",
    "file": "牛头鲶.png",
-   "path": "/mediawiki/images/en/8/88/牛头鲶.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/88/牛头鲶.png"
   },
   {
    "cat": "fish",
    "id": "carp",
    "name": "鲤鱼",
    "en": "Carp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Carp_Fish.png",
-   "path": "/mediawiki/images/en/e/e5/Carp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e5/Carp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "carp",
    "name": "鲤鱼",
    "en": "Carp",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲤鱼.png",
-   "path": "/mediawiki/images/en/a/a2/鲤鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a2/鲤鱼.png"
   },
   {
    "cat": "fish",
    "id": "catfish",
    "name": "鲶鱼",
    "en": "Catfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Catfish_Fish.png",
-   "path": "/mediawiki/images/en/e/ee/Catfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/ee/Catfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "catfish",
    "name": "鲶鱼",
    "en": "Catfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲶鱼.png",
-   "path": "/mediawiki/images/en/e/e1/鲶鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e1/鲶鱼.png"
   },
   {
    "cat": "fish",
    "id": "chub",
    "name": "圆腹雅罗鱼",
    "en": "Chub",
+   "ci": 0,
+   "role": "icon2",
    "file": "Chub_Fish.png",
-   "path": "/mediawiki/images/en/1/19/Chub_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/19/Chub_Fish.png"
   },
   {
    "cat": "fish",
    "id": "chub",
    "name": "圆腹雅罗鱼",
    "en": "Chub",
+   "ci": 0,
+   "role": "icon3",
    "file": "圆腹雅罗鱼.png",
-   "path": "/mediawiki/images/en/e/ee/圆腹雅罗鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/ee/圆腹雅罗鱼.png"
   },
   {
    "cat": "fish",
    "id": "clam",
    "name": "蛤蜊",
    "en": "Clam",
+   "ci": 0,
+   "role": "icon2",
    "file": "Clam_Fish.png",
-   "path": "/mediawiki/images/en/4/40/Clam_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/40/Clam_Fish.png"
   },
   {
    "cat": "fish",
    "id": "clam",
    "name": "蛤蜊",
    "en": "Clam",
+   "ci": 0,
+   "role": "icon3",
    "file": "蛤蜊.png",
-   "path": "/mediawiki/images/en/f/f0/蛤蜊.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f0/蛤蜊.png"
   },
   {
    "cat": "fish",
    "id": "cockle",
    "name": "鸟蛤",
    "en": "Cockle",
+   "ci": 0,
+   "role": "icon2",
    "file": "Cockle_Fish.png",
-   "path": "/mediawiki/images/en/a/a9/Cockle_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a9/Cockle_Fish.png"
   },
   {
    "cat": "fish",
    "id": "cockle",
    "name": "鸟蛤",
    "en": "Cockle",
+   "ci": 0,
+   "role": "icon3",
    "file": "鸟蛤.png",
-   "path": "/mediawiki/images/en/8/80/鸟蛤.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/80/鸟蛤.png"
   },
   {
    "cat": "fish",
    "id": "crab",
    "name": "螃蟹",
    "en": "Crab",
+   "ci": 0,
+   "role": "icon2",
    "file": "Crab_Fish.png",
-   "path": "/mediawiki/images/en/4/4e/Crab_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/4e/Crab_Fish.png"
   },
   {
    "cat": "fish",
    "id": "crab",
    "name": "螃蟹",
    "en": "Crab",
+   "ci": 0,
+   "role": "icon3",
    "file": "螃蟹.png",
-   "path": "/mediawiki/images/en/b/b5/螃蟹.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b5/螃蟹.png"
   },
   {
    "cat": "fish",
    "id": "crayfish",
    "name": "小龙虾",
    "en": "Crayfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Crayfish_Fish.png",
-   "path": "/mediawiki/images/en/1/1b/Crayfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1b/Crayfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "crayfish",
    "name": "小龙虾",
    "en": "Crayfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "小龙虾.png",
-   "path": "/mediawiki/images/en/d/db/小龙虾.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/db/小龙虾.png"
   },
   {
    "cat": "fish",
    "id": "crimsonfish",
    "name": "绯红鱼",
    "en": "Crimsonfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Crimsonfish_Fish.png",
-   "path": "/mediawiki/images/en/0/0d/Crimsonfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0d/Crimsonfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "crimsonfish",
    "name": "绯红鱼",
    "en": "Crimsonfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "绯红鱼.png",
-   "path": "/mediawiki/images/en/6/62/绯红鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/62/绯红鱼.png"
   },
   {
    "cat": "fish",
    "id": "dorado",
    "name": "鲯鳅",
    "en": "Dorado",
+   "ci": 0,
+   "role": "icon2",
    "file": "Dorado_Fish.png",
-   "path": "/mediawiki/images/en/8/86/Dorado_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/86/Dorado_Fish.png"
   },
   {
    "cat": "fish",
    "id": "dorado",
    "name": "鲯鳅",
    "en": "Dorado",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲯鳅.png",
-   "path": "/mediawiki/images/en/a/a5/鲯鳅.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a5/鲯鳅.png"
   },
   {
    "cat": "fish",
    "id": "eel",
    "name": "鳗鱼",
    "en": "Eel",
+   "ci": 0,
+   "role": "icon2",
    "file": "Eel_Fish.png",
-   "path": "/mediawiki/images/en/6/68/Eel_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/68/Eel_Fish.png"
   },
   {
    "cat": "fish",
    "id": "eel",
    "name": "鳗鱼",
    "en": "Eel",
+   "ci": 0,
+   "role": "icon3",
    "file": "鳗鱼.png",
-   "path": "/mediawiki/images/en/5/59/鳗鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/59/鳗鱼.png"
   },
   {
    "cat": "fish",
    "id": "flounder",
    "name": "比目鱼",
    "en": "Flounder",
+   "ci": 0,
+   "role": "icon2",
    "file": "Flounder_Fish.png",
-   "path": "/mediawiki/images/en/b/b7/Flounder_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b7/Flounder_Fish.png"
   },
   {
    "cat": "fish",
    "id": "flounder",
    "name": "比目鱼",
    "en": "Flounder",
+   "ci": 0,
+   "role": "icon3",
    "file": "比目鱼.png",
-   "path": "/mediawiki/images/en/d/df/比目鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/df/比目鱼.png"
   },
   {
    "cat": "fish",
    "id": "ghostfish",
    "name": "幽灵鱼",
    "en": "Ghostfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Ghostfish_Fish.png",
-   "path": "/mediawiki/images/en/7/77/Ghostfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/77/Ghostfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "ghostfish",
    "name": "幽灵鱼",
    "en": "Ghostfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "幽灵鱼.png",
-   "path": "/mediawiki/images/en/3/37/幽灵鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/37/幽灵鱼.png"
   },
   {
    "cat": "fish",
    "id": "glacierfish",
    "name": "冰川鱼",
    "en": "Glacierfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Glacierfish_Fish.png",
-   "path": "/mediawiki/images/en/5/5b/Glacierfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5b/Glacierfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "glacierfish",
    "name": "冰川鱼",
    "en": "Glacierfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "冰川鱼.png",
-   "path": "/mediawiki/images/en/b/b3/冰川鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b3/冰川鱼.png"
   },
   {
    "cat": "fish",
    "id": "glacierfish_jr",
    "name": "小冰川鱼",
    "en": "Glacierfish Jr.",
+   "ci": 0,
+   "role": "icon2",
    "file": "Glacierfish_Jr._Fish.png",
-   "path": "/mediawiki/images/en/7/70/Glacierfish_Jr._Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/70/Glacierfish_Jr._Fish.png"
   },
   {
    "cat": "fish",
    "id": "glacierfish_jr",
    "name": "小冰川鱼",
    "en": "Glacierfish Jr.",
+   "ci": 0,
+   "role": "icon3",
    "file": "小冰川鱼.png",
-   "path": "/mediawiki/images/en/a/a6/小冰川鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a6/小冰川鱼.png"
   },
   {
    "cat": "fish",
    "id": "goby",
    "name": "虾虎鱼",
    "en": "Goby",
+   "ci": 0,
+   "role": "icon2",
    "file": "Goby_Fish.png",
-   "path": "/mediawiki/images/en/3/30/Goby_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/30/Goby_Fish.png"
   },
   {
    "cat": "fish",
    "id": "goby",
    "name": "虾虎鱼",
    "en": "Goby",
+   "ci": 0,
+   "role": "icon3",
    "file": "虾虎鱼.png",
-   "path": "/mediawiki/images/en/6/68/虾虎鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/68/虾虎鱼.png"
   },
   {
    "cat": "fish",
    "id": "halibut",
    "name": "大比目鱼",
    "en": "Halibut",
+   "ci": 0,
+   "role": "icon2",
    "file": "Halibut_Fish.png",
-   "path": "/mediawiki/images/en/f/f1/Halibut_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f1/Halibut_Fish.png"
   },
   {
    "cat": "fish",
    "id": "halibut",
    "name": "大比目鱼",
    "en": "Halibut",
+   "ci": 0,
+   "role": "icon3",
    "file": "大比目鱼.png",
-   "path": "/mediawiki/images/en/f/f3/大比目鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f3/大比目鱼.png"
   },
   {
    "cat": "fish",
    "id": "herring",
    "name": "鲱鱼",
    "en": "Herring",
+   "ci": 0,
+   "role": "icon2",
    "file": "Herring_Fish.png",
-   "path": "/mediawiki/images/en/6/61/Herring_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/61/Herring_Fish.png"
   },
   {
    "cat": "fish",
    "id": "herring",
    "name": "鲱鱼",
    "en": "Herring",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲱鱼.png",
-   "path": "/mediawiki/images/en/2/25/鲱鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/25/鲱鱼.png"
   },
   {
    "cat": "fish",
    "id": "ice_pip",
    "name": "冰柱鱼",
    "en": "Ice Pip",
+   "ci": 0,
+   "role": "icon2",
    "file": "Ice_Pip_Fish.png",
-   "path": "/mediawiki/images/en/4/4d/Ice_Pip_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/4d/Ice_Pip_Fish.png"
   },
   {
    "cat": "fish",
    "id": "ice_pip",
    "name": "冰柱鱼",
    "en": "Ice Pip",
+   "ci": 0,
+   "role": "icon3",
    "file": "冰柱鱼.png",
-   "path": "/mediawiki/images/en/b/b5/冰柱鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b5/冰柱鱼.png"
   },
   {
    "cat": "fish",
    "id": "largemouth_bass",
    "name": "大口黑鲈",
    "en": "Largemouth Bass",
+   "ci": 0,
+   "role": "icon2",
    "file": "Largemouth_Bass_Fish.png",
-   "path": "/mediawiki/images/en/f/f5/Largemouth_Bass_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f5/Largemouth_Bass_Fish.png"
   },
   {
    "cat": "fish",
    "id": "largemouth_bass",
    "name": "大口黑鲈",
    "en": "Largemouth Bass",
+   "ci": 0,
+   "role": "icon3",
    "file": "大口黑鲈.png",
-   "path": "/mediawiki/images/en/1/1c/大口黑鲈.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1c/大口黑鲈.png"
   },
   {
    "cat": "fish",
    "id": "lava_eel",
    "name": "岩浆鳗",
    "en": "Lava Eel",
+   "ci": 0,
+   "role": "icon2",
    "file": "Lava_Eel_Fish.png",
-   "path": "/mediawiki/images/en/7/7d/Lava_Eel_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/7d/Lava_Eel_Fish.png"
   },
   {
    "cat": "fish",
    "id": "lava_eel",
    "name": "岩浆鳗",
    "en": "Lava Eel",
+   "ci": 0,
+   "role": "icon3",
    "file": "岩浆鳗.png",
-   "path": "/mediawiki/images/en/1/10/岩浆鳗.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/10/岩浆鳗.png"
   },
   {
    "cat": "fish",
    "id": "legend",
    "name": "传说之鱼",
    "en": "Legend",
+   "ci": 0,
+   "role": "icon2",
    "file": "Legend_Fish.png",
-   "path": "/mediawiki/images/en/5/5a/Legend_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5a/Legend_Fish.png"
   },
   {
    "cat": "fish",
    "id": "legend",
    "name": "传说之鱼",
    "en": "Legend",
+   "ci": 0,
+   "role": "icon3",
    "file": "传说之鱼.png",
-   "path": "/mediawiki/images/en/3/37/传说之鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/37/传说之鱼.png"
   },
   {
    "cat": "fish",
    "id": "legend_ii",
    "name": "传说之鱼二代",
    "en": "Legend II",
+   "ci": 0,
+   "role": "icon2",
    "file": "Legend_II_Fish.png",
-   "path": "/mediawiki/images/en/f/f5/Legend_II_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f5/Legend_II_Fish.png"
   },
   {
    "cat": "fish",
    "id": "legend_ii",
    "name": "传说之鱼二代",
    "en": "Legend II",
+   "ci": 0,
+   "role": "icon3",
    "file": "传说之鱼二代.png",
-   "path": "/mediawiki/images/en/6/6d/传说之鱼二代.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6d/传说之鱼二代.png"
   },
   {
    "cat": "fish",
    "id": "lingcod",
    "name": "长蛇齿鱼",
    "en": "Lingcod",
+   "ci": 0,
+   "role": "icon2",
    "file": "Lingcod_Fish.png",
-   "path": "/mediawiki/images/en/3/39/Lingcod_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/39/Lingcod_Fish.png"
   },
   {
    "cat": "fish",
    "id": "lingcod",
    "name": "长蛇齿鱼",
    "en": "Lingcod",
+   "ci": 0,
+   "role": "icon3",
    "file": "长蛇齿鱼.png",
-   "path": "/mediawiki/images/en/a/a7/长蛇齿鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a7/长蛇齿鱼.png"
   },
   {
    "cat": "fish",
    "id": "lionfish",
    "name": "狮子鱼",
    "en": "Lionfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Lionfish_Fish.png",
-   "path": "/mediawiki/images/en/e/e0/Lionfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e0/Lionfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "lionfish",
    "name": "狮子鱼",
    "en": "Lionfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "狮子鱼.png",
-   "path": "/mediawiki/images/en/f/f0/狮子鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f0/狮子鱼.png"
   },
   {
    "cat": "fish",
    "id": "lobster",
    "name": "龙虾",
    "en": "Lobster",
+   "ci": 0,
+   "role": "icon2",
    "file": "Lobster_Fish.png",
-   "path": "/mediawiki/images/en/1/1b/Lobster_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1b/Lobster_Fish.png"
   },
   {
    "cat": "fish",
    "id": "lobster",
    "name": "龙虾",
    "en": "Lobster",
+   "ci": 0,
+   "role": "icon3",
    "file": "龙虾.png",
-   "path": "/mediawiki/images/en/1/16/龙虾.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/16/龙虾.png"
   },
   {
    "cat": "fish",
    "id": "midnight_carp",
    "name": "午夜鲤鱼",
    "en": "Midnight Carp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Midnight_Carp_Fish.png",
-   "path": "/mediawiki/images/en/e/ea/Midnight_Carp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/ea/Midnight_Carp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "midnight_carp",
    "name": "午夜鲤鱼",
    "en": "Midnight Carp",
+   "ci": 0,
+   "role": "icon3",
    "file": "午夜鲤鱼.png",
-   "path": "/mediawiki/images/en/7/70/午夜鲤鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/70/午夜鲤鱼.png"
   },
   {
    "cat": "fish",
    "id": "midnight_squid",
    "name": "午夜鱿鱼",
    "en": "Midnight Squid",
+   "ci": 0,
+   "role": "icon2",
    "file": "Midnight_Squid_Fish.png",
-   "path": "/mediawiki/images/en/5/55/Midnight_Squid_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/55/Midnight_Squid_Fish.png"
   },
   {
    "cat": "fish",
    "id": "midnight_squid",
    "name": "午夜鱿鱼",
    "en": "Midnight Squid",
+   "ci": 0,
+   "role": "icon3",
    "file": "午夜鱿鱼.png",
-   "path": "/mediawiki/images/en/1/1e/午夜鱿鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1e/午夜鱿鱼.png"
   },
   {
    "cat": "fish",
    "id": "ms_angler",
    "name": "鮟鱇鱼女士",
    "en": "Ms. Angler",
+   "ci": 0,
+   "role": "icon2",
    "file": "Ms._Angler_Fish.png",
-   "path": "/mediawiki/images/en/f/ff/Ms._Angler_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/ff/Ms._Angler_Fish.png"
   },
   {
    "cat": "fish",
    "id": "ms_angler",
    "name": "鮟鱇鱼女士",
    "en": "Ms. Angler",
+   "ci": 0,
+   "role": "icon3",
    "file": "鮟鱇鱼女士.png",
-   "path": "/mediawiki/images/en/d/d4/鮟鱇鱼女士.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d4/鮟鱇鱼女士.png"
   },
   {
    "cat": "fish",
    "id": "mussel",
    "name": "贻贝",
    "en": "Mussel",
+   "ci": 0,
+   "role": "icon2",
    "file": "Mussel_Fish.png",
-   "path": "/mediawiki/images/en/b/ba/Mussel_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/ba/Mussel_Fish.png"
   },
   {
    "cat": "fish",
    "id": "mussel",
    "name": "贻贝",
    "en": "Mussel",
+   "ci": 0,
+   "role": "icon3",
    "file": "贻贝.png",
-   "path": "/mediawiki/images/en/9/9d/贻贝.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/9d/贻贝.png"
   },
   {
    "cat": "fish",
    "id": "mutant_carp",
    "name": "变异鲤鱼",
    "en": "Mutant Carp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Mutant_Carp_Fish.png",
-   "path": "/mediawiki/images/en/5/5f/Mutant_Carp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/5f/Mutant_Carp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "mutant_carp",
    "name": "变异鲤鱼",
    "en": "Mutant Carp",
+   "ci": 0,
+   "role": "icon3",
    "file": "变异鲤鱼.png",
-   "path": "/mediawiki/images/en/a/ac/变异鲤鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ac/变异鲤鱼.png"
   },
   {
    "cat": "fish",
    "id": "octopus",
    "name": "章鱼",
    "en": "Octopus",
+   "ci": 0,
+   "role": "icon2",
    "file": "Octopus_Fish.png",
-   "path": "/mediawiki/images/en/f/fd/Octopus_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fd/Octopus_Fish.png"
   },
   {
    "cat": "fish",
    "id": "octopus",
    "name": "章鱼",
    "en": "Octopus",
+   "ci": 0,
+   "role": "icon3",
    "file": "章鱼.png",
-   "path": "/mediawiki/images/en/1/17/章鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/17/章鱼.png"
   },
   {
    "cat": "fish",
    "id": "oyster",
    "name": "牡蛎",
    "en": "Oyster",
+   "ci": 0,
+   "role": "icon2",
    "file": "Oyster_Fish.png",
-   "path": "/mediawiki/images/en/3/3b/Oyster_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/3b/Oyster_Fish.png"
   },
   {
    "cat": "fish",
    "id": "oyster",
    "name": "牡蛎",
    "en": "Oyster",
+   "ci": 0,
+   "role": "icon3",
    "file": "牡蛎.png",
-   "path": "/mediawiki/images/en/e/ec/牡蛎.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/ec/牡蛎.png"
   },
   {
    "cat": "fish",
    "id": "perch",
    "name": "河鲈",
    "en": "Perch",
+   "ci": 0,
+   "role": "icon2",
    "file": "Perch_Fish.png",
-   "path": "/mediawiki/images/en/1/16/Perch_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/16/Perch_Fish.png"
   },
   {
    "cat": "fish",
    "id": "perch",
    "name": "河鲈",
    "en": "Perch",
+   "ci": 0,
+   "role": "icon3",
    "file": "河鲈.png",
-   "path": "/mediawiki/images/en/3/30/河鲈.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/30/河鲈.png"
   },
   {
    "cat": "fish",
    "id": "periwinkle",
    "name": "滨螺",
    "en": "Periwinkle",
+   "ci": 0,
+   "role": "icon2",
    "file": "Periwinkle_Fish.png",
-   "path": "/mediawiki/images/en/d/d2/Periwinkle_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d2/Periwinkle_Fish.png"
   },
   {
    "cat": "fish",
    "id": "periwinkle",
    "name": "滨螺",
    "en": "Periwinkle",
+   "ci": 0,
+   "role": "icon3",
    "file": "滨螺.png",
-   "path": "/mediawiki/images/en/6/6a/滨螺.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6a/滨螺.png"
   },
   {
    "cat": "fish",
    "id": "pike",
    "name": "狗鱼",
    "en": "Pike",
+   "ci": 0,
+   "role": "icon2",
    "file": "Pike_Fish.png",
-   "path": "/mediawiki/images/en/9/94/Pike_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/94/Pike_Fish.png"
   },
   {
    "cat": "fish",
    "id": "pike",
    "name": "狗鱼",
    "en": "Pike",
+   "ci": 0,
+   "role": "icon3",
    "file": "狗鱼.png",
-   "path": "/mediawiki/images/en/7/7b/狗鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/7b/狗鱼.png"
   },
   {
    "cat": "fish",
    "id": "pufferfish",
    "name": "河豚",
    "en": "Pufferfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Pufferfish_Fish.png",
-   "path": "/mediawiki/images/en/5/55/Pufferfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/55/Pufferfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "pufferfish",
    "name": "河豚",
    "en": "Pufferfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "河豚.png",
-   "path": "/mediawiki/images/en/4/4a/河豚.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/4a/河豚.png"
   },
   {
    "cat": "fish",
    "id": "radioactive_carp",
    "name": "放射性鲤鱼",
    "en": "Radioactive Carp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Radioactive_Carp_Fish.png",
-   "path": "/mediawiki/images/en/f/f4/Radioactive_Carp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f4/Radioactive_Carp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "radioactive_carp",
    "name": "放射性鲤鱼",
    "en": "Radioactive Carp",
+   "ci": 0,
+   "role": "icon3",
    "file": "放射性鲤鱼.png",
-   "path": "/mediawiki/images/en/8/80/放射性鲤鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/80/放射性鲤鱼.png"
   },
   {
    "cat": "fish",
    "id": "rainbow_trout",
    "name": "虹鳟鱼",
    "en": "Rainbow Trout",
+   "ci": 0,
+   "role": "icon2",
    "file": "Rainbow_Trout_Fish.png",
-   "path": "/mediawiki/images/en/a/ac/Rainbow_Trout_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ac/Rainbow_Trout_Fish.png"
   },
   {
    "cat": "fish",
    "id": "rainbow_trout",
    "name": "虹鳟鱼",
    "en": "Rainbow Trout",
+   "ci": 0,
+   "role": "icon3",
    "file": "虹鳟鱼.png",
-   "path": "/mediawiki/images/en/6/6e/虹鳟鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6e/虹鳟鱼.png"
   },
   {
    "cat": "fish",
    "id": "red_mullet",
    "name": "红鲻鱼",
    "en": "Red Mullet",
+   "ci": 0,
+   "role": "icon2",
    "file": "Red_Mullet_Fish.png",
-   "path": "/mediawiki/images/en/8/80/Red_Mullet_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/80/Red_Mullet_Fish.png"
   },
   {
    "cat": "fish",
    "id": "red_mullet",
    "name": "红鲻鱼",
    "en": "Red Mullet",
+   "ci": 0,
+   "role": "icon3",
    "file": "红鲻鱼.png",
-   "path": "/mediawiki/images/en/3/3e/红鲻鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/3e/红鲻鱼.png"
   },
   {
    "cat": "fish",
    "id": "red_snapper",
    "name": "红鲷鱼",
    "en": "Red Snapper",
+   "ci": 0,
+   "role": "icon2",
    "file": "Red_Snapper_Fish.png",
-   "path": "/mediawiki/images/en/3/3e/Red_Snapper_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/3e/Red_Snapper_Fish.png"
   },
   {
    "cat": "fish",
    "id": "red_snapper",
    "name": "红鲷鱼",
    "en": "Red Snapper",
+   "ci": 0,
+   "role": "icon3",
    "file": "红鲷鱼.png",
-   "path": "/mediawiki/images/en/8/87/红鲷鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/87/红鲷鱼.png"
   },
   {
    "cat": "fish",
    "id": "salmon",
    "name": "鲑鱼",
    "en": "Salmon",
+   "ci": 0,
+   "role": "icon2",
    "file": "Salmon_Fish.png",
-   "path": "/mediawiki/images/en/8/8b/Salmon_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8b/Salmon_Fish.png"
   },
   {
    "cat": "fish",
    "id": "salmon",
    "name": "鲑鱼",
    "en": "Salmon",
+   "ci": 0,
+   "role": "icon3",
    "file": "鲑鱼.png",
-   "path": "/mediawiki/images/en/1/18/鲑鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/18/鲑鱼.png"
   },
   {
    "cat": "fish",
    "id": "sandfish",
    "name": "沙鱼",
    "en": "Sandfish",
+   "ci": 0,
+   "role": "icon2",
    "file": "Sandfish_Fish.png",
-   "path": "/mediawiki/images/en/2/28/Sandfish_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/28/Sandfish_Fish.png"
   },
   {
    "cat": "fish",
    "id": "sandfish",
    "name": "沙鱼",
    "en": "Sandfish",
+   "ci": 0,
+   "role": "icon3",
    "file": "沙鱼.png",
-   "path": "/mediawiki/images/en/2/24/沙鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/24/沙鱼.png"
   },
   {
    "cat": "fish",
    "id": "sardine",
    "name": "沙丁鱼",
    "en": "Sardine",
+   "ci": 0,
+   "role": "icon2",
    "file": "Sardine_Fish.png",
-   "path": "/mediawiki/images/en/3/34/Sardine_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/34/Sardine_Fish.png"
   },
   {
    "cat": "fish",
    "id": "sardine",
    "name": "沙丁鱼",
    "en": "Sardine",
+   "ci": 0,
+   "role": "icon3",
    "file": "沙丁鱼.png",
-   "path": "/mediawiki/images/en/9/94/沙丁鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/94/沙丁鱼.png"
   },
   {
    "cat": "fish",
    "id": "scorpion_carp",
    "name": "蝎子鲤鱼",
    "en": "Scorpion Carp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Scorpion_Carp_Fish.png",
-   "path": "/mediawiki/images/en/b/b5/Scorpion_Carp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b5/Scorpion_Carp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "scorpion_carp",
    "name": "蝎子鲤鱼",
    "en": "Scorpion Carp",
+   "ci": 0,
+   "role": "icon3",
    "file": "蝎子鲤鱼.png",
-   "path": "/mediawiki/images/en/a/a5/蝎子鲤鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a5/蝎子鲤鱼.png"
   },
   {
    "cat": "fish",
    "id": "sea_cucumber",
    "name": "海参",
    "en": "Sea Cucumber",
+   "ci": 0,
+   "role": "icon2",
    "file": "Sea_Cucumber_Fish.png",
-   "path": "/mediawiki/images/en/1/1c/Sea_Cucumber_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1c/Sea_Cucumber_Fish.png"
   },
   {
    "cat": "fish",
    "id": "sea_cucumber",
    "name": "海参",
    "en": "Sea Cucumber",
+   "ci": 0,
+   "role": "icon3",
    "file": "海参.png",
-   "path": "/mediawiki/images/en/8/8c/海参.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8c/海参.png"
   },
   {
    "cat": "fish",
    "id": "sea_urchin",
    "name": "海胆",
    "en": "Sea Urchin",
+   "ci": 0,
+   "role": "icon2",
    "file": "Sea_Urchin_Fish.png",
-   "path": "/mediawiki/images/en/c/c5/Sea_Urchin_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c5/Sea_Urchin_Fish.png"
   },
   {
    "cat": "fish",
    "id": "sea_urchin",
    "name": "海胆",
    "en": "Sea Urchin",
+   "ci": 0,
+   "role": "icon3",
    "file": "海胆.png",
-   "path": "/mediawiki/images/en/7/74/海胆.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/74/海胆.png"
   },
   {
    "cat": "fish",
    "id": "shad",
    "name": "美洲西鲱",
    "en": "Shad",
+   "ci": 0,
+   "role": "icon2",
    "file": "Shad_Fish.png",
-   "path": "/mediawiki/images/en/b/b8/Shad_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b8/Shad_Fish.png"
   },
   {
    "cat": "fish",
    "id": "shad",
    "name": "美洲西鲱",
    "en": "Shad",
+   "ci": 0,
+   "role": "icon3",
    "file": "美洲西鲱.png",
-   "path": "/mediawiki/images/en/b/b9/美洲西鲱.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b9/美洲西鲱.png"
   },
   {
    "cat": "fish",
    "id": "shrimp",
    "name": "虾",
    "en": "Shrimp",
+   "ci": 0,
+   "role": "icon2",
    "file": "Shrimp_Fish.png",
-   "path": "/mediawiki/images/en/f/f2/Shrimp_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f2/Shrimp_Fish.png"
   },
   {
    "cat": "fish",
    "id": "shrimp",
    "name": "虾",
    "en": "Shrimp",
+   "ci": 0,
+   "role": "icon3",
    "file": "虾.png",
-   "path": "/mediawiki/images/en/e/e2/虾.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e2/虾.png"
   },
   {
    "cat": "fish",
    "id": "slimejack",
    "name": "史莱姆鱼",
    "en": "Slimejack",
+   "ci": 0,
+   "role": "icon2",
    "file": "Slimejack_Fish.png",
-   "path": "/mediawiki/images/en/e/e5/Slimejack_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e5/Slimejack_Fish.png"
   },
   {
    "cat": "fish",
    "id": "slimejack",
    "name": "史莱姆鱼",
    "en": "Slimejack",
+   "ci": 0,
+   "role": "icon3",
    "file": "史莱姆鱼.png",
-   "path": "/mediawiki/images/en/9/93/史莱姆鱼.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/93/史莱姆鱼.png"
   },
   {
    "cat": "fish",
    "id": "smallmouth_bass",
    "name": "小口黑鲈",
    "en": "Smallmouth Bass",
+   "ci": 0,
+   "role": "icon2",
    "file": "Smallmouth_Bass_Fish.png",
-   "path": "/mediawiki/images/en/9/9c/Smallmouth_Bass_Fish.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/9c/Smallmouth_Bass_Fish.png"
   },
   {
    "cat": "fish",
    "id": "smallmouth_bass",
    "name": "小口黑鲈",
    "en": "Smallmouth Bass",
+   "ci": 0,
+   "role": "icon3",
    "file": "小口黑鲈.png",
-   "path": "/mediawiki/images/en/9/90/小口黑鲈.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/90/小口黑鲈.png"
   },
   {
    "cat": "fish",
    "id": "snail",
    "name": "蜗牛",
    "en": "Snail",
-   "file": "Snail_Fish.png",
-   "path": "/mediawiki/images/en/1/16/Snail_Fish.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Snail_Fish.png",
+   "path": "/mediawiki/images/en/1/16/Snail_Fish.png"
   },
   {
    "cat": "fish",
    "id": "snail",
    "name": "蜗牛",
    "en": "Snail",
-   "file": "蜗牛.png",
-   "path": "/mediawiki/images/en/3/3e/蜗牛.png",
+   "ci": 0,
    "role": "icon3",
-   "ci": 0
+   "file": "蜗牛.png",
+   "path": "/mediawiki/images/en/3/3e/蜗牛.png"
   },
   {
    "cat": "fish",
    "id": "son_of_crimsonfish",
    "name": "绯红鱼之子",
    "en": "Son of Crimsonfish",
-   "file": "Son_of_Crimsonfish_Fish.png",
-   "path": "/mediawiki/images/en/b/b6/Son_of_Crimsonfish_Fish.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Son_of_Crimsonfish_Fish.png",
+   "path": "/mediawiki/images/en/b/b6/Son_of_Crimsonfish_Fish.png"
   }
  ]
 }

@@ -19030,5 +19030,943 @@
     }
    ]
   }
+ },
+ "bundles": {
+  "spring_crops": {
+   "name": "春季作物",
+   "en": "Spring Crops",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Spring_Crops_Bundle.png",
+     "path": "/mediawiki/images/en/5/51/Spring_Crops_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "summer_crops": {
+   "name": "夏季作物",
+   "en": "Summer Crops",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Summer_Crops_Bundle.png",
+     "path": "/mediawiki/images/en/2/27/Summer_Crops_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "fall_crops": {
+   "name": "秋季作物",
+   "en": "Fall Crops",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fall_Crops_Bundle.png",
+     "path": "/mediawiki/images/en/0/0d/Fall_Crops_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "quality_crops": {
+   "name": "高品质作物",
+   "en": "Quality Crops",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Quality_Crops_Bundle.png",
+     "path": "/mediawiki/images/en/8/86/Quality_Crops_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "animal_bundle": {
+   "name": "动物",
+   "en": "Animal Bundle",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Animal_Bundle_Bundle.png",
+     "path": "/mediawiki/images/en/f/fd/Animal_Bundle_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "Animal_Bundle.png",
+     "path": "/mediawiki/images/en/5/52/Animal_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "artisan_bundle": {
+   "name": "工匠",
+   "en": "Artisan Bundle",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Artisan_Bundle_Bundle.png",
+     "path": "/mediawiki/images/en/4/46/Artisan_Bundle_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "Artisan_Bundle.png",
+     "path": "/mediawiki/images/en/7/7a/Artisan_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "spring_foraging": {
+   "name": "春季采集",
+   "en": "Spring Foraging",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Spring_Foraging_Bundle.png",
+     "path": "/mediawiki/images/en/8/8a/Spring_Foraging_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "summer_foraging": {
+   "name": "夏季采集",
+   "en": "Summer Foraging",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Summer_Foraging_Bundle.png",
+     "path": "/mediawiki/images/en/f/fd/Summer_Foraging_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "fall_foraging": {
+   "name": "秋季采集",
+   "en": "Fall Foraging",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fall_Foraging_Bundle.png",
+     "path": "/mediawiki/images/en/3/3d/Fall_Foraging_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "winter_foraging": {
+   "name": "冬季采集",
+   "en": "Winter Foraging",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Winter_Foraging_Bundle.png",
+     "path": "/mediawiki/images/en/1/17/Winter_Foraging_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "construction": {
+   "name": "建筑",
+   "en": "Construction",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Construction_Bundle.png",
+     "path": "/mediawiki/images/en/7/7a/Construction_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "exotic_foraging": {
+   "name": "异国采集",
+   "en": "Exotic Foraging",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Exotic_Foraging_Bundle.png",
+     "path": "/mediawiki/images/en/5/5a/Exotic_Foraging_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "river_fish": {
+   "name": "河鱼",
+   "en": "River Fish",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "River_Fish_Bundle.png",
+     "path": "/mediawiki/images/en/c/c6/River_Fish_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "lake_fish": {
+   "name": "湖鱼",
+   "en": "Lake Fish",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Lake_Fish_Bundle.png",
+     "path": "/mediawiki/images/en/4/46/Lake_Fish_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "ocean_fish": {
+   "name": "海鱼",
+   "en": "Ocean Fish",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Ocean_Fish_Bundle.png",
+     "path": "/mediawiki/images/en/a/ac/Ocean_Fish_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "night_fishing": {
+   "name": "夜间鱼",
+   "en": "Night Fishing",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Night_Fishing_Bundle.png",
+     "path": "/mediawiki/images/en/a/a7/Night_Fishing_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "crab_pot": {
+   "name": "蟹笼",
+   "en": "Crab Pot",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Crab_Pot_Bundle.png",
+     "path": "/mediawiki/images/en/2/22/Crab_Pot_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "specialty_fish": {
+   "name": "特殊鱼",
+   "en": "Specialty Fish",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Specialty_Fish_Bundle.png",
+     "path": "/mediawiki/images/en/0/03/Specialty_Fish_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "blacksmith": {
+   "name": "铁匠",
+   "en": "Blacksmith's",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Blacksmith's_Bundle.png",
+     "path": "/mediawiki/images/en/9/9e/Blacksmith's_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon2",
+     "file": "Blacksmith_Bundle.png",
+     "path": "/mediawiki/images/en/c/c8/Blacksmith_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    },
+    {
+     "role": "icon3",
+     "file": "Blacksmiths_Bundle.png",
+     "path": "/mediawiki/images/en/1/16/Blacksmiths_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon4",
+     "file": "Blacksmiths.png",
+     "path": "/mediawiki/images/en/2/2a/Blacksmiths.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    }
+   ]
+  },
+  "geologist": {
+   "name": "地质学家",
+   "en": "Geologist's",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Geologist's_Bundle.png",
+     "path": "/mediawiki/images/en/6/68/Geologist's_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    },
+    {
+     "role": "icon2",
+     "file": "Geologist_Bundle.png",
+     "path": "/mediawiki/images/en/b/bf/Geologist_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon3",
+     "file": "Geologists_Bundle.png",
+     "path": "/mediawiki/images/en/a/a7/Geologists_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon4",
+     "file": "Geologists.png",
+     "path": "/mediawiki/images/en/f/f5/Geologists.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    }
+   ]
+  },
+  "adventurer": {
+   "name": "冒险家",
+   "en": "Adventurer's",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Adventurer's_Bundle.png",
+     "path": "/mediawiki/images/en/5/5e/Adventurer's_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    },
+    {
+     "role": "icon2",
+     "file": "Adventurer_Bundle.png",
+     "path": "/mediawiki/images/en/5/5a/Adventurer_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon3",
+     "file": "Adventurers_Bundle.png",
+     "path": "/mediawiki/images/en/6/64/Adventurers_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon4",
+     "file": "Adventurers.png",
+     "path": "/mediawiki/images/en/e/e9/Adventurers.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    }
+   ]
+  },
+  "chef": {
+   "name": "厨师",
+   "en": "Chef's",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Chef's_Bundle.png",
+     "path": "/mediawiki/images/en/e/ea/Chef's_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    },
+    {
+     "role": "icon2",
+     "file": "Chef_Bundle.png",
+     "path": "/mediawiki/images/en/9/94/Chef_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon3",
+     "file": "Chefs_Bundle.png",
+     "path": "/mediawiki/images/en/0/0c/Chefs_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon4",
+     "file": "Chefs.png",
+     "path": "/mediawiki/images/en/4/45/Chefs.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    }
+   ]
+  },
+  "dye": {
+   "name": "染料",
+   "en": "Dye",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Dye_Bundle.png",
+     "path": "/mediawiki/images/en/a/a5/Dye_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "field_research": {
+   "name": "实地研究",
+   "en": "Field Research",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Field_Research_Bundle.png",
+     "path": "/mediawiki/images/en/8/86/Field_Research_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "fodder": {
+   "name": "饲料",
+   "en": "Fodder",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fodder_Bundle.png",
+     "path": "/mediawiki/images/en/3/32/Fodder_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "enchanter": {
+   "name": "附魔",
+   "en": "Enchanter's",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Enchanter's_Bundle.png",
+     "path": "/mediawiki/images/en/6/69/Enchanter's_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    },
+    {
+     "role": "icon2",
+     "file": "Enchanter_Bundle.png",
+     "path": "/mediawiki/images/en/f/f7/Enchanter_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon3",
+     "file": "Enchanters_Bundle.png",
+     "path": "/mediawiki/images/en/0/0e/Enchanters_Bundle.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon4",
+     "file": "Enchanters.png",
+     "path": "/mediawiki/images/en/d/d8/Enchanters.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    }
+   ]
+  },
+  "vault_2500": {
+   "name": "2,500g",
+   "en": "2,500g",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "2500_Bundle.png",
+     "path": "/mediawiki/images/en/e/e2/2500_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "vault_5000": {
+   "name": "5,000g",
+   "en": "5,000g",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "5000_Bundle.png",
+     "path": "/mediawiki/images/en/1/17/5000_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "vault_10000": {
+   "name": "10,000g",
+   "en": "10,000g",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "10000_Bundle.png",
+     "path": "/mediawiki/images/en/1/11/10000_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  },
+  "vault_25000": {
+   "name": "25,000g",
+   "en": "25,000g",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "25000_Bundle.png",
+     "path": "/mediawiki/images/en/a/a7/25000_Bundle.png",
+     "exists": true,
+     "w": 136,
+     "h": 136
+    }
+   ]
+  }
+ },
+ "ui": {
+  "health": {
+   "name": "生命",
+   "en": "Health",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "HealthBar.png",
+     "path": "/mediawiki/images/en/3/35/HealthBar.png",
+     "exists": true,
+     "w": 78,
+     "h": 215
+    }
+   ]
+  },
+  "energy": {
+   "name": "能量",
+   "en": "Energy",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "EnergyBar.png",
+     "path": "/mediawiki/images/en/9/9d/EnergyBar.png",
+     "exists": true,
+     "w": 36,
+     "h": 215
+    }
+   ]
+  },
+  "gold": {
+   "name": "金币",
+   "en": "Gold",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Gold.png",
+     "path": "/mediawiki/images/en/1/10/Gold.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "luck": {
+   "name": "幸运",
+   "en": "Luck",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Luck.png",
+     "path": "/mediawiki/images/en/f/f0/Luck.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "gold_quality": {
+   "name": "金星",
+   "en": "Gold Quality",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Gold Quality Icon.png",
+     "path": "/mediawiki/images/en/4/47/Gold_Quality_Icon.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "iridium_quality": {
+   "name": "铱星",
+   "en": "Iridium Quality",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Iridium Quality Icon.png",
+     "path": "/mediawiki/images/en/e/e4/Iridium_Quality_Icon.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "rain": {
+   "name": "雨天",
+   "en": "Rain",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Rain.png",
+     "path": "/mediawiki/images/en/1/1d/Rain.png",
+     "exists": true,
+     "w": 16,
+     "h": 16
+    }
+   ]
+  },
+  "storm": {
+   "name": "雷雨",
+   "en": "Storm",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Thunderstorm.png",
+     "path": "/mediawiki/images/en/7/7a/Thunderstorm.png",
+     "exists": true,
+     "w": 16,
+     "h": 16
+    }
+   ]
+  },
+  "festival": {
+   "name": "节日",
+   "en": "Festival",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Festival.png",
+     "path": "/mediawiki/images/en/4/47/Festival.png",
+     "exists": true,
+     "w": 16,
+     "h": 16
+    }
+   ]
+  },
+  "clock": {
+   "name": "时钟",
+   "en": "Clock",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Clock.png",
+     "path": "/mediawiki/images/en/3/35/Clock.png",
+     "exists": true,
+     "w": 255,
+     "h": 236
+    }
+   ]
+  },
+  "farming": {
+   "name": "耕种",
+   "en": "Farming",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Farming Skill Icon.png",
+     "path": "/mediawiki/images/en/8/82/Farming_Skill_Icon.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "fishing": {
+   "name": "钓鱼",
+   "en": "Fishing",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fishing Skill Icon.png",
+     "path": "/mediawiki/images/en/e/e7/Fishing_Skill_Icon.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "mining": {
+   "name": "采矿",
+   "en": "Mining",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Mining Skill Icon.png",
+     "path": "/mediawiki/images/en/2/2f/Mining_Skill_Icon.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "backpack": {
+   "name": "背包",
+   "en": "Backpack",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Backpack.png",
+     "path": "/mediawiki/images/en/b/b1/Backpack.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "map": {
+   "name": "地图",
+   "en": "Map",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Map Tab.png",
+     "path": "/mediawiki/images/en/3/39/Map_Tab.png",
+     "exists": true,
+     "w": 64,
+     "h": 68
+    }
+   ]
+  },
+  "quest": {
+   "name": "任务",
+   "en": "Quests",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Quest.png",
+     "path": "/mediawiki/images/en/c/c0/Quest.png",
+     "exists": true,
+     "w": 32,
+     "h": 32
+    }
+   ]
+  },
+  "journal": {
+   "name": "日志",
+   "en": "Journal",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Journal Scrap.png",
+     "path": "/mediawiki/images/en/c/c4/Journal_Scrap.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "options": {
+   "name": "选项",
+   "en": "Options",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Advanced Options Button.png",
+     "path": "/mediawiki/images/en/c/cd/Advanced_Options_Button.png",
+     "exists": true,
+     "w": 80,
+     "h": 80
+    }
+   ]
+  },
+  "luck_buff": {
+   "name": "幸运",
+   "en": "Luck",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Luck Buff.png",
+     "path": "/mediawiki/images/en/4/48/Luck_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "magnetism": {
+   "name": "磁力",
+   "en": "Magnetism",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Magnetism Buff.png",
+     "path": "/mediawiki/images/en/b/b2/Magnetism_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "life_elixir": {
+   "name": "生命药水",
+   "en": "Life Elixir",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Life Elixir.png",
+     "path": "/mediawiki/images/en/6/6e/Life_Elixir.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "ginger_ale": {
+   "name": "姜汁汽水",
+   "en": "Ginger Ale",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Ginger Ale.png",
+     "path": "/mediawiki/images/en/1/1a/Ginger_Ale.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "bundle": {
+   "name": "收集包",
+   "en": "Bundles",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Bundle Icon.png",
+     "path": "/mediawiki/images/en/0/01/Bundle_Icon.png",
+     "exists": true,
+     "w": 52,
+     "h": 52
+    }
+   ]
+  },
+  "speed_buff": {
+   "name": "速度",
+   "en": "Speed",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Speed Buff.png",
+     "path": "/mediawiki/images/en/b/b3/Speed_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "defense_buff": {
+   "name": "防御",
+   "en": "Defense",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Defense Buff.png",
+     "path": "/mediawiki/images/en/e/e9/Defense_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "attack_buff": {
+   "name": "攻击",
+   "en": "Attack",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Attack Buff.png",
+     "path": "/mediawiki/images/en/3/32/Attack_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "garlic": {
+   "name": "大蒜油",
+   "en": "Oil of Garlic",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Oil of Garlic Buff.png",
+     "path": "/mediawiki/images/en/a/ae/Oil_of_Garlic_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  }
  }
 }

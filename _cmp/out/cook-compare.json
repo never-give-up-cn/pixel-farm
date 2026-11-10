@@ -1,0 +1,1171 @@
+{
+ "match": [
+  {
+   "id": "algae_soup",
+   "en": "Algae Soup"
+  },
+  {
+   "id": "artichoke_dip",
+   "en": "Artichoke Dip"
+  },
+  {
+   "id": "autumn_bounty",
+   "en": "Autumn's Bounty"
+  },
+  {
+   "id": "banana_pudding",
+   "en": "Banana Pudding"
+  },
+  {
+   "id": "bean_hotpot",
+   "en": "Bean Hotpot"
+  },
+  {
+   "id": "blackberry_cobbler",
+   "en": "Blackberry Cobbler"
+  },
+  {
+   "id": "bread",
+   "en": "Bread"
+  },
+  {
+   "id": "bruschetta",
+   "en": "Bruschetta"
+  },
+  {
+   "id": "carp_surprise",
+   "en": "Carp Surprise"
+  },
+  {
+   "id": "cheese_cauliflower",
+   "en": "Cheese Cauliflower"
+  },
+  {
+   "id": "chowder",
+   "en": "Chowder"
+  },
+  {
+   "id": "coleslaw",
+   "en": "Coleslaw"
+  },
+  {
+   "id": "cookies",
+   "en": "Cookie"
+  },
+  {
+   "id": "crab_cakes",
+   "en": "Crab Cakes"
+  },
+  {
+   "id": "cranberry_sauce",
+   "en": "Cranberry Sauce"
+  },
+  {
+   "id": "crispy_bass",
+   "en": "Crispy Bass"
+  },
+  {
+   "id": "fiddlehead_risotto",
+   "en": "Fiddlehead Risotto"
+  },
+  {
+   "id": "fried_calamari",
+   "en": "Fried Calamari"
+  },
+  {
+   "id": "fried_eel",
+   "en": "Fried Eel"
+  },
+  {
+   "id": "fried_egg",
+   "en": "Fried Egg"
+  },
+  {
+   "id": "fruit_salad",
+   "en": "Fruit Salad"
+  },
+  {
+   "id": "glazed_yams",
+   "en": "Glazed Yams"
+  },
+  {
+   "id": "hashbrowns",
+   "en": "Hashbrowns"
+  },
+  {
+   "id": "ice_cream",
+   "en": "Ice Cream"
+  },
+  {
+   "id": "lobster_bisque",
+   "en": "Lobster Bisque"
+  },
+  {
+   "id": "maki_roll",
+   "en": "Maki Roll"
+  },
+  {
+   "id": "mango_sticky_rice",
+   "en": "Mango Sticky Rice"
+  },
+  {
+   "id": "maple_bar",
+   "en": "Maple Bar"
+  },
+  {
+   "id": "parsnip_soup",
+   "en": "Parsnip Soup"
+  },
+  {
+   "id": "pepper_poppers",
+   "en": "Pepper Poppers"
+  },
+  {
+   "id": "pink_cake",
+   "en": "Pink Cake"
+  },
+  {
+   "id": "pizza",
+   "en": "Pizza"
+  },
+  {
+   "id": "pumpkin_soup",
+   "en": "Pumpkin Soup"
+  },
+  {
+   "id": "radish_salad",
+   "en": "Radish Salad"
+  },
+  {
+   "id": "red_plate",
+   "en": "Red Plate"
+  },
+  {
+   "id": "rhubarb_pie",
+   "en": "Rhubarb Pie"
+  },
+  {
+   "id": "rice_pudding",
+   "en": "Rice Pudding"
+  },
+  {
+   "id": "roasted_hazelnuts",
+   "en": "Roasted Hazelnuts"
+  },
+  {
+   "id": "roots_platter",
+   "en": "Roots Platter"
+  },
+  {
+   "id": "salad",
+   "en": "Salad"
+  },
+  {
+   "id": "sashimi",
+   "en": "Sashimi"
+  },
+  {
+   "id": "spaghetti",
+   "en": "Spaghetti"
+  },
+  {
+   "id": "spicy_eel",
+   "en": "Spicy Eel"
+  },
+  {
+   "id": "squid_ink_ravioli",
+   "en": "Squid Ink Ravioli"
+  },
+  {
+   "id": "survival_burger",
+   "en": "Survival Burger"
+  },
+  {
+   "id": "tortilla",
+   "en": "Tortilla"
+  },
+  {
+   "id": "triple_shot_espresso",
+   "en": "Triple Shot Espresso"
+  },
+  {
+   "id": "tropical_curry",
+   "en": "Tropical Curry"
+  }
+ ],
+ "diff": [
+  {
+   "id": "baked_fish",
+   "en": "Baked Fish",
+   "ours": [
+    [
+     "Sunfish",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Bream",
+     1
+    ],
+    [
+     "Sunfish",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "blueberry_tart",
+   "en": "Blueberry Tart",
+   "ours": [
+    [
+     "Blueberry",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Blueberry",
+     1
+    ],
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "chocolate_cake",
+   "en": "Chocolate Cake",
+   "ours": [
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Hazelnut",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "complete_breakfast",
+   "en": "Complete Breakfast",
+   "ours": [
+    [
+     "Bread",
+     1
+    ],
+    [
+     "Fried Egg",
+     1
+    ],
+    [
+     "Hashbrowns",
+     1
+    ],
+    [
+     "Milk",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Fried Egg",
+     1
+    ],
+    [
+     "Hashbrowns",
+     1
+    ],
+    [
+     "Milk",
+     1
+    ],
+    [
+     "Pancakes",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "cranberry_candy",
+   "en": "Cranberry Candy",
+   "ours": [
+    [
+     "Cranberries",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Apple",
+     1
+    ],
+    [
+     "Cranberries",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "dish_o_the_sea",
+   "en": "Dish O' The Sea",
+   "ours": [
+    [
+     "Corn",
+     1
+    ],
+    [
+     "Sardine",
+     2
+    ]
+   ],
+   "wiki": [
+    [
+     "Hashbrowns",
+     1
+    ],
+    [
+     "Sardine",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "eggplant_parmesan",
+   "en": "Eggplant Parmesan",
+   "ours": [
+    [
+     "Eggplant",
+     2
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Eggplant",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "escargot",
+   "en": "Escargot",
+   "ours": [
+    [
+     "Butter",
+     1
+    ],
+    [
+     "Garlic",
+     1
+    ],
+    [
+     "Snail",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Garlic",
+     1
+    ],
+    [
+     "Snail",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "farmers_lunch",
+   "en": "Farmer's Lunch",
+   "ours": [
+    [
+     "Cheese",
+     1
+    ],
+    [
+     "Fried Egg",
+     1
+    ],
+    [
+     "Parsnip",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Omelet",
+     1
+    ],
+    [
+     "Parsnip",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "fish_stew",
+   "en": "Fish Stew",
+   "ours": [
+    [
+     "Fish",
+     1
+    ],
+    [
+     "Onion",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Crayfish",
+     1
+    ],
+    [
+     "Mussel",
+     1
+    ],
+    [
+     "Periwinkle",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "fish_taco",
+   "en": "Fish Taco",
+   "ours": [
+    [
+     "Fish",
+     1
+    ],
+    [
+     "Mayonnaise",
+     1
+    ],
+    [
+     "Red Cabbage",
+     1
+    ],
+    [
+     "Tortilla",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Mayonnaise",
+     1
+    ],
+    [
+     "Red Cabbage",
+     1
+    ],
+    [
+     "Tortilla",
+     1
+    ],
+    [
+     "Tuna",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "fried_mushroom",
+   "en": "Fried Mushroom",
+   "ours": [
+    [
+     "Common Mushroom",
+     1
+    ],
+    [
+     "Oil",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Common Mushroom",
+     1
+    ],
+    [
+     "Morel",
+     1
+    ],
+    [
+     "Oil",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "ginger_ale",
+   "en": "Ginger Ale",
+   "ours": [
+    [
+     "Ginger",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Ginger",
+     3
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "lucky_lunch",
+   "en": "Lucky Lunch",
+   "ours": [
+    [
+     "Blueberry",
+     1
+    ],
+    [
+     "Sea Cucumber",
+     1
+    ],
+    [
+     "Tortilla",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Blue Jazz",
+     1
+    ],
+    [
+     "Sea Cucumber",
+     1
+    ],
+    [
+     "Tortilla",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "miners_treat",
+   "en": "Miner's Treat",
+   "ours": [
+    [
+     "Carrot",
+     1
+    ],
+    [
+     "Milk",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Cave Carrot",
+     2
+    ],
+    [
+     "Milk",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "moss_soup",
+   "en": "Moss Soup",
+   "ours": [
+    [
+     "Green Algae",
+     1
+    ],
+    [
+     "Moss",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Moss",
+     20
+    ]
+   ]
+  },
+  {
+   "id": "omelet",
+   "en": "Omelet",
+   "ours": [
+    [
+     "Egg",
+     2
+    ],
+    [
+     "Milk",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Milk",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pale_broth",
+   "en": "Pale Broth",
+   "ours": [
+    [
+     "Garlic",
+     1
+    ],
+    [
+     "White Algae",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "White Algae",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "pancakes",
+   "en": "Pancakes",
+   "ours": [
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Milk",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Egg",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "plum_pudding",
+   "en": "Plum Pudding",
+   "ours": [
+    [
+     "Plum",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ],
+    [
+     "Wild Plum",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "poi",
+   "en": "Poi",
+   "ours": [
+    [
+     "Taro Root",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Taro Root",
+     4
+    ]
+   ]
+  },
+  {
+   "id": "poppyseed_muffin",
+   "en": "Poppyseed Muffin",
+   "ours": [
+    [
+     "Poppy Seeds",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Poppy",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pumpkin_pie",
+   "en": "Pumpkin Pie",
+   "ours": [
+    [
+     "Pumpkin",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Milk",
+     1
+    ],
+    [
+     "Pumpkin",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "salmon_dinner",
+   "en": "Salmon Dinner",
+   "ours": [
+    [
+     "Cauliflower",
+     1
+    ],
+    [
+     "Potato",
+     1
+    ],
+    [
+     "Salmon",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Amaranth",
+     1
+    ],
+    [
+     "Kale",
+     1
+    ],
+    [
+     "Salmon",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "seafoam_pudding",
+   "en": "Seafoam Pudding",
+   "ours": [
+    [
+     "Clam",
+     1
+    ],
+    [
+     "Seaweed",
+     1
+    ],
+    [
+     "Sugar",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Flounder",
+     1
+    ],
+    [
+     "Midnight Carp",
+     1
+    ],
+    [
+     "Squid Ink",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "shrimp_cocktail",
+   "en": "Shrimp Cocktail",
+   "ours": [
+    [
+     "Shrimp",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Shrimp",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ],
+    [
+     "Wild Horseradish",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "stir_fry",
+   "en": "Stir Fry",
+   "ours": [
+    [
+     "Carrot",
+     1
+    ],
+    [
+     "Cauliflower",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Cave Carrot",
+     1
+    ],
+    [
+     "Common Mushroom",
+     1
+    ],
+    [
+     "Kale",
+     1
+    ],
+    [
+     "Oil",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "strange_bun",
+   "en": "Strange Bun",
+   "ours": [
+    [
+     "Void Egg",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Periwinkle",
+     1
+    ],
+    [
+     "Void Mayonnaise",
+     1
+    ],
+    [
+     "Wheat Flour",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "stuffing",
+   "en": "Stuffing",
+   "ours": [
+    [
+     "Bread",
+     1
+    ],
+    [
+     "Cranberries",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Bread",
+     1
+    ],
+    [
+     "Cranberries",
+     1
+    ],
+    [
+     "Hazelnut",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "super_meal",
+   "en": "Super Meal",
+   "ours": [
+    [
+     "Cauliflower",
+     1
+    ],
+    [
+     "Cranberries",
+     1
+    ],
+    [
+     "Hazelnut",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Artichoke",
+     1
+    ],
+    [
+     "Bok Choy",
+     1
+    ],
+    [
+     "Cranberries",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "tom_kha_soup",
+   "en": "Tom Kha Soup",
+   "ours": [
+    [
+     "Coconut",
+     1
+    ],
+    [
+     "Mushroom",
+     1
+    ],
+    [
+     "Shrimp",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Coconut",
+     1
+    ],
+    [
+     "Common Mushroom",
+     1
+    ],
+    [
+     "Shrimp",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "trout_soup",
+   "en": "Trout Soup",
+   "ours": [
+    [
+     "Green Algae",
+     1
+    ],
+    [
+     "Trout",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Green Algae",
+     1
+    ],
+    [
+     "Rainbow Trout",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vegetable_stew",
+   "en": "Vegetable Medley",
+   "ours": [
+    [
+     "Carrot",
+     1
+    ],
+    [
+     "Potato",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ],
+   "wiki": [
+    [
+     "Beet",
+     1
+    ],
+    [
+     "Tomato",
+     1
+    ]
+   ]
+  }
+ ],
+ "missing": []
+}

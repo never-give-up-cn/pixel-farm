@@ -1,5 +1,14 @@
 # 比对工具的临时产物
 __pycache__/
-_cmp/out/.chrome/
+_cmp/nm/
+_cmp/out/.chrome*/
 _cmp/out/wiki-*.html
+_cmp/out/prefix-*.html
+_cmp/out/Special_*.html
+_cmp/out/*.grid.html
 _cmp/pending.json
+_cmp/failcount.json
+_cmp/run.log
+_cmp/ranktest.log
+
+_cmp/out/art-*.html

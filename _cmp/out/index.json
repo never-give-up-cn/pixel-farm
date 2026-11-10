@@ -10,5 +10,7 @@
  "dishes",
  "buildings",
  "npcs",
- "animals"
+ "animals",
+ "bundles",
+ "ui"
 ]

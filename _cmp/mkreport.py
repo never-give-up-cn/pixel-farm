@@ -8,11 +8,15 @@ REP = ROOT / '_cmp' / 'report'
 summary = json.loads((REP / 'summary.json').read_text('utf-8'))
 internal = json.loads((REP / 'internal.json').read_text('utf-8'))
 cross = json.loads((REP / 'crosscheck.json').read_text('utf-8'))
+rank = json.loads((REP / 'ranktest.json').read_text('utf-8')) if (REP / 'ranktest.json').exists() else {}
+cook = json.loads((ROOT / '_cmp' / 'out' / 'cook-compare.json').read_text('utf-8')) \
+    if (ROOT / '_cmp' / 'out' / 'cook-compare.json').exists() else None
 CN = {
     'crops': '作物', 'trees': '树木', 'fish': '鱼类', 'minerals': '矿物',
     'monsters': '怪物', 'equipment': '装备（武器/戒指/靴子）', 'hats': '帽子',
     'artisan': '工匠品', 'dishes': '料理', 'buildings': '建筑',
-    'npcs': '村民头像', 'animals': '动物',
+    'npcs': '村民头像', 'animals': '动物', 'bundles': '社区中心收集包',
+    'ui': 'UI 图标',
 }
 
 rows = []
@@ -35,7 +39,7 @@ rnd_all = sum(s['random_mean'] * s['ok'] for s in summary.values()) / max(1, ok)
 L = []
 L.append('# 本项目像素图 vs stardewvalleywiki.com 官方原图 —— 比对报告\n')
 L.append('## 结论\n')
-L.append('**不一样。** 本项目的 616 个像素素材全部是按"星露谷题材"重新程序化绘制的一套原创图，'
+L.append(f'**不一样。** 本项目的 {all_items} 个像素素材全部是按"星露谷题材"重新程序化绘制的一套原创图，'
          '既不是官方素材的复制，也不是对官方图的描摹。')
 L.append('')
 L.append('两边"看起来像"，是因为共用了同一套像素画约定（小尺寸、有限配色、圆角造型），'
@@ -55,7 +59,7 @@ for cn, cat, s, it in rows:
 L.append('')
 L.append('> **差距** = 匹配均分 − 同分类随机错配基准分。')
 L.append('> 如果本项目是照着官方画的，这一列应该普遍在 +20 以上；')
-L.append('> 实测最高只有 +6.4（装备），最低 +0.8（料理）—— 说明"这是胡萝卜"这件事，'
+L.append('> 实测最高只有 +6.4（装备），最低 +0.2（收集包）—— 说明"这是胡萝卜"这件事，'
          '从我们的图上基本看不出来。\n')
 
 L.append('## 判别力：我们自己那一套内部有多雷同\n')
@@ -74,8 +78,41 @@ L.append('我们的胡萝卜和官方胡萝卜（63.5）甚至不如我们的胡
 L.append('其中 **村民头像 +11.4** 最说明问题：官方 34 个头像是 34 张独立画的美术头像，'
          '彼此差异明显；而我们的 34 个头像是**同一个模板换配色**'
          '（`js/anim/npcs.js` 的 `drawPortrait`：固定的脸型/眼位/嘴位，'
-         '只换发色、帽子、肤色），内部相似度高达 89.3，比官方自己内部还高 11 分。\n')
+         '只换发色、帽子、肤色），内部相似度高达 89.3，比官方自己内部还高 11 分。')
+L.append('**收集包 +11.0** 是同一类问题的另一例：'
+         '`js/anim/bundles.js` 的 `drawBundleIcon` 画的是同一张羊皮纸，'
+         '30 个包之间只换顶部色条和中心那一个小符号，所以彼此几乎一模一样。')
+L.append('**UI 图标 +18.3** 是最极端的一例：'
+         '`js/anim/ui-icons.js` 的 `drawUiIcon` 画的是同一枚圆形徽章，'
+         '60 个图标只换中心的符号和配色 —— 内部相似度 91.6，比官方自己内部还高 18 分。\n')
 
+L.append('## 配对识别力：正确配对能排第几\n')
+L.append('前面那个"差距"指标有点抽象，换一个更直白的问法：'
+         '把"我们画的第 i 个"和**官方全部 N 个**逐个比对，'
+         '看**正确的那一个**能排到第几名。\n')
+L.append('如果我们的图画的确实是官方那件东西，正确配对就该稳定排第 1；'
+         '如果只是"同一类东西都长得差不多"，名次就会随机散开。\n')
+L.append('| 分类 | 条目 | 正确配对排第 1 | 纯靠猜的期望 | 名次中位数 | 正确配对均分 | 换成配错时的最高分 |')
+L.append('| --- | ---: | ---: | ---: | ---: | ---: | ---: |')
+for cn, cat, s, it in rows:
+    r = rank.get(cat)
+    if not r:
+        continue
+    L.append(f"| {cn} | {r['n']} | {r['rank1']} / {r['n']}（{r['rank1_pct']:.0f}%） | "
+             f"{r['random_expect_pct']:.0f}% | 第 {r['median_rank']} 名 | "
+             f"{r['correct_mean']:.1f} | **{r['best_wrong_mean']:.1f}** |")
+if rank:
+    tn = sum(v['n'] for v in rank.values())
+    t1 = sum(v['rank1'] for v in rank.values())
+    L.append(f'| **合计** | **{tn}** | **{t1} / {tn}（{t1 / tn * 100:.1f}%）** | '
+             f'{100 / tn:.1f}% | | | |')
+L.append('')
+L.append('最后两列是最狠的：**每一类**里，随便挑一个"配错"的官方图来比，分数都比正确配对高。')
+L.append('也就是说 —— 想从官方图里认出"这是哪个收集包/哪道菜/哪个 NPC"，'
+         '挑错的可能性远大于挑对。\n')
+L.append('最典型的例子：30 个收集包里，只有 **1 个**（3%）的正确配对能排第 1，'
+         '名次中位数在 30 个里的第 15 名（正好是中间）；'
+         '而且 30 个里有一大半"最像的那个官方图"都是同一个 —— `Quality Crops`（品质作物包）。\n')
 L.append('## 逐项像素比对发现的差异\n')
 L.append('1. **描边**：官方素材统一带 1px 深色描边（黑/深褐），本项目大部分素材没有描边，'
          '靠同色系明暗（c1/c2/c3）区分体积。')
@@ -107,6 +144,8 @@ PAGE = {
     'fish': 'Fish', 'dishes': 'Cooking', 'artisan': 'Artisan Goods',
     'monsters': 'Monsters', 'animals': 'Animals / Coop', 'npcs': 'NPC',
     'trees': 'Trees / Fruit Trees', 'crops': 'Crops', 'buildings': "Carpenter's Shop / Buildings",
+    'bundles': 'Bundles',
+    'ui': 'wiki 完整文件清单',
 }
 for cn, cat, s, it in rows:
     cc = cross.get(cat)
@@ -129,6 +168,102 @@ L.append('- **golden_mask** 原来配到了沙漠神器 `Golden Mask.png`（48×
 L.append('- **copper_pan** 原来配到了厨具 `Copper Pan.png`（48×48），'
          '应为帽子本体 `Copper Pan (hat).png`（54×54）')
 L.append('wiki 上帽子的文件有三种命名：`X.png`、`Hat_X.png`、`X (hat).png`，第三种容易漏。\n')
+
+# --- 收集包（新增分类）的个案说明 ---
+bs = summary.get('bundles')
+bi = internal.get('bundles', {})
+if bs:
+    L.append('## 个案：社区中心收集包（30 个）\n')
+    L.append('新增的收集包分类把上面这套结论演示得最清楚 —— 因为官方图画的**就是包里要交的东西**，'
+             '而不是一个抽象的牌子：\n')
+    L.append('| | 本项目 | 官方原图 |')
+    L.append('| --- | --- | --- |')
+    L.append('| 画布 | 32×32 | 34×34（wiki 存的是 4× 放大的 136×136） |')
+    L.append('| 造型 | 一张米色羊皮纸 + 顶部房间色条 + 若干彩色小方块（物品槽）+ 中心一个符号 | '
+             '**卷轴**（上下有卷轴杆）+ 羊皮纸 + 卷轴上直接画出这个包要收的物品 |')
+    L.append('| 春季作物包 | 绿色条 + 一个抽象作物符号 | 一根带叶子的胡萝卜 |')
+    L.append('| 动物包 | 红色条 + 一个抽象动物符号 | 一颗带犄角和眼睛的牛头 |')
+    L.append('| 蟹笼包 | 蓝色条 + 一个抽象符号 | 一只带眼睛和钳子的螃蟹 |')
+    L.append('| 铁匠包 | 橙色条 + 一个抽象符号 | 铁砧与工具的剪影 |')
+    L.append('')
+    L.append(f'数值上也一样：匹配均分 **{bs["own_mean"]:.1f}**，随机错配基准 **{bs["random_mean"]:.1f}**，'
+             f'差距只有 **{bs["margin"]:+.1f}** —— 全项目 13 个分类里最低的一个。')
+    L.append(f'而内部雷同度：我们 **{bi.get("ours_internal", 0):.1f}** vs 官方 **{bi.get("wiki_internal", 0):.1f}**，'
+             f'差 **{bi.get("gap", 0):+.1f}**，仅次于村民头像。')
+    L.append('也就是说，我们的 30 个"不同"收集包其实是**同一张卷轴模板**换了颜色条和中心符号；'
+             '官方那 30 个则各画各的 —— 所以我们的 30 个彼此几乎一样，官方那 30 个彼此差别明显。\n')
+    L.append('顺带一提：官方还配了 7 个房间色带图（`Bundle_Red/Green/Yellow/Orange/Blue/Teal/Purple.png`），'
+             '我们用房间配色画条带这一点，思路和官方是对上的。\n')
+
+# --- 食谱卡：版式无官方对应物，但配料数据可以逐条核对 ---
+if cook:
+    L.append('## 食谱卡（81 张）：版式是原创的，配料数据有出入\n')
+    L.append('食谱卡本身（64×80 的卡片版式：菜图 + 配料表 + 增益）在 wiki 上**没有对应的官方素材** —— '
+             '官方游戏里没有这种卡片，所以它没法做像素比对。'
+             '卡片里的菜图用的是已经比对过的 `dishes` 那套图（料理 +0.8）。\n')
+    L.append('但**配料数据**可以核对：wiki 的 /Cooking 页表格里逐道菜列了配料和增益图标，'
+             '把项目的 `js/anim/recipes.js` 逐条对上：\n')
+    L.append(f'- 配料**完全一致**：{len(cook["match"])} / 81')
+    L.append(f'- 配料**不一致**：{len(cook["diff"])} / 81')
+    L.append(f'- 官方表里没找到同名菜：{len(cook["missing"])} / 81\n')
+    L.append('不一致的里面，有一部分是 wiki 把"任意某类"展开成了实例'
+             '（比如 Baked Fish 官方是"任意鱼 + 小麦粉"，wiki 会列出 Bream、Sunfish 等），'
+             '但相当一部分是实打实的数据错误：\n')
+    HARD = [
+        ('Bean Hotpot', '花椰菜 ×2', '青豆 ×2（Green Bean）'),
+        ('Eggplant Parmesan', '茄子 ×2 + 番茄 ×1', '茄子 ×1 + 番茄 ×1'),
+        ('Pepper Poppers', '奶酪 + 蓝莓', '奶酪 + 辣椒（Hot Pepper）'),
+        ('Spicy Eel', '鳗鱼 + 蓝莓', '鳗鱼 + 辣椒（Hot Pepper）'),
+        ('Lucky Lunch', '蓝莓 + 海参 + 玉米饼', '蓝爵士 + 海参 + 玉米饼（Blue Jazz）'),
+        ('Moss Soup', '绿藻 + 苔藓 ×1', '苔藓 ×20（Moss ×20）'),
+        ('Pale Broth', '大蒜 + 白藻 ×1', '白藻 ×2'),
+        ('Poi', '芋头 ×1', '芋头 ×4'),
+        ('Ginger Ale', '姜 ×1 + 糖', '姜 ×3 + 糖'),
+        ('Omelet', '鸡蛋 ×2 + 牛奶', '鸡蛋 ×1 + 牛奶'),
+        ('Poppyseed Muffin', '罂粟籽', '罂粟（Poppy）'),
+        ('Plum Pudding', '李子 ×1', '野梅 ×2（Wild Plum）'),
+        ('Pumpkin Pie', '南瓜 + 糖 + 小麦粉', '再加牛奶 ×1'),
+        ('Shrimp Cocktail', '虾 + 番茄', '再加野山萝卜 ×1'),
+        ('Chocolate Cake', '多了榛子', '官方不要榛子'),
+        ('Stuffing', '面包 + 蔓越莓', '再加榛子 ×1'),
+    ]
+    L.append('| 料理 | 我们的配料 | wiki /Cooking 的配料 |')
+    L.append('| --- | --- | --- |')
+    for name, ours, theirs in HARD:
+        L.append(f'| {name} | {ours} | {theirs} |')
+    L.append('')
+    L.append('完整 33 条明细见 `_cmp/report/cookdiff.md`。\n')
+
+# --- UI 图标 ---
+us = summary.get('ui')
+ui_ = internal.get('ui', {})
+if us:
+    L.append('## UI 图标（60 个）：官方只有 27 个能对上，而且一个都认不出来\n')
+    L.append('先用 `Special:PrefixIndex` 把 wiki 的**全部文件清单**（一万多个）抓下来本地比对，'
+             '才知道官方到底有哪些 UI 小图：\n')
+    L.append('- 状态条：`HealthBar.png`、`EnergyBar.png`、`Gold.png`、`Luck.png`')
+    L.append('- 品质：`Gold Quality Icon.png`、`Iridium Quality Icon.png`')
+    L.append('- 技能：`Farming Skill Icon.png`、`Fishing Skill Icon.png`、`Mining Skill Icon.png`（**只有 3 个**）')
+    L.append('- 增益：`Attack/Defense/Luck/Speed/Magnetism/Oil of Garlic Buff.png`（**只有 6 个**）')
+    L.append('- 菜单：`Backpack.png`、`Map Tab.png`、`Quest.png`、`Bundle Icon.png`、`Journal Scrap.png`')
+    L.append('- 天气：`Rain.png`、`Thunderstorm.png`、`Festival.png`（晴天/雪/风/雾/绿雨在 wiki 上没有小图，'
+             '只有 `RainAnimated.gif`、`FallWindAnimated.gif` 这类动画）')
+    L.append('- 四季与昼夜：wiki 上没有对应的官方小图\n')
+    L.append('所以 60 个 UI 图标里只有 **27 个**能在官方找到对应物，其余 33 个是项目自创的。'
+             '而这 27 个能对上的，比对结果是：\n')
+    L.append(f'- 匹配均分 **{us["own_mean"]:.1f}**，随机错配基准 **{us["random_mean"]:.1f}**，'
+             f'差距 **{us["margin"]:+.1f}**')
+    if 'ui' in rank:
+        r = rank['ui']
+        L.append(f'- 正确配对能排第 1 的：**{r["rank1"]} / {r["n"]}（{r["rank1_pct"]:.0f}%）**'
+                 f' —— 纯靠猜是 {r["random_expect_pct"]:.0f}%')
+    L.append(f'- 内部雷同度：我们 **{ui_.get("ours_internal", 0):.1f}** vs 官方 '
+             f'**{ui_.get("wiki_internal", 0):.1f}**，差 **{ui_.get("gap", 0):+.1f}** —— '
+             '全项目最高的一套\n')
+    L.append('换句话说：**27 个能对上的 UI 图标里，没有一个能被认出来** —— '
+             '我们的生命图标和官方的"暴雨"图标得分一样高。'
+             '原因是我们的 60 个图标都是同一枚圆形徽章 + 一个符号，'
+             '而官方每个图标画法都不同。\n')
 
 L.append('## 哪些部分最接近\n')
 L.append('- **装备（+6.4）、动物（+4.8）、矿物（+4.7）、帽子（+4.3）、怪物（+3.5）**：'

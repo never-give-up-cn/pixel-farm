@@ -38,6 +38,23 @@ const md5path = (name) => {
 };
 const enc = (s) => s.trim().replace(/\s+/g, '_');
 
+/* UI 图标 -> 官方文件名（照 wiki 完整文件清单人工核对，见 genurls 里 ui 分类的注释） */
+const UI_FILE_MAP = {
+  health: 'HealthBar.png', energy: 'EnergyBar.png', gold: 'Gold.png', luck: 'Luck.png',
+  gold_quality: 'Gold Quality Icon.png', iridium_quality: 'Iridium Quality Icon.png',
+  rain: 'Rain.png', storm: 'Thunderstorm.png', festival: 'Festival.png',
+  clock: 'Clock.png',
+  farming: 'Farming Skill Icon.png', fishing: 'Fishing Skill Icon.png',
+  mining: 'Mining Skill Icon.png',
+  speed_buff: 'Speed Buff.png', luck_buff: 'Luck Buff.png',
+  defense_buff: 'Defense Buff.png', attack_buff: 'Attack Buff.png',
+  magnetism: 'Magnetism Buff.png', garlic: 'Oil of Garlic Buff.png',
+  life_elixir: 'Life Elixir.png', ginger_ale: 'Ginger Ale.png',
+  backpack: 'Backpack.png', map: 'Map Tab.png', journal: 'Journal Scrap.png',
+  quest: 'Quest.png', bundle: 'Bundle Icon.png',
+  options: 'Advanced Options Button.png',
+};
+
 /* ---- 分类定义：模块、数据数组、候选文件名生成 ---- */
 const CATS = {
   crops: {
@@ -153,6 +170,55 @@ const CATS = {
     cands: (it) => {
       const base = enc(it.en);
       return [{ file: `${base}.png`, role: 'icon' }, { file: `${base}_Animal.png`, role: 'icon2' }];
+    }
+  },
+  bundles: {
+    mod: 'bundles.js', list: 'BUNDLES',
+    // 社区中心收集包：官方图标统一叫 "<名字>_Bundle.png"
+    // 例外一：钱袋类，项目 en 是 "2,500g"，官方文件名是 "2500_Bundle.png"
+    // 例外二：项目 en 已以 " Bundle" 结尾的，官方就是 "Animal_Bundle.png"（不重复加后缀）
+    // 例外三：撇号写法不统一 —— Blacksmith_Bundle.png 没有撇号，Geologist's_Bundle.png 有
+    cands: (it) => {
+      const out = [];
+      const money = /^([\d,]+)\s*g$/i.exec(it.en);
+      if (money) {
+        out.push({ file: `${money[1].replace(/,/g, '')}_Bundle.png`, role: 'icon' });
+        return out;
+      }
+      const base = enc(it.en);
+      out.push({ file: /_Bundle$/.test(base) ? `${base}.png` : `${base}_Bundle.png`, role: 'icon' });
+      if (base.endsWith("'s")) out.push({ file: `${base.replace(/'s$/, '')}_Bundle.png`, role: 'icon2' });
+      if (base.includes("'")) {
+        out.push({ file: `${base.replace(/'/g, '')}_Bundle.png`, role: 'icon3' });
+        out.push({ file: `${base.replace(/'/g, '')}.png`, role: 'icon4' });
+      }
+      return out;
+    }
+  },
+  ui: {
+    mod: 'ui-icons.js', list: 'UI_ICONS',
+    // UI 图标的官方文件名和项目里的 en 完全没有规律（HealthBar.png / Gold Quality Icon.png /
+    // Speed Buff.png ...），只能按 id 逐个指定。这份表是照着 wiki 的完整文件清单
+    // （Special:PrefixIndex 逐字母抓下来的 1 万多个文件）人工核对出来的。
+    // 表里没有的 id，说明 wiki 上确实没有对应的官方 UI 小图。
+    fileMap: {
+      health: 'HealthBar.png', energy: 'EnergyBar.png', gold: 'Gold.png', luck: 'Luck.png',
+      gold_quality: 'Gold Quality Icon.png', iridium_quality: 'Iridium Quality Icon.png',
+      rain: 'Rain.png', storm: 'Thunderstorm.png', festival: 'Festival.png',
+      clock: 'Clock.png',
+      farming: 'Farming Skill Icon.png', fishing: 'Fishing Skill Icon.png',
+      mining: 'Mining Skill Icon.png',
+      speed_buff: 'Speed Buff.png', luck_buff: 'Luck Buff.png',
+      defense_buff: 'Defense Buff.png', attack_buff: 'Attack Buff.png',
+      magnetism: 'Magnetism Buff.png', garlic: 'Oil of Garlic Buff.png',
+      life_elixir: 'Life Elixir.png', ginger_ale: 'Ginger Ale.png',
+      backpack: 'Backpack.png', map: 'Map Tab.png', journal: 'Journal Scrap.png',
+      quest: 'Quest.png', bundle: 'Bundle Icon.png',
+      options: 'Advanced Options Button.png',
+    },
+    cands: (it) => {
+      const f = UI_FILE_MAP[it.id];
+      return f ? [{ file: f, role: 'icon' }] : [];
     }
   }
 };

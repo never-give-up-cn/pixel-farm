@@ -26,6 +26,7 @@ function run(cmd, args, label) {
 
 const step = (script, label) => run('node', [path.join('_cmp', script), '.'], label);
 
+if (!step('genurls.mjs', '生成候选 URL 清单')) process.exit(1);
 if (!step('mergeextras.mjs', '合并额外候选')) process.exit(1);
 if (!run('node', [path.join('_cmp', 'verifyloop.mjs'), '.', '5'], '候选 URL 多轮验证')) process.exit(1);
 if (!step('mkmanifest.mjs', '生成分类清单')) process.exit(1);

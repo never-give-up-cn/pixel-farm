@@ -1,0 +1,310 @@
+{
+ "cat": "ui",
+ "count": 27,
+ "cell": 259,
+ "perRow": 8,
+ "rows": 4,
+ "gridW": 2072,
+ "gridH": 1036,
+ "oursW": "UI_W",
+ "oursH": "UI_H",
+ "items": [
+  {
+   "id": "health",
+   "name": "生命",
+   "en": "Health",
+   "wikiPath": "/mediawiki/images/en/3/35/HealthBar.png",
+   "wikiSize": [
+    78,
+    215
+   ],
+   "wikiFile": "HealthBar.png"
+  },
+  {
+   "id": "energy",
+   "name": "能量",
+   "en": "Energy",
+   "wikiPath": "/mediawiki/images/en/9/9d/EnergyBar.png",
+   "wikiSize": [
+    36,
+    215
+   ],
+   "wikiFile": "EnergyBar.png"
+  },
+  {
+   "id": "gold",
+   "name": "金币",
+   "en": "Gold",
+   "wikiPath": "/mediawiki/images/en/1/10/Gold.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Gold.png"
+  },
+  {
+   "id": "luck",
+   "name": "幸运",
+   "en": "Luck",
+   "wikiPath": "/mediawiki/images/en/f/f0/Luck.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Luck.png"
+  },
+  {
+   "id": "gold_quality",
+   "name": "金星",
+   "en": "Gold Quality",
+   "wikiPath": "/mediawiki/images/en/4/47/Gold_Quality_Icon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Gold Quality Icon.png"
+  },
+  {
+   "id": "iridium_quality",
+   "name": "铱星",
+   "en": "Iridium Quality",
+   "wikiPath": "/mediawiki/images/en/e/e4/Iridium_Quality_Icon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Iridium Quality Icon.png"
+  },
+  {
+   "id": "rain",
+   "name": "雨天",
+   "en": "Rain",
+   "wikiPath": "/mediawiki/images/en/1/1d/Rain.png",
+   "wikiSize": [
+    16,
+    16
+   ],
+   "wikiFile": "Rain.png"
+  },
+  {
+   "id": "storm",
+   "name": "雷雨",
+   "en": "Storm",
+   "wikiPath": "/mediawiki/images/en/7/7a/Thunderstorm.png",
+   "wikiSize": [
+    16,
+    16
+   ],
+   "wikiFile": "Thunderstorm.png"
+  },
+  {
+   "id": "festival",
+   "name": "节日",
+   "en": "Festival",
+   "wikiPath": "/mediawiki/images/en/4/47/Festival.png",
+   "wikiSize": [
+    16,
+    16
+   ],
+   "wikiFile": "Festival.png"
+  },
+  {
+   "id": "clock",
+   "name": "时钟",
+   "en": "Clock",
+   "wikiPath": "/mediawiki/images/en/3/35/Clock.png",
+   "wikiSize": [
+    255,
+    236
+   ],
+   "wikiFile": "Clock.png"
+  },
+  {
+   "id": "farming",
+   "name": "耕种",
+   "en": "Farming",
+   "wikiPath": "/mediawiki/images/en/8/82/Farming_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Farming Skill Icon.png"
+  },
+  {
+   "id": "fishing",
+   "name": "钓鱼",
+   "en": "Fishing",
+   "wikiPath": "/mediawiki/images/en/e/e7/Fishing_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Fishing Skill Icon.png"
+  },
+  {
+   "id": "mining",
+   "name": "采矿",
+   "en": "Mining",
+   "wikiPath": "/mediawiki/images/en/2/2f/Mining_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Mining Skill Icon.png"
+  },
+  {
+   "id": "backpack",
+   "name": "背包",
+   "en": "Backpack",
+   "wikiPath": "/mediawiki/images/en/b/b1/Backpack.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Backpack.png"
+  },
+  {
+   "id": "map",
+   "name": "地图",
+   "en": "Map",
+   "wikiPath": "/mediawiki/images/en/3/39/Map_Tab.png",
+   "wikiSize": [
+    64,
+    68
+   ],
+   "wikiFile": "Map Tab.png"
+  },
+  {
+   "id": "quest",
+   "name": "任务",
+   "en": "Quests",
+   "wikiPath": "/mediawiki/images/en/c/c0/Quest.png",
+   "wikiSize": [
+    32,
+    32
+   ],
+   "wikiFile": "Quest.png"
+  },
+  {
+   "id": "journal",
+   "name": "日志",
+   "en": "Journal",
+   "wikiPath": "/mediawiki/images/en/c/c4/Journal_Scrap.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Journal Scrap.png"
+  },
+  {
+   "id": "options",
+   "name": "选项",
+   "en": "Options",
+   "wikiPath": "/mediawiki/images/en/c/cd/Advanced_Options_Button.png",
+   "wikiSize": [
+    80,
+    80
+   ],
+   "wikiFile": "Advanced Options Button.png"
+  },
+  {
+   "id": "luck_buff",
+   "name": "幸运",
+   "en": "Luck",
+   "wikiPath": "/mediawiki/images/en/4/48/Luck_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Luck Buff.png"
+  },
+  {
+   "id": "magnetism",
+   "name": "磁力",
+   "en": "Magnetism",
+   "wikiPath": "/mediawiki/images/en/b/b2/Magnetism_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Magnetism Buff.png"
+  },
+  {
+   "id": "life_elixir",
+   "name": "生命药水",
+   "en": "Life Elixir",
+   "wikiPath": "/mediawiki/images/en/6/6e/Life_Elixir.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Life Elixir.png"
+  },
+  {
+   "id": "ginger_ale",
+   "name": "姜汁汽水",
+   "en": "Ginger Ale",
+   "wikiPath": "/mediawiki/images/en/1/1a/Ginger_Ale.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ginger Ale.png"
+  },
+  {
+   "id": "bundle",
+   "name": "收集包",
+   "en": "Bundles",
+   "wikiPath": "/mediawiki/images/en/0/01/Bundle_Icon.png",
+   "wikiSize": [
+    52,
+    52
+   ],
+   "wikiFile": "Bundle Icon.png"
+  },
+  {
+   "id": "speed_buff",
+   "name": "速度",
+   "en": "Speed",
+   "wikiPath": "/mediawiki/images/en/b/b3/Speed_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Speed Buff.png"
+  },
+  {
+   "id": "defense_buff",
+   "name": "防御",
+   "en": "Defense",
+   "wikiPath": "/mediawiki/images/en/e/e9/Defense_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Defense Buff.png"
+  },
+  {
+   "id": "attack_buff",
+   "name": "攻击",
+   "en": "Attack",
+   "wikiPath": "/mediawiki/images/en/3/32/Attack_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Attack Buff.png"
+  },
+  {
+   "id": "garlic",
+   "name": "大蒜油",
+   "en": "Oil of Garlic",
+   "wikiPath": "/mediawiki/images/en/a/ae/Oil_of_Garlic_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Oil of Garlic Buff.png"
+  }
+ ]
+}

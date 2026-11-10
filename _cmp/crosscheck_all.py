@@ -25,7 +25,17 @@ CASES = {
     'trees':     (['trees'],     ['wiki-Trees.html', 'wiki-FruitTrees.html']),
     'crops':     (['crops'],     ['wiki-Crops.html', 'wiki-FruitTrees.html']),
     'buildings': (['buildings'], ['wiki-CarpentersShop.html', 'wiki-Buildings.html']),
+    'bundles':   (['bundles'],   ['wiki-Bundles.html']),
+    'ui':        (['ui'],        []),      # 用 wiki 完整文件清单验证
 }
+
+# UI 图标散落在很多页面上，改用"文件是否在 wiki 完整文件清单里"来验证
+ALLFILES = ROOT / '_cmp' / 'out' / 'wiki-allfiles.json'
+if ALLFILES.exists():
+    allf = {f.replace('_', ' ').lower() for f in json.loads(ALLFILES.read_text('utf-8'))
+            if not f.startswith('File:')}
+else:
+    allf = None
 
 
 def norm(s):
@@ -41,6 +51,17 @@ for cat, (mans, pages) in CASES.items():
     if not mp.exists():
         continue
     man = json.loads(mp.read_text('utf-8'))
+    if cat == 'ui' and allf:
+        ok = [it['id'] for it in man['items']
+              if it['wikiFile'].replace('_', ' ').lower() in allf]
+        miss = [it['id'] for it in man['items']
+                if it['wikiFile'].replace('_', ' ').lower() not in allf]
+        res[cat] = {'ok': len(ok), 'total': len(man['items']), 'not_on_page': miss,
+                    'pages': ['wiki 完整文件清单']}
+        tot_ok += len(ok)
+        tot_all += len(man['items'])
+        print(f'{cat:11s} 文件清单里有 {len(ok):3d} / {len(man["items"]):3d}   未找到 {miss}')
+        continue
     blob = '\n'.join((OUT / p).read_text('utf-8', errors='ignore') for p in pages if (OUT / p).exists())
     files = set()
     for m in re.finditer(r'/mediawiki/images/[^"\'\s>]+', blob):

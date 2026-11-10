@@ -1,0 +1,60 @@
+health           生命       Health             -> Health.png
+energy           能量       Energy             -> Energy.png
+gold             金币       Gold               -> Gold.png
+luck             幸运       Luck               -> Luck.png
+friendship       友谊       Friendship         -> Blessing Of Friendship.png
+level            等级       Level              -> 11 ghastlyGalleonLevel.png
+star             星之果实     Stardrop           -> 无
+silver_quality   银星       Silver Quality     -> 无
+gold_quality     金星       Gold Quality       -> Gold Animal Cracker Fish Pond 1.png
+iridium_quality  铱星       Iridium Quality    -> Advanced Iridium Rod.png
+sun              晴天       Sunny              -> 无
+rain             雨天       Rain               -> Rain.png
+storm            雷雨       Storm              -> Thunderstorm.png
+snow             雪天       Snow               -> 无
+wind             大风       Wind               -> Basic Window.png
+green_rain       绿雨       Green Rain         -> 90 Trellis Crops in Greenhouse.png
+fog              雾        Fog                -> Fishing Infograph Day IT.png
+festival         节日       Festival           -> Festival.png
+clock            时钟       Clock              -> Clock.png
+day              白天       Day                -> Fishing Infograph Day IT.png
+night            夜晚       Night              -> Dark Shrine of Night Terrors.png
+spring           春        Spring             -> Calendar Spring DE.png
+summer           夏        Summer             -> Calendar Summer DE.png
+fall             秋        Fall               -> Fall.png
+winter           冬        Winter             -> Abigail Winter 00.png
+moon_phase       月相       Moon Phase         -> Dance Of The Moonlight Jellies - 2.jpg
+farming          耕种       Farming            -> Farming Skill Icon.png
+foraging         采集       Foraging           -> Fall Foraging Bundle.png
+fishing          钓鱼       Fishing            -> Fishing Skill Icon.png
+mining           采矿       Mining             -> Mining Skill Icon.png
+combat           战斗       Combat             -> 无
+luck_skill       幸运技能     Luck Skill         -> Blessing Of Luck.png
+backpack         背包       Backpack           -> Backpack.png
+map              地图       Map                -> Map.png
+quest            任务       Quests             -> Quest.png
+journal          日志       Journal            -> ClockWithJournal DE.png
+settings         设置       Settings           -> 无
+save             保存       Save               -> Editing a save in Sublime Text TR.png
+exit             退出       Exit               -> 无
+shop             商店       Shop               -> Carpenter's Shop Interior.png
+craft            制作       Crafting           -> 无
+bundles          收集包      Bundles            -> 无
+collections      收藏       Collections        -> 无
+skills           技能       Skills             -> 无
+social           社交       Social             -> 无
+options          选项       Options            -> Advanced Options Button.png
+controller       手柄       Controller         -> PS4ControllerMap DE.png
+pause            暂停       Pause              -> 无
+speed            速度       Speed              -> Speed Buff.png
+mining_buff      采矿增益     Mining Buff        -> Mining Monthly.png
+fishing_buff     钓鱼增益     Fishing Buff       -> DesertPondFishingZones.png
+luck_buff        幸运增益     Luck Buff          -> Luck Buff.png
+defense          防御       Defense            -> Defense Buff.png
+attack           攻击       Attack             -> Attack Buff.png
+magnetism        磁力       Magnetism          -> Magnetism Buff.png
+glow             发光       Glow               -> 12 glowshroomGrotto TR.png
+oil_of_garlic    大蒜油      Oil of Garlic      -> Oil of Garlic Buff.png
+monster_musk     怪物香水     Monster Musk       -> Sea Monster Anim.gif
+life_elixir      生命药水     Life Elixir        -> JOPK Life.png
+ginger_ale       姜汁汽水     Ginger Ale         -> Ginger Ale.png

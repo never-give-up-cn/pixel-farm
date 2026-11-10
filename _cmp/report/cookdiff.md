@@ -1,0 +1,106 @@
+# 配方配料对比（我们 vs wiki /Cooking）
+
+完全一致 48，不一致 33，wiki 没找到 0
+
+## 不一致明细
+- **Baked Fish**
+  - 我们: Sunfish x1、Wheat Flour x1
+  - wiki: Bream x1、Sunfish x1、Wheat Flour x1
+- **Blueberry Tart**
+  - 我们: Blueberry x1、Sugar x1、Wheat Flour x1
+  - wiki: Blueberry x1、Egg x1、Sugar x1、Wheat Flour x1
+- **Chocolate Cake**
+  - 我们: Egg x1、Hazelnut x1、Sugar x1、Wheat Flour x1
+  - wiki: Egg x1、Sugar x1、Wheat Flour x1
+- **Complete Breakfast**
+  - 我们: Bread x1、Fried Egg x1、Hashbrowns x1、Milk x1
+  - wiki: Fried Egg x1、Hashbrowns x1、Milk x1、Pancakes x1
+- **Cranberry Candy**
+  - 我们: Cranberries x1、Sugar x1
+  - wiki: Apple x1、Cranberries x1、Sugar x1
+- **Dish O' The Sea**
+  - 我们: Corn x1、Sardine x2
+  - wiki: Hashbrowns x1、Sardine x2
+- **Eggplant Parmesan**
+  - 我们: Eggplant x2、Tomato x1
+  - wiki: Eggplant x1、Tomato x1
+- **Escargot**
+  - 我们: Butter x1、Garlic x1、Snail x1
+  - wiki: Garlic x1、Snail x1
+- **Farmer's Lunch**
+  - 我们: Cheese x1、Fried Egg x1、Parsnip x1
+  - wiki: Omelet x1、Parsnip x1
+- **Fish Stew**
+  - 我们: Fish x1、Onion x1、Tomato x1
+  - wiki: Crayfish x1、Mussel x1、Periwinkle x1、Tomato x1
+- **Fish Taco**
+  - 我们: Fish x1、Mayonnaise x1、Red Cabbage x1、Tortilla x1
+  - wiki: Mayonnaise x1、Red Cabbage x1、Tortilla x1、Tuna x1
+- **Fried Mushroom**
+  - 我们: Common Mushroom x1、Oil x1、Wheat Flour x1
+  - wiki: Common Mushroom x1、Morel x1、Oil x1
+- **Ginger Ale**
+  - 我们: Ginger x1、Sugar x1
+  - wiki: Ginger x3、Sugar x1
+- **Lucky Lunch**
+  - 我们: Blueberry x1、Sea Cucumber x1、Tortilla x1
+  - wiki: Blue Jazz x1、Sea Cucumber x1、Tortilla x1
+- **Miner's Treat**
+  - 我们: Carrot x1、Milk x1、Sugar x1
+  - wiki: Cave Carrot x2、Milk x1、Sugar x1
+- **Moss Soup**
+  - 我们: Green Algae x1、Moss x1
+  - wiki: Moss x20
+- **Omelet**
+  - 我们: Egg x2、Milk x1
+  - wiki: Egg x1、Milk x1
+- **Pale Broth**
+  - 我们: Garlic x1、White Algae x1
+  - wiki: White Algae x2
+- **Pancakes**
+  - 我们: Egg x1、Milk x1、Wheat Flour x1
+  - wiki: Egg x1、Wheat Flour x1
+- **Plum Pudding**
+  - 我们: Plum x1、Sugar x1、Wheat Flour x1
+  - wiki: Sugar x1、Wheat Flour x1、Wild Plum x2
+- **Poi**
+  - 我们: Taro Root x1
+  - wiki: Taro Root x4
+- **Poppyseed Muffin**
+  - 我们: Poppy Seeds x1、Sugar x1、Wheat Flour x1
+  - wiki: Poppy x1、Sugar x1、Wheat Flour x1
+- **Pumpkin Pie**
+  - 我们: Pumpkin x1、Sugar x1、Wheat Flour x1
+  - wiki: Milk x1、Pumpkin x1、Sugar x1、Wheat Flour x1
+- **Salmon Dinner**
+  - 我们: Cauliflower x1、Potato x1、Salmon x1
+  - wiki: Amaranth x1、Kale x1、Salmon x1
+- **Seafoam Pudding**
+  - 我们: Clam x1、Seaweed x1、Sugar x1
+  - wiki: Flounder x1、Midnight Carp x1、Squid Ink x1
+- **Shrimp Cocktail**
+  - 我们: Shrimp x1、Tomato x1
+  - wiki: Shrimp x1、Tomato x1、Wild Horseradish x1
+- **Stir Fry**
+  - 我们: Carrot x1、Cauliflower x1
+  - wiki: Cave Carrot x1、Common Mushroom x1、Kale x1、Oil x1
+- **Strange Bun**
+  - 我们: Void Egg x1、Wheat Flour x1
+  - wiki: Periwinkle x1、Void Mayonnaise x1、Wheat Flour x1
+- **Stuffing**
+  - 我们: Bread x1、Cranberries x1
+  - wiki: Bread x1、Cranberries x1、Hazelnut x1
+- **Super Meal**
+  - 我们: Cauliflower x1、Cranberries x1、Hazelnut x1
+  - wiki: Artichoke x1、Bok Choy x1、Cranberries x1
+- **Tom Kha Soup**
+  - 我们: Coconut x1、Mushroom x1、Shrimp x1
+  - wiki: Coconut x1、Common Mushroom x1、Shrimp x1
+- **Trout Soup**
+  - 我们: Green Algae x1、Trout x1
+  - wiki: Green Algae x1、Rainbow Trout x1
+- **Vegetable Medley**
+  - 我们: Carrot x1、Potato x1、Tomato x1
+  - wiki: Beet x1、Tomato x1
+
+## wiki 没找到的

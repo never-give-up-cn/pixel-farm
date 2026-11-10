@@ -1,0 +1,722 @@
+[
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6259,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 81.89,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "spring_crops",
+  "name": "春季作物",
+  "en": "Spring Crops",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Spring_Crops_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.6224,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 80.27,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "summer_crops",
+  "name": "夏季作物",
+  "en": "Summer Crops",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Summer_Crops_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.5449,
+  "aspect_sim": 0.92,
+  "size_sim": 0.0,
+  "score": 79.47,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   136,
+   136
+  ],
+  "id": "fall_crops",
+  "name": "秋季作物",
+  "en": "Fall Crops",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fall_Crops_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.7955,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 85.99,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "quality_crops",
+  "name": "高品质作物",
+  "en": "Quality Crops",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Quality_Crops_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5258,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 81.15,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "animal_bundle",
+  "name": "动物",
+  "en": "Animal Bundle",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Animal_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6666,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 83.88,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "artisan_bundle",
+  "name": "工匠",
+  "en": "Artisan Bundle",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Artisan_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.5661,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 78.49,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "spring_foraging",
+  "name": "春季采集",
+  "en": "Spring Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Spring_Foraging_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.6747,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 80.43,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "summer_foraging",
+  "name": "夏季采集",
+  "en": "Summer Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Summer_Foraging_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.3387,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 75.39,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "fall_foraging",
+  "name": "秋季采集",
+  "en": "Fall Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Fall_Foraging_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.3906,
+  "palette_cov": 1.0,
+  "color_sim": 0.6912,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 77.55,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "winter_foraging",
+  "name": "冬季采集",
+  "en": "Winter Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Winter_Foraging_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.4231,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 76.8,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "construction",
+  "name": "建筑",
+  "en": "Construction",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Construction_Bundle.png"
+ },
+ {
+  "iou": 0.9553,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.6416,
+  "aspect_sim": 0.92,
+  "size_sim": 0.3025,
+  "score": 79.62,
+  "ours_box": [
+   25,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "exotic_foraging",
+  "name": "异国采集",
+  "en": "Exotic Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Exotic_Foraging_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7414,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 83.13,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "river_fish",
+  "name": "河鱼",
+  "en": "River Fish",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "River_Fish_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6985,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 83.74,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "lake_fish",
+  "name": "湖鱼",
+  "en": "Lake Fish",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Lake_Fish_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.7261,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 83.84,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "ocean_fish",
+  "name": "海鱼",
+  "en": "Ocean Fish",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Ocean_Fish_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.5311,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 78.41,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "night_fishing",
+  "name": "夜间鱼",
+  "en": "Night Fishing",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Night_Fishing_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.2258,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 76.33,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "crab_pot",
+  "name": "蟹笼",
+  "en": "Crab Pot",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Crab_Pot_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.8361,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 85.18,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "specialty_fish",
+  "name": "特殊鱼",
+  "en": "Specialty Fish",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Specialty_Fish_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.4857,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 78.36,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "blacksmith",
+  "name": "铁匠",
+  "en": "Blacksmith's",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Blacksmith_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.5773,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 79.11,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "geologist",
+  "name": "地质学家",
+  "en": "Geologist's",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Geologist's_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4096,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 77.84,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "adventurer",
+  "name": "冒险家",
+  "en": "Adventurer's",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Adventurer's_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.8117,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 85.12,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "chef",
+  "name": "厨师",
+  "en": "Chef's",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Chef's_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.9801,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 85.77,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "dye",
+  "name": "染料",
+  "en": "Dye",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Dye_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.8548,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 83.27,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "field_research",
+  "name": "实地研究",
+  "en": "Field Research",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Field_Research_Bundle.png"
+ },
+ {
+  "iou": 0.896,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.3013,
+  "aspect_sim": 0.8519,
+  "size_sim": 0.3794,
+  "score": 71.81,
+  "ours_box": [
+   27,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "fodder",
+  "name": "饲料",
+  "en": "Fodder",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Fodder_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.3594,
+  "palette_cov": 1.0,
+  "color_sim": 0.2407,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 71.56,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "enchanter",
+  "name": "附魔",
+  "en": "Enchanter's",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Enchanter's_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.3101,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 75.1,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "vault_2500",
+  "name": "2,500g",
+  "en": "2,500g",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "2500_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4195,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 78.62,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "vault_5000",
+  "name": "5,000g",
+  "en": "5,000g",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "5000_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.375,
+  "palette_cov": 1.0,
+  "color_sim": 0.348,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 73.48,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "vault_10000",
+  "name": "10,000g",
+  "en": "10,000g",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "10000_Bundle.png"
+ },
+ {
+  "iou": 0.9956,
+  "dhash_sim": 0.4062,
+  "palette_cov": 1.0,
+  "color_sim": 0.4257,
+  "aspect_sim": 0.9583,
+  "size_sim": 0.2618,
+  "score": 75.27,
+  "ours_box": [
+   24,
+   23
+  ],
+  "wiki_box": [
+   34,
+   34
+  ],
+  "id": "vault_25000",
+  "name": "25,000g",
+  "en": "25,000g",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "25000_Bundle.png"
+ }
+]

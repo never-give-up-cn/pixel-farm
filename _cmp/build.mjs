@@ -67,6 +67,14 @@ const CATS = {
   animals: {
     mod: '../../js/anim/animals.js', list: 'ANIMALS', w: 'ANIMAL_W', h: 'ANIMAL_H',
     draw: 'drawAnimal', drawExpr: "mod.drawAnimal(g, item.id, 'idle', 0, 1)"
+  },
+  bundles: {
+    mod: '../../js/anim/bundles.js', list: 'BUNDLES', w: 'BUNDLE_W', h: 'BUNDLE_H',
+    draw: 'drawBundleIcon', drawExpr: 'mod.drawBundleIcon(g, item, 0.25)'
+  },
+  ui: {
+    mod: '../../js/anim/ui-icons.js', list: 'UI_ICONS', w: 'UI_W', h: 'UI_H',
+    draw: 'drawUiIcon', drawExpr: 'mod.drawUiIcon(g, item, 0.25)'
   }
 };
 

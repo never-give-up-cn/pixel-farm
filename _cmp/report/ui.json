@@ -1,0 +1,650 @@
+[
+ {
+  "iou": 0.813,
+  "dhash_sim": 0.4219,
+  "palette_cov": 1.0,
+  "color_sim": 0.3928,
+  "aspect_sim": 0.3628,
+  "size_sim": 0.0,
+  "score": 62.35,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   78,
+   215
+  ],
+  "id": "health",
+  "name": "生命",
+  "en": "Health",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "HealthBar.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.3896,
+  "aspect_sim": 0.1674,
+  "size_sim": 0.0,
+  "score": 67.36,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   36,
+   215
+  ],
+  "id": "energy",
+  "name": "能量",
+  "en": "Energy",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "EnergyBar.png"
+ },
+ {
+  "iou": 0.7539,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.501,
+  "aspect_sim": 0.8,
+  "size_sim": 0.0,
+  "score": 68.76,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   8,
+   10
+  ],
+  "id": "gold",
+  "name": "金币",
+  "en": "Gold",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Gold.png"
+ },
+ {
+  "iou": 0.8652,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.1807,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 67.42,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "luck",
+  "name": "幸运",
+  "en": "Luck",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Luck.png"
+ },
+ {
+  "iou": 0.7344,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.3068,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 69.45,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   8,
+   8
+  ],
+  "id": "gold_quality",
+  "name": "金星",
+  "en": "Gold Quality",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Gold Quality Icon.png"
+ },
+ {
+  "iou": 0.7344,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5785,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 73.83,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   8,
+   8
+  ],
+  "id": "iridium_quality",
+  "name": "铱星",
+  "en": "Iridium Quality",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Iridium Quality Icon.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.8303,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 81.99,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "rain",
+  "name": "雨天",
+  "en": "Rain",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rain.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.8166,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 82.09,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "storm",
+  "name": "雷雨",
+  "en": "Storm",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Thunderstorm.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 73.28,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "festival",
+  "name": "节日",
+  "en": "Festival",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Festival.png"
+ },
+ {
+  "iou": 0.8503,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.5361,
+  "aspect_sim": 0.9255,
+  "size_sim": 0.0,
+  "score": 71.56,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   236
+  ],
+  "id": "clock",
+  "name": "时钟",
+  "en": "Clock",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Clock.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.2731,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 73.78,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "farming",
+  "name": "耕种",
+  "en": "Farming",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Farming Skill Icon.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.5997,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 80.25,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "fishing",
+  "name": "钓鱼",
+  "en": "Fishing",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Fishing Skill Icon.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.7058,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 79.65,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "mining",
+  "name": "采矿",
+  "en": "Mining",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Mining Skill Icon.png"
+ },
+ {
+  "iou": 0.8779,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.5781,
+  "aspect_sim": 0.6923,
+  "size_sim": 0.5573,
+  "score": 74.72,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   27,
+   39
+  ],
+  "id": "backpack",
+  "name": "背包",
+  "en": "Backpack",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Backpack.png"
+ },
+ {
+  "iou": 0.9785,
+  "dhash_sim": 0.4531,
+  "palette_cov": 1.0,
+  "color_sim": 0.4094,
+  "aspect_sim": 0.9412,
+  "size_sim": 0.0,
+  "score": 73.97,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   64,
+   68
+  ],
+  "id": "map",
+  "name": "地图",
+  "en": "Map",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Map Tab.png"
+ },
+ {
+  "iou": 0.7783,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7061,
+  "aspect_sim": 0.3704,
+  "size_sim": 0.0844,
+  "score": 69.32,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   10,
+   27
+  ],
+  "id": "quest",
+  "name": "任务",
+  "en": "Quests",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Quest.png"
+ },
+ {
+  "iou": 0.8682,
+  "dhash_sim": 0.375,
+  "palette_cov": 1.0,
+  "color_sim": 0.1764,
+  "aspect_sim": 0.9231,
+  "size_sim": 0.2699,
+  "score": 66.77,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   36,
+   39
+  ],
+  "id": "journal",
+  "name": "日志",
+  "en": "Journal",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Journal Scrap.png"
+ },
+ {
+  "iou": 0.9714,
+  "dhash_sim": 0.4062,
+  "palette_cov": 1.0,
+  "color_sim": 0.4024,
+  "aspect_sim": 1.0,
+  "size_sim": 0.4763,
+  "score": 75.69,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   20,
+   20
+  ],
+  "id": "options",
+  "name": "选项",
+  "en": "Options",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Advanced Options Button.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.0144,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 68.34,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "luck_buff",
+  "name": "幸运",
+  "en": "Luck",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Luck Buff.png"
+ },
+ {
+  "iou": 0.9453,
+  "dhash_sim": 0.2969,
+  "palette_cov": 1.0,
+  "color_sim": 0.3869,
+  "aspect_sim": 0.875,
+  "size_sim": 0.0,
+  "score": 68.85,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "magnetism",
+  "name": "磁力",
+  "en": "Magnetism",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Magnetism Buff.png"
+ },
+ {
+  "iou": 0.6396,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.6268,
+  "aspect_sim": 0.7333,
+  "size_sim": 0.2138,
+  "score": 66.68,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   33,
+   45
+  ],
+  "id": "life_elixir",
+  "name": "生命药水",
+  "en": "Life Elixir",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Life Elixir.png"
+ },
+ {
+  "iou": 0.6992,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.796,
+  "aspect_sim": 0.5625,
+  "size_sim": 0.3499,
+  "score": 71.23,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   27,
+   48
+  ],
+  "id": "ginger_ale",
+  "name": "姜汁汽水",
+  "en": "Ginger Ale",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ginger Ale.png"
+ },
+ {
+  "iou": 0.7852,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.294,
+  "aspect_sim": 0.9286,
+  "size_sim": 0.1158,
+  "score": 67.83,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "bundle",
+  "name": "收集包",
+  "en": "Bundles",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Bundle Icon.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.3816,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 75.1,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "speed_buff",
+  "name": "速度",
+  "en": "Speed",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Speed Buff.png"
+ },
+ {
+  "iou": 0.9492,
+  "dhash_sim": 0.375,
+  "palette_cov": 1.0,
+  "color_sim": 0.4803,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.0,
+  "score": 72.56,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "defense_buff",
+  "name": "防御",
+  "en": "Defense",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Defense Buff.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2505,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 74.38,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "attack_buff",
+  "name": "攻击",
+  "en": "Attack",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Attack Buff.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.3594,
+  "palette_cov": 1.0,
+  "color_sim": 0.6685,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 75.97,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "garlic",
+  "name": "大蒜油",
+  "en": "Oil of Garlic",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Oil of Garlic Buff.png"
+ }
+]

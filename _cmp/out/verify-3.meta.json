@@ -1,851 +1,1051 @@
 {
  "chunk": 3,
- "count": 84,
+ "count": 104,
  "cell": 48,
  "perRow": 16,
- "rows": 6,
+ "rows": 7,
  "w": 768,
- "h": 288,
+ "h": 336,
  "items": [
   {
    "cat": "buildings",
    "id": "mill",
    "name": "磨坊",
    "en": "Mill",
-   "file": "磨坊.png",
-   "path": "/mediawiki/images/en/9/95/磨坊.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "磨坊.png",
+   "path": "/mediawiki/images/en/9/95/磨坊.png"
   },
   {
    "cat": "buildings",
    "id": "coop",
    "name": "鸡舍",
    "en": "Coop",
-   "file": "鸡舍.png",
-   "path": "/mediawiki/images/en/3/3c/鸡舍.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "鸡舍.png",
+   "path": "/mediawiki/images/en/3/3c/鸡舍.png"
   },
   {
    "cat": "buildings",
    "id": "fish_pond",
    "name": "鱼塘",
    "en": "Fish Pond",
+   "ci": 0,
+   "role": "icon2",
    "file": "鱼塘.png",
-   "path": "/mediawiki/images/en/6/6b/鱼塘.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6b/鱼塘.png"
   },
   {
    "cat": "buildings",
    "id": "pet_bowl",
    "name": "宠物碗",
    "en": "Pet Bowl",
-   "file": "Pet_Bowl.png",
-   "path": "/mediawiki/images/en/7/77/Pet_Bowl.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Pet_Bowl.png",
+   "path": "/mediawiki/images/en/7/77/Pet_Bowl.png"
   },
   {
    "cat": "buildings",
    "id": "pet_bowl",
    "name": "宠物碗",
    "en": "Pet Bowl",
-   "file": "宠物碗.png",
-   "path": "/mediawiki/images/en/0/05/宠物碗.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "宠物碗.png",
+   "path": "/mediawiki/images/en/0/05/宠物碗.png"
   },
   {
    "cat": "buildings",
    "id": "barn",
    "name": "畜棚",
    "en": "Barn",
+   "ci": 0,
+   "role": "icon2",
    "file": "畜棚.png",
-   "path": "/mediawiki/images/en/7/75/畜棚.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/75/畜棚.png"
   },
   {
    "cat": "buildings",
    "id": "stable",
    "name": "马厩",
    "en": "Stable",
-   "file": "Stable.png",
-   "path": "/mediawiki/images/en/8/8c/Stable.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Stable.png",
+   "path": "/mediawiki/images/en/8/8c/Stable.png"
   },
   {
    "cat": "buildings",
    "id": "stable",
    "name": "马厩",
    "en": "Stable",
-   "file": "马厩.png",
-   "path": "/mediawiki/images/en/1/15/马厩.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "马厩.png",
+   "path": "/mediawiki/images/en/1/15/马厩.png"
   },
   {
    "cat": "buildings",
    "id": "slime_hutch",
    "name": "史莱姆屋",
    "en": "Slime Hutch",
-   "file": "史莱姆屋.png",
-   "path": "/mediawiki/images/en/7/71/史莱姆屋.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "史莱姆屋.png",
+   "path": "/mediawiki/images/en/7/71/史莱姆屋.png"
   },
   {
    "cat": "buildings",
    "id": "big_coop",
    "name": "大鸡舍",
    "en": "Big Coop",
-   "file": "大鸡舍.png",
-   "path": "/mediawiki/images/en/2/28/大鸡舍.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "大鸡舍.png",
+   "path": "/mediawiki/images/en/2/28/大鸡舍.png"
   },
   {
    "cat": "buildings",
    "id": "big_barn",
    "name": "大畜棚",
    "en": "Big Barn",
-   "file": "大畜棚.png",
-   "path": "/mediawiki/images/en/3/35/大畜棚.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "大畜棚.png",
+   "path": "/mediawiki/images/en/3/35/大畜棚.png"
   },
   {
    "cat": "buildings",
    "id": "shed",
    "name": "小屋",
    "en": "Shed",
-   "file": "小屋.png",
-   "path": "/mediawiki/images/en/e/e4/小屋.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "小屋.png",
+   "path": "/mediawiki/images/en/e/e4/小屋.png"
   },
   {
    "cat": "buildings",
    "id": "junimo_hut",
    "name": "祝尼魔屋",
    "en": "Junimo Hut",
-   "file": "祝尼魔屋.png",
-   "path": "/mediawiki/images/en/4/4e/祝尼魔屋.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "祝尼魔屋.png",
+   "path": "/mediawiki/images/en/4/4e/祝尼魔屋.png"
   },
   {
    "cat": "buildings",
    "id": "deluxe_coop",
    "name": "豪华鸡舍",
    "en": "Deluxe Coop",
-   "file": "豪华鸡舍.png",
-   "path": "/mediawiki/images/en/3/3f/豪华鸡舍.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "豪华鸡舍.png",
+   "path": "/mediawiki/images/en/3/3f/豪华鸡舍.png"
   },
   {
    "cat": "buildings",
    "id": "big_shed",
    "name": "大屋子",
    "en": "Big Shed",
-   "file": "大屋子.png",
-   "path": "/mediawiki/images/en/9/93/大屋子.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "大屋子.png",
+   "path": "/mediawiki/images/en/9/93/大屋子.png"
   },
   {
    "cat": "buildings",
    "id": "deluxe_barn",
    "name": "豪华畜棚",
    "en": "Deluxe Barn",
-   "file": "豪华畜棚.png",
-   "path": "/mediawiki/images/en/d/d9/豪华畜棚.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "豪华畜棚.png",
+   "path": "/mediawiki/images/en/d/d9/豪华畜棚.png"
   },
   {
    "cat": "buildings",
    "id": "earth_obelisk",
    "name": "大地图腾柱",
    "en": "Earth Obelisk",
-   "file": "大地图腾柱.png",
-   "path": "/mediawiki/images/en/9/94/大地图腾柱.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "大地图腾柱.png",
+   "path": "/mediawiki/images/en/9/94/大地图腾柱.png"
   },
   {
    "cat": "buildings",
    "id": "water_obelisk",
    "name": "水之图腾柱",
    "en": "Water Obelisk",
-   "file": "水之图腾柱.png",
-   "path": "/mediawiki/images/en/5/5e/水之图腾柱.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "水之图腾柱.png",
+   "path": "/mediawiki/images/en/5/5e/水之图腾柱.png"
   },
   {
    "cat": "buildings",
    "id": "desert_obelisk",
    "name": "沙漠图腾柱",
    "en": "Desert Obelisk",
-   "file": "沙漠图腾柱.png",
-   "path": "/mediawiki/images/en/f/fb/沙漠图腾柱.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "沙漠图腾柱.png",
+   "path": "/mediawiki/images/en/f/fb/沙漠图腾柱.png"
   },
   {
    "cat": "buildings",
    "id": "island_obelisk",
    "name": "姜岛图腾柱",
    "en": "Island Obelisk",
-   "file": "姜岛图腾柱.png",
-   "path": "/mediawiki/images/en/0/04/姜岛图腾柱.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "姜岛图腾柱.png",
+   "path": "/mediawiki/images/en/0/04/姜岛图腾柱.png"
   },
   {
    "cat": "buildings",
    "id": "gold_clock",
    "name": "黄金时钟",
    "en": "Gold Clock",
-   "file": "黄金时钟.png",
-   "path": "/mediawiki/images/en/3/38/黄金时钟.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "黄金时钟.png",
+   "path": "/mediawiki/images/en/3/38/黄金时钟.png"
   },
   {
    "cat": "npcs",
    "id": "abigail",
    "name": "阿比盖尔",
    "en": "Abigail",
-   "file": "Portrait_Abigail.png",
-   "path": "/mediawiki/images/en/6/69/Portrait_Abigail.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Abigail.png",
+   "path": "/mediawiki/images/en/6/69/Portrait_Abigail.png"
   },
   {
    "cat": "npcs",
    "id": "alex",
    "name": "亚历克斯",
    "en": "Alex",
-   "file": "Portrait_Alex.png",
-   "path": "/mediawiki/images/en/4/4a/Portrait_Alex.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Alex.png",
+   "path": "/mediawiki/images/en/4/4a/Portrait_Alex.png"
   },
   {
    "cat": "npcs",
    "id": "elliott",
    "name": "艾利欧特",
    "en": "Elliott",
-   "file": "Portrait_Elliott.png",
-   "path": "/mediawiki/images/en/d/d0/Portrait_Elliott.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Elliott.png",
+   "path": "/mediawiki/images/en/d/d0/Portrait_Elliott.png"
   },
   {
    "cat": "npcs",
    "id": "emily",
    "name": "艾米丽",
    "en": "Emily",
-   "file": "Portrait_Emily.png",
-   "path": "/mediawiki/images/en/f/f3/Portrait_Emily.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Emily.png",
+   "path": "/mediawiki/images/en/f/f3/Portrait_Emily.png"
   },
   {
    "cat": "npcs",
    "id": "haley",
    "name": "海莉",
    "en": "Haley",
-   "file": "Portrait_Haley.png",
-   "path": "/mediawiki/images/en/0/0a/Portrait_Haley.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Haley.png",
+   "path": "/mediawiki/images/en/0/0a/Portrait_Haley.png"
   },
   {
    "cat": "npcs",
    "id": "harvey",
    "name": "哈维",
    "en": "Harvey",
-   "file": "Portrait_Harvey.png",
-   "path": "/mediawiki/images/en/0/09/Portrait_Harvey.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Harvey.png",
+   "path": "/mediawiki/images/en/0/09/Portrait_Harvey.png"
   },
   {
    "cat": "npcs",
    "id": "leah",
    "name": "莉亚",
    "en": "Leah",
-   "file": "Portrait_Leah.png",
-   "path": "/mediawiki/images/en/9/9f/Portrait_Leah.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Leah.png",
+   "path": "/mediawiki/images/en/9/9f/Portrait_Leah.png"
   },
   {
    "cat": "npcs",
    "id": "maru",
    "name": "玛鲁",
    "en": "Maru",
-   "file": "Portrait_Maru.png",
-   "path": "/mediawiki/images/en/c/cf/Portrait_Maru.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Maru.png",
+   "path": "/mediawiki/images/en/c/cf/Portrait_Maru.png"
   },
   {
    "cat": "npcs",
    "id": "penny",
    "name": "潘妮",
    "en": "Penny",
-   "file": "Portrait_Penny.png",
-   "path": "/mediawiki/images/en/e/ec/Portrait_Penny.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Penny.png",
+   "path": "/mediawiki/images/en/e/ec/Portrait_Penny.png"
   },
   {
    "cat": "npcs",
    "id": "sam",
    "name": "山姆",
    "en": "Sam",
-   "file": "Portrait_Sam.png",
-   "path": "/mediawiki/images/en/b/b1/Portrait_Sam.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Sam.png",
+   "path": "/mediawiki/images/en/b/b1/Portrait_Sam.png"
   },
   {
    "cat": "npcs",
    "id": "sebastian",
    "name": "塞巴斯蒂安",
    "en": "Sebastian",
-   "file": "Portrait_Sebastian.png",
-   "path": "/mediawiki/images/en/1/15/Portrait_Sebastian.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Sebastian.png",
+   "path": "/mediawiki/images/en/1/15/Portrait_Sebastian.png"
   },
   {
    "cat": "npcs",
    "id": "shane",
    "name": "谢恩",
    "en": "Shane",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Shane.png",
-   "path": "/mediawiki/images/en/0/03/Portrait_Shane.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/03/Portrait_Shane.png"
   },
   {
    "cat": "npcs",
    "id": "caroline",
    "name": "卡洛琳",
    "en": "Caroline",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Caroline.png",
-   "path": "/mediawiki/images/en/6/69/Portrait_Caroline.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/69/Portrait_Caroline.png"
   },
   {
    "cat": "npcs",
    "id": "caroline",
    "name": "卡洛琳",
    "en": "Caroline",
+   "ci": 0,
+   "role": "icon3",
    "file": "Caroline_Portrait.png",
-   "path": "/mediawiki/images/en/8/8b/Caroline_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8b/Caroline_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "clint",
    "name": "克林特",
    "en": "Clint",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Clint.png",
-   "path": "/mediawiki/images/en/c/c6/Portrait_Clint.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/c/c6/Portrait_Clint.png"
   },
   {
    "cat": "npcs",
    "id": "clint",
    "name": "克林特",
    "en": "Clint",
+   "ci": 0,
+   "role": "icon3",
    "file": "Clint_Portrait.png",
-   "path": "/mediawiki/images/en/1/1b/Clint_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/1b/Clint_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "demetrius",
    "name": "德米特里厄斯",
    "en": "Demetrius",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Demetrius.png",
-   "path": "/mediawiki/images/en/0/0b/Portrait_Demetrius.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0b/Portrait_Demetrius.png"
   },
   {
    "cat": "npcs",
    "id": "demetrius",
    "name": "德米特里厄斯",
    "en": "Demetrius",
+   "ci": 0,
+   "role": "icon3",
    "file": "Demetrius_Portrait.png",
-   "path": "/mediawiki/images/en/d/dc/Demetrius_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/dc/Demetrius_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "dwarf",
    "name": "矮人",
    "en": "Dwarf",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Dwarf.png",
-   "path": "/mediawiki/images/en/f/fb/Portrait_Dwarf.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fb/Portrait_Dwarf.png"
   },
   {
    "cat": "npcs",
    "id": "dwarf",
    "name": "矮人",
    "en": "Dwarf",
+   "ci": 0,
+   "role": "icon3",
    "file": "Dwarf_Portrait.png",
-   "path": "/mediawiki/images/en/e/e3/Dwarf_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e3/Dwarf_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "evelyn",
    "name": "艾芙琳",
    "en": "Evelyn",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Evelyn.png",
-   "path": "/mediawiki/images/en/f/fc/Portrait_Evelyn.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fc/Portrait_Evelyn.png"
   },
   {
    "cat": "npcs",
    "id": "evelyn",
    "name": "艾芙琳",
    "en": "Evelyn",
+   "ci": 0,
+   "role": "icon3",
    "file": "Evelyn_Portrait.png",
-   "path": "/mediawiki/images/en/1/19/Evelyn_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/1/19/Evelyn_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "george",
    "name": "乔治",
    "en": "George",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_George.png",
-   "path": "/mediawiki/images/en/9/93/Portrait_George.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/9/93/Portrait_George.png"
   },
   {
    "cat": "npcs",
    "id": "george",
    "name": "乔治",
    "en": "George",
+   "ci": 0,
+   "role": "icon3",
    "file": "George_Portrait.png",
-   "path": "/mediawiki/images/en/a/ae/George_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/ae/George_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "gus",
    "name": "格斯",
    "en": "Gus",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Gus.png",
-   "path": "/mediawiki/images/en/3/36/Portrait_Gus.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/36/Portrait_Gus.png"
   },
   {
    "cat": "npcs",
    "id": "gus",
    "name": "格斯",
    "en": "Gus",
+   "ci": 0,
+   "role": "icon3",
    "file": "Gus_Portrait.png",
-   "path": "/mediawiki/images/en/2/2c/Gus_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/2/2c/Gus_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "jas",
    "name": "贾斯",
    "en": "Jas",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Jas.png",
-   "path": "/mediawiki/images/en/b/b2/Portrait_Jas.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/b/b2/Portrait_Jas.png"
   },
   {
    "cat": "npcs",
    "id": "jas",
    "name": "贾斯",
    "en": "Jas",
+   "ci": 0,
+   "role": "icon3",
    "file": "Jas_Portrait.png",
-   "path": "/mediawiki/images/en/4/48/Jas_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/48/Jas_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "jodi",
    "name": "乔迪",
    "en": "Jodi",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Jodi.png",
-   "path": "/mediawiki/images/en/0/08/Portrait_Jodi.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/08/Portrait_Jodi.png"
   },
   {
    "cat": "npcs",
    "id": "jodi",
    "name": "乔迪",
    "en": "Jodi",
+   "ci": 0,
+   "role": "icon3",
    "file": "Jodi_Portrait.png",
-   "path": "/mediawiki/images/en/f/fc/Jodi_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/fc/Jodi_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "kent",
    "name": "肯特",
    "en": "Kent",
-   "file": "Portrait_Kent.png",
-   "path": "/mediawiki/images/en/a/a5/Portrait_Kent.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Portrait_Kent.png",
+   "path": "/mediawiki/images/en/a/a5/Portrait_Kent.png"
   },
   {
    "cat": "npcs",
    "id": "kent",
    "name": "肯特",
    "en": "Kent",
-   "file": "Kent_Portrait.png",
-   "path": "/mediawiki/images/en/6/6d/Kent_Portrait.png",
+   "ci": 0,
    "role": "icon3",
-   "ci": 0
+   "file": "Kent_Portrait.png",
+   "path": "/mediawiki/images/en/6/6d/Kent_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "krobus",
    "name": "科罗布斯",
    "en": "Krobus",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Krobus.png",
-   "path": "/mediawiki/images/en/f/ff/Portrait_Krobus.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/ff/Portrait_Krobus.png"
   },
   {
    "cat": "npcs",
    "id": "leo",
    "name": "雷欧",
    "en": "Leo",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Leo.png",
-   "path": "/mediawiki/images/en/0/0a/Portrait_Leo.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/0a/Portrait_Leo.png"
   },
   {
    "cat": "npcs",
    "id": "leo",
    "name": "雷欧",
    "en": "Leo",
+   "ci": 0,
+   "role": "icon3",
    "file": "Leo_Portrait.png",
-   "path": "/mediawiki/images/en/f/f5/Leo_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f5/Leo_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "lewis",
    "name": "刘易斯",
    "en": "Lewis",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Lewis.png",
-   "path": "/mediawiki/images/en/8/8b/Portrait_Lewis.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/8b/Portrait_Lewis.png"
   },
   {
    "cat": "npcs",
    "id": "lewis",
    "name": "刘易斯",
    "en": "Lewis",
+   "ci": 0,
+   "role": "icon3",
    "file": "Lewis_Portrait.png",
-   "path": "/mediawiki/images/en/f/f9/Lewis_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f9/Lewis_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "linus",
    "name": "莱纳斯",
    "en": "Linus",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Linus.png",
-   "path": "/mediawiki/images/en/4/4b/Portrait_Linus.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/4b/Portrait_Linus.png"
   },
   {
    "cat": "npcs",
    "id": "linus",
    "name": "莱纳斯",
    "en": "Linus",
+   "ci": 0,
+   "role": "icon3",
    "file": "Linus_Portrait.png",
-   "path": "/mediawiki/images/en/0/06/Linus_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/06/Linus_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "marnie",
    "name": "玛妮",
    "en": "Marnie",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Marnie.png",
-   "path": "/mediawiki/images/en/8/81/Portrait_Marnie.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/8/81/Portrait_Marnie.png"
   },
   {
    "cat": "npcs",
    "id": "marnie",
    "name": "玛妮",
    "en": "Marnie",
+   "ci": 0,
+   "role": "icon3",
    "file": "Marnie_Portrait.png",
-   "path": "/mediawiki/images/en/a/a1/Marnie_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/a/a1/Marnie_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "pam",
    "name": "潘姆",
    "en": "Pam",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Pam.png",
-   "path": "/mediawiki/images/en/3/39/Portrait_Pam.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/3/39/Portrait_Pam.png"
   },
   {
    "cat": "npcs",
    "id": "pam",
    "name": "潘姆",
    "en": "Pam",
+   "ci": 0,
+   "role": "icon3",
    "file": "Pam_Portrait.png",
-   "path": "/mediawiki/images/en/d/dc/Pam_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/dc/Pam_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "pierre",
    "name": "皮埃尔",
    "en": "Pierre",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Pierre.png",
-   "path": "/mediawiki/images/en/7/7d/Portrait_Pierre.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/7/7d/Portrait_Pierre.png"
   },
   {
    "cat": "npcs",
    "id": "pierre",
    "name": "皮埃尔",
    "en": "Pierre",
+   "ci": 0,
+   "role": "icon3",
    "file": "Pierre_Portrait.png",
-   "path": "/mediawiki/images/en/5/50/Pierre_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/5/50/Pierre_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "robin",
    "name": "罗宾",
    "en": "Robin",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Robin.png",
-   "path": "/mediawiki/images/en/0/09/Portrait_Robin.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/09/Portrait_Robin.png"
   },
   {
    "cat": "npcs",
    "id": "robin",
    "name": "罗宾",
    "en": "Robin",
+   "ci": 0,
+   "role": "icon3",
    "file": "Robin_Portrait.png",
-   "path": "/mediawiki/images/en/6/6b/Robin_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6b/Robin_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "sandy",
    "name": "桑迪",
    "en": "Sandy",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Sandy.png",
-   "path": "/mediawiki/images/en/4/40/Portrait_Sandy.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/4/40/Portrait_Sandy.png"
   },
   {
    "cat": "npcs",
    "id": "sandy",
    "name": "桑迪",
    "en": "Sandy",
+   "ci": 0,
+   "role": "icon3",
    "file": "Sandy_Portrait.png",
-   "path": "/mediawiki/images/en/e/e3/Sandy_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/e/e3/Sandy_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "vincent",
    "name": "文森特",
    "en": "Vincent",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Vincent.png",
-   "path": "/mediawiki/images/en/d/d7/Portrait_Vincent.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/d7/Portrait_Vincent.png"
   },
   {
    "cat": "npcs",
    "id": "vincent",
    "name": "文森特",
    "en": "Vincent",
+   "ci": 0,
+   "role": "icon3",
    "file": "Vincent_Portrait.png",
-   "path": "/mediawiki/images/en/6/6e/Vincent_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/6e/Vincent_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "willy",
    "name": "威利",
    "en": "Willy",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Willy.png",
-   "path": "/mediawiki/images/en/0/09/Portrait_Willy.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/0/09/Portrait_Willy.png"
   },
   {
    "cat": "npcs",
    "id": "willy",
    "name": "威利",
    "en": "Willy",
+   "ci": 0,
+   "role": "icon3",
    "file": "Willy_Portrait.png",
-   "path": "/mediawiki/images/en/6/64/Willy_Portrait.png",
-   "role": "icon3",
-   "ci": 0
+   "path": "/mediawiki/images/en/6/64/Willy_Portrait.png"
   },
   {
    "cat": "npcs",
    "id": "wizard",
    "name": "法师",
    "en": "Wizard",
+   "ci": 0,
+   "role": "icon2",
    "file": "Portrait_Wizard.png",
-   "path": "/mediawiki/images/en/d/dd/Portrait_Wizard.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/d/dd/Portrait_Wizard.png"
   },
   {
    "cat": "npcs",
    "id": "wizard",
    "name": "法师",
    "en": "Wizard",
-   "file": "Wizard_Portrait.png",
-   "path": "/mediawiki/images/en/5/5f/Wizard_Portrait.png",
+   "ci": 0,
    "role": "icon3",
-   "ci": 0
+   "file": "Wizard_Portrait.png",
+   "path": "/mediawiki/images/en/5/5f/Wizard_Portrait.png"
   },
   {
    "cat": "animals",
    "id": "chicken",
    "name": "鸡",
    "en": "Chicken",
-   "file": "Chicken.png",
-   "path": "/mediawiki/images/en/a/a3/Chicken.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Chicken.png",
+   "path": "/mediawiki/images/en/a/a3/Chicken.png"
   },
   {
    "cat": "animals",
    "id": "chicken",
    "name": "鸡",
    "en": "Chicken",
-   "file": "Chicken_Animal.png",
-   "path": "/mediawiki/images/en/3/3b/Chicken_Animal.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Chicken_Animal.png",
+   "path": "/mediawiki/images/en/3/3b/Chicken_Animal.png"
   },
   {
    "cat": "animals",
    "id": "duck",
    "name": "鸭",
    "en": "Duck",
+   "ci": 0,
+   "role": "icon2",
    "file": "Duck_Animal.png",
-   "path": "/mediawiki/images/en/f/f0/Duck_Animal.png",
-   "role": "icon2",
-   "ci": 0
+   "path": "/mediawiki/images/en/f/f0/Duck_Animal.png"
   },
   {
    "cat": "animals",
    "id": "cow",
    "name": "牛",
    "en": "Cow",
-   "file": "Cow.png",
-   "path": "/mediawiki/images/en/8/84/Cow.png",
+   "ci": 0,
    "role": "icon",
-   "ci": 0
+   "file": "Cow.png",
+   "path": "/mediawiki/images/en/8/84/Cow.png"
   },
   {
    "cat": "animals",
    "id": "cow",
    "name": "牛",
    "en": "Cow",
-   "file": "Cow_Animal.png",
-   "path": "/mediawiki/images/en/f/f5/Cow_Animal.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Cow_Animal.png",
+   "path": "/mediawiki/images/en/f/f5/Cow_Animal.png"
   },
   {
    "cat": "animals",
    "id": "sheep",
    "name": "羊",
    "en": "Sheep",
-   "file": "Sheep_Animal.png",
-   "path": "/mediawiki/images/en/b/b1/Sheep_Animal.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Sheep_Animal.png",
+   "path": "/mediawiki/images/en/b/b1/Sheep_Animal.png"
   },
   {
    "cat": "animals",
    "id": "pig",
    "name": "猪",
    "en": "Pig",
-   "file": "Pig_Animal.png",
-   "path": "/mediawiki/images/en/9/9e/Pig_Animal.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Pig_Animal.png",
+   "path": "/mediawiki/images/en/9/9e/Pig_Animal.png"
   },
   {
    "cat": "animals",
    "id": "rabbit",
    "name": "兔",
    "en": "Rabbit",
-   "file": "Rabbit_Animal.png",
-   "path": "/mediawiki/images/en/d/d0/Rabbit_Animal.png",
+   "ci": 0,
    "role": "icon2",
-   "ci": 0
+   "file": "Rabbit_Animal.png",
+   "path": "/mediawiki/images/en/d/d0/Rabbit_Animal.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "blacksmith",
+   "name": "铁匠",
+   "en": "Blacksmith's",
+   "ci": 0,
+   "role": "icon",
+   "file": "Blacksmith's_Bundle.png",
+   "path": "/mediawiki/images/en/9/9e/Blacksmith's_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "blacksmith",
+   "name": "铁匠",
+   "en": "Blacksmith's",
+   "ci": 0,
+   "role": "icon3",
+   "file": "Blacksmiths_Bundle.png",
+   "path": "/mediawiki/images/en/1/16/Blacksmiths_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "blacksmith",
+   "name": "铁匠",
+   "en": "Blacksmith's",
+   "ci": 0,
+   "role": "icon4",
+   "file": "Blacksmiths.png",
+   "path": "/mediawiki/images/en/2/2a/Blacksmiths.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "geologist",
+   "name": "地质学家",
+   "en": "Geologist's",
+   "ci": 0,
+   "role": "icon2",
+   "file": "Geologist_Bundle.png",
+   "path": "/mediawiki/images/en/b/bf/Geologist_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "geologist",
+   "name": "地质学家",
+   "en": "Geologist's",
+   "ci": 0,
+   "role": "icon3",
+   "file": "Geologists_Bundle.png",
+   "path": "/mediawiki/images/en/a/a7/Geologists_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "geologist",
+   "name": "地质学家",
+   "en": "Geologist's",
+   "ci": 0,
+   "role": "icon4",
+   "file": "Geologists.png",
+   "path": "/mediawiki/images/en/f/f5/Geologists.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "adventurer",
+   "name": "冒险家",
+   "en": "Adventurer's",
+   "ci": 0,
+   "role": "icon2",
+   "file": "Adventurer_Bundle.png",
+   "path": "/mediawiki/images/en/5/5a/Adventurer_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "adventurer",
+   "name": "冒险家",
+   "en": "Adventurer's",
+   "ci": 0,
+   "role": "icon3",
+   "file": "Adventurers_Bundle.png",
+   "path": "/mediawiki/images/en/6/64/Adventurers_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "adventurer",
+   "name": "冒险家",
+   "en": "Adventurer's",
+   "ci": 0,
+   "role": "icon4",
+   "file": "Adventurers.png",
+   "path": "/mediawiki/images/en/e/e9/Adventurers.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "chef",
+   "name": "厨师",
+   "en": "Chef's",
+   "ci": 0,
+   "role": "icon2",
+   "file": "Chef_Bundle.png",
+   "path": "/mediawiki/images/en/9/94/Chef_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "chef",
+   "name": "厨师",
+   "en": "Chef's",
+   "ci": 0,
+   "role": "icon3",
+   "file": "Chefs_Bundle.png",
+   "path": "/mediawiki/images/en/0/0c/Chefs_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "chef",
+   "name": "厨师",
+   "en": "Chef's",
+   "ci": 0,
+   "role": "icon4",
+   "file": "Chefs.png",
+   "path": "/mediawiki/images/en/4/45/Chefs.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "enchanter",
+   "name": "附魔",
+   "en": "Enchanter's",
+   "ci": 0,
+   "role": "icon2",
+   "file": "Enchanter_Bundle.png",
+   "path": "/mediawiki/images/en/f/f7/Enchanter_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "enchanter",
+   "name": "附魔",
+   "en": "Enchanter's",
+   "ci": 0,
+   "role": "icon3",
+   "file": "Enchanters_Bundle.png",
+   "path": "/mediawiki/images/en/0/0e/Enchanters_Bundle.png"
+  },
+  {
+   "cat": "bundles",
+   "id": "enchanter",
+   "name": "附魔",
+   "en": "Enchanter's",
+   "ci": 0,
+   "role": "icon4",
+   "file": "Enchanters.png",
+   "path": "/mediawiki/images/en/d/d8/Enchanters.png"
+  },
+  {
+   "cat": "ui",
+   "id": "bundle",
+   "name": "收集包",
+   "en": "Bundles",
+   "ci": 0,
+   "role": "icon",
+   "file": "Bundle Icon.png",
+   "path": "/mediawiki/images/en/0/01/Bundle_Icon.png"
+  },
+  {
+   "cat": "ui",
+   "id": "speed_buff",
+   "name": "速度",
+   "en": "Speed",
+   "ci": 0,
+   "role": "icon",
+   "file": "Speed Buff.png",
+   "path": "/mediawiki/images/en/b/b3/Speed_Buff.png"
+  },
+  {
+   "cat": "ui",
+   "id": "defense_buff",
+   "name": "防御",
+   "en": "Defense",
+   "ci": 0,
+   "role": "icon",
+   "file": "Defense Buff.png",
+   "path": "/mediawiki/images/en/e/e9/Defense_Buff.png"
+  },
+  {
+   "cat": "ui",
+   "id": "attack_buff",
+   "name": "攻击",
+   "en": "Attack",
+   "ci": 0,
+   "role": "icon",
+   "file": "Attack Buff.png",
+   "path": "/mediawiki/images/en/3/32/Attack_Buff.png"
+  },
+  {
+   "cat": "ui",
+   "id": "garlic",
+   "name": "大蒜油",
+   "en": "Oil of Garlic",
+   "ci": 0,
+   "role": "icon",
+   "file": "Oil of Garlic Buff.png",
+   "path": "/mediawiki/images/en/a/ae/Oil_of_Garlic_Buff.png"
   }
  ]
 }

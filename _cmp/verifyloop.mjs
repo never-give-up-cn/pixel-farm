@@ -48,9 +48,25 @@ for (let round = 1; round <= MAX_ROUNDS; round++) {
   const failed = JSON.parse(fs.readFileSync(path.join(ROOT, '_cmp', 'failed.json'), 'utf8'));
   console.log(`\n本轮仍有 ${failed.length} 个候选未确认存在`);
   if (!failed.length) { console.log('全部候选已确认'); break; }
+
+  /* 连续失败 3 次的候选就认为是"wiki 上确实没有这个文件"，不再重试 */
+  const fcPath = path.join(ROOT, '_cmp', 'failcount.json');
+  const fc = fs.existsSync(fcPath) ? JSON.parse(fs.readFileSync(fcPath, 'utf8')) : {};
+  const next = [];
+  for (const c of failed) {
+    const key = `${c.cat}/${c.id}/${c.file}`;
+    fc[key] = (fc[key] || 0) + 1;
+    if (fc[key] < 3) next.push(c);
+  }
+  fs.writeFileSync(fcPath, JSON.stringify(fc, null, 1));
+
+  if (!next.length) {
+    console.log(`剩下 ${failed.length} 个都连续失败 3 次，判定 wiki 上不存在，停止重试`);
+    break;
+  }
   if (round < MAX_ROUNDS) {
-    fs.writeFileSync(path.join(ROOT, '_cmp', 'pending.json'), JSON.stringify(failed));
-    console.log(`下一轮只重试这 ${failed.length} 个（等 8 秒让限流窗口过去）`);
+    fs.writeFileSync(path.join(ROOT, '_cmp', 'pending.json'), JSON.stringify(next));
+    console.log(`下一轮只重试这 ${next.length} 个（等 8 秒让限流窗口过去）`);
     sleep(8000);
   }
 }

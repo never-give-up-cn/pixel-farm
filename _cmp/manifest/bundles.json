@@ -1,0 +1,366 @@
+{
+ "category": "bundles",
+ "items": [
+  {
+   "id": "spring_crops",
+   "name": "春季作物",
+   "en": "Spring Crops",
+   "wikiIcon": "/mediawiki/images/en/5/51/Spring_Crops_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Spring_Crops_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "summer_crops",
+   "name": "夏季作物",
+   "en": "Summer Crops",
+   "wikiIcon": "/mediawiki/images/en/2/27/Summer_Crops_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Summer_Crops_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "fall_crops",
+   "name": "秋季作物",
+   "en": "Fall Crops",
+   "wikiIcon": "/mediawiki/images/en/0/0d/Fall_Crops_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Fall_Crops_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "quality_crops",
+   "name": "高品质作物",
+   "en": "Quality Crops",
+   "wikiIcon": "/mediawiki/images/en/8/86/Quality_Crops_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Quality_Crops_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "animal_bundle",
+   "name": "动物",
+   "en": "Animal Bundle",
+   "wikiIcon": "/mediawiki/images/en/5/52/Animal_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Animal_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "artisan_bundle",
+   "name": "工匠",
+   "en": "Artisan Bundle",
+   "wikiIcon": "/mediawiki/images/en/7/7a/Artisan_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Artisan_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "spring_foraging",
+   "name": "春季采集",
+   "en": "Spring Foraging",
+   "wikiIcon": "/mediawiki/images/en/8/8a/Spring_Foraging_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Spring_Foraging_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "summer_foraging",
+   "name": "夏季采集",
+   "en": "Summer Foraging",
+   "wikiIcon": "/mediawiki/images/en/f/fd/Summer_Foraging_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Summer_Foraging_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "fall_foraging",
+   "name": "秋季采集",
+   "en": "Fall Foraging",
+   "wikiIcon": "/mediawiki/images/en/3/3d/Fall_Foraging_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Fall_Foraging_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "winter_foraging",
+   "name": "冬季采集",
+   "en": "Winter Foraging",
+   "wikiIcon": "/mediawiki/images/en/1/17/Winter_Foraging_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Winter_Foraging_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "construction",
+   "name": "建筑",
+   "en": "Construction",
+   "wikiIcon": "/mediawiki/images/en/7/7a/Construction_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Construction_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "exotic_foraging",
+   "name": "异国采集",
+   "en": "Exotic Foraging",
+   "wikiIcon": "/mediawiki/images/en/5/5a/Exotic_Foraging_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Exotic_Foraging_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "river_fish",
+   "name": "河鱼",
+   "en": "River Fish",
+   "wikiIcon": "/mediawiki/images/en/c/c6/River_Fish_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "River_Fish_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "lake_fish",
+   "name": "湖鱼",
+   "en": "Lake Fish",
+   "wikiIcon": "/mediawiki/images/en/4/46/Lake_Fish_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Lake_Fish_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ocean_fish",
+   "name": "海鱼",
+   "en": "Ocean Fish",
+   "wikiIcon": "/mediawiki/images/en/a/ac/Ocean_Fish_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Ocean_Fish_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "night_fishing",
+   "name": "夜间鱼",
+   "en": "Night Fishing",
+   "wikiIcon": "/mediawiki/images/en/a/a7/Night_Fishing_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Night_Fishing_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "crab_pot",
+   "name": "蟹笼",
+   "en": "Crab Pot",
+   "wikiIcon": "/mediawiki/images/en/2/22/Crab_Pot_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Crab_Pot_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "specialty_fish",
+   "name": "特殊鱼",
+   "en": "Specialty Fish",
+   "wikiIcon": "/mediawiki/images/en/0/03/Specialty_Fish_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Specialty_Fish_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "blacksmith",
+   "name": "铁匠",
+   "en": "Blacksmith's",
+   "wikiIcon": "/mediawiki/images/en/c/c8/Blacksmith_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Blacksmith_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "geologist",
+   "name": "地质学家",
+   "en": "Geologist's",
+   "wikiIcon": "/mediawiki/images/en/6/68/Geologist's_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Geologist's_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "adventurer",
+   "name": "冒险家",
+   "en": "Adventurer's",
+   "wikiIcon": "/mediawiki/images/en/5/5e/Adventurer's_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Adventurer's_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "chef",
+   "name": "厨师",
+   "en": "Chef's",
+   "wikiIcon": "/mediawiki/images/en/e/ea/Chef's_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Chef's_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dye",
+   "name": "染料",
+   "en": "Dye",
+   "wikiIcon": "/mediawiki/images/en/a/a5/Dye_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Dye_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "field_research",
+   "name": "实地研究",
+   "en": "Field Research",
+   "wikiIcon": "/mediawiki/images/en/8/86/Field_Research_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Field_Research_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "fodder",
+   "name": "饲料",
+   "en": "Fodder",
+   "wikiIcon": "/mediawiki/images/en/3/32/Fodder_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Fodder_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "enchanter",
+   "name": "附魔",
+   "en": "Enchanter's",
+   "wikiIcon": "/mediawiki/images/en/6/69/Enchanter's_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "Enchanter's_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vault_2500",
+   "name": "2,500g",
+   "en": "2,500g",
+   "wikiIcon": "/mediawiki/images/en/e/e2/2500_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "2500_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vault_5000",
+   "name": "5,000g",
+   "en": "5,000g",
+   "wikiIcon": "/mediawiki/images/en/1/17/5000_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "5000_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vault_10000",
+   "name": "10,000g",
+   "en": "10,000g",
+   "wikiIcon": "/mediawiki/images/en/1/11/10000_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "10000_Bundle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "vault_25000",
+   "name": "25,000g",
+   "en": "25,000g",
+   "wikiIcon": "/mediawiki/images/en/a/a7/25000_Bundle.png",
+   "wikiSize": [
+    136,
+    136
+   ],
+   "wikiFile": "25000_Bundle.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

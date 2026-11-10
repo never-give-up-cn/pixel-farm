@@ -171,5 +171,34 @@
   "wiki_scale_hist": {
    "3": 6
   }
+ },
+ "bundles": {
+  "items": 30,
+  "ok": 30,
+  "own_mean": 79.56,
+  "random_mean": 79.37,
+  "margin": 0.19,
+  "p10": 75.1,
+  "p50": 79.47,
+  "p90": 85.18,
+  "wiki_scale_hist": {
+   "1": 1,
+   "4": 29
+  }
+ },
+ "ui": {
+  "items": 27,
+  "ok": 27,
+  "own_mean": 72.34,
+  "random_mean": 72.19,
+  "margin": 0.15,
+  "p10": 66.77,
+  "p50": 72.56,
+  "p90": 80.25,
+  "wiki_scale_hist": {
+   "1": 13,
+   "3": 2,
+   "4": 12
+  }
  }
 }

@@ -71,7 +71,7 @@ function drawEntities(g, x0, y0, x1, y1){
       }
     }
   }
-  list.push({y:player.y + BOX_OFF_Y + CONFIG.PLAYER.BOX_H/2, f:()=>drawPlayer(g)});
+  list.push({y:player.y + BOX_OFF_Y + CONFIG.PLAYER.BOX_H/2, f:()=>(typeof drawPlayerAnim === 'function' ? drawPlayerAnim : drawPlayer)(g)});
   list.sort((a,b)=>a.y - b.y);
   for(const e of list) e.f();
 }

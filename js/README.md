@@ -94,6 +94,7 @@ import './world/buildings.js';
 | 建筑外观/布局 | `js/world/buildings.js` + `js/render/buildings.js` |
 | 地面/作物/实体怎么画 | `js/render/` 下对应文件 |
 | 玩家移动、碰撞、体力 | `js/systems/collision.js`、`js/systems/stamina.js` |
+| 玩家外观 / 动作 | `js/systems/player-anim.js` + `js/anim/farmer.js` |
 | 锄地、浇水、播种、收获 | `js/systems/crops.js`、`js/systems/soil.js` |
 | 工具切换与使用 | `js/systems/tools.js` |
 | 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
@@ -158,6 +159,7 @@ import './world/buildings.js';
 | `js/anim/animator.js` | 农夫动作元数据、帧缓存、`Animator` 播放器 |
 | `js/anim/atlas.js` | 图集导出：`buildAtlas` / `buildFarmerAtlas` / `buildCatalogAtlas` / `downloadAtlas`（PNG + JSON） |
 | `js/systems/mine.js` | 游戏本体的矿井模式：按 `J` 进入，移动 / 攻击 / 矿石 / 怪物 / 下一层，接管更新与渲染 |
+| `js/systems/player-anim.js` | 玩家动画状态机：移动 / 奔跑 / 钓鱼 / 工具 / 收获 / 吃东西，用 `drawFarmer` 按脚底对齐绘制 |
 
 ```js
 import { Animator, DIR_DOWN } from './anim/animator.js';

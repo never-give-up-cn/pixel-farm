@@ -10,6 +10,7 @@ import './render/crops.js';
 import './render/entities.js';
 import './render/preview.js';
 import './player.js';
+import './systems/player-anim.js';
 import './systems/inventory.js';
 import './systems/build.js';
 import './systems/stamina.js';

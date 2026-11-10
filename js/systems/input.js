@@ -199,7 +199,7 @@ canvas.addEventListener('mousedown', e=>{
     /* 第 19 轮：手持成品 → 右键吃一份回体力（每天限 3 次）；否则还是给水壶补水 */
     const selFood = selectedSlot();
     const fd = selFood ? itemDef(selFood.id) : null;
-    if(fd && fd.kind === 'food'){ eatFood(selFood.id); return; }
+    if(fd && fd.kind === 'food'){ eatFood(selFood.id); if(typeof playerPlayAction === 'function') playerPlayAction('eat'); return; }
     refillCan(); return;
   }
   if(e.button !== 0) return;
@@ -214,6 +214,9 @@ canvas.addEventListener('mousedown', e=>{
   /* 手持鱼竿 → 抛竿（钓到鱼才进背包，不再走 useTool） */
   const selNow = selectedSlot();
   if(selNow && selNow.id === CONFIG.FISHING.ROD_ID){ startFishing(); return; }
+  /* 第 30 轮：面向点击的格子并播放对应工具 / 收获动作 */
+  if(typeof playerFaceTile === 'function') playerFaceTile(tx, ty);
+  if(typeof playerActionFromItem === 'function') playerActionFromItem();
   useTool(tx, ty);
 });
 canvas.addEventListener('contextmenu', e=> e.preventDefault());

@@ -53,6 +53,7 @@ function update(dt){
   if(fishingActive()){
     /* 钓鱼：人站定不动，只推进抛竿/咬钩/拉杆的状态机（面板打开时上面的分支已经提前返回 → 冻结） */
     updateFishing(dt);
+    updatePlayerAnim(dt);            /* 第 30 轮：农夫钓鱼 / 抛竿动画 */
     updateAnimals(dt);               /* 动物照常走动（第 15 轮） */
     updateCamera(dt);
     updateSky(dt);
@@ -60,6 +61,7 @@ function update(dt){
     return;
   }
   updatePlayer(dt);
+  updatePlayerAnim(dt);              /* 第 30 轮：农夫动作状态机 */
   updateAnimals(dt);                 /* 第 15 轮：动物在围栏里随便走走 */
   updateCamera(dt);
   updateSky(dt);                     /* 昼夜色平滑过渡 */

@@ -73,6 +73,7 @@ function updatePlayer(dt){
     ix /= len; iy /= len;
     /* 体力为 0 时跑不动（自动禁用奔跑） */
     const running = !!keys['shift'] && stamina > 0;
+    player.running = running;
     if(running) stamina = Math.max(0, stamina - CONFIG.STAMINA.RUN_PER_SEC * dt);
     /* 石板路：踩上去速度 ×1.3 */
     const road = roadUnderPlayer();
@@ -103,6 +104,7 @@ function updatePlayer(dt){
     if(player.animT >= interval){ player.animT -= interval; player.frame ^= 1; }
   } else {
     player.vx = 0; player.vy = 0;
+    player.running = false;
     player.frame = 0;         /* 静止回到站立帧 */
     player.animT = 0;
   }

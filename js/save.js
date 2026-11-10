@@ -90,7 +90,8 @@ function serializeState(){
     v: CONFIG.SAVE.VERSION,
     at: Date.now(),
     seed: CONFIG.SEED,
-    player: {x: player.x, y: player.y},
+    player: (window.farmhouseActive && typeof farmhouseSavePos === 'function' && farmhouseSavePos())
+      ? farmhouseSavePos() : {x: player.x, y: player.y},
     gold: gold,
     stamina: stamina,
     staminaMax: staminaMax,
@@ -224,6 +225,7 @@ function deserializeState(d){
       }
     /* 玩家 / 背包 / 时间 / 天气 */
     if(d.player){ player.x = d.player.x; player.y = d.player.y; }
+    if(typeof farmhouseForceExit === 'function') farmhouseForceExit();
     /* 第 25 轮：存档正好停在门格上 → 挪到门另一头（不然会卡在门里） */
     {
       const dtx = Math.floor(player.x/TILE), dty = Math.floor(player.y/TILE);

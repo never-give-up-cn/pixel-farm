@@ -14,6 +14,12 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+  /* 农舍室内：只处理 Esc / E，移动由 updateFarmhouse 读 keys */
+  if(window.farmhouseActive){
+    if(k === 'escape'){ if(!e.repeat) exitFarmhouse(); return; }
+    if(k === 'e'){ if(!e.repeat) farmhouseInteract(); return; }
+    return;
+  }
   /* 第 30 轮：矿井模式接管所有按键（移动由 mine.js 自己的监听处理） */
   if(window.mineActive){
     if(k === 'escape'){ if(!e.repeat) exitMine(); return; }
@@ -136,7 +142,7 @@ window.addEventListener('keydown', e=>{
         if(npcAsleepHere(n)) toast(n.name + '睡得正香，别吵醒他');   /* 第 25 轮：睡着的叫不醒 */
         else npcOpenDialog(n);
       }
-      else if(nearHouse()) startSleep(false);
+      else if(nearHouse()) enterFarmhouse();
       else if(nearShop()) toggleShop();
       else if(c){
         if(c.preset) openNpcChest(c.npc);        /* 第 25 轮：NPC 家的箱子（一周一次） */
@@ -202,6 +208,7 @@ window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; h
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen) return;
+  if(window.farmhouseActive || window.mineActive) return;
   if(e.button === 0) mouseHeld = false;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */

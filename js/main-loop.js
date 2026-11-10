@@ -12,6 +12,7 @@ window.renderMs = 0;                  /* 最近一帧的渲染耗时（毫秒，
 
 function update(dt){
   if(window.mineActive){ updateMine(dt); return; }   /* 矿井模式：接管更新，农场世界冻结 */
+  if(window.farmhouseActive && sleepFx.phase === 'none'){ updateFarmhouse(dt); return; }   /* 农舍室内 */
   if(npcOpen) updateNpcDialog(dt);   /* 打字机属于 UI：对话打开时字照常一个个蹦出来 */
   if(warpFx.t < warpFx.dur) warpFx.t += dt;   /* 第 26 轮：进门只挪 1 格 → 闪屏不再用（留作以后别的转场） */
   if(sleepFx.phase !== 'none'){ updateSleepFx(dt); return; }  /* 睡觉/昏睡：接管整个更新 */
@@ -83,6 +84,7 @@ function render(){
   const _t0 = performance.now();
   ctx.imageSmoothingEnabled = false;
   if(window.mineActive){ drawMine(ctx); renderMs = renderMs * 0.9 + (performance.now() - _t0) * 0.1; return; }
+  if(window.farmhouseActive){ drawFarmhouse(ctx); drawSleepFx(ctx); renderMs = renderMs * 0.9 + (performance.now() - _t0) * 0.1; return; }
   /* 视锥裁剪：只绘制可见范围内的瓦片 */
   const x0 = Math.max(0, Math.floor(cam.x / TILE));
   const x1 = Math.min(MAP_W-1, Math.floor((cam.x + VIEW_W - 1) / TILE));

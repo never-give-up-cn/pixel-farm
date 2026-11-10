@@ -122,6 +122,7 @@ import './world/buildings.js';
 | 换装 / 衣柜 | `js/systems/wardrobe.js` + `js/ui/wardrobe-panel.js` |
 | 家具摆放 / 装修模式 | `js/systems/decor.js` + `js/render/buildings.js` |
 | 墙纸 / 地板 / 房间预览 | `js/systems/room.js` + `js/ui/room-panel.js` |
+| 农舍室内 | `js/systems/farmhouse.js` + `js/main-loop.js` + `js/systems/input.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
 | 成就/统计 | `js/systems/stats.js`（32 个成就，徽章走 `js/anim/achievements.js`） |
 | 加工台 | `js/systems/maker.js`（加工台 / 灶台共用一套面板，按 `cook` 过滤配方） |
@@ -187,6 +188,7 @@ import './world/buildings.js';
 | `js/systems/wardrobe.js` | 换装状态：帽子 / 上衣 / 下装，提供 drawFarmer 的 outfit 参数与存档 |
 | `js/systems/decor.js` | 装修模式：选中家具后 H 键进入，左键摆放 / 右键拆回，家具存档 |
 | `js/systems/room.js` | 房间装修状态：墙纸 / 地板选择与存档，装修样板建筑 |
+| `js/systems/farmhouse.js` | 可进入的农舍室内：移动、床睡觉、灶台、门口离开，应用墙纸/地板 |
 | `js/ui/room-panel.js` | 装修样板面板：3 行墙纸 + 5 行地板的实时房间预览 |
 | `js/ui/wardrobe-panel.js` | 衣柜面板：90 帽子 / 64 上衣 / 16 下装试穿与实时预览 |
 | `js/ui/bundle-panel.js` | 收集包 DOM 面板：30 个收集包、逐件交付与完成标记 |

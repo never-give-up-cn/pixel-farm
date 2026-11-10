@@ -84,6 +84,7 @@ function updateWeather(dt){
   }
 }
 function drawWeather(g){
+  if(typeof currentMap !== 'undefined' && String(currentMap).indexOf('in_') === 0) return;
   if(!fxParticles.length) return;
   if(weather.id === 'rain'){
     g.strokeStyle = 'rgba(175,210,255,0.55)';

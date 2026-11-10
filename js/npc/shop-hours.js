@@ -50,6 +50,7 @@ function townDoorState(b){
             text: asleep ? '有人在睡觉' : (working ? '正在工作' : (here.length > 1 ? here.length + ' 人在家' : '主人在家'))};
   }
   if(st.type === 'sleep') return {key:'rest', color:K.signRest, text:b.npc === 'aunt' ? '老板娘在睡觉' : '主人在睡觉'};
+  if(st.map && st.map !== 'valley') return {key:'away', color:K.signAway, text:'主人出去了'};
   if(st.type === 'work')  return {key:'open', color:K.signOpen, text:'主人在忙'};
   if(st.at === 'home')    return {key:'open', color:K.signOpen, text:'主人在家'};
   return {key:'away', color:K.signAway, text:'主人出去了'};

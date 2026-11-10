@@ -14,6 +14,17 @@ const MAP_DEFS = {
   beach:    { name: '鹈鹕海滩' }
 };
 
+/* 新地图里可进入的住宅室内：复用同一套房间模板，家具和住户不同 */
+const INTERIORS = {
+  in_robin:   { name:'罗宾家',     outMap:'mountain', outX:39, outY:82, room:{x:52,y:40,w:18,h:12} },
+  in_marnie:  { name:'玛妮牧场',   outMap:'forest',   outX:109,outY:43, room:{x:52,y:40,w:18,h:12} },
+  in_leah:    { name:'莉亚小屋',   outMap:'forest',   outX:103,outY:54, room:{x:52,y:40,w:18,h:12} },
+  in_wizard:  { name:'法师塔',     outMap:'forest',   outX:70, outY:49, room:{x:52,y:40,w:18,h:12} },
+  in_willy:   { name:'威利鱼店',   outMap:'beach',    outX:76, outY:18, room:{x:52,y:40,w:18,h:12} },
+  in_elliott: { name:'艾利欧特小屋',outMap:'beach',    outX:49, outY:18, room:{x:52,y:40,w:18,h:12} }
+};
+for(const id in INTERIORS) MAP_DEFS[id] = { name: INTERIORS[id].name };
+
 window.MAP_WORLD = {};
 window.currentMap = 'valley';
 window.mapDisplayName = MAP_DEFS.valley.name;
@@ -143,9 +154,9 @@ function genForest(){
   setPathRect(60, 30, 17, 2);
 
   const L = [
-    { type:'ranch',   x:104, y:34, w:15, h:8,  label:'玛妮牧场' },
-    { type:'cottage', x:98,  y:46, w:11, h:7,  label:'莉亚小屋' },
-    { type:'tower',   x:66,  y:34, w:10, h:15, label:'法师塔' },
+    { type:'ranch',   x:104, y:34, w:15, h:8,  label:'玛妮牧场', home:'in_marnie' },
+    { type:'cottage', x:98,  y:46, w:11, h:7,  label:'莉亚小屋', home:'in_leah' },
+    { type:'tower',   x:66,  y:34, w:10, h:15, label:'法师塔', home:'in_wizard' },
     { type:'log',     x:8,   y:8,  w:7,  h:4,  label:'秘密森林' },
     { type:'cart',    x:58,  y:22, w:7,  h:5,  label:'旅行货车' },
     { type:'sign',    x:119, y:40, w:3,  h:3,  label:'东边 · 小镇', solid:false }
@@ -177,7 +188,7 @@ function genMountain(){
   const L = [
     { type:'mine',      x:46, y:80, w:12, h:9,  label:'矿井' },
     { type:'guild',     x:76, y:84, w:14, h:11, label:'冒险家公会' },
-    { type:'carpenter', x:30, y:70, w:18, h:11, label:'罗宾木匠店' },
+    { type:'carpenter', x:30, y:70, w:18, h:11, label:'罗宾木匠店', home:'in_robin' },
     { type:'tent',      x:55, y:40, w:7,  h:5,  label:'莱纳斯的帐篷' },
     { type:'bridge',    x:104,y:28, w:13, h:3,  label:'采石场', solid:false },
     { type:'sign',      x:61, y:94, w:3,  h:3,  label:'南边 · 小镇', solid:false }
@@ -207,8 +218,8 @@ function genBeach(){
   setRect(22, 38, 9, 4, T.WATER);
 
   const L = [
-    { type:'fishshop', x:70, y:10, w:13, h:8, label:'威利的鱼店' },
-    { type:'cabin',    x:44, y:10, w:11, h:8, label:'艾利欧特小屋' },
+    { type:'fishshop', x:70, y:10, w:13, h:8, label:'威利的鱼店', home:'in_willy' },
+    { type:'cabin',    x:44, y:10, w:11, h:8, label:'艾利欧特小屋', home:'in_elliott' },
     { type:'pier',     x:58, y:50, w:5,  h:52, label:'栈桥', solid:false },
     { type:'sign',     x:61, y:4,  w:3,  h:3,  label:'北边 · 小镇', solid:false }
   ];
@@ -220,7 +231,39 @@ function genBeach(){
   };
 }
 
-/* 懒加载：第一次进入某张地图时才生成 */
+/* ---------- 新地图住宅室内 ---------- */
+function genInterior(id){
+  const I = INTERIORS[id];
+  if(!I) return null;
+  const r = I.room;
+  fillMap(T.WALL);
+  setRect(r.x, r.y, r.w, r.h, T.FLOOR);
+  const doorX = r.x + Math.floor(r.w / 2);
+  const doorY = r.y + r.h - 1;
+  map[doorY * MAP_W + doorX] = T.DOOR;
+
+  const add = (type, tx, ty, solid, flat, interact) => {
+    const b = { type:type, tx:tx, ty:ty, preset:true, solid:!!solid, flat:!!flat, interact:interact || '' };
+    buildings.push(b);
+    if(solid) buildIndex[ty*MAP_W+tx] = buildings.length - 1;
+  };
+  add('bed',   r.x + 3,         r.y + r.h - 4, 1, false, 'bed');
+  add('table', r.x + r.w - 6,   r.y + r.h - 5, 1, false, 'home');
+  add('stove', r.x + r.w - 4,   r.y + 3,       1, false, 'cook');
+  add('chest', r.x + 6,         r.y + 3,       1, false, 'chest');
+  add('shelf', r.x + 3,         r.y + 3,       0, false, '');
+  add('rug',   r.x + Math.floor(r.w/2), r.y + Math.floor(r.h/2), 0, true, '');
+  if(id === 'in_wizard'){
+    add('table', r.x + r.w - 9, r.y + 5, 1, false, 'home');
+  }
+  return {
+    landmarks: [],
+    exits: [{ x:doorX, y:doorY, w:1, h:1, to:I.outMap, tx:I.outX, ty:I.outY, label:'出门' }],
+    spawn: { x:doorX, y:doorY - 2 }
+  };
+}
+
+
 function ensureWorld(id){
   if(MAP_WORLD[id]) return MAP_WORLD[id];
   const old = MAP_WORLD[currentMap] || {
@@ -234,6 +277,7 @@ function ensureWorld(id){
   if(id === 'forest') result = genForest();
   else if(id === 'mountain') result = genMountain();
   else if(id === 'beach') result = genBeach();
+  else if(INTERIORS[id]) result = genInterior(id);
   if(result){
     st.landmarks = result.landmarks || [];
     st.exits = result.exits || [];
@@ -270,6 +314,26 @@ function worldActivate(id, x, y, silent){
 function worldSwitch(id, tx, ty){
   if(id === currentMap) return false;
   return !!worldActivate(id, tx, ty, false);
+}
+
+/* 走近可进入的地标房屋（新地图） */
+function worldLandmarkNear(){
+  if(currentMap === 'valley') return null;
+  const px = player.x / TILE, py = player.y / TILE;
+  let best = null, bd = 2.2;
+  for(const l of worldLandmarks()){
+    if(!l.home) continue;
+    const cx = clamp(px, l.x, l.x + l.w);
+    const cy = clamp(py, l.y, l.y + l.h);
+    const d = Math.hypot(px - cx, py - cy);
+    if(d < bd){ bd = d; best = l; }
+  }
+  return best;
+}
+function worldEnterLandmark(l){
+  if(!l || !l.home) return false;
+  const st = ensureWorld(l.home);
+  return !!worldActivate(l.home, st.spawn.x, st.spawn.y, false);
 }
 
 /* 出口判定：踩到地图边缘的出口格就切换 */
@@ -406,10 +470,12 @@ function worldLandmarkSolid(tx, ty){
 function worldLandmarkColor(type){ return landmarkColor(type); }
 
 Object.assign(window, {
-  MAP_DEFS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, drawWorldLandmark, worldLandmarkColor, ensureWorld
+  MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark,
+  drawWorldLandmark, worldLandmarkColor, ensureWorld
 });
 export {
-  MAP_DEFS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, drawWorldLandmark, worldLandmarkColor, ensureWorld
+  MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark,
+  drawWorldLandmark, worldLandmarkColor, ensureWorld
 };

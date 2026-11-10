@@ -2146,6 +2146,45 @@ CONFIG.TOWN_PLAN();
   }
 })();
 
+/* 第 36 轮：把新地图地标的住宅绑定成可进入室内；这些居民晚上回各自地图的家。 */
+(function assignCrossMapHomes(){
+  const HOMES = {
+    robin:     { map:'in_robin',   x:58, y:47, eve:'mountain', ex:39, ey:82, label:'山地 · 木匠店门口' },
+    demetrius: { map:'in_robin',   x:61, y:48, eve:'mountain', ex:42, ey:82, label:'山地 · 木匠店门口' },
+    maru:      { map:'in_robin',   x:63, y:49, eve:'mountain', ex:45, ey:82, label:'山地 · 木匠店门口' },
+    sebastian: { map:'in_robin',   x:67, y:48, eve:'mountain', ex:48, ey:82, label:'山地 · 木匠店门口' },
+    marnie:    { map:'in_marnie',  x:58, y:47, eve:'forest',   ex:109,ey:43, label:'森林 · 玛妮牧场' },
+    shane:     { map:'in_marnie',  x:61, y:48, eve:'forest',   ex:112,ey:43, label:'森林 · 玛妮牧场' },
+    jas:       { map:'in_marnie',  x:63, y:49, eve:'forest',   ex:112,ey:44, label:'森林 · 玛妮牧场' },
+    leah:      { map:'in_leah',    x:60, y:47, eve:'forest',   ex:103,ey:54, label:'森林 · 莉亚小屋' },
+    wizard:    { map:'in_wizard',  x:60, y:46, eve:'forest',   ex:70, ey:49, label:'森林 · 法师塔' },
+    willy:     { map:'in_willy',   x:60, y:47, eve:'beach',    ex:76, ey:18, label:'海滩 · 威利鱼店' },
+    elliott:   { map:'in_elliott', x:60, y:47, eve:'beach',    ex:49, ey:18, label:'海滩 · 艾利欧特小屋' }
+  };
+  for(const id in HOMES){
+    const h = HOMES[id];
+    const S = CONFIG.NPC_SCHED.LIST[id];
+    if(!S) continue;
+    const d = CONFIG.NPC.LIST.find(x => x.id === id);
+    if(d) d.homeMap = h.map;
+    for(const slot of S.sched){
+      if(slot.type === 'home' || slot.type === 'sleep'){
+        slot.map = h.map;
+        slot.x = h.x;
+        slot.y = h.y;
+        slot.label = '室内';
+        delete slot.at;
+      } else if(slot.type === 'wander'){
+        slot.map = h.eve;
+        slot.x = h.ex;
+        slot.y = h.ey;
+        slot.label = h.label;
+        delete slot.area;
+      }
+    }
+  }
+})();
+
 /* 第 33 轮：生日沿用 anim 数据（每季 1~28 日）。 */
 
 

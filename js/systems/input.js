@@ -142,6 +142,11 @@ window.addEventListener('keydown', e=>{
   if(k === 'e'){
     if(!e.repeat){
       if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+        const l = (typeof worldLandmarkNear === 'function') ? worldLandmarkNear() : null;
+        if(l && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
+          ensureAudio();
+          return;
+        }
         toast('这里是探索区域：可以走路、钓鱼、看地标；交互请回农场 / 小镇');
         ensureAudio();
         return;

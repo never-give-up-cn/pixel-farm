@@ -172,6 +172,7 @@ function npcAsleepHere(d){
   const st = npcCurrentState(d);
   if(!st || st.type !== 'sleep') return false;
   if(st.x === null || st.x === undefined) return false;
+  if((st.map || 'valley') !== 'valley') return st.map === currentMap;
   const room = playerRoomWide();
   if(!room) return false;                       /* 玩家在室外 → 不算（来访居民不受影响） */
   return npcRoomIdAt((st.x + 0.5)*TILE, (st.y + 0.5)*TILE) === room;

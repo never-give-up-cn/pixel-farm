@@ -6,6 +6,8 @@ import { FRUIT_TREES } from './anim/trees.js';
 import { MINERALS } from './anim/minerals.js';
 import { FISH as ANIM_FISH } from './anim/fish.js';
 import { ARTISANS } from './anim/artisan.js';
+import { DISHES, DISH_MAP } from './anim/dishes.js';
+import { RECIPES as ANIM_RECIPES } from './anim/recipes.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1515,6 +1517,107 @@ const CONFIG = {
       }
     }
   }
+})();
+
+
+/* 第 32 轮：81 道料理 + 食谱接入烹饪（复用加工台面板）。
+ * anim 食谱里的配料是中文名；这里先建「名称 → 游戏物品 id」索引，
+ * 再对游戏没有的配料做近似替换（黄油→牛奶、小麦粉→面粉…）。 */
+(function addDishes(){
+  const ICON_BY_CAT = {
+    soup:'🍲', salad:'🥗', fish:'🐟', breakfast:'🍳',
+    dessert:'🍰', main:'🍛', drink:'🥤'
+  };
+  const FALLBACK = {
+    '小麦粉':'flour', '面粉':'flour', '糖':'sugar', '黄油':'milk', '奶油':'milk',
+    '煎蛋':'egg', '薯饼':'potato', '面包':'bread', '大米':'rice', '醋':'vinegar',
+    '蛋黄酱':'mayonnaise', '奶酪':'cheese', '枫糖浆':'honey', '墨汁':'charcoal',
+    '榛子':'berry', '蜗牛':'crayfish', '沙丁鱼':'fish_crucian', '鱼籽':'roe'
+  };
+  const KEYWORD = [
+    ['鱼', 'fish_crucian'], ['奶', 'milk'], ['蛋', 'egg'], ['油', 'oil'],
+    ['蘑菇', 'common_mushroom'], ['莓', 'strawberry'], ['果', 'apple'],
+    ['甘蓝', 'kale'], ['土豆', 'potato'], ['番茄', 'tomato'], ['玉米', 'corn'],
+    ['南瓜', 'pumpkin'], ['小麦', 'wheat'], ['糖', 'sugar']
+  ];
+
+  /* 1) 先生成 81 道菜的物品，价格稍后按配料计算 */
+  for (const d of DISHES) {
+    if (CONFIG.ITEMS[d.id]) continue;
+    CONFIG.ITEMS[d.id] = {
+      id: d.id, name: d.name, icon: ICON_BY_CAT[d.cat] || '🍽️',
+      stack: true, max: 99, kind: 'food', price: 0, dishCat: d.cat
+    };
+  }
+
+  /* 2) 名称索引（菜名 / 作物 / 鱼 / 工匠品 / 畜牧品都在 CONFIG.ITEMS 里） */
+  const byName = new Map();
+  for (const id in CONFIG.ITEMS) {
+    const it = CONFIG.ITEMS[id];
+    if (it && it.name) byName.set(it.name, id);
+  }
+
+  function resolve(name) {
+    if (byName.has(name)) return byName.get(name);
+    if (FALLBACK[name]) return FALLBACK[name];
+    for (const [kw, id] of KEYWORD) {
+      if (name.indexOf(kw) >= 0 && CONFIG.ITEMS[id]) return id;
+    }
+    return 'wildflower';
+  }
+
+  /* 3) 食谱 → 加工台条目 */
+  let added = 0;
+  for (const r of ANIM_RECIPES) {
+    if (CONFIG.RECIPE.LIST.some(x => x.id === r.id)) continue;
+    const def = DISH_MAP[r.id];
+    if (!def) continue;
+
+    const inputs = {};
+    for (const line of r.ingredients) {
+      const m = String(line).match(/^(.*?)\s*[×x]\s*(\d+)\s*$/);
+      const name = m ? m[1].trim() : String(line).trim();
+      const n = m ? Math.max(1, parseInt(m[2], 10) || 1) : 1;
+      const id = resolve(name);
+      inputs[id] = (inputs[id] || 0) + n;
+    }
+
+    CONFIG.RECIPE.LIST.push({
+      id: r.id,
+      name: def.name,
+      icon: ICON_BY_CAT[def.cat] || '🍽️',
+      inputs,
+      out: { id: r.id, n: 1 },
+      hours: Math.min(4, 1 + Object.keys(inputs).length),
+      unlock: null,
+      cook: true
+    });
+    added++;
+  }
+
+  /* 4) 菜品价格：配料总价 × 1.5，多轮让「面包 → 三明治」这类链式配方也吃到涨价 */
+  const itemPrice = id => {
+    const d = CONFIG.ITEMS[id];
+    if (!d) return 0;
+    if (typeof d.price === 'number' && d.price > 0) return d.price;
+    if (d.kind === 'crop') {
+      const c = CONFIG.CROPS.find(x => x.id === d.crop);
+      return c ? c.sell : 0;
+    }
+    return 0;
+  };
+  const dishRecipes = CONFIG.RECIPE.LIST.filter(r => r.cook);
+  for (let pass = 0; pass < 3; pass++) {
+    for (const r of dishRecipes) {
+      let cost = 0;
+      for (const k in r.inputs) cost += itemPrice(k) * r.inputs[k];
+      if (cost > 0) {
+        CONFIG.ITEMS[r.id].price = Math.max(CONFIG.ITEMS[r.id].price || 0, Math.round(cost * 1.5));
+      }
+    }
+  }
+
+  CONFIG.DISH_DEBUG = { added, total: ANIM_RECIPES.length };
 })();
 
 

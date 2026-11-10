@@ -117,6 +117,7 @@ import './world/buildings.js';
 | 成就/统计 | `js/systems/stats.js` |
 | 加工台 | `js/systems/maker.js` |
 | 工匠品 / 加工配方 | `js/systems/maker.js` + `js/anim/artisan.js` + `js/config.js` |
+| 料理 / 食谱 | `js/anim/dishes.js` + `js/anim/recipes.js` + `js/config.js`（烹饪复用加工台） |
 | 评级/终局结算 | `js/systems/endgame.js` |
 | 输入、按键、暂停 | `js/systems/input.js`（含长按左键连续使用工具） |
 | NPC 日程/站位 | `js/npc/schedule.js` |

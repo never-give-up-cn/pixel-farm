@@ -12,6 +12,7 @@ import { ACHIEVEMENTS as ANIM_ACHIEVEMENTS } from './anim/achievements.js';
 import { BUNDLES as ANIM_BUNDLES, BUNDLE_ROOMS, bundleRoomName } from './anim/bundles.js';
 import { NPCS as ANIM_NPCS } from './anim/npcs.js';
 import { SPECIAL_NPCS as ANIM_SPECIAL_NPCS } from './anim/special-npcs.js';
+import { WEAPONS, RINGS, BOOTS } from './anim/equipment.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -166,6 +167,7 @@ const CONFIG = {
     START_LOADOUT: [
       { id:'hoe', n:1 }, { id:'can', n:1 }, { id:'axe', n:1 },
       { id:'pick', n:1 }, { id:'sickle', n:1 }, { id:'rod', n:1 },
+      { id:'steel_smallsword', n:1 },
       { id:'seed_parsnip', n:10 }, { id:'seed_potato', n:5 },
       { id:'seed_cauliflower', n:3 }, { id:'seed_tulip', n:3 }
     ]
@@ -1872,6 +1874,34 @@ const CONFIG = {
     k++;
   }
   CONFIG.SPECIAL_VILLAGERS = k;
+})();
+
+
+/* 第 32 轮：110 件装备（62 武器 / 30 戒指 / 18 靴子）作为游戏物品。
+ * 武器可在矿井里使用，按 dmg / crit 计算伤害；戒指与靴子目前作为可收集/出售品。 */
+(function addEquipmentItems(){
+  for (const w of WEAPONS) {
+    if (CONFIG.ITEMS[w.id]) continue;
+    CONFIG.ITEMS[w.id] = {
+      id: w.id, name: w.name, icon: '⚔️', stack: false, max: 1,
+      kind: 'weapon', price: 100 + (w.level | 0) * 400,
+      dmg: w.dmg, crit: w.crit, weaponCat: w.cat, stat: w.stat
+    };
+  }
+  RINGS.forEach((r, i) => {
+    if (CONFIG.ITEMS[r.id]) return;
+    CONFIG.ITEMS[r.id] = {
+      id: r.id, name: r.name, icon: '💍', stack: false, max: 1,
+      kind: 'ring', price: 600 + i * 50, effect: r.effect
+    };
+  });
+  for (const b of BOOTS) {
+    if (CONFIG.ITEMS[b.id]) continue;
+    CONFIG.ITEMS[b.id] = {
+      id: b.id, name: b.name, icon: '🥾', stack: false, max: 1,
+      kind: 'boots', price: 400 + (b.def | 0) * 120, defense: b.def, immunity: b.imm
+    };
+  }
 })();
 
 

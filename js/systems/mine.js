@@ -250,6 +250,33 @@ export function mineAttack() {
   p.attackDone = false;
 }
 
+function weaponDamage() {
+  if (typeof selectedSlot === 'function' && typeof itemDef === 'function') {
+    const s = selectedSlot();
+    const d = s ? itemDef(s.id) : null;
+    if (d && d.kind === 'weapon') {
+      const m = String(d.dmg || '').match(/(\d+)\s*-\s*(\d+)/);
+      let lo = 4, hi = 8;
+      if (m) { lo = parseInt(m[1], 10); hi = parseInt(m[2], 10); }
+      let dmg = lo + Math.floor(Math.random() * (hi - lo + 1));
+      const crit = parseFloat(d.crit) || 0;
+      if (Math.random() < crit) dmg = Math.round(dmg * 1.8);
+      return dmg;
+    }
+  }
+  return 8 + Math.floor(Math.random() * 6);
+}
+
+function dropEquipment(mon) {
+  if (typeof spawnDrop !== 'function' || Math.random() >= 0.12) return;
+  const pool = Object.keys(CONFIG.ITEMS).filter(id => {
+    const k = CONFIG.ITEMS[id].kind;
+    return k === 'weapon' || k === 'ring' || k === 'boots';
+  });
+  if (!pool.length) return;
+  spawnDrop(pool[Math.floor(Math.random() * pool.length)], 1, mon.px, mon.py, 60);
+}
+
 function resolveAttack() {
   const p = mine.player;
   const t = facingTile();
@@ -278,7 +305,7 @@ function resolveAttack() {
 
   const mon = mine.monsters.find(m => m.tx === t.x && m.ty === t.y);
   if (mon) {
-    const dmg = 8 + Math.floor(Math.random() * 6);
+    const dmg = weaponDamage();
     mon.hp -= dmg;
     mon.hurt = 0.22;
     burst(t.x, t.y, '#ff8060', 10);
@@ -291,6 +318,7 @@ function resolveAttack() {
       dropItem('stone', 1);
       if (Math.random() < 0.4) dropItem('charcoal', 1);
       if (typeof addGold === 'function') addGold(3 + Math.floor(Math.random() * 6));
+      dropEquipment(mon);
       playSfx(880, 'triangle', 0.09, 0.5);
     }
     return;

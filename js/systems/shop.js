@@ -30,7 +30,8 @@ function basePrice(id){
     const c = cropDef(d.crop); return c ? c.sell : 0;
   }
   if(d.kind === 'material' || d.kind === 'fish' || d.kind === 'gather' ||
-     d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral') return d.price || 0;
+     d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral' ||
+     d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots') return d.price || 0;
   return 0;
 }
 /* 当前价格（含季节系数与 ±15% 浮动） */
@@ -55,7 +56,8 @@ function isSellable(id){
   const d = itemDef(id);
   if(!d) return false;
   return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' ||
-         d.kind === 'gather' || d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral';
+         d.kind === 'gather' || d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral' ||
+         d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots';
 }
 /* 工具是否已经拥有（一次性商品） */
 function toolOwned(id){

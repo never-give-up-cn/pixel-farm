@@ -311,7 +311,8 @@ function showPackTip(i, e){
   const lines = [];
   lines.push(d.name + ' ×' + s.n);
   const kindName = {seed:'种子', crop:'作物', material:'材料', tool:'工具', currency:'货币',
-                    fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品', mineral:'矿物'}[d.kind] || d.kind;
+                    fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品', mineral:'矿物',
+                    weapon:'武器', ring:'戒指', boots:'靴子'}[d.kind] || d.kind;
   if(isSellable(d.id)){
     lines.push(kindName + ' · 售价 ' + priceOf(d.id) + ' 💰 ' + priceTrend(d.id));
   }else if(d.kind === 'seed'){

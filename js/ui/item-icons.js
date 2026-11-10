@@ -12,6 +12,7 @@ import { ARTISAN_MAP, drawArtisan } from '../anim/artisan.js';
 import { DISH_MAP, drawDish } from '../anim/dishes.js';
 import { PROD_MAP, drawProductIcon } from '../anim/products.js';
 import { RES_MAP, drawResourceIcon } from '../anim/resources.js';
+import { EQUIP_MAP, drawEquipment } from '../anim/equipment.js';
 
 const TOOL_ALIAS = {
   hoe: 'hoe', can: 'watering_can', axe: 'axe',
@@ -74,6 +75,8 @@ function buildIcon(id) {
     else if (ARTISAN_MAP[base]) { drawArtisan(g, ARTISAN_MAP[base], 0.25); drew = true; }
   } else if (d.kind === 'animal') {
     if (PROD_MAP[base]) { drawProductIcon(g, PROD_MAP[base], 0.25); drew = true; }
+  } else if (d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots') {
+    if (EQUIP_MAP[base]) { drawEquipment(g, EQUIP_MAP[base], 0.25); drew = true; }
   } else if (d.kind === 'material' || d.kind === 'gather') {
     if (RES_MAP[base]) { drawResourceIcon(g, RES_MAP[base], 0.25); drew = true; }
   } else if (d.kind === 'tool') {

@@ -113,6 +113,7 @@ import './world/buildings.js';
 | 钓鱼 | `js/systems/fishing.js` |
 | 鱼类 / 钓鱼池 | `js/systems/fishing.js` + `js/anim/fish.js` + `js/config.js` |
 | 矿井 / 战斗 | `js/systems/mine.js` + `js/anim/monsters.js` + `js/anim/farmer.js` |
+| 装备 / 武器伤害 | `js/anim/equipment.js` + `js/systems/mine.js` + `js/config.js` |
 | 动物/鸡舍/牛棚 | `js/systems/animals.js`（6 种动物，绘制走 `js/anim/animals.js`） |
 | 宠物 / 宠物碗 | `js/systems/pet.js`（15 种宠物，绘制走 `js/anim/pets.js`） |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |

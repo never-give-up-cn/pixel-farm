@@ -97,6 +97,8 @@ import './world/buildings.js';
 | 玩家外观 / 动作 | `js/systems/player-anim.js` + `js/anim/farmer.js` |
 | 锄地、浇水、播种、收获 | `js/systems/crops.js`、`js/systems/soil.js` |
 | 工具切换与使用 | `js/systems/tools.js` |
+| 砍树 / 树木倒下 | `js/systems/forest.js` + `js/render/entities.js` |
+| 地面掉落物 / 自动拾取 | `js/systems/drops.js` |
 | 背包、物品增删、快捷栏 | `js/systems/inventory.js` |
 | 商店买卖、价格浮动 | `js/systems/shop.js` + `js/ui/shop-panel.js` |
 | 时间、季节、天气 | `js/systems/time.js`、`js/systems/weather.js` |
@@ -160,6 +162,8 @@ import './world/buildings.js';
 | `js/anim/atlas.js` | 图集导出：`buildAtlas` / `buildFarmerAtlas` / `buildCatalogAtlas` / `downloadAtlas`（PNG + JSON） |
 | `js/systems/mine.js` | 游戏本体的矿井模式：按 `J` 进入，移动 / 攻击 / 矿石 / 怪物 / 下一层，接管更新与渲染 |
 | `js/systems/player-anim.js` | 玩家动画状态机：移动 / 奔跑 / 钓鱼 / 工具 / 收获 / 吃东西，用 `drawFarmer` 按脚底对齐绘制 |
+| `js/systems/drops.js` | 地面掉落物：随机散落、落地弹跳、靠近吸附、自动进背包与拾取飘字 |
+| `js/systems/forest.js` | 砍树：3 段受击、摇晃、绕根部倒下、木材抛散与木屑粒子 |
 
 ```js
 import { Animator, DIR_DOWN } from './anim/animator.js';

@@ -61,7 +61,7 @@ function drawEntities(g, x0, y0, x1, y1){
         const c = crops[i];
         if(c) list.push({y:ty*TILE + TILE, f:()=>drawCrop(g, px, py, c)});
         const t = map[i];
-        if(t === T.TREE)      list.push({y:ty*TILE + TILE, f:()=>drawTree(g, px, py)});
+        if(t === T.TREE)      list.push({y:ty*TILE + TILE, f:()=>drawTreeWithState(g, px, py, i)});
         else if(t === T.ROCK) list.push({y:ty*TILE + TILE, f:()=>drawRock(g, px, py)});
         else if(t === T.FLOWER) list.push({y:ty*TILE + TILE, f:()=>drawFlower(g, px, py, (hash2(tx,ty)*3)|0)});
         /* 第 17 轮：节日装饰（走同一张 Y 排序表） */
@@ -72,8 +72,14 @@ function drawEntities(g, x0, y0, x1, y1){
     }
   }
   list.push({y:player.y + BOX_OFF_Y + CONFIG.PLAYER.BOX_H/2, f:()=>(typeof drawPlayerAnim === 'function' ? drawPlayerAnim : drawPlayer)(g)});
+  /* 地面掉落物 / 拾取飘字：按 Y 混进同一张排序表（第 31 轮） */
+  if(typeof groundDrops !== 'undefined'){
+    for(const d of groundDrops) list.push({y:d.y + 0.5, f:()=>drawGroundDrop(g, d)});
+    for(const t of floatTexts) list.push({y:t.y + 0.6, f:()=>drawFloatText(g, t)});
+  }
   list.sort((a,b)=>a.y - b.y);
   for(const e of list) e.f();
+  if(typeof drawTreeChips === 'function') drawTreeChips(g);
 }
 
 

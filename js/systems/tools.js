@@ -44,6 +44,9 @@ function useTool(tx,ty){
   /* 4. 水壶 */
   if(tool.id === 'can') return waterTile(tx,ty);
 
+  /* 4.5 斧头砍树：多段受击 → 摇晃 → 倒下 → 掉木材（第 31 轮） */
+  if(tool.id === 'axe' && t === T.TREE) return chopTree(i, tx, ty);
+
   /* 5. 普通工具：按地块类型处理 */
   if(tool.accepts.indexOf(t) < 0){
     toast(item.name + '不能用在' + TILE_NAMES[t] + '上');

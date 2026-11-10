@@ -370,7 +370,7 @@ function drawObjects(g,x0,y0,x1,y1){
       const t = map[ty*MAP_W+tx];
       if(t===T.TREE || t===T.ROCK || t===T.FLOWER){
         const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
-        if(t===T.TREE) drawTree(g,x,y);
+        if(t===T.TREE) drawTreeWithState(g,x,y,ty*MAP_W+tx);
         else if(t===T.ROCK) drawRock(g,x,y);
         else drawFlower(g,x,y,(hash2(tx,ty)*3)|0);
       } else if(t === T.FLOOR){                 /* 第 24 轮：地毯（平的，不参与 Y 排序） */

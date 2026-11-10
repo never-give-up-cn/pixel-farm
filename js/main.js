@@ -22,6 +22,8 @@ import './ui/feedback.js';
 import './systems/crops.js';
 import './systems/soil.js';
 import './systems/tools.js';
+import './systems/drops.js';
+import './systems/forest.js';
 import './systems/shop.js';
 import './systems/time.js';
 import './systems/sleep.js';

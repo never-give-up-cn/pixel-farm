@@ -80,6 +80,10 @@ const CATS = {
     mod: '../../js/anim/crop-items.js', list: 'CROP_ITEMS', w: 'ITEM_W', h: 'ITEM_H',
     draw: 'drawProduceIcon',
     drawExpr: "item.group === 'seed' ? mod.drawSeedPacket(g, item.crop, 0.25) : mod.drawProduceIcon(g, item.crop, 0.25)"
+  },
+  misc: {
+    mod: '../../js/anim/misc.js', list: 'MISC', w: 'MISC_W', h: 'MISC_H',
+    draw: 'drawMiscIcon', drawExpr: 'mod.drawMiscIcon(g, item, 0.25)'
   }
 };
 

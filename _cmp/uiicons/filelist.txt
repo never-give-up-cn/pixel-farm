@@ -1,0 +1,184 @@
+360 A.png
+360 B.png
+360 Back.png
+360 Dpad.png
+360 LB.png
+360 Left Stick.png
+360 LT.png
+360 RB.png
+360 Right Stick.png
+360 RT.png
+360 Start.png
+360 X.png
+360 Y.png
+All Seasons Icon.png
+Animals Icon.png
+Artisan Icon.png
+Attack.png
+Beach Farm Map Icon.png
+Bookseller Icon.png
+Bundle Icon.png
+Calendar Flag Anim.gif
+Calico Egg.png
+CameraButton.png
+Controls Icon.png
+Cooking Icon.png
+Crit. Chance.png
+Crit. Power.png
+Defense.png
+Energy.png
+Fall.png
+Farming.png
+Festivals Icon.png
+Fish.png
+Fishing.png
+Foraging.png
+Forest Farm Map Icon.png
+Four Corners Farm Map Icon.png
+Furniture Icon.png
+Gold Quality Icon.png
+Gold Quality.png
+Gold.png
+Golden Scroll.png
+Health FR.png
+Health.png
+Henchman Icon.png
+Hilltop Farm Map Icon.png
+Hook Icon.png
+Immunity.png
+Inventory Icon.png
+Iridium Quality Icon.png
+Iridium Quality.png
+JunimoHutHarvestButton.png
+Left-Click.png
+Luck.png
+Magnetism.png
+Marriage Icon.png
+Max Energy.png
+Meadowlands Farm Map Icon.png
+Mining.png
+Mouse Middle Key Light.png
+Multiplayer Icon.png
+Poison.png
+PS4 Circle.png
+PS4 Cross.png
+PS4 Dpad.png
+PS4 L1.png
+PS4 L2.png
+PS4 Left Stick.png
+PS4 Options.png
+PS4 R1.png
+PS4 R2.png
+PS4 Right Stick.png
+PS4 Square.png
+PS4 Touch Pad.png
+PS4 Triangle.png
+QiCoin.png
+QuarryMineIcon.png
+Quests Icon.png
+Railroad Icon ES.png
+Railroad Icon PT.png
+Railroad Icon RU.png
+Railroad Icon.png
+Right-Click.png
+Riverland Farm Map Icon.png
+Secret Note Icon.png
+Silver Quality Icon.png
+Silver Quality.png
+Spa Icon.png
+Speech bubble.png
+Speed w.png
+Speed.png
+Spring.png
+Standard Farm Map Icon.png
+Stardew Checkup Icon.png
+Summer.png
+Switch A.png
+Switch B.png
+Switch Dpad.png
+Switch LB.png
+Switch Left Stick.png
+Switch LT.png
+Switch Minus.png
+Switch Plus.png
+Switch RB.png
+Switch Right Stick.png
+Switch RT.png
+Switch X.png
+Switch Y.png
+The Mines Icon.png
+The Player Icon.png
+Time Icon.png
+Toddler Icon.png
+Traveling Cart Icon.png
+Wallpaper Icon.png
+Weather Icon.png
+Weight.png
+Wilderness Farm Map Icon.png
+Winter.png
+XboxOne Menu.png
+XboxOne View.png
+StatusSun.png
+StatusRain.png
+StatusGreenRain.png
+StatusStorm.png
+StatusSnow.png
+StatusFestival.png
+StatusWedding.png
+StatusWindSpring.png
+StatusWindFall.png
+Sunny.png
+Rain.png
+Snow.png
+Thunderstorm.png
+Festival.png
+Farming Skill Icon.png
+Foraging Skill Icon.png
+Fishing Skill Icon.png
+Mining Skill Icon.png
+Combat Skill Icon.png
+Attack Buff.png
+Defense Buff.png
+Luck Buff.png
+Magnetism Buff.png
+Speed Buff.png
+Max Energy Buff.png
+Monster Musk.png
+Monster Musk Buff.png
+Oil of Garlic.png
+Oil of Garlic Buff.png
+HealthBar.png
+EnergyBar.png
+HeartIconLarge.png
+Stardrop.png
+FriendshipDots.png
+Friendship 101.png
+Clock.png
+ClockWithJournal.png
+Life Elixir.png
+Ginger Ale.png
+Magnet.png
+Optionstab.png
+Advanced Options Button.png
+Calendar.png
+Inventory Tab.png
+Map Tab.png
+Map.png
+Quest.png
+Crafting Tab.png
+Collections Tab.png
+Social Tab.png
+Skills Tab.png
+Skills Tab Icon.png
+Exit Game Tab.png
+Player tab.png
+Animals Tab.png
+Special Items & Powers Tab.png
+Mastery Icon.png
+Achievements Icon.png
+Gift Icon.png
+Journal Scrap.png
+Gold Clock.png
+Wall Clock.png
+Sun Table.png
+Moon Table.png

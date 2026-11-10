@@ -28,12 +28,15 @@ CASES = {
     'bundles':   (['bundles'],   ['wiki-Bundles.html']),
     'ui':        (['ui'],        []),      # 用 wiki 完整文件清单验证
     'cropitems': (['cropitems'], ['wiki-Crops.html']),
+    'misc':      (['misc'],      []),      # 用 wiki 完整文件清单验证
 }
 
 # UI 图标散落在很多页面上，改用"文件是否在 wiki 完整文件清单里"来验证
 ALLFILES = ROOT / '_cmp' / 'out' / 'wiki-files-all.json'
 if ALLFILES.exists():
-    allf = {f.replace('_', ' ').lower() for f in json.loads(ALLFILES.read_text('utf-8'))}
+    def _k(f):
+        return f.replace('_', ' ').lower().strip("'")
+    allf = {_k(f) for f in json.loads(ALLFILES.read_text('utf-8'))}
 else:
     allf = None
 
@@ -51,11 +54,11 @@ for cat, (mans, pages) in CASES.items():
     if not mp.exists():
         continue
     man = json.loads(mp.read_text('utf-8'))
-    if cat == 'ui' and allf:
-        ok = [it['id'] for it in man['items']
-              if it['wikiFile'].replace('_', ' ').lower() in allf]
-        miss = [it['id'] for it in man['items']
-                if it['wikiFile'].replace('_', ' ').lower() not in allf]
+    if cat in ('ui', 'misc') and allf:
+        def key(f):
+            return f.replace('_', ' ').lower().strip("'")
+        ok = [it['id'] for it in man['items'] if key(it['wikiFile']) in allf]
+        miss = [it['id'] for it in man['items'] if key(it['wikiFile']) not in allf]
         res[cat] = {'ok': len(ok), 'total': len(man['items']), 'not_on_page': miss,
                     'pages': ['wiki 完整文件清单']}
         tot_ok += len(ok)

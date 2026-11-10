@@ -16,7 +16,7 @@ CN = {
     'monsters': '怪物', 'equipment': '装备（武器/戒指/靴子）', 'hats': '帽子',
     'artisan': '工匠品', 'dishes': '料理', 'buildings': '建筑',
     'npcs': '村民头像', 'animals': '动物', 'bundles': '社区中心收集包',
-    'ui': 'UI 图标', 'cropitems': '种子包与农产品',
+    'ui': 'UI 图标', 'cropitems': '种子包与农产品', 'misc': '杂项（信件/书籍/饰品/电影）',
 }
 
 rows = []
@@ -75,16 +75,24 @@ L.append('')
 L.append('最后一列是**关键**：如果我们的图能认出"这是胡萝卜"，那么我们的胡萝卜和官方胡萝卜的相似度，')
 L.append('应该明显高于它和自己同类的其它作物（比如我们的蓝莓）。实测几乎全部为负 ——')
 L.append('我们的胡萝卜和官方胡萝卜（63.5）甚至不如我们的胡萝卜和我们自己的其它作物（平均 66.2）像。\n')
-L.append('其中 **村民头像 +11.4** 最说明问题：官方 34 个头像是 34 张独立画的美术头像，'
+def _gap(cat, key='gap'):
+    return internal.get(cat, {}).get(key, 0)
+
+
+L.append(f'其中 **村民头像 {_gap("npcs"):+.1f}** 最说明问题：官方 34 个头像是 34 张独立画的美术头像，'
          '彼此差异明显；而我们的 34 个头像是**同一个模板换配色**'
          '（`js/anim/npcs.js` 的 `drawPortrait`：固定的脸型/眼位/嘴位，'
-         '只换发色、帽子、肤色），内部相似度高达 89.3，比官方自己内部还高 11 分。')
-L.append('**收集包 +11.0** 是同一类问题的另一例：'
+         f'只换发色、帽子、肤色），内部相似度高达 '
+         f'{internal.get("npcs", {}).get("ours_internal", 0):.1f}，'
+         f'比官方自己内部还高 {_gap("npcs"):.0f} 分。')
+L.append(f'**收集包 {_gap("bundles"):+.1f}** 是同一类问题的另一例：'
          '`js/anim/bundles.js` 的 `drawBundleIcon` 画的是同一张羊皮纸，'
          '30 个包之间只换顶部色条和中心那一个小符号，所以彼此几乎一模一样。')
-L.append('**UI 图标 +18.3** 是最极端的一例：'
+L.append(f'**UI 图标 {_gap("ui"):+.1f}** 是最极端的一例：'
          '`js/anim/ui-icons.js` 的 `drawUiIcon` 画的是同一枚圆形徽章，'
-         '60 个图标只换中心的符号和配色 —— 内部相似度 91.6，比官方自己内部还高 18 分。\n')
+         f'60 个图标只换中心的符号和配色 —— 内部相似度 '
+         f'{internal.get("ui", {}).get("ours_internal", 0):.1f}，'
+         f'比官方自己内部还高 {_gap("ui"):.0f} 分。\n')
 
 L.append('## 配对识别力：正确配对能排第几\n')
 L.append('前面那个"差距"指标有点抽象，换一个更直白的问法：'
@@ -147,6 +155,7 @@ PAGE = {
     'bundles': 'Bundles',
     'ui': 'wiki 完整文件清单',
     'cropitems': 'Crops',
+    'misc': 'wiki 完整文件清单',
 }
 for cn, cat, s, it in rows:
     cc = cross.get(cat)
@@ -294,18 +303,49 @@ if cs:
              f'**{ci.get("wiki_internal", 0):.1f}**，差 **{ci.get("gap", 0):+.1f}**\n')
 
 L.append('## 哪些部分最接近\n')
-L.append('- **装备（+6.4）、动物（+4.8）、矿物（+4.7）、帽子（+4.3）、怪物（+3.5）**：'
+L.append('- **装备（+6.4）、动物（+4.8）、矿物（+4.7）、杂项（+4.2）、帽子（+4.3）、怪物（+3.5）**：'
          '这些物件轮廓本身就很明确（剑、戒指、宝石、帽子、史莱姆），重画后天然接近原物，'
          '所以是全项目最"像"的几类 —— 但也只是"看起来是那类东西"，不是"是那一件东西"。')
 L.append('- **村民头像（匹配分 78.2，绝对分最高）**：双方都是"上面头发、中间脸、下面肩膀"的构图，'
          '所以分数高；但内部雷同度 +11.4 恰恰说明这是模板而非还原。')
-L.append('- **料理（+0.8）、树木（+1.5）、工件品（+1.9）、作物（+2.3）**：差距几乎为零。\n')
+L.append('- **料理（+0.8）、UI 图标（+0.7）、收集包（+0.2）**：差距几乎为零。\n')
+
+# --- 杂项 ---
+ms = summary.get('misc')
+mi = internal.get('misc', {})
+if ms:
+    L.append('## 杂项（44 个：信件/书籍/饰品/电影海报）：官方有图的 26 个\n')
+    L.append('`js/anim/misc.js` 这批里，官方确实有一部分对应素材：\n')
+    L.append('- **电影海报 6 个**：官方有原画（`\'Mysterium\'.png`、`\'The Brave Little Sapling\'.png`…）')
+    L.append('- **饰品 8 个**：官方是物品图标（`Basilisk Paw.png`、`Fairy Box.png`、`Magic Quiver.png`…）')
+    L.append('- **书籍 9 个**：官方给部分书单独做了图（`Stardew Valley Almanac.png`、'
+             '`Combat Quarterly.png`、`The Alleyway Buffet.png`…）')
+    L.append('- **信件 3 个**：官方只有 `MomLetter.png`、`DadLetter DE.png`、`Secret Note.png`；'
+             '镇长欢迎信、Joja 广告、税务通知这类**官方根本没有图**\n')
+    L.append(f'- 匹配均分 **{ms["own_mean"]:.1f}**，随机错配基准 **{ms["random_mean"]:.1f}**，'
+             f'差距 **{ms["margin"]:+.1f}**')
+    if 'misc' in rank:
+        r = rank['misc']
+        L.append(f'- 正确配对能排第 1 的：**{r["rank1"]} / {r["n"]}（{r["rank1_pct"]:.0f}%）**，'
+                 f'名次中位数第 {r["median_rank"]} 名（纯靠猜是 {r["random_expect_pct"]:.0f}%）')
+    L.append(f'- 内部雷同度：我们 **{mi.get("ours_internal", 0):.1f}** vs 官方 '
+             f'**{mi.get("wiki_internal", 0):.1f}**，差 **{mi.get("gap", 0):+.1f}**\n')
+    L.append('这一类的差距 +4.2 相对高一些，主要是被 6 张电影海报拉上去的 —— '
+             '海报是大幅美术图，轮廓和配色都很好认；'
+             '而信件/书籍那几组因为是同一个模板画的，差距几乎为零。\n')
+
+L.append('## 哪些部分最接近\n')
+L.append('- **村民头像（匹配分 78.2，绝对分最高）**：双方都是"上面头发、中间脸、下面肩膀"的构图，'
+         '所以分数高；但内部雷同度 +11.4 恰恰说明这是模板而非还原。')
+L.append('- **料理（+0.8）、UI 图标（+0.7）、收集包（+0.2）**：差距几乎为零。\n')
 
 L.append('## 测量说明与局限\n')
 L.append('- 官方树木阶段图（`Oak_Stage_5.png` 等）是把 2~3 个季节变体**并排**放在一张图里的，'
          '已按空白列拆开、与各变体分别比较后取平均（不挑最像的那个），否则会低估相似度。')
 L.append('- wiki 侧图片均为无头 Chrome 实测加载（普通 HTTP 客户端会被 Cloudflare 403 拦截），'
-         '按 `Special:PrefixIndex` 列出的真实文件名 + MediaWiki 的 MD5 路径规则定位。')
+         '文件名取自 `Special:AllPages` 逐页爬下来的全站 7 千多个 `File:` 名'
+         '（`Special:PrefixIndex` 每个前缀只给 345 条，会漏掉大量条目），'
+         '再用 MediaWiki 的 MD5 路径规则定位图片。')
 L.append('- 指标 = 轮廓 IoU(30%) + dHash(20%) + 调色板覆盖率(20%) + 主色接近度(15%) + '
          '长宽比(10%) + 相对面积(5%)，全部归一到 0~100。\n')
 

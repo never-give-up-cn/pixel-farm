@@ -1555,7 +1555,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Burglar's_Ring_Ring.png",
-   "path": "/mediawiki/images/en/3/30/Burglar's_Ring_Ring.png"
+   "path": "/mediawiki/images/en/3/30/Burglar%27s_Ring_Ring.png"
   },
   {
    "cat": "equipment",
@@ -1565,7 +1565,7 @@
    "ci": 0,
    "role": "icon3",
    "file": "Ring_Burglar's_Ring.png",
-   "path": "/mediawiki/images/en/6/6a/Ring_Burglar's_Ring.png"
+   "path": "/mediawiki/images/en/6/6a/Ring_Burglar%27s_Ring.png"
   },
   {
    "cat": "equipment",
@@ -2095,7 +2095,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Emily's_Magic_Boots_Boots.png",
-   "path": "/mediawiki/images/en/6/6e/Emily's_Magic_Boots_Boots.png"
+   "path": "/mediawiki/images/en/6/6e/Emily%27s_Magic_Boots_Boots.png"
   },
   {
    "cat": "equipment",
@@ -2315,7 +2315,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Hunter's_Cap.png",
-   "path": "/mediawiki/images/en/6/61/Hat_Hunter's_Cap.png"
+   "path": "/mediawiki/images/en/6/61/Hat_Hunter%27s_Cap.png"
   },
   {
    "cat": "hats",
@@ -2325,7 +2325,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Hunter's_Cap (hat).png",
-   "path": "/mediawiki/images/en/8/83/Hunter's_Cap_%28hat%29.png"
+   "path": "/mediawiki/images/en/8/83/Hunter%27s_Cap_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -2355,7 +2355,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Sailor's_Cap.png",
-   "path": "/mediawiki/images/en/6/68/Hat_Sailor's_Cap.png"
+   "path": "/mediawiki/images/en/6/68/Hat_Sailor%27s_Cap.png"
   },
   {
    "cat": "hats",
@@ -2365,7 +2365,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Sailor's_Cap (hat).png",
-   "path": "/mediawiki/images/en/5/5c/Sailor's_Cap_%28hat%29.png"
+   "path": "/mediawiki/images/en/5/5c/Sailor%27s_Cap_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -2375,7 +2375,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Good_Ol'_Cap.png",
-   "path": "/mediawiki/images/en/8/84/Hat_Good_Ol'_Cap.png"
+   "path": "/mediawiki/images/en/8/84/Hat_Good_Ol%27_Cap.png"
   },
   {
    "cat": "hats",
@@ -2385,7 +2385,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Good_Ol'_Cap (hat).png",
-   "path": "/mediawiki/images/en/2/2b/Good_Ol'_Cap_%28hat%29.png"
+   "path": "/mediawiki/images/en/2/2b/Good_Ol%27_Cap_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -2435,7 +2435,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Gnome's_Cap.png",
-   "path": "/mediawiki/images/en/f/f3/Hat_Gnome's_Cap.png"
+   "path": "/mediawiki/images/en/f/f3/Hat_Gnome%27s_Cap.png"
   },
   {
    "cat": "hats",
@@ -2445,7 +2445,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Gnome's_Cap (hat).png",
-   "path": "/mediawiki/images/en/f/f7/Gnome's_Cap_%28hat%29.png"
+   "path": "/mediawiki/images/en/f/f7/Gnome%27s_Cap_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -2495,7 +2495,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Sou'wester.png",
-   "path": "/mediawiki/images/en/1/1b/Hat_Sou'wester.png"
+   "path": "/mediawiki/images/en/1/1b/Hat_Sou%27wester.png"
   },
   {
    "cat": "hats",
@@ -2505,7 +2505,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Sou'wester (hat).png",
-   "path": "/mediawiki/images/en/b/b8/Sou'wester_%28hat%29.png"
+   "path": "/mediawiki/images/en/b/b8/Sou%27wester_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -2555,7 +2555,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Archer's_Cap.png",
-   "path": "/mediawiki/images/en/3/30/Hat_Archer's_Cap.png"
+   "path": "/mediawiki/images/en/3/30/Hat_Archer%27s_Cap.png"
   },
   {
    "cat": "hats",
@@ -2565,7 +2565,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Archer's_Cap (hat).png",
-   "path": "/mediawiki/images/en/5/5a/Archer's_Cap_%28hat%29.png"
+   "path": "/mediawiki/images/en/5/5a/Archer%27s_Cap_%28hat%29.png"
   }
  ]
 }

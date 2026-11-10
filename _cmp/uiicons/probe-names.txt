@@ -1,0 +1,92 @@
+﻿Health.png
+Energy.png
+HealthBar.png
+EnergyBar.png
+Gold.png
+Luck.png
+Luck Buff.png
+HeartIconLarge.png
+Stardrop.png
+Clock.png
+Time Icon.png
+Mastery Icon.png
+FriendshipDots.png
+StatusSun.png
+StatusRain.png
+StatusGreenRain.png
+StatusStorm.png
+StatusSnow.png
+StatusFestival.png
+StatusWedding.png
+StatusWindSpring.png
+StatusWindFall.png
+Sunny.png
+Rain.png
+Snow.png
+Farming Skill Icon.png
+Foraging Skill Icon.png
+Fishing Skill Icon.png
+Mining Skill Icon.png
+Combat Skill Icon.png
+Inventory Icon.png
+Inventory Tab.png
+Map Tab.png
+Quests Icon.png
+Quest.png
+Crafting Tab.png
+Collections Tab.png
+Social Tab.png
+Skills Tab Icon.png
+Skills Tab.png
+Exit Game Tab.png
+Player tab.png
+Animals Tab.png
+Special Items & Powers Tab.png
+Bundle Icon.png
+Optionstab.png
+Controls Icon.png
+Weather Icon.png
+Festivals Icon.png
+The Player Icon.png
+Multiplayer Icon.png
+Achievements Icon.png
+Gift Icon.png
+Marriage Icon.png
+Cooking Icon.png
+Furniture Icon.png
+Animals Icon.png
+Artisan Icon.png
+Bookseller Icon.png
+Traveling Cart Icon.png
+Journal Scrap.png
+CameraButton.png
+Advanced Options Button.png
+Silver Quality.png
+Silver Quality Icon.png
+Gold Quality.png
+Gold Quality Icon.png
+Iridium Quality.png
+Iridium Quality Icon.png
+Spring.png
+Summer.png
+Fall.png
+Winter.png
+All Seasons Icon.png
+Attack.png
+Attack Buff.png
+Defense.png
+Defense Buff.png
+Speed.png
+Speed Buff.png
+Magnetism.png
+Magnetism Buff.png
+Max Energy.png
+Max Energy Buff.png
+Monster Musk Buff.png
+Oil of Garlic Buff.png
+Squid Ink Ravioli Buff.png
+Life Elixir.png
+Ginger Ale.png
+Monster Musk.png
+Oil of Garlic.png
+Magnet.png

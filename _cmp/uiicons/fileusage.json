@@ -1,0 +1,5959 @@
+{
+ "36 Backpack.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Pierre's_General_Store",
+   "Tools"
+  ],
+  "summary": "",
+  "cats": [
+   "Tool images"
+  ]
+ },
+ "360 A.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Magic_Bait",
+   "Magnet",
+   "Mobile_Controls",
+   "Targeted_Bait",
+   "Wild_Bait",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 B.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Back.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Dpad.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 LB.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Left Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 LT.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 RB.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Right Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 RT.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Start.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 X.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Fishing",
+   "Magic_Bait",
+   "Magnet",
+   "Mobile_Controls",
+   "Targeted_Bait",
+   "Wild_Bait",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "360 Y.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "File_talk:360_X.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Achievements Icon.png": {
+  "exists": true,
+  "dims": [
+   33,
+   33
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Achievement images"
+  ]
+ },
+ "Advanced Options Button.png": {
+  "exists": true,
+  "dims": [
+   80,
+   80
+  ],
+  "usage": [
+   "Getting_Started",
+   "Options"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "All Seasons Icon.png": {
+  "exists": true,
+  "dims": [
+   36,
+   36
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:All_Seasons_Icon.png",
+   "Acorn",
+   "Artifact_Spot",
+   "Banana",
+   "Banana_Sapling",
+   "Banana_Tree",
+   "Blue_Discus",
+   "Bouquet",
+   "Bream",
+   "Broken_CD",
+   "Broken_Glasses",
+   "Bullhead",
+   "Cactus_Fruit",
+   "Cactus_Seeds",
+   "Carp",
+   "Cave_Carrot",
+   "Chub",
+   "Clam",
+   "Cockle",
+   "Coconut",
+   "Common_Mushroom",
+   "Coral",
+   "Crab",
+   "Crayfish",
+   "Driftwood",
+   "Error_Item",
+   "Fiddlehead_Fern",
+   "Fishing_Strategy",
+   "Fruits",
+   "Ghostfish",
+   "Ginger",
+   "Ginger_Island",
+   "Golden_Coconut",
+   "Green_Algae",
+   "Heavy_Tapper",
+   "Ice_Pip",
+   "Joja_Cola",
+   "Large_Log",
+   "Large_Stump",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lionfish",
+   "Lobster",
+   "Mahogany_Seed",
+   "Mango",
+   "Mango_Sapling",
+   "Maple_Seed",
+   "Maple_Syrup",
+   "Mermaid's_Pendant",
+   "Mussel",
+   "Mutant_Bug_Lair",
+   "Mutant_Carp",
+   "Nautilus_Shell",
+   "Oak_Resin",
+   "Octopus",
+   "Oyster",
+   "Periwinkle",
+   "Pine_Cone",
+   "Pine_Tar",
+   "Pineapple",
+   "Purple_Mushroom",
+   "Qi_Bean",
+   "Qi_Fruit",
+   "Rainbow_Shell",
+   "Red_Mushroom",
+   "Roe",
+   "Salmonberry",
+   "Sandfish",
+   "Scorpion_Carp",
+   "Sea_Urchin",
+   "Seasons",
+   "Seaweed",
+   "Secret_Woods",
+   "Shrimp",
+   "Slime_Ball",
+   "Slimejack",
+   "Snail",
+   "Soggy_Newspaper",
+   "Soundtrack",
+   "Spice_Berry",
+   "Stardew_Valley_Wiki",
+   "Stingray",
+   "Stonefish",
+   "Tapper",
+   "Taro_Root",
+   "The_Desert",
+   "Trash_(item)",
+   "Traveling_Cart",
+   "Tuna",
+   "Void_Salmon",
+   "White_Algae",
+   "Witch's_Swamp",
+   "Woodskip",
+   "Template:FishLocations_Desert",
+   "Template:FishLocations_Mines",
+   "Template:FishLocations_Mutant_Bug_Lair",
+   "Template:FishLocations_Secret_Woods",
+   "Template:FishLocations_Sewers",
+   "Template:FishLocations_Witch's_Swamp",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc",
+   "Special:WhatLinksHere/File:All_Seasons_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Animals Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Animals Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Artisan Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Attack Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Attack.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Attack",
+   "Buffs",
+   "Cave_Carrot",
+   "Combat",
+   "Common_Mushroom",
+   "Cooking",
+   "Defense",
+   "Desert_Festival",
+   "Fishing",
+   "Forge",
+   "Fried_Mushroom",
+   "Luck",
+   "Magic_Rock_Candy",
+   "Mining",
+   "Morel",
+   "Neptune's_Glaive",
+   "Oil",
+   "Rings",
+   "Roots_Platter",
+   "Ruby_Ring",
+   "Skull_Cavern",
+   "Speed",
+   "The_Mines",
+   "Winter_Root",
+   "Template:Infobox_cooking",
+   "Template:Infobox_cooking/doc",
+   "Template:Recipes",
+   "Template:Recipes/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Backpack.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Pierre's_General_Store",
+   "Tools"
+  ],
+  "summary": "",
+  "cats": [
+   "Tool images"
+  ]
+ },
+ "BackpackComposite.png": {
+  "exists": true,
+  "dims": [
+   588,
+   240
+  ],
+  "usage": [
+   "Inventory"
+  ],
+  "summary": "",
+  "cats": [
+   "Interior images"
+  ]
+ },
+ "Beach Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Bookseller Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Bookseller",
+   "Pelican_Town"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Bundle Icon.png": {
+  "exists": true,
+  "dims": [
+   52,
+   52
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Calendar Flag Anim.gif": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Calendar",
+   "Fall",
+   "Spring",
+   "Summer",
+   "Winter"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Calendar.png": {
+  "exists": true,
+  "dims": [
+   39,
+   54
+  ],
+  "usage": [
+   "Calendar",
+   "Carpenter's_Shop",
+   "Furniture",
+   "User:Margotbean/Sandbox/Mainpage"
+  ],
+  "summary": "",
+  "cats": [
+   "Wall Hangings images",
+   "Calendar images"
+  ]
+ },
+ "Calico Egg.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Calico_Egg.png",
+   "Abby's_Planchette",
+   "Alex's_Bat",
+   "Ancient_Doll",
+   "Artifact_Trove",
+   "Banana_Sapling",
+   "Beer",
+   "Books",
+   "Bug_Meat",
+   "Cave_Carrot",
+   "Chipped_Amphora",
+   "Classic_Lamp",
+   "Clay",
+   "Cloth",
+   "Coal",
+   "Cookie",
+   "Copper_Ore",
+   "Crab",
+   "Crab_Cakes",
+   "Crispy_Bass",
+   "Daffodil",
+   "Dandelion",
+   "Deluxe_Speed-Gro",
+   "Desert_Festival",
+   "Egg",
+   "Eggplant_Parmesan",
+   "Elliott's_Pencil",
+   "Escargot",
+   "Fairy_Seeds",
+   "Fiber",
+   "Fiddlehead_Fern",
+   "Fried_Egg",
+   "Frozen_Geode",
+   "Furniture",
+   "Furniture_Catalogue",
+   "Grass_Starter",
+   "Green_Tea",
+   "Haley's_Iron",
+   "Hardwood",
+   "Harvey's_Mallet",
+   "Hashbrowns",
+   "Hats",
+   "Hay",
+   "Hazelnut",
+   "Iridium_Bar",
+   "Iron_Ore",
+   "Joja_Cola",
+   "Leah's_Whittler",
+   "Lobster_Bisque",
+   "Lucky_Lunch",
+   "Magic_Rock_Candy",
+   "Maple_Bar",
+   "Marlon",
+   "Maru's_Wrench",
+   "Mead",
+   "Mega_Bomb",
+   "Milk",
+   "Morel",
+   "Nautilus_Shell",
+   "Night_Sky_Decal_1",
+   "Night_Sky_Decal_2",
+   "Night_Sky_Decal_3",
+   "Oil",
+   "Pale_Ale",
+   "Pancakes",
+   "Penny's_Fryer",
+   "Pepper_Poppers",
+   "Pink_Cake",
+   "Pirate_Flag",
+   "Pizza",
+   "Poi",
+   "Prismatic_Shard",
+   "Pumpkin_Soup",
+   "Rabbit's_Foot",
+   "Salad",
+   "Sam's_Old_Guitar",
+   "Sandfish",
+   "Sap",
+   "Scorpion_Carp",
+   "Sea_Urchin",
+   "Seb's_Lost_Mace",
+   "Spice_Berry",
+   "Spicy_Eel",
+   "Squid",
+   "Squid_Ink",
+   "Squid_Ink_Ravioli",
+   "Staircase",
+   "Stone",
+   "Strawberry_Decal",
+   "Strawberry_Seeds",
+   "Tea_Sapling",
+   "Television",
+   "Tropical_Curry",
+   "Truffle_Oil",
+   "Vinegar",
+   "Wallpaper",
+   "Weapons",
+   "Wheat_Flour",
+   "Willy",
+   "Wood",
+   "Wood_Chipper",
+   "Special:WhatLinksHere/File:Calico_Egg.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "CameraButton.png": {
+  "exists": true,
+  "dims": [
+   54,
+   45
+  ],
+  "usage": [
+   "Options"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Clock.png": {
+  "exists": true,
+  "dims": [
+   288,
+   236
+  ],
+  "usage": [
+   "Day_Cycle"
+  ],
+  "summary": "",
+  "cats": [
+   "Clock images"
+  ]
+ },
+ "ClockWithJournal.png": {
+  "exists": true,
+  "dims": [
+   288,
+   290
+  ],
+  "usage": [
+   "Quests"
+  ],
+  "summary": "",
+  "cats": [
+   "Clock images"
+  ]
+ },
+ "Collections Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Combat Skill Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Attack",
+   "Battery_Pack",
+   "Bone_Fragment",
+   "Buffs",
+   "Bug_Meat",
+   "Bug_Steak",
+   "Cave_Carrot",
+   "Chanterelle",
+   "Coal",
+   "Combat",
+   "Cooking",
+   "Copper_Bar",
+   "Crafting",
+   "Diamond",
+   "Explosive_Ammo",
+   "Farm_Maps",
+   "Fire_Quartz",
+   "Frozen_Tear",
+   "Garlic",
+   "Getting_Started",
+   "Gold_Bar",
+   "Iridium_Band",
+   "Iridium_Bar",
+   "Iron_Bar",
+   "Life_Elixir",
+   "Magnetism",
+   "Mastery_Cave",
+   "Mining",
+   "Morel",
+   "Oil",
+   "Oil_of_Garlic",
+   "Purple_Mushroom",
+   "Red_Mushroom",
+   "Ring_of_Yoba",
+   "Rings",
+   "Roots_Platter",
+   "Skills",
+   "Slime",
+   "Slime_Egg-Press",
+   "Slime_Incubator",
+   "Solar_Essence",
+   "Squid_Ink",
+   "Squid_Ink_Ravioli",
+   "Stone",
+   "Sturdy_Ring",
+   "The_Farm",
+   "Thorns_Ring",
+   "Tomato",
+   "Void_Essence",
+   "Warrior_Ring",
+   "Wheat_Flour",
+   "Winter_Root"
+  ],
+  "summary": "",
+  "cats": [
+   "Skill images",
+   "Buff images"
+  ]
+ },
+ "Controls Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:CellyJogames",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Cooking Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Krobus",
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Crafting Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Crit. Chance.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Abby's_Planchette",
+   "Broken_Trident",
+   "Crit._Chance",
+   "Crit._Power",
+   "Dark_Sword",
+   "Defense",
+   "Dragontooth_Shiv",
+   "Dwarf_Dagger",
+   "Elliott's_Pencil",
+   "Forge",
+   "Galaxy_Dagger",
+   "Infinity_Dagger",
+   "Insect_Head",
+   "Iridium_Needle",
+   "Speed",
+   "Statue_Of_Blessings",
+   "Weapons",
+   "Weight",
+   "Wicked_Kris"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Crit. Power.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Burglar's_Shank",
+   "Combat",
+   "Crit._Chance",
+   "Crit._Power",
+   "Crystal_Dagger",
+   "Defense",
+   "Dragontooth_Club",
+   "Dragontooth_Cutlass",
+   "Dragontooth_Shiv",
+   "Forge",
+   "Haley's_Iron",
+   "Iridium_Needle",
+   "Kudgel",
+   "Lava_Katana",
+   "Leah's_Whittler",
+   "Obsidian_Edge",
+   "Rings",
+   "Speed",
+   "Steel_Falchion",
+   "Weapons",
+   "Weight",
+   "Wind_Spire",
+   "Yeti_Tooth",
+   "Template:Infobox_weapon",
+   "Template:Infobox_weapon/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Defense Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Defense.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Attack",
+   "Autumn's_Bounty",
+   "Banana",
+   "Banana_Pudding",
+   "Bread",
+   "Buffs",
+   "Cinderclown_Shoes",
+   "Claymore",
+   "Coconut",
+   "Combat",
+   "Combat_Boots",
+   "Cooking",
+   "Cowboy_Boots",
+   "Crab",
+   "Crab_Cakes",
+   "Crabshell_Ring",
+   "Cranberries",
+   "Crit._Chance",
+   "Crit._Power",
+   "Crystal_Shoes",
+   "Dark_Boots",
+   "Defense",
+   "Desert_Festival",
+   "Dragonscale_Boots",
+   "Duck_Egg",
+   "Dwarf_Dagger",
+   "Dwarf_Hammer",
+   "Dwarf_Sword",
+   "Egg",
+   "Eggplant",
+   "Eggplant_Parmesan",
+   "Emily's_Magic_Boots",
+   "Firewalker_Boots",
+   "Fishing",
+   "Footwear",
+   "Foraging",
+   "Forest_Sword",
+   "Forge",
+   "Genie_Shoes",
+   "Goat_Milk",
+   "Golden_Egg",
+   "Hazelnut",
+   "Holy_Blade",
+   "Immunity",
+   "Infinity_Blade",
+   "Infinity_Dagger",
+   "Infinity_Gavel",
+   "Iron_Edge",
+   "Jack_Be_Nimble,_Jack_Be_Thick",
+   "Large_Egg",
+   "Large_Milk",
+   "Lava_Katana",
+   "Leather_Boots",
+   "Leprechaun_Shoes",
+   "Luck",
+   "Magic_Rock_Candy",
+   "Mango",
+   "Mango_Sticky_Rice",
+   "Mermaid_Boots",
+   "Milk",
+   "Mining",
+   "Neptune's_Glaive",
+   "Oil",
+   "Ossified_Blade",
+   "Pumpkin",
+   "Pumpkin_Soup",
+   "Rice",
+   "Rings",
+   "Silver_Saber",
+   "Skull_Cavern",
+   "Sneakers",
+   "Space_Boots",
+   "Speed",
+   "Stuffing",
+   "Sugar",
+   "Tempered_Broadsword",
+   "Templar's_Blade",
+   "The_Mines",
+   "Thermal_Boots",
+   "Tomato",
+   "Topaz_Ring",
+   "Tundra_Boots",
+   "Void_Egg",
+   "Weapons",
+   "Weight",
+   "Wheat_Flour",
+   "Work_Boots",
+   "Yam",
+   "Yeti_Tooth",
+   "Template:Infobox_clothing",
+   "Template:Infobox_clothing/doc",
+   "Template:Infobox_cooking",
+   "Template:Infobox_cooking/doc",
+   "Template:Infobox_weapon",
+   "Template:Infobox_weapon/doc",
+   "Template:RecipeRow",
+   "Template:RecipeRow/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Energy.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Energy.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Artichoke",
+   "Artisan_Goods",
+   "Beer",
+   "Beet",
+   "Blue_Jazz",
+   "Blueberry",
+   "Bok_Choy",
+   "Bream",
+   "Bullhead",
+   "Cauliflower",
+   "Cheese",
+   "Cheese_Press",
+   "Complete_Breakfast",
+   "Cooking",
+   "Corn",
+   "Crab",
+   "Crafting",
+   "Crops",
+   "Dandelion",
+   "Duck_Mayonnaise",
+   "Eel",
+   "Eggplant",
+   "Energy",
+   "Fairy_Rose",
+   "Fall",
+   "Farming",
+   "Field_Snack",
+   "Fish",
+   "Fishing",
+   "Foraging",
+   "Fruit_Trees",
+   "Garlic",
+   "Ghostfish",
+   "Goat_Cheese",
+   "Grape",
+   "Green_Bean",
+   "Halibut",
+   "Harvey's_Clinic",
+   "Herring",
+   "Hops",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Joja_Cola",
+   "Kale",
+   "Keg",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lingcod",
+   "Maple_Syrup",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Melon",
+   "Mining",
+   "Oil_Maker",
+   "Pale_Ale",
+   "Parsnip",
+   "Perch",
+   "Pike",
+   "Poppy",
+   "Potato",
+   "Preserves_Jar",
+   "Pumpkin",
+   "Radish",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Skull_Cavern",
+   "Spring",
+   "Squid",
+   "Stardew_Valley_Wiki",
+   "Stardrop",
+   "Starfruit",
+   "Stonefish",
+   "Strawberry",
+   "Sturgeon",
+   "Summer",
+   "Summer_Spangle",
+   "Sunflower",
+   "Tapper",
+   "The_Cave",
+   "The_Mines",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tomato",
+   "Truffle_Oil",
+   "Tulip",
+   "Tuna",
+   "Walleye",
+   "Wheat_Flour",
+   "Winter",
+   "Yam",
+   "Template:Energy",
+   "Template:Energy/doc",
+   "Special:WhatLinksHere/File:Energy.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "EnergyBar.png": {
+  "exists": true,
+  "dims": [
+   36,
+   215
+  ],
+  "usage": [
+   "Energy"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Exit Game Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Fall.png": {
+  "exists": true,
+  "dims": [
+   48,
+   32
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Fall.png",
+   "Abigail",
+   "Albacore",
+   "Alex",
+   "Amaranth",
+   "Amaranth_Seeds",
+   "Anchovy",
+   "Ancient_Fruit",
+   "Ancient_Seeds",
+   "Angler",
+   "Apple",
+   "Apple_Sapling",
+   "Apple_Tree",
+   "Artichoke",
+   "Artichoke_Seeds",
+   "Artisan_Goods",
+   "Bee_House",
+   "Beet",
+   "Beet_Seeds",
+   "Blackberry",
+   "Bok_Choy",
+   "Bok_Choy_Seeds",
+   "Caroline",
+   "Carp",
+   "Catfish",
+   "Chanterelle",
+   "Cindersap_Forest",
+   "Common_Mushroom",
+   "Corn",
+   "Corn_Seeds",
+   "Cranberry_Seeds",
+   "Demetrius",
+   "Dried_Sunflowers",
+   "Eel",
+   "Eggplant",
+   "Eggplant_Seeds",
+   "Elliott",
+   "Fairy_Rose",
+   "Fairy_Seeds",
+   "Fall",
+   "Fall_Seeds",
+   "Fish",
+   "Fish_Shop",
+   "Fruit_Trees",
+   "Fruits",
+   "George",
+   "Golden_Pumpkin",
+   "Grape",
+   "Grape_Starter",
+   "Grass",
+   "Grass_Starter",
+   "Gus",
+   "Haley",
+   "Harvey",
+   "Hay",
+   "Hazelnut",
+   "Honey",
+   "Jodi",
+   "Leah",
+   "Lewis",
+   "Marnie",
+   "Maru",
+   "Pelican_Town",
+   "Penny",
+   "Pierre's_General_Store",
+   "Pomegranate",
+   "Pomegranate_Sapling",
+   "Pomegranate_Tree",
+   "Pumpkin",
+   "Pumpkin_Seeds",
+   "Rare_Seed",
+   "Red_Mushroom",
+   "Red_Snapper",
+   "Robin",
+   "Salmon",
+   "Sam",
+   "Sandy",
+   "Sardine",
+   "Sea_Cucumber",
+   "Seasons",
+   "Sebastian",
+   "Shad",
+   "Shane",
+   "Smallmouth_Bass",
+   "Spring",
+   "Summer",
+   "Sunflower",
+   "Sunflower_Seeds",
+   "Super_Cucumber",
+   "Sweet_Gem_Berry",
+   "The_Beach",
+   "The_Mountain",
+   "Tiger_Trout",
+   "Tilapia",
+   "Traveling_Cart",
+   "Truffle",
+   "Walleye",
+   "Wheat",
+   "Wheat_Seeds",
+   "Wild_Plum",
+   "Winter",
+   "Special:WhatLinksHere/File:Fall.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Farming Skill Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Farming_Skill_Icon.png",
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Artisan_Goods",
+   "Basic_Fertilizer",
+   "Basic_Retaining_Soil",
+   "Battery_Pack",
+   "Bee_House",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Cheese_Press",
+   "Chub",
+   "Clam",
+   "Clay",
+   "Coal",
+   "Cockle",
+   "Cooking",
+   "Copper_Bar",
+   "Crab",
+   "Crafting",
+   "Crayfish",
+   "Crimsonfish",
+   "Deluxe_Speed-Gro",
+   "Dorado",
+   "Earth_Crystal",
+   "Eel",
+   "Farmer's_Lunch",
+   "Farming",
+   "Fertilizer",
+   "Fish",
+   "Getting_Started",
+   "Ghostfish",
+   "Glacierfish",
+   "Gold_Bar",
+   "Halibut",
+   "Hardwood",
+   "Herring",
+   "Ice_Pip",
+   "Iridium_Bar",
+   "Iridium_Sprinkler",
+   "Iron_Bar",
+   "Jellies_and_Pickles",
+   "Keg",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Legend",
+   "Lingcod",
+   "Lobster",
+   "Loom",
+   "Maple_Syrup",
+   "Mayonnaise_Machine",
+   "Mussel",
+   "Mutant_Carp",
+   "Oak_Resin",
+   "Octopus",
+   "Oil_Maker",
+   "Omelet",
+   "Oyster",
+   "Parsnip",
+   "Perch",
+   "Periwinkle",
+   "Pike",
+   "Pine_Tar",
+   "Preserves_Jar",
+   "Pufferfish",
+   "Quality_Fertilizer",
+   "Quality_Retaining_Soil",
+   "Quality_Sprinkler",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Refined_Quartz",
+   "Salmon",
+   "Sandfish",
+   "Sap",
+   "Sardine",
+   "Scarecrow",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Seed_Maker",
+   "Shad",
+   "Shrimp",
+   "Skills",
+   "Slime",
+   "Smallmouth_Bass",
+   "Snail",
+   "Speed-Gro",
+   "Sprinkler",
+   "Squid",
+   "Stone",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tuna",
+   "Walleye",
+   "Special:WhatLinksHere/File:Farming_Skill_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Skill images",
+   "Buff images"
+  ]
+ },
+ "Farming.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Cheese",
+   "Coconut",
+   "Common_Mushroom",
+   "Complete_Breakfast",
+   "Cooking",
+   "Energy",
+   "Farmer's_Lunch",
+   "Farming",
+   "Fishing",
+   "Fried_Egg",
+   "Goat_Milk",
+   "Hashbrowns",
+   "Hot_Pepper",
+   "Large_Milk",
+   "Maple_Bar",
+   "Maple_Syrup",
+   "Milk",
+   "Mining",
+   "Oil",
+   "Omelet",
+   "Pancakes",
+   "Parsnip",
+   "Pepper_Poppers",
+   "Potato",
+   "Shrimp",
+   "Skull_Cavern",
+   "Speed",
+   "Sugar",
+   "The_Mines",
+   "Tom_Kha_Soup",
+   "Wheat_Flour"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Festival.png": {
+  "exists": true,
+  "dims": [
+   16,
+   16
+  ],
+  "usage": [
+   "Soundtrack",
+   "User_talk:Charly",
+   "Template:Weather_inline",
+   "Template:Weather_inline/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Festivals Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Fish.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Artisan_Goods",
+   "Blobfish",
+   "Blue_Discus",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Chub",
+   "Clam",
+   "Cockle",
+   "Cooking",
+   "Crab",
+   "Crab_Pot",
+   "Crafting",
+   "Crayfish",
+   "Crimsonfish",
+   "Dorado",
+   "Eel",
+   "Emily",
+   "Evelyn",
+   "Fertilizer",
+   "Fish",
+   "Fish_Smoker",
+   "Flounder",
+   "Ghostfish",
+   "Glacierfish",
+   "Glacierfish_Jr.",
+   "Goby",
+   "Halibut",
+   "Herring",
+   "Ice_Pip",
+   "Kent",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Legend",
+   "Legend_II",
+   "Lingcod",
+   "Lionfish",
+   "Lobster",
+   "Maki_Roll",
+   "Midnight_Carp",
+   "Midnight_Squid",
+   "Ms._Angler",
+   "Mussel",
+   "Mutant_Carp",
+   "Octopus",
+   "Oyster",
+   "Perch",
+   "Periwinkle",
+   "Pike",
+   "Pufferfish",
+   "Quality_Fertilizer",
+   "Radioactive_Carp",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Rice",
+   "Salmon",
+   "Sandfish",
+   "Sap",
+   "Sardine",
+   "Sashimi",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Seaweed",
+   "Sebastian",
+   "Shad",
+   "Shrimp",
+   "Slimejack",
+   "Smallmouth_Bass",
+   "Smoked_Fish",
+   "Snail",
+   "Son_of_Crimsonfish",
+   "Spook_Fish",
+   "Squid",
+   "Stingray",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tuna",
+   "Void_Salmon",
+   "Walleye",
+   "Willy",
+   "Woodskip",
+   "User:Gmlobdell/CraftingIngredients",
+   "User:Margotbean/IngredientsShortList",
+   "User:TheCheese/IngredientsShortList"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Fishing Skill Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Bait_(item)",
+   "Bait_Maker",
+   "Barbed_Hook",
+   "Buffs",
+   "Bug_Meat",
+   "Cloth",
+   "Cooking",
+   "Copper_Bar",
+   "Coral",
+   "Cork_Bobber",
+   "Crab_Pot",
+   "Crafting",
+   "Deluxe_Bait",
+   "Deluxe_Worm_Bin",
+   "Dish_O'_The_Sea",
+   "Dressed_Spinner",
+   "Farm_Maps",
+   "Fiber",
+   "Fiberglass_Rod",
+   "Fish_Shop",
+   "Fishing",
+   "Flounder",
+   "Getting_Started",
+   "Gold_Bar",
+   "Hardwood",
+   "Hashbrowns",
+   "Iridium_Rod",
+   "Iron_Bar",
+   "Letters",
+   "Magnet",
+   "Mastery_Cave",
+   "Midnight_Carp",
+   "Moss",
+   "Recycling_Machine",
+   "Refined_Quartz",
+   "Sap",
+   "Sardine",
+   "Sea_Urchin",
+   "Seafoam_Pudding",
+   "Skills",
+   "Slime",
+   "Sonar_Bobber",
+   "Spinner",
+   "Squid_Ink",
+   "Stone",
+   "The_Farm",
+   "Tools",
+   "Trap_Bobber",
+   "Treasure_Hunter",
+   "Wood",
+   "Worm_Bin",
+   "Template:Infobox_tool",
+   "Template:Infobox_tool/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Skill images",
+   "Buff images"
+  ]
+ },
+ "Fishing.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Attack",
+   "Chowder",
+   "Clam",
+   "Cooking",
+   "Crayfish",
+   "Defense",
+   "Desert_Festival",
+   "Dish_O'_The_Sea",
+   "Energy",
+   "Escargot",
+   "Farming",
+   "Fish_Stew",
+   "Fish_Taco",
+   "Fishing",
+   "Flounder",
+   "Garlic",
+   "Goat_Milk",
+   "Green_Algae",
+   "Hashbrowns",
+   "Large_Milk",
+   "Lobster",
+   "Lobster_Bisque",
+   "Luck",
+   "Maple_Bar",
+   "Maple_Syrup",
+   "Mayonnaise",
+   "Midnight_Carp",
+   "Milk",
+   "Mining",
+   "Mussel",
+   "Periwinkle",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Sardine",
+   "Sea_Jelly",
+   "Seafoam_Pudding",
+   "Shrimp",
+   "Shrimp_Cocktail",
+   "Skull_Cavern",
+   "Snail",
+   "Speed",
+   "Squid_Ink",
+   "Sugar",
+   "The_Mines",
+   "Tomato",
+   "Tortilla",
+   "Trout_Soup",
+   "Tuna",
+   "Wheat_Flour",
+   "Wild_Horseradish"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Foraging Skill Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Acorn",
+   "Bat_Wing",
+   "Blackberry",
+   "Bread",
+   "Buffs",
+   "Cave_Carrot",
+   "Charcoal_Kiln",
+   "Cloth",
+   "Coal",
+   "Common_Mushroom",
+   "Cooking",
+   "Cookout_Kit",
+   "Copper_Bar",
+   "Coral",
+   "Crafting",
+   "Crocus",
+   "Crystal_Fruit",
+   "Daffodil",
+   "Dandelion",
+   "Eggplant",
+   "Fall_Seeds",
+   "Farm_Maps",
+   "Fertilizer",
+   "Fiber",
+   "Field_Snack",
+   "Foraging",
+   "Getting_Started",
+   "Grape",
+   "Hardwood",
+   "Hazelnut",
+   "Honey",
+   "Iron_Bar",
+   "Leek",
+   "Lightning_Rod",
+   "Maple_Seed",
+   "Mastery_Cave",
+   "Moss",
+   "Moss_Soup",
+   "Mushroom_Log",
+   "Pine_Cone",
+   "Pine_Tar",
+   "Rain_Totem",
+   "Refined_Quartz",
+   "Skills",
+   "Snow_Yam",
+   "Spice_Berry",
+   "Spring_Seeds",
+   "Stone",
+   "Summer_Seeds",
+   "Survival_Burger",
+   "Sweet_Pea",
+   "Tapper",
+   "Tent_Kit",
+   "The_Farm",
+   "Tree_Fertilizer",
+   "Truffle_Oil",
+   "Warp_Totem:_Beach",
+   "Warp_Totem:_Farm",
+   "Warp_Totem:_Mountains",
+   "Wild_Horseradish",
+   "Wild_Plum",
+   "Winter",
+   "Winter_Root",
+   "Winter_Seeds",
+   "Wood",
+   "Template_talk:RecipeRow/NoBuffsHealthEnergy"
+  ],
+  "summary": "",
+  "cats": [
+   "Skill images",
+   "Buff images"
+  ]
+ },
+ "Foraging.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Autumn's_Bounty",
+   "Bread",
+   "Cave_Carrot",
+   "Coconut",
+   "Cooking",
+   "Defense",
+   "Egg",
+   "Eggplant",
+   "Foraging",
+   "Golden_Egg",
+   "Hot_Pepper",
+   "Large_Egg",
+   "Ostrich_Egg",
+   "Pancakes",
+   "Pineapple",
+   "Pumpkin",
+   "Skull_Cavern",
+   "Survival_Burger",
+   "The_Mines",
+   "Tropical_Curry",
+   "Void_Egg",
+   "Wheat_Flour",
+   "Yam",
+   "Template:RecipeRow",
+   "Template:RecipeRow/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Forest Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Four Corners Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Friendship 101.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Books",
+   "Bookseller",
+   "Dyeing",
+   "Friendship",
+   "Friendship_101",
+   "Prize_Ticket",
+   "Special_Items_&_Powers"
+  ],
+  "summary": "",
+  "cats": [
+   "Book images"
+  ]
+ },
+ "FriendshipDots.png": {
+  "exists": true,
+  "dims": [
+   202,
+   33
+  ],
+  "usage": [
+   "Friendship"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Furniture Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Gift Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Minerals"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Ginger Ale.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Cooking",
+   "Dyeing",
+   "Foraging",
+   "Ginger",
+   "Ginger_Ale",
+   "List_of_All_Gifts",
+   "Luck",
+   "Skull_Cavern",
+   "Stardew_Valley_Fair",
+   "Sugar",
+   "Tailoring",
+   "The_Mines",
+   "Vincent",
+   "Volcano_Dungeon",
+   "User:Margotbean/Sandbox/StickiedUniversalGifts",
+   "User:SnyperWolf",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Recipe images"
+  ]
+ },
+ "Gold Clock.png": {
+  "exists": true,
+  "dims": [
+   144,
+   240
+  ],
+  "usage": [
+   "Gold_Clock",
+   "Wizard's_Tower"
+  ],
+  "summary": "",
+  "cats": [
+   "Farm building images"
+  ]
+ },
+ "Gold Quality Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Gold_Quality_Icon.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Ancient_Fruit",
+   "Artichoke",
+   "Artisan_Goods",
+   "Beer",
+   "Beet",
+   "Blue_Jazz",
+   "Blueberry",
+   "Bok_Choy",
+   "Bream",
+   "Bullhead",
+   "Bundles",
+   "Catfish",
+   "Cauliflower",
+   "Cheese",
+   "Cheese_Press",
+   "Chicken",
+   "Complete_Breakfast",
+   "Corn",
+   "Cow",
+   "Crops",
+   "Dandelion",
+   "Dinosaur_Egg",
+   "Duck",
+   "Duck_Feather",
+   "Eel",
+   "Eggplant",
+   "Fairy_Rose",
+   "Fall",
+   "Fish",
+   "Foraging",
+   "Fruit_Trees",
+   "Garlic",
+   "Ghostfish",
+   "Goat",
+   "Goat_Cheese",
+   "Grape",
+   "Green_Bean",
+   "Halibut",
+   "Herring",
+   "Honey",
+   "Hops",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Kale",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lingcod",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Melon",
+   "Nautilus_Shell",
+   "Pale_Ale",
+   "Parsnip",
+   "Perch",
+   "Pig",
+   "Pike",
+   "Poppy",
+   "Potato",
+   "Pufferfish",
+   "Pumpkin",
+   "Rabbit",
+   "Radish",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Sheep",
+   "Spring",
+   "Squid",
+   "Starfruit",
+   "Stonefish",
+   "Strawberry",
+   "Sturgeon",
+   "Summer",
+   "Summer_Spangle",
+   "Sunflower",
+   "Sweet_Gem_Berry",
+   "The_Cave",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tomato",
+   "Tulip",
+   "Tuna",
+   "Void_Chicken",
+   "Walleye",
+   "Wheat",
+   "Wine",
+   "Winter",
+   "Woodskip",
+   "Yam",
+   "Template:Quality",
+   "Template:Quality/doc",
+   "Special:WhatLinksHere/File:Gold_Quality_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Gold Quality.png": {
+  "exists": true,
+  "dims": [
+   24,
+   24
+  ],
+  "usage": [
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Animal_Products_Profitability",
+   "Blobfish",
+   "Blue_Discus",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Chub",
+   "Crimsonfish",
+   "Crops",
+   "Dorado",
+   "Eel",
+   "Farming",
+   "Flounder",
+   "Friendship",
+   "Ghostfish",
+   "Glacierfish",
+   "Glacierfish_Jr.",
+   "Goby",
+   "Halibut",
+   "Herring",
+   "Ice_Pip",
+   "Keg_Productivity",
+   "Keg_Productivity_-_Artisan",
+   "Keg_Productivity_-_Tiller",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Legend",
+   "Legend_II",
+   "Lingcod",
+   "Lionfish",
+   "Midnight_Carp",
+   "Midnight_Squid",
+   "Ms._Angler",
+   "Mutant_Carp",
+   "Octopus",
+   "Perch",
+   "Pike",
+   "Preserves_Jar_Productivity",
+   "Preserves_Jar_Productivity_-_Artisan",
+   "Preserves_Jar_Productivity_-_Tiller",
+   "Pufferfish",
+   "Radioactive_Carp",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Salmon",
+   "Sandfish",
+   "Sardine",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Shipping",
+   "Slimejack",
+   "Smallmouth_Bass",
+   "Son_of_Crimsonfish",
+   "Spook_Fish",
+   "Squid",
+   "Stardew_Valley_Fair",
+   "Stingray",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tuna",
+   "Void_Salmon",
+   "Walleye",
+   "Woodskip",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Artisan",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Tiller",
+   "User:Pangaea/Artisan_Jars_vs_Kegs",
+   "User:YuvixAdun/Dehydrator_Productivity",
+   "User:YuvixAdun/Drafts/Mushrooms",
+   "Template:Grangeptsrow",
+   "Template:Grangeptsrow/doc",
+   "Template:Grangeptswrapper",
+   "Template:Grangeptswrapper/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Gold.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Gold.png",
+   "Abandoned_House",
+   "Achievements",
+   "Alex",
+   "Animals",
+   "Artifacts",
+   "Artisan_Goods",
+   "Blacksmith",
+   "Broken_CD",
+   "Broken_Glasses",
+   "Bundles",
+   "Caroline",
+   "Carpenter's_Shop",
+   "Clint",
+   "Coal",
+   "Community_Center",
+   "Cooking",
+   "Coop",
+   "Copper_Bar",
+   "Crafting",
+   "Crops",
+   "Dance_of_the_Moonlight_Jellies",
+   "Day_Cycle",
+   "Demetrius",
+   "Driftwood",
+   "Dwarf",
+   "Egg_Festival",
+   "Emily",
+   "Energy",
+   "Evelyn",
+   "Fall",
+   "Farmhouse",
+   "Farming",
+   "Feast_of_the_Winter_Star",
+   "Fertilizer",
+   "Festival_of_Ice",
+   "Fish",
+   "Fishing",
+   "Flooring",
+   "Flower_Dance",
+   "Footwear",
+   "Foraging",
+   "Fruit_Trees",
+   "Furnace",
+   "Furniture",
+   "George",
+   "Getting_Started",
+   "Ghostfish",
+   "Gold_Bar",
+   "Greenhouse",
+   "Gunther",
+   "Gus",
+   "Hats",
+   "Health",
+   "Iron_Bar",
+   "Iron_Ore",
+   "Jodi",
+   "JojaMart",
+   "Joja_Cola",
+   "Kent",
+   "Krobus",
+   "Lewis",
+   "Linus",
+   "Luau",
+   "Magnet_Ring",
+   "Marnie",
+   "Marnie's_Ranch",
+   "Marriage",
+   "Minerals",
+   "Morris",
+   "Old_Mariner",
+   "Pam",
+   "Pierre",
+   "Pierre's_General_Store",
+   "Quests",
+   "Refined_Quartz",
+   "Rings",
+   "Robin",
+   "Sandy",
+   "Secret_Woods",
+   "Shane",
+   "Skills",
+   "Slimes",
+   "Soggy_Newspaper",
+   "Spirit's_Eve",
+   "Spring",
+   "Stardew_Valley_Fair",
+   "Stone",
+   "Summer",
+   "Tackle",
+   "The_Cave",
+   "The_Mines",
+   "The_Stardrop_Saloon",
+   "Tools",
+   "Traveling_Cart",
+   "Wallpaper",
+   "Weapons",
+   "Willy",
+   "Winter",
+   "Wizard",
+   "Wood",
+   "Special:WhatLinksHere/File:Gold.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Golden Scroll.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Bundles",
+   "Community_Center",
+   "User:Zendowolf/Sandbox/Bundles"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Bundle images"
+  ]
+ },
+ "Health FR.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Non-English images"
+  ]
+ },
+ "Health.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Health.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Artichoke",
+   "Artisan_Goods",
+   "Beer",
+   "Beet",
+   "Blue_Jazz",
+   "Blueberry",
+   "Bok_Choy",
+   "Bream",
+   "Cauliflower",
+   "Cheese",
+   "Cheese_Press",
+   "Complete_Breakfast",
+   "Cooking",
+   "Corn",
+   "Crab",
+   "Crafting",
+   "Crops",
+   "Dandelion",
+   "Duck_Mayonnaise",
+   "Eel",
+   "Eggplant",
+   "Energy",
+   "Fairy_Rose",
+   "Fall",
+   "Farming",
+   "Field_Snack",
+   "Fish",
+   "Fishing",
+   "Foraging",
+   "Fruit_Trees",
+   "Garlic",
+   "Ghostfish",
+   "Goat_Cheese",
+   "Grape",
+   "Green_Bean",
+   "Halibut",
+   "Harvey's_Clinic",
+   "Herring",
+   "Hops",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Joja_Cola",
+   "Kale",
+   "Keg",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lingcod",
+   "Maple_Syrup",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Melon",
+   "Mining",
+   "Oil_Maker",
+   "Pale_Ale",
+   "Parsnip",
+   "Perch",
+   "Pike",
+   "Poppy",
+   "Potato",
+   "Preserves_Jar",
+   "Pumpkin",
+   "Radish",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Sap",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Skull_Cavern",
+   "Spring",
+   "Squid",
+   "Stardew_Valley_Wiki",
+   "Stardrop",
+   "Starfruit",
+   "Stonefish",
+   "Strawberry",
+   "Sturgeon",
+   "Summer",
+   "Summer_Spangle",
+   "Sunflower",
+   "Tapper",
+   "The_Cave",
+   "The_Mines",
+   "Tiger_Trout",
+   "Tomato",
+   "Truffle_Oil",
+   "Tulip",
+   "Tuna",
+   "Walleye",
+   "Weapons",
+   "Wheat_Flour",
+   "Winter",
+   "Yam",
+   "Template:Health",
+   "Template:Health/doc",
+   "Special:WhatLinksHere/File:Health.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "HealthBar.png": {
+  "exists": true,
+  "dims": [
+   78,
+   215
+  ],
+  "usage": [
+   "Getting_Started",
+   "Health"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "HeartIconLarge.png": {
+  "exists": true,
+  "dims": [
+   36,
+   36
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:HeartIconLarge.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Angler",
+   "Artichoke",
+   "Bean_Hotpot",
+   "Beet",
+   "Blueberry",
+   "Bok_Choy",
+   "Bread",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Cauliflower",
+   "Cheese",
+   "Chub",
+   "Clam",
+   "Cockle",
+   "Coconut",
+   "Common_Mushroom",
+   "Cooking",
+   "Crab",
+   "Crafting",
+   "Crayfish",
+   "Crimsonfish",
+   "Crispy_Bass",
+   "Dandelion",
+   "Dorado",
+   "Eel",
+   "Eggplant",
+   "Energy",
+   "Farming",
+   "Fish",
+   "Fishing",
+   "Foraging",
+   "Fried_Eel",
+   "Garlic",
+   "Ghostfish",
+   "Glacierfish",
+   "Green_Algae",
+   "Green_Bean",
+   "Halibut",
+   "Hazelnut",
+   "Herring",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Kale",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Leek",
+   "Legend",
+   "Lingcod",
+   "Lobster",
+   "Mayonnaise",
+   "Mining",
+   "Morel",
+   "Mussel",
+   "Mutant_Carp",
+   "Octopus",
+   "Oyster",
+   "Parsnip",
+   "Pepper_Poppers",
+   "Perch",
+   "Periwinkle",
+   "Pike",
+   "Pufferfish",
+   "Pumpkin",
+   "Radish",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Sardine",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Shrimp",
+   "Slime",
+   "Smallmouth_Bass",
+   "Snail",
+   "Squid",
+   "Stonefish",
+   "Strange_Bun",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tom_Kha_Soup",
+   "Tomato",
+   "Tuna",
+   "Vegetable_Medley",
+   "Walleye",
+   "Wheat_Flour",
+   "White_Algae",
+   "Wood",
+   "Special:WhatLinksHere/File:HeartIconLarge.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Heart images"
+  ]
+ },
+ "Henchman Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "Witch's_Hut",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Henchman images"
+  ]
+ },
+ "Hilltop Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Hook Icon.png": {
+  "exists": true,
+  "dims": [
+   20,
+   22
+  ],
+  "usage": [
+   "Calendar",
+   "Summer",
+   "Winter"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Immunity.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Cinderclown_Shoes",
+   "Combat",
+   "Cowboy_Boots",
+   "Crystal_Shoes",
+   "Dark_Boots",
+   "Defense",
+   "Emily's_Magic_Boots",
+   "Firewalker_Boots",
+   "Footwear",
+   "Genie_Shoes",
+   "Immunity",
+   "Leather_Boots",
+   "Leprechaun_Shoes",
+   "Mermaid_Boots",
+   "Rings",
+   "Rubber_Boots",
+   "Space_Boots",
+   "Thermal_Boots",
+   "Tundra_Boots"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Inventory Icon.png": {
+  "exists": true,
+  "dims": [
+   36,
+   36
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Inventory Parts DE.png": {
+  "exists": true,
+  "dims": [
+   714,
+   530
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Inventory images",
+   "Non-English images"
+  ]
+ },
+ "Inventory Parts.png": {
+  "exists": true,
+  "dims": [
+   714,
+   530
+  ],
+  "usage": [
+   "Inventory"
+  ],
+  "summary": "",
+  "cats": [
+   "Inventory images"
+  ]
+ },
+ "Inventory Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Inventory",
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Iridium Quality Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Iridium_Quality_Icon.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Ancient_Fruit",
+   "Artichoke",
+   "Artisan_Goods",
+   "Beer",
+   "Beet",
+   "Blue_Jazz",
+   "Blueberry",
+   "Bok_Choy",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Cauliflower",
+   "Cheese",
+   "Chicken",
+   "Corn",
+   "Cow",
+   "Crops",
+   "Dandelion",
+   "Dinosaur_Egg",
+   "Duck",
+   "Duck_Feather",
+   "Eel",
+   "Eggplant",
+   "Fairy_Rose",
+   "Fall",
+   "Fish",
+   "Foraging",
+   "Fruit_Trees",
+   "Garlic",
+   "Ghostfish",
+   "Goat",
+   "Goat_Cheese",
+   "Grape",
+   "Green_Bean",
+   "Halibut",
+   "Herring",
+   "Honey",
+   "Hops",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Kale",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lingcod",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Melon",
+   "Nautilus_Shell",
+   "Pale_Ale",
+   "Parsnip",
+   "Perch",
+   "Pig",
+   "Pike",
+   "Poppy",
+   "Potato",
+   "Pufferfish",
+   "Pumpkin",
+   "Rabbit",
+   "Radish",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Sheep",
+   "Spring",
+   "Squid",
+   "Starfruit",
+   "Stonefish",
+   "Strawberry",
+   "Sturgeon",
+   "Summer",
+   "Summer_Spangle",
+   "Sunflower",
+   "Super_Cucumber",
+   "Sweet_Gem_Berry",
+   "The_Cave",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tomato",
+   "Tulip",
+   "Tuna",
+   "Void_Chicken",
+   "Walleye",
+   "Wheat",
+   "Wine",
+   "Winter",
+   "Woodskip",
+   "Yam",
+   "Template:Quality",
+   "Template:Quality/doc",
+   "Special:WhatLinksHere/File:Iridium_Quality_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Iridium Quality.png": {
+  "exists": true,
+  "dims": [
+   24,
+   24
+  ],
+  "usage": [
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Animal_Products_Profitability",
+   "Blobfish",
+   "Blue_Discus",
+   "Bream",
+   "Bullhead",
+   "Calendar",
+   "Carp",
+   "Catfish",
+   "Chub",
+   "Crimsonfish",
+   "Crops",
+   "Dorado",
+   "Eel",
+   "Farming",
+   "Flounder",
+   "Friendship",
+   "Ghostfish",
+   "Glacierfish",
+   "Glacierfish_Jr.",
+   "Goby",
+   "Halibut",
+   "Herring",
+   "Holy_Blade",
+   "Ice_Pip",
+   "Keg_Productivity",
+   "Keg_Productivity_-_Artisan",
+   "Keg_Productivity_-_Tiller",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Legend",
+   "Legend_II",
+   "Lingcod",
+   "Lionfish",
+   "Midnight_Carp",
+   "Midnight_Squid",
+   "Ms._Angler",
+   "Mutant_Carp",
+   "Octopus",
+   "Perch",
+   "Pike",
+   "Preserves_Jar_Productivity",
+   "Preserves_Jar_Productivity_-_Artisan",
+   "Preserves_Jar_Productivity_-_Tiller",
+   "Pufferfish",
+   "Radioactive_Carp",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Salmon",
+   "Sandfish",
+   "Sardine",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Shipping",
+   "Slimejack",
+   "Smallmouth_Bass",
+   "Son_of_Crimsonfish",
+   "Spook_Fish",
+   "Spring",
+   "Squid",
+   "Stardew_Valley_Fair",
+   "Stingray",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tuna",
+   "Void_Salmon",
+   "Walleye",
+   "Weapons",
+   "Winter",
+   "Woodskip",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Artisan",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Tiller",
+   "User:Pangaea/Artisan_Jars_vs_Kegs",
+   "User:YuvixAdun/Dehydrator_Productivity",
+   "User:YuvixAdun/Drafts/Mushrooms",
+   "Template:Grangeptsrow",
+   "Template:Grangeptsrow/doc",
+   "Template:Grangeptswrapper",
+   "Template:Grangeptswrapper/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Journal Scrap.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Friendship",
+   "Journal_Scraps",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Journal Scrap images"
+  ]
+ },
+ "JunimoHutHarvestButton.png": {
+  "exists": true,
+  "dims": [
+   96,
+   48
+  ],
+  "usage": [
+   "Junimo_Hut"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "NPC images"
+  ]
+ },
+ "Left-Click.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Catalogue",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Fishing",
+   "Furniture",
+   "Furniture_Catalogue",
+   "Getting_Started",
+   "Joja_Furniture_Catalogue",
+   "Junimo_Catalogue",
+   "Magic_Bait",
+   "Magnet",
+   "Retro_Catalogue",
+   "Targeted_Bait",
+   "Trash_Catalogue",
+   "Wild_Bait",
+   "Wizard_Catalogue"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Life Elixir.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Bats",
+   "Chanterelle",
+   "Combat",
+   "Combat/Skill",
+   "Crafting",
+   "Dwarf",
+   "Dyeing",
+   "Fall",
+   "Foraging",
+   "Friendship",
+   "Golden_Mystery_Box",
+   "Krobus",
+   "Leo",
+   "Life_Elixir",
+   "List_of_All_Gifts",
+   "Morel",
+   "Mystery_Box",
+   "Purple_Mushroom",
+   "Red_Mushroom",
+   "Skills",
+   "Skull_Cavern",
+   "Spring",
+   "Stardew_Valley_Fair",
+   "Summer",
+   "Tailoring",
+   "The_Cave",
+   "Traveling_Cart",
+   "Willy",
+   "User:HPop/Monster_Drops",
+   "User:Horizon98/Sandbox/CraftingRecipes",
+   "User:Margotbean/Sandbox/Gifts",
+   "User:Margotbean/Sandbox/SkillsTables",
+   "User:Margotbean/Sandbox/StickiedUniversalGifts",
+   "User:SnyperWolf",
+   "User:Techhead7890/TapperProducts",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Craftable item images"
+  ]
+ },
+ "Luck Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Luck.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Attack",
+   "Banana",
+   "Banana_Pudding",
+   "Blue_Jazz",
+   "Buffs",
+   "Cave_Jelly",
+   "Cooking",
+   "Defense",
+   "Desert_Festival",
+   "Eel",
+   "Fishing",
+   "Fried_Eel",
+   "Ginger",
+   "Ginger_Ale",
+   "Goat_Milk",
+   "Hot_Pepper",
+   "Large_Milk",
+   "Luck",
+   "Lucky_Lunch",
+   "Lucky_Ring",
+   "Magic_Rock_Candy",
+   "Milk",
+   "Mining",
+   "Oil",
+   "Pumpkin",
+   "Pumpkin_Soup",
+   "Rings",
+   "Sea_Cucumber",
+   "Shrimp",
+   "Shrimp_Cocktail",
+   "Skull_Cavern",
+   "Speed",
+   "Spicy_Eel",
+   "Statue_Of_Blessings",
+   "Sugar",
+   "The_Mines",
+   "Tomato",
+   "Tortilla",
+   "Wild_Horseradish"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Magnet.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Bait",
+   "Casino",
+   "Crafting",
+   "Feast_of_the_Winter_Star",
+   "Festival_of_Ice",
+   "Fish_Shop",
+   "Fishing",
+   "Fishing/Skill",
+   "Iron_Bar",
+   "Krobus",
+   "Magnet",
+   "Skills",
+   "Traveling_Cart",
+   "User:Horizon98/Sandbox/CraftingRecipes",
+   "User:Margotbean/Sandbox/Gifts",
+   "User:Margotbean/Sandbox/SkillsTables",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Bait images"
+  ]
+ },
+ "Magnetism Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Magnetism.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Bean_Hotpot",
+   "Buffs",
+   "Cave_Carrot",
+   "Cooking",
+   "Crispy_Bass",
+   "Energy",
+   "Green_Bean",
+   "Largemouth_Bass",
+   "Magnetism",
+   "Milk",
+   "Miner's_Treat",
+   "Mining",
+   "Oil",
+   "Rings",
+   "Skull_Cavern",
+   "Small_Magnet_Ring",
+   "Sugar",
+   "The_Mines",
+   "Wheat_Flour"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Map Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Map.png": {
+  "exists": true,
+  "dims": [
+   400,
+   244
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Map.png",
+   "1_River_Road",
+   "1_Willow_Lane",
+   "2_Willow_Lane",
+   "Abandoned_House",
+   "Adventurer's_Guild",
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Blacksmith",
+   "Blobfish",
+   "Bream",
+   "Bullhead",
+   "Bus_Stop",
+   "Carp",
+   "Carpenter's_Shop",
+   "Casino",
+   "Catfish",
+   "Chub",
+   "Community_Center",
+   "Crimsonfish",
+   "Desert_Trader",
+   "Dog_Pen",
+   "Dorado",
+   "Earth_Obelisk",
+   "Eel",
+   "Elliott's_Cabin",
+   "Farmhouse",
+   "Fish_Shop",
+   "Ghostfish",
+   "Glacierfish",
+   "Graveyard",
+   "Halibut",
+   "Harvey's_Clinic",
+   "Herring",
+   "Ice_Cream_Stand",
+   "Ice_Pip",
+   "JojaMart",
+   "Joja_Warehouse",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Leah's_Cottage",
+   "Legend",
+   "Lingcod",
+   "Marnie's_Ranch",
+   "Mayor's_Manor",
+   "Midnight_Squid",
+   "Minecart",
+   "Movie_Theater",
+   "Museum",
+   "Mutant_Carp",
+   "Oasis",
+   "Octopus",
+   "Perch",
+   "Pierre's_General_Store",
+   "Pike",
+   "Pufferfish",
+   "Quarry",
+   "Railroad",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Return_Scepter",
+   "Salmon",
+   "Sandfish",
+   "Sardine",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Seaweed",
+   "Secret_Woods",
+   "Shad",
+   "Slimejack",
+   "Smallmouth_Bass",
+   "Spa",
+   "Spook_Fish",
+   "Squid",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tent",
+   "The_Desert",
+   "The_Farm",
+   "The_Mines",
+   "The_Sewers",
+   "The_Stardrop_Saloon",
+   "Tiger_Trout",
+   "Tilapia",
+   "Trailer",
+   "Traveling_Cart",
+   "Tuna",
+   "Void_Salmon",
+   "Walleye",
+   "Warp_Totem",
+   "Warp_Totem:_Beach",
+   "Warp_Totem:_Farm",
+   "Warp_Totem:_Mountains",
+   "Water_Obelisk",
+   "Witch's_Hut",
+   "Wizard's_Tower",
+   "Woodskip",
+   "Special:WhatLinksHere/File:Map.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Wiki images",
+   "World Map images"
+  ]
+ },
+ "Marriage Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Heart images"
+  ]
+ },
+ "Mastery Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Acorn",
+   "Advanced_Iridium_Rod",
+   "Anvil",
+   "Bone_Fragment",
+   "Challenge_Bait",
+   "Crafting",
+   "Dragon_Tooth",
+   "Fiber",
+   "Fishing",
+   "Furnace",
+   "Gold_Bar",
+   "Hardwood",
+   "Heavy_Furnace",
+   "Iridium_Bar",
+   "Iridium_Scythe",
+   "Iron_Bar",
+   "Mahogany_Seed",
+   "Maple_Seed",
+   "Mastery_Cave",
+   "Mini-Forge",
+   "Moss",
+   "Mystic_Syrup",
+   "Mystic_Tree_Seed",
+   "Pine_Cone",
+   "Sap",
+   "Skills",
+   "Special_Items_&_Powers",
+   "Statue_Of_Blessings",
+   "Statue_Of_The_Dwarf_King",
+   "Stone",
+   "Tools",
+   "Treasure_Totem"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Max Energy Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Max Energy.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Artichoke",
+   "Artisan_Goods",
+   "Bean_Hotpot",
+   "Bok_Choy",
+   "Buffs",
+   "Coconut",
+   "Common_Mushroom",
+   "Complete_Breakfast",
+   "Cooking",
+   "Cranberries",
+   "Energy",
+   "Farming",
+   "Fishing",
+   "Fried_Egg",
+   "Goat_Milk",
+   "Green_Bean",
+   "Green_Tea",
+   "Hashbrowns",
+   "Keg",
+   "Large_Milk",
+   "Lobster",
+   "Lobster_Bisque",
+   "Magnetism",
+   "Milk",
+   "Pancakes",
+   "Radish",
+   "Red_Cabbage",
+   "Red_Plate",
+   "River_Jelly",
+   "Shrimp",
+   "Skull_Cavern",
+   "Speed",
+   "Stardrop",
+   "Super_Meal",
+   "The_Mines",
+   "Tom_Kha_Soup"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Meadowlands Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Mining Skill Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Battery_Pack",
+   "Bomb",
+   "Buffs",
+   "Cave_Carrot",
+   "Cherry_Bomb",
+   "Coal",
+   "Cooking",
+   "Copper_Bar",
+   "Copper_Ore",
+   "Crafting",
+   "Crystalarium",
+   "Farm_Maps",
+   "Getting_Started",
+   "Glowstone_Ring",
+   "Goat_Milk",
+   "Gold_Bar",
+   "Gold_Ore",
+   "Iridium_Bar",
+   "Iron_Bar",
+   "Iron_Ore",
+   "Large_Milk",
+   "Magnetism",
+   "Mastery_Cave",
+   "Mega_Bomb",
+   "Milk",
+   "Miner's_Treat",
+   "Mining",
+   "Rings",
+   "Skills",
+   "Solar_Essence",
+   "Staircase",
+   "Stone",
+   "Sugar",
+   "The_Farm",
+   "Void_Essence"
+  ],
+  "summary": "",
+  "cats": [
+   "Skill images",
+   "Buff images"
+  ]
+ },
+ "Mining.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Attack",
+   "Banana",
+   "Banana_Pudding",
+   "Cave_Carrot",
+   "Cooking",
+   "Cranberries",
+   "Cranberry_Sauce",
+   "Defense",
+   "Desert_Festival",
+   "Eggplant",
+   "Eggplant_Parmesan",
+   "Farming",
+   "Fishing",
+   "Goat_Milk",
+   "Large_Milk",
+   "Luck",
+   "Magic_Rock_Candy",
+   "Magnetism",
+   "Maple_Bar",
+   "Maple_Syrup",
+   "Milk",
+   "Miner's_Treat",
+   "Mining",
+   "Skull_Cavern",
+   "Speed",
+   "Squid_Ink",
+   "Squid_Ink_Ravioli",
+   "Sugar",
+   "The_Mines",
+   "Tomato",
+   "Wheat_Flour",
+   "Template:Name",
+   "Template:Name/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Monster Musk Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs",
+   "Monster_Musk",
+   "User:CocoEnBuisson"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Monster Musk.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Bat_Wing",
+   "Bookseller",
+   "Crafting",
+   "Deconstructor",
+   "Dyeing",
+   "Friendship",
+   "Krobus",
+   "Letters",
+   "List_of_All_Gifts",
+   "Monster_Musk",
+   "Quests",
+   "Slime",
+   "Tailoring",
+   "User:Horizon98/Sandbox/CraftingRecipes",
+   "User:Margotbean/Sandbox/StickiedUniversalGifts",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Craftable item images"
+  ]
+ },
+ "Moon Table.png": {
+  "exists": true,
+  "dims": [
+   128,
+   152
+  ],
+  "usage": [
+   "Carpenter's_Shop",
+   "Furniture",
+   "Moon_Table",
+   "Traveling_Cart"
+  ],
+  "summary": "",
+  "cats": [
+   "Table images"
+  ]
+ },
+ "Mouse Middle Key Light.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "Getting_Started"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Multiplayer Icon.png": {
+  "exists": true,
+  "dims": [
+   36,
+   36
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Oil of Garlic Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs",
+   "Garlic",
+   "Oil",
+   "Oil_of_Garlic"
+  ],
+  "summary": "",
+  "cats": [
+   "Status effect images (page does not exist)",
+   "Buff images"
+  ]
+ },
+ "Oil of Garlic.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Combat",
+   "Combat/Skill",
+   "Crafting",
+   "Crops",
+   "Dwarf",
+   "Dyeing",
+   "Friendship",
+   "Garlic",
+   "Oil",
+   "Oil_of_Garlic",
+   "Skills",
+   "Stardew_Valley_Fair",
+   "Tailoring",
+   "Traveling_Cart",
+   "User:Gravy/Sortable_Crops_Table",
+   "User:Horizon98/Sandbox/CraftingRecipes",
+   "User:Margotbean/Sandbox/Gifts",
+   "User:Margotbean/Sandbox/SkillsTables",
+   "Template:FairPoints",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Craftable item images"
+  ]
+ },
+ "Optionstab.png": {
+  "exists": true,
+  "dims": [
+   34,
+   32
+  ],
+  "usage": [
+   "Controls",
+   "Getting_Started",
+   "Mobile_Controls",
+   "Options",
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Player tab.png": {
+  "exists": true,
+  "dims": [
+   785,
+   600
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Pending Deletion"
+  ]
+ },
+ "Poison.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Artisan_Goods",
+   "Fall",
+   "Foraging",
+   "Goby",
+   "Heavy_Tapper",
+   "Holly",
+   "Mayonnaise_Machine",
+   "Pufferfish",
+   "Red_Mushroom",
+   "Sap",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Summer",
+   "Tapper",
+   "The_Cave",
+   "Void_Egg",
+   "Void_Mayonnaise",
+   "Winter",
+   "User:Techhead7890/TapperProducts",
+   "Template:EdibilityGrid",
+   "Template:EdibilityGrid/doc",
+   "Template:Energy",
+   "Template:Energy/doc",
+   "Template:Health",
+   "Template:Health/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Circle.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "Crafting"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Cross.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Magic_Bait",
+   "Magnet",
+   "Targeted_Bait",
+   "Wild_Bait"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Dpad.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 L1.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 L2.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Left Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Options.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 R1.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 R2.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Right Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Square.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Fishing",
+   "Magic_Bait",
+   "Magnet",
+   "Targeted_Bait",
+   "Wild_Bait"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Touch Pad.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "PS4 Triangle.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "QiCoin.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "'Burnt_Offering'",
+   "'Highway_89'",
+   "'Primal_Motion'",
+   "'Spires'",
+   "Casino",
+   "Deconstructor",
+   "Fireworks_(Green)",
+   "Fireworks_(Purple)",
+   "Fireworks_(Red)",
+   "Flooring",
+   "Furniture",
+   "Hardwood_Fence",
+   "Hats",
+   "Magnet",
+   "Modern_Double_Bed",
+   "Scarecrow",
+   "Slot_Machine",
+   "Top_Hat",
+   "Wallpaper",
+   "Warp_Totem:_Farm",
+   "Talk:Casino",
+   "Talk:Wallpaper",
+   "User:Margotbean/Sandbox/Infobox_furniture",
+   "User_talk:User314159",
+   "Template:Infobox_furniture",
+   "Template:Infobox_furniture/doc",
+   "Template:Price",
+   "Template:Price/doc",
+   "Modding:Migrate_to_Stardew_Valley_1.6.16"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "QuarryMineIcon.png": {
+  "exists": true,
+  "dims": [
+   38,
+   38
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Quest.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Quest images"
+  ]
+ },
+ "Quests Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Crab_Pot",
+   "Crops",
+   "Fall",
+   "Fish",
+   "Foraging",
+   "Fruit_Trees",
+   "Rings",
+   "Stardew_Valley_Wiki",
+   "Summer",
+   "Winter",
+   "User:Gravy/Sortable_Crops_Table",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Quest images"
+  ]
+ },
+ "Railroad Icon ES.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Non-English images"
+  ]
+ },
+ "Railroad Icon PT.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Non-English images"
+  ]
+ },
+ "Railroad Icon RU.png": {
+  "exists": true,
+  "dims": [
+   32,
+   30
+  ],
+  "usage": [],
+  "summary": "",
+  "cats": [
+   "Menu icons",
+   "Non-English images"
+  ]
+ },
+ "Railroad Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "Talk:Stardew_Valley_Wiki/Archive_Feb_2021",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Rain.png": {
+  "exists": true,
+  "dims": [
+   16,
+   16
+  ],
+  "usage": [
+   "Catfish",
+   "Cooking",
+   "Eel",
+   "Fall",
+   "Fish",
+   "Ice_Cream_Stand",
+   "Legend",
+   "Mermaid's_Pendant",
+   "Red_Snapper",
+   "Shad",
+   "Soundtrack",
+   "Spring",
+   "Summer",
+   "Walleye",
+   "Winter",
+   "User:Margotbean/HeartEventTriggers",
+   "Template:Weather_inline",
+   "Template:Weather_inline/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Right-Click.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Calendar",
+   "Catalogue",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Furniture",
+   "Furniture_Catalogue",
+   "Getting_Started",
+   "Joja_Furniture_Catalogue",
+   "Junimo_Catalogue",
+   "Magic_Bait",
+   "Magnet",
+   "Rain_Totem",
+   "Retro_Catalogue",
+   "Targeted_Bait",
+   "Trash_Catalogue",
+   "Wild_Bait",
+   "Wizard_Catalogue"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Riverland Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   57,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Secret Note Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   54
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Silver Quality Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Silver_Quality_Icon.png",
+   "Albacore",
+   "Amaranth",
+   "Anchovy",
+   "Ancient_Fruit",
+   "Artichoke",
+   "Artisan_Goods",
+   "Beer",
+   "Beet",
+   "Blue_Jazz",
+   "Blueberry",
+   "Bok_Choy",
+   "Bream",
+   "Bullhead",
+   "Bundles",
+   "Carp",
+   "Catfish",
+   "Cauliflower",
+   "Cheese",
+   "Chicken",
+   "Corn",
+   "Cow",
+   "Crab",
+   "Crops",
+   "Dandelion",
+   "Dinosaur_Egg",
+   "Duck",
+   "Duck_Feather",
+   "Eel",
+   "Eggplant",
+   "Fairy_Rose",
+   "Fall",
+   "Fish",
+   "Foraging",
+   "Fruit_Trees",
+   "Garlic",
+   "Ghostfish",
+   "Goat",
+   "Goat_Cheese",
+   "Grape",
+   "Green_Bean",
+   "Halibut",
+   "Herring",
+   "Honey",
+   "Hops",
+   "Hot_Pepper",
+   "Ice_Pip",
+   "Kale",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Lingcod",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Melon",
+   "Nautilus_Shell",
+   "Pale_Ale",
+   "Parsnip",
+   "Perch",
+   "Pig",
+   "Pike",
+   "Poppy",
+   "Potato",
+   "Pufferfish",
+   "Pumpkin",
+   "Rabbit",
+   "Radish",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Red_Mullet",
+   "Rhubarb",
+   "Salmon",
+   "Sandfish",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Sheep",
+   "Spring",
+   "Squid",
+   "Starfruit",
+   "Stonefish",
+   "Strawberry",
+   "Sturgeon",
+   "Summer",
+   "Summer_Spangle",
+   "Sunflower",
+   "Sweet_Gem_Berry",
+   "The_Cave",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tomato",
+   "Tulip",
+   "Tuna",
+   "Void_Chicken",
+   "Walleye",
+   "Wheat",
+   "Wine",
+   "Winter",
+   "Woodskip",
+   "Yam",
+   "Template:Quality",
+   "Template:Quality/doc",
+   "Special:WhatLinksHere/File:Silver_Quality_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Silver Quality.png": {
+  "exists": true,
+  "dims": [
+   24,
+   24
+  ],
+  "usage": [
+   "Albacore",
+   "Anchovy",
+   "Angler",
+   "Animal_Products_Profitability",
+   "Blobfish",
+   "Blue_Discus",
+   "Bream",
+   "Bullhead",
+   "Carp",
+   "Catfish",
+   "Chub",
+   "Crimsonfish",
+   "Crops",
+   "Dorado",
+   "Eel",
+   "Farming",
+   "Flounder",
+   "Friendship",
+   "Ghostfish",
+   "Glacierfish",
+   "Glacierfish_Jr.",
+   "Goby",
+   "Halibut",
+   "Herring",
+   "Ice_Pip",
+   "Keg_Productivity",
+   "Keg_Productivity_-_Artisan",
+   "Keg_Productivity_-_Tiller",
+   "Largemouth_Bass",
+   "Lava_Eel",
+   "Legend",
+   "Legend_II",
+   "Lingcod",
+   "Lionfish",
+   "Midnight_Carp",
+   "Midnight_Squid",
+   "Ms._Angler",
+   "Mutant_Carp",
+   "Octopus",
+   "Perch",
+   "Pike",
+   "Preserves_Jar_Productivity",
+   "Preserves_Jar_Productivity_-_Artisan",
+   "Preserves_Jar_Productivity_-_Tiller",
+   "Pufferfish",
+   "Radioactive_Carp",
+   "Rainbow_Trout",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Salmon",
+   "Sandfish",
+   "Sardine",
+   "Scorpion_Carp",
+   "Sea_Cucumber",
+   "Shad",
+   "Shipping",
+   "Slimejack",
+   "Smallmouth_Bass",
+   "Son_of_Crimsonfish",
+   "Spook_Fish",
+   "Squid",
+   "Stardew_Valley_Fair",
+   "Stingray",
+   "Stonefish",
+   "Sturgeon",
+   "Sunfish",
+   "Super_Cucumber",
+   "Tiger_Trout",
+   "Tilapia",
+   "Tuna",
+   "Void_Salmon",
+   "Walleye",
+   "Woodskip",
+   "User:Carrotlord/Drafts",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Artisan",
+   "User:My_hat_stinks/Drafts/Dehydrator_Productivity_-_Tiller",
+   "User:Pangaea/Artisan_Jars_vs_Kegs",
+   "User:YuvixAdun/Dehydrator_Productivity",
+   "User:YuvixAdun/Drafts/Mushrooms",
+   "Template:Grangeptsrow",
+   "Template:Grangeptsrow/doc",
+   "Template:Grangeptswrapper",
+   "Template:Grangeptswrapper/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Skills Tab Icon.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Skills Tab.png": {
+  "exists": true,
+  "dims": [
+   800,
+   551
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Snow.png": {
+  "exists": true,
+  "dims": [
+   16,
+   16
+  ],
+  "usage": [
+   "Soundtrack",
+   "Template:Weather_inline",
+   "Template:Weather_inline/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Social Tab.png": {
+  "exists": true,
+  "dims": [
+   64,
+   68
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Spa Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "Talk:Stardew_Valley_Wiki/Archive_Feb_2021",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Special Items & Powers Tab.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Player_Menu"
+  ],
+  "summary": "",
+  "cats": []
+ },
+ "Speech bubble.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "Talk:Stardew_Valley_Wiki/Archive_Feb_2021",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Speed Buff.png": {
+  "exists": true,
+  "dims": [
+   64,
+   64
+  ],
+  "usage": [
+   "Buffs",
+   "Savage_Ring",
+   "Speed"
+  ],
+  "summary": "",
+  "cats": [
+   "Buff images"
+  ]
+ },
+ "Speed w.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Alex's_Bat",
+   "Bone_Sword",
+   "Claymore",
+   "Combat",
+   "Crit._Chance",
+   "Crit._Power",
+   "Cutlass",
+   "Dark_Sword",
+   "Defense",
+   "Dwarf_Dagger",
+   "Dwarf_Sword",
+   "Emerald_Ring",
+   "Femur",
+   "Forest_Sword",
+   "Forge",
+   "Galaxy_Dagger",
+   "Galaxy_Hammer",
+   "Galaxy_Sword",
+   "Haley's_Iron",
+   "Harvey's_Mallet",
+   "Holy_Blade",
+   "Infinity_Blade",
+   "Infinity_Dagger",
+   "Infinity_Gavel",
+   "Insect_Head",
+   "Iron_Edge",
+   "Kudgel",
+   "Lead_Rod",
+   "Leah's_Whittler",
+   "Maru's_Wrench",
+   "Meowmere",
+   "Neptune's_Glaive",
+   "Obsidian_Edge",
+   "Ossified_Blade",
+   "Penny's_Fryer",
+   "Pirate's_Sword",
+   "Rapier",
+   "Rings",
+   "Sam's_Old_Guitar",
+   "Seb's_Lost_Mace",
+   "Speed",
+   "Steel_Falchion",
+   "Steel_Smallsword",
+   "Tempered_Broadsword",
+   "The_Slammer",
+   "Weapons",
+   "Weight",
+   "Wood_Mallet"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Speed.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Animals",
+   "Artichoke",
+   "Artisan_Goods",
+   "Attack",
+   "Beer",
+   "Bok_Choy",
+   "Buffs",
+   "Carrot",
+   "Cheese",
+   "Coffee",
+   "Combat",
+   "Cooking",
+   "Crab",
+   "Crab_Cakes",
+   "Cranberries",
+   "Defense",
+   "Desert_Festival",
+   "Eel",
+   "Egg",
+   "Energy",
+   "Farming",
+   "Fishing",
+   "Golden_Egg",
+   "Golden_Spur",
+   "Green_Tea",
+   "Horse:_The_Book",
+   "Hot_Pepper",
+   "Joja_Cola",
+   "Keg",
+   "Large_Egg",
+   "Luck",
+   "Magic_Rock_Candy",
+   "Mead",
+   "Mining",
+   "Oil",
+   "Pale_Ale",
+   "Pepper_Poppers",
+   "Rings",
+   "Savage_Ring",
+   "Skull_Cavern",
+   "Slimes",
+   "Speed",
+   "Spicy_Eel",
+   "Statue_Of_Blessings",
+   "Super_Meal",
+   "The_Mines",
+   "Triple_Shot_Espresso",
+   "Void_Egg",
+   "Way_Of_The_Wind_pt._1",
+   "Way_Of_The_Wind_pt._2",
+   "Wheat_Flour",
+   "Wine"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Spring.png": {
+  "exists": true,
+  "dims": [
+   48,
+   32
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Spring.png",
+   "Abigail",
+   "Alex",
+   "Anchovy",
+   "Ancient_Fruit",
+   "Ancient_Seeds",
+   "Apricot",
+   "Apricot_Sapling",
+   "Apricot_Tree",
+   "Artisan_Goods",
+   "Bean_Starter",
+   "Bee_House",
+   "Blue_Jazz",
+   "Carp",
+   "Catfish",
+   "Cauliflower",
+   "Cauliflower_Seeds",
+   "Cherry",
+   "Cherry_Sapling",
+   "Cherry_Tree",
+   "Cindersap_Forest",
+   "Common_Mushroom",
+   "Daffodil",
+   "Dandelion",
+   "Demetrius",
+   "Eel",
+   "Elliott",
+   "Emily",
+   "Fall",
+   "Fish",
+   "Fish_Shop",
+   "Fruit_Trees",
+   "Fruits",
+   "Garlic",
+   "Garlic_Seeds",
+   "Grass",
+   "Grass_Starter",
+   "Green_Bean",
+   "Haley",
+   "Halibut",
+   "Harvey",
+   "Hay",
+   "Herring",
+   "Honey",
+   "Jazz_Seeds",
+   "Jodi",
+   "Kale",
+   "Kale_Seeds",
+   "Kent",
+   "Leah",
+   "Leek",
+   "Legend",
+   "Lewis",
+   "Maru",
+   "Mixed_Seeds",
+   "Morel",
+   "Pam",
+   "Parsnip",
+   "Parsnip_Seeds",
+   "Pelican_Town",
+   "Penny",
+   "Pierre",
+   "Pierre's_General_Store",
+   "Plush_Bunny",
+   "Potato",
+   "Potato_Seeds",
+   "Rhubarb",
+   "Rhubarb_Seeds",
+   "Salmonberry",
+   "Sam",
+   "Sardine",
+   "Seasons",
+   "Sebastian",
+   "Shad",
+   "Shane",
+   "Smallmouth_Bass",
+   "Spring",
+   "Spring_Onion",
+   "Spring_Seeds",
+   "Strawberry",
+   "Strawberry_Seeds",
+   "Summer",
+   "Sunfish",
+   "The_Beach",
+   "The_Mines",
+   "The_Mountain",
+   "Traveling_Cart",
+   "Truffle",
+   "Tulip",
+   "Tulip_Bulb",
+   "Vegetables",
+   "Vincent",
+   "Weeds",
+   "Wild_Horseradish",
+   "Willy",
+   "Winter",
+   "Template:FishLocations_Beach",
+   "Template:FishLocations_Forest",
+   "Template:FishLocations_Town",
+   "Template:ScheduleHeader",
+   "Template:ScheduleHeader/doc",
+   "Special:WhatLinksHere/File:Spring.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Standard Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "Stardew_Valley_Wiki",
+   "The_Farm",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Stardew Checkup Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainPage"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Stardrop.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Crops",
+   "Krobus",
+   "Letters",
+   "Museum",
+   "Slot_Machine",
+   "Stardew_Valley_Fair",
+   "Stardrop",
+   "The_Mines",
+   "Modding:Objects/Object_sprites"
+  ],
+  "summary": "",
+  "cats": [
+   "Special item images"
+  ]
+ },
+ "StatusFestival.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusGreenRain.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusRain.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather",
+   "User:CocoEnBuisson"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusSnow.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusStorm.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusSun.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather",
+   "User:CocoEnBuisson"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusWedding.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusWindFall.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "StatusWindSpring.png": {
+  "exists": true,
+  "dims": [
+   42,
+   30
+  ],
+  "usage": [
+   "Weather"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Summer.png": {
+  "exists": true,
+  "dims": [
+   48,
+   32
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Summer.png",
+   "Abigail",
+   "Alex",
+   "Ancient_Fruit",
+   "Ancient_Seeds",
+   "Artisan_Goods",
+   "Bee_House",
+   "Blueberry",
+   "Blueberry_Seeds",
+   "Carp",
+   "Catfish",
+   "Cindersap_Forest",
+   "Common_Mushroom",
+   "Corn",
+   "Corn_Seeds",
+   "Crimsonfish",
+   "Demetrius",
+   "Dorado",
+   "Dwarf",
+   "Elliott",
+   "Fall",
+   "Fiddlehead_Fern",
+   "Fish",
+   "Fish_Shop",
+   "Foraging",
+   "Fruit_Trees",
+   "Fruits",
+   "Grape",
+   "Grass",
+   "Grass_Starter",
+   "Gus",
+   "Haley",
+   "Halibut",
+   "Harvey",
+   "Hay",
+   "Honey",
+   "Hops",
+   "Hops_Starter",
+   "Hot_Pepper",
+   "Jas",
+   "Jodi",
+   "Leah",
+   "Lewis",
+   "Maru",
+   "Melon",
+   "Melon_Seeds",
+   "Mixed_Seeds",
+   "Octopus",
+   "Orange",
+   "Orange_Sapling",
+   "Orange_Tree",
+   "Peach",
+   "Peach_Sapling",
+   "Peach_Tree",
+   "Pelican_Town",
+   "Penny",
+   "Pepper_Seeds",
+   "Pierre's_General_Store",
+   "Pike",
+   "Poppy",
+   "Poppy_Seeds",
+   "Pufferfish",
+   "Radish",
+   "Radish_Seeds",
+   "Rainbow_Shell",
+   "Rainbow_Trout",
+   "Red_Cabbage",
+   "Red_Cabbage_Seeds",
+   "Red_Mullet",
+   "Red_Mushroom",
+   "Red_Snapper",
+   "Robin",
+   "Sam",
+   "Seasons",
+   "Sebastian",
+   "Shad",
+   "Shane",
+   "Spangle_Seeds",
+   "Spice_Berry",
+   "Spring",
+   "Starfruit",
+   "Starfruit_Seeds",
+   "Sturgeon",
+   "Summer",
+   "Summer_Seeds",
+   "Summer_Spangle",
+   "Sunfish",
+   "Sunflower",
+   "Sunflower_Seeds",
+   "Super_Cucumber",
+   "Sweet_Pea",
+   "The_Beach",
+   "The_Mountain",
+   "Tilapia",
+   "Tomato",
+   "Tomato_Seeds",
+   "Traveling_Cart",
+   "Truffle",
+   "Tuna",
+   "Wheat",
+   "Wheat_Seeds",
+   "Special:WhatLinksHere/File:Summer.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Sun Table.png": {
+  "exists": true,
+  "dims": [
+   128,
+   156
+  ],
+  "usage": [
+   "Carpenter's_Shop",
+   "Furniture",
+   "Sun_Table",
+   "Traveling_Cart"
+  ],
+  "summary": "",
+  "cats": [
+   "Table images"
+  ]
+ },
+ "Sunny.png": {
+  "exists": true,
+  "dims": [
+   16,
+   16
+  ],
+  "usage": [
+   "Cooking",
+   "Fish",
+   "Pufferfish",
+   "Soundtrack",
+   "Spring",
+   "Summer",
+   "Sunfish",
+   "User:Margotbean/HeartEventTriggers",
+   "Template:Weather_inline",
+   "Template:Weather_inline/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Switch A.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Magic_Bait",
+   "Magnet",
+   "Targeted_Bait",
+   "Wild_Bait"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch B.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "Crafting"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Dpad.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch LB.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Left Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch LT.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Minus.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Plus.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch RB.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Right Stick.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch RT.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch X.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls",
+   "Crafting"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Switch Y.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Bait",
+   "Bait_(item)",
+   "Challenge_Bait",
+   "Controls",
+   "Deluxe_Bait",
+   "Fishing",
+   "Magic_Bait",
+   "Magnet",
+   "Targeted_Bait",
+   "Wild_Bait"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "The Mines Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Earth_Crystal",
+   "Fire_Quartz",
+   "Frozen_Tear",
+   "Quartz",
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "The Player Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Thunderstorm.png": {
+  "exists": true,
+  "dims": [
+   16,
+   16
+  ],
+  "usage": [
+   "Soundtrack",
+   "Template:Weather_inline",
+   "Template:Weather_inline/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Weather images"
+  ]
+ },
+ "Time Icon.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Time_Icon.png",
+   "Artichoke",
+   "Artisan_Goods",
+   "Bee_House",
+   "Beer",
+   "Blue_Jazz",
+   "Bok_Choy",
+   "Broken_CD",
+   "Broken_Glasses",
+   "Cave_Carrot",
+   "Charcoal_Kiln",
+   "Cheese",
+   "Cheese_Press",
+   "Chicken",
+   "Clam",
+   "Cloth",
+   "Coconut",
+   "Common_Mushroom",
+   "Complete_Breakfast",
+   "Cooking",
+   "Copper_Bar",
+   "Corn",
+   "Crab",
+   "Crayfish",
+   "Dinosaur_Egg",
+   "Driftwood",
+   "Duck",
+   "Duck_Mayonnaise",
+   "Eel",
+   "Eggplant",
+   "Energy",
+   "Farming",
+   "Fishing",
+   "Foraging",
+   "Fried_Egg",
+   "Furnace",
+   "Garlic",
+   "Goat_Cheese",
+   "Gold_Bar",
+   "Green_Algae",
+   "Green_Bean",
+   "Hazelnut",
+   "Honey",
+   "Hops",
+   "Hot_Pepper",
+   "Iridium_Bar",
+   "Iron_Bar",
+   "Joja_Cola",
+   "Juice",
+   "Keg",
+   "Largemouth_Bass",
+   "Lobster",
+   "Loom",
+   "Maple_Syrup",
+   "Mayonnaise",
+   "Mayonnaise_Machine",
+   "Mining",
+   "Morel",
+   "Mussel",
+   "Oak_Resin",
+   "Oil_Maker",
+   "Omelet",
+   "Pale_Ale",
+   "Parsnip",
+   "Periwinkle",
+   "Pine_Tar",
+   "Potato",
+   "Preserves_Jar",
+   "Pumpkin",
+   "Quartz",
+   "Radish",
+   "Rainbow_Trout",
+   "Recycling_Machine",
+   "Red_Cabbage",
+   "Refined_Quartz",
+   "Sardine",
+   "Sea_Cucumber",
+   "Seed_Maker",
+   "Shrimp",
+   "Skull_Cavern",
+   "Slime",
+   "Slime_Egg-Press",
+   "Slime_Incubator",
+   "Slimes",
+   "Snail",
+   "Soggy_Newspaper",
+   "Stardew_Valley_Wiki",
+   "Stardrop",
+   "Sunflower",
+   "Tapper",
+   "The_Mines",
+   "Tomato",
+   "Truffle_Oil",
+   "Tuna",
+   "Void_Chicken",
+   "Wheat",
+   "Wheat_Flour",
+   "Wild_Horseradish",
+   "Wine",
+   "Winter_Root",
+   "Yam",
+   "Special:WhatLinksHere/File:Time_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Toddler Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Traveling Cart Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Special:WhatLinksHere/File:Traveling_Cart_Icon.png",
+   "'Little_Tree'",
+   "Acorn",
+   "Amaranth_Seeds",
+   "Ancient_Seeds",
+   "Apple_Sapling",
+   "Apple_Tree",
+   "Apricot_Sapling",
+   "Apricot_Tree",
+   "Artichoke_Seeds",
+   "Bean_Starter",
+   "Beet_Seeds",
+   "Birch_Bench",
+   "Birch_Chair",
+   "Blue_Armchair",
+   "Blue_Diner_Chair",
+   "Blue_Stool",
+   "Blueberry_Seeds",
+   "Bok_Choy_Seeds",
+   "Breakfast_Chair",
+   "Brown_Armchair",
+   "Cauliflower_Seeds",
+   "Cherry_Sapling",
+   "Cherry_Tree",
+   "Cindersap_Forest",
+   "Corn_Seeds",
+   "Country_Chair",
+   "Cranberry_Seeds",
+   "Crops",
+   "Cute_Chair",
+   "Dark_Throne",
+   "Dining_Chair_(red)",
+   "Dining_Chair_(yellow)",
+   "Eggplant_Seeds",
+   "Fairy_Seeds",
+   "Fall_Seeds",
+   "Fruit_Trees",
+   "Furniture",
+   "Garlic_Seeds",
+   "Grape_Starter",
+   "Grass_Starter",
+   "Green_Armchair",
+   "Green_Office_Stool",
+   "Green_Plush_Seat",
+   "Green_Stool",
+   "Groovy_Chair",
+   "Hops_Starter",
+   "House_Plant",
+   "Iridium_Bar",
+   "Jazz_Seeds",
+   "Kale_Seeds",
+   "King_Chair",
+   "Mahogany_Bench",
+   "Mahogany_Chair",
+   "Maple_Seed",
+   "Melon_Seeds",
+   "Metal_Chair",
+   "Mixed_Seeds",
+   "Modern_Bench",
+   "Oak_Bench",
+   "Oak_Chair",
+   "Orange_Office_Stool",
+   "Orange_Sapling",
+   "Orange_Tree",
+   "Parsnip_Seeds",
+   "Peach_Sapling",
+   "Peach_Tree",
+   "Pepper_Seeds",
+   "Pine_Cone",
+   "Pink_Office_Chair",
+   "Pink_Plush_Seat",
+   "Pomegranate_Sapling",
+   "Pomegranate_Tree",
+   "Poppy_Seeds",
+   "Potato_Seeds",
+   "Pumpkin_Seeds",
+   "Purple_Office_Chair",
+   "Radish_Seeds",
+   "Rare_Seed",
+   "Red_Armchair",
+   "Red_Cabbage_Seeds",
+   "Red_Diner_Chair",
+   "Rhubarb_Seeds",
+   "Spangle_Seeds",
+   "Spring_Seeds",
+   "Stardew_Valley_Wiki",
+   "Starfruit_Seeds",
+   "Strawberry_Seeds",
+   "Stump_Seat",
+   "Summer_Seeds",
+   "Sunflower_Seeds",
+   "Tomato_Seeds",
+   "Traveling_Cart",
+   "Tulip_Bulb",
+   "Walnut_Bench",
+   "Walnut_Chair",
+   "Wheat_Seeds",
+   "Winter_Chair",
+   "Winter_Seeds",
+   "Yam_Seeds",
+   "Yellow_Armchair",
+   "Special:WhatLinksHere/File:Traveling_Cart_Icon.png"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Wall Clock.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Furniture",
+   "Wall_Clock"
+  ],
+  "summary": "",
+  "cats": [
+   "Furniture images"
+  ]
+ },
+ "Wallpaper Icon.png": {
+  "exists": true,
+  "dims": [
+   32,
+   32
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Wallpaper icons",
+   "Menu icons"
+  ]
+ },
+ "Weather Icon.png": {
+  "exists": true,
+  "dims": [
+   36,
+   36
+  ],
+  "usage": [
+   "Stardew_Valley_Wiki",
+   "User:Margotbean/Sandbox/Mainpage",
+   "User:Zendowolf/Sandbox/MainMenu",
+   "User:Zendowolf/Sandbox/MainPage",
+   "Template:Mainmenu",
+   "Template:Mainmenu/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Weight.png": {
+  "exists": true,
+  "dims": [
+   48,
+   48
+  ],
+  "usage": [
+   "Bone_Sword",
+   "Claymore",
+   "Combat",
+   "Crit._Chance",
+   "Crit._Power",
+   "Crystal_Dagger",
+   "Dark_Sword",
+   "Defense",
+   "Dragontooth_Club",
+   "Dragontooth_Shiv",
+   "Dwarf_Dagger",
+   "Dwarf_Hammer",
+   "Forge",
+   "Galaxy_Dagger",
+   "Galaxy_Hammer",
+   "Infinity_Dagger",
+   "Infinity_Gavel",
+   "Iron_Edge",
+   "Kudgel",
+   "Lava_Katana",
+   "Meowmere",
+   "Neptune's_Glaive",
+   "Ossified_Blade",
+   "Rings",
+   "Shadow_Brute_(dangerous)",
+   "Speed",
+   "Tempered_Broadsword",
+   "Weapons",
+   "Weight",
+   "Wind_Spire",
+   "Wood_Mallet"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Wilderness Farm Map Icon.png": {
+  "exists": true,
+  "dims": [
+   54,
+   60
+  ],
+  "usage": [
+   "Farm_Maps",
+   "Getting_Started",
+   "The_Farm"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "Winter.png": {
+  "exists": true,
+  "dims": [
+   48,
+   32
+  ],
+  "usage": [
+   "'The_Miracle_At_Coldstar_Ranch'",
+   "'The_Zuzu_City_Express'",
+   "Abigail",
+   "Albacore",
+   "Alex",
+   "Big_Red_Cane",
+   "Blobfish",
+   "Bookseller",
+   "Caroline",
+   "Catfish",
+   "Cindersap_Forest",
+   "Clint",
+   "Crocus",
+   "Crystal_Fruit",
+   "Demetrius",
+   "Elliott",
+   "Emily",
+   "Evelyn",
+   "Fall",
+   "Fish",
+   "Fish_Shop",
+   "Fishing_Strategy",
+   "Flowers",
+   "Foraging",
+   "Fruits",
+   "Giant_Stump",
+   "Glacierfish",
+   "Green_Canes",
+   "Haley",
+   "Halibut",
+   "Harvey",
+   "Herring",
+   "Holly",
+   "Iridium_Golem",
+   "Jas",
+   "Jodi",
+   "Krobus",
+   "Leah",
+   "Leo",
+   "Lewis",
+   "Lingcod",
+   "Linus",
+   "Marnie",
+   "Maru",
+   "Midnight_Carp",
+   "Midnight_Squid",
+   "Mixed_Cane",
+   "Movie_Theater",
+   "Nautilus_Shell",
+   "Octopus",
+   "Pelican_Town",
+   "Penny",
+   "Perch",
+   "Pike",
+   "Powdermelon",
+   "Powdermelon_Seeds",
+   "Red_Canes",
+   "Red_Mullet",
+   "Red_Snapper",
+   "Sam",
+   "Sardine",
+   "Sea_Cucumber",
+   "Seasons",
+   "Sebastian",
+   "Seed_Spot",
+   "Shane",
+   "Snow_Yam",
+   "Soundtrack",
+   "Spook_Fish",
+   "Spring",
+   "Squid",
+   "Sturgeon",
+   "Summer",
+   "Super_Cucumber",
+   "Targeted_Bait",
+   "The_Beach",
+   "The_Mountain",
+   "Tiger_Trout",
+   "Traveling_Cart",
+   "Tree_of_the_Winter_Star",
+   "Tuna",
+   "Volcano_Dungeon",
+   "Walleye",
+   "Winter",
+   "Winter_Root",
+   "Winter_Seeds",
+   "Winter_Tree_Decal",
+   "Wizard",
+   "Talk:Linus",
+   "User:YuvixAdun/Drafts/Raccoon",
+   "Template:FishLocations_Beach",
+   "Template:FishLocations_Forest",
+   "Template:FishLocations_Mountain",
+   "Template:FishLocations_Town",
+   "Template:ScheduleHeader",
+   "Template:ScheduleHeader/doc"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "XboxOne Menu.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "XboxOne View.png": {
+  "exists": true,
+  "dims": [
+   100,
+   100
+  ],
+  "usage": [
+   "Controls"
+  ],
+  "summary": "",
+  "cats": [
+   "Menu icons"
+  ]
+ },
+ "_Stardrop_.png": {
+  "exists": true,
+  "dims": [
+   96,
+   96
+  ],
+  "usage": [
+   "'Stardrop'",
+   "Furniture",
+   "Junimo_Catalogue"
+  ],
+  "summary": "",
+  "cats": [
+   "Paintings images"
+  ]
+ }
+}

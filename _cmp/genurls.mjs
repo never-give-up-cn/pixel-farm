@@ -33,7 +33,7 @@ syncAnim();
 const md5path = (name) => {
   const n = name.trim().replace(/\s+/g, '_');
   const h = createHash('md5').update(n, 'utf8').digest('hex');
-  const enc = n.replace(/\(/g, '%28').replace(/\)/g, '%29');
+  const enc = n.replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/'/g, '%27');
   return `/mediawiki/images/en/${h[0]}/${h.slice(0, 2)}/${enc}`;
 };
 const enc = (s) => s.trim().replace(/\s+/g, '_');
@@ -46,33 +46,34 @@ const enc = (s) => s.trim().replace(/\s+/g, '_');
 const UI_FILE_MAP = {
   // 状态（挑的是 48×48 的方形状态图标，不是 215px 高的状态条 —— 项目画的是 32×32 的图标）
   health: 'Health.png', energy: 'Energy.png', gold: 'Gold.png', luck: 'Luck.png',
-  friendship: 'FriendshipDots.png', level: 'Mastery Icon.png', star: 'Stardrop.png',
+  friendship: 'HeartIconLarge.png', star: 'Stardrop.png',
   silver_quality: 'Silver Quality Icon.png',
   gold_quality: 'Gold Quality Icon.png', iridium_quality: 'Iridium Quality Icon.png',
   // 天气（官方是状态条上的一排小图标 StatusSun/Rain/Storm/Snow/Wind*/GreenRain/Festival）
   sun: 'StatusSun.png', rain: 'StatusRain.png', storm: 'StatusStorm.png',
   snow: 'StatusSnow.png', wind: 'StatusWindSpring.png',
   green_rain: 'StatusGreenRain.png', festival: 'StatusFestival.png',
-  // 时间 / 四季
+  // 时间 / 四季（官方四季图标是 48×32 的 Spring.png / Summer.png / Fall.png / Winter.png；
+  // Calendar Spring.png 那类是整页日历截图，不算图标）
   clock: 'Clock.png',
-  spring: 'Calendar Spring.png', summer: 'Calendar Summer.png',
-  fall: 'Calendar Fall.png', winter: 'Calendar Winter.png',
+  spring: 'Spring.png', summer: 'Summer.png', fall: 'Fall.png', winter: 'Winter.png',
   // 技能
   farming: 'Farming Skill Icon.png', foraging: 'Foraging Skill Icon.png',
   fishing: 'Fishing Skill Icon.png', mining: 'Mining Skill Icon.png',
   combat: 'Combat Skill Icon.png',
   // 菜单（官方是工具栏那一排 "* Tab.png"）
   backpack: 'Backpack.png', map: 'Map Tab.png', quest: 'Quests Icon.png',
-  journal: 'Journal Scrap.png', settings: 'Optionstab.png',
+  settings: 'Advanced Options Button.png',
   exit: 'Exit Game Tab.png', craft: 'Crafting Tab.png', bundle: 'Bundle Icon.png',
   collections: 'Collections Tab.png', skills: 'Skills Tab Icon.png',
   social: 'Social Tab.png',
-  options: 'Advanced Options Button.png', controller: 'Controls Icon.png',
-  // 增益
+  options: 'Optionstab.png', controller: 'Controls Icon.png',
+  // 增益（官方 Buffs 页上的增益图标；钓鱼/采矿增益官方直接用技能图标）
   speed_buff: 'Speed Buff.png', luck_buff: 'Luck Buff.png',
   defense_buff: 'Defense Buff.png', attack_buff: 'Attack Buff.png',
   magnetism: 'Magnetism Buff.png', garlic: 'Oil of Garlic Buff.png',
   monster_musk: 'Monster Musk Buff.png',
+  fishing_buff: 'Fishing Skill Icon.png', mining_buff: 'Mining Skill Icon.png',
 };
 
 /* 种子包的官方文件名例外（wiki 上不按 "<作物名> Seeds.png" 命名的那些）
@@ -96,6 +97,33 @@ const SEED_FILE_MAP = {
   grape: 'Rare Seed.png', sweet_gem_berry: 'Rare Seed.png',
   ancient_fruit: 'Ancient Seeds.png', cactus_fruit: 'Cactus Seeds.png',
   fairy_rose: 'Fairy Seeds.png',
+};
+
+/* 杂项（邮件/书籍/饰品/电影）里官方有图的那些
+ * 书籍：官方只给一部分书单独做了图，其余书共用通用书本图标
+ * 邮件：官方只有"妈妈来信""爸爸来信""秘密纸条"有图，其余信件没有
+ * 电影：官方有 6 张电影海报原图
+ */
+const MISC_FILE_MAP = {
+  // 邮件
+  mom_letter: 'MomLetter.png', dad_letter: 'DadLetter DE.png', secret_note: 'Secret Note.png',
+  // 书籍
+  almanac: 'Stardew Valley Almanac.png', woodcutters_weekly: "Woodcutter's Weekly.png",
+  combat_quarterly: 'Combat Quarterly.png', dwarvish_safety: 'Dwarvish Safety Manual.png',
+  monster_compendium: 'Monster Compendium.png', alleyway_buffet: 'The Alleyway Buffet.png',
+  diamond_hunter: 'The Diamond Hunter.png', art_of_crabbing: "The Art O' Crabbing.png",
+  jack_be_nimble: 'Jack Be Nimble, Jack Be Thick.png',
+  // 饰品
+  basilisk_paw: 'Basilisk Paw.png', fairy_box: 'Fairy Box.png', frog_egg: 'Green Frog Egg.png',
+  golden_spur: 'Golden Spur.png', ice_rod: 'Ice Rod.png',
+  magic_hair_gel: 'Magic Hair Gel.png', magic_quiver: 'Magic Quiver.png',
+  parrot_egg: 'Parrot Egg.png',
+  // 电影（官方海报的文件名里带单引号，是原始文件名的一部分）
+  brave_sapling: "'The Brave Little Sapling'.png",
+  prairie_king_movie: "'Journey Of The Prairie King The Motion Picture'.png",
+  mysterium: "'Mysterium'.png",
+  natural_wonders: "'Natural Wonders Exploring Our Vibrant World'.png",
+  zuzu_express: "'The Zuzu City Express'.png", wumbus: "'Wumbus'.png",
 };
 
 /* ---- 分类定义：模块、数据数组、候选文件名生成 ---- */
@@ -244,30 +272,7 @@ const CATS = {
     // Speed Buff.png ...），只能按 id 逐个指定。这份表是照着 wiki 的完整文件清单
     // （Special:PrefixIndex 逐字母抓下来的 1 万多个文件）人工核对出来的。
     // 表里没有的 id，说明 wiki 上确实没有对应的官方 UI 小图。
-    fileMap: {
-      health: 'HealthBar.png', energy: 'EnergyBar.png', gold: 'Gold.png', luck: 'Luck.png',
-      friendship: 'FriendshipDots.png', level: 'Mastery Icon.png', star: 'Stardrop.png',
-      silver_quality: 'Silver Quality Icon.png',
-      gold_quality: 'Gold Quality Icon.png', iridium_quality: 'Iridium Quality Icon.png',
-      sun: 'StatusSun.png', rain: 'StatusRain.png', storm: 'StatusStorm.png',
-      snow: 'StatusSnow.png', wind: 'StatusWindSpring.png',
-      green_rain: 'StatusGreenRain.png', festival: 'StatusFestival.png',
-      clock: 'Clock.png',
-      spring: 'Calendar Spring.png', summer: 'Calendar Summer.png',
-      fall: 'Calendar Fall.png', winter: 'Calendar Winter.png',
-      farming: 'Farming Skill Icon.png', foraging: 'Foraging Skill Icon.png',
-      fishing: 'Fishing Skill Icon.png', mining: 'Mining Skill Icon.png',
-      combat: 'Combat Skill Icon.png',
-      backpack: 'Inventory Tab.png', map: 'Map Tab.png', quest: 'Quests Icon.png',
-      journal: 'Journal Scrap.png', settings: 'Advanced Options Button.png',
-      exit: 'Exit Game Tab.png', craft: 'Crafting Tab.png', bundle: 'Bundle Icon.png',
-      collections: 'Collections Tab.png', skills: 'Skills Tab.png', social: 'Social Tab.png',
-      options: 'Optionstab.png', controller: 'Controls Icon.png',
-      speed_buff: 'Speed Buff.png', luck_buff: 'Luck Buff.png',
-      defense_buff: 'Defense Buff.png', attack_buff: 'Attack Buff.png',
-      magnetism: 'Magnetism Buff.png', garlic: 'Oil of Garlic Buff.png',
-      monster_musk: 'Monster Musk Buff.png',
-    },
+    fileMap: UI_FILE_MAP,   // 见文件顶部的 UI_FILE_MAP
     cands: (it) => {
       const f = UI_FILE_MAP[it.id];
       return f ? [{ file: f, role: 'icon' }] : [];
@@ -293,6 +298,13 @@ const CATS = {
         out.push({ file: `${base}.png`, role: 'icon' });
       }
       return out;
+    }
+  },
+  misc: {
+    mod: 'misc.js', list: 'MISC',
+    cands: (it) => {
+      const f = MISC_FILE_MAP[it.id];
+      return f ? [{ file: f, role: 'icon' }] : [];
     }
   }
 };

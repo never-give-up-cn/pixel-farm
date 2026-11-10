@@ -1,0 +1,415 @@
+[
+ {
+  "file": "Fog.png",
+  "path": "/mediawiki/images/en/e/ef/Fog.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Fog Icon.png",
+  "path": "/mediawiki/images/en/d/d8/Fog_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusFog.png",
+  "path": "/mediawiki/images/en/f/fd/StatusFog.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Journal Tab.png",
+  "path": "/mediawiki/images/en/a/af/Journal_Tab.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Journal Icon.png",
+  "path": "/mediawiki/images/en/8/8b/Journal_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Journal.png",
+  "path": "/mediawiki/images/en/4/40/Journal.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Save Icon.png",
+  "path": "/mediawiki/images/en/2/2a/Save_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Save.png",
+  "path": "/mediawiki/images/en/2/21/Save.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Pause Icon.png",
+  "path": "/mediawiki/images/en/6/64/Pause_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Pause.png",
+  "path": "/mediawiki/images/en/4/47/Pause.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Shop Icon.png",
+  "path": "/mediawiki/images/en/7/76/Shop_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Shop.png",
+  "path": "/mediawiki/images/en/3/31/Shop.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Level.png",
+  "path": "/mediawiki/images/en/3/3d/Level.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Level Icon.png",
+  "path": "/mediawiki/images/en/0/0b/Level_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "XP.png",
+  "path": "/mediawiki/images/en/1/1a/XP.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Day.png",
+  "path": "/mediawiki/images/en/2/2d/Day.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Night.png",
+  "path": "/mediawiki/images/en/1/15/Night.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Day Icon.png",
+  "path": "/mediawiki/images/en/3/32/Day_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Night Icon.png",
+  "path": "/mediawiki/images/en/0/03/Night_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Glow Buff.png",
+  "path": "/mediawiki/images/en/a/a6/Glow_Buff.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Glow.png",
+  "path": "/mediawiki/images/en/a/ab/Glow.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Luck Skill Icon.png",
+  "path": "/mediawiki/images/en/e/ed/Luck_Skill_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Moon.png",
+  "path": "/mediawiki/images/en/4/47/Moon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Moon Phase.png",
+  "path": "/mediawiki/images/en/b/b1/Moon_Phase.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "MoonPhase.png",
+  "path": "/mediawiki/images/en/9/9f/MoonPhase.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Heart.png",
+  "path": "/mediawiki/images/en/d/d9/Heart.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Friendship.png",
+  "path": "/mediawiki/images/en/e/e4/Friendship.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Backpack.png",
+  "path": "/mediawiki/images/en/b/b1/Backpack.png",
+  "exists": true,
+  "w": 48,
+  "h": 48
+ },
+ {
+  "file": "Settings.png",
+  "path": "/mediawiki/images/en/9/91/Settings.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Settings Icon.png",
+  "path": "/mediawiki/images/en/d/db/Settings_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Controller.png",
+  "path": "/mediawiki/images/en/d/de/Controller.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Controller Icon.png",
+  "path": "/mediawiki/images/en/7/7b/Controller_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Social Icon.png",
+  "path": "/mediawiki/images/en/2/2e/Social_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Bundle Tab.png",
+  "path": "/mediawiki/images/en/b/bb/Bundle_Tab.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Quality.png",
+  "path": "/mediawiki/images/en/7/79/Quality.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Silver.png",
+  "path": "/mediawiki/images/en/0/0b/Silver.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Gold Quality Star.png",
+  "path": "/mediawiki/images/en/a/a0/Gold_Quality_Star.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusFog.png",
+  "path": "/mediawiki/images/en/f/fd/StatusFog.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusNight.png",
+  "path": "/mediawiki/images/en/a/a2/StatusNight.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusDay.png",
+  "path": "/mediawiki/images/en/9/98/StatusDay.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusSpring.png",
+  "path": "/mediawiki/images/en/d/d2/StatusSpring.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusSummer.png",
+  "path": "/mediawiki/images/en/b/bc/StatusSummer.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusFall.png",
+  "path": "/mediawiki/images/en/1/1d/StatusFall.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusWinter.png",
+  "path": "/mediawiki/images/en/b/b8/StatusWinter.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "StatusWind.png",
+  "path": "/mediawiki/images/en/6/61/StatusWind.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Sunny.png",
+  "path": "/mediawiki/images/en/f/f1/Weather_Sunny.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Rain.png",
+  "path": "/mediawiki/images/en/5/55/Weather_Rain.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Snow.png",
+  "path": "/mediawiki/images/en/1/1e/Weather_Snow.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Storm.png",
+  "path": "/mediawiki/images/en/c/c0/Weather_Storm.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Wind.png",
+  "path": "/mediawiki/images/en/4/40/Weather_Wind.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Green Rain.png",
+  "path": "/mediawiki/images/en/e/e5/Weather_Green_Rain.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Fog.png",
+  "path": "/mediawiki/images/en/9/90/Weather_Fog.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Weather Festival.png",
+  "path": "/mediawiki/images/en/d/d6/Weather_Festival.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Health Icon.png",
+  "path": "/mediawiki/images/en/4/44/Health_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Energy Icon.png",
+  "path": "/mediawiki/images/en/a/a3/Energy_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Gold Icon.png",
+  "path": "/mediawiki/images/en/2/26/Gold_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Star.png",
+  "path": "/mediawiki/images/en/2/2e/Star.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Stardrop Icon.png",
+  "path": "/mediawiki/images/en/8/8e/Stardrop_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ },
+ {
+  "file": "Speed Buff Icon.png",
+  "path": "/mediawiki/images/en/3/36/Speed_Buff_Icon.png",
+  "exists": false,
+  "w": null,
+  "h": null
+ }
+]

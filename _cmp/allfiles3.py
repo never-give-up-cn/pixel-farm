@@ -1,41 +1,39 @@
-"""把两份清单合并成一份完整清单（AllPages 更全，PrefixIndex 作补充），再查 UI 图标 / 种子包。"""
+"""生成 wiki 全站文件名清单。
+
+数据来源（两份，互相补充）：
+  1. _uiicons/allfiles.json      —— Special:AllPages 逐页爬出来的 7219 个 File: 名（含引号原名）
+  2. _cmp/out/wiki-allfiles.json —— Special:PrefixIndex 逐前缀爬的（每前缀只给 345 条，会漏）
+
+输出：
+  _cmp/out/wiki-files-all.json     —— 全部文件名（保留原样，含单引号）
+  _cmp/out/wiki-files-nq.json      —— 去掉首尾单引号的版本（便于按名字查找）
+"""
 import json
-import re
 from pathlib import Path
-from urllib.parse import unquote
 
 OUT = Path('_cmp/out')
-a = json.loads((OUT / 'wiki-allfiles.json').read_text('utf-8'))
-b = json.loads((OUT / 'wiki-allfiles2.json').read_text('utf-8'))
-
 names = set()
-for f in a:
-    if not f.startswith('File:'):
-        names.add(f.replace('_', ' '))
-for f in b:
-    names.add(f.replace('_', ' '))
-names = {n for n in names if n.lower().endswith(('.png', '.gif', '.jpg'))}
+
+for p in [Path('_uiicons/allfiles.json'), OUT / 'wiki-allfiles.json']:
+    if p.exists():
+        d = json.loads(p.read_text('utf-8'))
+        for n in d:
+            if n.startswith('File:'):
+                n = n[5:]
+            if n.lower().endswith(('.png', '.gif', '.jpg', '.jpeg')):
+                names.add(n.replace('_', ' '))
+
+names = {n for n in names if not n.startswith('File:')}
 print(f'合并后 {len(names)} 个图片文件')
 
-# 清掉文件名里残留的首尾单引号（wiki 上带引号的标题会显示成 'X'.png）
-norm = {}
-for n in names:
-    m = re.match(r"^'(.*)'\.(png|gif|jpg)$", n)
-    norm[m.group(1) + '.' + m.group(2) if m else n] = n
-names = set(norm)
-Path(OUT / 'wiki-files-all.json').write_text(
+(OUT / 'wiki-files-all.json').write_text(
     json.dumps(sorted(names), ensure_ascii=False, indent=1), 'utf-8')
-print('已写入 _cmp/out/wiki-files-all.json')
 
-low = {n.lower(): n for n in names}
-
-def find(kw, limit=30):
-    return [n for n in sorted(names) if kw.lower() in n.lower() and len(n) < 45][:limit]
-
-for kw in ['stardrop', 'icon', 'buff', 'skill icon', 'weather', 'sun', 'fog', 'wind',
-           'snow', 'seed', 'menu', 'journal', 'options', 'pause', 'level', 'friendship',
-           'stamina', 'energy', 'health', 'gold', 'luck', 'quality']:
-    hits = find(kw)
-    print(f'\n== {kw} ({len(hits)})')
-    for h in hits[:26]:
-        print('   ', h)
+nq = set()
+for n in names:
+    nq.add(n)
+    if n.startswith("'") and "'.png" in n:
+        nq.add(n[1:-5] + '.png')
+(OUT / 'wiki-files-nq.json').write_text(
+    json.dumps(sorted(nq), ensure_ascii=False, indent=1), 'utf-8')
+print(f'去引号版 {len(nq)} 个')

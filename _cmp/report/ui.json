@@ -1174,5 +1174,53 @@
   "wiki_scale": 4,
   "variants": 1,
   "wikiFile": "Monster Musk Buff.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.6014,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 80.58,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "fishing_buff",
+  "name": "钓鱼",
+  "en": "Fishing",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Fishing Skill Icon.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.7022,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 79.6,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "mining_buff",
+  "name": "采矿",
+  "en": "Mining",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Mining Skill Icon.png"
  }
 ]

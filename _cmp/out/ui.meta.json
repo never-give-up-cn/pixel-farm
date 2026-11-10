@@ -1,6 +1,6 @@
 {
  "cat": "ui",
- "count": 49,
+ "count": 51,
  "cell": 259,
  "perRow": 8,
  "rows": 7,
@@ -547,6 +547,28 @@
     64
    ],
    "wikiFile": "Monster Musk Buff.png"
+  },
+  {
+   "id": "fishing_buff",
+   "name": "钓鱼",
+   "en": "Fishing",
+   "wikiPath": "/mediawiki/images/en/e/e7/Fishing_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Fishing Skill Icon.png"
+  },
+  {
+   "id": "mining_buff",
+   "name": "采矿",
+   "en": "Mining",
+   "wikiPath": "/mediawiki/images/en/2/2f/Mining_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Mining Skill Icon.png"
   }
  ]
 }

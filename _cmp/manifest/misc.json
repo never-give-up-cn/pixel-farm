@@ -1,0 +1,318 @@
+{
+ "category": "misc",
+ "items": [
+  {
+   "id": "mom_letter",
+   "name": "妈妈的信",
+   "en": "Letter from Mom",
+   "wikiIcon": "/mediawiki/images/en/9/9d/MomLetter.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "MomLetter.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dad_letter",
+   "name": "爸爸的信",
+   "en": "Letter from Dad",
+   "wikiIcon": "/mediawiki/images/en/c/c4/DadLetter_DE.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "DadLetter DE.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "secret_note",
+   "name": "秘密纸条",
+   "en": "Secret Note",
+   "wikiIcon": "/mediawiki/images/en/e/ec/Secret_Note.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Secret Note.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "almanac",
+   "name": "星露谷年鉴",
+   "en": "Stardew Valley Almanac",
+   "wikiIcon": "/mediawiki/images/en/2/28/Stardew_Valley_Almanac.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Stardew Valley Almanac.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "woodcutters_weekly",
+   "name": "伐木周刊",
+   "en": "Woodcutter's Weekly",
+   "wikiIcon": "/mediawiki/images/en/4/46/Woodcutter%27s_Weekly.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Woodcutter's Weekly.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "combat_quarterly",
+   "name": "战斗季刊",
+   "en": "Combat Quarterly",
+   "wikiIcon": "/mediawiki/images/en/8/85/Combat_Quarterly.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Combat Quarterly.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "dwarvish_safety",
+   "name": "矮人安全手册",
+   "en": "Dwarvish Safety Manual",
+   "wikiIcon": "/mediawiki/images/en/a/a7/Dwarvish_Safety_Manual.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Dwarvish Safety Manual.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "monster_compendium",
+   "name": "怪物图鉴",
+   "en": "Monster Compendium",
+   "wikiIcon": "/mediawiki/images/en/1/15/Monster_Compendium.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Monster Compendium.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "alleyway_buffet",
+   "name": "小巷自助餐",
+   "en": "The Alleyway Buffet",
+   "wikiIcon": "/mediawiki/images/en/3/3a/The_Alleyway_Buffet.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "The Alleyway Buffet.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "diamond_hunter",
+   "name": "钻石猎人",
+   "en": "The Diamond Hunter",
+   "wikiIcon": "/mediawiki/images/en/a/a7/The_Diamond_Hunter.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "The Diamond Hunter.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "art_of_crabbing",
+   "name": "捕蟹艺术",
+   "en": "The Art O' Crabbing",
+   "wikiIcon": "/mediawiki/images/en/c/c6/The_Art_O%27_Crabbing.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "The Art O' Crabbing.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "jack_be_nimble",
+   "name": "杰克敏捷",
+   "en": "Jack Be Nimble",
+   "wikiIcon": "/mediawiki/images/en/c/c2/Jack_Be_Nimble,_Jack_Be_Thick.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Jack Be Nimble, Jack Be Thick.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "basilisk_paw",
+   "name": "蛇怪爪",
+   "en": "Basilisk Paw",
+   "wikiIcon": "/mediawiki/images/en/0/02/Basilisk_Paw.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Basilisk Paw.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "fairy_box",
+   "name": "仙灵盒",
+   "en": "Fairy Box",
+   "wikiIcon": "/mediawiki/images/en/7/7c/Fairy_Box.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Fairy Box.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "frog_egg",
+   "name": "青蛙蛋",
+   "en": "Frog Egg",
+   "wikiIcon": "/mediawiki/images/en/2/23/Green_Frog_Egg.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Green Frog Egg.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "golden_spur",
+   "name": "金马刺",
+   "en": "Golden Spur",
+   "wikiIcon": "/mediawiki/images/en/c/c5/Golden_Spur.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Golden Spur.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "ice_rod",
+   "name": "冰杖",
+   "en": "Ice Rod",
+   "wikiIcon": "/mediawiki/images/en/6/69/Ice_Rod.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ice Rod.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "magic_hair_gel",
+   "name": "魔法发胶",
+   "en": "Magic Hair Gel",
+   "wikiIcon": "/mediawiki/images/en/c/c7/Magic_Hair_Gel.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Magic Hair Gel.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "magic_quiver",
+   "name": "魔法箭袋",
+   "en": "Magic Quiver",
+   "wikiIcon": "/mediawiki/images/en/b/b8/Magic_Quiver.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Magic Quiver.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "parrot_egg",
+   "name": "鹦鹉蛋",
+   "en": "Parrot Egg",
+   "wikiIcon": "/mediawiki/images/en/d/dc/Parrot_Egg.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Parrot Egg.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "brave_sapling",
+   "name": "勇敢的小树苗",
+   "en": "The Brave Little Sapling",
+   "wikiIcon": "/mediawiki/images/en/9/93/%27The_Brave_Little_Sapling%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'The Brave Little Sapling'.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "prairie_king_movie",
+   "name": "草原大王之旅",
+   "en": "Journey of the Prairie King",
+   "wikiIcon": "/mediawiki/images/en/e/ee/%27Journey_Of_The_Prairie_King_The_Motion_Picture%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'Journey Of The Prairie King The Motion Picture'.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mysterium",
+   "name": "神秘馆",
+   "en": "Mysterium",
+   "wikiIcon": "/mediawiki/images/en/0/03/%27Mysterium%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'Mysterium'.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "natural_wonders",
+   "name": "自然奇观",
+   "en": "Natural Wonders",
+   "wikiIcon": "/mediawiki/images/en/d/d5/%27Natural_Wonders_Exploring_Our_Vibrant_World%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'Natural Wonders Exploring Our Vibrant World'.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "zuzu_express",
+   "name": "祖祖城特快",
+   "en": "The Zuzu City Express",
+   "wikiIcon": "/mediawiki/images/en/d/db/%27The_Zuzu_City_Express%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'The Zuzu City Express'.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "wumbus",
+   "name": "温布斯",
+   "en": "Wumbus",
+   "wikiIcon": "/mediawiki/images/en/d/d9/%27Wumbus%27.png",
+   "wikiSize": [
+    48,
+    66
+   ],
+   "wikiFile": "'Wumbus'.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": []
+}

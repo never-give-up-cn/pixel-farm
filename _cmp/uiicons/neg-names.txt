@@ -1,0 +1,59 @@
+﻿Fog.png
+Fog Icon.png
+StatusFog.png
+Journal Tab.png
+Journal Icon.png
+Journal.png
+Save Icon.png
+Save.png
+Pause Icon.png
+Pause.png
+Shop Icon.png
+Shop.png
+Level.png
+Level Icon.png
+XP.png
+Day.png
+Night.png
+Day Icon.png
+Night Icon.png
+Glow Buff.png
+Glow.png
+Luck Skill Icon.png
+Moon.png
+Moon Phase.png
+MoonPhase.png
+Heart.png
+Friendship.png
+Backpack.png
+Settings.png
+Settings Icon.png
+Controller.png
+Controller Icon.png
+Social Icon.png
+Bundle Tab.png
+Quality.png
+Silver.png
+Gold Quality Star.png
+StatusFog.png
+StatusNight.png
+StatusDay.png
+StatusSpring.png
+StatusSummer.png
+StatusFall.png
+StatusWinter.png
+StatusWind.png
+Weather Sunny.png
+Weather Rain.png
+Weather Snow.png
+Weather Storm.png
+Weather Wind.png
+Weather Green Rain.png
+Weather Fog.png
+Weather Festival.png
+Health Icon.png
+Energy Icon.png
+Gold Icon.png
+Star.png
+Stardrop Icon.png
+Speed Buff Icon.png

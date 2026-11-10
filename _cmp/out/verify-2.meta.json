@@ -95,7 +95,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Emily's_Magic_Hat.png",
-   "path": "/mediawiki/images/en/f/f9/Hat_Emily's_Magic_Hat.png"
+   "path": "/mediawiki/images/en/f/f9/Hat_Emily%27s_Magic_Hat.png"
   },
   {
    "cat": "hats",
@@ -105,7 +105,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Emily's_Magic_Hat (hat).png",
-   "path": "/mediawiki/images/en/1/1e/Emily's_Magic_Hat_%28hat%29.png"
+   "path": "/mediawiki/images/en/1/1e/Emily%27s_Magic_Hat_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -535,7 +535,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Governor's_Hat.png",
-   "path": "/mediawiki/images/en/b/b4/Hat_Governor's_Hat.png"
+   "path": "/mediawiki/images/en/b/b4/Hat_Governor%27s_Hat.png"
   },
   {
    "cat": "hats",
@@ -545,7 +545,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Governor's_Hat (hat).png",
-   "path": "/mediawiki/images/en/c/c9/Governor's_Hat_%28hat%29.png"
+   "path": "/mediawiki/images/en/c/c9/Governor%27s_Hat_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -575,7 +575,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Mr._Qi's_Hat.png",
-   "path": "/mediawiki/images/en/b/ba/Hat_Mr._Qi's_Hat.png"
+   "path": "/mediawiki/images/en/b/ba/Hat_Mr._Qi%27s_Hat.png"
   },
   {
    "cat": "hats",
@@ -585,7 +585,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Mr._Qi's_Hat (hat).png",
-   "path": "/mediawiki/images/en/4/48/Mr._Qi's_Hat_%28hat%29.png"
+   "path": "/mediawiki/images/en/4/48/Mr._Qi%27s_Hat_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -655,7 +655,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Forager's_Hat.png",
-   "path": "/mediawiki/images/en/e/e1/Hat_Forager's_Hat.png"
+   "path": "/mediawiki/images/en/e/e1/Hat_Forager%27s_Hat.png"
   },
   {
    "cat": "hats",
@@ -665,7 +665,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Forager's_Hat (hat).png",
-   "path": "/mediawiki/images/en/e/ed/Forager's_Hat_%28hat%29.png"
+   "path": "/mediawiki/images/en/e/ed/Forager%27s_Hat_%28hat%29.png"
   },
   {
    "cat": "hats",
@@ -1085,7 +1085,7 @@
    "ci": 0,
    "role": "icon2",
    "file": "Hat_Knight's_Helmet.png",
-   "path": "/mediawiki/images/en/5/57/Hat_Knight's_Helmet.png"
+   "path": "/mediawiki/images/en/5/57/Hat_Knight%27s_Helmet.png"
   },
   {
    "cat": "hats",
@@ -1095,7 +1095,7 @@
    "ci": 0,
    "role": "hatvar",
    "file": "Knight's_Helmet (hat).png",
-   "path": "/mediawiki/images/en/1/1e/Knight's_Helmet_%28hat%29.png"
+   "path": "/mediawiki/images/en/1/1e/Knight%27s_Helmet_%28hat%29.png"
   },
   {
    "cat": "hats",

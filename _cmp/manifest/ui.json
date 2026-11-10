@@ -375,7 +375,12 @@
     33
    ],
    "wikiFile": "FriendshipDots.png",
-   "wikiExtra": []
+   "wikiExtra": [
+    {
+     "label": "icon",
+     "path": "/mediawiki/images/en/0/04/HeartIconLarge.png"
+    }
+   ]
   },
   {
    "id": "level",
@@ -471,7 +476,12 @@
     255
    ],
    "wikiFile": "Calendar Spring.png",
-   "wikiExtra": []
+   "wikiExtra": [
+    {
+     "label": "icon",
+     "path": "/mediawiki/images/en/9/9c/Spring.png"
+    }
+   ]
   },
   {
    "id": "summer",
@@ -483,7 +493,12 @@
     255
    ],
    "wikiFile": "Calendar Summer.png",
-   "wikiExtra": []
+   "wikiExtra": [
+    {
+     "label": "icon",
+     "path": "/mediawiki/images/en/8/85/Summer.png"
+    }
+   ]
   },
   {
    "id": "fall",
@@ -495,7 +510,12 @@
     255
    ],
    "wikiFile": "Calendar Fall.png",
-   "wikiExtra": []
+   "wikiExtra": [
+    {
+     "label": "icon",
+     "path": "/mediawiki/images/en/5/5d/Fall.png"
+    }
+   ]
   },
   {
    "id": "winter",
@@ -507,7 +527,12 @@
     255
    ],
    "wikiFile": "Calendar Winter.png",
-   "wikiExtra": []
+   "wikiExtra": [
+    {
+     "label": "icon",
+     "path": "/mediawiki/images/en/a/a7/Winter.png"
+    }
+   ]
   },
   {
    "id": "foraging",
@@ -637,6 +662,30 @@
     64
    ],
    "wikiFile": "Monster Musk Buff.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "fishing_buff",
+   "name": "钓鱼",
+   "en": "Fishing",
+   "wikiIcon": "/mediawiki/images/en/e/e7/Fishing_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Fishing Skill Icon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "mining_buff",
+   "name": "采矿",
+   "en": "Mining",
+   "wikiIcon": "/mediawiki/images/en/2/2f/Mining_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Mining Skill Icon.png",
    "wikiExtra": []
   }
  ],

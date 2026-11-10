@@ -1,0 +1,2610 @@
+{
+ "Buff images": {
+  "files": [
+   {
+    "name": "Attack Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Energy.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Fangs.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Friendship.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Luck.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Speed.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of The Butterfly.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blessing Of Waters.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Burnt.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Combat Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Darkness.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Defense Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dwarf Statue Bombs.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dwarf Statue Coal.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dwarf Statue Geodes.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dwarf Statue Ladders.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dwarf Statue Ore.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Farming Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fishing Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Foraging Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Frozen.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Jinxed.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Luck Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Magnetism Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Max Energy Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mining Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Monster Musk Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Nauseated.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Oil of Garlic Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Slimed.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Speed Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Squid Ink Ravioli Buff.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Tipsy.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Weakness.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Yoba's Blessing.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Images"
+  ]
+ },
+ "Calendar images": {
+  "files": [
+   {
+    "name": "Calendar.png",
+    "disp": [
+     87,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Clock images": {
+  "files": [
+   {
+    "name": "Clock DE.png",
+    "disp": null
+   },
+   {
+    "name": "Clock ES.png",
+    "disp": null
+   },
+   {
+    "name": "Clock FR.png",
+    "disp": null
+   },
+   {
+    "name": "Clock HU.png",
+    "disp": null
+   },
+   {
+    "name": "Clock IT.png",
+    "disp": null
+   },
+   {
+    "name": "Clock JA.png",
+    "disp": null
+   },
+   {
+    "name": "Clock KO.png",
+    "disp": null
+   },
+   {
+    "name": "Clock PT.png",
+    "disp": null
+   },
+   {
+    "name": "Clock RU.png",
+    "disp": null
+   },
+   {
+    "name": "Clock TR.png",
+    "disp": null
+   },
+   {
+    "name": "Clock ZH.png",
+    "disp": null
+   },
+   {
+    "name": "Clock.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal DE.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal ES.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal FR.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal HU.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal IT.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal JA.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal KO.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal PT.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal RU.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal TR.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal ZH.png",
+    "disp": null
+   },
+   {
+    "name": "ClockWithJournal.png",
+    "disp": null
+   },
+   {
+    "name": "Gold display ES.png",
+    "disp": null
+   },
+   {
+    "name": "WeddingDayHeart PT.png",
+    "disp": null
+   },
+   {
+    "name": "WeddingDayHeart TR.png",
+    "disp": null
+   },
+   {
+    "name": "WeddingDayHeart.png",
+    "disp": null
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Collections images": {
+  "files": [
+   {
+    "name": "Artifacts.png",
+    "disp": null
+   },
+   {
+    "name": "Cooking.png",
+    "disp": null
+   },
+   {
+    "name": "Fish Collection Page 1.png",
+    "disp": null
+   },
+   {
+    "name": "Fish Collection Page 2.png",
+    "disp": null
+   },
+   {
+    "name": "Minerals.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 1 ES.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 1 FR.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 1 RU.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 1.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 2 ES.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 2 FR.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 2 JA.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 2 RU.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 2.png",
+    "disp": null
+   },
+   {
+    "name": "Shipping Page 3.png",
+    "disp": null
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Controller Map images": {
+  "files": [
+   {
+    "name": "PS4ControllerMap DE.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap ES.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap FR.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap HU.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap IT.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap JA.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap KO.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap PT.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap RU.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap TR.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap ZH.png",
+    "disp": null
+   },
+   {
+    "name": "PS4ControllerMap.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap DE.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap ES.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap FR.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap HU.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap IT.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap JA.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap KO.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap PT.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap RU.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap TR.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap ZH.png",
+    "disp": null
+   },
+   {
+    "name": "SwitchControllerMap.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap DE.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap ES.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap FR.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap HU.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap IT.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap JA.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap KO.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap PT.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap RU.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap TR.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap ZH.png",
+    "disp": null
+   },
+   {
+    "name": "XboxControllerMap.png",
+    "disp": null
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Heart images": {
+  "files": [
+   {
+    "name": "ConcessionLove.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "DialogueBubbleLove.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "HeartIconLarge.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Marriage Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Secret Heart.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Inventory images": {
+  "files": [
+   {
+    "name": "Inventory Parts DE.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts ES.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts FR.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts HU.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts IT.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts JA.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts KO.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts PT.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts RU.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts TR.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts ZH.png",
+    "disp": null
+   },
+   {
+    "name": "Inventory Parts.png",
+    "disp": null
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Journal Scrap images": {
+  "files": [
+   {
+    "name": "Journal Scrap.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Menu icons": {
+  "files": [
+   {
+    "name": "360 A.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 B.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Back.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Dpad.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 LB.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Left Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 LT.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 RB.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Right Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 RT.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Start.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 X.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "360 Y.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "All Seasons Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Animals Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Artisan Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Attack.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Beach Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Bookseller Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Bundle Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Calendar Flag Anim.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Calico Egg.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "CameraButton.png",
+    "disp": [
+     120,
+     100
+    ]
+   },
+   {
+    "name": "Controls Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Cooking Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Crit. Chance.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Crit. Power.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Defense.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Energy.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fall.png",
+    "disp": [
+     120,
+     80
+    ]
+   },
+   {
+    "name": "Farming.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Festivals Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fish.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fishing.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Foraging.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Forest Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Four Corners Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Furniture Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Gold Quality Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Gold Quality.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Gold.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Scroll.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Health FR.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Health.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Henchman Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Hilltop Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Hook Icon.png",
+    "disp": [
+     109,
+     120
+    ]
+   },
+   {
+    "name": "Immunity.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Inventory Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Iridium Quality Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Iridium Quality.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "JunimoHutHarvestButton.png",
+    "disp": [
+     120,
+     60
+    ]
+   },
+   {
+    "name": "Left-Click.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Luck.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Magnetism.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Marriage Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Max Energy.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Meadowlands Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Mining.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mouse Middle Key Light.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Multiplayer Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Poison.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Circle.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Cross.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Dpad.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 L1.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 L2.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Left Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Options.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 R1.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 R2.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Right Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Square.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Touch Pad.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "PS4 Triangle.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "QiCoin.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "QuarryMineIcon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Quests Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Railroad Icon ES.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Railroad Icon PT.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Railroad Icon RU.png",
+    "disp": [
+     120,
+     113
+    ]
+   },
+   {
+    "name": "Railroad Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Right-Click.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Riverland Farm Map Icon.png",
+    "disp": [
+     114,
+     120
+    ]
+   },
+   {
+    "name": "Secret Note Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Silver Quality Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Silver Quality.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Spa Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Speech bubble.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Speed w.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Speed.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Spring.png",
+    "disp": [
+     120,
+     80
+    ]
+   },
+   {
+    "name": "Standard Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Stardew Checkup Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Summer.png",
+    "disp": [
+     120,
+     80
+    ]
+   },
+   {
+    "name": "Switch A.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch B.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Dpad.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch LB.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Left Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch LT.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Minus.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Plus.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch RB.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Right Stick.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch RT.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch X.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Switch Y.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "The Mines Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "The Player Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Time Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Toddler Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Traveling Cart Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Wallpaper Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Weather Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Weight.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Wilderness Farm Map Icon.png",
+    "disp": [
+     108,
+     120
+    ]
+   },
+   {
+    "name": "Winter.png",
+    "disp": [
+     120,
+     80
+    ]
+   },
+   {
+    "name": "XboxOne Menu.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "XboxOne View.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Menu images": {
+  "files": [
+   {
+    "name": "Advanced Options Button.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "AncientSeedsRecipe.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Animals Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "Collections Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "ConcessionDislike.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "ConcessionLike.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "ConcessionLove.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Crafting Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "DialogueBubbleHate.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "DialogueBubbleLove.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Exit Game Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "Gift Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Inventory Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "Map Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "Mobile Controls Toggle Button.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Optionstab.png",
+    "disp": [
+     120,
+     113
+    ]
+   },
+   {
+    "name": "Plate.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Skills Tab Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Social Tab.png",
+    "disp": [
+     113,
+     120
+    ]
+   },
+   {
+    "name": "Special Items &amp; Powers Tab.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "SpecialCharsXbox.png",
+    "disp": [
+     120,
+     55
+    ]
+   }
+  ],
+  "subcats": [
+   "Calendar images",
+   "Clock images",
+   "Collections images",
+   "Controller Map images",
+   "Dye Pots images",
+   "Emoji images",
+   "Emotes images",
+   "Forge interface images",
+   "Heart images",
+   "Help Wanted Board images",
+   "Inventory images",
+   "Journal Scrap images",
+   "Menu icons",
+   "Overlay images",
+   "Secret Note images",
+   "Sewing interface images",
+   "Tile marker images",
+   "World Map images",
+   "Images"
+  ]
+ },
+ "Overlay images": {
+  "files": [
+   {
+    "name": "Aged Roe Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Dried Fruit Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Honey Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Jelly Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Juice Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pickles Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Recipe Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Wine Overlay.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Menu images"
+  ]
+ },
+ "Quest images": {
+  "files": [
+   {
+    "name": "Quest.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Quests Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Images"
+  ]
+ },
+ "Seasons": {
+  "files": [],
+  "subcats": [
+   "Game mechanics"
+  ]
+ },
+ "Skill images": {
+  "files": [
+   {
+    "name": "Acrobat.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Agriculturist.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Angler Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Artisan.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Blacksmith Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Botanist.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Brute.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Combat Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Coopmaster.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Defender.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Desperado.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Excavator.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Farming Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fighter.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fisher.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Fishing Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Foraging Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Forester.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Gatherer.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Gemologist.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Geologist.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Lumberjack.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Luremaster.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mariner.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Miner.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mining Skill Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pirate.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Prospector.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Rancher.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Scout.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Shepherd.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Tapper Icon.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Tiller.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Tracker.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Trapper.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Images"
+  ]
+ },
+ "Special item images": {
+  "files": [
+   {
+    "name": "Artifact Trove.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Bouquet.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Butterfly Powder.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Coffee Maker.png",
+    "disp": [
+     68,
+     120
+    ]
+   },
+   {
+    "name": "Cursed Mannequin (F).png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Cursed Mannequin (M).png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Deconstructor.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Dragon Tooth.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Enricher.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Far Away Stone.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Forest Magic.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Galaxy Soul.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Animal Cracker.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Coconut.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Mystery Box.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Pumpkin.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Tag.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Golden Walnut.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Horse Flute.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Junimo Chest.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Mannequin (F).png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Mannequin (M).png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Mermaid's Pendant.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mini-Fridge.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Moss.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Movie Ticket RU.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Movie Ticket TR.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Movie Ticket.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Mystery Box.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Ornate Necklace.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pearl.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pierre's Missing Stocklist.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pressure Nozzle.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Prize Ticket.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Qi Gem.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Qi Seasoning.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Sewing Machine.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Squid Ink.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Stardrop Tea.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Stardrop.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Supply Crate 1.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Supply Crate 2.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Supply Crate 3.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Telephone.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Treasure Totem.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Void Ghost Pendant.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Wilted Bouquet.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Wood Chipper On.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Wood Chipper.png",
+    "disp": [
+     60,
+     120
+    ]
+   },
+   {
+    "name": "Workbench.png",
+    "disp": [
+     62,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Wallet images",
+   "Images"
+  ]
+ },
+ "Weather images": {
+  "files": [
+   {
+    "name": "FallWindAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Festival.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "FestivalWeatherAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "GreenRainAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pollen fall.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Pollen spring.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Rain.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "RainAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Snow.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "SnowAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "SpringWindAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "StatusFestival.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusGreenRain.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusRain.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusSnow.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusStorm.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusSun.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusWedding.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusWindFall.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StatusWindSpring.png",
+    "disp": [
+     120,
+     86
+    ]
+   },
+   {
+    "name": "StormAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "SunAnimated.gif",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Sunny.png",
+    "disp": [
+     120,
+     120
+    ]
+   },
+   {
+    "name": "Thunderstorm.png",
+    "disp": [
+     120,
+     120
+    ]
+   }
+  ],
+  "subcats": [
+   "Images"
+  ]
+ }
+}

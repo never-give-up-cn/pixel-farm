@@ -1,0 +1,626 @@
+[
+ {
+  "iou": 0.9985,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.555,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 75.89,
+  "ours_box": [
+   24,
+   16
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "mom_letter",
+  "name": "妈妈的信",
+  "en": "Letter from Mom",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "MomLetter.png"
+ },
+ {
+  "iou": 0.9985,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.0863,
+  "aspect_sim": 0.6667,
+  "size_sim": 0.0,
+  "score": 67.29,
+  "ours_box": [
+   24,
+   16
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "dad_letter",
+  "name": "爸爸的信",
+  "en": "Letter from Dad",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "DadLetter DE.png"
+ },
+ {
+  "iou": 0.8281,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.2432,
+  "aspect_sim": 0.75,
+  "size_sim": 0.4783,
+  "score": 69.95,
+  "ours_box": [
+   18,
+   24
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "secret_note",
+  "name": "秘密纸条",
+  "en": "Secret Note",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Secret Note.png"
+ },
+ {
+  "iou": 0.9492,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.5649,
+  "aspect_sim": 0.8929,
+  "size_sim": 0.0,
+  "score": 80.88,
+  "ours_box": [
+   20,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "almanac",
+  "name": "星露谷年鉴",
+  "en": "Stardew Valley Almanac",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Stardew Valley Almanac.png"
+ },
+ {
+  "iou": 0.9485,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.5212,
+  "aspect_sim": 0.8929,
+  "size_sim": 0.0,
+  "score": 80.51,
+  "ours_box": [
+   20,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "woodcutters_weekly",
+  "name": "伐木周刊",
+  "en": "Woodcutter's Weekly",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Woodcutter's Weekly.png"
+ },
+ {
+  "iou": 0.9653,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.7552,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 82.83,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "combat_quarterly",
+  "name": "战斗季刊",
+  "en": "Combat Quarterly",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Combat Quarterly.png"
+ },
+ {
+  "iou": 0.9653,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5816,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 78.98,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "dwarvish_safety",
+  "name": "矮人安全手册",
+  "en": "Dwarvish Safety Manual",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Dwarvish Safety Manual.png"
+ },
+ {
+  "iou": 0.939,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.8406,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 82.7,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "monster_compendium",
+  "name": "怪物图鉴",
+  "en": "Monster Compendium",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Monster Compendium.png"
+ },
+ {
+  "iou": 0.9653,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.1318,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 74.11,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "alleyway_buffet",
+  "name": "小巷自助餐",
+  "en": "The Alleyway Buffet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "The Alleyway Buffet.png"
+ },
+ {
+  "iou": 0.9456,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4692,
+  "aspect_sim": 0.8929,
+  "size_sim": 0.0,
+  "score": 78.71,
+  "ours_box": [
+   20,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "diamond_hunter",
+  "name": "钻石猎人",
+  "en": "The Diamond Hunter",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "The Diamond Hunter.png"
+ },
+ {
+  "iou": 0.9653,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.3861,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 74.8,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "art_of_crabbing",
+  "name": "捕蟹艺术",
+  "en": "The Art O' Crabbing",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "The Art O' Crabbing.png"
+ },
+ {
+  "iou": 0.9653,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2847,
+  "aspect_sim": 0.8482,
+  "size_sim": 0.0,
+  "score": 74.21,
+  "ours_box": [
+   19,
+   24
+  ],
+  "wiki_box": [
+   42,
+   45
+  ],
+  "id": "jack_be_nimble",
+  "name": "杰克敏捷",
+  "en": "Jack Be Nimble",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Jack Be Nimble, Jack Be Thick.png"
+ },
+ {
+  "iou": 0.5595,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5604,
+  "aspect_sim": 0.9444,
+  "size_sim": 0.0,
+  "score": 66.82,
+  "ours_box": [
+   17,
+   18
+  ],
+  "wiki_box": [
+   42,
+   42
+  ],
+  "id": "basilisk_paw",
+  "name": "蛇怪爪",
+  "en": "Basilisk Paw",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Basilisk Paw.png"
+ },
+ {
+  "iou": 0.8877,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.8344,
+  "aspect_sim": 0.9076,
+  "size_sim": 0.0,
+  "score": 81.35,
+  "ours_box": [
+   18,
+   17
+  ],
+  "wiki_box": [
+   42,
+   36
+  ],
+  "id": "fairy_box",
+  "name": "仙灵盒",
+  "en": "Fairy Box",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fairy Box.png"
+ },
+ {
+  "iou": 0.7378,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.788,
+  "aspect_sim": 0.8202,
+  "size_sim": 0.0,
+  "score": 73.72,
+  "ours_box": [
+   19,
+   17
+  ],
+  "wiki_box": [
+   33,
+   36
+  ],
+  "id": "frog_egg",
+  "name": "青蛙蛋",
+  "en": "Frog Egg",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Green Frog Egg.png"
+ },
+ {
+  "iou": 0.1843,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.3146,
+  "aspect_sim": 0.9231,
+  "size_sim": 0.0,
+  "score": 49.48,
+  "ours_box": [
+   21,
+   18
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "golden_spur",
+  "name": "金马刺",
+  "en": "Golden Spur",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Golden Spur.png"
+ },
+ {
+  "iou": 0.451,
+  "dhash_sim": 0.8125,
+  "palette_cov": 1.0,
+  "color_sim": 0.5482,
+  "aspect_sim": 0.913,
+  "size_sim": 0.0,
+  "score": 67.13,
+  "ours_box": [
+   21,
+   23
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "ice_rod",
+  "name": "冰杖",
+  "en": "Ice Rod",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Ice Rod.png"
+ },
+ {
+  "iou": 0.7559,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.434,
+  "aspect_sim": 0.5714,
+  "size_sim": 0.0,
+  "score": 65.21,
+  "ours_box": [
+   8,
+   14
+  ],
+  "wiki_box": [
+   39,
+   39
+  ],
+  "id": "magic_hair_gel",
+  "name": "魔法发胶",
+  "en": "Magic Hair Gel",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Magic Hair Gel.png"
+ },
+ {
+  "iou": 0.6783,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.4092,
+  "aspect_sim": 0.6154,
+  "size_sim": 0.0,
+  "score": 65.77,
+  "ours_box": [
+   12,
+   26
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "magic_quiver",
+  "name": "魔法箭袋",
+  "en": "Magic Quiver",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Magic Quiver.png"
+ },
+ {
+  "iou": 0.714,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.619,
+  "aspect_sim": 0.7895,
+  "size_sim": 0.0,
+  "score": 71.1,
+  "ours_box": [
+   19,
+   18
+  ],
+  "wiki_box": [
+   30,
+   36
+  ],
+  "id": "parrot_egg",
+  "name": "鹦鹉蛋",
+  "en": "Parrot Egg",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Parrot Egg.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.8492,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 84.78,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "brave_sapling",
+  "name": "勇敢的小树苗",
+  "en": "The Brave Little Sapling",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'The Brave Little Sapling'.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.4456,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 79.35,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "prairie_king_movie",
+  "name": "草原大王之旅",
+  "en": "Journey of the Prairie King",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'Journey Of The Prairie King The Motion Picture'.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2145,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 74.64,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "mysterium",
+  "name": "神秘馆",
+  "en": "Mysterium",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'Mysterium'.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.6406,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 82.28,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "natural_wonders",
+  "name": "自然奇观",
+  "en": "Natural Wonders",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'Natural Wonders Exploring Our Vibrant World'.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.4581,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 79.23,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "zuzu_express",
+  "name": "祖祖城特快",
+  "en": "The Zuzu City Express",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'The Zuzu City Express'.png"
+ },
+ {
+  "iou": 0.8936,
+  "dhash_sim": 0.7656,
+  "palette_cov": 1.0,
+  "color_sim": 0.1852,
+  "aspect_sim": 0.8595,
+  "size_sim": 0.5156,
+  "score": 76.07,
+  "ours_box": [
+   22,
+   26
+  ],
+  "wiki_box": [
+   16,
+   22
+  ],
+  "id": "wumbus",
+  "name": "温布斯",
+  "en": "Wumbus",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "'Wumbus'.png"
+ }
+]

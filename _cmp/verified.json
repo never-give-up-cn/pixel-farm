@@ -20043,6 +20043,14 @@
      "exists": true,
      "w": 202,
      "h": 33
+    },
+    {
+     "role": "icon",
+     "file": "HeartIconLarge.png",
+     "path": "/mediawiki/images/en/0/04/HeartIconLarge.png",
+     "exists": true,
+     "w": 36,
+     "h": 36
     }
    ]
   },
@@ -20155,6 +20163,14 @@
      "exists": true,
      "w": 255,
      "h": 255
+    },
+    {
+     "role": "icon",
+     "file": "Spring.png",
+     "path": "/mediawiki/images/en/9/9c/Spring.png",
+     "exists": true,
+     "w": 48,
+     "h": 32
     }
    ]
   },
@@ -20169,6 +20185,14 @@
      "exists": true,
      "w": 255,
      "h": 255
+    },
+    {
+     "role": "icon",
+     "file": "Summer.png",
+     "path": "/mediawiki/images/en/8/85/Summer.png",
+     "exists": true,
+     "w": 48,
+     "h": 32
     }
    ]
   },
@@ -20183,6 +20207,14 @@
      "exists": true,
      "w": 255,
      "h": 255
+    },
+    {
+     "role": "icon",
+     "file": "Fall.png",
+     "path": "/mediawiki/images/en/5/5d/Fall.png",
+     "exists": true,
+     "w": 48,
+     "h": 32
     }
    ]
   },
@@ -20197,6 +20229,14 @@
      "exists": true,
      "w": 255,
      "h": 255
+    },
+    {
+     "role": "icon",
+     "file": "Winter.png",
+     "path": "/mediawiki/images/en/a/a7/Winter.png",
+     "exists": true,
+     "w": 48,
+     "h": 32
     }
    ]
   },
@@ -20350,6 +20390,34 @@
      "role": "icon",
      "file": "Monster Musk Buff.png",
      "path": "/mediawiki/images/en/2/23/Monster_Musk_Buff.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "fishing_buff": {
+   "name": "钓鱼",
+   "en": "Fishing",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fishing Skill Icon.png",
+     "path": "/mediawiki/images/en/e/e7/Fishing_Skill_Icon.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "mining_buff": {
+   "name": "采矿",
+   "en": "Mining",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Mining Skill Icon.png",
+     "path": "/mediawiki/images/en/2/2f/Mining_Skill_Icon.png",
      "exists": true,
      "w": 64,
      "h": 64
@@ -22659,6 +22727,420 @@
      "exists": true,
      "w": 48,
      "h": 48
+    }
+   ]
+  }
+ },
+ "misc": {
+  "mom_letter": {
+   "name": "妈妈的信",
+   "en": "Letter from Mom",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "MomLetter.png",
+     "path": "/mediawiki/images/en/9/9d/MomLetter.png",
+     "exists": true,
+     "w": 255,
+     "h": 255
+    }
+   ]
+  },
+  "dad_letter": {
+   "name": "爸爸的信",
+   "en": "Letter from Dad",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "DadLetter DE.png",
+     "path": "/mediawiki/images/en/c/c4/DadLetter_DE.png",
+     "exists": true,
+     "w": 255,
+     "h": 255
+    }
+   ]
+  },
+  "secret_note": {
+   "name": "秘密纸条",
+   "en": "Secret Note",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Secret Note.png",
+     "path": "/mediawiki/images/en/e/ec/Secret_Note.png",
+     "exists": true,
+     "w": 64,
+     "h": 64
+    }
+   ]
+  },
+  "almanac": {
+   "name": "星露谷年鉴",
+   "en": "Stardew Valley Almanac",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Stardew Valley Almanac.png",
+     "path": "/mediawiki/images/en/2/28/Stardew_Valley_Almanac.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "woodcutters_weekly": {
+   "name": "伐木周刊",
+   "en": "Woodcutter's Weekly",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Woodcutter's Weekly.png",
+     "path": "/mediawiki/images/en/4/46/Woodcutter%27s_Weekly.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "combat_quarterly": {
+   "name": "战斗季刊",
+   "en": "Combat Quarterly",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Combat Quarterly.png",
+     "path": "/mediawiki/images/en/8/85/Combat_Quarterly.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "dwarvish_safety": {
+   "name": "矮人安全手册",
+   "en": "Dwarvish Safety Manual",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Dwarvish Safety Manual.png",
+     "path": "/mediawiki/images/en/a/a7/Dwarvish_Safety_Manual.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "monster_compendium": {
+   "name": "怪物图鉴",
+   "en": "Monster Compendium",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Monster Compendium.png",
+     "path": "/mediawiki/images/en/1/15/Monster_Compendium.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "alleyway_buffet": {
+   "name": "小巷自助餐",
+   "en": "The Alleyway Buffet",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "The Alleyway Buffet.png",
+     "path": "/mediawiki/images/en/3/3a/The_Alleyway_Buffet.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "diamond_hunter": {
+   "name": "钻石猎人",
+   "en": "The Diamond Hunter",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "The Diamond Hunter.png",
+     "path": "/mediawiki/images/en/a/a7/The_Diamond_Hunter.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "art_of_crabbing": {
+   "name": "捕蟹艺术",
+   "en": "The Art O' Crabbing",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "The Art O' Crabbing.png",
+     "path": "/mediawiki/images/en/c/c6/The_Art_O%27_Crabbing.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "jack_be_nimble": {
+   "name": "杰克敏捷",
+   "en": "Jack Be Nimble",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Jack Be Nimble, Jack Be Thick.png",
+     "path": "/mediawiki/images/en/c/c2/Jack_Be_Nimble,_Jack_Be_Thick.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "basilisk_paw": {
+   "name": "蛇怪爪",
+   "en": "Basilisk Paw",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Basilisk Paw.png",
+     "path": "/mediawiki/images/en/0/02/Basilisk_Paw.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "fairy_box": {
+   "name": "仙灵盒",
+   "en": "Fairy Box",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Fairy Box.png",
+     "path": "/mediawiki/images/en/7/7c/Fairy_Box.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "frog_egg": {
+   "name": "青蛙蛋",
+   "en": "Frog Egg",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Green Frog Egg.png",
+     "path": "/mediawiki/images/en/2/23/Green_Frog_Egg.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "golden_spur": {
+   "name": "金马刺",
+   "en": "Golden Spur",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Golden Spur.png",
+     "path": "/mediawiki/images/en/c/c5/Golden_Spur.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "ice_rod": {
+   "name": "冰杖",
+   "en": "Ice Rod",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Ice Rod.png",
+     "path": "/mediawiki/images/en/6/69/Ice_Rod.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "magic_hair_gel": {
+   "name": "魔法发胶",
+   "en": "Magic Hair Gel",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Magic Hair Gel.png",
+     "path": "/mediawiki/images/en/c/c7/Magic_Hair_Gel.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "magic_quiver": {
+   "name": "魔法箭袋",
+   "en": "Magic Quiver",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Magic Quiver.png",
+     "path": "/mediawiki/images/en/b/b8/Magic_Quiver.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "parrot_egg": {
+   "name": "鹦鹉蛋",
+   "en": "Parrot Egg",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Parrot Egg.png",
+     "path": "/mediawiki/images/en/d/dc/Parrot_Egg.png",
+     "exists": true,
+     "w": 48,
+     "h": 48
+    }
+   ]
+  },
+  "brave_sapling": {
+   "name": "勇敢的小树苗",
+   "en": "The Brave Little Sapling",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "The Brave Little Sapling.png",
+     "path": "/mediawiki/images/en/d/d6/The_Brave_Little_Sapling.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'The Brave Little Sapling'.png",
+     "path": "/mediawiki/images/en/9/93/%27The_Brave_Little_Sapling%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
+    }
+   ]
+  },
+  "prairie_king_movie": {
+   "name": "草原大王之旅",
+   "en": "Journey of the Prairie King",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Journey of the Prairie King The Motion Picture.png",
+     "path": "/mediawiki/images/en/8/8d/Journey_of_the_Prairie_King_The_Motion_Picture.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'Journey Of The Prairie King The Motion Picture'.png",
+     "path": "/mediawiki/images/en/e/ee/%27Journey_Of_The_Prairie_King_The_Motion_Picture%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
+    }
+   ]
+  },
+  "mysterium": {
+   "name": "神秘馆",
+   "en": "Mysterium",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Mysterium.png",
+     "path": "/mediawiki/images/en/6/61/Mysterium.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'Mysterium'.png",
+     "path": "/mediawiki/images/en/0/03/%27Mysterium%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
+    }
+   ]
+  },
+  "natural_wonders": {
+   "name": "自然奇观",
+   "en": "Natural Wonders",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Natural Wonders Exploring Our Vibrant World.png",
+     "path": "/mediawiki/images/en/b/be/Natural_Wonders_Exploring_Our_Vibrant_World.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'Natural Wonders Exploring Our Vibrant World'.png",
+     "path": "/mediawiki/images/en/d/d5/%27Natural_Wonders_Exploring_Our_Vibrant_World%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
+    }
+   ]
+  },
+  "zuzu_express": {
+   "name": "祖祖城特快",
+   "en": "The Zuzu City Express",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "The Zuzu City Express.png",
+     "path": "/mediawiki/images/en/8/8a/The_Zuzu_City_Express.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'The Zuzu City Express'.png",
+     "path": "/mediawiki/images/en/d/db/%27The_Zuzu_City_Express%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
+    }
+   ]
+  },
+  "wumbus": {
+   "name": "温布斯",
+   "en": "Wumbus",
+   "cands": [
+    {
+     "role": "icon",
+     "file": "Wumbus.png",
+     "path": "/mediawiki/images/en/f/f7/Wumbus.png",
+     "exists": false,
+     "w": null,
+     "h": null
+    },
+    {
+     "role": "icon",
+     "file": "'Wumbus'.png",
+     "path": "/mediawiki/images/en/d/d9/%27Wumbus%27.png",
+     "exists": true,
+     "w": 48,
+     "h": 66
     }
    ]
   }

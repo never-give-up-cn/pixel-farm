@@ -202,6 +202,20 @@ function drawPlacedFurniture(g, id, x, y) {
   g.restore();
 }
 
+/* 装修样板：木桌 + 墙纸卷 + 地板样块 */
+function drawRoomPlanner(g,x,y){
+  g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(x+3, y+28, 26, 3);
+  g.fillStyle = '#6a4a2a'; g.fillRect(x+4, y+18, 24, 10);
+  g.fillStyle = '#8a6238'; g.fillRect(x+5, y+16, 22, 4);
+  g.fillStyle = '#4a3018'; g.fillRect(x+6, y+24, 3, 6); g.fillRect(x+23, y+24, 3, 6);
+  /* 卷起来的墙纸 */
+  g.fillStyle = '#c88aa0'; g.fillRect(x+7, y+9, 5, 8);
+  g.fillStyle = '#8ac0a0'; g.fillRect(x+13, y+8, 5, 9);
+  g.fillStyle = '#e0d0a0'; g.fillRect(x+19, y+10, 5, 7);
+  /* 地板样块 */
+  g.fillStyle = '#b08a60'; g.fillRect(x+10, y+30, 12, 2);
+}
+
 function drawBuilding(g,b,x,y){
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
   else if(b.type.indexOf('furn_') === 0) drawPlacedFurniture(g, b.type.slice(5), x, y);
@@ -210,6 +224,7 @@ function drawBuilding(g,b,x,y){
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
   else if(b.type === 'stove') drawStove(g,x,y);
   else if(b.type === 'wardrobe') drawWardrobe(g,x,y);
+  else if(b.type === 'room_planner') drawRoomPlanner(g,x,y);
   else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
   else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);

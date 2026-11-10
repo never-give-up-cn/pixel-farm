@@ -217,6 +217,20 @@
   .wcell.on{border-color:#7a6a30;background:#202a3a}
   .wcell b{font-size:9px;font-weight:400;color:#cfe3ff;white-space:nowrap;overflow:hidden;max-width:46px;line-height:1.2}
   .wcell canvas{image-rendering:pixelated}
+  /* 装修样板 */
+  #room{position:fixed;inset:0;z-index:54;display:none;align-items:center;justify-content:center}
+  #room.open{display:flex}
+  #roomMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #roomPanel{position:relative;width:760px;max-width:calc(100vw - 24px);max-height:90vh;display:flex;flex-direction:column}
+  #roomHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #roomHead span{color:#8fa3bd;font-size:11px}
+  #roomTabs{display:flex;gap:6px;margin-bottom:8px}
+  #roomTabs button{background:#1a2130;border:1px solid #2c3a4e;border-radius:4px;color:#8fa3bd;
+    font:12px/1 Consolas,"Microsoft YaHei",monospace;padding:5px 12px;cursor:pointer}
+  #roomTabs button.on{background:#2a3450;border-color:#7a6a30;color:#ffd76a}
+  #roomBody{display:flex;gap:10px;min-height:0}
+  #roomPreview{flex:0 0 auto;background:#141b16;border:1px solid #2c3a4e;border-radius:4px;image-rendering:pixelated}
+  #roomGrid{flex:1;overflow-y:auto;max-height:58vh;display:grid;grid-template-columns:repeat(6,50px);gap:5px;align-content:start;padding-right:4px}
   .srow{
     display:flex;align-items:center;gap:8px;padding:5px 6px;
     border-bottom:1px solid #232c3e;
@@ -877,6 +891,23 @@
       <div id="wardrobeGrid"></div>
     </div>
     <div id="wardrobeFoot">点击试穿，再点一次脱下 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- 装修样板面板 -->
+<div id="room">
+  <div id="roomMask"></div>
+  <div id="roomPanel" class="panel">
+    <div id="roomHead">装修样板 <span id="roomInfo"></span></div>
+    <div id="roomTabs">
+      <button class="tab on" data-rtab="wall">墙纸</button>
+      <button class="tab" data-rtab="floor">地板</button>
+    </div>
+    <div id="roomBody">
+      <canvas id="roomPreview" width="384" height="256"></canvas>
+      <div id="roomGrid"></div>
+    </div>
+    <div id="roomFoot">点击已拥有的墙纸 / 地板应用 · Esc 关闭</div>
   </div>
 </div>
 

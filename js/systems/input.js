@@ -58,7 +58,7 @@ window.addEventListener('keydown', e=>{
   /* 成就墙 / 年度总结 / 好感总览 / 全屏地图：只有 Esc 能动，其它键一律忽略（打开时世界冻结） */
   if((achOpen || annualOpen || frendOpen || bigmapOpen) && k !== 'escape') return;
   /* 第 30 轮：J 进入 / 离开矿井（有面板或建造 / 钓鱼时忽略） */
-  if(k === 'j' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
+  if(k === 'j' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !roomOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
     toggleMine(); ensureAudio(); return;
   }
   /* H：装修模式（选中家具后左键放置 / 右键拆除） */
@@ -71,12 +71,15 @@ window.addEventListener('keydown', e=>{
   if(bundleOpen && k !== 'escape') return;
   /* 衣柜面板：只允许 Esc 关闭 */
   if(wardrobeOpen && k !== 'escape') return;
+  /* 装修样板：只允许 Esc 关闭 */
+  if(roomOpen && k !== 'escape') return;
   /* 背包：Tab / I 打开，Esc 关闭 */
   if(k === 'tab' || k === 'i'){ if(!e.repeat) togglePack(); ensureAudio(); return; }
   if(k === 'escape'){
     if(decorMode){ toggleDecor(false); return; }
     if(bundleOpen){ bundleClosePanel(); return; }
     if(wardrobeOpen){ wardrobeClosePanel(); return; }
+    if(roomOpen){ roomClosePanel(); return; }
     if(pauseMenuOpen){ togglePauseMenu(false); return; }   /* 第 29 轮：先关暂停菜单 */
     if(endingOpen){ endingClosePanel(); return; }
     if(ratingOpen){ ratingClosePanel(); return; }
@@ -105,6 +108,7 @@ window.addEventListener('keydown', e=>{
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
   if(bundleOpen) return;            /* 收集包面板：其它按键一律忽略 */
   if(wardrobeOpen) return;          /* 衣柜面板：其它按键一律忽略 */
+  if(roomOpen) return;              /* 装修样板：其它按键一律忽略 */
   if(chestOpen) return;             /* 木箱打开时其它按键一律忽略 */
   if(makerOpen) return;             /* 加工台打开时其它按键一律忽略 */
   if(sleepFx.phase !== 'none') return;   /* 睡觉/昏睡中：其它按键一律忽略 */
@@ -141,6 +145,7 @@ window.addEventListener('keydown', e=>{
       else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
       else if(typeof bundleCenterNear === 'function' && bundleCenterNear()) toggleBundlePanel();  /* 第 32 轮：社区中心 */
       else if(typeof wardrobeNear === 'function' && wardrobeNear()) toggleWardrobe();             /* 第 32 轮：衣柜 */
+      else if(typeof roomPlannerNear === 'function' && roomPlannerNear()) toggleRoom();          /* 第 32 轮：装修样板 */
       else if(fixtureNear()) interactFixture(fixtureNear());   /* 第 25 轮：看装饰 / 睡 bed */
       else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
@@ -196,7 +201,7 @@ window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; h
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
-     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen) return;
+     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen) return;
   if(e.button === 0) mouseHeld = false;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */

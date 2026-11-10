@@ -378,10 +378,13 @@ function drawUI(g){
     drawText(g, String(i + 1), x + 3, hb.y + 3, 1, on ? CONFIG.COLORS.hudAccent : '#63758f');
     if(s){
       const d = itemDef(s.id);
-      g.textBaseline = 'middle'; g.textAlign = 'center';
-      g.font = '24px ' + FONT_EMOJI;
-      g.fillText(d ? d.icon : '', x + hb.cell/2, hb.y + hb.h/2 - 1);
-      g.textBaseline = 'top'; g.textAlign = 'left';
+      const drew = typeof drawItemIconTo === 'function' && drawItemIconTo(g, s.id, x + (hb.cell - 32) / 2, hb.y + 6, 32);
+      if(!drew){
+        g.textBaseline = 'middle'; g.textAlign = 'center';
+        g.font = '24px ' + FONT_EMOJI;
+        g.fillText(d ? d.icon : '', x + hb.cell/2, hb.y + hb.h/2 - 1);
+        g.textBaseline = 'top'; g.textAlign = 'left';
+      }
       if(d && d.id === 'can'){                    /* 水壶显示余量 */
         g.font = '11px ' + FONT_EMOJI;
         g.fillStyle = canWater > 0 ? CONFIG.COLORS.hudText : '#ff8a7a';

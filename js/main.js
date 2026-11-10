@@ -20,6 +20,7 @@ import './systems/camera.js';
 import './audio.js';
 import './systems/options.js';
 import './ui/feedback.js';
+import './ui/item-icons.js';
 import './systems/crops.js';
 import './systems/soil.js';
 import './systems/tools.js';

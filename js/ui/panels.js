@@ -211,7 +211,7 @@ function refreshPackGrid(){
     if(!c || typeof c.querySelector !== 'function') continue;
     const s = inv[i], d = s ? itemDef(s.id) : null;
     const ic = c.querySelector('.ic'), n = c.querySelector('.n');
-    if(ic) ic.textContent = d ? d.icon : '';
+    if(ic && !(typeof paintItemIcon === 'function' && d && paintItemIcon(ic, s.id, 32))) ic.textContent = d ? d.icon : '';
     if(n)  n.textContent  = (s && s.n > 1) ? String(s.n) : '';
   }
 }
@@ -403,7 +403,7 @@ function refreshChestGrid(){
       const s = arr ? arr[i] : null;
       const d = s ? itemDef(s.id) : null;
       const ic = c.querySelector('.ic'), n = c.querySelector('.n');
-      if(ic) ic.textContent = d ? d.icon : '';
+      if(ic && !(typeof paintItemIcon === 'function' && s && paintItemIcon(ic, s.id, 32))) ic.textContent = d ? d.icon : '';
       if(n)  n.textContent  = (s && s.n > 1) ? String(s.n) : '';
     }
   };

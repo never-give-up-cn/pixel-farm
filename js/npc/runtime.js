@@ -15,8 +15,10 @@ function npcRuntimeClear(){
 function npcRoomIdAt(x, y){
   const tx = Math.floor(x/TILE), ty = Math.floor(y/TILE);
   const C = CONFIG.TOWN;
-  for(const b of C.LIST)
-    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b.id;
+  for(const b of C.LIST){
+    const row = b.row || C.ROOM_ROW;
+    if(tx >= b.x && tx < b.x + b.w && ty >= row && ty < row + C.ROOM_H) return b.id;
+  }
   return null;
 }
 /* 门的三个落脚点：门外侧（街上）+ 门内侧（门格）+ 再往屋里一格
@@ -24,16 +26,18 @@ function npcRoomIdAt(x, y){
 function npcDoorPoints(bid){
   const b = CONFIG.TOWN.LIST.find(x => x.id === bid);
   if(!b) return null;
-  const dx = b.x + CONFIG.TOWN.DOOR_DX;
-  let iy = CONFIG.TOWN.ROOM_ROW + 1;
+  const C = CONFIG.TOWN;
+  const row = b.row || C.ROOM_ROW;
+  const dx = b.x + C.DOOR_DX;
+  let iy = row + 1;
   for(let k=0;k<3;k++){
-    const y = CONFIG.TOWN.ROOM_ROW + 1 + k;
+    const y = row + 1 + k;
     iy = y;
     if(!isSolid(dx, y)) break;
   }
-  return {inside:{x:(dx + 0.5)*TILE, y:(CONFIG.TOWN.ROOM_ROW + 0.5)*TILE},
+  return {inside:{x:(dx + 0.5)*TILE, y:(row + 0.5)*TILE},
           inner:{x:(dx + 0.5)*TILE, y:(iy + 0.5)*TILE},
-          outside:{x:(dx + 0.5)*TILE, y:(CONFIG.TOWN.STREET_ROW + 0.5)*TILE}};
+          outside:{x:(dx + 0.5)*TILE, y:(row - 0.5)*TILE}};
 }
 /* 逻辑落脚点（像素坐标）：日程 / 节日赶集 / 来访农场都算进来 */
 function npcLogicalTarget(d){
@@ -42,13 +46,28 @@ function npcLogicalTarget(d){
   return {x:(w.x + 0.5)*TILE, y:(w.y + 0.5)*TILE, tx:w.x, ty:w.y,
           at:w.at, label:w.label, type:w.type, key:w.x + ',' + w.y};
 }
-/* 寻路：起点 / 终点在不同房子里 → 必须走门（门 → 街 → 门） */
+/* 寻路：起点 / 终点在不同房子里 → 必须走门（门 → 街 → 门）
+ * 四排住宅之间还要沿南北主路走，不能斜穿房子。 */
 function buildNpcPath(sx, sy, tx, ty){
+  const C = CONFIG.TOWN;
   const sBid = npcRoomIdAt(sx, sy), eBid = npcRoomIdAt(tx, ty);
   const path = [];
   if(sBid && sBid !== eBid){
     const dp = npcDoorPoints(sBid);
     if(dp){ path.push(dp.inner); path.push(dp.inside); path.push(dp.outside); }
+  }
+  const sRow = sBid ? ((CONFIG.TOWN.LIST.find(b => b.id === sBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(sy/TILE);
+  const eRow = eBid ? ((CONFIG.TOWN.LIST.find(b => b.id === eBid) || {}).row || C.ROOM_ROW) - 1 : Math.floor(ty/TILE);
+  const streets = C.STREET_ROWS || [C.STREET_ROW];
+  const isStreet = (y) => streets.indexOf(y) >= 0;
+  let via1 = isStreet(sRow) ? sRow : null;
+  let via2 = isStreet(eRow) ? eRow : null;
+  if(via1 && !via2 && Math.floor(ty/TILE) < C.ROW) via2 = streets[0];
+  if(!via1 && via2 && Math.floor(sy/TILE) < C.ROW) via1 = streets[0];
+  if(via1 !== null && via2 !== null && via1 !== via2){
+    const cx = (C.CONNECTOR_X + 0.5) * TILE;
+    path.push({x:cx, y:(via1 + 0.5)*TILE});
+    path.push({x:cx, y:(via2 + 0.5)*TILE});
   }
   if(eBid && eBid !== sBid){
     const dp = npcDoorPoints(eBid);

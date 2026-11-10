@@ -110,6 +110,48 @@ function migrate(oldSave){
        * 老档一律按默认值：100% / 关 / 隐藏 / 隐藏 / 关，和升级前观感一致。 */
       if(!d.opt || typeof d.opt !== 'object') d.opt = {s:100, m:0, f:0, g:0, l:0};
     }
+    if(v < 16){
+      /* v15 → v16：地图从 64×64 扩到 128×104，城镇改成四排住宅。
+       * 农场从 (26,26) 移到 (58,24)：旧农场的玩家 / 作物 / 建筑 / 地图 diff / 石板路
+       * 统一平移 32 格、上移 2 格；旧城镇改动丢弃（城镇本身重新生成）。 */
+      const T = CONFIG.TILE;
+      const oldFarmX = 26, oldFarmY = 26;
+      const newFarmX = Math.floor((CONFIG.MAP_W - CONFIG.GEN.FARM_W) / 2);
+      const newFarmY = CONFIG.GEN.FARM_Y;
+      const dx = newFarmX - oldFarmX, dy = newFarmY - oldFarmY;
+      const nearFarm = (x, y) => x >= 18 && x < 46 && y >= 18 && y < 40;
+      if(d.player && Number.isFinite(d.player.x) && Number.isFinite(d.player.y)){
+        const px = d.player.x / T, py = d.player.y / T;
+        if(nearFarm(px, py)){ d.player.x += dx * T; d.player.y += dy * T; }
+        else { d.player.x = (newFarmX + 6.5) * T; d.player.y = (newFarmY + 6.5) * T; }
+      }
+      if(Array.isArray(d.crops)){
+        d.crops = d.crops.filter(c => {
+          if(!c || !nearFarm(c.x, c.y)) return false;
+          c.x += dx; c.y += dy; return true;
+        });
+      }
+      if(Array.isArray(d.buildings)){
+        d.buildings = d.buildings.filter(b => {
+          if(!b || !nearFarm(b.x, b.y)) return false;
+          b.x += dx; b.y += dy; return true;
+        });
+      }
+      if(d.map && typeof d.map === 'object'){
+        const m = {};
+        for(const k in d.map){
+          const p = k.split(','), x = +p[0], y = +p[1];
+          if(nearFarm(x, y)) m[(x + dx) + ',' + (y + dy)] = d.map[k];
+        }
+        d.map = m;
+      }
+      if(Array.isArray(d.roads)){
+        d.roads = d.roads.map(s => {
+          const p = String(s).split(','), x = +p[0], y = +p[1];
+          return nearFarm(x, y) ? ((x + dx) + ',' + (y + dy)) : null;
+        }).filter(Boolean);
+      }
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){

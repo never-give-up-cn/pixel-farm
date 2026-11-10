@@ -70,14 +70,15 @@ const CONFIG = {
 
   /* 世界 */
   TILE: 32,                 // 每格像素
-  MAP_W: 64,                // 地图宽（格）
-  MAP_H: 64,                // 地图高（格）
+  MAP_W: 128,               // 地图宽（格）
+  MAP_H: 104,               // 地图高（格）
   SEED: 20240613,           // 随机种子（同种子 → 同一张地图）
 
   /* 地图生成 */
   GEN: {
     FARM_W: 12,             // 中央空地宽（格）
     FARM_H: 12,             // 中央空地高（格）
+    FARM_Y: 24,             // 农场固定在北侧，南边留给城镇住宅区
     HOUSE_W: 3, HOUSE_H: 2, // 小屋尺寸（格）
     SHOP_W: 2,  SHOP_H: 2,  // 商店摊尺寸（格）
     WATER_LEVEL: 0.66,      // 噪声高于此值 → 水
@@ -236,7 +237,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名（多槽位时槽 1 仍用这个键，不能改名）
-    VERSION: 15,              // 存档版本号（第 29 轮 +1：opt 设置项）
+    VERSION: 16,              // 存档版本号（第 34 轮 +1：大地图 / 四排住宅）
     SLOTS: 3,                 // 存档槽位数量（槽 1 = KEY，槽 2/3 = KEY + '_s2' / '_s3'）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
@@ -660,11 +661,14 @@ const CONFIG = {
    * 原则 C：玩家的「扑空」必须可解释 → 门口的牌子写清楚他去哪了
    */
   TOWN: {
-    ROW: 38, END_ROW: 62,     // 城镇带（38~62 行；63 行是南边的水岸）
-    STREET_ROW: 42,           // 街（石板路）在第 42 行
+    ROW: 38, END_ROW: 96,     // 城镇带（38~96 行；南边留出四排住宅）
+    STREET_ROW: 42,           // 第一条街（探索 / 商店 / 广场）
+    STREET_ROWS: [42, 56, 70, 84],
+    ROOM_ROWS: [43, 57, 71, 85],
+    CONNECTOR_X: 58,          // 南北向主路：贯穿四排住宅
     /* 第 26 轮：墙只有 1 格厚 —— 房子直接贴着街，屋顶不再是地图上的实体格
      *   43 行 = 后墙（中间那一格是门）/ 44~51 行 = 木地板 / 52 行 = 前墙 */
-    ROOM_ROW: 43,             // 室内第一行 = 后墙
+    ROOM_ROW: 43,             // 默认室内第一行（每栋房子可用 row 覆盖）
     ROOM_H: 10,               // 室内共 10 行（后墙 1 + 地板 8 + 前墙 1）
     DOOR_DX: 5,               // 门在房子里的横向偏移
     ARRIVE_DY: 1,             // 从大门进屋后落在室内第几行（门正下方）
@@ -733,6 +737,105 @@ const CONFIG = {
       signOpen:'#5fd07a', signRest:'#8a8a8a', signAway:'#ffd76a',
       chestBox:'#8a5a2b', chestBoxDark:'#5b3a1d', chestLock:'#e2c14a'
     }
+  },
+
+  /* 城镇住宅区：4 排 × 8 个地块，按星露谷的住户关系分配。
+   * 一栋房子可以住 1~4 人；门牌 / 室内家具 / 屋顶 / NPC 寻路都按 b.row 定位。 */
+  TOWN_PLAN: function buildTownPlan(){
+    const C = CONFIG.TOWN;
+    const cols = [4, 18, 32, 46, 60, 74, 88, 102];
+    const rows = C.ROOM_ROWS;
+    const streets = C.STREET_ROWS;
+
+    function homeProps(workTypes){
+      const p = [
+        { dx: 2, dy: 8, type: 'bed', solid: 1, interact: 'bed' },
+        { dx: 9, dy: 7, type: 'table', solid: 1, interact: 'home' },
+        { dx: 10, dy: 2, type: 'stove', solid: 1, interact: 'cook' },
+        { dx: 6, dy: 2, type: 'chest', solid: 1, interact: 'chest' },
+        { dx: 3, dy: 2, type: 'shelf' },
+        { dx: 5, dy: 5, type: 'rug', flat: 1 }
+      ];
+      const works = [].concat(workTypes || []);
+      const spots = [[9, 4], [7, 4], [9, 6], [7, 6], [10, 4], [8, 4]];
+      works.forEach((type, i) => {
+        const p0 = spots[i % spots.length];
+        p.push({ dx: p0[0], dy: p0[1], type: type, solid: 1, interact: 'work' });
+      });
+      return p;
+    }
+
+    function wanderFor(b){
+      const street = (b.row || C.ROOM_ROW) - 1;
+      return { chance: 0.12, spots: [
+        { x: b.x + 2, y: street, label: '自家门口' },
+        { x: b.x + 8, y: street, label: '街上' }
+      ] };
+    }
+
+    /* [id, 门牌, 主住户, 同住者, 排, 列, 工作家具] */
+    const plan = [
+      ['shop',          '杂货店',       'aunt',          ['aunt'],                                  0, 0, null],
+      ['home_aunt',     '老板娘的家',   'aunt',          ['aunt'],                                  0, 1, null],
+      ['home_carpenter','老木匠家',     'carpenter',     ['carpenter'],                             0, 2, 'bench'],
+      ['home_girl',     '女孩家',       'girl',          ['girl'],                                  0, 3, 'flowerstand'],
+      ['home_pierre',   '皮埃尔家',     'pierre',        ['pierre','caroline','abigail'],          0, 4, 'counter'],
+      ['home_robin',    '罗宾家',       'robin',         ['robin','demetrius','maru','sebastian'], 0, 5, ['bench','desk','desk','desk']],
+      ['home_jodi',     '乔迪家',       'jodi',          ['jodi','kent','sam','vincent'],          0, 6, null],
+      ['home_emily',    '艾米丽家',     'emily',         ['emily','haley'],                         0, 7, 'desk'],
+      ['home_marnie',   '玛妮牧场',     'marnie',        ['marnie','shane','jas'],                 1, 0, ['counter','counter']],
+      ['home_evelyn',   '河景屋',       'evelyn',        ['evelyn','george','alex'],               1, 1, null],
+      ['home_pam',      '拖车',         'pam',           ['pam','penny'],                           1, 2, null],
+      ['home_leah',     '莉亚小屋',     'leah',          ['leah'],                                  1, 3, 'desk'],
+      ['home_elliott',  '艾利欧特小屋', 'elliott',       ['elliott'],                               1, 4, 'desk'],
+      ['home_harvey',   '哈维诊所',     'harvey',        ['harvey'],                                1, 5, 'desk'],
+      ['home_clint',    '铁匠铺',       'clint',         ['clint'],                                 1, 6, 'bench'],
+      ['home_willy',    '鱼店',         'willy',         ['willy'],                                 1, 7, 'counter'],
+      ['home_linus',    '莱纳斯的帐篷', 'linus',         ['linus'],                                 2, 0, null],
+      ['home_wizard',   '法师塔',       'wizard',        ['wizard'],                                2, 1, 'desk'],
+      ['home_lewis',    '镇长宅邸',     'lewis',         ['lewis','governor'],                      2, 2, 'desk'],
+      ['home_gus',      '星之果实酒馆', 'gus',           ['gus'],                                   2, 3, ['counter','counter','counter']],
+      ['home_sandy',    '绿洲',         'sandy',         ['sandy','welwick'],                       2, 4, ['counter','desk']],
+      ['home_dwarf',    '矮人矿屋',     'dwarf',         ['dwarf'],                                 2, 5, 'counter'],
+      ['home_krobus',   '下水道小屋',   'krobus',        ['krobus'],                                2, 6, 'counter'],
+      ['home_leo',      '姜岛小屋',     'leo',           ['leo','birdie','professor_snail'],        2, 7, 'desk'],
+      ['home_gunther',  '博物馆',       'gunther',       ['gunther'],                               3, 0, ['desk','desk','desk','desk']],
+      ['home_guild',    '冒险家公会',   'marlon',        ['marlon','gil'],                          3, 1, ['desk','desk']],
+      ['home_morris',   'Joja 超市',    'morris',        ['morris'],                                3, 2, ['counter','counter']],
+      ['home_casino',   '赌场',         'mr_qi',         ['mr_qi','bouncer','henchman'],            3, 3, ['counter','counter','counter']],
+      ['home_beach',    '海滩小屋',     'old_mariner',   ['old_mariner'],                           3, 4, null]
+    ];
+
+    C.LIST = plan.map(row => {
+      const id = row[0], name = row[1], npc = row[2], residents = row[3];
+      const rowIdx = row[4], colIdx = row[5], work = row[6];
+      const b = {
+        id: id,
+        name: name,
+        kind: id === 'shop' ? 'shop' : 'house',
+        npc: npc,
+        residents: residents.slice(),
+        x: cols[colIdx],
+        w: 12,
+        row: rows[rowIdx],
+        hours: id === 'shop' ? { from: 10, to: 19 } : { from: 19, to: 30 },
+        sign: name,
+        props: id === 'shop'
+          ? [
+              { dx: 5, dy: 4, type: 'counter', solid: 1, interact: 'work' },
+              { dx: 2, dy: 2, type: 'shelf' },
+              { dx: 9, dy: 2, type: 'shelf' },
+              { dx: 10, dy: 7, type: 'barrel' },
+              { dx: 5, dy: 7, type: 'rug', flat: 1 }
+            ]
+          : homeProps(work)
+      };
+      b.wander = id === 'shop'
+        ? { chance: 0.26, spots: [{ x: 13, y: 42, label: '街角' }, { x: 18, y: 41, label: '广场' }] }
+        : wanderFor(b);
+      return b;
+    });
+    return C.LIST;
   },
 
   /* ---------- 第 25 轮：NPC 日程（slot 类型）/ 室内互动 / 箱子战利品 ----------
@@ -1193,6 +1296,9 @@ const CONFIG = {
     // 牛棚红墙 + 灰屋顶 + 白边
   }
 };
+
+/* 城镇住宅区要在 CONFIG 初始化完成后生成（builder 内部引用 CONFIG.TOWN） */
+CONFIG.TOWN_PLAN();
 
 
 
@@ -1881,6 +1987,128 @@ const CONFIG = {
     k++;
   }
   CONFIG.SPECIAL_VILLAGERS = k;
+})();
+
+/* 第 34 轮：按星露谷的住户 / 职业 / 作息给 49 位居民分配住宅与工作地点。
+ * 住宅来自 CONFIG.TOWN.LIST（4 排 × 8 个地块，共 29 栋）；
+ * 作息由 profile 生成，所有时段 6:00~次日 6:00 连续覆盖。 */
+(function assignNpcHomesAndJobs(){
+  const PLAN = {
+    aunt:        { home:'home_aunt',     work:'shop',           at:'counter', from:10, to:19, job:'杂货店老板', profile:'shop' },
+    carpenter:   { home:'home_carpenter',work:'home_carpenter', at:'bench',   from:7,  to:14, job:'木匠',       profile:'early' },
+    girl:        { home:'home_girl',     work:'home_girl',      at:'flowerstand', from:14, to:22, job:'花贩',   profile:'late' },
+
+    abigail:     { home:'home_pierre',   job:'冒险者',   profile:'social' },
+    alex:        { home:'home_evelyn',   job:'运动员',   profile:'social' },
+    elliott:     { home:'home_elliott',  work:'home_elliott', at:'desk', from:9, to:17, job:'作家',     profile:'worker' },
+    emily:       { home:'home_emily',    work:'home_gus',     at:'counter', from:17, to:24, job:'裁缝 / 酒馆帮工', profile:'night' },
+    haley:       { home:'home_emily',    work:'home_emily',   at:'desk', from:10, to:16, job:'摄影师',   profile:'worker' },
+    harvey:      { home:'home_harvey',   work:'home_harvey',  at:'desk', from:9, to:17, job:'医生',     profile:'worker' },
+    leah:        { home:'home_leah',     work:'home_leah',    at:'desk', from:9, to:17, job:'艺术家',   profile:'worker' },
+    maru:        { home:'home_robin',    work:'home_robin',   at:'desk', from:9, to:17, job:'发明家',   profile:'worker' },
+    penny:       { home:'home_pam',      work:'home_gunther', at:'desk', from:9, to:14, job:'教师',     profile:'child' },
+    sam:         { home:'home_jodi',     work:'home_morris',  at:'counter', from:9, to:17, job:'Joja 店员 / 音乐人', profile:'worker' },
+    sebastian:   { home:'home_robin',    work:'home_robin',   at:'desk', from:13, to:17, job:'程序员',   profile:'worker' },
+    shane:       { home:'home_marnie',   work:'home_marnie',  at:'counter', from:8, to:16, job:'牧场工', profile:'worker' },
+    caroline:    { home:'home_pierre',   job:'主妇',     profile:'homebody' },
+    clint:       { home:'home_clint',    work:'home_clint',   at:'bench', from:9, to:17, job:'铁匠',     profile:'worker' },
+    demetrius:   { home:'home_robin',    work:'home_robin',   at:'desk', from:9, to:17, job:'科学家',   profile:'worker' },
+    dwarf:       { home:'home_dwarf',    work:'home_dwarf',   at:'counter', from:9, to:17, job:'商人', profile:'worker' },
+    evelyn:      { home:'home_evelyn',   job:'祖母',     profile:'retiree' },
+    george:      { home:'home_evelyn',   job:'退休',     profile:'retiree' },
+    gus:         { home:'home_gus',      work:'home_gus',     at:'counter', from:10, to:24, job:'酒馆老板', profile:'saloon' },
+    jas:         { home:'home_marnie',   work:'home_gunther', at:'desk', from:9, to:14, job:'小孩',     profile:'child' },
+    jodi:        { home:'home_jodi',     job:'主妇',     profile:'homebody' },
+    kent:        { home:'home_jodi',     job:'士兵',     profile:'social' },
+    krobus:      { home:'home_krobus',   work:'home_krobus',  at:'counter', from:9, to:17, job:'影子商人', profile:'worker' },
+    leo:         { home:'home_leo',      job:'小孩',     profile:'child' },
+    lewis:       { home:'home_lewis',    work:'home_lewis',   at:'desk', from:9, to:17, job:'镇长',     profile:'worker' },
+    linus:       { home:'home_linus',    job:'流浪者',   profile:'wanderer' },
+    marnie:      { home:'home_marnie',   work:'home_marnie',  at:'counter', from:9, to:16, job:'牧场主', profile:'worker' },
+    pam:         { home:'home_pam',      work:'home_gus',     at:'counter', from:17, to:24, job:'司机 / 酒馆常客', profile:'night' },
+    pierre:      { home:'home_pierre',   work:'home_pierre',  at:'counter', from:9, to:17, job:'店主', profile:'worker' },
+    robin:       { home:'home_robin',    work:'home_robin',   at:'bench', from:9, to:17, job:'木匠',     profile:'worker' },
+    sandy:       { home:'home_sandy',    work:'home_sandy',   at:'counter', from:9, to:17, job:'绿洲老板', profile:'worker' },
+    vincent:     { home:'home_jodi',     work:'home_gunther', at:'desk', from:9, to:14, job:'小孩',     profile:'child' },
+    willy:       { home:'home_willy',    work:'home_willy',   at:'counter', from:9, to:17, job:'渔夫', profile:'worker' },
+    wizard:      { home:'home_wizard',   work:'home_wizard',  at:'desk', from:9, to:17, job:'法师',     profile:'worker' },
+
+    gunther:     { home:'home_gunther',  work:'home_gunther', at:'desk', from:9, to:17, job:'博物馆馆长', profile:'worker' },
+    governor:    { home:'home_lewis',    job:'州长',     profile:'visitor' },
+    welwick:     { home:'home_sandy',    work:'home_sandy',   at:'desk', from:10, to:16, job:'算命师', profile:'worker' },
+    marlon:      { home:'home_guild',    work:'home_guild',   at:'desk', from:9, to:17, job:'冒险家', profile:'worker' },
+    gil:         { home:'home_guild',    work:'home_guild',   at:'desk', from:9, to:17, job:'冒险家', profile:'worker' },
+    morris:      { home:'home_morris',   work:'home_morris',  at:'counter', from:9, to:17, job:'Joja 经理', profile:'worker' },
+    bouncer:     { home:'home_casino',   work:'home_casino',  at:'counter', from:17, to:24, job:'保镖', profile:'night' },
+    henchman:    { home:'home_casino',   work:'home_casino',  at:'counter', from:10, to:18, job:'手下', profile:'worker' },
+    birdie:      { home:'home_leo',      job:'姜岛居民', profile:'homebody' },
+    professor_snail: { home:'home_leo',  work:'home_leo',     at:'desk', from:9, to:17, job:'教授', profile:'worker' },
+    old_mariner: { home:'home_beach',    job:'幽灵水手', profile:'wanderer' },
+    mr_qi:       { home:'home_casino',   work:'home_casino',  at:'counter', from:10, to:24, job:'神秘商人', profile:'saloon' }
+  };
+
+  function homeBuilding(id){ return CONFIG.TOWN.LIST.find(b => b.id === id) || null; }
+  function homeArea(id){
+    const b = homeBuilding(id);
+    const street = b ? ((b.row || CONFIG.TOWN.ROOM_ROW) - 1) : CONFIG.TOWN.STREET_ROW;
+    const x = b ? Math.max(2, b.x - 4) : 4;
+    return { x: x, y: street, w: 24, h: 1, label: (b ? b.name : '街上') + '附近' };
+  }
+
+  function makeSchedule(p){
+    const area = homeArea(p.home);
+    const home = (from, to, at) => ({ from: from, to: to, type: 'home', at: at || 'table' });
+    const work = (from, to) => ({ from: from, to: to, type: 'work', at: p.at || 'desk' });
+    const wander = (from, to) => ({ from: from, to: to, type: 'wander', area: area });
+    const sleep = (from) => ({ from: from, to: 30, type: 'sleep', at: 'bed' });
+
+    switch(p.profile){
+      case 'shop':    return [home(6,10), work(10,19), home(19,22), sleep(22)];
+      case 'early':   return [home(6,7), work(7,14), wander(14,21), home(21,22), sleep(22)];
+      case 'late':    return [home(6,9), wander(9,13), home(13,14), work(14,22), home(22,26), sleep(26)];
+      case 'night':   return [home(6,17), work(17,24), home(24,26), sleep(26)];
+      case 'saloon':  return [home(6,10), work(10,24), home(24,26), sleep(26)];
+      case 'child':
+        return [home(6,8), wander(8,9), p.work ? work(9,14) : wander(9,14), wander(14,18), home(18,21), sleep(21)];
+      case 'retiree': return [home(6,20), sleep(20)];
+      case 'wanderer':return [home(6,8), wander(8,21), home(21,23), sleep(23)];
+      case 'visitor': return [home(6,22), sleep(22)];
+      case 'homebody':return [home(6,22), sleep(22)];
+      case 'social':  return [home(6,8), wander(8,21), home(21,22), sleep(22)];
+      default: {
+        const wf = p.from || 9, wt = p.to || 17;
+        if(wt >= 22) return [home(6,wf), work(wf,wt), home(wt, wt + 2), sleep(wt + 2)];
+        const out = [];
+        if(wf <= 9){
+          out.push(home(6,8));
+          if(wf > 8) out.push(wander(8,wf));
+        } else {
+          out.push(home(6,wf));
+        }
+        out.push(work(wf,wt));
+        out.push(wander(wt,21));
+        out.push(home(21,22));
+        out.push(sleep(22));
+        return out;
+      }
+    }
+  }
+
+  for(const id in PLAN){
+    const p = PLAN[id];
+    const d = CONFIG.NPC.LIST.find(x => x.id === id);
+    if(!d) continue;
+    d.home = p.home;
+    d.work = p.work || null;
+    d.job = p.job || d.job || '居民';
+    const sched = makeSchedule(p);
+    CONFIG.NPC_SCHED.LIST[id] = {
+      open: { from: p.from || 9, to: p.to || 17 },
+      house: p.home,
+      work: p.work || p.home,
+      sched: sched
+    };
+  }
 })();
 
 /* 第 33 轮：生日沿用 anim 数据（每季 1~28 日）。 */

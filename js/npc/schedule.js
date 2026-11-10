@@ -56,7 +56,17 @@ function npcFixtureSpot(d, type){
   for(const id of order){
     const def = buildingDef(id);
     if(!def) continue;
-    for(const f of def.fixtures) if(f.type === type) return f;
+    const matches = def.fixtures.filter(f => f.type === type);
+    if(!matches.length) continue;
+    if(matches.length === 1) return matches[0];
+    /* 同一个工作点有多件同类家具（柜台 / 书桌）→ 按同工种列表分配，避免叠在一起 */
+    const workers = CONFIG.NPC.LIST.filter(x => {
+      const sx = npcSched(x);
+      return sx && sx.work === id && sx.sched.some(sl => sl.type === 'work' && sl.at === type);
+    });
+    let idx = workers.findIndex(x => x.id === d.id);
+    if(idx < 0) idx = 0;
+    return matches[idx % matches.length];
   }
   for(const def of BUILDING_DEFS)                              /* 兜底：全镇找一件 */
     for(const f of def.fixtures) if(f.type === type) return f;
@@ -152,8 +162,9 @@ function npcCurrentState(d, day, hour){
   /* home / sleep / work：站在某件家具上 */
   const f = npcFixtureSpot(d, slot.at);
   if(f){ st.x = f.tx; st.y = f.ty; }
-  st.at = (slot.type === 'work' && slot.at === 'counter') ? 'shop' : 'home';
-  st.label = (slot.type === 'sleep') ? '床上' : (st.at === 'shop' ? '店里' : '家');
+  const isWork = slot.type === 'work';
+  st.at = isWork ? (slot.at === 'counter' ? 'shop' : 'work') : 'home';
+  st.label = (slot.type === 'sleep') ? '床上' : (isWork ? '工作' : (st.at === 'shop' ? '店里' : '家'));
   return st;
 }
 /* 这个 NPC 是不是就在玩家面前睡着了（叫不醒） */

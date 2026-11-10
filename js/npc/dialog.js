@@ -113,7 +113,7 @@ function renderNpcDialog(){
     npcIcon.textContent = d.icon;
   }
 }
-  if(npcName)   npcName.textContent   = d.name;
+  if(npcName)   npcName.textContent   = d.name + (d.job ? ' · ' + d.job : '');
   if(npcTierEl) npcTierEl.textContent = tier.name;
   if(npcAffEl)  npcAffEl.textContent  = '好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX;
   if(npcBarFill) npcBarFill.style.width = (aff / CONFIG.NPC.AFF_MAX * 100).toFixed(1) + '%';

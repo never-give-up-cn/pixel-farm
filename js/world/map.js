@@ -182,14 +182,14 @@ if(bigmapMaskEl) bigmapMaskEl.addEventListener('mousedown', e=>{ e.preventDefaul
 /* 中央空地 + 建筑位置（全部由 CONFIG 推导） */
 const FARM = {
   x: Math.floor((MAP_W - CONFIG.GEN.FARM_W) / 2),
-  y: Math.floor((MAP_H - CONFIG.GEN.FARM_H) / 2),
+  y: (CONFIG.GEN.FARM_Y || Math.floor((MAP_H - CONFIG.GEN.FARM_H) / 2)),
   w: CONFIG.GEN.FARM_W, h: CONFIG.GEN.FARM_H
 };
 const HOUSE_POS = {x:FARM.x + 1, y:FARM.y, w:CONFIG.GEN.HOUSE_W, h:CONFIG.GEN.HOUSE_H};
 /* 第 24 轮：商店从「农场里的摊位」搬到了镇上的杂货店（能走进去）
  * SHOP_POS 现在指的是镇上杂货店的外框；真正交易的地方在店内柜台（townCounterSpot） */
 const TOWN_SHOP = CONFIG.TOWN.LIST.find(b => b.kind === 'shop');
-const SHOP_POS  = {x:TOWN_SHOP.x, y:CONFIG.TOWN.ROOM_ROW, w:TOWN_SHOP.w, h:CONFIG.TOWN.ROOM_H};
+const SHOP_POS  = {x:TOWN_SHOP.x, y:(TOWN_SHOP.row || CONFIG.TOWN.ROOM_ROW), w:TOWN_SHOP.w, h:CONFIG.TOWN.ROOM_H};
 /* 委托板（第 16 轮）：放在商店西侧 3 格，离商店的交互半径不重叠 */
 const QUEST_BOARD = {x:SHOP_POS.x - 3, y:SHOP_POS.y, w:1, h:1};
 const SPAWN = {x:FARM.x + Math.floor(FARM.w/2), y:FARM.y + Math.floor(FARM.h/2) + 2};
@@ -236,19 +236,18 @@ function fbm(x,y,seed){
  * 镇子在地图南边（38~62 行），从农场的南边直接走下去就是街。 */
 function genTown(){
   const C = CONFIG.TOWN;
-  /* 1) 整条城镇带清空（38~62 行）：草地 + 街 + 房子
-   * 第 26 轮：房子变矮了（墙只有 1 格厚），所以整条带子都要清干净，
-   * 不然南边会留下一片随机长出来的树 */
+  /* 1) 整条城镇带清空，铺四排横向街道 + 一条南北主路 */
   for(let y=C.ROW;y<=C.END_ROW;y++)
     for(let x=1;x<MAP_W-1;x++) map[y*MAP_W+x] = T.GRASS;
-  /* 竖着下镇的路：走农场东侧（x = 36~37），避开节日广场的 x 范围（29~35）
-   * —— 广场必须是干净草地，不然节日装饰放不下去（第 17 轮的回归） */
-  for(let x=FARM.x+10;x<=FARM.x+11;x++)
-    for(let y=C.ROW;y<=C.STREET_ROW;y++) map[y*MAP_W+x] = T.PATH;
-  for(let x=1;x<MAP_W-1;x++) map[C.STREET_ROW*MAP_W+x] = T.PATH;
+  for(const street of (C.STREET_ROWS || [C.STREET_ROW]))
+    for(let x=1;x<MAP_W-1;x++) map[street*MAP_W+x] = T.PATH;
+  const cx = C.CONNECTOR_X == null ? FARM.x + 10 : C.CONNECTOR_X;
+  for(let x=cx;x<=cx+1;x++){
+    for(let y=FARM.y+FARM.h;y<C.ROW;y++) map[y*MAP_W+x] = T.PATH;   /* 农场 → 镇上 */
+    for(let y=C.ROW;y<=C.END_ROW;y++) map[y*MAP_W+x] = T.PATH;
+  }
 
-  /* 2) 四栋房子：后墙（中间开门）+ 地板 + 前墙
-   * 第 26 轮：墙只有 1 格厚，屋顶不再是地图上的实体格（改成纯渲染层） */
+  /* 2) 住宅 / 商店：每栋按自己的 row 盖墙、地板、门 */
   for(const b of C.LIST){
     stampBuilding(buildingDef(b.id), false);                       /* 墙 / 地板 / 门 */
   }

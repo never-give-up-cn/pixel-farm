@@ -42,6 +42,13 @@ function townDoorState(b){
     return {key:'rest', color:K.signRest, text:'休息中 · 今天关店了'};
   }
   if(!st) return {key:'rest', color:K.signRest, text:'空房子'};
+  const here = (typeof townResidentsHere === 'function') ? townResidentsHere(b) : [];
+  if(here.length){
+    const asleep = here.some(x => { const sx = npcCurrentState(x); return sx && sx.type === 'sleep'; });
+    const working = here.some(x => { const sx = npcCurrentState(x); return sx && sx.type === 'work'; });
+    return {key: asleep ? 'rest' : 'open', color: asleep ? K.signRest : K.signOpen,
+            text: asleep ? '有人在睡觉' : (working ? '正在工作' : (here.length > 1 ? here.length + ' 人在家' : '主人在家'))};
+  }
   if(st.type === 'sleep') return {key:'rest', color:K.signRest, text:b.npc === 'aunt' ? '老板娘在睡觉' : '主人在睡觉'};
   if(st.type === 'work')  return {key:'open', color:K.signOpen, text:'主人在忙'};
   if(st.at === 'home')    return {key:'open', color:K.signOpen, text:'主人在家'};
@@ -55,8 +62,9 @@ function townProps(){
     _townProps = [];
     for(const b of C.LIST){
       if(!b.props) continue;
+      const row = b.row || C.ROOM_ROW;
       for(const p of b.props)
-        _townProps.push({b:b, x:b.x + p.dx, y:C.ROOM_ROW + p.dy,
+        _townProps.push({b:b, x:b.x + p.dx, y:row + p.dy,
                          type:p.type, solid:!!p.solid, flat:!!p.flat,
                          interact:p.interact || '', preset:true});
     }
@@ -65,8 +73,11 @@ function townProps(){
 }
 function townPropAt(tx,ty){
   const C = CONFIG.TOWN;
-  if(ty <= C.ROOM_ROW || ty >= C.ROOM_ROW + C.ROOM_H) return null;
-  for(const p of townProps()) if(p.x === tx && p.y === ty) return p;
+  for(const p of townProps()){
+    const row = p.b.row || C.ROOM_ROW;
+    if(ty <= row || ty >= row + C.ROOM_H) continue;
+    if(p.x === tx && p.y === ty) return p;
+  }
   return null;
 }
 /* 进门的那一下闪一下（遮住瞬移）
@@ -77,13 +88,13 @@ const warpFx = {t:0, dur:0};
 function townCounterSpot(){
   const b = townShopBuilding();
   if(!b) return null;
-  return {x:b.x + CONFIG.TOWN.DOOR_DX, y:CONFIG.TOWN.ROOM_ROW + 4};
+  return {x:b.x + CONFIG.TOWN.DOOR_DX, y:(b.row || CONFIG.TOWN.ROOM_ROW) + 4};
 }
 /* 自己的卧室（床边那块地） */
 function townHomeSpot(npcId){
   const b = townHomeBuilding(npcId);
   if(!b) return null;
-  return {x:b.x + 3, y:CONFIG.TOWN.ROOM_ROW + 8};
+  return {x:b.x + 3, y:(b.row || CONFIG.TOWN.ROOM_ROW) + 8};
 }
 /* 开门时间（to > 24 表示跨午夜，例如 19 → 30 是 19:00~次日 6:00） */
 function townOpenNow(b, h){

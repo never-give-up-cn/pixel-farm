@@ -14,10 +14,11 @@ function drawEntities(g, x0, y0, x1, y1){
   /* 第 25 轮：镇上的家具已经进了 buildings（preset），跟着建造物一起排 Y */
   /* 门牌（第 24 轮）：说明主人在不在、去哪了 */
   for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || CONFIG.TOWN.ROOM_ROW;
     const sx = (b.x + CONFIG.TOWN.SIGN_DX)*TILE - cam.x;
-    const sy = CONFIG.TOWN.SIGN_ROW*TILE - cam.y;
+    const sy = (row - 2)*TILE - cam.y;
     if(sx < -TILE || sx > VIEW_W || sy < -TILE || sy > VIEW_H) continue;
-    list.push({y:CONFIG.TOWN.SIGN_ROW*TILE + TILE, f:()=>drawTownSign(g, b, sx, sy)});
+    list.push({y:(row - 2)*TILE + TILE, f:()=>drawTownSign(g, b, sx, sy)});
   }
   for(const b of buildings){
     const bx = b.tx*TILE - cam.x, by = b.ty*TILE - cam.y;
@@ -29,10 +30,11 @@ function drawEntities(g, x0, y0, x1, y1){
   }
   /* 第 25 轮：门口挂牌三态（画在大门正上方一格） */
   for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || CONFIG.TOWN.ROOM_ROW;
     const sx = (b.x + CONFIG.TOWN.DOOR_DX)*TILE - cam.x;
-    const sy = (CONFIG.TOWN.ROOM_ROW - 1)*TILE - cam.y;
+    const sy = (row - 1)*TILE - cam.y;
     if(sx < -TILE || sx > VIEW_W || sy < -TILE || sy > VIEW_H) continue;
-    list.push({y:CONFIG.TOWN.ROOM_ROW*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
+    list.push({y:(row - 1)*TILE, f:()=>drawTownDoorState(g, b, sx, sy)});
   }
   /* NPC（居民）：按脚点 Y 混进同一张排序表（和玩家同一套约定：+12） */
   for(const d of CONFIG.NPC.LIST){

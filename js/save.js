@@ -240,7 +240,7 @@ function deserializeState(d){
         const bb = townBuildingAt(ptx, pty);
         const dx = bb ? bb.x + CONFIG.TOWN.DOOR_DX : CONFIG.TOWN.LIST[0].x + CONFIG.TOWN.DOOR_DX;
         player.x = (dx + 0.5)*TILE;
-        player.y = (CONFIG.TOWN.STREET_ROW + 0.5)*TILE;
+        player.y = ((bb ? ((bb.row || CONFIG.TOWN.ROOM_ROW) - 1) : CONFIG.TOWN.STREET_ROW) + 0.5)*TILE;
       }
     }
     if(typeof d.gold === 'number') gold = d.gold;

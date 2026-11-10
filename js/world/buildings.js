@@ -16,14 +16,17 @@ const BUILDING_DEFS = (function(){
   const C = CONFIG.TOWN;
   const out = [];
   for(const b of C.LIST){
+    const row = b.row || C.ROOM_ROW;
     const fixtures = [];
     for(const p of (b.props || []))
       fixtures.push({
-        type:p.type, tx:b.x + p.dx, ty:C.ROOM_ROW + p.dy,
+        type:p.type, tx:b.x + p.dx, ty:row + p.dy,
         solid:!!p.solid, flat:!!p.flat, interact:p.interact || '',
         preset:true, npc:b.npc, bid:b.id
       });
-    out.push({id:b.id, name:b.name, kind:b.kind, npc:b.npc, x:b.x, w:b.w,
+    out.push({id:b.id, name:b.name, kind:b.kind, npc:b.npc,
+              residents:(b.residents || [b.npc]).slice(),
+              x:b.x, w:b.w, row:row,
               hours:b.hours, wander:b.wander || null, fixtures:fixtures});
   }
   return out;

@@ -94,7 +94,8 @@ function drawRoofs(g){
   for(const b of C.LIST){
     const alpha = (room === b.id) ? R.ALPHA_INSIDE : 1;
     if(alpha <= 0.02) continue;             /* 玩家在屋里 → 屋顶完全掀开 */
-    const sx = b.x*TILE - cam.x, sy = C.ROOM_ROW*TILE - cam.y;
+    const row = b.row || C.ROOM_ROW;
+    const sx = b.x*TILE - cam.x, sy = row*TILE - cam.y;
     const sw = b.w*TILE, sh = C.ROOM_H*TILE;
     if(sx > VIEW_W || sx + sw < 0 || sy > VIEW_H || sy + sh < 0) continue;   /* 视锥裁剪 */
     const shop = b.kind === 'shop';

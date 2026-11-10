@@ -80,7 +80,7 @@ import './world/buildings.js';
 | `js/anim-demo-mine.js` | 可操作矿井探索面板 |
 | `js/anim-demo-town.js` | 鹈鹕镇村民日程面板 |
 | `js/player.js` | 玩家精灵与朝向 |
-| `js/town.js` | 小镇建筑、房间、街道的查询 |
+| `js/town.js` | 小镇建筑、四排住宅、房间、街道与门牌的查询 |
 | `js/audio.js` | 音效与音量 |
 | `js/save.js` | 存档序列化/反序列化 |
 | `js/main-loop.js` | 固定步长主循环、更新与渲染调度 |

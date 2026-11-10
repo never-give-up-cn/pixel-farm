@@ -9,7 +9,7 @@
 /* 镇上的建筑（按 id / 种类 / 主人找） */
 function townBuilding(id){ return CONFIG.TOWN.LIST.find(b => b.id === id) || null; }
 function townShopBuilding(){ return CONFIG.TOWN.LIST.find(b => b.kind === 'shop') || null; }
-function townHomeBuilding(npcId){ return CONFIG.TOWN.LIST.find(b => b.kind === 'house' && b.npc === npcId) || null; }
+function townHomeBuilding(npcId){ return CONFIG.TOWN.LIST.find(b => b.kind === 'house' && (b.npc === npcId || (b.residents || []).indexOf(npcId) >= 0)) || null; }
 /* 第 25 轮：静态建筑定义（不存档） */
 function buildingDef(id){ return BUILDING_DEFS.find(b => b.id === id) || null; }
 /* 盖一栋房子：外墙（前墙 / 后墙）+ 屋里的门 + 地板 + 家具
@@ -17,12 +17,13 @@ function buildingDef(id){ return BUILDING_DEFS.find(b => b.id === id) || null; }
 function stampBuilding(def, withFixtures){
   if(!def) return false;
   const C = CONFIG.TOWN;
-  for(let y=C.ROOM_ROW;y<C.ROOM_ROW+C.ROOM_H;y++)
+  const row = def.row || C.ROOM_ROW;
+  for(let y=row;y<row+C.ROOM_H;y++)
     for(let x=def.x;x<def.x+def.w;x++)
-      map[y*MAP_W+x] = (y === C.ROOM_ROW + C.ROOM_H - 1) ? T.WALL_FRONT : T.WALL_BACK;
-  for(let y=C.ROOM_ROW+1;y<C.ROOM_ROW+C.ROOM_H-1;y++)
+      map[y*MAP_W+x] = (y === row + C.ROOM_H - 1) ? T.WALL_FRONT : T.WALL_BACK;
+  for(let y=row+1;y<row+C.ROOM_H-1;y++)
     for(let x=def.x+1;x<def.x+def.w-1;x++) map[y*MAP_W+x] = T.FLOOR;
-  map[C.ROOM_ROW*MAP_W + def.x + C.DOOR_DX] = T.DOOR;             /* 屋里的门：踩上去回街上 */
+  map[row*MAP_W + def.x + C.DOOR_DX] = T.DOOR;             /* 屋里的门：踩上去回街上 */
   if(withFixtures !== false) stampFixtures(def);
   return true;
 }
@@ -51,15 +52,20 @@ function stampTownFixtures(){
 function playerRoomWide(){
   const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
   const C = CONFIG.TOWN;
-  for(const b of CONFIG.TOWN.LIST)
-    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b.id;
+  for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || C.ROOM_ROW;
+    if(tx >= b.x && tx < b.x + b.w && ty >= row && ty < row + C.ROOM_H) return b.id;
+  }
   return null;
 }
 /* 某一格是不是某栋房子的「前墙」（南边那排墙） */
 function townFrontWallBuilding(tx,ty){
   const C = CONFIG.TOWN;
-  if(ty !== C.ROOM_ROW + C.ROOM_H - 1) return null;
-  for(const b of CONFIG.TOWN.LIST) if(tx >= b.x && tx < b.x + b.w) return b;
+  for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || C.ROOM_ROW;
+    if(ty !== row + C.ROOM_H - 1) continue;
+    if(tx >= b.x && tx < b.x + b.w) return b;
+  }
   return null;
 }
 /* 玩家是不是在屋里（进门 = 在屋子的范围里，含墙和门格） */
@@ -67,15 +73,19 @@ function insideHouse(){ return playerRoomWide() !== null; }
 /* 某个格子是不是某栋房子的外框（第 26 轮：房子的范围 = 后墙那一行到前墙那一行） */
 function townBuildingAt(tx,ty){
   const C = CONFIG.TOWN;
-  for(const b of CONFIG.TOWN.LIST)
-    if(tx >= b.x && tx < b.x + b.w && ty >= C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H) return b;
+  for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || C.ROOM_ROW;
+    if(tx >= b.x && tx < b.x + b.w && ty >= row && ty < row + C.ROOM_H) return b;
+  }
   return null;
 }
 /* 室内区域：站在哪一间屋子里（null = 在室外） */
 function townRoomAt(tx,ty){
   const C = CONFIG.TOWN;
-  for(const b of CONFIG.TOWN.LIST)
-    if(tx > b.x && tx < b.x + b.w - 1 && ty > C.ROOM_ROW && ty < C.ROOM_ROW + C.ROOM_H - 1) return b.id;
+  for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || C.ROOM_ROW;
+    if(tx > b.x && tx < b.x + b.w - 1 && ty > row && ty < row + C.ROOM_H - 1) return b.id;
+  }
   return null;
 }
 function playerRoom(){ return townRoomAt(Math.floor(player.x/TILE), Math.floor(player.y/TILE)); }
@@ -85,13 +95,14 @@ function playerRoom(){ return townRoomAt(Math.floor(player.x/TILE), Math.floor(p
 function townDoorAt(tx, ty, prevTy){
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
+    const row = b.row || C.ROOM_ROW;
     const dx = b.x + C.DOOR_DX;
-    if(tx !== dx || ty !== C.ROOM_ROW) continue;
+    if(tx !== dx || ty !== row) continue;
     let dir;
     if(typeof prevTy === 'number') dir = (prevTy < ty) ? 'in' : 'out';
     else dir = (player.y <= (ty + 0.5)*TILE) ? 'in' : 'out';   /* 兜底：站在门的上半格 = 从街上来 */
     return {b:b, dir:dir,
-            to: dir === 'in' ? {x:dx, y:C.ROOM_ROW + C.ARRIVE_DY} : {x:dx, y:C.STREET_ROW}};
+            to: dir === 'in' ? {x:dx, y:row + C.ARRIVE_DY} : {x:dx, y:row - 1}};
   }
   return null;
 }
@@ -109,6 +120,20 @@ function townDoorCheck(prevTy){
   townEnter(d);
   return true;
 }
+/* 某栋房子现在有谁在屋里（含正在睡觉的人） */
+function townResidents(b){
+  const ids = (b.residents && b.residents.length) ? b.residents : [b.npc];
+  return ids.map(id => npcDef(id)).filter(Boolean);
+}
+function townResidentsHere(b){
+  const out = [];
+  for(const d of townResidents(b)){
+    const st = npcCurrentState(d);
+    if(!st || st.x === null || st.x === undefined) continue;
+    if(npcRoomIdAt((st.x + 0.5)*TILE, (st.y + 0.5)*TILE) === b.id) out.push(d);
+  }
+  return out;
+}
 /* 进屋时给一句话：扑空也必须有解释（原则 C） */
 function townEnter(d){
   const b = d.b;
@@ -119,16 +144,30 @@ function townEnter(d){
     return;
   }
   if(!npc){ toast(b.name + '空荡荡的'); return; }
-  if(w && w.at === 'wander'){ toast(b.name + '里没人 —— ' + npc.name + '去' + (w.label || '外面') + '逛了'); return; }
   if(b.kind === 'shop'){
     if(w && w.at === 'shop') toast('杂货店 · 营业中（' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
     else if(townOpenNow(b)) toast('店里没人 —— ' + npc.name + '不在柜台（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
     else toast('店里没人 —— 已经打烊了（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）');
     return;
   }
-  if(w && w.type === 'sleep'){ toast(b.name + ' · ' + npc.name + '睡着了（别吵醒她）'); return; }
-  if(w && w.at === 'home'){ toast(b.name + ' · ' + npc.name + '在家'); return; }
-  toast(b.name + '里没人 —— ' + npc.name + '在' + ((w && w.label) || '外面'));
+  const here = townResidentsHere(b);
+  if(here.length){
+    const names = here.map(x => x.name).join('、');
+    const asleep = here.some(x => {
+      const st = npcCurrentState(x);
+      return st && st.type === 'sleep';
+    });
+    const working = here.some(x => {
+      const st = npcCurrentState(x);
+      return st && st.type === 'work';
+    });
+    toast(b.name + ' · ' + names + (asleep ? '在家（有人睡着了）' : (working ? '在工作' : '在家')));
+    return;
+  }
+  const someone = townResidents(b)[0] || npc;
+  if(w && w.at === 'wander'){ toast(b.name + '里没人 —— ' + someone.name + '去' + (w.label || '外面') + '逛了'); return; }
+  if(w && w.type === 'sleep'){ toast(b.name + '里没人'); return; }
+  toast(b.name + '里没人 —— ' + someone.name + '在' + ((w && w.label) || '外面'));
 }
 /* 小时数 → "7:00" */
 function hourText(h){ h = ((h % 24) + 24) % 24; const hh = Math.floor(h); return (hh < 10 ? '0' : '') + hh + ':00'; }
@@ -143,17 +182,34 @@ function townSignText(b){
     if(w && w.at === 'wander') s += ' · ' + npc.name + '在' + (w.label || '外面') + '那边逛着';
     return s;
   }
-  if(w && w.at === 'wander') return npc.name + '不在，' + (w.label || '外面') + '那边逛着呢';
   if(b.kind === 'shop'){
     if(w && w.at === 'shop') return b.sign + ' · 营业中 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to);
     return b.sign + ' · 店主不在柜台（营业时间 ' + hourText(b.hours.from) + '~' + hourText(b.hours.to) + '）';
   }
-  if(w && w.at === 'home') return b.sign + ' · ' + npc.name + '在家';
+  const here = townResidentsHere(b);
+  if(here.length){
+    const working = here.filter(x => { const st = npcCurrentState(x); return st && st.type === 'work'; });
+    const resting = here.filter(x => working.indexOf(x) < 0);
+    const short = (arr) => {
+      const names = arr.map(x => x.name);
+      return names.length > 2 ? names.slice(0, 2).join('、') + '等' : names.join('、');
+    };
+    const parts = [];
+    if(resting.length) parts.push(short(resting) + '在家');
+    if(working.length) parts.push(short(working) + '在工作');
+    return b.sign + ' · ' + parts.join('，');
+  }
+  const res = townResidents(b);
+  const outNpc = res.find(x => {
+    const st = npcCurrentState(x);
+    return st && st.type !== 'sleep' && st.x !== null;
+  }) || npc;
+  if(w && w.at === 'wander') return outNpc.name + '不在，' + (w.label || '外面') + '那边逛着呢';
   if(w && w.type === 'sleep') return b.sign + ' · ' + npc.name + '睡着了';
-  return b.sign + ' · ' + npc.name + '不在（' + ((w && w.label) || '出门了') + '）';
+  return b.sign + ' · ' + outNpc.name + '不在（' + ((w && w.label) || '出门了') + '）';
 }
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { townBuilding, townShopBuilding, townHomeBuilding, buildingDef, stampBuilding, stampFixtures, stampTownFixtures, playerRoomWide, townFrontWallBuilding, insideHouse, townBuildingAt, townRoomAt, playerRoom, townDoorAt, townDoorCheck, townEnter, hourText, townSignText });
-export { townBuilding, townShopBuilding, townHomeBuilding, buildingDef, stampBuilding, stampFixtures, stampTownFixtures, playerRoomWide, townFrontWallBuilding, insideHouse, townBuildingAt, townRoomAt, playerRoom, townDoorAt, townDoorCheck, townEnter, hourText, townSignText };
+Object.assign(window, { townBuilding, townShopBuilding, townHomeBuilding, townResidents, townResidentsHere, buildingDef, stampBuilding, stampFixtures, stampTownFixtures, playerRoomWide, townFrontWallBuilding, insideHouse, townBuildingAt, townRoomAt, playerRoom, townDoorAt, townDoorCheck, townEnter, hourText, townSignText });
+export { townBuilding, townShopBuilding, townHomeBuilding, townResidents, townResidentsHere, buildingDef, stampBuilding, stampFixtures, stampTownFixtures, playerRoomWide, townFrontWallBuilding, insideHouse, townBuildingAt, townRoomAt, playerRoom, townDoorAt, townDoorCheck, townEnter, hourText, townSignText };

@@ -11,6 +11,18 @@ function drawEntities(g, x0, y0, x1, y1){
   /* 委托板（第 16 轮）：同样按脚点 Y 混进排序表 */
   list.push({y:(QUEST_BOARD.y + QUEST_BOARD.h)*TILE,
              f:()=>drawQuestBoard(g, QUEST_BOARD.x*TILE-cam.x, QUEST_BOARD.y*TILE-cam.y)});
+  /* 农场 / 城镇入口方向牌 */
+  if(typeof drawDirectionSign === 'function' && typeof FARM !== 'undefined'){
+    const cx = (CONFIG.TOWN.CONNECTOR_X + 2)*TILE - cam.x;
+    const fy = (FARM.y + FARM.h - 1)*TILE - cam.y;
+    const ty = (CONFIG.TOWN.ROW + 1)*TILE - cam.y;
+    if(cx > -TILE && cx < VIEW_W + TILE){
+      if(fy > -TILE && fy < VIEW_H + TILE)
+        list.push({y:(FARM.y + FARM.h)*TILE, f:()=>drawDirectionSign(g, cx, fy, '南边 · 城镇 ↓')});
+      if(ty > -TILE && ty < VIEW_H + TILE)
+        list.push({y:(CONFIG.TOWN.ROW + 2)*TILE, f:()=>drawDirectionSign(g, cx, ty, '北边 · 农场 ↑')});
+    }
+  }
   /* 第 25 轮：镇上的家具已经进了 buildings（preset），跟着建造物一起排 Y */
   /* 门牌（第 24 轮）：说明主人在不在、去哪了 */
   for(const b of CONFIG.TOWN.LIST){

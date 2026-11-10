@@ -41,6 +41,12 @@ function minimapTileColor(t){
   if(t === T.TREE)    return C.treeLeaf;
   if(t === T.ROCK)    return C.rock;
   if(t === T.FLOWER)  return C.flowers[0];
+  /* 城镇地块：让全屏地图能看出街道、房子和门 */
+  if(t === T.PATH) return '#b9b3a6';
+  if(t === T.DOOR) return '#e2c14a';
+  if(t === T.FLOOR) return '#b5844f';
+  if(t === T.WALL_BACK || t === T.WALL_FRONT || t === T.HOUSE) return '#7a5a3a';
+  if(t === T.SHOP) return '#5b86ad';
   return C.grass;
 }
 /* 第 25 轮：小地图上的 NPC 点按「他现在的状态」着色
@@ -120,7 +126,10 @@ function renderBigmap(){
   const cv = bigmapCvEl;
   if(!cv || !cv.getContext) return;
   const g = cv.getContext('2d');
-  const K = CONFIG.MINIMAP.SCALE, PAD = 8;
+  const PAD = 8;
+  const K = Math.max(1, Math.floor(Math.min((cv.width - PAD*2) / MAP_W, (cv.height - PAD*2) / MAP_H)));
+  const PX = Math.floor((cv.width - MAP_W * K) / 2);
+  const PY = Math.floor((cv.height - MAP_H * K) / 2);
   g.fillStyle = '#0c1018';
   g.fillRect(0, 0, cv.width, cv.height);
   /* 地块 + 石板路 */
@@ -128,22 +137,25 @@ function renderBigmap(){
     for(let x = 0; x < MAP_W; x++){
       const i = y * MAP_W + x;
       g.fillStyle = minimapTileColor(map[i]);
-      g.fillRect(PAD + x * K, PAD + y * K, K, K);
+      g.fillRect(PX + x * K, PY + y * K, K, K);
       if(roads[i]){
         g.fillStyle = CONFIG.TILE_COLORS.roadStone;
-        g.fillRect(PAD + x * K, PAD + y * K, K, K);
+        g.fillRect(PX + x * K, PY + y * K, K, K);
       }
     }
   }
-  /* 城镇建筑（整栋画成色块：杂货店青色，其余民居棕色） */
+  /* 城镇建筑：按每栋自己的 row 画矩形（不再从城镇带顶部拉到底部） */
   const C = CONFIG.TOWN;
   for(const b of (C.LIST || [])){
+    const row = b.row || C.ROOM_ROW;
     g.fillStyle = (b.kind === 'shop') ? CONFIG.MINIMAP.SHOP : '#b08968';
-    g.fillRect(PAD + b.x * K, PAD + C.ROW * K, b.w * K, (C.END_ROW - C.ROW + 1) * K);
+    g.fillRect(PX + b.x * K, PY + row * K, b.w * K, C.ROOM_H * K);
+    g.fillStyle = '#f4d35e';
+    g.fillRect(PX + (b.x + C.DOOR_DX) * K, PY + row * K, Math.max(1, K), Math.max(1, K));
   }
   /* 农舍 / 农场里的杂货店摊位（沿用小地图配色） */
   g.fillStyle = CONFIG.MINIMAP.HOUSE;
-  g.fillRect(PAD + HOUSE_POS.x * K, PAD + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
+  g.fillRect(PX + HOUSE_POS.x * K, PY + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
   /* 居民（按当前状态着色：营业黄 / 瞎逛橙 / 在家蓝；睡觉外出不画） */
   for(const d of CONFIG.NPC.LIST){
     const p = npcPos(d);
@@ -151,12 +163,12 @@ function renderBigmap(){
     const col = minimapNpcColor(npcWhere(d));
     if(!col) continue;
     g.fillStyle = col;
-    g.fillRect(PAD + p.tx * K + (K >> 1) - 2, PAD + p.ty * K + (K >> 1) - 2, 4, 4);
+    g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
   }
   /* 玩家（白点） */
   const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
   g.fillStyle = CONFIG.MINIMAP.PLAYER;
-  g.fillRect(PAD + px * K + (K >> 1) - 2, PAD + py * K + (K >> 1) - 2, 5, 5);
+  g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
   if(bigmapSubEl) bigmapSubEl.textContent = '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
 }
 function bigmapOpenPanel(){

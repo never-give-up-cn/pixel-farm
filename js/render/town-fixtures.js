@@ -99,28 +99,78 @@ function drawRoofs(g){
     const sw = b.w*TILE, sh = C.ROOM_H*TILE;
     if(sx > VIEW_W || sx + sw < 0 || sy > VIEW_H || sy + sh < 0) continue;   /* 视锥裁剪 */
     const shop = b.kind === 'shop';
+    const facadeH = 32;                     /* 临街那一格画成可见的墙面 + 门窗 */
+    const roofY = sy + facadeH;
+    const roofH = sh - facadeH;
     g.globalAlpha = alpha;
+
+    /* 1) 临街墙面：让房子从“一块橙色屋顶”变成能认出来的房子 */
+    g.fillStyle = shop ? '#6f7f92' : K.wall;
+    g.fillRect(sx, sy, sw, facadeH);
+    g.fillStyle = shop ? '#5c6a7a' : K.wallLine;
+    g.fillRect(sx, sy + facadeH - 4, sw, 4);
+    g.fillRect(sx, sy, 4, facadeH);
+    g.fillRect(sx + sw - 4, sy, 4, facadeH);
+    /* 墙面横纹 */
+    for(let yy = sy + 8; yy < sy + facadeH - 5; yy += 9){
+      g.fillStyle = shop ? 'rgba(30,42,56,.22)' : 'rgba(60,36,20,.16)';
+      g.fillRect(sx + 5, yy, sw - 10, 1);
+    }
+    /* 窗户：门两侧各一扇 */
+    const winY = sy + 8, winW = 18, winH = 13;
+    for(const wx of [sx + 28, sx + sw - 46]){
+      g.fillStyle = '#4a5a6a'; g.fillRect(wx - 2, winY - 2, winW + 4, winH + 4);
+      g.fillStyle = shop ? '#9ec8e8' : '#9ec4d8'; g.fillRect(wx, winY, winW, winH);
+      g.fillStyle = 'rgba(255,255,255,.55)'; g.fillRect(wx + 2, winY + 2, 5, 4);
+      g.fillStyle = '#4a5a6a'; g.fillRect(wx + winW/2 - 1, winY, 2, winH);
+      g.fillRect(wx, winY + winH/2 - 1, winW, 2);
+    }
+    /* 门口：墙面中间 */
+    drawDoorTile(g, (b.x + C.DOOR_DX)*TILE - cam.x, sy);
+
+    /* 2) 屋顶：从临街墙面后面一直盖到南墙 */
     g.fillStyle = shop ? K.roofShop : K.roofHouse;
-    g.fillRect(sx, sy, sw, sh);
+    g.fillRect(sx, roofY, sw, roofH);
     /* 瓦片横纹 */
     g.fillStyle = shop ? K.roofShopLine : K.roofHouseLine;
-    for(let yy = sy + 8; yy < sy + sh - 8; yy += R.TILE_H) g.fillRect(sx + 3, yy, sw - 6, 2);
-    /* 屋脊（北边那条）*/
-    g.fillStyle = K.roofRidge; g.fillRect(sx, sy, sw, 5);
-    /* 屋檐（南边那条）*/
+    for(let yy = roofY + 10; yy < sy + sh - 8; yy += R.TILE_H) g.fillRect(sx + 4, yy, sw - 8, 2);
+    /* 竖缝：把一排长屋顶切成独立屋 */
+    g.fillStyle = 'rgba(80,40,20,.20)';
+    for(let xx = sx + 24; xx < sx + sw - 8; xx += 32) g.fillRect(xx, roofY + 4, 1, roofH - 10);
+    /* 屋脊 / 屋檐 */
+    g.fillStyle = K.roofRidge; g.fillRect(sx, roofY, sw, 6);
     g.fillStyle = K.roofEave;  g.fillRect(sx, sy + sh - 6, sw, 6);
-    /* 烟囱（商店屋顶）*/
-    if(R.CHIMNEY && shop){
+    g.strokeStyle = K.roofEave; g.lineWidth = 1;
+    g.strokeRect(sx + 0.5, roofY + 0.5, sw - 1, roofH - 1);
+
+    /* 3) 烟囱：商店和每隔几栋房子 */
+    if(R.CHIMNEY && (shop || (b.x % 4 === 0))){
       const cx = sx + sw - 46;
-      g.fillStyle = K.roofEave;   g.fillRect(cx, sy + 16, 14, 20);
-      g.fillStyle = K.roofRidge;  g.fillRect(cx - 2, sy + 12, 18, 5);
+      g.fillStyle = K.roofEave;   g.fillRect(cx, roofY + 16, 14, 20);
+      g.fillStyle = K.roofRidge;  g.fillRect(cx - 2, roofY + 12, 18, 5);
     }
-    /* 门口：屋顶上再画一次门（不然街上只看得见一块屋顶）*/
-    drawDoorTile(g, (b.x + C.DOOR_DX)*TILE - cam.x, sy);
     g.globalAlpha = 1;
   }
 }
-/* 门牌：写清楚「在不在 / 为什么不在 / 去哪了」（原则 C） */
+/* 路牌：给农场 / 城镇入口做方向提示 */
+function drawDirectionSign(g, px, py, text){
+  const K = CONFIG.TOWN.COLORS;
+  g.fillStyle = K.signPost; g.fillRect(px + 14, py + 12, 4, 20);
+  g.fillStyle = K.sign;     g.fillRect(px + 2, py + 2, 28, 12);
+  g.fillStyle = K.signText; g.fillRect(px + 5, py + 6, 22, 4);
+  const dx = px + 16 + cam.x - player.x, dy = py + 6 + cam.y - player.y;
+  if(dx*dx + dy*dy > 240*240) return;
+  g.font = '12px ' + FONT_CJK;
+  const w = g.measureText(text).width;
+  const bx = px + 16 - w/2 - 5, by = py - 15;
+  g.fillStyle = 'rgba(8,10,16,0.86)'; g.fillRect(bx, by, w + 10, 18);
+  g.strokeStyle = CONFIG.COLORS.hudBorder; g.strokeRect(bx, by, w + 10, 18);
+  g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+  g.fillText(text, bx + 5, by + 13);
+  g.textAlign = 'left';
+}
+
+
 function drawTownSign(g, b, px, py){
   const K = CONFIG.TOWN.COLORS;
   g.fillStyle = K.signPost; g.fillRect(px+14, py+12, 4, 20);
@@ -164,5 +214,5 @@ function drawTownDoorState(g, b, px, py){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { drawTownProp, drawDoorTile, drawRoofs, drawTownSign, drawTownDoorState });
-export { drawTownProp, drawDoorTile, drawRoofs, drawTownSign, drawTownDoorState };
+Object.assign(window, { drawTownProp, drawDoorTile, drawRoofs, drawTownSign, drawTownDoorState, drawDirectionSign });
+export { drawTownProp, drawDoorTile, drawRoofs, drawTownSign, drawTownDoorState, drawDirectionSign };

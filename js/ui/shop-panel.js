@@ -19,10 +19,11 @@ function pulseShopGold(){
   shopGold.style.animation = 'goldBump ' + CONFIG.SHOP.GOLD_PULSE_MS + 'ms ease-out';
 }
 /* 画一条商品行 */
-function shopRow(icon, name, sub, priceHtml, buttons){
+function shopRow(icon, name, sub, priceHtml, buttons, iconId){
   const row = document.createElement('div');
   row.className = 'srow';
-  const ic = document.createElement('span'); ic.className = 'ic'; ic.textContent = icon;
+  const ic = document.createElement('span'); ic.className = 'ic';
+  if(!(iconId && typeof paintItemIcon === 'function' && paintItemIcon(ic, iconId, 24))) ic.textContent = icon;
   const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = name;
   if(sub){
     const em = document.createElement('em'); em.textContent = sub; nm.appendChild(em);
@@ -97,7 +98,7 @@ function renderShopBuy(){
       fn = ()=>{ shopBuyClick(id); };
     }
     shopBody.appendChild(shopRow(d ? d.icon : '💧', name, sub, priceHtml(id),
-      [{label:label, off:off, fn:fn}]));
+      [{label:label, off:off, fn:fn}], id));
   }
 }
 /* 出售页签：列出背包里所有可卖的物品 */
@@ -122,7 +123,7 @@ function renderShopSell(){
     const row = shopRow(d.icon, d.name + ' ×' + n, '', priceTxt + '　共 ' + total + ' 💰', [
       {label:'卖 1', off:false, fn:()=>{ sellItem(id, 1); }},
       {label:'全卖', off:false, fn:()=>{ sellItem(id, n); }}
-    ]);
+    ], id);
     shopBody.appendChild(row);
   }
 }

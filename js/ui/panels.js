@@ -319,7 +319,16 @@ function updatePackHeld(){
   if(!packHeld) return;
   if(!held){ packHeld.style.display = 'none'; packHeld.textContent = ''; return; }
   const d = itemDef(held.id);
-  packHeld.textContent = d ? d.icon + (held.n > 1 ? '×' + held.n : '') : '';
+  packHeld.textContent = '';
+  if(!(typeof paintItemIcon === 'function' && paintItemIcon(packHeld, held.id, 40))){
+    packHeld.textContent = d ? d.icon : '';
+  }
+  if(held.n > 1){
+    const n = document.createElement('span');
+    n.textContent = '×' + held.n;
+    n.style.cssText = 'position:absolute;right:-8px;bottom:-4px;font-size:12px;color:#ffd76a;text-shadow:0 1px 2px #000';
+    packHeld.appendChild(n);
+  }
   packHeld.style.display = 'block';
 }
 /* 开关背包 */

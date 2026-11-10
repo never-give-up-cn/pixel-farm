@@ -58,6 +58,7 @@ function update(dt){
     updateHarvestFx(dt);
     updateDrops(dt);
     updateAnimals(dt);               /* 动物照常走动（第 15 轮） */
+    updatePet(dt);                   /* 第 32 轮：宠物在院子里走动 */
     updateCamera(dt);
     updateSky(dt);
     updateDropFx(dt);
@@ -70,6 +71,7 @@ function update(dt){
   updateHarvestFx(dt);               /* 第 31 轮：岩石 / 野花 / 水土粒子 */
   updateDrops(dt);                   /* 第 31 轮：地面掉落物与自动吸附 */
   updateAnimals(dt);                 /* 第 15 轮：动物在围栏里随便走走 */
+  updatePet(dt);                     /* 第 32 轮：宠物在农舍附近走动 */
   updateCamera(dt);
   updateSky(dt);                     /* 昼夜色平滑过渡 */
   updateDropFx(dt);                  /* 洒水器水滴 */

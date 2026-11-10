@@ -127,6 +127,8 @@ window.addEventListener('keydown', e=>{
       else if(fixtureNear()) interactFixture(fixtureNear());   /* 第 25 轮：看装饰 / 睡 bed */
       else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
+      else if(typeof petBowlNear === 'function' && petBowlNear()) petCycle();   /* 第 32 轮：宠物碗换品种 */
+      else if(typeof petNear === 'function' && petNear()) petInteract();        /* 第 32 轮：摸宠物 */
       else{
         const tr = (typeof fruitTreeNear === 'function') ? fruitTreeNear() : null;
         const g = gatherNear();

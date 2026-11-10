@@ -52,6 +52,14 @@ function drawEntities(g, x0, y0, x1, y1){
        a.y - cam.y < -TILE || a.y - cam.y > VIEW_H + TILE) continue;
     list.push({y:a.y, f:()=>drawAnimal(g, a, nearAnimal)});
   }
+  /* 宠物（第 32 轮）：和玩家 / 动物同一套 Y 排序 */
+  if(typeof ensurePet === 'function' && typeof drawPetEntity === 'function'){
+    const p = ensurePet();
+    if(!(p.x - cam.x < -TILE || p.x - cam.x > VIEW_W + TILE ||
+         p.y - cam.y < -TILE || p.y - cam.y > VIEW_H + TILE)){
+      list.push({y:p.y, f:()=>drawPetEntity(g)});
+    }
+  }
   /* 作物 + 地图物件（树 / 岩石 / 野花）按格子的 Y 混进同一张表 */
   if(CONFIG.PERF.Y_SORT && x0 !== undefined){
     for(let ty=y0;ty<=y1;ty++){

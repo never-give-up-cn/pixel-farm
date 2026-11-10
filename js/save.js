@@ -124,6 +124,7 @@ function serializeState(){
     dex: {f: dexState.f.slice(), g: dexState.g >>> 0, m: dexState.m.slice()},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
+    pet: (typeof petSerialize === 'function') ? petSerialize() : null,
     /* 第 16 轮新增：委托板（信誉 / 当日委托 / 进行中）+ 紧凑数组 */
     quest: questSerialize(),
     /* 第 17 轮新增：节日（渔获赛积分 / 当天日期 / 已领奖标记 / 横幅已弹标记） */
@@ -304,6 +305,7 @@ function deserializeState(d){
     }
     /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */
     animalDeserialize(d.animals);
+    if(typeof petDeserialize === 'function') petDeserialize(d.pet);
     /* 委托板（老存档没这个字段 → 按当天重新生成，信誉归零） */
     questDeserialize(d.quest);
     /* 节日（老存档没这个字段 → 节日状态归零；若今天正是节日，效果 / 装饰立即续上） */
@@ -499,6 +501,7 @@ function newGame(){
   npcRuntimeClear();                            /* 第 27 轮：清空 NPC 物理坐标（下次 tick 直接落在落脚点上） */
   dexResetState();                              /* 新游戏：图鉴清空 */
   animalResetState();                           /* 新游戏：清空动物 */
+  if(typeof petResetState === 'function') petResetState();   /* 新游戏：清空宠物 */
   questResetState();                            /* 新游戏：清空委托 / 信誉 */
   festivalResetState();                         /* 新游戏：清空节日状态 / 横幅 / 环境音 */
   statsResetState();                            /* 第 18 轮：统计从 0 开始（第 1 天算 1 天） */

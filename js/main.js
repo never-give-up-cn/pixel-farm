@@ -60,6 +60,7 @@ import './systems/dex.js';
 import './systems/fishing.js';
 import './systems/gather.js';
 import './systems/animals.js';
+import './systems/pet.js';
 import './systems/quests.js';
 import './systems/festival.js';
 import './systems/stats.js';

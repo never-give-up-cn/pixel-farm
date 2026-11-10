@@ -111,6 +111,7 @@ import './world/buildings.js';
 | 鱼类 / 钓鱼池 | `js/systems/fishing.js` + `js/anim/fish.js` + `js/config.js` |
 | 矿井 / 战斗 | `js/systems/mine.js` + `js/anim/monsters.js` + `js/anim/farmer.js` |
 | 动物/鸡舍/牛棚 | `js/systems/animals.js`（6 种动物，绘制走 `js/anim/animals.js`） |
+| 宠物 / 宠物碗 | `js/systems/pet.js`（15 种宠物，绘制走 `js/anim/pets.js`） |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
@@ -172,6 +173,7 @@ import './world/buildings.js';
 | `js/systems/drops.js` | 地面掉落物：随机散落、落地弹跳、靠近吸附、自动进背包与拾取飘字 |
 | `js/systems/forest.js` | 砍树：3 段受击、摇晃、绕根部倒下、木材抛散与木屑粒子 |
 | `js/systems/trees.js` | 地图树木：10 种野生树 + 8 种果树按坐标分树种，果树结果 / 采摘 / 再结果 |
+| `js/systems/pet.js` | 宠物：15 种 anim 宠物在农舍附近游荡，E 抚摸，宠物碗切换品种 |
 | `js/systems/harvest-fx.js` | 采集反馈：岩石摇晃 / 碎裂、野花倒伏、锄地扬土、浇水涟漪、收获碎叶 |
 
 ```js

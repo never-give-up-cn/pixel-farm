@@ -1,9 +1,20 @@
 /* js/boot.js —— 由 index.html 拆分，原行 11889–11936 */
 'use strict';
 
+import { EQUIPMENT } from './anim/equipment.js';
+
 genMap(CONFIG.SEED);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
+/* 初始装备也计入图鉴（静默，不弹提示） */
+if (typeof dexState !== 'undefined') {
+  for (const s of inv) {
+    if (!s) continue;
+    const d = itemDef(s.id);
+    if (!d || (d.kind !== 'weapon' && d.kind !== 'ring' && d.kind !== 'boots')) continue;
+    if (EQUIPMENT.some(e => e.id === s.id) && dexState.eq.indexOf(s.id) < 0) dexState.eq.push(s.id);
+  }
+}
 buildPackGrid();                       /* 造出背包面板的 24 个格子 */
 buildDexGrid();                        /* 第 14 轮：图鉴格子（鱼 + 采集物） */
 buildChestGrid();                      /* 造出木箱面板的格子（8 + 24） */

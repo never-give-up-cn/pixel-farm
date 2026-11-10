@@ -5,11 +5,12 @@
 
 import { MINERALS } from '../anim/minerals.js';
 import { MONSTERS } from '../anim/monsters.js';
+import { EQUIPMENT } from '../anim/equipment.js';
 
-const dexState = { f: [], g: 0, m: [], c: [], a: [], mo: [] };
+const dexState = { f: [], g: 0, m: [], c: [], a: [], mo: [], eq: [] };
 function dexTotal(){
   return CONFIG.FISHING.LIST.length + CONFIG.GATHER.TYPES.length + MINERALS.length
-    + CONFIG.CROPS.length + CONFIG.ANIMALS.TYPES.length + MONSTERS.length;
+    + CONFIG.CROPS.length + CONFIG.ANIMALS.TYPES.length + MONSTERS.length + EQUIPMENT.length;
 }
 function dexPopcount(n){
   n = n | 0; let c = 0;
@@ -18,9 +19,9 @@ function dexPopcount(n){
 }
 function dexCollected(){
   return dexState.f.length + dexPopcount(dexState.g) + dexState.m.length
-    + dexState.c.length + dexState.a.length + dexState.mo.length;
+    + dexState.c.length + dexState.a.length + dexState.mo.length + dexState.eq.length;
 }
-function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; dexState.c = []; dexState.a = []; dexState.mo = []; }
+function dexResetState(){ dexState.f = []; dexState.g = 0; dexState.m = []; dexState.c = []; dexState.a = []; dexState.mo = []; dexState.eq = []; }
 function dexAllEntries(){
   const out = [];
   for(let i=0;i<CONFIG.FISHING.LIST.length;i++){
@@ -47,6 +48,10 @@ function dexAllEntries(){
     const m = MONSTERS[i];
     out.push({kind:'monster', idx:i, id:m.id, name:m.name, icon:'👾'});
   }
+  for(let i=0;i<EQUIPMENT.length;i++){
+    const e = EQUIPMENT[i];
+    out.push({kind:'equip', idx:i, id:e.id, name:e.name, icon:'⚔️'});
+  }
   return out;
 }
 function arrFor(kind){
@@ -55,6 +60,7 @@ function arrFor(kind){
   if(kind === 'crop') return dexState.c;
   if(kind === 'animal') return dexState.a;
   if(kind === 'monster') return dexState.mo;
+  if(kind === 'equip') return dexState.eq;
   return null;
 }
 function dexHas(kind, idx){
@@ -69,6 +75,7 @@ function dexHas(kind, idx){
   if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; return !!(c && arr.indexOf(c.id) >= 0); }
   if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; return !!(a && arr.indexOf(a.id) >= 0); }
   if(kind === 'monster'){ const m = MONSTERS[idx]; return !!(m && arr.indexOf(m.id) >= 0); }
+  if(kind === 'equip'){ const e = EQUIPMENT[idx]; return !!(e && arr.indexOf(e.id) >= 0); }
   return false;
 }
 function dexUnlock(kind, idx){
@@ -88,6 +95,7 @@ function dexUnlock(kind, idx){
     else if(kind === 'crop'){ const c = CONFIG.CROPS[idx]; id = c && c.id; }
     else if(kind === 'animal'){ const a = CONFIG.ANIMALS.TYPES[idx]; id = a && a.id; }
     else if(kind === 'monster'){ const m = MONSTERS[idx]; id = m && m.id; }
+    else if(kind === 'equip'){ const e = EQUIPMENT[idx]; id = e && e.id; }
     if(!id || arr.indexOf(id) >= 0) return false;
     arr.push(id);
   }

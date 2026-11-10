@@ -11,6 +11,7 @@
 
 import { RES_MAP, drawResourceIcon } from '../anim/resources.js';
 import { MINERALS, MINERAL_MAP, drawMineral } from '../anim/minerals.js';
+import { EQUIPMENT } from '../anim/equipment.js';
 
 const groundDrops = [];
 const floatTexts = [];
@@ -61,6 +62,10 @@ function pickUpDrop(d) {
     /* 矿物第一次捡到就记进图鉴 */
     const idx = MINERALS.findIndex(m => m.id === d.id);
     if (idx >= 0) dexUnlock('mineral', idx);
+  }
+  if (def && (def.kind === 'weapon' || def.kind === 'ring' || def.kind === 'boots') && typeof dexUnlock === 'function') {
+    const idx = EQUIPMENT.findIndex(e => e.id === d.id);
+    if (idx >= 0) dexUnlock('equip', idx);
   }
   if (typeof playSfx === 'function') playSfx(920, 'triangle', 0.045, CONFIG.AUDIO.VOLUME * 0.35);
   return d.n <= 0;

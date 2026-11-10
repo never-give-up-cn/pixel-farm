@@ -3,6 +3,7 @@
 
 import { MINERALS } from './anim/minerals.js';
 import { MONSTERS } from './anim/monsters.js';
+import { EQUIPMENT } from './anim/equipment.js';
 
 /* === 7.存档 === */
 /* 浏览器本地存档：localStorage 单档位，键名 CONFIG.SAVE.KEY（farm_save_v1）
@@ -123,7 +124,7 @@ function serializeState(){
     npc: npcSerialize(),
     /* 第 14 轮新增：图鉴（两个位掩码，8 位鱼 + 3 位采集物，固定 30 字节左右） */
     dex: {f: dexState.f.slice(), g: dexState.g >>> 0, m: dexState.m.slice(),
-          c: dexState.c.slice(), a: dexState.a.slice(), mo: dexState.mo.slice()},
+          c: dexState.c.slice(), a: dexState.a.slice(), mo: dexState.mo.slice(), eq: dexState.eq.slice()},
     /* 第 15 轮新增：动物（类型 / 棚舍归属 / 好感 / 喂食 / 产出 / 成长 / 位置） */
     animals: animalSerialize(),
     pet: (typeof petSerialize === 'function') ? petSerialize() : null,
@@ -317,6 +318,10 @@ function deserializeState(d){
       if(Array.isArray(d.dex.mo)){
         const valid = new Set(MONSTERS.map(m => m.id));
         dexState.mo = [...new Set(d.dex.mo.filter(id => valid.has(id)))];
+      }
+      if(Array.isArray(d.dex.eq)){
+        const valid = new Set(EQUIPMENT.map(e => e.id));
+        dexState.eq = [...new Set(d.dex.eq.filter(id => valid.has(id)))];
       }
     }
     /* 动物（老存档没这个字段 → 没有动物；棚舍没了的动物会被丢弃） */
@@ -518,6 +523,15 @@ function newGame(){
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
   npcRuntimeClear();                            /* 第 27 轮：清空 NPC 物理坐标（下次 tick 直接落在落脚点上） */
   dexResetState();                              /* 新游戏：图鉴清空 */
+  /* 初始武器也计入装备图鉴 */
+  if (typeof dexState !== 'undefined') {
+    for (const s of inv) {
+      if (!s) continue;
+      const d = itemDef(s.id);
+      if (!d || (d.kind !== 'weapon' && d.kind !== 'ring' && d.kind !== 'boots')) continue;
+      if (EQUIPMENT.some(e => e.id === s.id) && dexState.eq.indexOf(s.id) < 0) dexState.eq.push(s.id);
+    }
+  }
   animalResetState();                           /* 新游戏：清空动物 */
   if(typeof petResetState === 'function') petResetState();   /* 新游戏：清空宠物 */
   if(typeof bundleResetState === 'function') bundleResetState();   /* 新游戏：清空收集包 */

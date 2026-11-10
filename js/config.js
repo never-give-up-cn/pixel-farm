@@ -1883,6 +1883,19 @@ const CONFIG = {
   CONFIG.SPECIAL_VILLAGERS = k;
 })();
 
+/* 第 33 轮：生日归一化。
+ * anim 数据按「一季 28 天」写生日，而游戏一季只有 DAYS_PER_SEASON（10）天，
+ * 11 日以后的居民永远过不到生日。把超过一季的日期等比例压到 1~10，
+ * 原本 1~10 日的生日保持不变。 */
+(function normalizeNpcBirthdays(){
+  const D = CONFIG.DAYS_PER_SEASON;
+  for (const d of CONFIG.NPC.LIST) {
+    if (!d.bday) d.bday = { season: '春', day: 1 };
+    const day = Math.max(1, d.bday.day | 0);
+    if (day > D) d.bday.day = Math.max(1, Math.min(D, Math.floor((day - 1) * D / 28) + 1));
+  }
+})();
+
 
 /* 第 32 轮：110 件装备（62 武器 / 30 戒指 / 18 靴子）作为游戏物品。
  * 武器可在矿井里使用，按 dmg / crit 计算伤害；戒指与靴子目前作为可收集/出售品。 */

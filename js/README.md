@@ -43,7 +43,7 @@ import './world/buildings.js';
 | --- | --- |
 | `js/config.js` | `CONFIG` 全部可调参数、地块类型 `T`、物品/作物/商店/NPC 日程等配置 |
 | `js/world/` | 地图生成、建筑定义 |
-| `js/render/` | 瓦片、建筑、作物、实体、建造预览的 Canvas 绘制 |
+| `js/render/` | 瓦片、建筑、作物、实体、建造预览的 Canvas 绘制；作物改用 `js/anim/sdv-crops.js` 的程序化美术 |
 | `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、矿井、终局等 |
 | `js/ui/` | DOM 面板：背包/商店/系统菜单/暂停菜单/开始菜单/提示 |
 | `js/npc/` | NPC：状态、日程、连续移动、对话、送礼、来访、好感、存档、绘制 |
@@ -92,7 +92,7 @@ import './world/buildings.js';
 | 数值、价格、作物生长天数、NPC 日程数据 | `js/config.js` |
 | 地图生成、地形 | `js/world/map.js` |
 | 建筑外观/布局 | `js/world/buildings.js` + `js/render/buildings.js` |
-| 地面/作物/实体怎么画 | `js/render/` 下对应文件 |
+| 地面/作物/实体怎么画 | `js/render/` 下对应文件；作物美术在 `js/anim/sdv-crops.js` |
 | 玩家移动、碰撞、体力 | `js/systems/collision.js`、`js/systems/stamina.js` |
 | 玩家外观 / 动作 | `js/systems/player-anim.js` + `js/anim/farmer.js` |
 | 锄地、浇水、播种、收获 | `js/systems/crops.js`、`js/systems/soil.js` |

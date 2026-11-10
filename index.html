@@ -176,6 +176,27 @@
   }
   #shopTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
   #shopBody{max-height:330px;overflow-y:auto}
+  /* 第 32 轮：社区中心收集包 */
+  #bundle{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
+  #bundle.open{display:flex}
+  #bundleMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #bundlePanel{position:relative;width:580px;max-width:calc(100vw - 24px);max-height:86vh;display:flex;flex-direction:column}
+  #bundleHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+  #bundleHead span{color:#8fa3bd;font-size:12px}
+  #bundleList{overflow-y:auto;max-height:62vh;display:flex;flex-direction:column;gap:6px;padding-right:4px}
+  #bundleFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
+  .brow{border:1px solid #2c3a4e;border-radius:6px;padding:6px 8px;background:rgba(8,10,16,.55)}
+  .brow.done{border-color:#6b5a2a;background:rgba(34,28,10,.62)}
+  .brow .bt{color:#e8f0ff;font-size:12px}
+  .brow .bt em{font-style:normal;color:#8fa3bd;font-size:11px;margin-left:8px}
+  .brow.done .bt{color:#ffd76a}
+  .brow .breq{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+  .breq button{background:#1a2130;border:1px solid #2c3a4e;border-radius:4px;color:#cfe3ff;
+    font:11px/1.2 Consolas,"Microsoft YaHei",monospace;padding:3px 7px;cursor:pointer}
+  .breq button:hover{background:#232c3e}
+  .breq button.ok{border-color:#5a8a4a;color:#9fe08a}
+  .breq button.full{border-color:#6b5a2a;color:#ffd76a}
+  .breq button.off{opacity:.45;cursor:default}
   .srow{
     display:flex;align-items:center;gap:8px;padding:5px 6px;
     border-bottom:1px solid #232c3e;
@@ -808,6 +829,16 @@
     </div>
     <div id="shopBody"></div>
     <div id="shopFoot">Esc 关闭 · 走到商店摊附近按 E 打开</div>
+  </div>
+</div>
+
+<!-- 社区中心收集包面板 -->
+<div id="bundle">
+  <div id="bundleMask"></div>
+  <div id="bundlePanel" class="panel">
+    <div id="bundleHead">社区中心 <span id="bundleProg">0/30</span></div>
+    <div id="bundleList"></div>
+    <div id="bundleFoot">点击物品交付 · 交满自动领取金币 · Esc 关闭</div>
   </div>
 </div>
 

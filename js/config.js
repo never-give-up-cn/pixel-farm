@@ -9,6 +9,7 @@ import { ARTISANS } from './anim/artisan.js';
 import { DISHES, DISH_MAP } from './anim/dishes.js';
 import { RECIPES as ANIM_RECIPES } from './anim/recipes.js';
 import { ACHIEVEMENTS as ANIM_ACHIEVEMENTS } from './anim/achievements.js';
+import { BUNDLES as ANIM_BUNDLES, BUNDLE_ROOMS, bundleRoomName } from './anim/bundles.js';
 
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
@@ -1410,7 +1411,8 @@ const CONFIG = {
     ['water_obelisk',   '水之图腾', { stone:40 },           1500],
     ['desert_obelisk',  '沙漠图腾', { stone:40 },           3000],
     ['island_obelisk',  '岛屿图腾', { stone:40 },           3000],
-    ['gold_clock',      '黄金时钟', { stone:50 },           5000]
+    ['gold_clock',      '黄金时钟', { stone:50 },           5000],
+    ['community_center','社区中心', { wood:50, stone:50 },   1000]
   ];
   for (const [id, name, cost, gold] of EXTRA) {
     if (CONFIG.BUILD.RECIPES.some(r => r.id === id)) continue;
@@ -1659,6 +1661,78 @@ const CONFIG = {
     a.badge = pool[k % pool.length];
     used[a.cat] = k + 1;
   });
+})();
+
+
+/* 第 32 轮：30 个社区中心收集包，物品名映射到游戏物品，奖励简化为金币。 */
+(function addBundles(){
+  const ROOM_ICON = { pantry:'🥫', crafts:'🧺', fish:'🎣', boiler:'🔥', bulletin:'📌', vault:'💰' };
+  const ROOM_GOLD  = { pantry:800, crafts:900, fish:1000, boiler:1200, bulletin:1200, vault:1500 };
+  const SYN = {
+    '布料':'cloth', '西红柿':'tomato', '大牛奶':'milk', '大鸡蛋':'egg', '大羊奶':'milk',
+    '大棕色鸡蛋':'egg', '大鸭蛋':'duck_egg', '硬木':'wood', '煤炭':'charcoal',
+    '椰子':'apple', '山洞萝卜':'carrot', '红蘑菇':'common_mushroom', '紫蘑菇':'common_mushroom',
+    '雪山药':'winter_root', '番红花':'tulip', '榛子':'berry', '黑莓':'berry', '野梅':'berry',
+    '贝壳':'clam', '牡蛎':'clam', '贻贝':'clam', '水晶果':'frozen_tear',
+    '太阳鱼':'fish_crucian', '西鲱':'fish_anchovy', '虎鳟':'fish_bream',
+    '大头鱼':'fish_carp', '鲟鱼':'fish_sturgeon', '沙丁鱼':'fish_anchovy',
+    '金枪鱼':'fish_tuna', '红鲷鱼':'fish_bream', '罗非鱼':'fish_bream',
+    '鲑鱼':'fish_salmon', '大眼鱼':'fish_bream', '龙虾':'crab', '螃蟹':'crab'
+  };
+
+  const byName = new Map();
+  for (const id in CONFIG.ITEMS) {
+    const it = CONFIG.ITEMS[id];
+    if (it && it.name && !byName.has(it.name)) byName.set(it.name, id);
+  }
+  const firstFish = Object.keys(CONFIG.ITEMS).find(id => CONFIG.ITEMS[id].kind === 'fish') || 'fish_crucian';
+
+  function resolve(rawName) {
+    const pick = (id, fb) => CONFIG.ITEMS[id] ? id : fb;
+    let name = rawName;
+    /* 金星 / 铱星品质 → 优质物品 */
+    if (name.indexOf('金星') === 0 || name.indexOf('铱星') === 0) {
+      const base = name.slice(2);
+      if (byName.has(base + '_hq')) return byName.get(base + '_hq');
+      name = base;
+    }
+    if (byName.has(name)) return byName.get(name);
+    if (SYN[name]) return pick(SYN[name], firstFish);
+    if (SYN[name.replace(/^大/, '')]) return pick(SYN[name.replace(/^大/, '')], firstFish);
+    if (name.indexOf('鱼') >= 0) return firstFish;
+    if (name.indexOf('牛奶') >= 0 || name.indexOf('羊奶') >= 0) return 'milk';
+    if (name.indexOf('蛋') >= 0) return 'egg';
+    if (name.indexOf('奶酪') >= 0) return 'cheese';
+    if (name.indexOf('果酱') >= 0) return 'jelly';
+    if (name.indexOf('蜂蜜') >= 0) return 'honey';
+    if (name.indexOf('松露') >= 0) return 'truffle';
+    if (name.indexOf('木材') >= 0) return 'wood';
+    if (name.indexOf('石头') >= 0) return 'stone';
+    if (name.indexOf('蘑菇') >= 0) return 'common_mushroom';
+    return 'wildflower';
+  }
+
+  CONFIG.BUNDLES = [];
+  ANIM_BUNDLES.forEach((b, idx) => {
+    const reqMap = {};
+    for (const line of b.items) {
+      const m = String(line).match(/^(.*?)\s*[×x]\s*(\d+)\s*$/);
+      const name = m ? m[1].trim() : String(line).trim();
+      const n = m ? Math.max(1, parseInt(m[2], 10) || 1) : 1;
+      const id = resolve(name);
+      reqMap[id] = (reqMap[id] || 0) + n;
+    }
+    const items = Object.keys(reqMap).map(id => ({ id, n: reqMap[id] }));
+    CONFIG.BUNDLES.push({
+      id: b.id, name: b.name, room: b.room,
+      roomName: bundleRoomName(b.room),
+      icon: ROOM_ICON[b.room] || '🎁',
+      items,
+      gold: (ROOM_GOLD[b.room] || 800) + idx * 30
+    });
+  });
+  CONFIG.BUNDLE_MAP = Object.fromEntries(CONFIG.BUNDLES.map(b => [b.id, b]));
+  CONFIG.BUNDLE_ROOMS = BUNDLE_ROOMS;
 })();
 
 

@@ -116,6 +116,7 @@ import './world/buildings.js';
 | 宠物 / 宠物碗 | `js/systems/pet.js`（15 种宠物，绘制走 `js/anim/pets.js`） |
 | 建造模式 | `js/systems/build.js` + `js/ui/panels.js` |
 | 委托 | `js/systems/quests.js` |
+| 收集包 / 社区中心 | `js/systems/bundles.js` + `js/ui/bundle-panel.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
 | 成就/统计 | `js/systems/stats.js`（32 个成就，徽章走 `js/anim/achievements.js`） |
 | 加工台 | `js/systems/maker.js` |
@@ -176,6 +177,8 @@ import './world/buildings.js';
 | `js/systems/forest.js` | 砍树：3 段受击、摇晃、绕根部倒下、木材抛散与木屑粒子 |
 | `js/systems/trees.js` | 地图树木：10 种野生树 + 8 种果树按坐标分树种，果树结果 / 采摘 / 再结果 |
 | `js/systems/pet.js` | 宠物：15 种 anim 宠物在农舍附近游荡，E 抚摸，宠物碗切换品种 |
+| `js/systems/bundles.js` | 社区中心收集包：交付进度 / 完成状态 / 金币奖励 / 存档 |
+| `js/ui/bundle-panel.js` | 收集包 DOM 面板：30 个收集包、逐件交付与完成标记 |
 | `js/systems/harvest-fx.js` | 采集反馈：岩石摇晃 / 碎裂、野花倒伏、锄地扬土、浇水涟漪、收获碎叶 |
 
 ```js

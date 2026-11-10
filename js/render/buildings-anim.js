@@ -12,7 +12,8 @@ import {
 
 /* 游戏 type → anim 建筑 id（同名直接对应） */
 const TYPE_ALIAS = {
-  house: 'farmhouse'
+  house: 'farmhouse',
+  community_center: 'junimo_hut'
 };
 
 const SCALE = 1;

@@ -187,8 +187,8 @@ import './world/buildings.js';
 | `js/systems/bundles.js` | 社区中心收集包：交付进度 / 完成状态 / 金币奖励 / 存档 |
 | `js/systems/wardrobe.js` | 换装状态：帽子 / 上衣 / 下装，提供 drawFarmer 的 outfit 参数与存档 |
 | `js/systems/decor.js` | 装修模式：选中家具后 H 键进入，左键摆放 / 右键拆回，家具存档 |
-| `js/systems/room.js` | 房间装修状态：墙纸 / 地板选择与存档，装修样板建筑 |
-| `js/systems/farmhouse.js` | 可进入的农舍室内：移动、床睡觉、灶台、门口离开，应用墙纸/地板 |
+| `js/systems/room.js` | 房间装修状态：墙纸 / 地板 / 室内家具 / 室内灶台任务与存档 |
+| `js/systems/farmhouse.js` | 可进入的农舍室内：移动、床睡觉、室内家具摆放、灶台烹饪、门口离开 |
 | `js/ui/room-panel.js` | 装修样板面板：3 行墙纸 + 5 行地板的实时房间预览 |
 | `js/ui/wardrobe-panel.js` | 衣柜面板：90 帽子 / 64 上衣 / 16 下装试穿与实时预览 |
 | `js/ui/bundle-panel.js` | 收集包 DOM 面板：30 个收集包、逐件交付与完成标记 |

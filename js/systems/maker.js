@@ -127,7 +127,9 @@ function makerAdvance(minutes, silent){
   const m = Math.max(0, Number(minutes) || 0);
   if(m <= 0) return 0;
   let done = 0;
-  for(const b of buildings){
+  const list = (window.roomStove && buildings.indexOf(window.roomStove) < 0)
+    ? buildings.concat([window.roomStove]) : buildings;
+  for(const b of list){
     if((b.type !== 'maker' && b.type !== 'stove') || !b.job) continue;
     if(b.job.left <= 0){
       /* 上次因为产出槽满而挂起：腾出空位后静默完成，不重复弹提示 */

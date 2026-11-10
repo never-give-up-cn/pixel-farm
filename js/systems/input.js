@@ -16,7 +16,11 @@ window.addEventListener('keydown', e=>{
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
   /* 农舍室内：只处理 Esc / E，移动由 updateFarmhouse 读 keys */
   if(window.farmhouseActive){
-    if(k === 'escape'){ if(!e.repeat) exitFarmhouse(); return; }
+    if(k === 'h'){ if(!e.repeat) toggleIndoorDecor(); return; }
+    if(k === 'escape'){
+      if(window.indoorDecor){ toggleIndoorDecor(false); return; }
+      exitFarmhouse(); return;
+    }
     if(k === 'e'){ if(!e.repeat) farmhouseInteract(); return; }
     return;
   }
@@ -208,7 +212,16 @@ window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; h
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen) return;
-  if(window.farmhouseActive || window.mineActive) return;
+  if(window.mineActive) return;
+  if(window.farmhouseActive){
+    if(window.indoorDecor){
+      const lp = toLogical(e);
+      const t = farmhouseTileAt(lp.x, lp.y);
+      if(e.button === 0) farmhouseIndoorPlace(t.tx, t.ty);
+      else if(e.button === 2) farmhouseIndoorRemove(t.tx, t.ty);
+    }
+    return;
+  }
   if(e.button === 0) mouseHeld = false;
   const p = toLogical(e);
   /* 点 HUD 上的日期 → 打开日历（第 17 轮），不要穿到世界里去锄地/放置 */

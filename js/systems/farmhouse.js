@@ -6,7 +6,7 @@
 'use strict';
 
 import {
-  INTERIOR_MAP, drawWallpaperTile, drawFloorTile
+  INTERIOR_MAP, drawWallpaperTile, drawFloorTile, drawFurnitureIcon
 } from '../anim/interior.js';
 import { drawFarmer } from '../anim/farmer.js';
 import { HAT_MAP, drawHatOnFarmer } from '../anim/hats.js';
@@ -18,6 +18,7 @@ const ROOM_OY = Math.round((CONFIG.VIEW_H - ROOM_H * 32) / 2);
 const SPEED = 90;
 
 window.farmhouseActive = false;
+window.indoorDecor = false;
 
 let outside = null;
 
@@ -33,6 +34,7 @@ function inside(x, y, r) {
 function solidAt(tx, ty) {
   if (tx < 1 || tx >= ROOM_W - 1 || ty < 3 || ty >= ROOM_H - 1) return true;
   if (inside(tx, ty, BED) || inside(tx, ty, STOVE) || inside(tx, ty, TABLE)) return true;
+  if (typeof roomFurnitureAt === 'function' && roomFurnitureAt(tx, ty)) return true;
   return false;
 }
 
@@ -96,8 +98,12 @@ function farmhouseInteract() {
     return true;
   }
   if (nearRect(STOVE, 52)) {
-    toast('灶台还没接上，先用外面的灶台烹饪');
-    playSfx(320, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.6);
+    if (typeof makerOpenPanel === 'function' && window.roomStove) {
+      if (typeof packOpen !== 'undefined' && packOpen && typeof togglePack === 'function') togglePack(false);
+      makerOpenPanel(window.roomStove);
+    } else {
+      toast('灶台还没接上，先用外面的灶台烹饪');
+    }
     return true;
   }
   if (Math.hypot(player.x - (DOOR.x + 0.5) * 32, player.y - (DOOR.y + 0.2) * 32) <= 54) {
@@ -109,6 +115,53 @@ function farmhouseInteract() {
     return true;
   }
   return false;
+}
+
+function farmhouseTileAt(px, py) {
+  return { tx: Math.floor((px - ROOM_OX) / 32), ty: Math.floor((py - ROOM_OY) / 32) };
+}
+
+function indoorTileFree(tx, ty) {
+  if (tx < 1 || tx >= ROOM_W - 1 || ty < 3 || ty >= ROOM_H - 1) return false;
+  if (inside(tx, ty, BED) || inside(tx, ty, STOVE) || inside(tx, ty, TABLE)) return false;
+  if (typeof roomFurnitureAt === 'function' && roomFurnitureAt(tx, ty)) return false;
+  return true;
+}
+
+function toggleIndoorDecor(v) {
+  const want = (v === undefined) ? !window.indoorDecor : !!v;
+  if (want) {
+    const d = typeof decorItem === 'function' ? decorItem() : null;
+    if (!d) { toast('先在快捷栏选中一件家具'); return false; }
+    toast('室内装修：左键摆放 · 右键拆回 · H / Esc 退出');
+  } else {
+    toast('退出室内装修');
+  }
+  window.indoorDecor = want;
+  return want;
+}
+
+function farmhouseIndoorPlace(tx, ty) {
+  if (!window.indoorDecor) return false;
+  const d = typeof decorItem === 'function' ? decorItem() : null;
+  if (!d) { toast('先在快捷栏选中一件家具'); return false; }
+  if (!indoorTileFree(tx, ty)) { toast('这里放不下家具'); return false; }
+  if (countItem(d.id) <= 0) { toast('背包里没有这件家具'); return false; }
+  if (!removeItem(d.id, 1)) return false;
+  if (typeof roomPlaceFurniture === 'function') roomPlaceFurniture(d.id, tx, ty);
+  playSfx(520, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.8);
+  return true;
+}
+
+function farmhouseIndoorRemove(tx, ty) {
+  if (!window.indoorDecor) return false;
+  if (typeof roomRemoveFurniture !== 'function') return false;
+  const id = roomRemoveFurniture(tx, ty);
+  if (!id) return false;
+  addItem(id, 1);
+  toast('收起了家具');
+  playSfx(320, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.7);
+  return true;
 }
 
 function updateFarmhouse(dt) {
@@ -203,6 +256,40 @@ function drawFarmhouse(g) {
   g.fillStyle = '#6a4a2a'; g.fillRect(dx + 7, dy - 1, 18, 26);
   g.fillStyle = '#c8a050'; g.fillRect(dx + 21, dy + 12, 3, 3);
 
+  /* 室内家具 */
+  if (typeof roomState !== 'undefined' && roomState.furn) {
+    for (const f of roomState.furn) {
+      const def = INTERIOR_MAP[f.id];
+      if (!def) continue;
+      const fx = ROOM_OX + f.tx * 32, fy = ROOM_OY + f.ty * 32;
+      g.save();
+      g.imageSmoothingEnabled = false;
+      g.translate(fx - 4, fy - 8);
+      drawFurnitureIcon(g, def, (typeof animTime !== 'undefined' ? animTime : 0) * 0.2);
+      g.restore();
+    }
+  }
+
+  /* 室内装修预览 */
+  if (window.indoorDecor && typeof mouse !== 'undefined' && mouse.inside && typeof decorItem === 'function') {
+    const d = decorItem();
+    const src = d && typeof itemIconCanvas === 'function' ? itemIconCanvas(d.id) : null;
+    if (d && src) {
+      const t = farmhouseTileAt(mouse.x, mouse.y);
+      if (t.tx >= 0 && t.ty >= 0 && t.tx < ROOM_W && t.ty < ROOM_H) {
+        const fx = ROOM_OX + t.tx * 32, fy = ROOM_OY + t.ty * 32;
+        g.save();
+        g.globalAlpha = 0.65;
+        g.drawImage(src, Math.round(fx - 4), Math.round(fy - 8), 40, 40);
+        g.globalAlpha = 1;
+        g.strokeStyle = indoorTileFree(t.tx, t.ty) ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
+        g.lineWidth = 2;
+        g.strokeRect(fx + 1, fy + 1, 30, 30);
+        g.restore();
+      }
+    }
+  }
+
   /* 玩家 */
   const fit = (typeof playerOutfitOpts === 'function') ? playerOutfitOpts() : null;
   const action = player.moving ? 'walk' : 'idle';
@@ -225,9 +312,13 @@ function drawFarmhouse(g) {
 
 Object.assign(window, {
   farmhouseActive, enterFarmhouse, exitFarmhouse, updateFarmhouse,
-  drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit
+  drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit,
+  farmhouseTileAt, indoorTileFree, toggleIndoorDecor,
+  farmhouseIndoorPlace, farmhouseIndoorRemove
 });
 export {
   enterFarmhouse, exitFarmhouse, updateFarmhouse,
-  drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit
+  drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit,
+  farmhouseTileAt, indoorTileFree, toggleIndoorDecor,
+  farmhouseIndoorPlace, farmhouseIndoorRemove
 };

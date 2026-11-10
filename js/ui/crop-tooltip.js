@@ -89,9 +89,8 @@ function updateStats(force){
     '背包 <b>' + invUsed() + '</b>/' + CONFIG.INVENTORY.SLOTS + ' 格　金币 <b>' + gold + '</b>\n' +
     '体力 <b>' + Math.ceil(stamina) + '</b>/' + staminaMax + '（上限 ' + CONFIG.STAMINA.MAX + '）\n' +
     '水壶 <b>' + canWater + '</b>/' + canCapacity() + '（Lv' + canLevel + '）　右键站在水边补水\n' +
-    '作物 ' + CONFIG.CROPS.map(c =>
-        c.icon + c.name + '(' + c.season + c.days + '天' + (c.regrow ? '可再收' : '') + ')' +
-        ' 种' + c.seedCost + '/售' + c.sell).join('　') + '\n' +
+    '作物 <b>' + CONFIG.CROPS.length + '</b> 种（当季 ' +
+        CONFIG.CROPS.filter(c => cropSeasons(c).indexOf(seasonName()) >= 0).length + ' 种）\n' +
     '背包物品 ' + Object.keys(CONFIG.ITEMS).filter(id => countItem(id) > 0).map(id =>
         CONFIG.ITEMS[id].icon + ' ' + CONFIG.ITEMS[id].name + ' <b>' + countItem(id) + '</b>').join('　') + '\n' +
     '时间 <b>' + seasonName() + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + '</b>　' +

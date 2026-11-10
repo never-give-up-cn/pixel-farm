@@ -41,7 +41,7 @@ import './world/buildings.js';
 
 | 目录 | 负责 |
 | --- | --- |
-| `js/config.js` | `CONFIG` 全部可调参数、地块类型 `T`、物品/作物/商店/NPC 日程等配置 |
+| `js/config.js` | `CONFIG` 全部可调参数、地块类型 `T`、物品/作物/商店/NPC 日程等配置；第 32 轮起从 anim 作物表生成 50 种作物、种子与商店货架 |
 | `js/world/` | 地图生成、建筑定义 |
 | `js/render/` | 瓦片、建筑、作物、实体、建造预览的 Canvas 绘制；作物改用 `js/anim/sdv-crops.js` 的程序化美术 |
 | `js/systems/` | 玩法系统：背包、建造、碰撞、体力、商店、时间、天气、睡觉、钓鱼、动物、委托、节日、统计、加工台、矿井、终局等 |

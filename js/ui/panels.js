@@ -254,7 +254,7 @@ function showPackTip(i, e){
     lines.push(kindName + ' · 售价 ' + priceOf(d.id) + ' 💰 ' + priceTrend(d.id));
   }else if(d.kind === 'seed'){
     const cd = cropDef(d.crop);
-    lines.push('种子 · ' + cd.season + '季 · ' + cd.days + '天');
+    lines.push('种子 · ' + cropSeasons(cd).join('、') + '季 · ' + cd.days + '天');
   }else if(d.kind === 'tool'){
     lines.push('工具 · 左键使用');
   }else if(d.kind === 'currency'){

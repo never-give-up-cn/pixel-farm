@@ -71,6 +71,11 @@ function renderShopBuy(){
     const up = (id === 'can_upgrade');
     const d = up ? null : itemDef(id);
     if(!up && !d) continue;
+    /* 第 32 轮：种子只显示当季可种的，避免 50 种一起挤满货架 */
+    if(d && d.kind === 'seed'){
+      const cd = cropDef(d.crop);
+      if(!cd || cropSeasons(cd).indexOf(seasonName()) < 0) continue;
+    }
     const price = priceOf(id);
     let name, sub, off = false, label = '购买', fn;
     if(up){
@@ -85,7 +90,7 @@ function renderShopBuy(){
       const owned = toolOwned(id);
       name = d.name;
       if(d.kind === 'tool')      sub = '工具 · 一次性';
-      else if(d.kind === 'seed'){ const cd = cropDef(d.crop); sub = cd.season + '季 · ' + cd.days + '天'; }
+      else if(d.kind === 'seed'){ const cd = cropDef(d.crop); sub = cropSeasons(cd).join('、') + '季 · ' + cd.days + '天'; }
       else sub = '';
       off = owned || (gold < price);
       label = owned ? '已拥有' : (gold < price ? '金币不够' : '购买');

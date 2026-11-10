@@ -68,14 +68,14 @@ function questMake(rng, kind){
   const A = CONFIG.QUEST, season = seasonName();
   /* 第 22 轮：先把种类定下来，再统一生成目标（原来 crop 分支里改 kind 再走 else if 链，容易绕晕） */
   if(kind === 'crop'){
-    const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
+    const pool = CONFIG.CROPS.filter(c => cropSeasons(c).indexOf(season) >= 0);
     /* 冬天没有当季作物 → 换成材料委托，避免刷出做不完的委托 */
     if(!pool.length) kind = 'material';
   }
   let target = null;
   if(kind === 'crop'){
-    const pool = A.CROP_POOL.filter(id => { const c = cropDef(id); return c && c.season === season; });
-    target = questPick(rng, pool);
+    const pool = CONFIG.CROPS.filter(c => cropSeasons(c).indexOf(season) >= 0);
+    target = questPick(rng, pool).id;
   }else if(kind === 'fish'){
     const pool = A.FISH_POOL.filter(id => { const f = fishDef(id); return f && f.seasons.indexOf(season) >= 0; });
     target = questPick(rng, pool.length ? pool : A.FISH_POOL);

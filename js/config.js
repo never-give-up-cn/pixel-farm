@@ -1,6 +1,8 @@
 /* js/config.js —— 由 index.html 拆分，原行 1122–2293 */
 'use strict';
 
+import { CROPS as ANIM_CROPS } from './anim/sdv-crops.js';
+
 /* === 1.CONFIG === */
 /* 所有可调数字都来自这里 —— 改这一个对象即可调整个游戏 */
 
@@ -154,8 +156,8 @@ const CONFIG = {
     START_LOADOUT: [
       { id:'hoe', n:1 }, { id:'can', n:1 }, { id:'axe', n:1 },
       { id:'pick', n:1 }, { id:'sickle', n:1 }, { id:'rod', n:1 },
-      { id:'seed_radish', n:10 }, { id:'seed_potato', n:5 },
-      { id:'seed_tomato', n:5 }, { id:'seed_pumpkin', n:5 }
+      { id:'seed_parsnip', n:10 }, { id:'seed_potato', n:5 },
+      { id:'seed_cauliflower', n:3 }, { id:'seed_tulip', n:3 }
     ]
   },
 
@@ -1174,6 +1176,102 @@ const CONFIG = {
   }
 };
 
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * 第 32 轮：把 anim 图鉴的 50 种作物接进玩法。
+ *  - 基础 4 种（萝卜/土豆/番茄/南瓜）保留原有数值，不重复生成；
+ *  - 其余 46 种按「生长天数 + 是否再收 + 果实大小」推算种子价与售价；
+ *  - 同步生成作物物品、优质物品、种子物品、种子工具条目与商店货架。
+ * ═══════════════════════════════════════════════════════════════════════ */
+(function mergeAnimCrops(){
+  const ICON_BY_ID = {
+    blue_jazz:'🌷', carrot:'🥕', cauliflower:'🥦', coffee_bean:'☕', garlic:'🧄',
+    green_bean:'🫛', kale:'🥬', parsnip:'🥕', strawberry:'🍓', tulip:'🌷',
+    unmilled_rice:'🌾', wild_horseradish:'🌿',
+    blueberry:'🫐', hops:'🌿', hot_pepper:'🌶️', melon:'🍈', pineapple:'🍍',
+    poppy:'🌺', red_cabbage:'🥬', spice_berry:'🫐', starfruit:'⭐',
+    summer_spangle:'🌼', summer_squash:'🎃', taro_root:'🍠', corn:'🌽',
+    sunflower:'🌻', wheat:'🌾',
+    amaranth:'🌺', artichoke:'🥬', beet:'🍠', bok_choy:'🥬', broccoli:'🥦',
+    common_mushroom:'🍄', cranberries:'🍒', eggplant:'🍆', fairy_rose:'🌹',
+    grape:'🍇', sweet_gem_berry:'💎', yam:'🍠',
+    powdermelon:'🍈', winter_root:'🥔',
+    ancient_fruit:'🫐', cactus_fruit:'🌵', fiber:'🌿', qi_fruit:'🟦'
+  };
+  const ICON_BY_KIND = {
+    flower:'🌷', root:'🥕', leafy:'🥬', bush:'🫐', pod:'🫛', vine:'🍇',
+    gourd:'🎃', tree:'🍎', grain:'🌾', tuber:'🥔', mushroom:'🍄', fiber:'🌿'
+  };
+
+  /* 「全季」需要展开成四个季节，否则 seasonName() 永远匹配不上 */
+  const allSeasons = ['春', '夏', '秋', '冬'];
+  function seasonsOf(ac){
+    if (ac.season === '全季' || ac.season === '全年') return allSeasons.slice();
+    return ac.season.split('').filter(ch => allSeasons.indexOf(ch) >= 0);
+  }
+
+  for (const ac of ANIM_CROPS) {
+    const seasons = seasonsOf(ac);
+    if (!seasons.length) seasons.push('春');
+
+    /* 已有作物也按 demo 数据同步生长天数、再收间隔与季节 */
+    const def = CONFIG.CROPS.find(c => c.id === ac.id);
+    if (def) {
+      def.season = seasons[0];
+      def.seasons = seasons.length > 1 ? seasons : undefined;
+      def.days = ac.days;
+      def.regrow = ac.regrow || 0;
+      def.ripe = ac.produce ? ac.produce.c1 : def.ripe;
+      def.unripe = ac.produce ? (ac.produce.c2 || ac.produce.c1) : def.unripe;
+      def.leaf = ac.leaf || def.leaf;
+      continue;
+    }
+
+    const icon = ICON_BY_ID[ac.id] || ICON_BY_KIND[ac.kind] || '🌱';
+    const size = (ac.produce && ac.produce.size) || 2;
+    const sell = Math.round(ac.days * 6 + (ac.regrow ? 24 : 0) + size * 8);
+    const seedCost = Math.max(8, Math.round(sell * 0.35));
+
+    CONFIG.CROPS.push({
+      id: ac.id,
+      name: ac.name,
+      icon,
+      season: seasons[0],
+      seasons,
+      days: ac.days,
+      seedCost,
+      sell,
+      regrow: ac.regrow || 0,
+      ripe: ac.produce ? ac.produce.c1 : '#e0a040',
+      unripe: ac.produce ? (ac.produce.c2 || ac.produce.c1) : '#c8c090',
+      leaf: ac.leaf || '#4aa03c'
+    });
+
+    CONFIG.ITEMS[ac.id] = {
+      id: ac.id, name: ac.name, icon, stack: true, max: 99,
+      kind: 'crop', crop: ac.id, price: sell
+    };
+    CONFIG.ITEMS[ac.id + '_hq'] = {
+      id: ac.id + '_hq', name: '优质' + ac.name, icon, stack: true, max: 99,
+      kind: 'crop', crop: ac.id, price: Math.round(sell * 1.8)
+    };
+    CONFIG.ITEMS['seed_' + ac.id] = {
+      id: 'seed_' + ac.id, name: ac.name + '种子', icon: '🌱', stack: true, max: 99,
+      kind: 'seed', crop: ac.id
+    };
+
+    /* 播种工具条目：useTool 通过 CONFIG.TOOLS 找到 crop */
+    CONFIG.TOOLS.push({
+      id: 'seed_' + ac.id, crop: ac.id,
+      accepts: [T.TILLED], to: T.TILLED, out: null, cost: 0,
+      msg: '播下了' + ac.name, sfx: 420 + (CONFIG.TOOLS.length * 37) % 560
+    });
+
+    /* 商店只上架当季种子（渲染时再按季节筛） */
+    CONFIG.SHOP.BUY.push({ id: 'seed_' + ac.id, price: seedCost });
+  }
+})();
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */

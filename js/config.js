@@ -1412,7 +1412,8 @@ const CONFIG = {
     ['desert_obelisk',  '沙漠图腾', { stone:40 },           3000],
     ['island_obelisk',  '岛屿图腾', { stone:40 },           3000],
     ['gold_clock',      '黄金时钟', { stone:50 },           5000],
-    ['community_center','社区中心', { wood:50, stone:50 },   1000]
+    ['community_center','社区中心', { wood:50, stone:50 },   1000],
+    ['stove',           '灶台',     { wood:15, stone:10 },   0]
   ];
   for (const [id, name, cost, gold] of EXTRA) {
     if (CONFIG.BUILD.RECIPES.some(r => r.id === id)) continue;

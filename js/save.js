@@ -102,7 +102,7 @@ function serializeState(){
     buildings: buildings.filter(b => !b.preset).map(b => {     /* 第 25 轮：镇上的家具是静态配置，不存档 */
       const o = {type:b.type, x:b.tx, y:b.ty,
         slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null};
-      if(b.type === 'maker'){                 /* 第 19 轮：加工台剩余时间 + 产出槽 */
+      if(b.type === 'maker' || b.type === 'stove'){                 /* 第 19 轮：加工台剩余时间 + 产出槽 */
         if(b.job) o.j = {r:b.job.rid, t:Math.max(0, Math.round(b.job.left))};
         if(b.out && b.out.length) o.o = b.out.map(s => ({id:s.id, n:s.n}));
       }
@@ -188,7 +188,7 @@ function deserializeState(d){
               if(s && CONFIG.ITEMS[s.id]) nb.slots[k] = {id:s.id, n:s.n|0};
             }
         }
-        if(b.type === 'maker'){                 /* 第 19 轮：恢复剩余时间与产出槽 */
+        if(b.type === 'maker' || b.type === 'stove'){                 /* 第 19 轮：恢复剩余时间与产出槽 */
           nb.job = null; nb.out = [];
           if(b.j && typeof b.j === 'object'){
             const rd = recipeDef(b.j.r);

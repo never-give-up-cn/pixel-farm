@@ -162,11 +162,27 @@ function drawAutobox(g,x,y,t){
   g.fillRect(x+6, y+15, 3, 3);
   if(on){ g.fillStyle = 'rgba(110,240,160,.35)'; g.fillRect(x+5, y+14, 5, 5); }
 }
+/* 灶台：石砌底座 + 铁锅 + 火光 */
+function drawStove(g,x,y){
+  const t = typeof animTime !== 'undefined' ? animTime : 0;
+  g.fillStyle = 'rgba(0,0,0,.20)'; g.fillRect(x+3, y+28, 26, 3);
+  g.fillStyle = '#6e6e66'; g.fillRect(x+4, y+16, 24, 13);
+  g.fillStyle = '#8e8e86'; g.fillRect(x+5, y+17, 22, 5);
+  g.fillStyle = '#4e4e48'; g.fillRect(x+4, y+26, 24, 3);
+  g.fillStyle = '#4a4a4a'; g.fillRect(x+6, y+12, 20, 4);
+  g.fillStyle = '#3a3a42'; g.fillRect(x+10, y+8, 12, 5);
+  g.fillStyle = '#6a6a72'; g.fillRect(x+11, y+9, 10, 2);
+  const f = Math.sin(t * 9) > 0 ? 1 : 0;
+  g.fillStyle = '#e07a2a'; g.fillRect(x+14, y+24+f, 4, 3);
+  g.fillStyle = '#f0c050'; g.fillRect(x+15, y+25+f, 2, 2);
+}
+
 function drawBuilding(g,b,x,y){
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
   else if(b.type === 'fence')     drawFence(g,x,y);
   else if(b.type === 'chest') drawChest(g,x,y, chestOpen && openChest === b);
   else if(b.type === 'sprinkler') drawSprinkler(g,x,y, animTime);
+  else if(b.type === 'stove') drawStove(g,x,y);
   else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
   else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);

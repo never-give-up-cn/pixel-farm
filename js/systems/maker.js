@@ -10,6 +10,8 @@ const makerMaskEl  = document.getElementById('makerMask');
 const makerStatusEl= document.getElementById('makerStatus');
 const makerOutEl   = document.getElementById('makerOut');
 const makerListEl  = document.getElementById('makerList');
+const makerTitleEl = document.getElementById('makerTitle');
+const makerIconEl  = document.getElementById('makerIcon');
 window.makerOpen = false;            /* 面板是否打开（打开时 update() 整体冻结） */
 window.openMaker = null;             /* 当前打开的加工台（buildings 里的那一条） */
 const makerEat = {day:-1, n:0};   /* 成品食用：哪一天 + 今天吃了几次 */
@@ -69,7 +71,7 @@ function recipeMissingText(r){
 function makerNear(){
   let best = null, bd = Infinity;
   for(const b of buildings){
-    if(b.type !== 'maker') continue;
+    if(b.type !== 'maker' && b.type !== 'stove') continue;
     const d = tileCenterDist(b.tx, b.ty);
     if(d < bd){ bd = d; best = b; }
   }
@@ -126,7 +128,7 @@ function makerAdvance(minutes, silent){
   if(m <= 0) return 0;
   let done = 0;
   for(const b of buildings){
-    if(b.type !== 'maker' || !b.job) continue;
+    if((b.type !== 'maker' && b.type !== 'stove') || !b.job) continue;
     if(b.job.left <= 0){
       /* 上次因为产出槽满而挂起：腾出空位后静默完成，不重复弹提示 */
       if(makerFinish(b, true)) done++;
@@ -141,7 +143,7 @@ function makerAdvance(minutes, silent){
 /* 开始加工（rid = 配方 id） */
 function makerStart(rid){
   const b = openMaker;
-  if(!b || b.type !== 'maker') return false;
+  if(!b || (b.type !== 'maker' && b.type !== 'stove')) return false;
   const r = recipeDef(rid);
   if(!r){ toast('没有这个配方'); return false; }
   if(b.job){ toast('这台加工台还在忙，先等它做完'); return false; }
@@ -204,6 +206,9 @@ function makerFormatLeft(min){
 function makerRenderPanel(){
   if(!openMaker) return;
   const b = openMaker;
+  const isStove = b.type === 'stove';
+  if(makerTitleEl) makerTitleEl.textContent = isStove ? '灶台' : '加工台';
+  if(makerIconEl) makerIconEl.textContent = isStove ? '🍳' : '🛠️';
   if(makerStatusEl){
     if(b.job){
       const r = recipeDef(b.job.rid);
@@ -238,7 +243,8 @@ function makerRenderPanel(){
   /* 配方列表 */
   if(makerListEl && makerListEl.appendChild){
     makerListEl.innerHTML = '';
-    for(const r of CONFIG.RECIPE.LIST){
+    const list = CONFIG.RECIPE.LIST.filter(r => isStove ? !!r.cook : !r.cook);
+    for(const r of list){
       const u = recipeUnlockInfo(r);
       const miss = recipeMissing(r);
       const busy = !!b.job;
@@ -256,7 +262,8 @@ function makerRenderPanel(){
       info.appendChild(nm); info.appendChild(meta);
       const btn = document.createElement('button');
       btn.className = 'mbtn' + (can ? '' : ' off');
-      btn.textContent = !u.ok ? '未解锁' : (busy ? '加工中' : (miss.length ? '材料不足' : (can ? '投入' : '产出槽满')));
+      btn.textContent = !u.ok ? '未解锁' : (busy ? (isStove ? '烹饪中' : '加工中')
+        : (miss.length ? '材料不足' : (can ? '投入' : '产出槽满')));
       btn.addEventListener('click', ()=>{ if(can) makerStart(r.id); });
       row.appendChild(ic); row.appendChild(info); row.appendChild(btn);
       makerListEl.appendChild(row);
@@ -265,7 +272,7 @@ function makerRenderPanel(){
 }
 /* 开关面板 */
 function makerOpenPanel(b){
-  if(!b || b.type !== 'maker') return false;
+  if(!b || (b.type !== 'maker' && b.type !== 'stove')) return false;
   if(packOpen) togglePack(false);
   if(shopOpen) toggleShop(false);
   if(chestOpen) toggleChest(false);
@@ -291,7 +298,7 @@ function toggleMakerPanel(b){
 function makerHudInfo(){
   let busy = 0, ready = 0;
   for(const b of buildings){
-    if(b.type !== 'maker') continue;
+    if(b.type !== 'maker' && b.type !== 'stove') continue;
     if(b.job) busy++;
     if(b.out && b.out.length) ready++;
   }

@@ -119,7 +119,7 @@ import './world/buildings.js';
 | 收集包 / 社区中心 | `js/systems/bundles.js` + `js/ui/bundle-panel.js` |
 | 节日/日历/好感总览面板 | `js/systems/festival.js` |
 | 成就/统计 | `js/systems/stats.js`（32 个成就，徽章走 `js/anim/achievements.js`） |
-| 加工台 | `js/systems/maker.js` |
+| 加工台 | `js/systems/maker.js`（加工台 / 灶台共用一套面板，按 `cook` 过滤配方） |
 | 工匠品 / 加工配方 | `js/systems/maker.js` + `js/anim/artisan.js` + `js/config.js` |
 | 料理 / 食谱 | `js/anim/dishes.js` + `js/anim/recipes.js` + `js/config.js`（烹饪复用加工台） |
 | 评级/终局结算 | `js/systems/endgame.js` |

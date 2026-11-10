@@ -1,0 +1,82 @@
+# Dish icons (official names as they exist on the wiki)
+Algae Soup.png
+Artichoke Dip.png
+Autumn's Bounty.png
+Baked Fish.png
+Banana Pudding.png
+Bean Hotpot.png
+Blackberry Cobbler.png
+Blueberry Tart.png
+Bread.png
+Bruschetta.png
+Carp Surprise.png
+Cheese Cauliflower.png
+Chocolate Cake.png
+Chowder.png
+Coleslaw.png
+Complete Breakfast.png
+Cookie.png
+Crab Cakes.png
+Cranberry Sauce.png
+Cranberry Candy.png
+Crispy Bass.png
+Dish O' The Sea.png
+Eggplant Parmesan.png
+Escargot.png
+Farmer's Lunch.png
+Fiddlehead Risotto.png
+Fish Stew.png
+Fish Taco.png
+Fried Calamari.png
+Fried Eel.png
+Fried Egg.png
+Fried Mushroom.png
+Fruit Salad.png
+Ginger Ale.png
+Glazed Yams.png
+Hashbrowns.png
+Ice Cream.png
+Lobster Bisque.png
+Lucky Lunch.png
+Maki Roll.png
+Mango Sticky Rice.png
+Maple Bar.png
+Miner's Treat.png
+Moss Soup.png
+Omelet.png
+Pale Broth.png
+Pancakes.png
+Parsnip Soup.png
+Pepper Poppers.png
+Pink Cake.png
+Pizza.png
+Plum Pudding.png
+Poi.png
+Poppyseed Muffin.png
+Pumpkin Pie.png
+Pumpkin Soup.png
+Radish Salad.png
+Red Plate.png
+Rhubarb Pie.png
+Rice Pudding.png
+Roasted Hazelnuts.png
+Roots Platter.png
+Salad.png
+Salmon Dinner.png
+Sashimi.png
+Seafoam Pudding.png
+Shrimp Cocktail.png
+Spaghetti.png
+Spicy Eel.png
+Squid Ink Ravioli.png
+Stir Fry.png
+Strange Bun.png
+Stuffing.png
+Super Meal.png
+Survival Burger.png
+Tom Kha Soup.png
+Tortilla.png
+Triple Shot Espresso.png
+Tropical Curry.png
+Trout Soup.png
+Vegetable Medley.png

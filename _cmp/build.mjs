@@ -75,6 +75,11 @@ const CATS = {
   ui: {
     mod: '../../js/anim/ui-icons.js', list: 'UI_ICONS', w: 'UI_W', h: 'UI_H',
     draw: 'drawUiIcon', drawExpr: 'mod.drawUiIcon(g, item, 0.25)'
+  },
+  cropitems: {
+    mod: '../../js/anim/crop-items.js', list: 'CROP_ITEMS', w: 'ITEM_W', h: 'ITEM_H',
+    draw: 'drawProduceIcon',
+    drawExpr: "item.group === 'seed' ? mod.drawSeedPacket(g, item.crop, 0.25) : mod.drawProduceIcon(g, item.crop, 0.25)"
   }
 };
 

@@ -27,13 +27,13 @@ CASES = {
     'buildings': (['buildings'], ['wiki-CarpentersShop.html', 'wiki-Buildings.html']),
     'bundles':   (['bundles'],   ['wiki-Bundles.html']),
     'ui':        (['ui'],        []),      # 用 wiki 完整文件清单验证
+    'cropitems': (['cropitems'], ['wiki-Crops.html']),
 }
 
 # UI 图标散落在很多页面上，改用"文件是否在 wiki 完整文件清单里"来验证
-ALLFILES = ROOT / '_cmp' / 'out' / 'wiki-allfiles.json'
+ALLFILES = ROOT / '_cmp' / 'out' / 'wiki-files-all.json'
 if ALLFILES.exists():
-    allf = {f.replace('_', ' ').lower() for f in json.loads(ALLFILES.read_text('utf-8'))
-            if not f.startswith('File:')}
+    allf = {f.replace('_', ' ').lower() for f in json.loads(ALLFILES.read_text('utf-8'))}
 else:
     allf = None
 

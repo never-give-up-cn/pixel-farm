@@ -16,7 +16,7 @@ CN = {
     'monsters': '怪物', 'equipment': '装备（武器/戒指/靴子）', 'hats': '帽子',
     'artisan': '工匠品', 'dishes': '料理', 'buildings': '建筑',
     'npcs': '村民头像', 'animals': '动物', 'bundles': '社区中心收集包',
-    'ui': 'UI 图标',
+    'ui': 'UI 图标', 'cropitems': '种子包与农产品',
 }
 
 rows = []
@@ -146,6 +146,7 @@ PAGE = {
     'trees': 'Trees / Fruit Trees', 'crops': 'Crops', 'buildings': "Carpenter's Shop / Buildings",
     'bundles': 'Bundles',
     'ui': 'wiki 完整文件清单',
+    'cropitems': 'Crops',
 }
 for cn, cat, s, it in rows:
     cc = cross.get(cat)
@@ -238,19 +239,22 @@ if cook:
 us = summary.get('ui')
 ui_ = internal.get('ui', {})
 if us:
-    L.append('## UI 图标（60 个）：官方只有 27 个能对上，而且一个都认不出来\n')
-    L.append('先用 `Special:PrefixIndex` 把 wiki 的**全部文件清单**（一万多个）抓下来本地比对，'
-             '才知道官方到底有哪些 UI 小图：\n')
-    L.append('- 状态条：`HealthBar.png`、`EnergyBar.png`、`Gold.png`、`Luck.png`')
-    L.append('- 品质：`Gold Quality Icon.png`、`Iridium Quality Icon.png`')
-    L.append('- 技能：`Farming Skill Icon.png`、`Fishing Skill Icon.png`、`Mining Skill Icon.png`（**只有 3 个**）')
-    L.append('- 增益：`Attack/Defense/Luck/Speed/Magnetism/Oil of Garlic Buff.png`（**只有 6 个**）')
-    L.append('- 菜单：`Backpack.png`、`Map Tab.png`、`Quest.png`、`Bundle Icon.png`、`Journal Scrap.png`')
-    L.append('- 天气：`Rain.png`、`Thunderstorm.png`、`Festival.png`（晴天/雪/风/雾/绿雨在 wiki 上没有小图，'
-             '只有 `RainAnimated.gif`、`FallWindAnimated.gif` 这类动画）')
-    L.append('- 四季与昼夜：wiki 上没有对应的官方小图\n')
-    L.append('所以 60 个 UI 图标里只有 **27 个**能在官方找到对应物，其余 33 个是项目自创的。'
-             '而这 27 个能对上的，比对结果是：\n')
+    L.append('## UI 图标（60 个）：官方有对应物的 49 个，一个都认不出来\n')
+    L.append('先把 wiki **全站 7 千多个 File: 文件名**抓下来本地比对（`Special:AllPages` 逐页抓），'
+             '才知道官方到底有哪些 UI 小图 —— 官方其实有一整套工具栏图标：\n')
+    L.append('- 工具栏：`Inventory Tab.png`、`Map Tab.png`、`Crafting Tab.png`、`Collections Tab.png`、'
+             '`Social Tab.png`、`Skills Tab.png`、`Exit Game Tab.png`、`Animals Tab.png`')
+    L.append('- 技能：`Farming / Foraging / Fishing / Mining / Combat Skill Icon.png`（5 个）')
+    L.append('- 增益：`Attack / Defense / Luck / Speed / Magnetism / Monster Musk / Oil of Garlic Buff.png`（7 个）')
+    L.append('- 品质：`Silver / Gold / Iridium Quality Icon.png`')
+    L.append('- 状态条天气：`StatusSun / StatusRain / StatusStorm / StatusSnow / StatusWindSpring / '
+             'StatusGreenRain / StatusFestival.png`')
+    L.append('- 四季：`Calendar Spring / Summer / Fall / Winter.png`')
+    L.append('- 其它：`HealthBar.png`、`EnergyBar.png`、`Gold.png`、`Luck.png`、`Stardrop.png`、'
+             '`FriendshipDots.png`、`Mastery Icon.png`、`Clock.png`、`Bundle Icon.png`、`Cooking Icon.png`…\n')
+    L.append('对得上的是 **49 个**，剩下 11 个（雾天、昼夜、月相、幸运技能、存档、商店、暂停、'
+             '钓鱼/采矿/发光增益、生命药水、姜汁汽水）wiki 上确实没有对应小图。'
+             '而这 49 个能对上的，比对结果是：\n')
     L.append(f'- 匹配均分 **{us["own_mean"]:.1f}**，随机错配基准 **{us["random_mean"]:.1f}**，'
              f'差距 **{us["margin"]:+.1f}**')
     if 'ui' in rank:
@@ -260,10 +264,34 @@ if us:
     L.append(f'- 内部雷同度：我们 **{ui_.get("ours_internal", 0):.1f}** vs 官方 '
              f'**{ui_.get("wiki_internal", 0):.1f}**，差 **{ui_.get("gap", 0):+.1f}** —— '
              '全项目最高的一套\n')
-    L.append('换句话说：**27 个能对上的 UI 图标里，没有一个能被认出来** —— '
+    L.append('换句话说：**49 个能对上的 UI 图标里，没有一个能被认出来** —— '
              '我们的生命图标和官方的"暴雨"图标得分一样高。'
              '原因是我们的 60 个图标都是同一枚圆形徽章 + 一个符号，'
              '而官方每个图标画法都不同。\n')
+
+# --- 种子包与农产品 ---
+cs = summary.get('cropitems')
+ci = internal.get('cropitems', {})
+if cs:
+    L.append('## 种子包与农产品（93 个）：形状对得上，但画法不同\n')
+    L.append('`js/anim/crop-items.js` 画了 50 种作物的**收获物**和**种子包**，'
+             '这两样 wiki 上都有官方图，是全套比对里语义最直接的一类：\n')
+    L.append('- 收获物：官方就是 `<作物名>.png`（`Carrot.png`、`Blueberry.png`…）—— 50 个全部对上了')
+    L.append('- 种子包：官方是 `<作物名> Seeds.png`（`Carrot Seeds.png`）—— 43 个对上了；'
+             '另外几个官方不按这个命名：官方管蓝爵士叫 `Jazz Seeds.png`、'
+             '夏雪花的叫 `Spangle Seeds.png`、蔓越莓是单数 `Cranberry Seeds.png`、'
+             '野外采集那几种是混装包 `Mixed Seeds.png`、'
+             '远古果实/葡萄/宝石甜果都出自 `Rare Seed.png`')
+    L.append('- 剩下 7 个官方确实没有种子包（咖啡豆、稻米、啤酒花、辣椒、绿豆、芋头、奇异果）\n')
+    L.append(f'- 匹配均分 **{cs["own_mean"]:.1f}**，随机错配基准 **{cs["random_mean"]:.1f}**，'
+             f'差距 **{cs["margin"]:+.1f}**（比"作物植株"那一类的 +2.3 高，'
+             '因为这里比的是同一个东西：物品图标对物品图标）')
+    if 'cropitems' in rank:
+        r = rank['cropitems']
+        L.append(f'- 正确配对能排第 1 的：**{r["rank1"]} / {r["n"]}（{r["rank1_pct"]:.0f}%）**，'
+                 f'名次中位数第 {r["median_rank"]} 名（纯靠猜是 {r["random_expect_pct"]:.0f}%）')
+    L.append(f'- 内部雷同度：我们 **{ci.get("ours_internal", 0):.1f}** vs 官方 '
+             f'**{ci.get("wiki_internal", 0):.1f}**，差 **{ci.get("gap", 0):+.1f}**\n')
 
 L.append('## 哪些部分最接近\n')
 L.append('- **装备（+6.4）、动物（+4.8）、矿物（+4.7）、帽子（+4.3）、怪物（+3.5）**：'
@@ -304,8 +332,10 @@ L.append('- `_cmp/report/<分类>.json`：逐项指标明细')
 L.append('- `_cmp/report/summary.json` / `internal.json`：汇总与内部相似度')
 L.append('- `_cmp/report/ranktable.md` / `ranktest.json`：配对识别力（正确配对能排第几）')
 L.append('- `_cmp/report/cookdiff.md`：81 道食谱的配料逐条差异')
-L.append('- `_cmp/out/wiki-allfiles.json`：wiki 全站文件名清单'
-         '（Special:PrefixIndex 逐前缀抓下来的，1 万多条）')
+L.append('- `_cmp/out/wiki-files-all.json`：wiki 全站文件名清单'
+         '（Special:AllPages 逐页抓下来的，7 千多条）')
+L.append('- `_cmp/recipecards/`：食谱卡官方素材的核查记录'
+         '（结论：wiki 上没有官方"卡片"版式素材）')
 L.append('- `_cmp/manifest/<分类>.json`：本项目条目 ↔ 官方图文件名的映射清单')
 L.append('- `_cmp/verified.json`：每个候选 wiki 文件的存在性与原始尺寸实测结果')
 L.append('- `_cmp/report/crosscheck.json`：映射可靠性校验结果')
@@ -319,3 +349,22 @@ L.append('- 映射可靠性校验需要重新抓页面：'
 
 (REP / 'REPORT.md').write_text('\n'.join(L), 'utf-8')
 print('written', REP / 'REPORT.md')
+
+# --- 另存一份配对识别力的小表 ---
+if rank:
+    rows = ['| 分类 | 条目 | 正确配对排第1 | 随机期望 | 名次中位数 | 正确配对均分 | 配错时的最高分均分 |',
+            '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+    order = sorted(rank.items(), key=lambda kv: -kv[1]['rank1_pct'])
+    tot_n = tot_r1 = 0
+    for cat, r in order:
+        rows.append(f"| {CN.get(cat, cat)} | {r['n']} | {r['rank1']} ({r['rank1_pct']:.0f}%) | "
+                    f"{r['random_expect_pct']:.0f}% | {r['median_rank']} | "
+                    f"{r['correct_mean']:.1f} | {r['best_wrong_mean']:.1f} |")
+        tot_n += r['n']
+        tot_r1 += r['rank1']
+    rows.append(f"| **合计** | **{tot_n}** | **{tot_r1} ({tot_r1 / tot_n * 100:.1f}%)** | "
+                f"{100 / (tot_n / len(rank)):.1f}%* | | | |")
+    rows.append('')
+    rows.append('* 随机期望按各分类条目数取平均')
+    (REP / 'ranktable.md').write_text('\n'.join(rows), 'utf-8')
+    print('written', REP / 'ranktable.md')

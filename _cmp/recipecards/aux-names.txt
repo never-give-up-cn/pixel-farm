@@ -1,0 +1,131 @@
+# Stat / buff icons used on the wiki Cooking page (48x48)
+Energy.png
+Health.png
+Speed.png
+Attack.png
+Defense.png
+Luck.png
+Magnetism.png
+Max Energy.png
+Farming.png
+Fishing.png
+Mining.png
+Foraging.png
+Combat Skill Icon.png
+Farming Skill Icon.png
+Foraging Skill Icon.png
+Fishing Skill Icon.png
+Mining Skill Icon.png
+Qi Gem.png
+Time Icon.png
+Gold.png
+# Buffed variants (64x64)
+Attack Buff.png
+Defense Buff.png
+Luck Buff.png
+Magnetism Buff.png
+Max Energy Buff.png
+Speed Buff.png
+Monster Musk Buff.png
+Oil of Garlic Buff.png
+Squid Ink Ravioli Buff.png
+# Core cooking ingredients
+Egg.png
+Milk.png
+Wheat Flour.png
+Sugar.png
+Oil.png
+Cheese.png
+Vinegar.png
+Mayonnaise.png
+Coffee.png
+Coffee Bean.png
+# Produce
+Tomato.png
+Beet.png
+Parsnip.png
+Cauliflower.png
+Leek.png
+Dandelion.png
+Green Bean.png
+Yam.png
+Potato.png
+Artichoke.png
+Pumpkin.png
+Amaranth.png
+Corn.png
+Radish.png
+Rice.png
+Pineapple.png
+Melon.png
+Mango.png
+Banana.png
+Apple.png
+Apricot.png
+Blueberry.png
+Blackberry.png
+Wild Plum.png
+Rhubarb.png
+Cranberries.png
+Wild Horseradish.png
+Winter Root.png
+Hazelnut.png
+Taro Root.png
+Coconut.png
+Green Algae.png
+White Algae.png
+Seaweed.png
+Fiddlehead Fern.png
+Common Mushroom.png
+Morel.png
+Red Cabbage.png
+Hot Pepper.png
+Eggplant.png
+Maple Syrup.png
+Ginger.png
+Garlic.png
+Poppy.png
+Bone Fragment.png
+Void Egg.png
+# Fish & shellfish
+Carp.png
+Salmon.png
+Tuna.png
+Sunfish.png
+Bream.png
+Rainbow Trout.png
+Largemouth Bass.png
+Sardine.png
+Periwinkle.png
+Sea Cucumber.png
+Red Snapper.png
+Midnight Carp.png
+Flounder.png
+Squid.png
+Eel.png
+Shrimp.png
+Crab.png
+Lobster.png
+Clam.png
+Mussel.png
+Snail.png
+Crayfish.png
+Anchovy.png
+Chub.png
+Cockle.png
+Ghostfish.png
+Herring.png
+Oyster.png
+Perch.png
+Shad.png
+Smallmouth Bass.png
+Fish.png
+# Recipe / TV / cooking UI related
+Recipe Overlay.png
+Queen Of Sauce Cookbook.png
+Queen of Sauce.png
+Cooking Icon.png
+Cooking Channel.png
+Cooking.png
+TVprogram.png
+Cookbook.jpg

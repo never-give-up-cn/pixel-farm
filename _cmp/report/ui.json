@@ -646,5 +646,533 @@
   "wiki_scale": 4,
   "variants": 1,
   "wikiFile": "Oil of Garlic Buff.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.7527,
+  "aspect_sim": 0.1634,
+  "size_sim": 0.0,
+  "score": 71.67,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   202,
+   33
+  ],
+  "id": "friendship",
+  "name": "友谊",
+  "en": "Friendship",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "FriendshipDots.png"
+ },
+ {
+  "iou": 0.5859,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.541,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.0,
+  "score": 65.38,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   45,
+   48
+  ],
+  "id": "level",
+  "name": "等级",
+  "en": "Level",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mastery Icon.png"
+ },
+ {
+  "iou": 0.7388,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.6807,
+  "aspect_sim": 0.875,
+  "size_sim": 0.0,
+  "score": 69.87,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   42,
+   48
+  ],
+  "id": "star",
+  "name": "星之果实",
+  "en": "Stardrop",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Stardrop.png"
+ },
+ {
+  "iou": 0.7344,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4786,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 72.02,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   8,
+   8
+  ],
+  "id": "silver_quality",
+  "name": "银星",
+  "en": "Silver Quality",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Silver Quality Icon.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.4734,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 76.43,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   14,
+   10
+  ],
+  "id": "sun",
+  "name": "晴天",
+  "en": "Sunny",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "StatusSun.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.3616,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 73.5,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   14,
+   10
+  ],
+  "id": "snow",
+  "name": "雪天",
+  "en": "Snow",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "StatusSnow.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.0307,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 67.6,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   14,
+   10
+  ],
+  "id": "wind",
+  "name": "大风",
+  "en": "Wind",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "StatusWindSpring.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.9387,
+  "aspect_sim": 0.7143,
+  "size_sim": 0.0,
+  "score": 83.1,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   14,
+   10
+  ],
+  "id": "green_rain",
+  "name": "绿雨",
+  "en": "Green Rain",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "StatusGreenRain.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 70.0,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "spring",
+  "name": "春",
+  "en": "Spring",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Calendar Spring.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.1831,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 73.37,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "summer",
+  "name": "夏",
+  "en": "Summer",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Calendar Summer.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 70.0,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "fall",
+  "name": "秋",
+  "en": "Fall",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Calendar Fall.png"
+ },
+ {
+  "iou": 1.0,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 70.94,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "winter",
+  "name": "冬",
+  "en": "Winter",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Calendar Winter.png"
+ },
+ {
+  "iou": 0.9844,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.4265,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 74.84,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "foraging",
+  "name": "采集",
+  "en": "Foraging",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Foraging Skill Icon.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.3931,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 75.27,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "combat",
+  "name": "战斗",
+  "en": "Combat",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Combat Skill Icon.png"
+ },
+ {
+  "iou": 0.9714,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4946,
+  "aspect_sim": 1.0,
+  "size_sim": 0.4763,
+  "score": 79.57,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   20,
+   20
+  ],
+  "id": "settings",
+  "name": "设置",
+  "en": "Settings",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Advanced Options Button.png"
+ },
+ {
+  "iou": 0.9766,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.3474,
+  "aspect_sim": 0.9412,
+  "size_sim": 0.0918,
+  "score": 74.38,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   17
+  ],
+  "id": "exit",
+  "name": "退出",
+  "en": "Exit",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Exit Game Tab.png"
+ },
+ {
+  "iou": 0.9785,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.5739,
+  "aspect_sim": 0.9412,
+  "size_sim": 0.0,
+  "score": 77.38,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   64,
+   68
+  ],
+  "id": "craft",
+  "name": "制作",
+  "en": "Crafting",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Crafting Tab.png"
+ },
+ {
+  "iou": 0.9785,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.3077,
+  "aspect_sim": 0.9412,
+  "size_sim": 0.0,
+  "score": 73.07,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   64,
+   68
+  ],
+  "id": "collections",
+  "name": "收藏",
+  "en": "Collections",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Collections Tab.png"
+ },
+ {
+  "iou": 0.9993,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4521,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0,
+  "score": 77.38,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   255,
+   255
+  ],
+  "id": "skills",
+  "name": "技能",
+  "en": "Skills",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Skills Tab.png"
+ },
+ {
+  "iou": 0.9766,
+  "dhash_sim": 0.4531,
+  "palette_cov": 1.0,
+  "color_sim": 0.5132,
+  "aspect_sim": 0.9412,
+  "size_sim": 0.0918,
+  "score": 75.93,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   17
+  ],
+  "id": "social",
+  "name": "社交",
+  "en": "Social",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Social Tab.png"
+ },
+ {
+  "iou": 0.6338,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.5973,
+  "aspect_sim": 1.0,
+  "size_sim": 0.7142,
+  "score": 73.42,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   30,
+   30
+  ],
+  "id": "controller",
+  "name": "手柄",
+  "en": "Controller",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Controls Icon.png"
+ },
+ {
+  "iou": 0.9531,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.7949,
+  "aspect_sim": 1.0,
+  "size_sim": 0.0314,
+  "score": 81.92,
+  "ours_box": [
+   26,
+   26
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "monster_musk",
+  "name": "怪物香水",
+  "en": "Monster Musk",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Monster Musk Buff.png"
  }
 ]

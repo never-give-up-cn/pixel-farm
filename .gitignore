@@ -12,3 +12,5 @@ _cmp/run.log
 _cmp/ranktest.log
 
 _cmp/out/art-*.html
+_cmp/recipecards/*.html
+_cmp/recipecards/.chrome*/

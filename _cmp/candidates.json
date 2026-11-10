@@ -15683,9 +15683,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "HealthBar.png",
+      "file": "Health.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/3/35/HealthBar.png"
+      "path": "/mediawiki/images/en/9/94/Health.png"
      }
     ]
    },
@@ -15697,9 +15697,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "EnergyBar.png",
+      "file": "Energy.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/9/9d/EnergyBar.png"
+      "path": "/mediawiki/images/en/a/a9/Energy.png"
      }
     ]
    },
@@ -15737,7 +15737,13 @@
     "name": "友谊",
     "en": "Friendship",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "FriendshipDots.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/c9/FriendshipDots.png"
+     }
+    ]
    },
    {
     "i": 5,
@@ -15745,7 +15751,13 @@
     "name": "等级",
     "en": "Level",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Mastery Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/df/Mastery_Icon.png"
+     }
+    ]
    },
    {
     "i": 6,
@@ -15753,7 +15765,13 @@
     "name": "星之果实",
     "en": "Stardrop",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Stardrop.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/a5/Stardrop.png"
+     }
+    ]
    },
    {
     "i": 7,
@@ -15761,7 +15779,13 @@
     "name": "银星",
     "en": "Silver Quality",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Silver Quality Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/8a/Silver_Quality_Icon.png"
+     }
+    ]
    },
    {
     "i": 8,
@@ -15797,7 +15821,13 @@
     "name": "晴天",
     "en": "Sunny",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "StatusSun.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/d2/StatusSun.png"
+     }
+    ]
    },
    {
     "i": 11,
@@ -15807,9 +15837,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "Rain.png",
+      "file": "StatusRain.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/1/1d/Rain.png"
+      "path": "/mediawiki/images/en/3/3a/StatusRain.png"
      }
     ]
    },
@@ -15821,9 +15851,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "Thunderstorm.png",
+      "file": "StatusStorm.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/7/7a/Thunderstorm.png"
+      "path": "/mediawiki/images/en/5/5a/StatusStorm.png"
      }
     ]
    },
@@ -15833,7 +15863,13 @@
     "name": "雪天",
     "en": "Snow",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "StatusSnow.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/b/b5/StatusSnow.png"
+     }
+    ]
    },
    {
     "i": 14,
@@ -15841,7 +15877,13 @@
     "name": "大风",
     "en": "Wind",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "StatusWindSpring.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/9/99/StatusWindSpring.png"
+     }
+    ]
    },
    {
     "i": 15,
@@ -15849,7 +15891,13 @@
     "name": "绿雨",
     "en": "Green Rain",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "StatusGreenRain.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/0/0d/StatusGreenRain.png"
+     }
+    ]
    },
    {
     "i": 16,
@@ -15867,9 +15915,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "Festival.png",
+      "file": "StatusFestival.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/4/47/Festival.png"
+      "path": "/mediawiki/images/en/3/3f/StatusFestival.png"
      }
     ]
    },
@@ -15909,7 +15957,13 @@
     "name": "春",
     "en": "Spring",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Calendar Spring.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/6/6d/Calendar_Spring.png"
+     }
+    ]
    },
    {
     "i": 22,
@@ -15917,7 +15971,13 @@
     "name": "夏",
     "en": "Summer",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Calendar Summer.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/e/e6/Calendar_Summer.png"
+     }
+    ]
    },
    {
     "i": 23,
@@ -15925,7 +15985,13 @@
     "name": "秋",
     "en": "Fall",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Calendar Fall.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/cb/Calendar_Fall.png"
+     }
+    ]
    },
    {
     "i": 24,
@@ -15933,7 +15999,13 @@
     "name": "冬",
     "en": "Winter",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Calendar Winter.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/5e/Calendar_Winter.png"
+     }
+    ]
    },
    {
     "i": 25,
@@ -15963,7 +16035,13 @@
     "name": "采集",
     "en": "Foraging",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Foraging Skill Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/f1/Foraging_Skill_Icon.png"
+     }
+    ]
    },
    {
     "i": 28,
@@ -15999,7 +16077,13 @@
     "name": "战斗",
     "en": "Combat",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Combat Skill Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/cf/Combat_Skill_Icon.png"
+     }
+    ]
    },
    {
     "i": 31,
@@ -16045,9 +16129,9 @@
     "cat": "",
     "cands": [
      {
-      "file": "Quest.png",
+      "file": "Quests Icon.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/c/c0/Quest.png"
+      "path": "/mediawiki/images/en/c/c2/Quests_Icon.png"
      }
     ]
    },
@@ -16071,7 +16155,13 @@
     "name": "设置",
     "en": "Settings",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Optionstab.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/d3/Optionstab.png"
+     }
+    ]
    },
    {
     "i": 37,
@@ -16087,7 +16177,13 @@
     "name": "退出",
     "en": "Exit",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Exit Game Tab.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/ab/Exit_Game_Tab.png"
+     }
+    ]
    },
    {
     "i": 39,
@@ -16103,7 +16199,13 @@
     "name": "制作",
     "en": "Crafting",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Crafting Tab.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/ab/Crafting_Tab.png"
+     }
+    ]
    },
    {
     "i": 41,
@@ -16125,7 +16227,13 @@
     "name": "收藏",
     "en": "Collections",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Collections Tab.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/82/Collections_Tab.png"
+     }
+    ]
    },
    {
     "i": 43,
@@ -16133,7 +16241,13 @@
     "name": "技能",
     "en": "Skills",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Skills Tab Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/7/70/Skills_Tab_Icon.png"
+     }
+    ]
    },
    {
     "i": 44,
@@ -16141,7 +16255,13 @@
     "name": "社交",
     "en": "Social",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Social Tab.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/e/ee/Social_Tab.png"
+     }
+    ]
    },
    {
     "i": 45,
@@ -16163,7 +16283,13 @@
     "name": "手柄",
     "en": "Controller",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Controls Icon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/db/Controls_Icon.png"
+     }
+    ]
    },
    {
     "i": 47,
@@ -16287,7 +16413,13 @@
     "name": "怪物香水",
     "en": "Monster Musk",
     "cat": "",
-    "cands": []
+    "cands": [
+     {
+      "file": "Monster Musk Buff.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/23/Monster_Musk_Buff.png"
+     }
+    ]
    },
    {
     "i": 58,
@@ -16295,13 +16427,7 @@
     "name": "生命药水",
     "en": "Life Elixir",
     "cat": "",
-    "cands": [
-     {
-      "file": "Life Elixir.png",
-      "role": "icon",
-      "path": "/mediawiki/images/en/6/6e/Life_Elixir.png"
-     }
-    ]
+    "cands": []
    },
    {
     "i": 59,
@@ -16309,15 +16435,1979 @@
     "name": "姜汁汽水",
     "en": "Ginger Ale",
     "cat": "",
+    "cands": []
+   }
+  ],
+  "total": 47
+ },
+ "cropitems": {
+  "items": [
+   {
+    "i": 0,
+    "id": "seed_blue_jazz",
+    "name": "蓝调爵士种子",
+    "en": "Blue Jazz Seeds",
+    "cat": "",
     "cands": [
      {
-      "file": "Ginger Ale.png",
+      "file": "Jazz Seeds.png",
       "role": "icon",
-      "path": "/mediawiki/images/en/1/1a/Ginger_Ale.png"
+      "path": "/mediawiki/images/en/9/95/Jazz_Seeds.png"
+     },
+     {
+      "file": "Blue_Jazz_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/0/0a/Blue_Jazz_Seeds.png"
+     },
+     {
+      "file": "Blue_Jazzseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/e/ea/Blue_Jazzseeds.png"
+     },
+     {
+      "file": "Blue_Jazz Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/0/0a/Blue_Jazz_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 1,
+    "id": "produce_blue_jazz",
+    "name": "蓝调爵士",
+    "en": "Blue Jazz",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Blue_Jazz.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2f/Blue_Jazz.png"
+     }
+    ]
+   },
+   {
+    "i": 2,
+    "id": "seed_carrot",
+    "name": "胡萝卜种子",
+    "en": "Carrot Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Carrot_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/1/1f/Carrot_Seeds.png"
+     },
+     {
+      "file": "Carrotseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/8/84/Carrotseeds.png"
+     },
+     {
+      "file": "Carrot Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/1/1f/Carrot_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 3,
+    "id": "produce_carrot",
+    "name": "胡萝卜",
+    "en": "Carrot",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Carrot.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/c3/Carrot.png"
+     }
+    ]
+   },
+   {
+    "i": 4,
+    "id": "seed_cauliflower",
+    "name": "花椰菜种子",
+    "en": "Cauliflower Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cauliflower_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/b/bb/Cauliflower_Seeds.png"
+     },
+     {
+      "file": "Cauliflowerseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/3/36/Cauliflowerseeds.png"
+     },
+     {
+      "file": "Cauliflower Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/b/bb/Cauliflower_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 5,
+    "id": "produce_cauliflower",
+    "name": "花椰菜",
+    "en": "Cauliflower",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cauliflower.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/aa/Cauliflower.png"
+     }
+    ]
+   },
+   {
+    "i": 6,
+    "id": "seed_coffee_bean",
+    "name": "咖啡豆种子",
+    "en": "Coffee Bean Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Coffee_Bean_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/2/29/Coffee_Bean_Seeds.png"
+     },
+     {
+      "file": "Coffee_Beanseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/7/72/Coffee_Beanseeds.png"
+     },
+     {
+      "file": "Coffee_Bean Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/2/29/Coffee_Bean_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 7,
+    "id": "produce_coffee_bean",
+    "name": "咖啡豆",
+    "en": "Coffee Bean",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Coffee_Bean.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/3/33/Coffee_Bean.png"
+     }
+    ]
+   },
+   {
+    "i": 8,
+    "id": "seed_garlic",
+    "name": "大蒜种子",
+    "en": "Garlic Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Garlic_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/d/d5/Garlic_Seeds.png"
+     },
+     {
+      "file": "Garlicseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/f/f6/Garlicseeds.png"
+     },
+     {
+      "file": "Garlic Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/d/d5/Garlic_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 9,
+    "id": "produce_garlic",
+    "name": "大蒜",
+    "en": "Garlic",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Garlic.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/cc/Garlic.png"
+     }
+    ]
+   },
+   {
+    "i": 10,
+    "id": "seed_green_bean",
+    "name": "青豆种子",
+    "en": "Green Bean Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Green_Bean_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/1/10/Green_Bean_Seeds.png"
+     },
+     {
+      "file": "Green_Beanseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/a/aa/Green_Beanseeds.png"
+     },
+     {
+      "file": "Green_Bean Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/1/10/Green_Bean_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 11,
+    "id": "produce_green_bean",
+    "name": "青豆",
+    "en": "Green Bean",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Green_Bean.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/5c/Green_Bean.png"
+     }
+    ]
+   },
+   {
+    "i": 12,
+    "id": "seed_kale",
+    "name": "羽衣甘蓝种子",
+    "en": "Kale Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Kale_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/0/00/Kale_Seeds.png"
+     },
+     {
+      "file": "Kaleseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/a/a7/Kaleseeds.png"
+     },
+     {
+      "file": "Kale Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/0/00/Kale_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 13,
+    "id": "produce_kale",
+    "name": "羽衣甘蓝",
+    "en": "Kale",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Kale.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/d1/Kale.png"
+     }
+    ]
+   },
+   {
+    "i": 14,
+    "id": "seed_parsnip",
+    "name": "防风草种子",
+    "en": "Parsnip Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Parsnip_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/d/d3/Parsnip_Seeds.png"
+     },
+     {
+      "file": "Parsnipseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/8/85/Parsnipseeds.png"
+     },
+     {
+      "file": "Parsnip Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/d/d3/Parsnip_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 15,
+    "id": "produce_parsnip",
+    "name": "防风草",
+    "en": "Parsnip",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Parsnip.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/db/Parsnip.png"
+     }
+    ]
+   },
+   {
+    "i": 16,
+    "id": "seed_potato",
+    "name": "土豆种子",
+    "en": "Potato Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Potato_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/4/44/Potato_Seeds.png"
+     },
+     {
+      "file": "Potatoseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/b/b9/Potatoseeds.png"
+     },
+     {
+      "file": "Potato Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/4/44/Potato_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 17,
+    "id": "produce_potato",
+    "name": "土豆",
+    "en": "Potato",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Potato.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/c2/Potato.png"
+     }
+    ]
+   },
+   {
+    "i": 18,
+    "id": "seed_rhubarb",
+    "name": "大黄种子",
+    "en": "Rhubarb Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Rhubarb_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/4/47/Rhubarb_Seeds.png"
+     },
+     {
+      "file": "Rhubarbseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/2/28/Rhubarbseeds.png"
+     },
+     {
+      "file": "Rhubarb Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/4/47/Rhubarb_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 19,
+    "id": "produce_rhubarb",
+    "name": "大黄",
+    "en": "Rhubarb",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Rhubarb.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/6/6e/Rhubarb.png"
+     }
+    ]
+   },
+   {
+    "i": 20,
+    "id": "seed_strawberry",
+    "name": "草莓种子",
+    "en": "Strawberry Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Strawberry_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/f/f2/Strawberry_Seeds.png"
+     },
+     {
+      "file": "Strawberryseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/5/56/Strawberryseeds.png"
+     },
+     {
+      "file": "Strawberry Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/f/f2/Strawberry_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 21,
+    "id": "produce_strawberry",
+    "name": "草莓",
+    "en": "Strawberry",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Strawberry.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/6/6d/Strawberry.png"
+     }
+    ]
+   },
+   {
+    "i": 22,
+    "id": "seed_tulip",
+    "name": "郁金香种子",
+    "en": "Tulip Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Mixed Flower Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/7/76/Mixed_Flower_Seeds.png"
+     },
+     {
+      "file": "Tulip_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/c/c2/Tulip_Seeds.png"
+     },
+     {
+      "file": "Tulipseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/9/92/Tulipseeds.png"
+     },
+     {
+      "file": "Tulip Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/c/c2/Tulip_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 23,
+    "id": "produce_tulip",
+    "name": "郁金香",
+    "en": "Tulip",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Tulip.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/cf/Tulip.png"
+     }
+    ]
+   },
+   {
+    "i": 24,
+    "id": "seed_unmilled_rice",
+    "name": "未碾米种子",
+    "en": "Unmilled Rice Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Unmilled_Rice_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/3/32/Unmilled_Rice_Seeds.png"
+     },
+     {
+      "file": "Unmilled_Riceseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/6/6c/Unmilled_Riceseeds.png"
+     },
+     {
+      "file": "Unmilled_Rice Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/3/32/Unmilled_Rice_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 25,
+    "id": "produce_unmilled_rice",
+    "name": "未碾米",
+    "en": "Unmilled Rice",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Unmilled_Rice.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/fe/Unmilled_Rice.png"
+     }
+    ]
+   },
+   {
+    "i": 26,
+    "id": "seed_wild_horseradish",
+    "name": "野山葵种子",
+    "en": "Wild Horseradish Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Mixed Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2e/Mixed_Seeds.png"
+     },
+     {
+      "file": "Wild_Horseradish_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/f/fd/Wild_Horseradish_Seeds.png"
+     },
+     {
+      "file": "Wild_Horseradishseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/1/13/Wild_Horseradishseeds.png"
+     },
+     {
+      "file": "Wild_Horseradish Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/f/fd/Wild_Horseradish_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 27,
+    "id": "produce_wild_horseradish",
+    "name": "野山葵",
+    "en": "Wild Horseradish",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Wild_Horseradish.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/9/90/Wild_Horseradish.png"
+     }
+    ]
+   },
+   {
+    "i": 28,
+    "id": "seed_blueberry",
+    "name": "蓝莓种子",
+    "en": "Blueberry Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Blueberry_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/8/81/Blueberry_Seeds.png"
+     },
+     {
+      "file": "Blueberryseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/3/37/Blueberryseeds.png"
+     },
+     {
+      "file": "Blueberry Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/8/81/Blueberry_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 29,
+    "id": "produce_blueberry",
+    "name": "蓝莓",
+    "en": "Blueberry",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Blueberry.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/9/9e/Blueberry.png"
+     }
+    ]
+   },
+   {
+    "i": 30,
+    "id": "seed_hops",
+    "name": "啤酒花种子",
+    "en": "Hops Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Hops_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/c/c0/Hops_Seeds.png"
+     },
+     {
+      "file": "Hopsseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/5/53/Hopsseeds.png"
+     },
+     {
+      "file": "Hops Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/c/c0/Hops_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 31,
+    "id": "produce_hops",
+    "name": "啤酒花",
+    "en": "Hops",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Hops.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/59/Hops.png"
+     }
+    ]
+   },
+   {
+    "i": 32,
+    "id": "seed_hot_pepper",
+    "name": "辣椒种子",
+    "en": "Hot Pepper Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Hot_Pepper_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/5/5f/Hot_Pepper_Seeds.png"
+     },
+     {
+      "file": "Hot_Pepperseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/dd/Hot_Pepperseeds.png"
+     },
+     {
+      "file": "Hot_Pepper Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/5/5f/Hot_Pepper_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 33,
+    "id": "produce_hot_pepper",
+    "name": "辣椒",
+    "en": "Hot Pepper",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Hot_Pepper.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/f1/Hot_Pepper.png"
+     }
+    ]
+   },
+   {
+    "i": 34,
+    "id": "seed_melon",
+    "name": "甜瓜种子",
+    "en": "Melon Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Melon_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/5/5e/Melon_Seeds.png"
+     },
+     {
+      "file": "Melonseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/dd/Melonseeds.png"
+     },
+     {
+      "file": "Melon Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/5/5e/Melon_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 35,
+    "id": "produce_melon",
+    "name": "甜瓜",
+    "en": "Melon",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Melon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/1/19/Melon.png"
+     }
+    ]
+   },
+   {
+    "i": 36,
+    "id": "seed_pineapple",
+    "name": "菠萝种子",
+    "en": "Pineapple Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Pineapple_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/1/17/Pineapple_Seeds.png"
+     },
+     {
+      "file": "Pineappleseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/6/6b/Pineappleseeds.png"
+     },
+     {
+      "file": "Pineapple Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/1/17/Pineapple_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 37,
+    "id": "produce_pineapple",
+    "name": "菠萝",
+    "en": "Pineapple",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Pineapple.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/fb/Pineapple.png"
+     }
+    ]
+   },
+   {
+    "i": 38,
+    "id": "seed_poppy",
+    "name": "虞美人种子",
+    "en": "Poppy Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Poppy_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/a/a2/Poppy_Seeds.png"
+     },
+     {
+      "file": "Poppyseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/6/69/Poppyseeds.png"
+     },
+     {
+      "file": "Poppy Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/a/a2/Poppy_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 39,
+    "id": "produce_poppy",
+    "name": "虞美人",
+    "en": "Poppy",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Poppy.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/3/37/Poppy.png"
+     }
+    ]
+   },
+   {
+    "i": 40,
+    "id": "seed_radish",
+    "name": "萝卜种子",
+    "en": "Radish Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Radish_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/b/b1/Radish_Seeds.png"
+     },
+     {
+      "file": "Radishseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/7/7c/Radishseeds.png"
+     },
+     {
+      "file": "Radish Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/b/b1/Radish_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 41,
+    "id": "produce_radish",
+    "name": "萝卜",
+    "en": "Radish",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Radish.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/d5/Radish.png"
+     }
+    ]
+   },
+   {
+    "i": 42,
+    "id": "seed_red_cabbage",
+    "name": "红甘蓝种子",
+    "en": "Red Cabbage Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Red_Cabbage_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/e/ec/Red_Cabbage_Seeds.png"
+     },
+     {
+      "file": "Red_Cabbageseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/d3/Red_Cabbageseeds.png"
+     },
+     {
+      "file": "Red_Cabbage Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/e/ec/Red_Cabbage_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 43,
+    "id": "produce_red_cabbage",
+    "name": "红甘蓝",
+    "en": "Red Cabbage",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Red_Cabbage.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2d/Red_Cabbage.png"
+     }
+    ]
+   },
+   {
+    "i": 44,
+    "id": "seed_spice_berry",
+    "name": "香料浆果种子",
+    "en": "Spice Berry Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Mixed Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2e/Mixed_Seeds.png"
+     },
+     {
+      "file": "Spice_Berry_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/5/56/Spice_Berry_Seeds.png"
+     },
+     {
+      "file": "Spice_Berryseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/3/3e/Spice_Berryseeds.png"
+     },
+     {
+      "file": "Spice_Berry Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/5/56/Spice_Berry_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 45,
+    "id": "produce_spice_berry",
+    "name": "香料浆果",
+    "en": "Spice Berry",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Spice_Berry.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/c6/Spice_Berry.png"
+     }
+    ]
+   },
+   {
+    "i": 46,
+    "id": "seed_starfruit",
+    "name": "杨桃种子",
+    "en": "Starfruit Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Starfruit_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/e/e0/Starfruit_Seeds.png"
+     },
+     {
+      "file": "Starfruitseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/7/79/Starfruitseeds.png"
+     },
+     {
+      "file": "Starfruit Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/e/e0/Starfruit_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 47,
+    "id": "produce_starfruit",
+    "name": "杨桃",
+    "en": "Starfruit",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Starfruit.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/db/Starfruit.png"
+     }
+    ]
+   },
+   {
+    "i": 48,
+    "id": "seed_summer_spangle",
+    "name": "夏日亮片种子",
+    "en": "Summer Spangle Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Spangle Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/85/Spangle_Seeds.png"
+     },
+     {
+      "file": "Summer_Spangle_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/7/76/Summer_Spangle_Seeds.png"
+     },
+     {
+      "file": "Summer_Spangleseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/f/f3/Summer_Spangleseeds.png"
+     },
+     {
+      "file": "Summer_Spangle Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/7/76/Summer_Spangle_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 49,
+    "id": "produce_summer_spangle",
+    "name": "夏日亮片",
+    "en": "Summer Spangle",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Summer_Spangle.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/9/9f/Summer_Spangle.png"
+     }
+    ]
+   },
+   {
+    "i": 50,
+    "id": "seed_summer_squash",
+    "name": "夏南瓜种子",
+    "en": "Summer Squash Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Summer_Squash_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/f/fd/Summer_Squash_Seeds.png"
+     },
+     {
+      "file": "Summer_Squashseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/9/99/Summer_Squashseeds.png"
+     },
+     {
+      "file": "Summer_Squash Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/f/fd/Summer_Squash_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 51,
+    "id": "produce_summer_squash",
+    "name": "夏南瓜",
+    "en": "Summer Squash",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Summer_Squash.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/4/43/Summer_Squash.png"
+     }
+    ]
+   },
+   {
+    "i": 52,
+    "id": "seed_taro_root",
+    "name": "芋头种子",
+    "en": "Taro Root Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Taro_Root_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/1/11/Taro_Root_Seeds.png"
+     },
+     {
+      "file": "Taro_Rootseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/da/Taro_Rootseeds.png"
+     },
+     {
+      "file": "Taro_Root Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/1/11/Taro_Root_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 53,
+    "id": "produce_taro_root",
+    "name": "芋头",
+    "en": "Taro Root",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Taro_Root.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/0/01/Taro_Root.png"
+     }
+    ]
+   },
+   {
+    "i": 54,
+    "id": "seed_tomato",
+    "name": "番茄种子",
+    "en": "Tomato Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Tomato_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/e/e3/Tomato_Seeds.png"
+     },
+     {
+      "file": "Tomatoseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/1/1d/Tomatoseeds.png"
+     },
+     {
+      "file": "Tomato Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/e/e3/Tomato_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 55,
+    "id": "produce_tomato",
+    "name": "番茄",
+    "en": "Tomato",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Tomato.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/9/9d/Tomato.png"
+     }
+    ]
+   },
+   {
+    "i": 56,
+    "id": "seed_corn",
+    "name": "玉米种子",
+    "en": "Corn Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Corn_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/d/d1/Corn_Seeds.png"
+     },
+     {
+      "file": "Cornseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/db/Cornseeds.png"
+     },
+     {
+      "file": "Corn Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/d/d1/Corn_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 57,
+    "id": "produce_corn",
+    "name": "玉米",
+    "en": "Corn",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Corn.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/f8/Corn.png"
+     }
+    ]
+   },
+   {
+    "i": 58,
+    "id": "seed_sunflower",
+    "name": "向日葵种子",
+    "en": "Sunflower Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Sunflower_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/1/1f/Sunflower_Seeds.png"
+     },
+     {
+      "file": "Sunflowerseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/6/6e/Sunflowerseeds.png"
+     },
+     {
+      "file": "Sunflower Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/1/1f/Sunflower_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 59,
+    "id": "produce_sunflower",
+    "name": "向日葵",
+    "en": "Sunflower",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Sunflower.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/81/Sunflower.png"
+     }
+    ]
+   },
+   {
+    "i": 60,
+    "id": "seed_wheat",
+    "name": "小麦种子",
+    "en": "Wheat Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Wheat_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/2/2b/Wheat_Seeds.png"
+     },
+     {
+      "file": "Wheatseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/9/96/Wheatseeds.png"
+     },
+     {
+      "file": "Wheat Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/2/2b/Wheat_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 61,
+    "id": "produce_wheat",
+    "name": "小麦",
+    "en": "Wheat",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Wheat.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/e/e2/Wheat.png"
+     }
+    ]
+   },
+   {
+    "i": 62,
+    "id": "seed_amaranth",
+    "name": "苋菜种子",
+    "en": "Amaranth Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Amaranth_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/c/ca/Amaranth_Seeds.png"
+     },
+     {
+      "file": "Amaranthseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/e/e7/Amaranthseeds.png"
+     },
+     {
+      "file": "Amaranth Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/c/ca/Amaranth_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 63,
+    "id": "produce_amaranth",
+    "name": "苋菜",
+    "en": "Amaranth",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Amaranth.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/f6/Amaranth.png"
+     }
+    ]
+   },
+   {
+    "i": 64,
+    "id": "seed_artichoke",
+    "name": "洋蓟种子",
+    "en": "Artichoke Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Artichoke_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/7/71/Artichoke_Seeds.png"
+     },
+     {
+      "file": "Artichokeseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/d/de/Artichokeseeds.png"
+     },
+     {
+      "file": "Artichoke Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/7/71/Artichoke_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 65,
+    "id": "produce_artichoke",
+    "name": "洋蓟",
+    "en": "Artichoke",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Artichoke.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/dd/Artichoke.png"
+     }
+    ]
+   },
+   {
+    "i": 66,
+    "id": "seed_beet",
+    "name": "甜菜种子",
+    "en": "Beet Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Beet_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/a/a8/Beet_Seeds.png"
+     },
+     {
+      "file": "Beetseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/3/34/Beetseeds.png"
+     },
+     {
+      "file": "Beet Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/a/a8/Beet_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 67,
+    "id": "produce_beet",
+    "name": "甜菜",
+    "en": "Beet",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Beet.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/a4/Beet.png"
+     }
+    ]
+   },
+   {
+    "i": 68,
+    "id": "seed_bok_choy",
+    "name": "小白菜种子",
+    "en": "Bok Choy Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Bok_Choy_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/2/21/Bok_Choy_Seeds.png"
+     },
+     {
+      "file": "Bok_Choyseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/1/15/Bok_Choyseeds.png"
+     },
+     {
+      "file": "Bok_Choy Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/2/21/Bok_Choy_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 69,
+    "id": "produce_bok_choy",
+    "name": "小白菜",
+    "en": "Bok Choy",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Bok_Choy.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/4/40/Bok_Choy.png"
+     }
+    ]
+   },
+   {
+    "i": 70,
+    "id": "seed_broccoli",
+    "name": "西兰花种子",
+    "en": "Broccoli Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Broccoli_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/9/97/Broccoli_Seeds.png"
+     },
+     {
+      "file": "Broccoliseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/8/82/Broccoliseeds.png"
+     },
+     {
+      "file": "Broccoli Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/9/97/Broccoli_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 71,
+    "id": "produce_broccoli",
+    "name": "西兰花",
+    "en": "Broccoli",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Broccoli.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/f/f1/Broccoli.png"
+     }
+    ]
+   },
+   {
+    "i": 72,
+    "id": "seed_common_mushroom",
+    "name": "普通蘑菇种子",
+    "en": "Common Mushroom Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Mixed Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2e/Mixed_Seeds.png"
+     },
+     {
+      "file": "Common_Mushroom_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/3/3e/Common_Mushroom_Seeds.png"
+     },
+     {
+      "file": "Common_Mushroomseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/2/25/Common_Mushroomseeds.png"
+     },
+     {
+      "file": "Common_Mushroom Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/3/3e/Common_Mushroom_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 73,
+    "id": "produce_common_mushroom",
+    "name": "普通蘑菇",
+    "en": "Common Mushroom",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Common_Mushroom.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/2/2e/Common_Mushroom.png"
+     }
+    ]
+   },
+   {
+    "i": 74,
+    "id": "seed_cranberries",
+    "name": "蔓越莓种子",
+    "en": "Cranberries Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cranberry Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/e/ec/Cranberry_Seeds.png"
+     },
+     {
+      "file": "Cranberries_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/e/e8/Cranberries_Seeds.png"
+     },
+     {
+      "file": "Cranberriesseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/2/23/Cranberriesseeds.png"
+     },
+     {
+      "file": "Cranberries Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/e/e8/Cranberries_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 75,
+    "id": "produce_cranberries",
+    "name": "蔓越莓",
+    "en": "Cranberries",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cranberries.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/6/6e/Cranberries.png"
+     }
+    ]
+   },
+   {
+    "i": 76,
+    "id": "seed_eggplant",
+    "name": "茄子种子",
+    "en": "Eggplant Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Eggplant_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/f/f9/Eggplant_Seeds.png"
+     },
+     {
+      "file": "Eggplantseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/8/87/Eggplantseeds.png"
+     },
+     {
+      "file": "Eggplant Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/f/f9/Eggplant_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 77,
+    "id": "produce_eggplant",
+    "name": "茄子",
+    "en": "Eggplant",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Eggplant.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/8f/Eggplant.png"
+     }
+    ]
+   },
+   {
+    "i": 78,
+    "id": "seed_fairy_rose",
+    "name": "仙女玫瑰种子",
+    "en": "Fairy Rose Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Fairy Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/8e/Fairy_Seeds.png"
+     },
+     {
+      "file": "Fairy_Rose_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/4/46/Fairy_Rose_Seeds.png"
+     },
+     {
+      "file": "Fairy_Roseseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/4/48/Fairy_Roseseeds.png"
+     },
+     {
+      "file": "Fairy_Rose Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/4/46/Fairy_Rose_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 79,
+    "id": "produce_fairy_rose",
+    "name": "仙女玫瑰",
+    "en": "Fairy Rose",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Fairy_Rose.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/5c/Fairy_Rose.png"
+     }
+    ]
+   },
+   {
+    "i": 80,
+    "id": "seed_grape",
+    "name": "葡萄种子",
+    "en": "Grape Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Rare Seed.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/5b/Rare_Seed.png"
+     },
+     {
+      "file": "Grape_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/a/a3/Grape_Seeds.png"
+     },
+     {
+      "file": "Grapeseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/e/ee/Grapeseeds.png"
+     },
+     {
+      "file": "Grape Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/a/a3/Grape_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 81,
+    "id": "produce_grape",
+    "name": "葡萄",
+    "en": "Grape",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Grape.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/c/c2/Grape.png"
+     }
+    ]
+   },
+   {
+    "i": 82,
+    "id": "seed_pumpkin",
+    "name": "南瓜种子",
+    "en": "Pumpkin Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Pumpkin_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/9/99/Pumpkin_Seeds.png"
+     },
+     {
+      "file": "Pumpkinseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/0/04/Pumpkinseeds.png"
+     },
+     {
+      "file": "Pumpkin Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/9/99/Pumpkin_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 83,
+    "id": "produce_pumpkin",
+    "name": "南瓜",
+    "en": "Pumpkin",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Pumpkin.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/6/64/Pumpkin.png"
+     }
+    ]
+   },
+   {
+    "i": 84,
+    "id": "seed_sweet_gem_berry",
+    "name": "甜宝石浆果种子",
+    "en": "Sweet Gem Berry Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Rare Seed.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/5b/Rare_Seed.png"
+     },
+     {
+      "file": "Sweet_Gem_Berry_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/9/9a/Sweet_Gem_Berry_Seeds.png"
+     },
+     {
+      "file": "Sweet_Gem_Berryseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/2/23/Sweet_Gem_Berryseeds.png"
+     },
+     {
+      "file": "Sweet_Gem_Berry Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/9/9a/Sweet_Gem_Berry_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 85,
+    "id": "produce_sweet_gem_berry",
+    "name": "甜宝石浆果",
+    "en": "Sweet Gem Berry",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Sweet_Gem_Berry.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/8/88/Sweet_Gem_Berry.png"
+     }
+    ]
+   },
+   {
+    "i": 86,
+    "id": "seed_yam",
+    "name": "山药种子",
+    "en": "Yam Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Yam_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/e/e9/Yam_Seeds.png"
+     },
+     {
+      "file": "Yamseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/6/6e/Yamseeds.png"
+     },
+     {
+      "file": "Yam Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/e/e9/Yam_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 87,
+    "id": "produce_yam",
+    "name": "山药",
+    "en": "Yam",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Yam.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/5/52/Yam.png"
+     }
+    ]
+   },
+   {
+    "i": 88,
+    "id": "seed_powdermelon",
+    "name": "霜瓜种子",
+    "en": "Powdermelon Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Powdermelon_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/d/de/Powdermelon_Seeds.png"
+     },
+     {
+      "file": "Powdermelonseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/c/c8/Powdermelonseeds.png"
+     },
+     {
+      "file": "Powdermelon Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/d/de/Powdermelon_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 89,
+    "id": "produce_powdermelon",
+    "name": "霜瓜",
+    "en": "Powdermelon",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Powdermelon.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/a/aa/Powdermelon.png"
+     }
+    ]
+   },
+   {
+    "i": 90,
+    "id": "seed_winter_root",
+    "name": "冬根种子",
+    "en": "Winter Root Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Winter Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/d/dd/Winter_Seeds.png"
+     },
+     {
+      "file": "Winter_Root_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/f/f1/Winter_Root_Seeds.png"
+     },
+     {
+      "file": "Winter_Rootseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/7/74/Winter_Rootseeds.png"
+     },
+     {
+      "file": "Winter_Root Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/f/f1/Winter_Root_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 91,
+    "id": "produce_winter_root",
+    "name": "冬根",
+    "en": "Winter Root",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Winter_Root.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/1/11/Winter_Root.png"
+     }
+    ]
+   },
+   {
+    "i": 92,
+    "id": "seed_ancient_fruit",
+    "name": "上古水果种子",
+    "en": "Ancient Fruit Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Ancient Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/e/ec/Ancient_Seeds.png"
+     },
+     {
+      "file": "Ancient_Fruit_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/0/07/Ancient_Fruit_Seeds.png"
+     },
+     {
+      "file": "Ancient_Fruitseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/f/f9/Ancient_Fruitseeds.png"
+     },
+     {
+      "file": "Ancient_Fruit Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/0/07/Ancient_Fruit_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 93,
+    "id": "produce_ancient_fruit",
+    "name": "上古水果",
+    "en": "Ancient Fruit",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Ancient_Fruit.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/0/01/Ancient_Fruit.png"
+     }
+    ]
+   },
+   {
+    "i": 94,
+    "id": "seed_cactus_fruit",
+    "name": "仙人掌果种子",
+    "en": "Cactus Fruit Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cactus Seeds.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/0/09/Cactus_Seeds.png"
+     },
+     {
+      "file": "Cactus_Fruit_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/3/37/Cactus_Fruit_Seeds.png"
+     },
+     {
+      "file": "Cactus_Fruitseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/b/bf/Cactus_Fruitseeds.png"
+     },
+     {
+      "file": "Cactus_Fruit Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/3/37/Cactus_Fruit_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 95,
+    "id": "produce_cactus_fruit",
+    "name": "仙人掌果",
+    "en": "Cactus Fruit",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Cactus_Fruit.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/3/32/Cactus_Fruit.png"
+     }
+    ]
+   },
+   {
+    "i": 96,
+    "id": "seed_fiber",
+    "name": "纤维种子",
+    "en": "Fiber Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Fiber_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/0/05/Fiber_Seeds.png"
+     },
+     {
+      "file": "Fiberseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/1/1c/Fiberseeds.png"
+     },
+     {
+      "file": "Fiber Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/0/05/Fiber_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 97,
+    "id": "produce_fiber",
+    "name": "纤维",
+    "en": "Fiber",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Fiber.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/4/45/Fiber.png"
+     }
+    ]
+   },
+   {
+    "i": 98,
+    "id": "seed_qi_fruit",
+    "name": "齐瓜种子",
+    "en": "Qi Fruit Seeds",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Qi_Fruit_Seeds.png",
+      "role": "icon2",
+      "path": "/mediawiki/images/en/d/de/Qi_Fruit_Seeds.png"
+     },
+     {
+      "file": "Qi_Fruitseeds.png",
+      "role": "icon3",
+      "path": "/mediawiki/images/en/3/34/Qi_Fruitseeds.png"
+     },
+     {
+      "file": "Qi_Fruit Seeds.png",
+      "role": "icon4",
+      "path": "/mediawiki/images/en/d/de/Qi_Fruit_Seeds.png"
+     }
+    ]
+   },
+   {
+    "i": 99,
+    "id": "produce_qi_fruit",
+    "name": "齐瓜",
+    "en": "Qi Fruit",
+    "cat": "",
+    "cands": [
+     {
+      "file": "Qi_Fruit.png",
+      "role": "icon",
+      "path": "/mediawiki/images/en/b/b9/Qi_Fruit.png"
      }
     ]
    }
   ],
-  "total": 27
+  "total": 213
  }
 }

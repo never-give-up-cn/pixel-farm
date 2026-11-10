@@ -1,0 +1,2234 @@
+[
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.2382,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.97,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_blue_jazz",
+  "name": "蓝调爵士种子",
+  "en": "Blue Jazz Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Jazz Seeds.png"
+ },
+ {
+  "iou": 0.6415,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.574,
+  "aspect_sim": 0.8272,
+  "size_sim": 0.0,
+  "score": 70.19,
+  "ours_box": [
+   17,
+   25
+  ],
+  "wiki_box": [
+   27,
+   48
+  ],
+  "id": "produce_blue_jazz",
+  "name": "蓝调爵士",
+  "en": "Blue Jazz",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Blue_Jazz.png"
+ },
+ {
+  "iou": 0.7783,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.3106,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.0,
+  "score": 65.84,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "seed_carrot",
+  "name": "胡萝卜种子",
+  "en": "Carrot Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Carrot_Seeds.png"
+ },
+ {
+  "iou": 0.3839,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.606,
+  "aspect_sim": 0.8824,
+  "size_sim": 0.0,
+  "score": 60.68,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "produce_carrot",
+  "name": "胡萝卜",
+  "en": "Carrot",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Carrot.png"
+ },
+ {
+  "iou": 0.918,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4193,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 76.09,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_cauliflower",
+  "name": "花椰菜种子",
+  "en": "Cauliflower Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cauliflower_Seeds.png"
+ },
+ {
+  "iou": 0.6087,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.0285,
+  "aspect_sim": 0.8077,
+  "size_sim": 0.1366,
+  "score": 59.33,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "produce_cauliflower",
+  "name": "花椰菜",
+  "en": "Cauliflower",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Cauliflower.png"
+ },
+ {
+  "iou": 0.7635,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.7204,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.7984,
+  "score": 77.7,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "produce_coffee_bean",
+  "name": "咖啡豆",
+  "en": "Coffee Bean",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Coffee_Bean.png"
+ },
+ {
+  "iou": 0.9268,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5406,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.0,
+  "score": 78.23,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "seed_garlic",
+  "name": "大蒜种子",
+  "en": "Garlic Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Garlic_Seeds.png"
+ },
+ {
+  "iou": 0.5964,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.5175,
+  "aspect_sim": 0.6493,
+  "size_sim": 0.0,
+  "score": 63.71,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   11,
+   12
+  ],
+  "id": "produce_garlic",
+  "name": "大蒜",
+  "en": "Garlic",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Garlic.png"
+ },
+ {
+  "iou": 0.4435,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.514,
+  "aspect_sim": 0.3261,
+  "size_sim": 0.4583,
+  "score": 56.25,
+  "ours_box": [
+   23,
+   9
+  ],
+  "wiki_box": [
+   10,
+   12
+  ],
+  "id": "produce_green_bean",
+  "name": "青豆",
+  "en": "Green Bean",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Green_Bean.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.2738,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.25,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "seed_kale",
+  "name": "羽衣甘蓝种子",
+  "en": "Kale Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Kale_Seeds.png"
+ },
+ {
+  "iou": 0.7505,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.6654,
+  "aspect_sim": 0.8635,
+  "size_sim": 0.0,
+  "score": 75.19,
+  "ours_box": [
+   21,
+   17
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "produce_kale",
+  "name": "羽衣甘蓝",
+  "en": "Kale",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Kale.png"
+ },
+ {
+  "iou": 0.8613,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2999,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 71.04,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_parsnip",
+  "name": "防风草种子",
+  "en": "Parsnip Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Parsnip_Seeds.png"
+ },
+ {
+  "iou": 0.7123,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.0071,
+  "aspect_sim": 0.6618,
+  "size_sim": 0.7175,
+  "score": 64.49,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "produce_parsnip",
+  "name": "防风草",
+  "en": "Parsnip",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Parsnip.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5787,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 79.14,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_potato",
+  "name": "土豆种子",
+  "en": "Potato Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Potato_Seeds.png"
+ },
+ {
+  "iou": 0.6303,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.5116,
+  "aspect_sim": 0.6522,
+  "size_sim": 0.0,
+  "score": 64.67,
+  "ours_box": [
+   23,
+   15
+  ],
+  "wiki_box": [
+   11,
+   11
+  ],
+  "id": "produce_potato",
+  "name": "土豆",
+  "en": "Potato",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Potato.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.466,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 77.76,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "seed_rhubarb",
+  "name": "大黄种子",
+  "en": "Rhubarb Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rhubarb_Seeds.png"
+ },
+ {
+  "iou": 0.5027,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.3331,
+  "aspect_sim": 0.5289,
+  "size_sim": 0.0,
+  "score": 55.99,
+  "ours_box": [
+   8,
+   22
+  ],
+  "wiki_box": [
+   33,
+   48
+  ],
+  "id": "produce_rhubarb",
+  "name": "大黄",
+  "en": "Rhubarb",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Rhubarb.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2867,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.13,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "seed_strawberry",
+  "name": "草莓种子",
+  "en": "Strawberry Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Strawberry_Seeds.png"
+ },
+ {
+  "iou": 0.6712,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.302,
+  "aspect_sim": 0.9574,
+  "size_sim": 0.0,
+  "score": 65.18,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   48,
+   47
+  ],
+  "id": "produce_strawberry",
+  "name": "草莓",
+  "en": "Strawberry",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Strawberry.png"
+ },
+ {
+  "iou": 0.4241,
+  "dhash_sim": 0.4844,
+  "palette_cov": 1.0,
+  "color_sim": 0.2896,
+  "aspect_sim": 0.7566,
+  "size_sim": 0.0,
+  "score": 54.32,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   42,
+   39
+  ],
+  "id": "seed_tulip",
+  "name": "郁金香种子",
+  "en": "Tulip Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Mixed Flower Seeds.png"
+ },
+ {
+  "iou": 0.4294,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4282,
+  "aspect_sim": 0.8854,
+  "size_sim": 0.0,
+  "score": 60.97,
+  "ours_box": [
+   14,
+   23
+  ],
+  "wiki_box": [
+   33,
+   48
+  ],
+  "id": "produce_tulip",
+  "name": "郁金香",
+  "en": "Tulip",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tulip.png"
+ },
+ {
+  "iou": 0.352,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.1489,
+  "aspect_sim": 0.2909,
+  "size_sim": 0.0,
+  "score": 48.51,
+  "ours_box": [
+   8,
+   22
+  ],
+  "wiki_box": [
+   45,
+   36
+  ],
+  "id": "produce_unmilled_rice",
+  "name": "未碾米",
+  "en": "Unmilled Rice",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Unmilled_Rice.png"
+ },
+ {
+  "iou": 0.3284,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.873,
+  "size_sim": 0.0,
+  "score": 49.21,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   15
+  ],
+  "id": "seed_wild_horseradish",
+  "name": "野山葵种子",
+  "en": "Wild Horseradish Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mixed Seeds.png"
+ },
+ {
+  "iou": 0.6964,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.0972,
+  "aspect_sim": 0.7647,
+  "size_sim": 0.8536,
+  "score": 66.14,
+  "ours_box": [
+   17,
+   13
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "produce_wild_horseradish",
+  "name": "野山葵",
+  "en": "Wild Horseradish",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wild_Horseradish.png"
+ },
+ {
+  "iou": 0.9268,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.3324,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.0,
+  "score": 74.48,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "seed_blueberry",
+  "name": "蓝莓种子",
+  "en": "Blueberry Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blueberry_Seeds.png"
+ },
+ {
+  "iou": 0.8047,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.5997,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.1303,
+  "score": 78.16,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   10,
+   10
+  ],
+  "id": "produce_blueberry",
+  "name": "蓝莓",
+  "en": "Blueberry",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Blueberry.png"
+ },
+ {
+  "iou": 0.669,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4331,
+  "aspect_sim": 0.7721,
+  "size_sim": 0.0,
+  "score": 66.16,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   42,
+   48
+  ],
+  "id": "produce_hops",
+  "name": "啤酒花",
+  "en": "Hops",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hops.png"
+ },
+ {
+  "iou": 0.3015,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.5277,
+  "aspect_sim": 0.9559,
+  "size_sim": 0.0,
+  "score": 56.52,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   39,
+   36
+  ],
+  "id": "produce_hot_pepper",
+  "name": "辣椒",
+  "en": "Hot Pepper",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Hot_Pepper.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.5019,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 77.67,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "seed_melon",
+  "name": "甜瓜种子",
+  "en": "Melon Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Melon_Seeds.png"
+ },
+ {
+  "iou": 0.6554,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.4693,
+  "aspect_sim": 0.7931,
+  "size_sim": 0.0,
+  "score": 65.26,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "produce_melon",
+  "name": "甜瓜",
+  "en": "Melon",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Melon.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.7969,
+  "palette_cov": 1.0,
+  "color_sim": 0.2236,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 76.62,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_pineapple",
+  "name": "菠萝种子",
+  "en": "Pineapple Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pineapple_Seeds.png"
+ },
+ {
+  "iou": 0.6696,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.1292,
+  "aspect_sim": 0.9868,
+  "size_sim": 0.0973,
+  "score": 62.69,
+  "ours_box": [
+   19,
+   25
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "produce_pineapple",
+  "name": "菠萝",
+  "en": "Pineapple",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pineapple.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2659,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.76,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_poppy",
+  "name": "虞美人种子",
+  "en": "Poppy Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Poppy_Seeds.png"
+ },
+ {
+  "iou": 0.4255,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.2796,
+  "aspect_sim": 0.8308,
+  "size_sim": 0.0,
+  "score": 58.08,
+  "ours_box": [
+   18,
+   25
+  ],
+  "wiki_box": [
+   39,
+   45
+  ],
+  "id": "produce_poppy",
+  "name": "虞美人",
+  "en": "Poppy",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Poppy.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.7031,
+  "palette_cov": 1.0,
+  "color_sim": 0.4094,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 77.53,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_radish",
+  "name": "萝卜种子",
+  "en": "Radish Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Radish_Seeds.png"
+ },
+ {
+  "iou": 0.6316,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.1694,
+  "aspect_sim": 0.7353,
+  "size_sim": 0.0,
+  "score": 59.47,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   30,
+   36
+  ],
+  "id": "produce_radish",
+  "name": "萝卜",
+  "en": "Radish",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Radish.png"
+ },
+ {
+  "iou": 0.9326,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.5833,
+  "aspect_sim": 0.9818,
+  "size_sim": 0.0,
+  "score": 78.42,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   45
+  ],
+  "id": "seed_red_cabbage",
+  "name": "红甘蓝种子",
+  "en": "Red Cabbage Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Red_Cabbage_Seeds.png"
+ },
+ {
+  "iou": 0.6172,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.3781,
+  "aspect_sim": 0.8077,
+  "size_sim": 0.1366,
+  "score": 66.07,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "produce_red_cabbage",
+  "name": "红甘蓝",
+  "en": "Red Cabbage",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Red_Cabbage.png"
+ },
+ {
+  "iou": 0.3284,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.0591,
+  "aspect_sim": 0.873,
+  "size_sim": 0.0,
+  "score": 50.72,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   15
+  ],
+  "id": "seed_spice_berry",
+  "name": "香料浆果种子",
+  "en": "Spice Berry Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mixed Seeds.png"
+ },
+ {
+  "iou": 0.7314,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.1178,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.9357,
+  "score": 68.7,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   15,
+   15
+  ],
+  "id": "produce_spice_berry",
+  "name": "香料浆果",
+  "en": "Spice Berry",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spice_Berry.png"
+ },
+ {
+  "iou": 0.9414,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.0968,
+  "aspect_sim": 0.9972,
+  "size_sim": 0.0,
+  "score": 73.1,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   39,
+   48
+  ],
+  "id": "seed_starfruit",
+  "name": "杨桃种子",
+  "en": "Starfruit Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Starfruit_Seeds.png"
+ },
+ {
+  "iou": 0.6213,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5094,
+  "aspect_sim": 0.9651,
+  "size_sim": 0.0,
+  "score": 67.18,
+  "ours_box": [
+   21,
+   19
+  ],
+  "wiki_box": [
+   48,
+   45
+  ],
+  "id": "produce_starfruit",
+  "name": "杨桃",
+  "en": "Starfruit",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Starfruit.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.2193,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.99,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_summer_spangle",
+  "name": "夏日亮片种子",
+  "en": "Summer Spangle Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Spangle Seeds.png"
+ },
+ {
+  "iou": 0.4787,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.4525,
+  "aspect_sim": 0.9549,
+  "size_sim": 0.0,
+  "score": 62.26,
+  "ours_box": [
+   18,
+   25
+  ],
+  "wiki_box": [
+   33,
+   48
+  ],
+  "id": "produce_summer_spangle",
+  "name": "夏日亮片",
+  "en": "Summer Spangle",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Summer_Spangle.png"
+ },
+ {
+  "iou": 0.7783,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.2471,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.0,
+  "score": 66.77,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "seed_summer_squash",
+  "name": "夏南瓜种子",
+  "en": "Summer Squash Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Summer_Squash_Seeds.png"
+ },
+ {
+  "iou": 0.4144,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.5737,
+  "aspect_sim": 0.8654,
+  "size_sim": 0.0,
+  "score": 62.19,
+  "ours_box": [
+   28,
+   21
+  ],
+  "wiki_box": [
+   45,
+   39
+  ],
+  "id": "produce_summer_squash",
+  "name": "夏南瓜",
+  "en": "Summer Squash",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Summer_Squash.png"
+ },
+ {
+  "iou": 0.379,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.5964,
+  "aspect_sim": 0.6198,
+  "size_sim": 0.4024,
+  "score": 57.9,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "produce_taro_root",
+  "name": "芋头",
+  "en": "Taro Root",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Taro_Root.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.1417,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 71.96,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_tomato",
+  "name": "番茄种子",
+  "en": "Tomato Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Tomato_Seeds.png"
+ },
+ {
+  "iou": 0.5552,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5801,
+  "aspect_sim": 0.6493,
+  "size_sim": 0.0,
+  "score": 64.04,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   33,
+   36
+  ],
+  "id": "produce_tomato",
+  "name": "番茄",
+  "en": "Tomato",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Tomato.png"
+ },
+ {
+  "iou": 0.8887,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.281,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 72.89,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_corn",
+  "name": "玉米种子",
+  "en": "Corn Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Corn_Seeds.png"
+ },
+ {
+  "iou": 0.6367,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.461,
+  "aspect_sim": 0.7857,
+  "size_sim": 0.0,
+  "score": 67.62,
+  "ours_box": [
+   11,
+   14
+  ],
+  "wiki_box": [
+   42,
+   42
+  ],
+  "id": "produce_corn",
+  "name": "玉米",
+  "en": "Corn",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Corn.png"
+ },
+ {
+  "iou": 0.376,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.0,
+  "score": 52.55,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "seed_sunflower",
+  "name": "向日葵种子",
+  "en": "Sunflower Seeds",
+  "status": "ok",
+  "wiki_scale": 4,
+  "variants": 1,
+  "wikiFile": "Sunflower_Seeds.png"
+ },
+ {
+  "iou": 0.6727,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.7663,
+  "aspect_sim": 0.96,
+  "size_sim": 0.0,
+  "score": 75.65,
+  "ours_box": [
+   18,
+   25
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "produce_sunflower",
+  "name": "向日葵",
+  "en": "Sunflower",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sunflower.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.5852,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 79.23,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_wheat",
+  "name": "小麦种子",
+  "en": "Wheat Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Wheat_Seeds.png"
+ },
+ {
+  "iou": 0.4482,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.8007,
+  "aspect_sim": 0.4848,
+  "size_sim": 0.0,
+  "score": 60.62,
+  "ours_box": [
+   8,
+   22
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "produce_wheat",
+  "name": "小麦",
+  "en": "Wheat",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Wheat.png"
+ },
+ {
+  "iou": 0.9238,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4221,
+  "aspect_sim": 0.9,
+  "size_sim": 0.0,
+  "score": 74.92,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   11,
+   15
+  ],
+  "id": "seed_amaranth",
+  "name": "苋菜种子",
+  "en": "Amaranth Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Amaranth_Seeds.png"
+ },
+ {
+  "iou": 0.3949,
+  "dhash_sim": 0.5312,
+  "palette_cov": 1.0,
+  "color_sim": 0.5879,
+  "aspect_sim": 0.3333,
+  "size_sim": 0.9481,
+  "score": 59.36,
+  "ours_box": [
+   9,
+   27
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "produce_amaranth",
+  "name": "苋菜",
+  "en": "Amaranth",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Amaranth.png"
+ },
+ {
+  "iou": 0.9326,
+  "dhash_sim": 0.6719,
+  "palette_cov": 1.0,
+  "color_sim": 0.2365,
+  "aspect_sim": 0.9818,
+  "size_sim": 0.0,
+  "score": 74.78,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   36,
+   45
+  ],
+  "id": "seed_artichoke",
+  "name": "洋蓟种子",
+  "en": "Artichoke Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Artichoke_Seeds.png"
+ },
+ {
+  "iou": 0.6016,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.0327,
+  "aspect_sim": 0.6923,
+  "size_sim": 0.0,
+  "score": 57.65,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "produce_artichoke",
+  "name": "洋蓟",
+  "en": "Artichoke",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Artichoke.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.1122,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 70.89,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_beet",
+  "name": "甜菜种子",
+  "en": "Beet Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Beet_Seeds.png"
+ },
+ {
+  "iou": 0.4607,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.424,
+  "aspect_sim": 0.5755,
+  "size_sim": 0.0,
+  "score": 57.19,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   39,
+   48
+  ],
+  "id": "produce_beet",
+  "name": "甜菜",
+  "en": "Beet",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Beet.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.75,
+  "palette_cov": 1.0,
+  "color_sim": 0.1959,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 75.27,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_bok_choy",
+  "name": "小白菜种子",
+  "en": "Bok Choy Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bok_Choy_Seeds.png"
+ },
+ {
+  "iou": 0.6448,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.2869,
+  "aspect_sim": 0.7067,
+  "size_sim": 0.1117,
+  "score": 63.15,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "produce_bok_choy",
+  "name": "小白菜",
+  "en": "Bok Choy",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Bok_Choy.png"
+ },
+ {
+  "iou": 0.7783,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.4195,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.0,
+  "score": 69.66,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "seed_broccoli",
+  "name": "西兰花种子",
+  "en": "Broccoli Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Broccoli_Seeds.png"
+ },
+ {
+  "iou": 0.5754,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.6343,
+  "aspect_sim": 0.8077,
+  "size_sim": 0.0,
+  "score": 67.98,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   14,
+   14
+  ],
+  "id": "produce_broccoli",
+  "name": "西兰花",
+  "en": "Broccoli",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Broccoli.png"
+ },
+ {
+  "iou": 0.3284,
+  "dhash_sim": 0.5938,
+  "palette_cov": 1.0,
+  "color_sim": 0.1062,
+  "aspect_sim": 0.873,
+  "size_sim": 0.0,
+  "score": 52.05,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   15
+  ],
+  "id": "seed_common_mushroom",
+  "name": "普通蘑菇种子",
+  "en": "Common Mushroom Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Mixed Seeds.png"
+ },
+ {
+  "iou": 0.845,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.1298,
+  "aspect_sim": 0.8824,
+  "size_sim": 0.0,
+  "score": 68.93,
+  "ours_box": [
+   17,
+   15
+  ],
+  "wiki_box": [
+   36,
+   36
+  ],
+  "id": "produce_common_mushroom",
+  "name": "普通蘑菇",
+  "en": "Common Mushroom",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Common_Mushroom.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.35,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 74.14,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_cranberries",
+  "name": "蔓越莓种子",
+  "en": "Cranberries Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cranberry Seeds.png"
+ },
+ {
+  "iou": 0.6202,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.3067,
+  "aspect_sim": 0.9375,
+  "size_sim": 0.4919,
+  "score": 67.85,
+  "ours_box": [
+   16,
+   15
+  ],
+  "wiki_box": [
+   12,
+   12
+  ],
+  "id": "produce_cranberries",
+  "name": "蔓越莓",
+  "en": "Cranberries",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cranberries.png"
+ },
+ {
+  "iou": 0.9453,
+  "dhash_sim": 0.625,
+  "palette_cov": 1.0,
+  "color_sim": 0.454,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 77.12,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_eggplant",
+  "name": "茄子种子",
+  "en": "Eggplant Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Eggplant_Seeds.png"
+ },
+ {
+  "iou": 0.5488,
+  "dhash_sim": 0.5,
+  "palette_cov": 1.0,
+  "color_sim": 0.7,
+  "aspect_sim": 0.9231,
+  "size_sim": 0.3864,
+  "score": 68.13,
+  "ours_box": [
+   17,
+   17
+  ],
+  "wiki_box": [
+   13,
+   12
+  ],
+  "id": "produce_eggplant",
+  "name": "茄子",
+  "en": "Eggplant",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Eggplant.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.7188,
+  "palette_cov": 1.0,
+  "color_sim": 0.2783,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 75.88,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_fairy_rose",
+  "name": "仙女玫瑰种子",
+  "en": "Fairy Rose Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fairy Seeds.png"
+ },
+ {
+  "iou": 0.5046,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.3168,
+  "aspect_sim": 0.96,
+  "size_sim": 0.0,
+  "score": 63.24,
+  "ours_box": [
+   18,
+   25
+  ],
+  "wiki_box": [
+   36,
+   48
+  ],
+  "id": "produce_fairy_rose",
+  "name": "仙女玫瑰",
+  "en": "Fairy Rose",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fairy_Rose.png"
+ },
+ {
+  "iou": 0.7617,
+  "dhash_sim": 0.4688,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 61.43,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_grape",
+  "name": "葡萄种子",
+  "en": "Grape Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rare Seed.png"
+ },
+ {
+  "iou": 0.615,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.2912,
+  "aspect_sim": 0.8635,
+  "size_sim": 0.6043,
+  "score": 66.66,
+  "ours_box": [
+   17,
+   21
+  ],
+  "wiki_box": [
+   15,
+   16
+  ],
+  "id": "produce_grape",
+  "name": "葡萄",
+  "en": "Grape",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Grape.png"
+ },
+ {
+  "iou": 0.8711,
+  "dhash_sim": 0.7344,
+  "palette_cov": 1.0,
+  "color_sim": 0.4121,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 76.45,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_pumpkin",
+  "name": "南瓜种子",
+  "en": "Pumpkin Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pumpkin_Seeds.png"
+ },
+ {
+  "iou": 0.6979,
+  "dhash_sim": 0.5156,
+  "palette_cov": 1.0,
+  "color_sim": 0.7129,
+  "aspect_sim": 0.9852,
+  "size_sim": 0.0,
+  "score": 71.8,
+  "ours_box": [
+   29,
+   25
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "produce_pumpkin",
+  "name": "南瓜",
+  "en": "Pumpkin",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Pumpkin.png"
+ },
+ {
+  "iou": 0.7617,
+  "dhash_sim": 0.4375,
+  "palette_cov": 1.0,
+  "color_sim": 0.0246,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 61.17,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_sweet_gem_berry",
+  "name": "甜宝石浆果种子",
+  "en": "Sweet Gem Berry Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Rare Seed.png"
+ },
+ {
+  "iou": 0.5121,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.3979,
+  "aspect_sim": 0.681,
+  "size_sim": 0.0,
+  "score": 59.39,
+  "ours_box": [
+   15,
+   13
+  ],
+  "wiki_box": [
+   33,
+   42
+  ],
+  "id": "produce_sweet_gem_berry",
+  "name": "甜宝石浆果",
+  "en": "Sweet Gem Berry",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Sweet_Gem_Berry.png"
+ },
+ {
+  "iou": 0.9268,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.292,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.0,
+  "score": 73.25,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "seed_yam",
+  "name": "山药种子",
+  "en": "Yam Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Yam_Seeds.png"
+ },
+ {
+  "iou": 0.5843,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.5197,
+  "aspect_sim": 0.4722,
+  "size_sim": 0.0,
+  "score": 62.23,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   8,
+   12
+  ],
+  "id": "produce_yam",
+  "name": "山药",
+  "en": "Yam",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Yam.png"
+ },
+ {
+  "iou": 0.7783,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.2175,
+  "aspect_sim": 0.8148,
+  "size_sim": 0.0,
+  "score": 66.01,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   45,
+   45
+  ],
+  "id": "seed_powdermelon",
+  "name": "霜瓜种子",
+  "en": "Powdermelon Seeds",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Powdermelon_Seeds.png"
+ },
+ {
+  "iou": 0.6826,
+  "dhash_sim": 0.5781,
+  "palette_cov": 1.0,
+  "color_sim": 0.3778,
+  "aspect_sim": 0.7365,
+  "size_sim": 0.1024,
+  "score": 65.59,
+  "ours_box": [
+   29,
+   23
+  ],
+  "wiki_box": [
+   39,
+   42
+  ],
+  "id": "produce_powdermelon",
+  "name": "霜瓜",
+  "en": "Powdermelon",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Powdermelon.png"
+ },
+ {
+  "iou": 0.9375,
+  "dhash_sim": 0.6875,
+  "palette_cov": 1.0,
+  "color_sim": 0.09,
+  "aspect_sim": 0.9205,
+  "size_sim": 0.0,
+  "score": 72.43,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   16
+  ],
+  "id": "seed_winter_root",
+  "name": "冬根种子",
+  "en": "Winter Root Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Winter Seeds.png"
+ },
+ {
+  "iou": 0.5315,
+  "dhash_sim": 0.6094,
+  "palette_cov": 1.0,
+  "color_sim": 0.0,
+  "aspect_sim": 0.4048,
+  "size_sim": 0.0,
+  "score": 52.18,
+  "ours_box": [
+   24,
+   17
+  ],
+  "wiki_box": [
+   8,
+   14
+  ],
+  "id": "produce_winter_root",
+  "name": "冬根",
+  "en": "Winter Root",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Winter_Root.png"
+ },
+ {
+  "iou": 0.8809,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.2326,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 70.3,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_ancient_fruit",
+  "name": "上古水果种子",
+  "en": "Ancient Fruit Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ancient Seeds.png"
+ },
+ {
+  "iou": 0.5759,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.4861,
+  "aspect_sim": 0.8077,
+  "size_sim": 0.2446,
+  "score": 66.68,
+  "ours_box": [
+   26,
+   21
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "produce_ancient_fruit",
+  "name": "上古水果",
+  "en": "Ancient Fruit",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Ancient_Fruit.png"
+ },
+ {
+  "iou": 0.8223,
+  "dhash_sim": 0.6562,
+  "palette_cov": 1.0,
+  "color_sim": 0.1842,
+  "aspect_sim": 0.9312,
+  "size_sim": 0.0275,
+  "score": 70.01,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   14,
+   16
+  ],
+  "id": "seed_cactus_fruit",
+  "name": "仙人掌果种子",
+  "en": "Cactus Fruit Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cactus Seeds.png"
+ },
+ {
+  "iou": 0.8573,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.1964,
+  "aspect_sim": 0.7292,
+  "size_sim": 0.814,
+  "score": 71.28,
+  "ours_box": [
+   15,
+   18
+  ],
+  "wiki_box": [
+   16,
+   14
+  ],
+  "id": "produce_cactus_fruit",
+  "name": "仙人掌果",
+  "en": "Cactus Fruit",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Cactus_Fruit.png"
+ },
+ {
+  "iou": 0.7959,
+  "dhash_sim": 0.6406,
+  "palette_cov": 1.0,
+  "color_sim": 0.0758,
+  "aspect_sim": 0.9506,
+  "size_sim": 0.0,
+  "score": 67.33,
+  "ours_box": [
+   22,
+   27
+  ],
+  "wiki_box": [
+   12,
+   14
+  ],
+  "id": "seed_fiber",
+  "name": "纤维种子",
+  "en": "Fiber Seeds",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Fiber_Seeds.png"
+ },
+ {
+  "iou": 0.5109,
+  "dhash_sim": 0.5469,
+  "palette_cov": 1.0,
+  "color_sim": 0.4039,
+  "aspect_sim": 0.3879,
+  "size_sim": 0.0,
+  "score": 56.2,
+  "ours_box": [
+   8,
+   22
+  ],
+  "wiki_box": [
+   45,
+   48
+  ],
+  "id": "produce_fiber",
+  "name": "纤维",
+  "en": "Fiber",
+  "status": "ok",
+  "wiki_scale": 1,
+  "variants": 1,
+  "wikiFile": "Fiber.png"
+ },
+ {
+  "iou": 0.62,
+  "dhash_sim": 0.5625,
+  "palette_cov": 1.0,
+  "color_sim": 0.6519,
+  "aspect_sim": 0.76,
+  "size_sim": 0.3837,
+  "score": 69.15,
+  "ours_box": [
+   25,
+   19
+  ],
+  "wiki_box": [
+   16,
+   16
+  ],
+  "id": "produce_qi_fruit",
+  "name": "齐瓜",
+  "en": "Qi Fruit",
+  "status": "ok",
+  "wiki_scale": 3,
+  "variants": 1,
+  "wikiFile": "Qi_Fruit.png"
+ }
+]

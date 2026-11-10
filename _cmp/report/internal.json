@@ -78,9 +78,15 @@
   "gap": 11.0
  },
  "ui": {
-  "n": 27,
-  "ours_internal": 91.6,
-  "wiki_internal": 73.3,
-  "gap": 18.3
+  "n": 49,
+  "ours_internal": 91.1,
+  "wiki_internal": 73.7,
+  "gap": 17.4
+ },
+ "cropitems": {
+  "n": 93,
+  "ours_internal": 72.3,
+  "wiki_internal": 70.1,
+  "gap": 2.2
  }
 }

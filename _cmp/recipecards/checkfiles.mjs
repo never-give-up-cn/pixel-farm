@@ -1,6 +1,5 @@
 // Check existence of many File: pages on the wiki using headless Chrome in parallel.
-// Usage: node _cmp/checkfiles.mjs <root> <listfile> <outjson> [concurrency]
-// listfile: one file name per line (e.g. "Algae Soup.png")
+// Usage: node _cmp/recipecards/checkfiles.mjs <root> <listfile> <outjson> [concurrency]
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -15,7 +14,7 @@ const names = fs.readFileSync(listFile, 'utf8').split(/\r?\n/).map(s => s.trim()
 
 function check(name, idx) {
   const url = `https://stardewvalleywiki.com/File:${encodeURIComponent(name)}`;
-  const profile = path.join(ROOT, '_cmp', 'out', `.chrome-chk-${process.pid}-${idx}-${Date.now()}`);
+  const profile = path.join(ROOT, '_cmp', 'recipecards', `.chrome-chk-${process.pid}-${idx}-${Date.now()}`);
   const r = spawnSync(CHROME, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
     '--disable-extensions', '--no-first-run', '--no-default-browser-check',
@@ -29,20 +28,14 @@ function check(name, idx) {
   const compact = html.replace(/\s/g, '');
   const missing = compact.includes('wgArticleId":0');
   const m = html.match(/(\d+)\s*[x×]\s*(\d+)\s*pixels/);
-  // find the actual full-size image link on the file page
   const imgs = [...html.matchAll(/\/mediawiki\/images\/en\/[^"]*\/([^/"']+\.(?:png|jpg|jpeg|gif))/g)].map(x => x[1]);
   const exact = imgs.filter(f => decodeURIComponent(f).toLowerCase() === name.toLowerCase());
-  return {
-    exists: !missing,
-    exactMatch: exact.length > 0,
-    dims: m ? `${m[1]}x${m[2]}` : null,
-    images: [...new Set(imgs)].slice(0, 6),
-  };
+  return { exists: !missing, exactMatch: exact.length > 0, dims: m ? `${m[1]}x${m[2]}` : null };
 }
 
 const results = {};
 let i = 0;
-async function worker(w) {
+async function worker() {
   while (true) {
     const idx = i++;
     if (idx >= names.length) return;
@@ -52,6 +45,6 @@ async function worker(w) {
     console.log(`${res.exists === null ? 'ERR ' : res.exists ? 'YES' : 'NO '} ${name} ${res.dims || ''} ${res.error || ''}`);
   }
 }
-await Promise.all(Array.from({ length: CONC }, (_, w) => worker(w)));
+await Promise.all(Array.from({ length: CONC }, () => worker()));
 fs.writeFileSync(outFile, JSON.stringify(results, null, 1), 'utf8');
 console.log('->', outFile);

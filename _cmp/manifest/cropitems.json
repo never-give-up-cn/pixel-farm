@@ -1,0 +1,1312 @@
+{
+ "category": "cropitems",
+ "items": [
+  {
+   "id": "seed_blue_jazz",
+   "name": "蓝调爵士种子",
+   "en": "Blue Jazz Seeds",
+   "wikiIcon": "/mediawiki/images/en/9/95/Jazz_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Jazz Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_blue_jazz",
+   "name": "蓝调爵士",
+   "en": "Blue Jazz",
+   "wikiIcon": "/mediawiki/images/en/2/2f/Blue_Jazz.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Blue_Jazz.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_carrot",
+   "name": "胡萝卜种子",
+   "en": "Carrot Seeds",
+   "wikiIcon": "/mediawiki/images/en/1/1f/Carrot_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Carrot_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/1/1f/Carrot_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_carrot",
+   "name": "胡萝卜",
+   "en": "Carrot",
+   "wikiIcon": "/mediawiki/images/en/c/c3/Carrot.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Carrot.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_cauliflower",
+   "name": "花椰菜种子",
+   "en": "Cauliflower Seeds",
+   "wikiIcon": "/mediawiki/images/en/b/bb/Cauliflower_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cauliflower_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/b/bb/Cauliflower_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_cauliflower",
+   "name": "花椰菜",
+   "en": "Cauliflower",
+   "wikiIcon": "/mediawiki/images/en/a/aa/Cauliflower.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cauliflower.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_coffee_bean",
+   "name": "咖啡豆",
+   "en": "Coffee Bean",
+   "wikiIcon": "/mediawiki/images/en/3/33/Coffee_Bean.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Coffee_Bean.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_garlic",
+   "name": "大蒜种子",
+   "en": "Garlic Seeds",
+   "wikiIcon": "/mediawiki/images/en/d/d5/Garlic_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Garlic_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/d5/Garlic_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_garlic",
+   "name": "大蒜",
+   "en": "Garlic",
+   "wikiIcon": "/mediawiki/images/en/c/cc/Garlic.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Garlic.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_green_bean",
+   "name": "青豆",
+   "en": "Green Bean",
+   "wikiIcon": "/mediawiki/images/en/5/5c/Green_Bean.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Green_Bean.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_kale",
+   "name": "羽衣甘蓝种子",
+   "en": "Kale Seeds",
+   "wikiIcon": "/mediawiki/images/en/0/00/Kale_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Kale_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/0/00/Kale_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_kale",
+   "name": "羽衣甘蓝",
+   "en": "Kale",
+   "wikiIcon": "/mediawiki/images/en/d/d1/Kale.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Kale.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_parsnip",
+   "name": "防风草种子",
+   "en": "Parsnip Seeds",
+   "wikiIcon": "/mediawiki/images/en/d/d3/Parsnip_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Parsnip_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon2",
+     "path": "/mediawiki/images/en/8/85/Parsnipseeds.png"
+    },
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/d3/Parsnip_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_parsnip",
+   "name": "防风草",
+   "en": "Parsnip",
+   "wikiIcon": "/mediawiki/images/en/d/db/Parsnip.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Parsnip.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_potato",
+   "name": "土豆种子",
+   "en": "Potato Seeds",
+   "wikiIcon": "/mediawiki/images/en/4/44/Potato_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Potato_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/4/44/Potato_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_potato",
+   "name": "土豆",
+   "en": "Potato",
+   "wikiIcon": "/mediawiki/images/en/c/c2/Potato.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Potato.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_rhubarb",
+   "name": "大黄种子",
+   "en": "Rhubarb Seeds",
+   "wikiIcon": "/mediawiki/images/en/4/47/Rhubarb_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rhubarb_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/4/47/Rhubarb_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_rhubarb",
+   "name": "大黄",
+   "en": "Rhubarb",
+   "wikiIcon": "/mediawiki/images/en/6/6e/Rhubarb.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rhubarb.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_strawberry",
+   "name": "草莓种子",
+   "en": "Strawberry Seeds",
+   "wikiIcon": "/mediawiki/images/en/f/f2/Strawberry_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Strawberry_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/f/f2/Strawberry_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_strawberry",
+   "name": "草莓",
+   "en": "Strawberry",
+   "wikiIcon": "/mediawiki/images/en/6/6d/Strawberry.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Strawberry.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_tulip",
+   "name": "郁金香种子",
+   "en": "Tulip Seeds",
+   "wikiIcon": "/mediawiki/images/en/7/76/Mixed_Flower_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mixed Flower Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_tulip",
+   "name": "郁金香",
+   "en": "Tulip",
+   "wikiIcon": "/mediawiki/images/en/c/cf/Tulip.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tulip.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_unmilled_rice",
+   "name": "未碾米",
+   "en": "Unmilled Rice",
+   "wikiIcon": "/mediawiki/images/en/f/fe/Unmilled_Rice.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Unmilled_Rice.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_wild_horseradish",
+   "name": "野山葵种子",
+   "en": "Wild Horseradish Seeds",
+   "wikiIcon": "/mediawiki/images/en/2/2e/Mixed_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mixed Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_wild_horseradish",
+   "name": "野山葵",
+   "en": "Wild Horseradish",
+   "wikiIcon": "/mediawiki/images/en/9/90/Wild_Horseradish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wild_Horseradish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_blueberry",
+   "name": "蓝莓种子",
+   "en": "Blueberry Seeds",
+   "wikiIcon": "/mediawiki/images/en/8/81/Blueberry_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Blueberry_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/8/81/Blueberry_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_blueberry",
+   "name": "蓝莓",
+   "en": "Blueberry",
+   "wikiIcon": "/mediawiki/images/en/9/9e/Blueberry.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Blueberry.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_hops",
+   "name": "啤酒花",
+   "en": "Hops",
+   "wikiIcon": "/mediawiki/images/en/5/59/Hops.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Hops.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_hot_pepper",
+   "name": "辣椒",
+   "en": "Hot Pepper",
+   "wikiIcon": "/mediawiki/images/en/f/f1/Hot_Pepper.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Hot_Pepper.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_melon",
+   "name": "甜瓜种子",
+   "en": "Melon Seeds",
+   "wikiIcon": "/mediawiki/images/en/5/5e/Melon_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Melon_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/5/5e/Melon_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_melon",
+   "name": "甜瓜",
+   "en": "Melon",
+   "wikiIcon": "/mediawiki/images/en/1/19/Melon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Melon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_pineapple",
+   "name": "菠萝种子",
+   "en": "Pineapple Seeds",
+   "wikiIcon": "/mediawiki/images/en/1/17/Pineapple_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pineapple_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/1/17/Pineapple_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_pineapple",
+   "name": "菠萝",
+   "en": "Pineapple",
+   "wikiIcon": "/mediawiki/images/en/f/fb/Pineapple.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pineapple.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_poppy",
+   "name": "虞美人种子",
+   "en": "Poppy Seeds",
+   "wikiIcon": "/mediawiki/images/en/a/a2/Poppy_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Poppy_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/a/a2/Poppy_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_poppy",
+   "name": "虞美人",
+   "en": "Poppy",
+   "wikiIcon": "/mediawiki/images/en/3/37/Poppy.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Poppy.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_radish",
+   "name": "萝卜种子",
+   "en": "Radish Seeds",
+   "wikiIcon": "/mediawiki/images/en/b/b1/Radish_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Radish_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/b/b1/Radish_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_radish",
+   "name": "萝卜",
+   "en": "Radish",
+   "wikiIcon": "/mediawiki/images/en/d/d5/Radish.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Radish.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_red_cabbage",
+   "name": "红甘蓝种子",
+   "en": "Red Cabbage Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/ec/Red_Cabbage_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Red_Cabbage_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/e/ec/Red_Cabbage_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_red_cabbage",
+   "name": "红甘蓝",
+   "en": "Red Cabbage",
+   "wikiIcon": "/mediawiki/images/en/2/2d/Red_Cabbage.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Red_Cabbage.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_spice_berry",
+   "name": "香料浆果种子",
+   "en": "Spice Berry Seeds",
+   "wikiIcon": "/mediawiki/images/en/2/2e/Mixed_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mixed Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_spice_berry",
+   "name": "香料浆果",
+   "en": "Spice Berry",
+   "wikiIcon": "/mediawiki/images/en/c/c6/Spice_Berry.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Spice_Berry.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_starfruit",
+   "name": "杨桃种子",
+   "en": "Starfruit Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/e0/Starfruit_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Starfruit_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/e/e0/Starfruit_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_starfruit",
+   "name": "杨桃",
+   "en": "Starfruit",
+   "wikiIcon": "/mediawiki/images/en/d/db/Starfruit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Starfruit.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_summer_spangle",
+   "name": "夏日亮片种子",
+   "en": "Summer Spangle Seeds",
+   "wikiIcon": "/mediawiki/images/en/8/85/Spangle_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Spangle Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_summer_spangle",
+   "name": "夏日亮片",
+   "en": "Summer Spangle",
+   "wikiIcon": "/mediawiki/images/en/9/9f/Summer_Spangle.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Summer_Spangle.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_summer_squash",
+   "name": "夏南瓜种子",
+   "en": "Summer Squash Seeds",
+   "wikiIcon": "/mediawiki/images/en/f/fd/Summer_Squash_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Summer_Squash_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/f/fd/Summer_Squash_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_summer_squash",
+   "name": "夏南瓜",
+   "en": "Summer Squash",
+   "wikiIcon": "/mediawiki/images/en/4/43/Summer_Squash.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Summer_Squash.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_taro_root",
+   "name": "芋头",
+   "en": "Taro Root",
+   "wikiIcon": "/mediawiki/images/en/0/01/Taro_Root.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Taro_Root.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_tomato",
+   "name": "番茄种子",
+   "en": "Tomato Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/e3/Tomato_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tomato_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/e/e3/Tomato_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_tomato",
+   "name": "番茄",
+   "en": "Tomato",
+   "wikiIcon": "/mediawiki/images/en/9/9d/Tomato.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Tomato.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_corn",
+   "name": "玉米种子",
+   "en": "Corn Seeds",
+   "wikiIcon": "/mediawiki/images/en/d/d1/Corn_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Corn_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/d1/Corn_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_corn",
+   "name": "玉米",
+   "en": "Corn",
+   "wikiIcon": "/mediawiki/images/en/f/f8/Corn.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Corn.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_sunflower",
+   "name": "向日葵种子",
+   "en": "Sunflower Seeds",
+   "wikiIcon": "/mediawiki/images/en/1/1f/Sunflower_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sunflower_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/1/1f/Sunflower_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_sunflower",
+   "name": "向日葵",
+   "en": "Sunflower",
+   "wikiIcon": "/mediawiki/images/en/8/81/Sunflower.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sunflower.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_wheat",
+   "name": "小麦种子",
+   "en": "Wheat Seeds",
+   "wikiIcon": "/mediawiki/images/en/2/2b/Wheat_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wheat_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/2/2b/Wheat_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_wheat",
+   "name": "小麦",
+   "en": "Wheat",
+   "wikiIcon": "/mediawiki/images/en/e/e2/Wheat.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Wheat.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_amaranth",
+   "name": "苋菜种子",
+   "en": "Amaranth Seeds",
+   "wikiIcon": "/mediawiki/images/en/c/ca/Amaranth_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Amaranth_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/c/ca/Amaranth_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_amaranth",
+   "name": "苋菜",
+   "en": "Amaranth",
+   "wikiIcon": "/mediawiki/images/en/f/f6/Amaranth.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Amaranth.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_artichoke",
+   "name": "洋蓟种子",
+   "en": "Artichoke Seeds",
+   "wikiIcon": "/mediawiki/images/en/7/71/Artichoke_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Artichoke_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/7/71/Artichoke_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_artichoke",
+   "name": "洋蓟",
+   "en": "Artichoke",
+   "wikiIcon": "/mediawiki/images/en/d/dd/Artichoke.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Artichoke.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_beet",
+   "name": "甜菜种子",
+   "en": "Beet Seeds",
+   "wikiIcon": "/mediawiki/images/en/a/a8/Beet_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Beet_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/a/a8/Beet_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_beet",
+   "name": "甜菜",
+   "en": "Beet",
+   "wikiIcon": "/mediawiki/images/en/a/a4/Beet.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Beet.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_bok_choy",
+   "name": "小白菜种子",
+   "en": "Bok Choy Seeds",
+   "wikiIcon": "/mediawiki/images/en/2/21/Bok_Choy_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bok_Choy_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/2/21/Bok_Choy_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_bok_choy",
+   "name": "小白菜",
+   "en": "Bok Choy",
+   "wikiIcon": "/mediawiki/images/en/4/40/Bok_Choy.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Bok_Choy.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_broccoli",
+   "name": "西兰花种子",
+   "en": "Broccoli Seeds",
+   "wikiIcon": "/mediawiki/images/en/9/97/Broccoli_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Broccoli_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/9/97/Broccoli_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_broccoli",
+   "name": "西兰花",
+   "en": "Broccoli",
+   "wikiIcon": "/mediawiki/images/en/f/f1/Broccoli.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Broccoli.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_common_mushroom",
+   "name": "普通蘑菇种子",
+   "en": "Common Mushroom Seeds",
+   "wikiIcon": "/mediawiki/images/en/2/2e/Mixed_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mixed Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_common_mushroom",
+   "name": "普通蘑菇",
+   "en": "Common Mushroom",
+   "wikiIcon": "/mediawiki/images/en/2/2e/Common_Mushroom.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Common_Mushroom.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_cranberries",
+   "name": "蔓越莓种子",
+   "en": "Cranberries Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/ec/Cranberry_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cranberry Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_cranberries",
+   "name": "蔓越莓",
+   "en": "Cranberries",
+   "wikiIcon": "/mediawiki/images/en/6/6e/Cranberries.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cranberries.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_eggplant",
+   "name": "茄子种子",
+   "en": "Eggplant Seeds",
+   "wikiIcon": "/mediawiki/images/en/f/f9/Eggplant_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Eggplant_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/f/f9/Eggplant_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_eggplant",
+   "name": "茄子",
+   "en": "Eggplant",
+   "wikiIcon": "/mediawiki/images/en/8/8f/Eggplant.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Eggplant.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_fairy_rose",
+   "name": "仙女玫瑰种子",
+   "en": "Fairy Rose Seeds",
+   "wikiIcon": "/mediawiki/images/en/8/8e/Fairy_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Fairy Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_fairy_rose",
+   "name": "仙女玫瑰",
+   "en": "Fairy Rose",
+   "wikiIcon": "/mediawiki/images/en/5/5c/Fairy_Rose.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Fairy_Rose.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_grape",
+   "name": "葡萄种子",
+   "en": "Grape Seeds",
+   "wikiIcon": "/mediawiki/images/en/5/5b/Rare_Seed.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rare Seed.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_grape",
+   "name": "葡萄",
+   "en": "Grape",
+   "wikiIcon": "/mediawiki/images/en/c/c2/Grape.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Grape.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_pumpkin",
+   "name": "南瓜种子",
+   "en": "Pumpkin Seeds",
+   "wikiIcon": "/mediawiki/images/en/9/99/Pumpkin_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pumpkin_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/9/99/Pumpkin_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_pumpkin",
+   "name": "南瓜",
+   "en": "Pumpkin",
+   "wikiIcon": "/mediawiki/images/en/6/64/Pumpkin.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Pumpkin.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_sweet_gem_berry",
+   "name": "甜宝石浆果种子",
+   "en": "Sweet Gem Berry Seeds",
+   "wikiIcon": "/mediawiki/images/en/5/5b/Rare_Seed.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Rare Seed.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_sweet_gem_berry",
+   "name": "甜宝石浆果",
+   "en": "Sweet Gem Berry",
+   "wikiIcon": "/mediawiki/images/en/8/88/Sweet_Gem_Berry.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Sweet_Gem_Berry.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_yam",
+   "name": "山药种子",
+   "en": "Yam Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/e9/Yam_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Yam_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/e/e9/Yam_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_yam",
+   "name": "山药",
+   "en": "Yam",
+   "wikiIcon": "/mediawiki/images/en/5/52/Yam.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Yam.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_powdermelon",
+   "name": "霜瓜种子",
+   "en": "Powdermelon Seeds",
+   "wikiIcon": "/mediawiki/images/en/d/de/Powdermelon_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Powdermelon_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/d/de/Powdermelon_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_powdermelon",
+   "name": "霜瓜",
+   "en": "Powdermelon",
+   "wikiIcon": "/mediawiki/images/en/a/aa/Powdermelon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Powdermelon.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_winter_root",
+   "name": "冬根种子",
+   "en": "Winter Root Seeds",
+   "wikiIcon": "/mediawiki/images/en/d/dd/Winter_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Winter Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_winter_root",
+   "name": "冬根",
+   "en": "Winter Root",
+   "wikiIcon": "/mediawiki/images/en/1/11/Winter_Root.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Winter_Root.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_ancient_fruit",
+   "name": "上古水果种子",
+   "en": "Ancient Fruit Seeds",
+   "wikiIcon": "/mediawiki/images/en/e/ec/Ancient_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ancient Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_ancient_fruit",
+   "name": "上古水果",
+   "en": "Ancient Fruit",
+   "wikiIcon": "/mediawiki/images/en/0/01/Ancient_Fruit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Ancient_Fruit.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_cactus_fruit",
+   "name": "仙人掌果种子",
+   "en": "Cactus Fruit Seeds",
+   "wikiIcon": "/mediawiki/images/en/0/09/Cactus_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cactus Seeds.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_cactus_fruit",
+   "name": "仙人掌果",
+   "en": "Cactus Fruit",
+   "wikiIcon": "/mediawiki/images/en/3/32/Cactus_Fruit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Cactus_Fruit.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "seed_fiber",
+   "name": "纤维种子",
+   "en": "Fiber Seeds",
+   "wikiIcon": "/mediawiki/images/en/0/05/Fiber_Seeds.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Fiber_Seeds.png",
+   "wikiExtra": [
+    {
+     "label": "icon3",
+     "path": "/mediawiki/images/en/0/05/Fiber_Seeds.png"
+    }
+   ]
+  },
+  {
+   "id": "produce_fiber",
+   "name": "纤维",
+   "en": "Fiber",
+   "wikiIcon": "/mediawiki/images/en/4/45/Fiber.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Fiber.png",
+   "wikiExtra": []
+  },
+  {
+   "id": "produce_qi_fruit",
+   "name": "齐瓜",
+   "en": "Qi Fruit",
+   "wikiIcon": "/mediawiki/images/en/b/b9/Qi_Fruit.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Qi_Fruit.png",
+   "wikiExtra": []
+  }
+ ],
+ "missing": [
+  {
+   "id": "seed_coffee_bean",
+   "en": "Coffee Bean Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_green_bean",
+   "en": "Green Bean Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_unmilled_rice",
+   "en": "Unmilled Rice Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_hops",
+   "en": "Hops Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_hot_pepper",
+   "en": "Hot Pepper Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_taro_root",
+   "en": "Taro Root Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  },
+  {
+   "id": "seed_qi_fruit",
+   "en": "Qi Fruit Seeds",
+   "reason": "wiki 上未找到对应像素图"
+  }
+ ]
+}

@@ -1,11 +1,11 @@
 {
  "cat": "ui",
- "count": 27,
+ "count": 49,
  "cell": 259,
  "perRow": 8,
- "rows": 4,
+ "rows": 7,
  "gridW": 2072,
- "gridH": 1036,
+ "gridH": 1813,
  "oursW": "UI_W",
  "oursH": "UI_H",
  "items": [
@@ -305,6 +305,248 @@
     64
    ],
    "wikiFile": "Oil of Garlic Buff.png"
+  },
+  {
+   "id": "friendship",
+   "name": "友谊",
+   "en": "Friendship",
+   "wikiPath": "/mediawiki/images/en/c/c9/FriendshipDots.png",
+   "wikiSize": [
+    202,
+    33
+   ],
+   "wikiFile": "FriendshipDots.png"
+  },
+  {
+   "id": "level",
+   "name": "等级",
+   "en": "Level",
+   "wikiPath": "/mediawiki/images/en/d/df/Mastery_Icon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Mastery Icon.png"
+  },
+  {
+   "id": "star",
+   "name": "星之果实",
+   "en": "Stardrop",
+   "wikiPath": "/mediawiki/images/en/a/a5/Stardrop.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Stardrop.png"
+  },
+  {
+   "id": "silver_quality",
+   "name": "银星",
+   "en": "Silver Quality",
+   "wikiPath": "/mediawiki/images/en/8/8a/Silver_Quality_Icon.png",
+   "wikiSize": [
+    48,
+    48
+   ],
+   "wikiFile": "Silver Quality Icon.png"
+  },
+  {
+   "id": "sun",
+   "name": "晴天",
+   "en": "Sunny",
+   "wikiPath": "/mediawiki/images/en/d/d2/StatusSun.png",
+   "wikiSize": [
+    42,
+    30
+   ],
+   "wikiFile": "StatusSun.png"
+  },
+  {
+   "id": "snow",
+   "name": "雪天",
+   "en": "Snow",
+   "wikiPath": "/mediawiki/images/en/b/b5/StatusSnow.png",
+   "wikiSize": [
+    42,
+    30
+   ],
+   "wikiFile": "StatusSnow.png"
+  },
+  {
+   "id": "wind",
+   "name": "大风",
+   "en": "Wind",
+   "wikiPath": "/mediawiki/images/en/9/99/StatusWindSpring.png",
+   "wikiSize": [
+    42,
+    30
+   ],
+   "wikiFile": "StatusWindSpring.png"
+  },
+  {
+   "id": "green_rain",
+   "name": "绿雨",
+   "en": "Green Rain",
+   "wikiPath": "/mediawiki/images/en/0/0d/StatusGreenRain.png",
+   "wikiSize": [
+    42,
+    30
+   ],
+   "wikiFile": "StatusGreenRain.png"
+  },
+  {
+   "id": "spring",
+   "name": "春",
+   "en": "Spring",
+   "wikiPath": "/mediawiki/images/en/6/6d/Calendar_Spring.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Calendar Spring.png"
+  },
+  {
+   "id": "summer",
+   "name": "夏",
+   "en": "Summer",
+   "wikiPath": "/mediawiki/images/en/e/e6/Calendar_Summer.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Calendar Summer.png"
+  },
+  {
+   "id": "fall",
+   "name": "秋",
+   "en": "Fall",
+   "wikiPath": "/mediawiki/images/en/c/cb/Calendar_Fall.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Calendar Fall.png"
+  },
+  {
+   "id": "winter",
+   "name": "冬",
+   "en": "Winter",
+   "wikiPath": "/mediawiki/images/en/5/5e/Calendar_Winter.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Calendar Winter.png"
+  },
+  {
+   "id": "foraging",
+   "name": "采集",
+   "en": "Foraging",
+   "wikiPath": "/mediawiki/images/en/f/f1/Foraging_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Foraging Skill Icon.png"
+  },
+  {
+   "id": "combat",
+   "name": "战斗",
+   "en": "Combat",
+   "wikiPath": "/mediawiki/images/en/c/cf/Combat_Skill_Icon.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Combat Skill Icon.png"
+  },
+  {
+   "id": "settings",
+   "name": "设置",
+   "en": "Settings",
+   "wikiPath": "/mediawiki/images/en/c/cd/Advanced_Options_Button.png",
+   "wikiSize": [
+    80,
+    80
+   ],
+   "wikiFile": "Advanced Options Button.png"
+  },
+  {
+   "id": "exit",
+   "name": "退出",
+   "en": "Exit",
+   "wikiPath": "/mediawiki/images/en/a/ab/Exit_Game_Tab.png",
+   "wikiSize": [
+    64,
+    68
+   ],
+   "wikiFile": "Exit Game Tab.png"
+  },
+  {
+   "id": "craft",
+   "name": "制作",
+   "en": "Crafting",
+   "wikiPath": "/mediawiki/images/en/a/ab/Crafting_Tab.png",
+   "wikiSize": [
+    64,
+    68
+   ],
+   "wikiFile": "Crafting Tab.png"
+  },
+  {
+   "id": "collections",
+   "name": "收藏",
+   "en": "Collections",
+   "wikiPath": "/mediawiki/images/en/8/82/Collections_Tab.png",
+   "wikiSize": [
+    64,
+    68
+   ],
+   "wikiFile": "Collections Tab.png"
+  },
+  {
+   "id": "skills",
+   "name": "技能",
+   "en": "Skills",
+   "wikiPath": "/mediawiki/images/en/4/4e/Skills_Tab.png",
+   "wikiSize": [
+    255,
+    255
+   ],
+   "wikiFile": "Skills Tab.png"
+  },
+  {
+   "id": "social",
+   "name": "社交",
+   "en": "Social",
+   "wikiPath": "/mediawiki/images/en/e/ee/Social_Tab.png",
+   "wikiSize": [
+    64,
+    68
+   ],
+   "wikiFile": "Social Tab.png"
+  },
+  {
+   "id": "controller",
+   "name": "手柄",
+   "en": "Controller",
+   "wikiPath": "/mediawiki/images/en/d/db/Controls_Icon.png",
+   "wikiSize": [
+    32,
+    32
+   ],
+   "wikiFile": "Controls Icon.png"
+  },
+  {
+   "id": "monster_musk",
+   "name": "怪物香水",
+   "en": "Monster Musk",
+   "wikiPath": "/mediawiki/images/en/2/23/Monster_Musk_Buff.png",
+   "wikiSize": [
+    64,
+    64
+   ],
+   "wikiFile": "Monster Musk Buff.png"
   }
  ]
 }

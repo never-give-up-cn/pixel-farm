@@ -1,0 +1,657 @@
+{
+ "# Stat / buff icons used on the wiki Cooking page (48x48)": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Energy.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Health.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Speed.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Attack.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Defense.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Luck.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Magnetism.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Max Energy.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Farming.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Fishing.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Mining.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Foraging.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Combat Skill Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Farming Skill Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Foraging Skill Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Fishing Skill Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Mining Skill Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Qi Gem.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Time Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Gold.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "# Buffed variants (64x64)": {
+  "exists": false,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Attack Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Defense Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Luck Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Magnetism Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Max Energy Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Speed Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Monster Musk Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Oil of Garlic Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "Squid Ink Ravioli Buff.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "64x64"
+ },
+ "# Core cooking ingredients": {
+  "exists": false,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Egg.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Milk.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Wheat Flour.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Sugar.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Oil.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Cheese.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Vinegar.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Mayonnaise.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Coffee.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Coffee Bean.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "# Produce": {
+  "exists": false,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Tomato.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Beet.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Parsnip.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Cauliflower.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Leek.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Dandelion.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Green Bean.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Yam.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Potato.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Artichoke.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Pumpkin.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Amaranth.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Corn.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Radish.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Rice.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Pineapple.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Melon.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Mango.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Banana.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Apple.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Apricot.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Blueberry.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Blackberry.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Wild Plum.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Rhubarb.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Cranberries.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Wild Horseradish.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Winter Root.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Hazelnut.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Taro Root.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Coconut.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Green Algae.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "White Algae.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Seaweed.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Fiddlehead Fern.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Common Mushroom.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Morel.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Red Cabbage.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Hot Pepper.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Eggplant.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Maple Syrup.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Ginger.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Garlic.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Poppy.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Bone Fragment.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Void Egg.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "# Fish & shellfish": {
+  "exists": false,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Carp.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Salmon.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Tuna.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Sunfish.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Bream.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Rainbow Trout.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Largemouth Bass.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Sardine.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Periwinkle.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Sea Cucumber.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Red Snapper.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Midnight Carp.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Flounder.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Squid.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Eel.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Shrimp.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Crab.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Lobster.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Clam.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Mussel.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Snail.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Crayfish.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Anchovy.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Chub.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Cockle.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Ghostfish.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Herring.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Oyster.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Perch.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Shad.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "Smallmouth Bass.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Fish.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "48x48"
+ },
+ "# Recipe / TV / cooking UI related": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": null
+ },
+ "Recipe Overlay.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Queen Of Sauce Cookbook.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "48x48"
+ },
+ "Queen of Sauce.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "168x112"
+ },
+ "Cooking Icon.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "32x32"
+ },
+ "Cooking Channel.png": {
+  "exists": true,
+  "exactMatch": false,
+  "dims": "73x92"
+ },
+ "Cooking.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "800x304"
+ },
+ "TVprogram.png": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "96x144"
+ },
+ "Cookbook.jpg": {
+  "exists": true,
+  "exactMatch": true,
+  "dims": "342x421"
+ }
+}

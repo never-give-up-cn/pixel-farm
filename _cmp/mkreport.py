@@ -187,7 +187,7 @@ if bs:
     L.append('| 铁匠包 | 橙色条 + 一个抽象符号 | 铁砧与工具的剪影 |')
     L.append('')
     L.append(f'数值上也一样：匹配均分 **{bs["own_mean"]:.1f}**，随机错配基准 **{bs["random_mean"]:.1f}**，'
-             f'差距只有 **{bs["margin"]:+.1f}** —— 全项目 13 个分类里最低的一个。')
+             f'差距只有 **{bs["margin"]:+.1f}** —— 全项目 14 个分类里倒数第二低的一个（最低是 UI 图标 +0.1）。')
     L.append(f'而内部雷同度：我们 **{bi.get("ours_internal", 0):.1f}** vs 官方 **{bi.get("wiki_internal", 0):.1f}**，'
              f'差 **{bi.get("gap", 0):+.1f}**，仅次于村民头像。')
     L.append('也就是说，我们的 30 个"不同"收集包其实是**同一张卷轴模板**换了颜色条和中心符号；'
@@ -302,15 +302,20 @@ L.append('- `_cmp/report/sheet-<分类>.png`：每个分类的并排对比大图
          '（左=本项目绘制，右=官方原图，两边都按内容包围盒裁切并整数倍放大）')
 L.append('- `_cmp/report/<分类>.json`：逐项指标明细')
 L.append('- `_cmp/report/summary.json` / `internal.json`：汇总与内部相似度')
+L.append('- `_cmp/report/ranktable.md` / `ranktest.json`：配对识别力（正确配对能排第几）')
+L.append('- `_cmp/report/cookdiff.md`：81 道食谱的配料逐条差异')
+L.append('- `_cmp/out/wiki-allfiles.json`：wiki 全站文件名清单'
+         '（Special:PrefixIndex 逐前缀抓下来的，1 万多条）')
 L.append('- `_cmp/manifest/<分类>.json`：本项目条目 ↔ 官方图文件名的映射清单')
 L.append('- `_cmp/verified.json`：每个候选 wiki 文件的存在性与原始尺寸实测结果')
 L.append('- `_cmp/report/crosscheck.json`：映射可靠性校验结果')
 L.append('- 重跑方式：`node _cmp/run.mjs .`（需先起 `node serve.js`，并有 Chrome）')
+L.append('- 抓全站文件名清单：`node _cmp/filelist.mjs .`')
 L.append('- 映射可靠性校验需要重新抓页面：'
          '`node _cmp/dumpdom.mjs . <页面名> _cmp/out/wiki-<页面名>.html`'
          '（页面名：Hats / Weapons / Rings / Footwear / Minerals / Fish / Cooking / '
          'Artisan_Goods / Monsters / Animals / Coop / NPC / Trees / Fruit_Trees / Crops / '
-         "Carpenter's Shop / Buildings），再跑 `python _cmp/crosscheck_all.py`\n")
+         "Carpenter's Shop / Buildings / Bundles），再跑 `python _cmp/crosscheck_all.py`\n")
 
 (REP / 'REPORT.md').write_text('\n'.join(L), 'utf-8')
 print('written', REP / 'REPORT.md')

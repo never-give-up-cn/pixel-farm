@@ -150,7 +150,8 @@ function serializeState(){
     tp: tipsSerialize(),
     /* 第 23 轮新增：土壤肥力 + NPC 来访状态（来访人 / 已评分 / 已提示） */
     soil: Math.round(soilFert),
-    vs: visitSerialize()
+    vs: visitSerialize(),
+    museum: (typeof museumSerialize === 'function') ? museumSerialize() : []
   };
   if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(_worldMap);
   return out;
@@ -355,6 +356,7 @@ function deserializeState(d){
     soilFert = (typeof d.soil === 'number') ? clamp(d.soil, CONFIG.QUALITY.SOIL.MIN, CONFIG.QUALITY.SOIL.MAX)
                                             : CONFIG.QUALITY.SOIL.START;
     visitDeserialize(d.vs);
+    if(typeof museumDeserialize === 'function') museumDeserialize(d.museum);
     held = null;
     cancelFishing(true);                       /* 读档时先收竿，不从旧状态接着钓 */
     /* 第 21 轮：图鉴只在背包打开且正停在图鉴页时重建（懒渲染）；
@@ -542,6 +544,7 @@ function newGame(){
   npcResetState();                              /* 新游戏：三位居民都当"刚认识" */
   npcRuntimeClear();                            /* 第 27 轮：清空 NPC 物理坐标（下次 tick 直接落在落脚点上） */
   dexResetState();                              /* 新游戏：图鉴清空 */
+  if(typeof museumResetState === 'function') museumResetState();   /* 新游戏：博物馆收藏清空 */
   /* 初始武器也计入装备图鉴 */
   if (typeof dexState !== 'undefined') {
     for (const s of inv) {

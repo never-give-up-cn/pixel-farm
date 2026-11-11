@@ -68,6 +68,12 @@ const CONFIG = {
     FAINT_PENALTY: 0.2      // 强制昏睡惩罚：次日体力上限 -20%
   },
 
+  /* 哈维诊所：付费恢复体力 */
+  CLINIC: {
+    COST: 40,               // 一次治疗的金币
+    HEAL: 250               // 恢复量（默认回满）
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 128,               // 地图宽（格）
@@ -237,7 +243,7 @@ const CONFIG = {
    * AUTO_*   自动存档的时机 */
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名（多槽位时槽 1 仍用这个键，不能改名）
-    VERSION: 16,              // 存档版本号（第 34 轮 +1：大地图 / 四排住宅）
+    VERSION: 17,              // 存档版本号（第 36 轮 +1：博物馆捐赠）
     SLOTS: 3,                 // 存档槽位数量（槽 1 = KEY，槽 2/3 = KEY + '_s2' / '_s3'）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */

@@ -152,6 +152,10 @@ function migrate(oldSave){
         }).filter(Boolean);
       }
     }
+    if(v < 17){
+      /* v16 → v17：博物馆捐赠列表。老档默认空。 */
+      if(!Array.isArray(d.museum)) d.museum = [];
+    }
     d.v = CONFIG.SAVE.VERSION;
     return d;
   }catch(e){

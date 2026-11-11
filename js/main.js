@@ -63,6 +63,8 @@ import './npc/perks.js';
 import './npc/save.js';
 import './npc/draw.js';
 import './systems/dex.js';
+import './systems/museum.js';
+import './systems/town-interactions.js';
 import './systems/fishing.js';
 import './systems/gather.js';
 import './systems/animals.js';

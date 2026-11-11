@@ -45,6 +45,10 @@ function interactFixture(f){
     window.openChest = f;
     if(typeof toggleChest === 'function'){ toggleChest(true); return true; }
   }
+  if(f.type === 'display' && typeof museumDonate === 'function') return museumDonate();
+  if(f.type === 'crate' && typeof jojaInteract === 'function') return jojaInteract();
+  if(f.type === 'jukebox' && typeof jukeboxPlay === 'function') return jukeboxPlay();
+  if((f.type === 'medcab' || f.type === 'clinic_bed') && typeof clinicTreat === 'function') return clinicTreat();
   const txt = decorText(f.npc, f.type);
   toast(txt || '看起来没什么特别的');
   return true;

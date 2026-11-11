@@ -26,6 +26,7 @@ const shopGold = document.getElementById('shopGold');
 const shopSeason = document.getElementById('shopSeason');
 window.shopOpen = false;          /* 商店是否打开（打开时 update() 整体冻结 → 时间停住） */
 window.shopTab = 'buy';          /* 当前页签：'buy' 购买 / 'sell' 出售 */
+window.shopMode = 'shop';        /* 'shop' 杂货店 / 'joja' Joja 超市 */
 
 /* 金币跳动：商店面板里的金币数字也弹一下 */
 function pulseShopGold(){
@@ -64,6 +65,18 @@ function priceHtml(id){
 /* 购买页签 */
 function renderShopBuy(){
   if(!shopBody) return;
+  if(shopMode === 'joja'){
+    for(const id of (CONFIG.JOJA.STOCK || [])){
+      const d = itemDef(id);
+      if(!d) continue;
+      const price = priceOf(id);
+      const off = gold < price;
+      const sub = d.kind === 'seed' ? 'Joja 进口种子' : (d.kind === 'food' ? '即食' : 'Joja 货架');
+      shopBody.appendChild(shopRow(d.icon, d.name, sub, priceHtml(id),
+        [{label:off ? '金币不够' : '购买', off:off, fn:()=>{ shopBuyClick(id); }}], id));
+    }
+    return;
+  }
   for(const entry of CONFIG.SHOP.BUY){
     const id = entry.id;
     /* 第 15 轮：动物（不是背包物品，按棚舍空位购买） */
@@ -146,16 +159,22 @@ function renderShopSell(){
 /* 刷新商店面板 */
 function renderShop(){
   if(shopGold) shopGold.textContent = '💰 ' + gold + ' 金币';
+  const sh = document.getElementById('shopHead');
+  if(sh && sh.firstChild) sh.firstChild.textContent = (shopMode === 'joja' ? 'Joja 超市 ' : '商店 ');
   if(shopSeason){
-    const bonus = npcShopBonusLeft();
-    const sb = townShopBuilding();
-    const owner = sb ? npcDef(sb.npc) : null;
-    const w = owner ? npcWhere(owner) : null;
-    const away = (owner && (!w || w.at !== 'shop'))
-      ? ('　' + owner.name + (w && w.at === 'wander' ? ('去' + w.label + '逛了') : '不在店里') + '，今日无加购')
-      : '';
-    shopSeason.textContent = seasonName() + '季 价格 ×' + seasonCoef().toFixed(2) + '　' +
-      (bonus > 0 ? ('老板娘加购 ×' + CONFIG.NPC.SHOP_BONUS.PRICE_MULT + '（还剩 ' + bonus + ' 件）　') : '') + away;
+    if(shopMode === 'joja'){
+      shopSeason.textContent = 'Joja 会员价 · 今日货架';
+    } else {
+      const bonus = npcShopBonusLeft();
+      const sb = townShopBuilding();
+      const owner = sb ? npcDef(sb.npc) : null;
+      const w = owner ? npcWhere(owner) : null;
+      const away = (owner && (!w || w.at !== 'shop'))
+        ? ('　' + owner.name + (w && w.at === 'wander' ? ('去' + w.label + '逛了') : '不在店里') + '，今日无加购')
+        : '';
+      shopSeason.textContent = seasonName() + '季 价格 ×' + seasonCoef().toFixed(2) + '　' +
+        (bonus > 0 ? ('老板娘加购 ×' + CONFIG.NPC.SHOP_BONUS.PRICE_MULT + '（还剩 ' + bonus + ' 件）　') : '') + away;
+    }
   }
   if(shopTabs && shopTabs.children){
     for(const t of shopTabs.children){
@@ -197,12 +216,29 @@ function toggleShop(open){
   }
   shopOpen = want;
   if(shopOpen){
+    shopMode = 'shop';
     if(packOpen) togglePack(false);            /* 背包与商店互斥 */
     renderShop();
     setPanelOpen(shopEl, true);
   }else{
     setPanelOpen(shopEl, false);
+    shopMode = 'shop';
   }
+  return true;
+}
+/* Joja 货箱直接打开 Joja 超市面板（不需要站在杂货店柜台） */
+function openJojaShop(){
+  shopMode = 'joja';
+  shopTab = 'buy';
+  if(!shopOpen){
+    if(packOpen) togglePack(false);
+    shopOpen = true;
+    renderShop();
+    setPanelOpen(shopEl, true);
+  }else{
+    renderShop();
+  }
+  playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
   return true;
 }
 if(shopMask) shopMask.addEventListener('mousedown', e=>{ e.preventDefault(); toggleShop(false); });
@@ -595,5 +631,5 @@ function drawUI(g){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, drawText, drawUI });
-export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, drawText, drawUI };
+Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, drawText, drawUI });
+export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, drawText, drawUI };

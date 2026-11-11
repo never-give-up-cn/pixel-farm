@@ -4,7 +4,7 @@
 
 'use strict';
 
-const museumState = { donated: [] };
+const museumState = { donated: [], rewarded: false };
 window.museumState = museumState;
 
 function museumHas(id){
@@ -34,21 +34,29 @@ function museumDonate(){
   changeGold(120);
   toast('🏛 博物馆收藏：' + item.name + '（' + museumState.donated.length + '/' + museumTotal() + '，+120 金币）');
   playSfx(880, 'triangle', 0.14, CONFIG.AUDIO.VOLUME);
+  if(!museumState.rewarded && museumState.donated.length >= museumTotal()){
+    museumState.rewarded = true;
+    changeGold(5000);
+    addItem('diamond', 1);
+    toast('🏛 博物馆全收集！奖励 5000 金币 + 钻石 ×1');
+    playSfx(1568, 'triangle', 0.2, CONFIG.AUDIO.VOLUME);
+  }
   return true;
 }
 function museumSerialize(){
-  return museumState.donated.slice();
+  return { d: museumState.donated.slice(), r: museumState.rewarded ? 1 : 0 };
 }
 function museumDeserialize(a){
   museumState.donated = [];
-  if(Array.isArray(a)){
-    for(const id of a){
-      if(typeof id === 'string' && CONFIG.ITEMS[id] && CONFIG.ITEMS[id].kind === 'artifact' &&
-         museumState.donated.indexOf(id) < 0) museumState.donated.push(id);
-    }
+  museumState.rewarded = false;
+  const list = Array.isArray(a) ? a : (a && Array.isArray(a.d) ? a.d : []);
+  for(const id of list){
+    if(typeof id === 'string' && CONFIG.ITEMS[id] && CONFIG.ITEMS[id].kind === 'artifact' &&
+       museumState.donated.indexOf(id) < 0) museumState.donated.push(id);
   }
+  if(a && !Array.isArray(a) && a.r) museumState.rewarded = true;
 }
-function museumResetState(){ museumState.donated = []; }
+function museumResetState(){ museumState.donated = []; museumState.rewarded = false; }
 
 Object.assign(window, {
   museumState, museumHas, museumTotal, museumDonate,

@@ -7,11 +7,9 @@
 let jojaOfferDay = -1;
 let jojaOfferId = null;
 
-const JOJA_STOCK = ['coffee', 'bread', 'seed_starfruit', 'coal', 'wood', 'feed'];
-
 function jojaTodayOffer(){
   if(jojaOfferDay === clock.day && jojaOfferId) return jojaOfferId;
-  const pool = JOJA_STOCK.filter(id => CONFIG.ITEMS[id]);
+  const pool = (CONFIG.JOJA.STOCK || []).filter(id => CONFIG.ITEMS[id]);
   const id = pool.length ? pool[clock.day % pool.length] : null;
   jojaOfferId = id;
   jojaOfferDay = clock.day;
@@ -56,14 +54,23 @@ function clinicTreat(){
   return true;
 }
 
+const JUKEBOX_TRACKS = [
+  { name:'山谷的早晨', notes:[523, 659, 784, 659, 523, 440] },
+  { name:'矿洞回声',   notes:[392, 440, 523, 440, 392, 330] },
+  { name:'星之果实',   notes:[659, 784, 880, 784, 659, 523] },
+  { name:'雨夜',       notes:[440, 523, 494, 392, 349, 330] }
+];
+let jukeboxTrack = 0;
+
 function jukeboxPlay(){
-  const notes = [523, 659, 784, 659, 523, 440];
-  notes.forEach((f, i) => {
+  const track = JUKEBOX_TRACKS[jukeboxTrack % JUKEBOX_TRACKS.length];
+  jukeboxTrack++;
+  track.notes.forEach((f, i) => {
     setTimeout(() => {
       if(typeof playSfx === 'function') playSfx(f, 'triangle', 0.18, CONFIG.AUDIO.VOLUME * 0.7);
     }, i * 170);
   });
-  toast('🎵 点唱机放起了一首老歌');
+  toast('🎵 点唱机：' + track.name);
   return true;
 }
 

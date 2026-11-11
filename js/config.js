@@ -74,6 +74,11 @@ const CONFIG = {
     HEAL: 250               // 恢复量（默认回满）
   },
 
+  /* Joja 超市的货架（价格仍按当日波动） */
+  JOJA: {
+    STOCK: ['coffee', 'bread', 'seed_starfruit', 'seed_pumpkin', 'feed', 'coal', 'wood', 'stone']
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 128,               // 地图宽（格）

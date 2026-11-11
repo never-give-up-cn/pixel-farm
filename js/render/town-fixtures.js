@@ -72,6 +72,47 @@ function drawTownProp(g, p, px, py){
       g.fillStyle = K.chestBoxDark; g.fillRect(px+5, py+12, 22, 2);
       g.fillStyle = K.chestLock;    g.fillRect(px+14, py+11, 5, 6);
       break;
+    case 'display':                     /* 博物馆展柜 */
+      g.fillStyle = '#5b3a1d'; g.fillRect(px+5, py+24, 22, 4);
+      g.fillStyle = 'rgba(150,200,230,.30)'; g.fillRect(px+4, py+5, 24, 21);
+      g.fillStyle = '#9ec4d8'; g.fillRect(px+6, py+7, 20, 15);
+      g.fillStyle = '#e2c14a'; g.fillRect(px+13, py+13, 6, 6);
+      g.fillStyle = '#5b3a1d'; g.fillRect(px+4, py+5, 24, 2); g.fillRect(px+4, py+24, 24, 2);
+      break;
+    case 'crate':                       /* Joja 货箱 */
+      g.fillStyle = '#4f6d8a'; g.fillRect(px+5, py+7, 22, 21);
+      g.fillStyle = '#7a9ab0'; g.fillRect(px+7, py+5, 18, 21);
+      g.fillStyle = '#e8dcc0'; g.fillRect(px+10, py+11, 12, 5);
+      g.fillStyle = '#4f6d8a'; g.fillRect(px+7, py+15, 18, 2);
+      break;
+    case 'jukebox':                     /* 酒馆点唱机 */
+      g.fillStyle = '#5b3a1d'; g.fillRect(px+6, py+4, 20, 25);
+      g.fillStyle = '#b3443c'; g.fillRect(px+8, py+6, 16, 17);
+      g.fillStyle = '#e2c14a'; g.fillRect(px+10, py+9, 12, 5);
+      g.fillStyle = '#9ec4d8'; g.fillRect(px+10, py+16, 12, 5);
+      break;
+    case 'clinic_bed':                  /* 诊所病床 */
+      g.fillStyle = '#c8d0d8'; g.fillRect(px+4, py+9, 24, 18);
+      g.fillStyle = '#f4f7fa'; g.fillRect(px+6, py+6, 20, 10);
+      g.fillStyle = '#c05a72'; g.fillRect(px+7, py+16, 18, 6);
+      g.fillStyle = '#9aa1a9'; g.fillRect(px+5, py+25, 22, 3);
+      break;
+    case 'medcab':                      /* 药柜 */
+      g.fillStyle = '#d8e0e8'; g.fillRect(px+6, py+5, 20, 24);
+      g.fillStyle = '#9aa1a9'; g.fillRect(px+6, py+5, 20, 2); g.fillRect(px+6, py+17, 20, 2);
+      g.fillStyle = '#c05a3a'; g.fillRect(px+14, py+9, 4, 12); g.fillRect(px+10, py+13, 12, 4);
+      break;
+    case 'anvil':                       /* 铁砧 */
+      g.fillStyle = '#4a4a55'; g.fillRect(px+7, py+6, 18, 9);
+      g.fillStyle = '#6a6a75'; g.fillRect(px+9, py+8, 14, 5);
+      g.fillStyle = '#3a3a44'; g.fillRect(px+12, py+15, 8, 13);
+      break;
+    case 'fish_tank':                   /* 鱼缸 */
+      g.fillStyle = '#4f8fbf'; g.fillRect(px+4, py+6, 24, 22);
+      g.fillStyle = 'rgba(150,220,240,.55)'; g.fillRect(px+6, py+8, 20, 17);
+      g.fillStyle = '#e08a2a'; g.fillRect(px+10, py+14, 6, 3);
+      g.fillStyle = '#9aa1a9'; g.fillRect(px+4, py+27, 24, 3);
+      break;
   }
 }
 /* 门（第 26 轮：单独拎出来 —— 屋顶层也要再画一次门，

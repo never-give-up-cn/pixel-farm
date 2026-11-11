@@ -830,6 +830,39 @@ const CONFIG = {
             ]
           : homeProps(work)
       };
+      const EXTRA = {
+        home_gunther: [
+          { dx: 2, dy: 4, type: 'display', solid: 1 },
+          { dx: 4, dy: 4, type: 'display', solid: 1 },
+          { dx: 2, dy: 6, type: 'display', solid: 1 }
+        ],
+        home_morris: [
+          { dx: 2, dy: 4, type: 'crate', solid: 1 },
+          { dx: 4, dy: 4, type: 'crate', solid: 1 },
+          { dx: 2, dy: 6, type: 'crate', solid: 1 }
+        ],
+        home_gus: [
+          { dx: 2, dy: 4, type: 'jukebox', solid: 1 },
+          { dx: 4, dy: 4, type: 'table', solid: 1 },
+          { dx: 2, dy: 6, type: 'barrel', solid: 1 }
+        ],
+        home_harvey: [
+          { dx: 2, dy: 4, type: 'clinic_bed', solid: 1 },
+          { dx: 2, dy: 6, type: 'clinic_bed', solid: 1 },
+          { dx: 10, dy: 6, type: 'medcab', solid: 1 }
+        ],
+        home_clint: [
+          { dx: 2, dy: 4, type: 'anvil', solid: 1 },
+          { dx: 2, dy: 6, type: 'anvil', solid: 1 },
+          { dx: 10, dy: 6, type: 'barrel', solid: 1 }
+        ],
+        home_willy: [
+          { dx: 2, dy: 4, type: 'fish_tank', solid: 1 },
+          { dx: 2, dy: 6, type: 'fish_tank', solid: 1 },
+          { dx: 10, dy: 6, type: 'barrel', solid: 1 }
+        ]
+      };
+      if(EXTRA[id]) for(const p of EXTRA[id]) b.props.push(p);
       b.wander = id === 'shop'
         ? { chance: 0.26, spots: [{ x: 13, y: 42, label: '街角' }, { x: 18, y: 41, label: '广场' }] }
         : wanderFor(b);
@@ -905,7 +938,14 @@ const CONFIG = {
       barrel:      ['酒桶塞得很紧，桶壁上还留着几道旧年号的刻痕。'],
       rug:         ['地毯边角磨得起了毛，踩上去有点软。'],
       plant:       ['窗台上的绿萝长得很旺，垂下来几乎碰到地板。'],
-      bed:         ['被子叠得很整齐，枕头上还留着压出来的凹痕。']
+      bed:         ['被子叠得很整齐，枕头上还留着压出来的凹痕。'],
+      display:     ['玻璃展柜里放着一件旧时代的遗物，标签上写着出土年份。'],
+      crate:       ['印着 Joja 标志的木箱，胶带还没拆干净。'],
+      jukebox:     ['点唱机上的唱片还在慢慢转，放着一首很老的歌。'],
+      clinic_bed:  ['诊所病床，被单刚换过，旁边有一杯温水。'],
+      medcab:      ['药柜里按字母排着药瓶，最上层有一瓶写着「 farmer 专用」。'],
+      anvil:       ['铁砧上还留着上一件工具的锤痕。'],
+      fish_tank:   ['鱼缸里的鱼慢悠悠地游着，水草随水流轻轻摆。']
     },
     /* 同一个人的专属文案（覆盖 DECOR） */
     DECOR_BY_NPC: {

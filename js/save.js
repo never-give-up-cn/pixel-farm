@@ -151,7 +151,8 @@ function serializeState(){
     /* 第 23 轮新增：土壤肥力 + NPC 来访状态（来访人 / 已评分 / 已提示） */
     soil: Math.round(soilFert),
     vs: visitSerialize(),
-    museum: (typeof museumSerialize === 'function') ? museumSerialize() : []
+    museum: (typeof museumSerialize === 'function') ? museumSerialize() : [],
+    hm: (typeof worldStumpSerialize === 'function') ? worldStumpSerialize() : []
   };
   if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(_worldMap);
   return out;
@@ -372,6 +373,7 @@ function deserializeState(d){
       const wp = d.world.player || d.player || { x: player.x, y: player.y };
       worldActivate(d.world.map, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
     }
+    if(typeof worldStumpDeserialize === 'function') worldStumpDeserialize(d.hm);   /* 秘密森林树桩当天砍伐记录 */
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
     const sky0 = skyAt(skyHour());
@@ -532,6 +534,10 @@ function newGame(){
   initInventory();
   buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);
   stampTownFixtures();                        /* 第 25 轮：镇上的家具重新盖一遍（静态配置，不存档） */
+  /* 新游戏：清掉上一局探索过的地图缓存（树桩 / 室内箱子等状态），只保留新农场 */
+  if(window.MAP_WORLD && typeof MAP_WORLD === 'object'){
+    for(const k in MAP_WORLD) if(k !== 'valley') delete MAP_WORLD[k];
+  }
   if(typeof worldRegisterValley === 'function') worldRegisterValley();
   dropFx = [];
   clock.day = 1; clock.min = 0; clock.hold = 0;

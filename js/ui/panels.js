@@ -13,13 +13,15 @@ const panelTimers = new Map();       /* 面板 id → 关闭动画定时器 */
 function setPanelOpen(el, open){
   if(!el || !el.classList) return;
   const key = el.id || el;
-  if(panelTimers.has(key)){ clearTimeout(panelTimers.get(key)); panelTimers.delete(key); }
   if(open){
+    if(panelTimers.has(key)){ clearTimeout(panelTimers.get(key)); panelTimers.delete(key); }
     el.classList.remove('closing');
     el.classList.add('open');
   }else{
-    /* 已经在关闭动画中就别重复触发 */
+    /* 已经在关闭动画中就别重复触发（也不能清掉正在跑的关闭定时器，
+     * 否则第二次关闭会把面板永久卡在 .closing 遮罩上） */
     if(el.classList.contains('closing')) return;
+    if(panelTimers.has(key)){ clearTimeout(panelTimers.get(key)); panelTimers.delete(key); }
     el.classList.add('closing');
     panelTimers.set(key, setTimeout(()=>{
       el.classList.remove('closing');

@@ -11,7 +11,8 @@ const MAP_DEFS = {
   valley:   { name: '农场与小镇' },
   forest:   { name: '煤渣森林' },
   mountain: { name: '山地' },
-  beach:    { name: '鹈鹕海滩' }
+  beach:    { name: '鹈鹕海滩' },
+  secret:   { name: '秘密森林' }
 };
 
 /* 新地图里可进入的住宅室内：复用同一套房间模板，家具和住户不同 */
@@ -207,7 +208,7 @@ function genForest(){
     { type:'ranch',   x:104, y:34, w:15, h:8,  label:'玛妮牧场', home:'in_marnie' },
     { type:'cottage', x:98,  y:46, w:11, h:7,  label:'莉亚小屋', home:'in_leah' },
     { type:'tower',   x:66,  y:34, w:10, h:15, label:'法师塔', home:'in_wizard' },
-    { type:'log',     x:8,   y:8,  w:7,  h:4,  label:'秘密森林' },
+    { type:'log',     x:8,   y:8,  w:7,  h:4,  label:'秘密森林', action:'secret' },
     { type:'cart',    x:58,  y:22, w:7,  h:5,  label:'旅行货车' },
     { type:'sign',    x:119, y:40, w:3,  h:3,  label:'东边 · 小镇', solid:false }
   ];
@@ -216,6 +217,32 @@ function genForest(){
     landmarks: L,
     exits: [{ x:127, y:42, w:1, h:1, to:'valley', tx:4, ty:42, label:'东边 · 小镇' }],
     spawn: { x:112, y:42 }
+  };
+}
+
+/* ---------- 秘密森林 ---------- */
+function genSecret(){
+  fillMap(T.GRASS);
+  borderWater();
+  /* 中央池塘 */
+  pond(64, 52, 13, 9);
+  /* 南入口 → 林间空地（林间土路） */
+  setRect(64, 90, 3, 13, T.DIRT);
+  setRect(34, 70, 33, 3, T.DIRT);
+  setRect(34, 38, 3, 35, T.DIRT);
+  setRect(46, 38, 20, 3, T.DIRT);
+  /* 六棵硬木树桩 */
+  const L = [];
+  const stumps = [[40,40],[48,40],[56,40],[40,64],[48,64],[56,64]];
+  for(const p of stumps){
+    L.push({ type:'stump', x:p[0], y:p[1], w:2, h:2, label:'硬木树桩', action:'stump', solid:true });
+  }
+  L.push({ type:'sign', x:61, y:94, w:3, h:3, label:'南边 · 煤渣森林', solid:false });
+  scatterWild(mulberry32(9104), 2400, L, { tree:0.88 });
+  return {
+    landmarks: L,
+    exits: [{ x:64, y:102, w:2, h:1, to:'forest', tx:16, ty:13, label:'南边 · 煤渣森林' }],
+    spawn: { x:64, y:98 }
   };
 }
 
@@ -345,6 +372,7 @@ function ensureWorld(id){
   if(id === 'forest') result = genForest();
   else if(id === 'mountain') result = genMountain();
   else if(id === 'beach') result = genBeach();
+  else if(id === 'secret') result = genSecret();
   else if(INTERIORS[id]) result = genInterior(id);
   if(result){
     st.landmarks = result.landmarks || [];
@@ -404,6 +432,39 @@ function worldEnterLandmark(l){
   if(!l || !l.home) return false;
   const st = ensureWorld(l.home);
   return !!worldActivate(l.home, st.spawn.x, st.spawn.y, false);
+}
+
+/* 秘密森林：树桩每天可以砍一次，掉硬木 */
+function worldCutStump(l){
+  if(!l || l.action !== 'stump') return false;
+  if(l.cutDay === clock.day){ toast('这个树桩今天已经砍过了'); return false; }
+  if(typeof countItem === 'function' && countItem('hardwood') >= 99){ toast('硬木已经拿不下了'); return false; }
+  l.cutDay = clock.day;
+  if(typeof addItem === 'function') addItem('hardwood', 2);
+  toast('砍下树桩，获得硬木 ×2');
+  if(typeof playSfx === 'function') playSfx(420, 'triangle', 0.12, CONFIG.AUDIO.VOLUME * 0.7);
+  return true;
+}
+/* 树桩砍伐记录存档：[[x, y, day], ...] */
+function worldStumpSerialize(){
+  const st = MAP_WORLD.secret;
+  if(!st || !st.landmarks) return [];
+  return st.landmarks
+    .filter(l => l.action === 'stump' && l.cutDay)
+    .map(l => [l.x, l.y, l.cutDay | 0]);
+}
+function worldStumpDeserialize(a){
+  if(!Array.isArray(a) || !a.length) return;
+  const st = ensureWorld('secret');
+  if(!st || !st.landmarks) return;
+  for(const rec of a){
+    if(!Array.isArray(rec)) continue;
+    const x = rec[0] | 0, y = rec[1] | 0, day = rec[2] | 0;
+    if(day <= 0) continue;
+    for(const l of st.landmarks){
+      if(l.action === 'stump' && l.x === x && l.y === y) l.cutDay = day;
+    }
+  }
 }
 
 /* 出口判定：踩到地图边缘的出口格就切换 */
@@ -483,6 +544,39 @@ function drawWorldLandmark(g, l){
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }
+  if(type === 'stump'){
+    const cut = l.cutDay === clock.day;
+    const cx = x + w/2;
+    /* 影子 + 树根 */
+    g.fillStyle = 'rgba(0,0,0,.20)';
+    g.beginPath(); g.ellipse(cx, y+h*0.90, w*0.40, h*0.10, 0, 0, Math.PI*2); g.fill();
+    g.fillStyle = '#4a2f16';
+    g.beginPath(); g.ellipse(cx, y+h*0.84, w*0.36, h*0.13, 0, 0, Math.PI*2); g.fill();
+    g.fillRect(cx-w*0.34, y+h*0.62, w*0.68, h*0.20);
+    /* 树桩侧面 + 树皮 */
+    g.fillStyle = '#6b4520';
+    g.fillRect(cx-w*0.24, y+h*0.32, w*0.48, h*0.52);
+    g.fillStyle = '#5a381b';
+    g.fillRect(cx+w*0.06, y+h*0.32, w*0.18, h*0.52);
+    g.fillStyle = '#7d5426';
+    g.fillRect(cx-w*0.24, y+h*0.32, 2, h*0.52);
+    /* 断面 */
+    g.fillStyle = cut ? '#c9a163' : '#8a6a3a';
+    g.beginPath(); g.ellipse(cx, y+h*0.32, w*0.27, h*0.15, 0, 0, Math.PI*2); g.fill();
+    if(cut){
+      /* 今天已经砍过：露出新鲜年轮 */
+      g.strokeStyle = '#a17b42'; g.lineWidth = 1;
+      g.beginPath(); g.ellipse(cx, y+h*0.32, w*0.16, h*0.09, 0, 0, Math.PI*2); g.stroke();
+      g.beginPath(); g.ellipse(cx, y+h*0.32, w*0.07, h*0.04, 0, 0, Math.PI*2); g.stroke();
+    }else{
+      /* 还没砍：断面覆着青苔 */
+      g.fillStyle = '#5f8a3a';
+      g.fillRect(cx-w*0.14, y+h*0.25, w*0.12, h*0.07);
+      g.fillRect(cx+w*0.04, y+h*0.30, w*0.09, h*0.05);
+    }
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
   if(type === 'tent'){
     g.fillStyle = '#c9a24a';
     g.beginPath(); g.moveTo(x+w/2, y); g.lineTo(x+w, y+h); g.lineTo(x, y+h); g.closePath(); g.fill();
@@ -541,11 +635,13 @@ function worldLandmarkColor(type){ return landmarkColor(type); }
 
 Object.assign(window, {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
+  worldStumpSerialize, worldStumpDeserialize,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 });
 export {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
+  worldStumpSerialize, worldStumpDeserialize,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 };

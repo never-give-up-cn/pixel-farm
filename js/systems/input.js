@@ -148,6 +148,16 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        if(l && l.action === 'secret' && typeof worldSwitch === 'function'){
+          worldSwitch('secret', 64, 98);
+          ensureAudio();
+          return;
+        }
+        if(l && l.action === 'stump' && typeof worldCutStump === 'function'){
+          worldCutStump(l);
+          ensureAudio();
+          return;
+        }
         if(l && l.home && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
           ensureAudio();
           return;

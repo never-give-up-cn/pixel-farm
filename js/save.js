@@ -98,6 +98,7 @@ function serializeState(){
     gold: gold,
     stamina: stamina,
     staminaMax: staminaMax,
+    sb: staminaBonus | 0,          /* 永久体力上限加成（古老雕像奖励） */
     canWater: canWater,
     canLevel: canLevel,
     hotSel: hotSel,
@@ -152,7 +153,8 @@ function serializeState(){
     soil: Math.round(soilFert),
     vs: visitSerialize(),
     museum: (typeof museumSerialize === 'function') ? museumSerialize() : [],
-    hm: (typeof worldStumpSerialize === 'function') ? worldStumpSerialize() : []
+    hm: (typeof worldStumpSerialize === 'function') ? worldStumpSerialize() : [],
+    sec: (typeof worldSecretSerialize === 'function') ? worldSecretSerialize() : null
   };
   if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(_worldMap);
   return out;
@@ -254,7 +256,9 @@ function deserializeState(d){
       }
     }
     if(typeof d.gold === 'number') gold = d.gold;
-    if(typeof d.staminaMax === 'number') staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX);
+    if(typeof d.sb === 'number') staminaBonus = clamp(d.sb|0, 0, 100);   /* 永久体力上限加成 */
+    if(typeof d.staminaMax === 'number')
+      staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX + staminaBonus);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
     if(typeof d.canLevel === 'number') canLevel = clamp(d.canLevel|0, 0, CONFIG.SHOP.CAN_MAX_LEVEL);
     if(typeof d.canWater === 'number') canWater = clamp(d.canWater, 0, canCapacity());
@@ -374,6 +378,7 @@ function deserializeState(d){
       worldActivate(d.world.map, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
     }
     if(typeof worldStumpDeserialize === 'function') worldStumpDeserialize(d.hm);   /* 秘密森林树桩当天砍伐记录 */
+    if(typeof worldSecretDeserialize === 'function') worldSecretDeserialize(d.sec);
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
     const sky0 = skyAt(skyHour());
@@ -538,10 +543,12 @@ function newGame(){
   if(window.MAP_WORLD && typeof MAP_WORLD === 'object'){
     for(const k in MAP_WORLD) if(k !== 'valley') delete MAP_WORLD[k];
   }
+  if(typeof worldSecretReset === 'function') worldSecretReset();
   if(typeof worldRegisterValley === 'function') worldRegisterValley();
   dropFx = [];
   clock.day = 1; clock.min = 0; clock.hold = 0;
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;
+  staminaBonus = 0;                          /* 新游戏：永久体力加成清零 */
   canLevel = 0; canWater = CONFIG.WATER_CAN.CAPACITY;
   gold = CONFIG.INIT_GOLD; hotSel = 0;
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;

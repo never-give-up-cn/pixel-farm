@@ -585,8 +585,8 @@ function drawUI(g){
   /* 第 28 轮：状态效果图标行（体力条上方；昏睡后遗症 / 今日还能吃几份） */
   {
     const chips = [];
-    if(staminaMax < CONFIG.STAMINA.MAX)
-      chips.push({ic:'😵', tx:'体力上限-' + Math.round((1 - staminaMax / CONFIG.STAMINA.MAX) * 100) + '%'});
+    if(staminaMax < CONFIG.STAMINA.MAX + staminaBonus)
+      chips.push({ic:'😵', tx:'体力上限-' + Math.round((1 - staminaMax / (CONFIG.STAMINA.MAX + staminaBonus)) * 100) + '%'});
     const eatsUsed = makerEatsToday();
     if(eatsUsed > 0)
       chips.push({ic:'🍱', tx:'今日还可吃 ' + (CONFIG.RECIPE.EAT_PER_DAY - eatsUsed) + ' 份'});

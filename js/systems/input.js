@@ -158,6 +158,11 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        if(l && l.action === 'statue' && typeof worldStatueInteract === 'function'){
+          worldStatueInteract(l);
+          ensureAudio();
+          return;
+        }
         if(l && l.home && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
           ensureAudio();
           return;

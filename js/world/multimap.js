@@ -238,6 +238,7 @@ function genSecret(){
     L.push({ type:'stump', x:p[0], y:p[1], w:2, h:2, label:'硬木树桩', action:'stump', solid:true });
   }
   L.push({ type:'sign', x:61, y:94, w:3, h:3, label:'南边 · 煤渣森林', solid:false });
+  L.push({ type:'statue', x:76, y:86, w:3, h:3, label:'古老雕像', action:'statue', solid:true });
   scatterWild(mulberry32(9104), 2400, L, { tree:0.88 });
   return {
     landmarks: L,
@@ -434,6 +435,40 @@ function worldEnterLandmark(l){
   return !!worldActivate(l.home, st.spawn.x, st.spawn.y, false);
 }
 
+/* 秘密森林的古老雕像：用宝石甜莓换永久体力上限 */
+const secretState = { statue: false };
+
+function worldStatueInteract(l){
+  if(!l || l.action !== 'statue') return false;
+  if(secretState.statue){
+    toast('古老雕像静静立在林间，已经不再回应你');
+    return false;
+  }
+  if(typeof countItem !== 'function' || countItem('sweet_gem_berry') <= 0){
+    toast('古老雕像摊开手掌，像在等待一颗宝石般的果实（宝石甜莓）');
+    return false;
+  }
+  if(typeof removeItem !== 'function' || !removeItem('sweet_gem_berry', 1)){
+    toast('宝石甜莓拿不出来');
+    return false;
+  }
+  secretState.statue = true;
+  staminaBonus += 10;
+  staminaMax = CONFIG.STAMINA.MAX + staminaBonus;
+  stamina = staminaMax;
+  if(typeof updateStats === 'function') updateStats();
+  toast('古老雕像收下甜宝石浆果，体力上限 +10（' + staminaMax + '）');
+  if(typeof playSfx === 'function') playSfx(1046, 'triangle', 0.2, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+function worldSecretSerialize(){
+  return { s: secretState.statue ? 1 : 0 };
+}
+function worldSecretDeserialize(a){
+  secretState.statue = !!(a && a.s);
+}
+function worldSecretReset(){ secretState.statue = false; }
+
 /* 秘密森林：树桩每天可以砍一次，掉硬木 */
 function worldCutStump(l){
   if(!l || l.action !== 'stump') return false;
@@ -520,6 +555,32 @@ function drawWorldLandmark(g, l){
     for(let yy = y; yy < y+h; yy += 10) g.fillRect(x, yy, w, 4);
     g.fillStyle = '#5b3a1d';
     g.fillRect(x, y, 3, h); g.fillRect(x+w-3, y, 3, h);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'statue'){
+    const done = window.secretState && secretState.statue;
+    const cx = x + w/2;
+    /* 底座 */
+    g.fillStyle = '#6f6a5a';
+    g.fillRect(x+w*0.18, y+h*0.68, w*0.64, h*0.24);
+    g.fillStyle = '#8a8574';
+    g.fillRect(x+w*0.18, y+h*0.68, w*0.64, 4);
+    /* 身体 + 头 */
+    g.fillStyle = done ? '#8f9a86' : '#8a9280';
+    g.fillRect(cx-w*0.16, y+h*0.34, w*0.32, h*0.38);
+    g.beginPath(); g.arc(cx, y+h*0.28, w*0.13, 0, Math.PI*2); g.fill();
+    /* 手臂 */
+    g.fillRect(cx-w*0.28, y+h*0.40, w*0.13, h*0.06);
+    g.fillRect(cx+w*0.15, y+h*0.40, w*0.13, h*0.06);
+    /* 青苔 */
+    g.fillStyle = 'rgba(95,138,58,.55)';
+    g.fillRect(cx-w*0.15, y+h*0.52, w*0.10, h*0.06);
+    g.fillRect(x+w*0.22, y+h*0.78, w*0.12, h*0.05);
+    if(done){
+      g.fillStyle = '#ffd76a';
+      g.fillRect(cx-1, y+h*0.24, 3, 3);
+    }
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }
@@ -636,12 +697,14 @@ function worldLandmarkColor(type){ return landmarkColor(type); }
 Object.assign(window, {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
-  worldStumpSerialize, worldStumpDeserialize,
+  worldStumpSerialize, worldStumpDeserialize, secretState, worldStatueInteract,
+  worldSecretSerialize, worldSecretDeserialize, worldSecretReset,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 });
 export {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
-  worldStumpSerialize, worldStumpDeserialize,
+  worldStumpSerialize, worldStumpDeserialize, secretState, worldStatueInteract,
+  worldSecretSerialize, worldSecretDeserialize, worldSecretReset,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 };

@@ -3,7 +3,8 @@
 
 /* --- 体力：干活消耗，睡觉恢复；为 0 时干不了活 --- */
 window.stamina = CONFIG.STAMINA.MAX;      /* 当前体力（可为小数：奔跑按秒扣） */
-window.staminaMax = CONFIG.STAMINA.MAX;   /* 当前体力上限（昏睡后会被扣 20%） */
+window.staminaBonus = 0;                  /* 永久体力上限加成（古老雕像等奖励） */
+window.staminaMax = CONFIG.STAMINA.MAX + window.staminaBonus;   /* 当前体力上限（昏睡后会被扣 20%） */
 /* 某个动作消耗多少体力 */
 function staminaCost(id){ return CONFIG.STAMINA.TOOL_COST[id] || 0; }
 /* 扣体力：体力为 0 时任何消耗体力的动作都做不了 */

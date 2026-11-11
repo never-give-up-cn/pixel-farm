@@ -87,7 +87,7 @@ function updateStats(force){
     '快捷栏 ' + CONFIG.INVENTORY.HOTBAR + ' 格（= 背包前 ' + CONFIG.INVENTORY.HOTBAR + ' 格）选中 <b>' +
         (hotSel + 1) + '</b>：' + (selectedItem() ? selectedItem().icon + selectedItem().name : '空') + '\n' +
     '背包 <b>' + invUsed() + '</b>/' + CONFIG.INVENTORY.SLOTS + ' 格　金币 <b>' + gold + '</b>\n' +
-    '体力 <b>' + Math.ceil(stamina) + '</b>/' + staminaMax + '（上限 ' + CONFIG.STAMINA.MAX + '）\n' +
+    '体力 <b>' + Math.ceil(stamina) + '</b>/' + staminaMax + '（上限 ' + staminaMax + '）\n' +
     '水壶 <b>' + canWater + '</b>/' + canCapacity() + '（Lv' + canLevel + '）　右键站在水边补水\n' +
     '作物 <b>' + CONFIG.CROPS.length + '</b> 种（当季 ' +
         CONFIG.CROPS.filter(c => cropSeasons(c).indexOf(seasonName()) >= 0).length + ' 种）\n' +

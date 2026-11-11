@@ -2159,7 +2159,9 @@ CONFIG.TOWN_PLAN();
     leah:      { map:'in_leah',    x:60, y:47, eve:'forest',   ex:103,ey:54, label:'森林 · 莉亚小屋' },
     wizard:    { map:'in_wizard',  x:60, y:46, eve:'forest',   ex:70, ey:49, label:'森林 · 法师塔' },
     willy:     { map:'in_willy',   x:60, y:47, eve:'beach',    ex:76, ey:18, label:'海滩 · 威利鱼店' },
-    elliott:   { map:'in_elliott', x:60, y:47, eve:'beach',    ex:49, ey:18, label:'海滩 · 艾利欧特小屋' }
+    elliott:   { map:'in_elliott', x:60, y:47, eve:'beach',    ex:49, ey:18, label:'海滩 · 艾利欧特小屋' },
+    marlon:    { map:'in_guild',   x:58, y:46, workX:60, workY:45, eve:'mountain', ex:82, ey:95, label:'山地 · 冒险家公会' },
+    gil:       { map:'in_guild',   x:61, y:48, workX:63, workY:45, eve:'mountain', ex:85, ey:95, label:'山地 · 冒险家公会' }
   };
   for(const id in HOMES){
     const h = HOMES[id];
@@ -2168,7 +2170,13 @@ CONFIG.TOWN_PLAN();
     const d = CONFIG.NPC.LIST.find(x => x.id === id);
     if(d) d.homeMap = h.map;
     for(const slot of S.sched){
-      if(slot.type === 'home' || slot.type === 'sleep'){
+      if(h.workX != null && slot.type === 'work'){
+        slot.map = h.map;
+        slot.x = h.workX;
+        slot.y = h.workY;
+        slot.label = '室内 · 工作';
+        delete slot.at;
+      } else if(slot.type === 'home' || slot.type === 'sleep'){
         slot.map = h.map;
         slot.x = h.x;
         slot.y = h.y;

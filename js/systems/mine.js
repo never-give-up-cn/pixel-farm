@@ -223,7 +223,7 @@ export function enterMine() {
   mine.keys.clear();
   mine.time = 0;
   generate(1);
-  if (typeof toast === 'function') toast('进入矿井 · WASD 移动 / 空格攻击 / Esc 返回农场');
+  if (typeof toast === 'function') toast('进入矿井 · WASD 移动 / 空格攻击 / Esc 返回地面');
   if (typeof playSfx === 'function') playSfx(300, 'square', 0.09, 0.5);
   if (typeof dlog === 'function') dlog('[mine] 进入矿井 B1');
 }
@@ -233,7 +233,7 @@ export function exitMine() {
   window.mineActive = false;
   mine.active = false;
   mine.keys.clear();
-  if (typeof toast === 'function') toast(`回到农场 · 最深 B${mine.best} · 矿石 ${mine.ore}`);
+  if (typeof toast === 'function') toast(`回到地面 · 最深 B${mine.best} · 矿石 ${mine.ore}`);
   if (typeof playSfx === 'function') playSfx(420, 'sine', 0.08, 0.45);
 }
 

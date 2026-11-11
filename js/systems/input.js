@@ -143,7 +143,12 @@ window.addEventListener('keydown', e=>{
     if(!e.repeat){
       if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
         const l = (typeof worldLandmarkNear === 'function') ? worldLandmarkNear() : null;
-        if(l && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
+        if(l && l.action === 'mine' && typeof toggleMine === 'function'){
+          toggleMine();
+          ensureAudio();
+          return;
+        }
+        if(l && l.home && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
           ensureAudio();
           return;
         }

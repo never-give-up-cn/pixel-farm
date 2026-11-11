@@ -152,6 +152,11 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        const f = (typeof fixtureNear === 'function') ? fixtureNear() : null;
+        if(f && typeof interactFixture === 'function' && interactFixture(f)){
+          ensureAudio();
+          return;
+        }
         toast('这里是探索区域：可以走路、钓鱼、看地标；交互请回农场 / 小镇');
         ensureAudio();
         return;

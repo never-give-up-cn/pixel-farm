@@ -498,7 +498,8 @@ function chestNear(){
 function toggleChest(open){
   const want = (open === undefined) ? !chestOpen : !!open;
   if(want === chestOpen) return;
-  if(want && openChest && openChest.preset){     /* 第 25 轮：镇上的箱子走 openNpcChest */
+  if(want && openChest && openChest.preset &&
+     !(typeof currentMap !== 'undefined' && String(currentMap).indexOf('in_') === 0)){
     toast('这是镇上的箱子');
     return;
   }

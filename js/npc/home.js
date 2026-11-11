@@ -9,11 +9,12 @@
 /* 附近最近的那件家具（只在玩家所在的屋子里找） */
 function fixtureNear(){
   const room = playerRoom();
-  if(!room) return null;
+  const interior = (typeof currentMap !== 'undefined' && String(currentMap).indexOf('in_') === 0);
+  if(!room && !interior) return null;
   let best = null, bd = CONFIG.INTERACT.RANGE_TILES;
   for(const b of buildings){
     if(!b.preset) continue;
-    if(b.bid !== room) continue;
+    if(!interior && b.bid !== room) continue;
     const d = tileCenterDist(b.tx, b.ty);
     if(d < bd){ bd = d; best = b; }
   }
@@ -33,6 +34,17 @@ function interactFixture(f){
   if(!f) return false;
   const npc = npcDef(f.npc);
   if(f.type === 'bed') return bedInteract(f);
+  if(f.type === 'stove'){
+    const st = window.MAP_WORLD && MAP_WORLD[currentMap];
+    if(st && st.stove && typeof makerOpenPanel === 'function'){
+      makerOpenPanel(st.stove);
+      return true;
+    }
+  }
+  if(f.type === 'chest'){
+    window.openChest = f;
+    if(typeof toggleChest === 'function'){ toggleChest(true); return true; }
+  }
   const txt = decorText(f.npc, f.type);
   toast(txt || '看起来没什么特别的');
   return true;

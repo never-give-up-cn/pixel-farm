@@ -17,7 +17,7 @@ const MAP_DEFS = {
 /* 新地图里可进入的住宅室内：复用同一套房间模板，家具和住户不同 */
 const INTERIORS = {
   in_robin: {
-    name:'罗宾家', outMap:'mountain', outX:39, outY:82, room:{x:52,y:40,w:18,h:12},
+    name:'罗宾家', owner:'robin', outMap:'mountain', outX:39, outY:82, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'table',x:64,y:46}, {type:'stove',x:66,y:42},
       {type:'chest',x:58,y:42}, {type:'shelf',x:55,y:42}, {type:'bench',x:56,y:45},
@@ -25,7 +25,7 @@ const INTERIORS = {
     ]
   },
   in_marnie: {
-    name:'玛妮牧场', outMap:'forest', outX:109, outY:43, room:{x:52,y:40,w:18,h:12},
+    name:'玛妮牧场', owner:'marnie', outMap:'forest', outX:109, outY:43, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'bed',x:67,y:48}, {type:'table',x:64,y:46},
       {type:'stove',x:66,y:42}, {type:'chest',x:58,y:42}, {type:'shelf',x:55,y:42},
@@ -33,7 +33,7 @@ const INTERIORS = {
     ]
   },
   in_leah: {
-    name:'莉亚小屋', outMap:'forest', outX:103, outY:54, room:{x:52,y:40,w:18,h:12},
+    name:'莉亚小屋', owner:'leah', outMap:'forest', outX:103, outY:54, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'desk',x:64,y:46}, {type:'table',x:66,y:49},
       {type:'chest',x:58,y:42}, {type:'shelf',x:55,y:42}, {type:'flowerstand',x:67,y:42},
@@ -41,7 +41,7 @@ const INTERIORS = {
     ]
   },
   in_wizard: {
-    name:'法师塔', outMap:'forest', outX:70, outY:49, room:{x:52,y:40,w:18,h:12},
+    name:'法师塔', owner:'wizard', outMap:'forest', outX:70, outY:49, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'shelf',x:55,y:42}, {type:'shelf',x:58,y:42},
       {type:'desk',x:64,y:45}, {type:'table',x:66,y:48}, {type:'stove',x:67,y:42},
@@ -49,7 +49,7 @@ const INTERIORS = {
     ]
   },
   in_willy: {
-    name:'威利鱼店', outMap:'beach', outX:76, outY:18, room:{x:52,y:40,w:18,h:12},
+    name:'威利鱼店', owner:'willy', outMap:'beach', outX:76, outY:18, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'counter',x:64,y:46}, {type:'barrel',x:67,y:42},
       {type:'barrel',x:68,y:44}, {type:'table',x:66,y:49}, {type:'chest',x:58,y:42},
@@ -57,7 +57,7 @@ const INTERIORS = {
     ]
   },
   in_elliott: {
-    name:'艾利欧特小屋', outMap:'beach', outX:49, outY:18, room:{x:52,y:40,w:18,h:12},
+    name:'艾利欧特小屋', owner:'elliott', outMap:'beach', outX:49, outY:18, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'desk',x:64,y:46}, {type:'shelf',x:55,y:42},
       {type:'shelf',x:67,y:42}, {type:'table',x:66,y:49}, {type:'chest',x:58,y:42},
@@ -65,7 +65,7 @@ const INTERIORS = {
     ]
   },
   in_guild: {
-    name:'冒险家公会', outMap:'mountain', outX:82, outY:95, room:{x:52,y:40,w:18,h:12},
+    name:'冒险家公会', owner:'marlon', outMap:'mountain', outX:82, outY:95, room:{x:52,y:40,w:18,h:12},
     furn:[
       {type:'bed',x:54,y:48}, {type:'bed',x:67,y:48}, {type:'table',x:64,y:46},
       {type:'bench',x:56,y:44}, {type:'bench',x:66,y:44}, {type:'chest',x:58,y:42},
@@ -293,28 +293,41 @@ function genInterior(id){
   map[doorY * MAP_W + doorX] = T.DOOR;
 
   const add = (type, tx, ty, solid, flat, interact) => {
-    const b = { type:type, tx:tx, ty:ty, preset:true, solid:!!solid, flat:!!flat, interact:interact || '' };
+    const b = { type:type, tx:tx, ty:ty, preset:true, solid:!!solid, flat:!!flat,
+                interact:interact || '', npc:I.owner, bid:id };
     buildings.push(b);
     if(solid) buildIndex[ty*MAP_W+tx] = buildings.length - 1;
+    return b;
   };
+  let stoveRef = null, chestRef = null;
   if(Array.isArray(I.furn) && I.furn.length){
     const solidOf = { bed:1, table:1, stove:1, chest:1, bench:1, counter:1, barrel:1, desk:1, flowerstand:1, shelf:0, rug:0, plant:1 };
     const interactOf = { bed:'bed', table:'home', stove:'cook', chest:'chest', counter:'work', bench:'work', desk:'work', flowerstand:'work' };
     for(const f of I.furn){
-      add(f.type, f.x, f.y, solidOf[f.type] || 0, f.type === 'rug', interactOf[f.type] || '');
+      if(f.type === 'stove'){
+        stoveRef = add('stove', f.x, f.y, 1, false, 'cook');
+        stoveRef.job = null; stoveRef.out = [];
+      } else if(f.type === 'chest'){
+        chestRef = add('chest', f.x, f.y, 1, false, 'chest');
+        chestRef.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
+      } else {
+        add(f.type, f.x, f.y, solidOf[f.type] || 0, f.type === 'rug', interactOf[f.type] || '');
+      }
     }
   } else {
     add('bed',   r.x + 3,         r.y + r.h - 4, 1, false, 'bed');
     add('table', r.x + r.w - 6,   r.y + r.h - 5, 1, false, 'home');
-    add('stove', r.x + r.w - 4,   r.y + 3,       1, false, 'cook');
-    add('chest', r.x + 6,         r.y + 3,       1, false, 'chest');
+    stoveRef = add('stove', r.x + r.w - 4, r.y + 3, 1, false, 'cook'); stoveRef.job = null; stoveRef.out = [];
+    chestRef = add('chest', r.x + 6, r.y + 3, 1, false, 'chest'); chestRef.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
     add('shelf', r.x + 3,         r.y + 3,       0, false, '');
     add('rug',   r.x + Math.floor(r.w/2), r.y + Math.floor(r.h/2), 0, true, '');
   }
   return {
     landmarks: [],
     exits: [{ x:doorX, y:doorY, w:1, h:1, to:I.outMap, tx:I.outX, ty:I.outY, label:'出门' }],
-    spawn: { x:doorX, y:doorY - 2 }
+    spawn: { x:doorX, y:doorY - 2 },
+    stove: stoveRef,
+    chest: chestRef
   };
 }
 
@@ -338,6 +351,8 @@ function ensureWorld(id){
     st.exits = result.exits || [];
     st.name = MAP_DEFS[id] ? MAP_DEFS[id].name : id;
     st.spawn = result.spawn || { x: 64, y: 52 };
+    st.stove = result.stove || null;
+    st.chest = result.chest || null;
     st.baseMap.set(map);
   }
   useWorldArrays(old);

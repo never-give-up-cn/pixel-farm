@@ -208,6 +208,7 @@ window.addEventListener('keydown', e=>{
       const c = chestNear();
       const n = npcNear();
       const mk = makerNear();
+      const fb = (typeof farmBuildingNear === 'function') ? farmBuildingNear() : null;
       if(n){                                     /* 人在旁边 → 先跟人说话 */
         if(npcAsleepHere(n)) toast(n.name + '睡得正香，别吵醒他');   /* 第 25 轮：睡着的叫不醒 */
         else npcOpenDialog(n);
@@ -219,6 +220,7 @@ window.addEventListener('keydown', e=>{
         else { openChest = c; toggleChest(true); }
       }
       else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
+      else if(fb) farmBuildingInteract(fb);      /* 温室 / 筒仓 / 水井 / 发货箱 / 鱼塘 / 磨坊 */
       else if(typeof bundleCenterNear === 'function' && bundleCenterNear()) toggleBundlePanel();  /* 第 32 轮：社区中心 */
       else if(typeof wardrobeNear === 'function' && wardrobeNear()) toggleWardrobe();             /* 第 32 轮：衣柜 */
       else if(typeof roomPlannerNear === 'function' && roomPlannerNear()) toggleRoom();          /* 第 32 轮：装修样板 */

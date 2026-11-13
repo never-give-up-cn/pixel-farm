@@ -31,8 +31,9 @@ function sowCrop(tx,ty,type,seedId){
   const sid = seedId || ('seed_' + type);
   const season = seasonName();
   const seasons = cropSeasons(def);            /* 第 23 轮：杂交作物有两个季可种 */
-  if(seasons.indexOf(season) < 0){
-    toast(season === '冬' ? '土地休眠了' : (def.name + '只能在' + seasons.join('、') + '季种'));
+  const inGh = (typeof cropInGreenhouse === 'function') && cropInGreenhouse(tx, ty);
+  if(seasons.indexOf(season) < 0 && !inGh){
+    toast(season === '冬' ? '土地休眠了（温室范围内可以种）' : (def.name + '只能在' + seasons.join('、') + '季种（温室范围内除外）'));
     playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6);
     return false;
   }

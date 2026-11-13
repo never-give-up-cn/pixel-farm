@@ -118,6 +118,8 @@ function serializeState(){
         if(b.job) o.j = {r:b.job.rid, t:Math.max(0, Math.round(b.job.left))};
         if(b.out && b.out.length) o.o = b.out.map(s => ({id:s.id, n:s.n}));
       }
+      if(b.pond && b.pond.fish) o.p = {f:b.pond.fish, d:b.pond.day | 0};
+      if(b.mill && b.mill.out) o.m = {r:b.mill.ready | 0, o:b.mill.out};
       return o;
     }),
     roads: rs,
@@ -227,6 +229,12 @@ function deserializeState(d){
               if(n > 0) nb.out.push({id:s.id, n:n});
             }
           if(nb.job && nb.job.left <= 0) makerFinish(nb, true);   /* 存档时刚好做完 → 读档即完成 */
+        }
+        if(b.p && typeof b.p === 'object' && CONFIG.ITEMS[b.p.f]) {
+          nb.pond = { fish: b.p.f, day: Math.max(0, b.p.d | 0) };
+        }
+        if(b.m && typeof b.m === 'object' && CONFIG.ITEMS[b.m.o]) {
+          nb.mill = { ready: Math.max(0, b.m.r | 0), out: b.m.o };
         }
         buildings.push(nb);
         if(nb.type.indexOf('furn_') !== 0) buildIndex[y*MAP_W+x] = buildings.length - 1;

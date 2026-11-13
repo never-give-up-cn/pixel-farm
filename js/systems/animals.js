@@ -141,7 +141,8 @@ function buyAnimal(typeId){
 /* --- 每天 6:00 结算：成长 / 好感 / 产出 --- */
 function animalDayStart(){
   const A = CONFIG.ANIMALS;
-  let produced = 0, hq = 0, hungry = 0, grew = 0, full = 0, boxed = 0;
+  const hasSilo = (typeof farmBuildingCount === 'function') && farmBuildingCount('silo') > 0;
+  let produced = 0, hq = 0, hungry = 0, grew = 0, full = 0, boxed = 0, autoFed = 0;
   for(const a of animals){
     const t = animalType(a.type);
     if(!t) continue;
@@ -167,7 +168,9 @@ function animalDayStart(){
     }
     a.produced = got;
     a.fed = false;                 /* 新的一天：重新喂 */
+    if(hasSilo){ a.fed = true; autoFed++; }
   }
+  if(autoFed)  toast('筒仓自动喂食了 ' + autoFed + ' 只动物');
   if(grew)     toast(grew + ' 只动物长大了');
   if(produced) toast('动物产出：' + produced + ' 份' + (hq ? '（优质 ' + hq + ' 份）' : '') +
                      (boxed ? '，其中 ' + boxed + ' 份进了采集箱' : ''));

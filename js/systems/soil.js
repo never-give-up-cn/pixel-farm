@@ -94,12 +94,14 @@ function settleDay(){
     const c = crops[i];
     if(!c || c.dead) continue;
     const def = cropDef(c.type);
-    if(cropSeasons(def).indexOf(newSeason) < 0){   /* 换季 → 非当季作物枯萎（第 23 轮：杂交作物有两个季） */
+    const tx = i % MAP_W, ty = (i / MAP_W) | 0;
+    const gh = (typeof cropInGreenhouse === 'function') && cropInGreenhouse(tx, ty);
+    if(!gh && cropSeasons(def).indexOf(newSeason) < 0){   /* 换季 → 非当季作物枯萎；温室范围内全年生长 */
       c.dead = true; c.stage = 0; withered++;
       continue;
     }
     c.a = (c.a | 0) + 1;                 /* 第 23 轮：经过天数（用来算浇水完整度） */
-    if(map[i] === T.WATERED){              /* 当天浇过水 → 生长一天 */
+    if(map[i] === T.WATERED || gh){      /* 当天浇过水 / 温室自动浇水 → 生长一天 */
       let inc = festivalGrowInc(c);        /* 第 17 轮：春·播种祭当天播种的生长 ×2 */
       /* 第 20 轮：被铱质洒水器浇过 → 有概率当天多长一阶段（默认 30%） */
       if(c.irr && Math.random() < CONFIG.ENDGAME.IRRIGATION.CHANCE){ inc += 1; irrGrew++; }

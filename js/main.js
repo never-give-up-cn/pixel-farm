@@ -28,6 +28,7 @@ import './ui/ui-icon-decor.js';
 import './ui/bundle-panel.js';
 import './ui/wardrobe-panel.js';
 import './ui/room-panel.js';
+import './systems/farm-buildings.js';
 import './systems/crops.js';
 import './systems/soil.js';
 import './systems/tools.js';

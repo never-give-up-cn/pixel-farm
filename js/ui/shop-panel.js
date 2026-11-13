@@ -68,7 +68,10 @@ function priceHtml(id){
   }
   const t = priceTrend(id);
   const cls = (t === '↑') ? 'up' : (t === '↓' ? 'dn' : '');
-  return priceOf(id) + ' 💰<span class="' + cls + '">' + t + '</span>';
+  const member = (typeof isJojaMember === 'function') && isJojaMember();
+  const p = Math.max(1, Math.round(priceOf(id) * (typeof jojaPriceMult === 'function' ? jojaPriceMult() : 1)));
+  if(member) return p + ' 💰<span class="up">Joja 9 折</span>';
+  return p + ' 💰<span class="' + cls + '">' + t + '</span>';
 }
 /* 购买页签 */
 function renderShopBuy(){

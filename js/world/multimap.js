@@ -210,7 +210,7 @@ function genForest(){
     { type:'cottage', x:98,  y:46, w:11, h:7,  label:'莉亚小屋', home:'in_leah' },
     { type:'tower',   x:66,  y:34, w:10, h:15, label:'法师塔', home:'in_wizard' },
     { type:'log',     x:8,   y:8,  w:7,  h:4,  label:'秘密森林', action:'secret' },
-    { type:'cart',    x:58,  y:22, w:7,  h:5,  label:'旅行货车' },
+    { type:'cart',    x:64,  y:24, w:7,  h:5,  label:'旅行货车', action:'cart' },
     { type:'sign',    x:119, y:40, w:3,  h:3,  label:'东边 · 小镇', solid:false }
   ];
   scatterWild(mulberry32(9101), 1800, L, { tree:0.80 });
@@ -696,6 +696,52 @@ function drawWorldLandmark(g, l){
     }
     g.fillStyle = 'rgba(0,0,0,.18)';
     g.fillRect(x+w*0.10, y+h*0.92, w*0.80, 3);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'cart'){
+    const cx = x + w/2;
+    /* 影子 */
+    g.fillStyle = 'rgba(0,0,0,.22)';
+    g.beginPath(); g.ellipse(cx, y+h*0.90, w*0.40, h*0.08, 0, 0, Math.PI*2); g.fill();
+    /* 车斗：木板 + 铁箍 */
+    g.fillStyle = '#7a4f24';
+    g.fillRect(x+w*0.14, y+h*0.42, w*0.72, h*0.40);
+    g.fillStyle = '#8f6230';
+    g.fillRect(x+w*0.14, y+h*0.42, w*0.72, 4);
+    g.fillStyle = '#5c3a18';
+    for(let i = 1; i < 4; i++) g.fillRect(x+w*0.14, y+h*0.42 + i*h*0.10, w*0.72, 3);
+    g.fillRect(x+w*0.20, y+h*0.42, 4, h*0.40);
+    g.fillRect(x+w*0.80, y+h*0.42, 4, h*0.40);
+    /* 顶棚：条纹帆布 */
+    g.fillStyle = '#e8dcc0';
+    g.beginPath();
+    g.moveTo(x+w*0.12, y+h*0.44);
+    g.quadraticCurveTo(cx, y+h*0.02, x+w*0.88, y+h*0.44);
+    g.closePath(); g.fill();
+    g.save();
+    g.clip();
+    g.fillStyle = '#b8564a';
+    for(let i = 0; i < 6; i += 2)
+      g.fillRect(x+w*(0.12 + i*0.13), y, w*0.09, h*0.5);
+    g.restore();
+    g.strokeStyle = '#6b4a2a'; g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(x+w*0.12, y+h*0.44);
+    g.quadraticCurveTo(cx, y+h*0.02, x+w*0.88, y+h*0.44);
+    g.stroke();
+    /* 车轮 */
+    for(const wx of [0.28, 0.72]){
+      g.fillStyle = '#3a2a18';
+      g.beginPath(); g.arc(x+w*wx, y+h*0.84, w*0.10, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#8a6a3a';
+      g.beginPath(); g.arc(x+w*wx, y+h*0.84, w*0.05, 0, Math.PI*2); g.fill();
+      g.strokeStyle = '#c8a25a'; g.lineWidth = 2;
+      g.beginPath(); g.arc(x+w*wx, y+h*0.84, w*0.07, 0, Math.PI*2); g.stroke();
+    }
+    /* 拉车木杆 */
+    g.fillStyle = '#6b4520';
+    g.fillRect(x+w*0.86, y+h*0.66, w*0.10, 4);
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }

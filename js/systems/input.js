@@ -173,6 +173,11 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        if(l && l.action === 'cart' && typeof openCartShop === 'function'){
+          openCartShop();
+          ensureAudio();
+          return;
+        }
         if(l && l.home && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
           ensureAudio();
           return;

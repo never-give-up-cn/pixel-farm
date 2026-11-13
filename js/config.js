@@ -79,6 +79,15 @@ const CONFIG = {
     STOCK: ['coffee', 'bread', 'seed_starfruit', 'seed_pumpkin', 'feed', 'coal', 'wood', 'stone']
   },
 
+  /* 旅行货车：每 3 天换一批货，价格比商店贵 30% */
+  CART: {
+    CYCLE: 3,
+    COUNT: 4,
+    MARKUP: 1.3,
+    STOCK: ['diamond', 'quartz', 'copper_ore', 'iron_ore', 'gold_ore', 'coal',
+            'seed_starfruit', 'seed_sweet_gem_berry', 'coffee', 'bread', 'feed', 'wood']
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 128,               // 地图宽（格）

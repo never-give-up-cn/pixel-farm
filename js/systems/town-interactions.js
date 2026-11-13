@@ -74,5 +74,34 @@ function jukeboxPlay(){
   return true;
 }
 
-Object.assign(window, { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer });
-export { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer };
+/* ---------- 旅行货车 ---------- */
+function cartCycle(){
+  const C = CONFIG.CART;
+  return Math.floor((clock.day - 1) / Math.max(1, C.CYCLE));
+}
+function cartNextDay(){
+  const C = CONFIG.CART;
+  return (cartCycle() + 1) * Math.max(1, C.CYCLE) + 1;
+}
+function cartStock(){
+  const C = CONFIG.CART;
+  const pool = (C.STOCK || []).filter(id => CONFIG.ITEMS[id]);
+  if(!pool.length) return [];
+  const rng = mulberry32((0x9e3779b9 ^ (cartCycle() * 2654435761)) >>> 0);
+  const arr = pool.slice();
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr.slice(0, Math.max(1, C.COUNT));
+}
+function cartPrice(id){
+  const base = priceOf(id);
+  if(base <= 0) return 0;
+  return Math.max(1, Math.round(base * CONFIG.CART.MARKUP));
+}
+
+Object.assign(window, { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer,
+                       cartCycle, cartNextDay, cartStock, cartPrice });
+export { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer,
+         cartCycle, cartNextDay, cartStock, cartPrice };

@@ -56,8 +56,16 @@ function shopRow(icon, name, sub, priceHtml, buttons, iconId){
   }
   return row;
 }
+/* 当前面板的售价：旅行货车按加价后的固定价，其余按当日浮动价 */
+function shopPrice(id){
+  if(shopMode === 'cart' && typeof cartPrice === 'function') return cartPrice(id);
+  return priceOf(id);
+}
 /* 价格文字 + 浮动标记 */
 function priceHtml(id){
+  if(shopMode === 'cart'){
+    return shopPrice(id) + ' 💰<span class="up">货车价 ×' + CONFIG.CART.MARKUP + '</span>';
+  }
   const t = priceTrend(id);
   const cls = (t === '↑') ? 'up' : (t === '↓' ? 'dn' : '');
   return priceOf(id) + ' 💰<span class="' + cls + '">' + t + '</span>';
@@ -65,6 +73,26 @@ function priceHtml(id){
 /* 购买页签 */
 function renderShopBuy(){
   if(!shopBody) return;
+  if(shopMode === 'cart'){
+    const stock = (typeof cartStock === 'function') ? cartStock() : [];
+    if(!stock.length){
+      const e = document.createElement('div');
+      e.className = 'sempty';
+      e.textContent = '货车今天没有货';
+      shopBody.appendChild(e);
+      return;
+    }
+    for(const id of stock){
+      const d = itemDef(id);
+      if(!d) continue;
+      const price = shopPrice(id);
+      const off = gold < price;
+      const sub = d.kind === 'seed' ? '旅行商人的种子' : (d.kind === 'food' ? '路上带的干粮' : '旅行商人收来的货');
+      shopBody.appendChild(shopRow(d.icon, d.name, sub, priceHtml(id),
+        [{label:off ? '金币不够' : '购买', off:off, fn:()=>{ shopBuyClick(id, price); }}], id));
+    }
+    return;
+  }
   if(shopMode === 'joja'){
     for(const id of (CONFIG.JOJA.STOCK || [])){
       const d = itemDef(id);
@@ -159,11 +187,22 @@ function renderShopSell(){
 /* 刷新商店面板 */
 function renderShop(){
   if(shopGold) shopGold.textContent = '💰 ' + gold + ' 金币';
+  const sf = document.getElementById('shopFoot');
+  if(sf){
+    sf.textContent = shopMode === 'cart'
+      ? 'Esc 关闭 · 走到煤渣森林的旅行货车旁按 E 打开'
+      : (shopMode === 'joja' ? 'Esc 关闭 · 走到 Joja 货箱旁按 E 购买' : 'Esc 关闭 · 走到商店摊附近按 E 打开');
+  }
   const sh = document.getElementById('shopHead');
-  if(sh && sh.firstChild) sh.firstChild.textContent = (shopMode === 'joja' ? 'Joja 超市 ' : '商店 ');
+  if(sh && sh.firstChild){
+    sh.firstChild.textContent = (shopMode === 'joja' ? 'Joja 超市 ' : (shopMode === 'cart' ? '旅行货车 ' : '商店 '));
+  }
   if(shopSeason){
     if(shopMode === 'joja'){
       shopSeason.textContent = 'Joja 会员价 · 今日货架';
+    } else if(shopMode === 'cart'){
+      const nd = cartNextDay();
+      shopSeason.textContent = '每 ' + CONFIG.CART.CYCLE + ' 天换一批货 · 第 ' + nd + ' 天补货 · 价格 ×' + CONFIG.CART.MARKUP;
     } else {
       const bonus = npcShopBonusLeft();
       const sb = townShopBuilding();
@@ -178,8 +217,11 @@ function renderShop(){
   }
   if(shopTabs && shopTabs.children){
     for(const t of shopTabs.children){
-      const on = (t.getAttribute && t.getAttribute('data-tab') === shopTab);
+      const tab = t.getAttribute && t.getAttribute('data-tab');
+      const on = (tab === shopTab);
       t.className = 'tab' + (on ? ' on' : '');
+      /* 旅行货车只买不卖，隐藏出售页签 */
+      if(t.style) t.style.display = (shopMode === 'cart' && tab === 'sell') ? 'none' : '';
     }
   }
   if(!shopBody) return;
@@ -188,7 +230,7 @@ function renderShop(){
   else renderShopSell();
 }
 /* 点「购买」按钮：先挡掉买不了的情况（按钮虽然置灰，点一下也给提示） */
-function shopBuyClick(id){
+function shopBuyClick(id, priceOverride){
   /* 第 15 轮：动物走独立购买流程（棚舍容量 / 金币校验） */
   const animalEntry = CONFIG.SHOP.BUY.find(b => b.id === id && b.animal);
   if(animalEntry) return buyAnimal(animalEntry.animal);
@@ -201,10 +243,10 @@ function shopBuyClick(id){
   const d = itemDef(id);
   if(!d) return false;
   if(toolOwned(id)){ toast('已经有' + d.name + '了'); return false; }
-  const p = priceOf(id);
+  const p = (typeof priceOverride === 'number' && priceOverride > 0) ? priceOverride : priceOf(id);
   if(gold < p){ toast('金币不够（还差 ' + (p - gold) + '）'); return false; }
   if(!canFit(id, 1)){ toast('背包满了，装不下' + d.name); return false; }
-  return buyItem(id);
+  return buyItem(id, priceOverride);
 }
 /* 开关商店 */
 function toggleShop(open){
@@ -239,6 +281,19 @@ function openJojaShop(){
     renderShop();
   }
   playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 旅行货车：独立摊位，只买不卖，价格按货车加价 */
+function openCartShop(){
+  shopMode = 'cart';
+  shopTab = 'buy';
+  if(!shopOpen){
+    if(packOpen) togglePack(false);
+    shopOpen = true;
+  }
+  renderShop();
+  setPanelOpen(shopEl, true);
+  playSfx(620, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
   return true;
 }
 if(shopMask) shopMask.addEventListener('mousedown', e=>{ e.preventDefault(); toggleShop(false); });
@@ -485,6 +540,21 @@ function drawUI(g){
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, hy);
   }
+  /* 走到旅行货车旁 → 提示按 E 看货 */
+  if(!shopOpen && typeof worldLandmarkNear === 'function'){
+    const wl = worldLandmarkNear();
+    if(wl && wl.action === 'cart'){
+      const hint = '按 E 看货车';
+      g.font = '13px ' + FONT_CJK;
+      const hw = g.measureText(hint).width;
+      const hx = player.x - cam.x - hw/2, hy = player.y - cam.y - 44;
+      g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+      g.strokeStyle = CONFIG.COLORS.hudBorder;
+      g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+      g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+      g.fillText(hint, hx, hy);
+    }
+  }
   /* 走到委托板附近 → 提示按 E 看委托（第 16 轮） */
   if(!shopOpen && questBoardNear()){
     const bx = QUEST_BOARD.x*TILE - cam.x, by = QUEST_BOARD.y*TILE - cam.y;
@@ -631,5 +701,5 @@ function drawUI(g){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, drawText, drawUI });
-export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, drawText, drawUI };
+Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, drawText, drawUI });
+export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, drawText, drawUI };

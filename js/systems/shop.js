@@ -86,13 +86,15 @@ function buyItem(id, priceOverride){
   const d = itemDef(id);
   if(!d){ toast('商店不卖这个'); return false; }
   if(toolOwned(id)){ toast('已经有' + d.name + '了'); return false; }
-  const price = (typeof priceOverride === 'number' && priceOverride > 0) ? priceOverride : priceOf(id);
-  if(gold < price){ toast('金币不够（还差 ' + (price - gold) + '）'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
+  const price = ((typeof priceOverride === 'number' && priceOverride > 0) ? priceOverride : priceOf(id)) *
+                (typeof jojaPriceMult === 'function' ? jojaPriceMult() : 1);
+  const finalPrice = Math.max(1, Math.round(price));
+  if(gold < finalPrice){ toast('金币不够（还差 ' + (finalPrice - gold) + '）'); playSfx(120,'sawtooth',0.10,CONFIG.AUDIO.VOLUME*0.6); return false; }
   if(!canFit(id, 1)){ toast('背包满了，装不下' + d.name); return false; }
-  changeGold(-price);
+  changeGold(-finalPrice);
   giveItem(id, 1);
   const inHot = inv.findIndex(s => s && s.id === id) < CONFIG.INVENTORY.HOTBAR;
-  toast('买下了' + d.name + '（-' + price + ' 💰）' +
+  toast('买下了' + d.name + '（-' + finalPrice + ' 💰）' +
         (inHot ? '' : '　快捷栏满了，放在背包里，拖到快捷栏就能用'));
   playSfx(880, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   refreshPackGrid();

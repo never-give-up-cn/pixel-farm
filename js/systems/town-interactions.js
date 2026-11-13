@@ -7,6 +7,18 @@
 let jojaOfferDay = -1;
 let jojaOfferId = null;
 
+/* Joja 会员：5000g 入会 → 所有购买 9 折 + 每天一次会员赠品 */
+const jojaState = { member: false, giftDay: 0 };
+window.jojaState = jojaState;
+function isJojaMember(){ return !!jojaState.member; }
+function jojaPriceMult(){ return jojaState.member ? 0.9 : 1; }
+function jojaSerialize(){ return { m: jojaState.member ? 1 : 0, g: jojaState.giftDay | 0 }; }
+function jojaDeserialize(v){
+  jojaState.member = !!(v && v.m);
+  jojaState.giftDay = (v && typeof v.g === 'number') ? (v.g | 0) : 0;
+}
+function jojaReset(){ jojaState.member = false; jojaState.giftDay = 0; }
+
 function jojaTodayOffer(){
   if(jojaOfferDay === clock.day && jojaOfferId) return jojaOfferId;
   const pool = (CONFIG.JOJA.STOCK || []).filter(id => CONFIG.ITEMS[id]);
@@ -17,10 +29,41 @@ function jojaTodayOffer(){
 }
 
 function jojaInteract(){
+  /* 还没入会 → 先推销会员 */
+  if(!jojaState.member){
+    if(jojaInteract._memberQuote === true){
+      if(gold < 5000){ toast('Joja 会员需要 5000 金币（还差 ' + (5000 - gold) + '）'); return false; }
+      changeGold(-5000);
+      jojaState.member = true;
+      jojaInteract._memberQuote = false;
+      toast('🎉 加入 Joja 会员！所有商店购买 9 折，每天可领一份会员赠品');
+      playSfx(1046, 'triangle', 0.18, CONFIG.AUDIO.VOLUME);
+      return true;
+    }
+    jojaInteract._memberQuote = true;
+    toast('Joja 会员：5000 金币，购物 9 折 + 每天赠品 · 再按一次 E 加入');
+    playSfx(660, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.6);
+    return true;
+  }
+  /* 会员每日赠品 */
+  if(jojaState.giftDay !== clock.day){
+    jojaState.giftDay = clock.day;
+    const pool = (CONFIG.JOJA.STOCK || []).filter(id => CONFIG.ITEMS[id]);
+    const id = pool.length ? pool[(clock.day + 3) % pool.length] : null;
+    if(id && canFit(id, 1)){
+      giveItem(id, 1);
+      toast('🎁 Joja 会员赠品：' + itemDef(id).name + ' ×1');
+    }else{
+      changeGold(100);
+      toast('🎁 Joja 会员赠品：金币 +100');
+    }
+    playSfx(880, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
+    return true;
+  }
   const id = jojaTodayOffer();
   const item = id && itemDef(id);
   if(!item){ toast('Joja 货箱今天没有补货'); return false; }
-  const price = priceOf(id);
+  const price = Math.round(priceOf(id) * jojaPriceMult());
   if(jojaOfferDay === clock.day && jojaOfferId && jojaInteract._quoted === id){
     if(gold < price){ toast('金币不够（还差 ' + (price - gold) + '）'); return false; }
     if(!canFit(id, 1)){ toast('背包满了'); return false; }
@@ -102,6 +145,8 @@ function cartPrice(id){
 }
 
 Object.assign(window, { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer,
+                       isJojaMember, jojaPriceMult, jojaSerialize, jojaDeserialize, jojaReset,
                        cartCycle, cartNextDay, cartStock, cartPrice });
 export { jojaInteract, clinicTreat, jukeboxPlay, jojaTodayOffer,
+         isJojaMember, jojaPriceMult, jojaSerialize, jojaDeserialize, jojaReset,
          cartCycle, cartNextDay, cartStock, cartPrice };

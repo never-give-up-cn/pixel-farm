@@ -28,6 +28,7 @@ function drawBuildPreview(g){
     else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
     else if(r.id === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
     else if(r.id === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
+    else if(typeof isMachineType === 'function' && isMachineType(r.id)) drawMachine(g, r.id, x, y, null);
     else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y);
   } catch(err) {
     if(typeof console !== 'undefined') console.warn('[build] 配方预览绘制失败：' + (r && r.id), err);
@@ -104,6 +105,31 @@ function drawBuildIcon(g,id,x,y){
     g.fillStyle = '#6d8299'; g.fillRect(x+2, y+2, 10, 2);
     g.fillStyle = '#26303c'; g.fillRect(x+5, y+7, 4, 6);
     g.fillStyle = '#6ef0a0'; g.fillRect(x+3, y+6, 2, 2);
+  }else if(id === 'keg'){
+    g.fillStyle = '#6a3f1e'; g.fillRect(x+2, y+3, 10, 9);
+    g.fillStyle = '#8a5a2a'; g.fillRect(x+3, y+4, 8, 7);
+    g.fillStyle = '#4a2a14'; g.fillRect(x+2, y+6, 10, 1); g.fillRect(x+2, y+10, 10, 1);
+    g.fillStyle = '#d0b070'; g.fillRect(x+2, y+2, 10, 2);
+  }else if(id === 'preserves_jar'){
+    g.fillStyle = '#cfe3e8'; g.fillRect(x+3, y+4, 8, 8);
+    g.fillStyle = '#e05a5a'; g.fillRect(x+4, y+7, 6, 4);
+    g.fillStyle = '#6a8a90'; g.fillRect(x+2, y+2, 10, 2);
+  }else if(id === 'cheese_press'){
+    g.fillStyle = '#7a4a24'; g.fillRect(x+1, y+9, 12, 3);
+    g.fillStyle = '#e0c040'; g.fillRect(x+3, y+5, 8, 4);
+    g.fillStyle = '#5a3418'; g.fillRect(x+6, y+2, 2, 3);
+  }else if(id === 'mayo_machine'){
+    g.fillStyle = '#8a8a9a'; g.fillRect(x+2, y+3, 10, 8);
+    g.fillStyle = '#a8a8b8'; g.fillRect(x+3, y+4, 8, 3);
+    g.fillStyle = '#e8e8d8'; g.fillRect(x+5, y+9, 4, 3);
+  }else if(id === 'loom'){
+    g.fillStyle = '#7a4a24'; g.fillRect(x+2, y+2, 2, 11); g.fillRect(x+10, y+2, 2, 11);
+    g.fillStyle = '#9a6232'; g.fillRect(x+2, y+2, 10, 2);
+    g.fillStyle = '#e8e0d0'; g.fillRect(x+4, y+5, 6, 7);
+  }else if(id === 'oil_maker'){
+    g.fillStyle = '#4a4a3a'; g.fillRect(x+2, y+4, 10, 8);
+    g.fillStyle = '#6a6a52'; g.fillRect(x+3, y+5, 8, 6);
+    g.fillStyle = '#3a3a2a'; g.fillRect(x+5, y+2, 4, 3);
   }else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(id)){
     drawAnimStructureIcon(g, id, x+1, y+1, 13);
   }

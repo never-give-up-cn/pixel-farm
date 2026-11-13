@@ -216,6 +216,53 @@ function drawRoomPlanner(g,x,y){
   g.fillStyle = '#b08a60'; g.fillRect(x+10, y+30, 12, 2);
 }
 
+function drawMachine(g,type,x,y,b){
+  const busy = b && b.job;
+  const t = (typeof animTime !== 'undefined' ? animTime : 0);
+  if(type === 'keg'){
+    g.fillStyle = '#6a3f1e'; g.fillRect(x+7,y+9,26,25);
+    g.fillStyle = '#8a5a2a'; g.fillRect(x+9,y+11,22,21);
+    g.fillStyle = '#4a2a14'; g.fillRect(x+7,y+15,26,3); g.fillRect(x+7,y+28,26,3);
+    g.fillStyle = '#b08040'; g.fillRect(x+19,y+18,2,8);
+    g.fillStyle = '#d0b070'; g.fillRect(x+7,y+8,26,3);
+  }else if(type === 'preserves_jar'){
+    g.fillStyle = '#cfe3e8'; g.fillRect(x+9,y+11,22,22);
+    g.fillStyle = '#8ac0c8'; g.fillRect(x+11,y+19,18,12);
+    g.fillStyle = '#e05a5a'; g.fillRect(x+12,y+21,16,8);
+    g.fillStyle = '#6a8a90'; g.fillRect(x+8,y+7,24,5);
+    g.fillStyle = '#f0f4f4'; g.fillRect(x+11,y+13,4,3);
+  }else if(type === 'cheese_press'){
+    g.fillStyle = '#7a4a24'; g.fillRect(x+6,y+24,28,7);
+    g.fillStyle = '#9a6232'; g.fillRect(x+9,y+18,22,7);
+    g.fillStyle = '#e0c040'; g.fillRect(x+12,y+12,16,7);
+    g.fillStyle = '#f0d870'; g.fillRect(x+13,y+13,6,3);
+    g.fillStyle = '#5a3418'; g.fillRect(x+18,y+6,4,7);
+  }else if(type === 'mayo_machine'){
+    g.fillStyle = '#8a8a9a'; g.fillRect(x+8,y+12,24,20);
+    g.fillStyle = '#a8a8b8'; g.fillRect(x+10,y+14,20,7);
+    g.fillStyle = '#e8e8d8'; g.fillRect(x+14,y+24,12,6);
+    g.fillStyle = '#f0d060'; g.fillRect(x+17,y+25,6,4);
+    g.fillStyle = '#5a5a6a'; g.fillRect(x+8,y+10,24,3);
+  }else if(type === 'loom'){
+    g.fillStyle = '#7a4a24'; g.fillRect(x+7,y+7,4,27); g.fillRect(x+29,y+7,4,27);
+    g.fillStyle = '#9a6232'; g.fillRect(x+7,y+7,26,4);
+    g.fillStyle = '#e8e0d0'; g.fillRect(x+11,y+13,18,16);
+    g.fillStyle = '#c0b8a8'; g.fillRect(x+11,y+17,18,2); g.fillRect(x+11,y+23,18,2);
+  }else if(type === 'oil_maker'){
+    g.fillStyle = '#4a4a3a'; g.fillRect(x+8,y+12,24,22);
+    g.fillStyle = '#6a6a52'; g.fillRect(x+10,y+14,20,18);
+    g.fillStyle = '#3a3a2a'; g.fillRect(x+15,y+5,10,7);
+    g.fillStyle = '#8a7a3a'; g.fillRect(x+17,y+22,6,5);
+  }else{
+    g.fillStyle = '#8a5a2b'; g.fillRect(x+8,y+12,24,18);
+  }
+  if(busy){
+    const pulse = 0.5 + Math.sin(t * 4) * 0.5;
+    g.fillStyle = 'rgba(255,215,106,' + (0.35 + pulse * 0.45).toFixed(2) + ')';
+    g.fillRect(x+18,y+2,4,4);
+  }
+}
+
 function drawBuilding(g,b,x,y){
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
   else if(b.type.indexOf('furn_') === 0) drawPlacedFurniture(g, b.type.slice(5), x, y);
@@ -228,6 +275,7 @@ function drawBuilding(g,b,x,y){
   else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
   else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);
+  else if(typeof isMachineType === 'function' && isMachineType(b.type)) drawMachine(g,b.type,x,y,b);
   else if(b.type === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
   else if(b.type === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
   else if(b.type === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
@@ -454,5 +502,5 @@ function drawSeasonOverlay(g,x0,y0,x1,y1){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay });
-export { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay };
+Object.assign(window, { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawMachine, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay });
+export { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawMachine, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay };

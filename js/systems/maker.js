@@ -67,11 +67,31 @@ function recipeMissing(r){
 function recipeMissingText(r){
   return recipeMissing(r).map(m => '缺 ' + itemDef(m.id).name + '×' + m.lack).join('，');
 }
+/* --- 独立加工设备 --- */
+function machineDef(type){ return (CONFIG.RECIPE.MACHINES || {})[type] || null; }
+function isMachineType(type){ return !!machineDef(type); }
+function machineRecipeAllowed(type, r){
+  if(!r || r.cook) return false;
+  if(type === 'maker') {
+    /* 通用加工台只做没有被任何专用设备占用的基础配方 */
+    for(const id in (CONFIG.RECIPE.MACHINES || {})){
+      if(CONFIG.RECIPE.MACHINES[id].outputs.indexOf(r.out.id) >= 0) return false;
+    }
+    return true;
+  }
+  const def = machineDef(type);
+  return !!(def && def.outputs.indexOf(r.out.id) >= 0);
+}
+function makerRecipesFor(b){
+  if(!b) return [];
+  if(b.type === 'stove') return CONFIG.RECIPE.LIST.filter(r => !!r.cook);
+  return CONFIG.RECIPE.LIST.filter(r => machineRecipeAllowed(b.type, r));
+}
 /* 离玩家最近的加工台（在交互距离内） */
 function makerNear(){
   let best = null, bd = Infinity;
   for(const b of buildings){
-    if(b.type !== 'maker' && b.type !== 'stove') continue;
+    if(b.type !== 'maker' && b.type !== 'stove' && !isMachineType(b.type)) continue;
     const d = tileCenterDist(b.tx, b.ty);
     if(d < bd){ bd = d; best = b; }
   }
@@ -130,7 +150,7 @@ function makerAdvance(minutes, silent){
   const list = (window.roomStove && buildings.indexOf(window.roomStove) < 0)
     ? buildings.concat([window.roomStove]) : buildings;
   for(const b of list){
-    if((b.type !== 'maker' && b.type !== 'stove') || !b.job) continue;
+    if((b.type !== 'maker' && b.type !== 'stove' && !isMachineType(b.type)) || !b.job) continue;
     if(b.job.left <= 0){
       /* 上次因为产出槽满而挂起：腾出空位后静默完成，不重复弹提示 */
       if(makerFinish(b, true)) done++;
@@ -145,9 +165,13 @@ function makerAdvance(minutes, silent){
 /* 开始加工（rid = 配方 id） */
 function makerStart(rid){
   const b = openMaker;
-  if(!b || (b.type !== 'maker' && b.type !== 'stove')) return false;
+  if(!b || (b.type !== 'maker' && b.type !== 'stove' && !isMachineType(b.type))) return false;
   const r = recipeDef(rid);
   if(!r){ toast('没有这个配方'); return false; }
+  if(b.type !== 'stove' && !machineRecipeAllowed(b.type, r)){
+    toast('这台设备做不了' + r.name);
+    return false;
+  }
   if(b.job){ toast('这台加工台还在忙，先等它做完'); return false; }
   const u = recipeUnlockInfo(r);
   if(!u.ok){
@@ -209,8 +233,9 @@ function makerRenderPanel(){
   if(!openMaker) return;
   const b = openMaker;
   const isStove = b.type === 'stove';
-  if(makerTitleEl) makerTitleEl.textContent = isStove ? '灶台' : '加工台';
-  if(makerIconEl) makerIconEl.textContent = isStove ? '🍳' : '🛠️';
+  const mdef = machineDef(b.type);
+  if(makerTitleEl) makerTitleEl.textContent = isStove ? '灶台' : (mdef ? mdef.name : '加工台');
+  if(makerIconEl) makerIconEl.textContent = isStove ? '🍳' : (mdef ? mdef.icon : '🛠️');
   if(makerStatusEl){
     if(b.job){
       const r = recipeDef(b.job.rid);
@@ -246,7 +271,7 @@ function makerRenderPanel(){
   /* 配方列表 */
   if(makerListEl && makerListEl.appendChild){
     makerListEl.innerHTML = '';
-    const list = CONFIG.RECIPE.LIST.filter(r => isStove ? !!r.cook : !r.cook);
+    const list = makerRecipesFor(b);
     for(const r of list){
       const u = recipeUnlockInfo(r);
       const miss = recipeMissing(r);
@@ -276,7 +301,7 @@ function makerRenderPanel(){
 }
 /* 开关面板 */
 function makerOpenPanel(b){
-  if(!b || (b.type !== 'maker' && b.type !== 'stove')) return false;
+  if(!b || (b.type !== 'maker' && b.type !== 'stove' && !isMachineType(b.type))) return false;
   if(packOpen) togglePack(false);
   if(shopOpen) toggleShop(false);
   if(chestOpen) toggleChest(false);
@@ -378,5 +403,5 @@ if(makerMaskEl) makerMaskEl.addEventListener('mousedown', e=>{ e.preventDefault(
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { makerEl, makerMaskEl, makerStatusEl, makerOutEl, makerListEl, makerEat, recipeDef, recipeInputText, recipeOutText, recipeProfit, recipeProfitText, recipeUnlockInfo, recipeUnlocked, recipeMissing, recipeMissingText, makerNear, makerCanStore, makerStore, makerFinish, makerAdvance, makerStart, makerTake, makerTakeAll, makerFormatLeft, makerRenderPanel, makerOpenPanel, makerClosePanel, toggleMakerPanel, makerHudInfo, makerHudText, drawMakerHud, makerEatsToday, eatFood, makerEatSerialize, makerEatDeserialize, makerResetState });
-export { makerEl, makerMaskEl, makerStatusEl, makerOutEl, makerListEl, makerEat, recipeDef, recipeInputText, recipeOutText, recipeProfit, recipeProfitText, recipeUnlockInfo, recipeUnlocked, recipeMissing, recipeMissingText, makerNear, makerCanStore, makerStore, makerFinish, makerAdvance, makerStart, makerTake, makerTakeAll, makerFormatLeft, makerRenderPanel, makerOpenPanel, makerClosePanel, toggleMakerPanel, makerHudInfo, makerHudText, drawMakerHud, makerEatsToday, eatFood, makerEatSerialize, makerEatDeserialize, makerResetState };
+Object.assign(window, { makerEl, makerMaskEl, makerStatusEl, makerOutEl, makerListEl, makerEat, recipeDef, recipeInputText, recipeOutText, recipeProfit, recipeProfitText, recipeUnlockInfo, recipeUnlocked, recipeMissing, recipeMissingText, machineDef, isMachineType, machineRecipeAllowed, makerRecipesFor, makerNear, makerCanStore, makerStore, makerFinish, makerAdvance, makerStart, makerTake, makerTakeAll, makerFormatLeft, makerRenderPanel, makerOpenPanel, makerClosePanel, toggleMakerPanel, makerHudInfo, makerHudText, drawMakerHud, makerEatsToday, eatFood, makerEatSerialize, makerEatDeserialize, makerResetState });
+export { makerEl, makerMaskEl, makerStatusEl, makerOutEl, makerListEl, makerEat, recipeDef, recipeInputText, recipeOutText, recipeProfit, recipeProfitText, recipeUnlockInfo, recipeUnlocked, recipeMissing, recipeMissingText, machineDef, isMachineType, machineRecipeAllowed, makerRecipesFor, makerNear, makerCanStore, makerStore, makerFinish, makerAdvance, makerStart, makerTake, makerTakeAll, makerFormatLeft, makerRenderPanel, makerOpenPanel, makerClosePanel, toggleMakerPanel, makerHudInfo, makerHudText, drawMakerHud, makerEatsToday, eatFood, makerEatSerialize, makerEatDeserialize, makerResetState };

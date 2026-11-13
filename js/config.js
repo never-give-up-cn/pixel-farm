@@ -1231,7 +1231,16 @@ const CONFIG = {
       // 蘑菇浓汤：蘑菇 ×3 + 牛奶（集齐采集物后解锁）
       {id:'woodcarving',    name:'木雕',     icon:'🗿', inputs:{wood:8},                  out:{id:'woodcarving', n:1},    hours:4, unlock:{type:'aff', npc:'carpenter', min:60}}
       // 木雕：木材 ×8（老木匠成为朋友后解锁）
-    ]
+    ],
+    /* 独立加工设备：每台只显示自己那类配方 */
+    MACHINES: {
+      keg:            { name:'小桶',     icon:'🍷', outputs:['wine','juice','beer','pale_ale','mead','coffee','green_tea','vinegar'] },
+      preserves_jar:  { name:'罐头瓶',   icon:'🫙', outputs:['jelly','pickles','jam','pickled_radish','ketchup'] },
+      cheese_press:   { name:'压酪机',   icon:'🧀', outputs:['cheese','goat_cheese'] },
+      mayo_machine:   { name:'蛋黄酱机', icon:'🥚', outputs:['mayonnaise','duck_mayonnaise'] },
+      loom:           { name:'织布机',   icon:'🧵', outputs:['cloth'] },
+      oil_maker:      { name:'榨油机',   icon:'🫗', outputs:['oil','truffle_oil'] }
+    }
   },
 
   /* ---------- 终局自动化 + 农场评级（第 20 轮）----------
@@ -1602,7 +1611,13 @@ CONFIG.TOWN_PLAN();
     ['community_center','社区中心', { wood:50, stone:50 },   1000],
     ['stove',           '灶台',     { wood:15, stone:10 },   0],
     ['wardrobe',        '衣柜',     { wood:20 },            0],
-    ['room_planner',    '装修样板', { wood:10 },            0]
+    ['room_planner',    '装修样板', { wood:10 },            0],
+    ['keg',             '小桶',     { wood:30, stone:5  },  0],
+    ['preserves_jar',   '罐头瓶',   { wood:20, stone:10 },  0],
+    ['cheese_press',    '压酪机',   { wood:20, stone:20 },  0],
+    ['mayo_machine',    '蛋黄酱机', { wood:15, stone:15 },  0],
+    ['loom',            '织布机',   { wood:25, stone:5  },  0],
+    ['oil_maker',       '榨油机',   { wood:20, stone:10 },  0]
   ];
   for (const [id, name, cost, gold] of EXTRA) {
     if (CONFIG.BUILD.RECIPES.some(r => r.id === id)) continue;

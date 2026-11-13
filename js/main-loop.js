@@ -156,7 +156,16 @@ function loop(now){
   }
   if(steps === CONFIG.MAX_STEPS) accumulator = 0;
 
-  render();
+  /* 渲染异常不能把 rAF 循环带停：记录一次并继续跑，避免整页假死 */
+  try {
+    render();
+  } catch(err) {
+    if(!window.__renderErrorLogged){
+      window.__renderErrorLogged = true;
+      if(typeof console !== 'undefined') console.error('[render] 渲染异常，已跳过该帧：', err);
+      if(typeof toast === 'function') toast('渲染出错：' + ((err && err.message) || err));
+    }
+  }
 
   frameCount++; frameNo++;
   fpsTimer += frameTime;

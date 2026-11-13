@@ -14,19 +14,24 @@ function drawBuildPreview(g){
   g.fillStyle = p.ok ? 'rgba(90,230,120,0.75)' : 'rgba(240,90,80,0.75)';
   g.fillRect(x+1, y+1, TILE-2, TILE-2);
   g.globalAlpha = 0.62;
-  if(r.overlay) drawRoadTile(g,x,y);
-  else if(r.id === 'fence')     drawFence(g,x,y);
-  else if(r.id === 'chest')     drawChest(g,x,y,false);
-  else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
-  else if(r.id === 'stove')     drawStove(g,x,y);
-  else if(r.id === 'wardrobe')  drawWardrobe(g,x,y);
-  else if(r.id === 'room_planner') drawRoomPlanner(g,x,y);
-  else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
-  else if(r.id === 'maker')     drawMaker(g,x,y,null);
-  else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
-  else if(r.id === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
-  else if(r.id === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
-  else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y);
+  /* 单个配方的预览图坏了也不能拖垮整帧渲染 */
+  try {
+    if(r.overlay) drawRoadTile(g,x,y);
+    else if(r.id === 'fence')     drawFence(g,x,y);
+    else if(r.id === 'chest')     drawChest(g,x,y,false);
+    else if(r.id === 'sprinkler') drawSprinkler(g,x,y, animTime);
+    else if(r.id === 'stove')     drawStove(g,x,y);
+    else if(r.id === 'wardrobe')  drawWardrobe(g,x,y);
+    else if(r.id === 'room_planner') drawRoomPlanner(g,x,y);
+    else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
+    else if(r.id === 'maker')     drawMaker(g,x,y,null);
+    else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
+    else if(r.id === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
+    else if(r.id === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
+    else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y);
+  } catch(err) {
+    if(typeof console !== 'undefined') console.warn('[build] 配方预览绘制失败：' + (r && r.id), err);
+  }
   g.globalAlpha = 1;
   g.strokeStyle = p.ok ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
   g.lineWidth = 2;

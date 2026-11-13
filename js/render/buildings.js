@@ -454,5 +454,5 @@ function drawSeasonOverlay(g,x0,y0,x1,y1){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay });
-export { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay };
+Object.assign(window, { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay });
+export { drawFence, drawChest, drawSprinkler, drawCoop, drawBarn, drawMaker, drawIrrigator, drawScarecrow, drawAutobox, drawStove, drawWardrobe, drawRoomPlanner, drawBuilding, drawRoadTile, drawRoads, drawGroundTileBase, drawGrassTile, drawWaterAnim, bakeGroundTile, ensureGroundBaked, drawGround, drawFrontWalls, drawFrontWall, drawObjects, drawSeasonOverlay };

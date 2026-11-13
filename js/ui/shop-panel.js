@@ -555,6 +555,22 @@ function drawUI(g){
       g.fillText(hint, hx, hy);
     }
   }
+  /* 走到矿井入口 → 提示按 E 下矿 / 打开电梯 */
+  if(!shopOpen && typeof worldLandmarkNear === 'function'){
+    const wl = worldLandmarkNear();
+    if(wl && wl.action === 'mine'){
+      const floors = (typeof mineElevatorFloors === 'function') ? mineElevatorFloors() : [];
+      const hint = floors.length ? '按 E 打开矿井电梯' : '按 E 下矿';
+      g.font = '13px ' + FONT_CJK;
+      const hw = g.measureText(hint).width;
+      const hx = player.x - cam.x - hw/2, hy = player.y - cam.y - 44;
+      g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+      g.strokeStyle = CONFIG.COLORS.hudBorder;
+      g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+      g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+      g.fillText(hint, hx, hy);
+    }
+  }
   /* 走到委托板附近 → 提示按 E 看委托（第 16 轮） */
   if(!shopOpen && questBoardNear()){
     const bx = QUEST_BOARD.x*TILE - cam.x, by = QUEST_BOARD.y*TILE - cam.y;

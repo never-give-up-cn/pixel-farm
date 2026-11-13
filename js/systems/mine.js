@@ -212,8 +212,13 @@ function burst(tx, ty, color, n) {
 
 /* ---------- 对外：进出 / 攻击 ---------- */
 
-export function enterMine() {
+export function enterMine(startDepth) {
   if (window.mineActive) return;
+  let depth = 1;
+  if (typeof startDepth === 'number' && startDepth > 1) {
+    /* 电梯只能去到已经解锁的楼层 */
+    depth = Math.min(startDepth | 0, Math.max(1, mine.best | 0));
+  }
   window.mineActive = true;
   mine.active = true;
   mine.hp = 100;
@@ -222,10 +227,31 @@ export function enterMine() {
   mine.down = 0;
   mine.keys.clear();
   mine.time = 0;
-  generate(1);
-  if (typeof toast === 'function') toast('进入矿井 · WASD 移动 / 空格攻击 / Esc 返回地面');
+  generate(depth);
+  if (typeof toast === 'function') toast(`进入矿井 B${depth} · WASD 移动 / 空格攻击 / Esc 返回地面`);
   if (typeof playSfx === 'function') playSfx(300, 'square', 0.09, 0.5);
-  if (typeof dlog === 'function') dlog('[mine] 进入矿井 B1');
+  if (typeof dlog === 'function') dlog(`[mine] 进入矿井 B${depth}`);
+}
+
+/* 电梯已解锁的楼层：B5、B10、B15……（按最深层向下取整） */
+export function mineElevatorFloors() {
+  const step = Math.max(1, CONFIG.MINE.ELEVATOR_STEP | 0);
+  const out = [];
+  for (let f = step; f <= mine.best; f += step) out.push(f);
+  return out;
+}
+
+/* 矿井最深纪录：存档用 */
+export function mineSave() {
+  return Math.max(1, mine.best | 0);
+}
+export function mineLoad(v) {
+  mine.best = Math.max(1, (typeof v === 'number' ? v : 1) | 0);
+}
+export function mineReset() {
+  mine.best = 1;
+  mine.depth = 1;
+  if (window.mineActive) exitMine();
 }
 
 export function exitMine() {
@@ -631,5 +657,9 @@ Object.assign(window, {
   mineAttack,
   updateMine,
   drawMine,
-  mineState: mine
+  mineState: mine,
+  mineElevatorFloors,
+  mineSave,
+  mineLoad,
+  mineReset
 });

@@ -25,6 +25,10 @@ window.addEventListener('keydown', e=>{
     return;
   }
   /* 第 30 轮：矿井模式接管所有按键（移动由 mine.js 自己的监听处理） */
+  if(window.mineGateOpen){
+    if(k === 'escape' && !e.repeat) mineGateClosePanel();
+    return;
+  }
   if(window.mineActive){
     if(k === 'escape'){ if(!e.repeat) exitMine(); return; }
     if(k === ' '){ if(!e.repeat) mineAttack(); return; }
@@ -144,7 +148,8 @@ window.addEventListener('keydown', e=>{
       if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
         const l = (typeof worldLandmarkNear === 'function') ? worldLandmarkNear() : null;
         if(l && l.action === 'mine' && typeof toggleMine === 'function'){
-          toggleMine();
+          if(typeof mineEntranceInteract === 'function') mineEntranceInteract();
+          else toggleMine();
           ensureAudio();
           return;
         }

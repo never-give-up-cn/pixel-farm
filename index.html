@@ -177,6 +177,18 @@
   }
   #shopTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
   #shopBody{max-height:330px;overflow-y:auto}
+  /* 矿井入口电梯 */
+  #minegate{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
+  #minegate.open{display:flex}
+  #minegateMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #minegatePanel{position:relative;width:460px;max-width:calc(100vw - 24px)}
+  #minegateHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+  #minegateHead span{color:#8fa3bd;font-size:12px}
+  #minegateHint{color:#cfe3ff;font-size:12px;margin-bottom:8px}
+  #minegateFloors{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  #minegateFloors .mbtn{min-width:94px;font-size:12px}
+  #minegateFloors .mbtn.entry{border-color:#6b5a2a;color:#ffd76a}
+  #minegateFoot{color:#8fa3bd;font-size:11px;margin-top:6px}
   /* 第 32 轮：社区中心收集包 */
   #bundle{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #bundle.open{display:flex}
@@ -864,6 +876,17 @@
     </div>
     <div id="shopBody"></div>
     <div id="shopFoot">Esc 关闭 · 走到商店摊附近按 E 打开</div>
+  </div>
+</div>
+
+<!-- 矿井入口电梯 -->
+<div id="minegate">
+  <div id="minegateMask"></div>
+  <div id="minegatePanel" class="panel">
+    <div id="minegateHead">矿井入口 <span id="minegateBest"></span></div>
+    <div id="minegateHint"></div>
+    <div id="minegateFloors"></div>
+    <div id="minegateFoot">Esc 关闭 · 每下 5 层解锁一个电梯楼层</div>
   </div>
 </div>
 

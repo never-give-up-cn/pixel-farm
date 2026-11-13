@@ -41,6 +41,7 @@ import './systems/input.js';
 import './systems/mine.js';
 import './ui/panels.js';
 import './ui/shop-panel.js';
+import './ui/mine-gate-panel.js';
 import './ui/crop-tooltip.js';
 import './ui/start-menu.js';
 import './ui/sys-menu.js';

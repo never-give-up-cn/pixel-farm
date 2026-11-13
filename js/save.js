@@ -99,6 +99,7 @@ function serializeState(){
     stamina: stamina,
     staminaMax: staminaMax,
     sb: staminaBonus | 0,          /* 永久体力上限加成（古老雕像奖励） */
+    mb: (typeof mineSave === 'function') ? mineSave() : 1,   /* 矿井最深纪录（电梯楼层解锁） */
     canWater: canWater,
     canLevel: canLevel,
     hotSel: hotSel,
@@ -257,6 +258,7 @@ function deserializeState(d){
     }
     if(typeof d.gold === 'number') gold = d.gold;
     if(typeof d.sb === 'number') staminaBonus = clamp(d.sb|0, 0, 100);   /* 永久体力上限加成 */
+    if(typeof mineLoad === 'function') mineLoad(d.mb);                    /* 矿井最深纪录 / 电梯楼层 */
     if(typeof d.staminaMax === 'number')
       staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX + staminaBonus);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
@@ -549,6 +551,7 @@ function newGame(){
   clock.day = 1; clock.min = 0; clock.hold = 0;
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;
   staminaBonus = 0;                          /* 新游戏：永久体力加成清零 */
+  if(typeof mineReset === 'function') mineReset();   /* 新游戏：矿井最深纪录重置为 B1 */
   canLevel = 0; canWater = CONFIG.WATER_CAN.CAPACITY;
   gold = CONFIG.INIT_GOLD; hotSel = 0;
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;

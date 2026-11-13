@@ -49,13 +49,24 @@ function mineGateRender() {
   if (mineGateBest) mineGateBest.textContent = '最深 B' + best;
   if (mineGateHint) {
     mineGateHint.textContent = floors.length
-      ? '电梯已解锁：选择要从哪一层开始。往下走梯子可以继续刷新最深纪录。'
+      ? '电梯已解锁：选择要从哪一层开始。往下走梯子可以继续刷新最深纪录。' + (best >= 40 ? ' 已发现骷髅洞穴。' : '')
       : '电梯还没解锁。先下到 B' + Math.max(1, CONFIG.MINE.ELEVATOR_STEP) + '，之后就能从这里直达。';
   }
   if (mineGateFloors) {
     mineGateFloors.innerHTML = '';
     mineGateAddFloor('B1 入口', 1, true);
     for (const f of floors) mineGateAddFloor('B' + f, f, false);
+    if (best >= 40) {
+      const skull = document.createElement('button');
+      skull.className = 'mbtn entry';
+      skull.textContent = '💀 骷髅洞穴';
+      skull.addEventListener('click', e => {
+        e.preventDefault();
+        mineGateClosePanel();
+        if (typeof enterMine === 'function') enterMine(1, 'skull');
+      });
+      mineGateFloors.appendChild(skull);
+    }
   }
 }
 

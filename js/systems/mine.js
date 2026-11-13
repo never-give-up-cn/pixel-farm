@@ -60,11 +60,13 @@ export function mineTheme(depth) {
 }
 
 const MINE_MONSTERS = MONSTERS.filter(m => m.loc === 'mine' || m.loc === 'skull');
+const SKULL_MONSTERS = MONSTERS.filter(m => m.loc === 'skull');
 
 window.mineActive = false;
 
 const mine = {
   active: false,
+  mode: 'normal',
   depth: 1,
   best: 1,
   hp: 100,
@@ -116,7 +118,7 @@ function tileCenter(x, y) {
 
 function generate(depth) {
   const rnd = mulberry32(7200 + depth * 197);
-  const theme = mineTheme(depth);
+  const theme = (mine.mode === 'skull') ? MINE_THEMES[2] : mineTheme(depth);
   mine.depth = depth;
   mine.best = Math.max(mine.best, depth);
   mine.themeId = theme.id;
@@ -194,17 +196,19 @@ function generate(depth) {
 
   let count = 0;
   guard = 0;
+  const pool = (mine.mode === 'skull' && SKULL_MONSTERS.length) ? SKULL_MONSTERS : MINE_MONSTERS;
   while (count < 5 && guard++ < 300) {
     const x = 4 + Math.floor(rnd() * (COLS - 6));
     const y = 1 + Math.floor(rnd() * (ROWS - 2));
     if (tileAt(x, y) !== 'floor') continue;
     if (Math.abs(x - 1) + Math.abs(y - 5) < 4) continue;
-    const def = MINE_MONSTERS[Math.floor(rnd() * MINE_MONSTERS.length)];
-    const hp = Math.max(6, Math.round(def.hp / 7 + depth * 1.4));
+    const def = pool[Math.floor(rnd() * pool.length)];
+    const scale = mine.mode === 'skull' ? 1.45 : 1;
+    const hp = Math.max(6, Math.round((def.hp / 7 + depth * 1.4) * scale));
     const c = tileCenter(x, y);
     mine.monsters.push({
       type: def.id, tx: x, ty: y, px: c.x, py: c.y,
-      hp, maxHp: hp, dmg: Math.max(1, Math.round(def.dmg / 3 + depth * 0.2)),
+      hp, maxHp: hp, dmg: Math.max(1, Math.round((def.dmg / 3 + depth * 0.2) * scale)),
       cooldown: 0.6 + rnd() * 1.4, moveTimer: 0.4 + rnd() * 0.8,
       phase: rnd() * 6.28, hurt: 0
     });
@@ -303,15 +307,17 @@ function openMineChest() {
 
 /* ---------- 对外：进出 / 攻击 ---------- */
 
-export function enterMine(startDepth) {
+export function enterMine(startDepth, mode) {
   if (window.mineActive) return;
+  const isSkull = mode === 'skull';
   let depth = 1;
-  if (typeof startDepth === 'number' && startDepth > 1) {
+  if (!isSkull && typeof startDepth === 'number' && startDepth > 1) {
     /* 电梯只能去到已经解锁的楼层 */
     depth = Math.min(startDepth | 0, Math.max(1, mine.best | 0));
   }
   window.mineActive = true;
   mine.active = true;
+  mine.mode = isSkull ? 'skull' : 'normal';
   mine.hp = 100 + (typeof skillMineHpBonus === 'function' ? skillMineHpBonus() : 0);
   mine.maxHp = mine.hp;
   mine.ore = 0;
@@ -320,7 +326,9 @@ export function enterMine(startDepth) {
   mine.time = 0;
   generate(depth);
   const theme = mineTheme(depth);
-  if (typeof toast === 'function') toast(`进入矿井 B${depth} · ${theme.name} · WASD 移动 / 空格攻击 / Esc 返回地面`);
+  if (typeof toast === 'function') toast(isSkull
+    ? `进入骷髅洞穴 B${depth} · 更强的怪物 / 更好的掉落 · Esc 返回`
+    : `进入矿井 B${depth} · ${theme.name} · WASD 移动 / 空格攻击 / Esc 返回地面`);
   if (typeof playSfx === 'function') playSfx(300, 'square', 0.09, 0.5);
   if (typeof dlog === 'function') dlog(`[mine] 进入矿井 B${depth}`);
 }
@@ -353,6 +361,7 @@ export function mineClaimedDeserialize(a) {
 export function mineReset() {
   mine.best = 1;
   mine.depth = 1;
+  mine.mode = 'normal';
   mine.chest = null;
   mine.claimed.clear();
   if (window.mineActive) exitMine();
@@ -679,7 +688,7 @@ export function drawMine(ctx) {
   if (!ctx) return;
   const W = CONFIG.VIEW_W;
   const H = CONFIG.VIEW_H;
-  const theme = mineTheme(mine.depth);
+  const theme = (mine.mode === 'skull') ? MINE_THEMES[2] : mineTheme(mine.depth);
 
   ctx.clearRect(0, 0, W, H);
   ctx.imageSmoothingEnabled = false;
@@ -819,7 +828,7 @@ export function drawMine(ctx) {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#e9c96f';
   ctx.font = '15px "Microsoft YaHei", monospace';
-  ctx.fillText(`矿井 B${mine.depth}`, 18, 26);
+  ctx.fillText((mine.mode === 'skull' ? '骷髅洞穴 B' : '矿井 B') + mine.depth, 18, 26);
 
   ctx.fillStyle = '#2a2a32';
   ctx.fillRect(130, 18, 180, 9);
@@ -837,7 +846,7 @@ export function drawMine(ctx) {
   ctx.fillText(`最深 B${mine.best}`, 560, 26);
   ctx.fillStyle = theme.accent;
   ctx.font = '12px "Microsoft YaHei", monospace';
-  ctx.fillText(theme.name, 664, 26);
+  ctx.fillText(mine.mode === 'skull' ? '骷髅' : theme.name, 664, 26);
 
   if (mine.floorMsg > 0) {
     ctx.globalAlpha = Math.min(1, mine.floorMsg / 0.4);
@@ -847,7 +856,7 @@ export function drawMine(ctx) {
     ctx.fillText(`B${mine.depth}`, W / 2, OY + 50);
     ctx.fillStyle = theme.accent;
     ctx.font = '13px "Microsoft YaHei", monospace';
-    ctx.fillText(theme.name, W / 2, OY + 74);
+    ctx.fillText(mine.mode === 'skull' ? '骷髅洞穴' : theme.name, W / 2, OY + 74);
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }

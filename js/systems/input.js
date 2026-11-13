@@ -153,6 +153,16 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        if(l && l.action === 'quarry' && typeof worldSwitch === 'function'){
+          worldSwitch('quarry', 64, 98);
+          ensureAudio();
+          return;
+        }
+        if(l && l.action === 'quarryrock' && typeof worldMineRock === 'function'){
+          worldMineRock(l);
+          ensureAudio();
+          return;
+        }
         if(l && l.action === 'stump' && typeof worldCutStump === 'function'){
           worldCutStump(l);
           ensureAudio();

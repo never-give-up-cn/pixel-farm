@@ -153,7 +153,7 @@ function serializeState(){
     soil: Math.round(soilFert),
     vs: visitSerialize(),
     museum: (typeof museumSerialize === 'function') ? museumSerialize() : [],
-    hm: (typeof worldStumpSerialize === 'function') ? worldStumpSerialize() : [],
+    hm: (typeof worldDailySerialize === 'function') ? worldDailySerialize() : [],
     sec: (typeof worldSecretSerialize === 'function') ? worldSecretSerialize() : null
   };
   if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(_worldMap);
@@ -377,7 +377,7 @@ function deserializeState(d){
       const wp = d.world.player || d.player || { x: player.x, y: player.y };
       worldActivate(d.world.map, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
     }
-    if(typeof worldStumpDeserialize === 'function') worldStumpDeserialize(d.hm);   /* 秘密森林树桩当天砍伐记录 */
+    if(typeof worldDailyDeserialize === 'function') worldDailyDeserialize(d.hm);   /* 树桩 / 采石场矿脉当天采集记录 */
     if(typeof worldSecretDeserialize === 'function') worldSecretDeserialize(d.sec);
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
     cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);

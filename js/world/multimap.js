@@ -12,7 +12,8 @@ const MAP_DEFS = {
   forest:   { name: '煤渣森林' },
   mountain: { name: '山地' },
   beach:    { name: '鹈鹕海滩' },
-  secret:   { name: '秘密森林' }
+  secret:   { name: '秘密森林' },
+  quarry:   { name: '采石场' }
 };
 
 /* 新地图里可进入的住宅室内：复用同一套房间模板，家具和住户不同 */
@@ -268,7 +269,7 @@ function genMountain(){
     { type:'guild',     x:76, y:84, w:14, h:11, label:'冒险家公会', home:'in_guild' },
     { type:'carpenter', x:30, y:70, w:18, h:11, label:'罗宾木匠店', home:'in_robin' },
     { type:'tent',      x:55, y:40, w:7,  h:5,  label:'莱纳斯的帐篷' },
-    { type:'bridge',    x:104,y:28, w:13, h:3,  label:'采石场', solid:false },
+    { type:'bridge',    x:104,y:28, w:13, h:3,  label:'采石场', action:'quarry' },
     { type:'sign',      x:61, y:94, w:3,  h:3,  label:'南边 · 小镇', solid:false }
   ];
   scatterWild(mulberry32(9102), 1300, L, { tree:0.62 });
@@ -276,6 +277,48 @@ function genMountain(){
     landmarks: L,
     exits: [{ x:64, y:102, w:2, h:1, to:'valley', tx:64, ty:3, label:'南边 · 小镇' }],
     spawn: { x:64, y:92 }
+  };
+}
+
+/* ---------- 采石场 ---------- */
+function genQuarry(){
+  fillMap(T.BARE);
+  borderWater();
+  /* 零散的裸岩地，让采石场看起来坑坑洼洼 */
+  const rng = mulberry32(9203);
+  for(let n = 0; n < 600; n++){
+    const tx = 3 + Math.floor(rng() * (MAP_W-6));
+    const ty = 3 + Math.floor(rng() * (MAP_H-6));
+    const i = ty * MAP_W + tx;
+    if(map[i] === T.BARE && rng() < 0.45) map[i] = T.ROCK;
+  }
+  /* 小水潭（可以钓鱼） */
+  pond(86, 52, 8, 6);
+  /* 主路：南入口 → 采石区 */
+  setRect(64, 82, 3, 21, T.PATH);
+  setRect(40, 82, 27, 3, T.PATH);
+  setRect(40, 60, 3, 25, T.PATH);
+  setRect(40, 60, 27, 3, T.PATH);
+  setRect(84, 60, 12, 3, T.PATH);
+  setRect(84, 60, 3, 25, T.PATH);
+
+  const kinds = [
+    ['stone', '岩石'], ['stone', '岩石'], ['copper_ore', '铜矿脉'], ['copper_ore', '铜矿脉'],
+    ['iron_ore', '铁矿脉'], ['iron_ore', '铁矿脉'], ['gold_ore', '金矿脉'], ['coal', '煤矿脉']
+  ];
+  const spots = [[46,76],[56,76],[70,76],[80,76],[46,88],[56,88],[70,88],[80,88]];
+  const L = [];
+  spots.forEach((p, i) => {
+    const k = kinds[i];
+    L.push({ type:'quarryrock', x:p[0], y:p[1], w:3, h:3,
+             label:k[1], action:'quarryrock', ore:k[0], solid:true });
+  });
+  L.push({ type:'sign', x:61, y:94, w:3, h:3, label:'南边 · 山地', solid:false });
+
+  return {
+    landmarks: L,
+    exits: [{ x:64, y:102, w:2, h:1, to:'mountain', tx:110, ty:33, label:'南边 · 山地' }],
+    spawn: { x:64, y:98 }
   };
 }
 
@@ -374,6 +417,7 @@ function ensureWorld(id){
   else if(id === 'mountain') result = genMountain();
   else if(id === 'beach') result = genBeach();
   else if(id === 'secret') result = genSecret();
+  else if(id === 'quarry') result = genQuarry();
   else if(INTERIORS[id]) result = genInterior(id);
   if(result){
     st.landmarks = result.landmarks || [];
@@ -480,24 +524,53 @@ function worldCutStump(l){
   if(typeof playSfx === 'function') playSfx(420, 'triangle', 0.12, CONFIG.AUDIO.VOLUME * 0.7);
   return true;
 }
-/* 树桩砍伐记录存档：[[x, y, day], ...] */
-function worldStumpSerialize(){
-  const st = MAP_WORLD.secret;
-  if(!st || !st.landmarks) return [];
-  return st.landmarks
-    .filter(l => l.action === 'stump' && l.cutDay)
-    .map(l => [l.x, l.y, l.cutDay | 0]);
+/* 采石场矿脉：每天可以采一次 */
+const QUARRY_YIELD = {
+  stone:      [['stone', 3]],
+  copper_ore: [['copper_ore', 2], ['stone', 2]],
+  iron_ore:   [['iron_ore', 2], ['stone', 2]],
+  gold_ore:   [['gold_ore', 1], ['stone', 3]],
+  coal:       [['coal', 2], ['stone', 2]]
+};
+function worldMineRock(l){
+  if(!l || l.action !== 'quarryrock') return false;
+  if(l.cutDay === clock.day){ toast('这块矿脉今天已经采过了'); return false; }
+  const drops = QUARRY_YIELD[l.ore] || [['stone', 2]];
+  l.cutDay = clock.day;
+  const names = [];
+  for(const [id, n] of drops){
+    if(typeof addItem === 'function') addItem(id, n);
+    const d = (typeof itemDef === 'function') ? itemDef(id) : null;
+    names.push((d ? d.name : id) + ' ×' + n);
+  }
+  toast('采下' + l.label + '：' + names.join('、'));
+  if(typeof playSfx === 'function') playSfx(200, 'square', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+  return true;
 }
-function worldStumpDeserialize(a){
+/* 每日采集记录：[[地图, x, y, day], ...]（旧存档是 [x, y, day]，默认秘密森林树桩） */
+function worldDailySerialize(){
+  const out = [];
+  for(const id in MAP_WORLD){
+    const st = MAP_WORLD[id];
+    if(!st || !st.landmarks) continue;
+    for(const l of st.landmarks){
+      if(l.cutDay) out.push([id, l.x, l.y, l.cutDay | 0]);
+    }
+  }
+  return out;
+}
+function worldDailyDeserialize(a){
   if(!Array.isArray(a) || !a.length) return;
-  const st = ensureWorld('secret');
-  if(!st || !st.landmarks) return;
   for(const rec of a){
     if(!Array.isArray(rec)) continue;
-    const x = rec[0] | 0, y = rec[1] | 0, day = rec[2] | 0;
-    if(day <= 0) continue;
+    let id = 'secret', x, y, day;
+    if(rec.length >= 4){ id = rec[0]; x = rec[1] | 0; y = rec[2] | 0; day = rec[3] | 0; }
+    else { x = rec[0] | 0; y = rec[1] | 0; day = rec[2] | 0; }
+    if(day <= 0 || typeof id !== 'string' || !MAP_DEFS[id]) continue;
+    const st = ensureWorld(id);
+    if(!st || !st.landmarks) continue;
     for(const l of st.landmarks){
-      if(l.action === 'stump' && l.x === x && l.y === y) l.cutDay = day;
+      if((l.action === 'stump' || l.action === 'quarryrock') && l.x === x && l.y === y) l.cutDay = day;
     }
   }
 }
@@ -527,6 +600,8 @@ function landmarkColor(type){
   if(type === 'ranch') return '#b3443c';
   if(type === 'guild') return '#8a8a96';
   if(type === 'bridge' || type === 'pier') return '#9a6b3c';
+  if(type === 'quarryrock') return '#6f675c';
+  if(type === 'statue') return '#8a9280';
   return '#b07a4a';
 }
 
@@ -581,6 +656,46 @@ function drawWorldLandmark(g, l){
       g.fillStyle = '#ffd76a';
       g.fillRect(cx-1, y+h*0.24, 3, 3);
     }
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'quarryrock'){
+    const cut = l.cutDay === clock.day;
+    const ORE_COLOR = { stone:'#d8d4c8', copper_ore:'#c07a3a', iron_ore:'#b8c4d0',
+                        gold_ore:'#e8c24a', coal:'#3a3a42' };
+    const speck = ORE_COLOR[l.ore] || '#d8d4c8';
+    if(cut){
+      /* 采过：只剩碎石子 */
+      g.fillStyle = '#5f584e';
+      g.beginPath(); g.ellipse(x+w*0.32, y+h*0.82, w*0.14, h*0.06, 0, 0, Math.PI*2); g.fill();
+      g.beginPath(); g.ellipse(x+w*0.62, y+h*0.86, w*0.12, h*0.05, 0, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#7a7366';
+      g.fillRect(x+w*0.28, y+h*0.76, w*0.10, 3);
+      g.fillRect(x+w*0.60, y+h*0.80, w*0.08, 3);
+    }else{
+      /* 未采：灰岩块 + 矿脉斑点 */
+      g.fillStyle = '#6f675c';
+      g.beginPath();
+      g.moveTo(x+w*0.12, y+h*0.82);
+      g.lineTo(x+w*0.20, y+h*0.46);
+      g.lineTo(x+w*0.42, y+h*0.26);
+      g.lineTo(x+w*0.72, y+h*0.32);
+      g.lineTo(x+w*0.88, y+h*0.60);
+      g.lineTo(x+w*0.86, y+h*0.82);
+      g.closePath(); g.fill();
+      g.fillStyle = '#8f877a';
+      g.beginPath();
+      g.moveTo(x+w*0.24, y+h*0.48);
+      g.lineTo(x+w*0.42, y+h*0.30);
+      g.lineTo(x+w*0.56, y+h*0.42);
+      g.lineTo(x+w*0.34, y+h*0.60);
+      g.closePath(); g.fill();
+      g.fillStyle = speck;
+      const spots = [[0.34,0.52],[0.50,0.40],[0.60,0.52],[0.46,0.62],[0.70,0.48],[0.66,0.66]];
+      for(const [sx, sy] of spots) g.fillRect(x+w*sx, y+h*sy, 3, 3);
+    }
+    g.fillStyle = 'rgba(0,0,0,.18)';
+    g.fillRect(x+w*0.10, y+h*0.92, w*0.80, 3);
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }
@@ -696,15 +811,15 @@ function worldLandmarkColor(type){ return landmarkColor(type); }
 
 Object.assign(window, {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
-  worldStumpSerialize, worldStumpDeserialize, secretState, worldStatueInteract,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
+  worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,
   worldSecretSerialize, worldSecretDeserialize, worldSecretReset,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 });
 export {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
-  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump,
-  worldStumpSerialize, worldStumpDeserialize, secretState, worldStatueInteract,
+  worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
+  worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,
   worldSecretSerialize, worldSecretDeserialize, worldSecretReset,
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 };

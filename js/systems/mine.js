@@ -380,6 +380,71 @@ export function mineAttack() {
   p.attackDone = false;
 }
 
+/* 炸弹：清理周围岩石 / 矿石并伤害怪物（按 Q） */
+export function mineUseBomb() {
+  if (!window.mineActive || mine.down > 0) return false;
+  if (typeof countItem !== 'function' || countItem('bomb') <= 0) {
+    if (typeof toast === 'function') toast('背包里没有炸弹（杂货店有卖）');
+    return false;
+  }
+  if (typeof removeItem === 'function') removeItem('bomb', 1);
+  const p = mine.player;
+  let cleared = 0, hurtMon = 0;
+  for (let dy = -2; dy <= 2; dy++) {
+    for (let dx = -2; dx <= 2; dx++) {
+      if (Math.hypot(dx, dy) > 2.5) continue;
+      const x = p.tx + dx, y = p.ty + dy;
+      const t = tileAt(x, y);
+      if (t === 'rock') {
+        setTile(x, y, 'floor');
+        mine.rocks.delete(keyOf(x, y));
+        if (typeof dropItem === 'function') dropItem('stone', 1);
+        cleared++;
+      } else if (t === 'ore') {
+        const id = mine.ores.get(keyOf(x, y));
+        setTile(x, y, 'floor');
+        mine.ores.delete(keyOf(x, y));
+        mine.ore++;
+        if (typeof addItem === 'function' && id) addItem(id, 1);
+        cleared++;
+      }
+    }
+  }
+  for (const m of mine.monsters) {
+    if (Math.hypot(m.tx - p.tx, m.ty - p.ty) > 2.5) continue;
+    m.hp -= 45;
+    m.hurt = 0.22;
+    hurtMon++;
+  }
+  const dead = mine.monsters.filter(m => m.hp <= 0);
+  for (const mon of dead) {
+    mine.monsters = mine.monsters.filter(m => m !== mon);
+    mine.dying.push({ ...mon, timer: 0.5 });
+    mine.ore += 2;
+    if (typeof skillAdd === 'function') skillAdd('combat', 12);
+    if (typeof dropItem === 'function') dropItem('stone', 1);
+  }
+  burst(p.tx, p.ty, '#ff9040', 26);
+  if (typeof playSfx === 'function') playSfx(90, 'sawtooth', 0.22, 0.7);
+  if (typeof toast === 'function') toast('💣 炸弹！清理 ' + cleared + ' 处矿岩，炸伤 ' + hurtMon + ' 只怪物');
+  return true;
+}
+
+/* 楼梯：消耗一个，直接下一层（按 R） */
+export function mineUseStair() {
+  if (!window.mineActive || mine.down > 0) return false;
+  if (typeof countItem !== 'function' || countItem('stair') <= 0) {
+    if (typeof toast === 'function') toast('背包里没有楼梯（杂货店有卖）');
+    return false;
+  }
+  if (typeof removeItem === 'function') removeItem('stair', 1);
+  mine.hp = Math.min(mine.maxHp, mine.hp + 12);
+  generate(mine.depth + 1);
+  if (typeof toast === 'function') toast('🪜 使用楼梯，下到 B' + mine.depth);
+  if (typeof playSfx === 'function') playSfx(520, 'triangle', 0.10, 0.5);
+  return true;
+}
+
 function weaponDamage() {
   if (typeof selectedSlot === 'function' && typeof itemDef === 'function') {
     const s = selectedSlot();
@@ -784,7 +849,7 @@ export function drawMine(ctx) {
   ctx.fillRect(0, H - BAR, W, BAR);
   ctx.fillStyle = '#9aa8b8';
   ctx.font = '12px "Microsoft YaHei", monospace';
-  ctx.fillText('WASD / 方向键移动 · 空格攻击 · 打碎矿石 · 走到梯子下一层 · Esc 返回农场', 18, H - 26);
+  ctx.fillText('WASD / 方向键移动 · 空格攻击 · Q 炸弹 · R 楼梯 · 走到梯子下一层 · Esc 返回农场', 18, H - 26);
   ctx.fillStyle = '#6a7a8a';
   ctx.font = '11px monospace';
   ctx.fillText('矿石 +1 并掉落石材 · 击杀怪物 +2 矿石 / 石材 / 金币 · 每 5 层首次到达有矿工宝箱', 18, H - 9);
@@ -805,6 +870,8 @@ Object.assign(window, {
   exitMine,
   toggleMine,
   mineAttack,
+  mineUseBomb,
+  mineUseStair,
   updateMine,
   drawMine,
   mineState: mine,

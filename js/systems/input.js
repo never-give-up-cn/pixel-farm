@@ -32,6 +32,8 @@ window.addEventListener('keydown', e=>{
   if(window.mineActive){
     if(k === 'escape'){ if(!e.repeat) exitMine(); return; }
     if(k === ' '){ if(!e.repeat) mineAttack(); return; }
+    if(k === 'q'){ if(!e.repeat) mineUseBomb(); return; }
+    if(k === 'r'){ if(!e.repeat) mineUseStair(); return; }
     return;
   }
   /* 技能面板：Esc 关闭，其余按键不穿透 */

@@ -232,7 +232,9 @@ const CONFIG = {
       { id:'pendant',      price:5000, romance:'pendant' },  // 美人鱼吊坠：交往 + 好感 100 后求婚
       { id:'fert_basic',   price:100 },   // 基础肥料
       { id:'fert_quality', price:300 },   // 优质肥料
-      { id:'fert_deluxe',  price:600 }    // 高级肥料
+      { id:'fert_deluxe',  price:600 },   // 高级肥料
+      { id:'bomb',         price:300 },   // 矿井炸弹
+      { id:'stair',        price:500 }    // 矿井楼梯
     ]
   },
 
@@ -2363,6 +2365,19 @@ CONFIG.TOWN_PLAN();
       id, name, icon, stack:true, max:99, kind:'fertilizer', price, fertBonus:bonus
     };
   }
+})();
+
+
+/* 矿井消耗品：炸弹 / 楼梯 */
+(function addMineItems(){
+  CONFIG.ITEMS.bomb = {
+    id:'bomb', name:'炸弹', icon:'💣', stack:true, max:99,
+    kind:'bomb', price:300
+  };
+  CONFIG.ITEMS.stair = {
+    id:'stair', name:'楼梯', icon:'🪜', stack:true, max:99,
+    kind:'stair', price:500
+  };
 })();
 
 

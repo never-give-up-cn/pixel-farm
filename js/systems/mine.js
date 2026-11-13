@@ -49,6 +49,8 @@ const mine = {
   rocks: new Map(),
   ores: new Map(),
   ladder: { x: COLS - 2, y: 5 },
+  chest: null,
+  claimed: new Set(),
   sparkles: [],
   down: 0,
   floorMsg: 0
@@ -117,6 +119,28 @@ function generate(depth) {
 
   mine.ladder = { x: COLS - 2, y: 5 };
   setTile(mine.ladder.x, mine.ladder.y, 'ladder');
+
+  /* 每 5 层：首次到达时放一个矿工宝箱 */
+  mine.chest = null;
+  const chestStep = Math.max(1, CONFIG.MINE.CHEST_STEP | 0);
+  if (depth % chestStep === 0 && !mine.claimed.has(depth)) {
+    const cx = COLS - 4;
+    const cy = ROWS - 3;
+    setTile(cx, cy, 'chest');
+    mine.rocks.delete(keyOf(cx, cy));
+    mine.ores.delete(keyOf(cx, cy));
+    /* 清掉宝箱四邻的矿石 / 岩石，避免随机生成把宝箱围死 */
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      const nx = cx + dx, ny = cy + dy;
+      const t = tileAt(nx, ny);
+      if (t === 'rock' || t === 'ore') {
+        setTile(nx, ny, 'floor');
+        mine.rocks.delete(keyOf(nx, ny));
+        mine.ores.delete(keyOf(nx, ny));
+      }
+    }
+    mine.chest = { x: cx, y: cy };
+  }
 
   const p = tileCenter(1, 5);
   mine.player.tx = 1;
@@ -210,6 +234,36 @@ function burst(tx, ty, color, n) {
   }
 }
 
+/* 矿工宝箱：首次到达 5 的倍数层生成，走上去领取 */
+function mineChestLoot(depth) {
+  const gold = 100 + depth * 30;
+  let item = 'quartz', n = 2;
+  if (depth >= 30) { item = 'diamond'; n = 1; }
+  else if (depth >= 20) { item = 'ruby'; n = 1; }
+  else if (depth >= 15) { item = 'topaz'; n = 2; }
+  else if (depth >= 10) { item = 'amethyst'; n = 2; }
+  return { gold, item, n };
+}
+
+function openMineChest() {
+  const c = mine.chest;
+  if (!c) return false;
+  const depth = mine.depth;
+  const loot = mineChestLoot(depth);
+  mine.claimed.add(depth);
+  setTile(c.x, c.y, 'floor');
+  mine.chest = null;
+  if (typeof changeGold === 'function') changeGold(loot.gold);
+  dropItem(loot.item, loot.n);
+  const d = (typeof itemDef === 'function') ? itemDef(loot.item) : null;
+  burst(c.x, c.y, '#ffd76a', 18);
+  if (typeof toast === 'function') {
+    toast('矿工宝箱：+' + loot.gold + ' 金币、' + (d ? d.name : loot.item) + ' ×' + loot.n);
+  }
+  if (typeof playSfx === 'function') playSfx(880, 'triangle', 0.12, 0.55);
+  return true;
+}
+
 /* ---------- 对外：进出 / 攻击 ---------- */
 
 export function enterMine(startDepth) {
@@ -248,9 +302,21 @@ export function mineSave() {
 export function mineLoad(v) {
   mine.best = Math.max(1, (typeof v === 'number' ? v : 1) | 0);
 }
+export function mineClaimedSerialize() {
+  return Array.from(mine.claimed).filter(n => n > 0).sort((a, b) => a - b);
+}
+export function mineClaimedDeserialize(a) {
+  mine.claimed = new Set(
+    (Array.isArray(a) ? a : [])
+      .map(n => n | 0)
+      .filter(n => n > 0)
+  );
+}
 export function mineReset() {
   mine.best = 1;
   mine.depth = 1;
+  mine.chest = null;
+  mine.claimed.clear();
   if (window.mineActive) exitMine();
 }
 
@@ -389,6 +455,7 @@ export function updateMine(dt) {
       p.px = p.targetX;
       p.py = p.targetY;
       p.moving = false;
+      if (mine.chest && p.tx === mine.chest.x && p.ty === mine.chest.y) openMineChest();
       if (p.tx === mine.ladder.x && p.ty === mine.ladder.y) {
         mine.hp = Math.min(mine.maxHp, mine.hp + 12);
         generate(mine.depth + 1);
@@ -536,6 +603,16 @@ export function drawMine(ctx) {
         R(ctx, px + 24, py + 2, 4, TILE - 4, '#8a6238');
         for (let i = 0; i < 4; i++) R(ctx, px + 11, py + 9 + i * 8, 17, 3, '#c8a050');
         R(ctx, px + 13, py + 4, 2, TILE - 8, '#5a3a22');
+      } else if (t === 'chest') {
+        const bob = Math.sin(mine.time * 4) * 1.5;
+        ellipse(ctx, px + TILE / 2, py + TILE - 8, 14, 5, 'rgba(0,0,0,.35)');
+        R(ctx, px + 8, py + 15 + bob, 24, 15, '#7a4a22');
+        R(ctx, px + 8, py + 10 + bob, 24, 8, '#a86a32');
+        R(ctx, px + 8, py + 10 + bob, 24, 2, '#d89a4a');
+        R(ctx, px + 8, py + 22 + bob, 24, 3, '#d8b050');
+        R(ctx, px + 17, py + 17 + bob, 6, 8, '#ffd76a');
+        R(ctx, px + 19, py + 19 + bob, 2, 3, '#7a4a22');
+        ellipse(ctx, px + TILE / 2, py + 8 + bob, 10, 4, 'rgba(255,215,106,.18)');
       }
     }
   }
@@ -637,7 +714,7 @@ export function drawMine(ctx) {
   ctx.fillText('WASD / 方向键移动 · 空格攻击 · 打碎矿石 · 走到梯子下一层 · Esc 返回农场', 18, H - 26);
   ctx.fillStyle = '#6a7a8a';
   ctx.font = '11px monospace';
-  ctx.fillText('矿石 +1 并掉落石材 · 击杀怪物 +2 矿石 / 石材 / 金币 · 下一层恢复 12 HP', 18, H - 9);
+  ctx.fillText('矿石 +1 并掉落石材 · 击杀怪物 +2 矿石 / 石材 / 金币 · 每 5 层首次到达有矿工宝箱', 18, H - 9);
 
   if (mine.down > 0) {
     ctx.fillStyle = 'rgba(0,0,0,0.55)';
@@ -661,5 +738,7 @@ Object.assign(window, {
   mineElevatorFloors,
   mineSave,
   mineLoad,
+  mineClaimedSerialize,
+  mineClaimedDeserialize,
   mineReset
 });

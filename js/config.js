@@ -70,7 +70,8 @@ const CONFIG = {
 
   /* 矿井：最深纪录 + 入口电梯（每 5 层解锁一个直达层） */
   MINE: {
-    ELEVATOR_STEP: 5        // 电梯楼层间隔
+    ELEVATOR_STEP: 5,       // 电梯楼层间隔
+    CHEST_STEP: 5           // 每 5 层首次到达出现矿工宝箱
   },
 
   /* 哈维诊所：付费恢复体力 */

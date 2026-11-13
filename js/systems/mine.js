@@ -23,7 +23,42 @@ const DIRS = [
   { dx: 0, dy: -1, dir: DIR_UP }
 ];
 
-const ORES = ['copper_ore', 'iron_ore', 'gold_ore', 'coal', 'quartz', 'fire_quartz', 'frozen_tear', 'earth_crystal'];
+/* 矿井分层主题：B1–B39 岩石层、B40–B79 冰霜层、B80+ 熔岩层。
+ * 每层有独立的背景 / 岩壁 / 地面配色与矿石池，深层更容易出稀有矿。 */
+const MINE_THEMES = [
+  {
+    id: 'stone', name: '岩石层', from: 1, accent: '#e9c96f',
+    bg0: '#151920', bg1: '#0d1015', ceil1: '#1d222a', ceil2: '#232830',
+    wall: '#2a2d35', wallIn: '#343842', wallHi: '#40444e', wallLo: '#22252c',
+    floorA: '#3a3830', floorB: '#413e34', speck: '#4a463a', speck2: '#2e2c26',
+    rockShadow: '#5a5a50', rockBody: '#7a7a6a', rockHi: '#9a9a88', oreRock: '#6a6a5a',
+    ores: ['copper_ore', 'iron_ore', 'gold_ore', 'coal', 'quartz', 'earth_crystal']
+  },
+  {
+    id: 'ice', name: '冰霜层', from: 40, accent: '#9ad8f0',
+    bg0: '#101a24', bg1: '#0a1119', ceil1: '#182430', ceil2: '#1d2c3a',
+    wall: '#22303e', wallIn: '#2c3e50', wallHi: '#3a5064', wallLo: '#1a2530',
+    floorA: '#2c3a44', floorB: '#33434e', speck: '#3e5260', speck2: '#22303a',
+    rockShadow: '#46606e', rockBody: '#6a8a9a', rockHi: '#a8ccd8', oreRock: '#5a7a8a',
+    ores: ['frozen_tear', 'iron_ore', 'gold_ore', 'coal', 'quartz']
+  },
+  {
+    id: 'lava', name: '熔岩层', from: 80, accent: '#ff9a5a',
+    bg0: '#241110', bg1: '#150808', ceil1: '#2a1512', ceil2: '#331a16',
+    wall: '#3a1c18', wallIn: '#4a2620', wallHi: '#5e332a', wallLo: '#2a120f',
+    floorA: '#3a2420', floorB: '#432a24', speck: '#5a3028', speck2: '#301a16',
+    rockShadow: '#5a2e24', rockBody: '#7a4434', rockHi: '#b06a4a', oreRock: '#6a3a2c',
+    ores: ['fire_quartz', 'gold_ore', 'earth_crystal', 'coal', 'copper_ore']
+  }
+];
+
+export function mineTheme(depth) {
+  const d = Math.max(1, depth | 0);
+  let theme = MINE_THEMES[0];
+  for (const t of MINE_THEMES) if (d >= t.from) theme = t;
+  return theme;
+}
+
 const MINE_MONSTERS = MONSTERS.filter(m => m.loc === 'mine' || m.loc === 'skull');
 
 window.mineActive = false;
@@ -81,8 +116,10 @@ function tileCenter(x, y) {
 
 function generate(depth) {
   const rnd = mulberry32(7200 + depth * 197);
+  const theme = mineTheme(depth);
   mine.depth = depth;
   mine.best = Math.max(mine.best, depth);
+  mine.themeId = theme.id;
   mine.rocks.clear();
   mine.ores.clear();
   mine.monsters = [];
@@ -109,7 +146,7 @@ function generate(depth) {
     if (tileAt(x, y) !== 'floor') continue;
     if (rnd() < 0.3) {
       setTile(x, y, 'ore');
-      mine.ores.set(keyOf(x, y), ORES[Math.floor(rnd() * ORES.length)]);
+      mine.ores.set(keyOf(x, y), theme.ores[Math.floor(rnd() * theme.ores.length)]);
     } else {
       setTile(x, y, 'rock');
       mine.rocks.set(keyOf(x, y), 1);
@@ -282,7 +319,8 @@ export function enterMine(startDepth) {
   mine.keys.clear();
   mine.time = 0;
   generate(depth);
-  if (typeof toast === 'function') toast(`进入矿井 B${depth} · WASD 移动 / 空格攻击 / Esc 返回地面`);
+  const theme = mineTheme(depth);
+  if (typeof toast === 'function') toast(`进入矿井 B${depth} · ${theme.name} · WASD 移动 / 空格攻击 / Esc 返回地面`);
   if (typeof playSfx === 'function') playSfx(300, 'square', 0.09, 0.5);
   if (typeof dlog === 'function') dlog(`[mine] 进入矿井 B${depth}`);
 }
@@ -458,8 +496,14 @@ export function updateMine(dt) {
       if (mine.chest && p.tx === mine.chest.x && p.ty === mine.chest.y) openMineChest();
       if (p.tx === mine.ladder.x && p.ty === mine.ladder.y) {
         mine.hp = Math.min(mine.maxHp, mine.hp + 12);
+        const prevTheme = mineTheme(mine.depth);
         generate(mine.depth + 1);
-        if (typeof toast === 'function') toast(`矿井 B${mine.depth}`);
+        const nextTheme = mineTheme(mine.depth);
+        if (typeof toast === 'function') {
+          toast(prevTheme.id !== nextTheme.id
+            ? `矿井 B${mine.depth} · 进入${nextTheme.name}`
+            : `矿井 B${mine.depth} · ${nextTheme.name}`);
+        }
         if (typeof playSfx === 'function') playSfx(520, 'triangle', 0.08, 0.45);
       }
     } else {
@@ -551,19 +595,20 @@ export function drawMine(ctx) {
   if (!ctx) return;
   const W = CONFIG.VIEW_W;
   const H = CONFIG.VIEW_H;
+  const theme = mineTheme(mine.depth);
 
   ctx.clearRect(0, 0, W, H);
   ctx.imageSmoothingEnabled = false;
 
   const grad = ctx.createLinearGradient(0, 0, 0, H);
-  grad.addColorStop(0, '#151920');
-  grad.addColorStop(1, '#0d1015');
+  grad.addColorStop(0, theme.bg0);
+  grad.addColorStop(1, theme.bg1);
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
   for (let y = 0; y < OY; y += 24) {
     for (let x = 0; x < W; x += 48) {
-      ctx.fillStyle = (x + y) % 3 ? '#1d222a' : '#232830';
+      ctx.fillStyle = (x + y) % 3 ? theme.ceil1 : theme.ceil2;
       ctx.fillRect(x, y, 46, 22);
     }
   }
@@ -574,25 +619,35 @@ export function drawMine(ctx) {
       const px = OX + x * TILE;
       const py = OY + y * TILE;
       if (t === 'wall') {
-        R(ctx, px, py, TILE, TILE, '#2a2d35');
-        R(ctx, px + 2, py + 2, TILE - 4, TILE - 4, '#343842');
-        R(ctx, px + 3, py + 3, TILE - 6, 2, '#40444e');
-        R(ctx, px + 3, py + TILE - 5, TILE - 6, 2, '#22252c');
+        R(ctx, px, py, TILE, TILE, theme.wall);
+        R(ctx, px + 2, py + 2, TILE - 4, TILE - 4, theme.wallIn);
+        R(ctx, px + 3, py + 3, TILE - 6, 2, theme.wallHi);
+        R(ctx, px + 3, py + TILE - 5, TILE - 6, 2, theme.wallLo);
       } else {
-        R(ctx, px, py, TILE, TILE, (x + y) % 2 ? '#3a3830' : '#413e34');
-        R(ctx, px + 2, py + 2, 3, 2, '#4a463a');
-        R(ctx, px + TILE - 9, py + TILE - 8, 4, 2, '#2e2c26');
+        R(ctx, px, py, TILE, TILE, (x + y) % 2 ? theme.floorA : theme.floorB);
+        R(ctx, px + 2, py + 2, 3, 2, theme.speck);
+        R(ctx, px + TILE - 9, py + TILE - 8, 4, 2, theme.speck2);
       }
 
       if (t === 'rock') {
-        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 4, 14, 11, '#5a5a50');
-        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 1, 13, 10, '#7a7a6a');
-        R(ctx, px + 11, py + 11, 5, 4, '#9a9a88');
+        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 4, 14, 11, theme.rockShadow);
+        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 1, 13, 10, theme.rockBody);
+        R(ctx, px + 11, py + 11, 5, 4, theme.rockHi);
       } else if (t === 'ore') {
-        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 4, 14, 11, '#4a4a42');
-        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 1, 13, 10, '#6a6a5a');
+        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 4, 14, 11, theme.rockShadow);
+        ellipse(ctx, px + TILE / 2, py + TILE / 2 + 1, 13, 10, theme.oreRock);
         const item = RES_MAP[mine.ores.get(keyOf(x, y))];
         if (item) {
+          /* 稀有层的矿石带一点主题辉光，方便在深色背景里辨认 */
+          if (theme.id !== 'stone') {
+            const pulse = 0.5 + Math.sin(mine.time * 2 + x + y) * 0.5;
+            ctx.globalAlpha = 0.12 + pulse * 0.12;
+            ctx.fillStyle = theme.accent;
+            ctx.beginPath();
+            ctx.arc(px + TILE / 2, py + TILE / 2, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+          }
           ctx.save();
           ctx.translate(px + 4, py + 4);
           drawResourceIcon(ctx, item, mine.time * 0.5);
@@ -696,6 +751,9 @@ export function drawMine(ctx) {
   ctx.fillText(`怪物 ${mine.monsters.length}`, 450, 26);
   ctx.fillStyle = '#8b9aab';
   ctx.fillText(`最深 B${mine.best}`, 560, 26);
+  ctx.fillStyle = theme.accent;
+  ctx.font = '12px "Microsoft YaHei", monospace';
+  ctx.fillText(theme.name, 664, 26);
 
   if (mine.floorMsg > 0) {
     ctx.globalAlpha = Math.min(1, mine.floorMsg / 0.4);
@@ -703,6 +761,9 @@ export function drawMine(ctx) {
     ctx.font = 'bold 22px "Microsoft YaHei", monospace';
     ctx.textAlign = 'center';
     ctx.fillText(`B${mine.depth}`, W / 2, OY + 50);
+    ctx.fillStyle = theme.accent;
+    ctx.font = '13px "Microsoft YaHei", monospace';
+    ctx.fillText(theme.name, W / 2, OY + 74);
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }
@@ -735,6 +796,7 @@ Object.assign(window, {
   updateMine,
   drawMine,
   mineState: mine,
+  mineTheme,
   mineElevatorFloors,
   mineSave,
   mineLoad,

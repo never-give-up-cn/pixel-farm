@@ -229,7 +229,10 @@ const CONFIG = {
       { id:'chicken',      price:120, animal:'chicken' },  // 鸡（第 15 轮，需要先建鸡舍）
       { id:'cow',          price:260, animal:'cow' },       // 牛（第 15 轮，需要先建牛棚）
       { id:'bouquet',      price:800, romance:'bouquet' },  // 花束：好感 80 后开始交往
-      { id:'pendant',      price:5000, romance:'pendant' }  // 美人鱼吊坠：交往 + 好感 100 后求婚
+      { id:'pendant',      price:5000, romance:'pendant' },  // 美人鱼吊坠：交往 + 好感 100 后求婚
+      { id:'fert_basic',   price:100 },   // 基础肥料
+      { id:'fert_quality', price:300 },   // 优质肥料
+      { id:'fert_deluxe',  price:600 }    // 高级肥料
     ]
   },
 
@@ -1762,6 +1765,8 @@ CONFIG.TOWN_PLAN();
     if (CONFIG.RECIPE.LIST.some(x => x.id === r.id)) continue;
     const def = DISH_MAP[r.id];
     if (!def) continue;
+    const dishItem = CONFIG.ITEMS[r.id];
+    if (dishItem) dishItem.buff = r.buff || '';
 
     const inputs = {};
     for (const line of r.ingredients) {
@@ -2328,6 +2333,21 @@ CONFIG.TOWN_PLAN();
     id:'pendant', name:'美人鱼吊坠', icon:'🧜', stack:false, max:1,
     kind:'misc', price:5000, romance:true
   };
+})();
+
+
+/* 肥料：对作物使用，提高品质评分 */
+(function addFertilizerItems(){
+  const F = [
+    ['fert_basic',   '基础肥料', '🧪', 100, 0.10],
+    ['fert_quality', '优质肥料', '🧪', 300, 0.20],
+    ['fert_deluxe',  '高级肥料', '🧪', 600, 0.30]
+  ];
+  for (const [id, name, icon, price, bonus] of F) {
+    CONFIG.ITEMS[id] = {
+      id, name, icon, stack:true, max:99, kind:'fertilizer', price, fertBonus:bonus
+    };
+  }
 })();
 
 

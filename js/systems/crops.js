@@ -123,6 +123,29 @@ function clearDeadCrop(tx,ty){
 }
 
 
+function useFertilizer(tx, ty, item){
+  if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+    toast('这里只能探索，回农场再施肥');
+    return false;
+  }
+  if(typeof tileCenterDist === 'function' && tileCenterDist(tx, ty) > CONFIG.INTERACT.RANGE_TILES){
+    toast('太远了，走近一点再施肥');
+    return false;
+  }
+  const i = ty * MAP_W + tx;
+  const c = crops[i];
+  if(!c){ toast('对着作物使用肥料'); return false; }
+  if(c.dead){ toast('这株已经枯萎了，先清理掉'); return false; }
+  const lvl = item.id === 'fert_deluxe' ? 3 : item.id === 'fert_quality' ? 2 : 1;
+  if((c.fert | 0) >= lvl){ toast('这块地已经施过同样或更好的肥料了'); return false; }
+  if(!removeItem(item.id, 1)){ toast('背包里没有' + item.name); return false; }
+  c.fert = lvl;
+  toast('施了' + item.name + '，品质评分 +' + Math.round((item.fertBonus || 0.1) * 100) + '%');
+  if(typeof playSfx === 'function') playSfx(660, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { tileCenterDist, cropDef, allCropDefs, cropSeasons, cropAt, cropStage, ripeness, sowCrop, waterTile, harvestCrop, clearDeadCrop });
-export { tileCenterDist, cropDef, allCropDefs, cropSeasons, cropAt, cropStage, ripeness, sowCrop, waterTile, harvestCrop, clearDeadCrop };
+Object.assign(window, { tileCenterDist, cropDef, allCropDefs, cropSeasons, cropAt, cropStage, ripeness, sowCrop, waterTile, harvestCrop, clearDeadCrop, useFertilizer });
+export { tileCenterDist, cropDef, allCropDefs, cropSeasons, cropAt, cropStage, ripeness, sowCrop, waterTile, harvestCrop, clearDeadCrop, useFertilizer };

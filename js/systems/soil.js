@@ -33,9 +33,10 @@ function cropQuality(c){
   const season = (cur === def.season) ? 1 : (seasons.indexOf(cur) >= 0 ? Q.SEASON_SECONDARY : 0.5);
   const fest = festivalToday() ? 1 : Q.FEST_NORMAL;
   const soil = clamp(soilFert / 100, 0, 1);
+  const fert = Math.max(0, Math.min(0.30, (c.fert | 0) * 0.10));
   const score = clamp(Q.WEIGHT.water*water + Q.WEIGHT.season*season +
-                      Q.WEIGHT.soil*soil + Q.WEIGHT.fest*fest, 0, 1);
-  return {score:score, water:water, season:season, fest:fest, soil:soil, hq:score >= Q.HQ_SCORE};
+                      Q.WEIGHT.soil*soil + Q.WEIGHT.fest*fest + fert, 0, 1);
+  return {score:score, water:water, season:season, fest:fest, soil:soil, fert:fert, hq:score >= Q.HQ_SCORE};
 }
 /* --- 第 23 轮：种子杂交（相邻种两种不同作物 → 有概率结出杂交种子） --- */
 function hybridRecipe(a, b){

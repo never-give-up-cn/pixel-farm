@@ -344,6 +344,7 @@ function showPackTip(i, e){
   lines.push(d.name + ' ×' + s.n);
   const kindName = {seed:'种子', crop:'作物', material:'材料', tool:'工具', currency:'货币',
                     fish:'鱼获', gather:'采集', animal:'畜产', food:'加工食品', mineral:'矿物',
+                    fertilizer:'肥料',
                     weapon:'武器', ring:'戒指', boots:'靴子', furniture:'家具',
                     wallpaper:'墙纸', flooring:'地板', misc:'杂项', artifact:'古物'}[d.kind] || d.kind;
   if(isSellable(d.id)){
@@ -368,6 +369,7 @@ function showPackTip(i, e){
   else if(d.kind === 'food') lines.push('手持后在世界里右键吃 · 体力 +' + CONFIG.RECIPE.EAT_STAMINA +
     ' · 今日还可吃 ' + Math.max(0, CONFIG.RECIPE.EAT_PER_DAY - makerEatsToday()) + ' 份');
   else if(d.romance) lines.push('恋爱道具 · 在居民对话面板里使用');
+  else if(d.kind === 'fertilizer') lines.push('对着作物左键使用 · 提高品质评分');
   else if(d.kind === 'tool') lines.push('拿在手上，对着目标按左键');
   else if(isSellable(d.id)) lines.push('去杂货店卖给老板娘');
   if(packTip){

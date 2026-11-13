@@ -18,6 +18,7 @@ import './systems/build.js';
 import './systems/stamina.js';
 import './systems/skills.js';
 import './systems/marriage.js';
+import './systems/food-buff.js';
 import './systems/collision.js';
 import './systems/camera.js';
 import './audio.js';

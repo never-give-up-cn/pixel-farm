@@ -107,6 +107,9 @@ function useTool(tx,ty,opts){
   const item = slot ? itemDef(slot.id) : null;
   const tool = item ? CONFIG.TOOLS.find(x => x.id === item.id) : null;
 
+  /* 0. 肥料：对着作物使用，提高品质 */
+  if(item && item.kind === 'fertilizer') return useFertilizer(tx, ty, item);
+
   /* 1. 地里有作物：成熟的点一下就收（跟手上拿什么无关）；枯萎的要用镰刀 */
   if(crop){
     if(crop.dead){

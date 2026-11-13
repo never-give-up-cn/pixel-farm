@@ -348,6 +348,7 @@ function eatFood(id){
   stamina = Math.min(staminaMax, stamina + CONFIG.RECIPE.EAT_STAMINA);
   if(makerEat.day !== clock.day){ makerEat.day = clock.day; makerEat.n = 0; }
   makerEat.n++;
+  if(typeof foodBuffApply === 'function') foodBuffApply(d);
   toast('吃了' + d.name + '（体力 +' + CONFIG.RECIPE.EAT_STAMINA +
         '，今天还能吃 ' + (CONFIG.RECIPE.EAT_PER_DAY - makerEat.n) + ' 次）');
   playSfx(660, 'sine', 0.10, CONFIG.AUDIO.VOLUME);

@@ -82,6 +82,7 @@ function serializeState(){
              grown:c.grown|0, watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
     if(c.fastDay) c0.fast = c.fastDay | 0;      /* 第 17 轮：播种祭的加速标记（只有非 0 才写） */
     if(c.irr) c0.irr = 1;                       /* 第 20 轮：铱质洒水器加速标记（只有 true 才写） */
+    if(c.fert) c0.f = c.fert | 0;                /* 肥料等级 */
     if(c.a) c0.a = c.a | 0;                     /* 第 23 轮：经过天数（用来算浇水完整度） */
     if(c.rc) c0.rc = 1;                         /* 第 23 轮：第几轮结果（番茄可再收） */
     cs.push(c0);
@@ -189,6 +190,7 @@ function deserializeState(d){
                             watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
         if(c.fast) nc.fastDay = Math.max(0, c.fast | 0);   /* 第 17 轮：播种祭加速标记 */
         if(c.irr) nc.irr = 1;                              /* 第 20 轮：铱质洒水器加速标记 */
+        if(c.f) nc.fert = c.f | 0;                         /* 肥料等级 */
         if(c.a) nc.a = c.a | 0;                            /* 第 23 轮：经过天数 */
         if(c.rc) nc.rc = 1;                                /* 第 23 轮：第几轮结果 */
         crops[y*MAP_W+x] = nc;

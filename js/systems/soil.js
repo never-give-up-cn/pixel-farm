@@ -34,8 +34,9 @@ function cropQuality(c){
   const fest = festivalToday() ? 1 : Q.FEST_NORMAL;
   const soil = clamp(soilFert / 100, 0, 1);
   const fert = Math.max(0, Math.min(0.30, (c.fert | 0) * 0.10));
+  const luck = (typeof equipLuckBonus === 'function') ? equipLuckBonus() : 0;
   const score = clamp(Q.WEIGHT.water*water + Q.WEIGHT.season*season +
-                      Q.WEIGHT.soil*soil + Q.WEIGHT.fest*fest + fert, 0, 1);
+                      Q.WEIGHT.soil*soil + Q.WEIGHT.fest*fest + fert + luck, 0, 1);
   return {score:score, water:water, season:season, fest:fest, soil:soil, fert:fert, hq:score >= Q.HQ_SCORE};
 }
 /* --- 第 23 轮：种子杂交（相邻种两种不同作物 → 有概率结出杂交种子） --- */

@@ -98,6 +98,7 @@ function fishingStartReel(){
   fishing.zoneW = Math.max(R.ZONE_MIN, R.ZONE_BASE - (f.rarity - 1) * R.ZONE_STEP);
   if(typeof skillFishZoneMult === 'function') fishing.zoneW = Math.min(0.92, fishing.zoneW * skillFishZoneMult());
   if(typeof foodBuffFishZoneMult === 'function') fishing.zoneW = Math.min(0.92, fishing.zoneW * foodBuffFishZoneMult());
+  if(typeof equipFishZoneMult === 'function') fishing.zoneW = Math.min(0.92, fishing.zoneW * equipFishZoneMult());
   const half = fishing.zoneW / 2;
   fishing.zone = half + Math.random() * Math.max(0, 1 - fishing.zoneW);
   fishing.pointer = Math.random() < 0.5 ? 0 : 1;

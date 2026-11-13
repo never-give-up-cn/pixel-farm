@@ -212,6 +212,20 @@
   .skpick .mbtn{font-size:12px;padding:4px 10px;text-align:left}
   .skpick .mbtn small{display:block;color:#8fa3bd;font-size:10px;margin-top:2px}
   #skillsFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
+  /* 装备面板 */
+  #equipment{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
+  #equipment.open{display:flex}
+  #equipmentMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #equipmentPanel{position:relative;width:520px;max-width:calc(100vw - 24px)}
+  #equipmentHead{font-size:14px;color:#ffd76a;margin-bottom:8px}
+  #equipmentList{display:flex;flex-direction:column;gap:7px}
+  .eqsum{color:#cfe3ff;font-size:11px;margin-bottom:2px}
+  .eqrow{display:flex;align-items:center;gap:10px;border:1px solid #2c3a4e;border-radius:6px;padding:6px 8px;background:rgba(8,10,16,.55)}
+  .eqslot{color:#8fa3bd;font-size:11px;width:44px}
+  .eqname{color:#e8f0ff;font-size:12px;width:100px}
+  .eqdesc{color:#9fb0c4;font-size:11px;flex:1}
+  .eqrow .mbtn{font-size:11px;padding:3px 8px}
+  #equipmentFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
   /* 第 32 轮：社区中心收集包 */
   #bundle{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #bundle.open{display:flex}
@@ -920,6 +934,16 @@
     <div id="skillsHead">技能 <span id="skillsTotal"></span></div>
     <div id="skillsList"></div>
     <div id="skillsFoot">K 关闭 · 收获 / 采集 / 钓鱼 / 采矿 / 战斗都会获得经验</div>
+  </div>
+</div>
+
+<!-- 装备面板 -->
+<div id="equipment">
+  <div id="equipmentMask"></div>
+  <div id="equipmentPanel" class="panel">
+    <div id="equipmentHead">装备 · 戒指 / 靴子</div>
+    <div id="equipmentList"></div>
+    <div id="equipmentFoot">L 关闭 · 在背包里右键戒指 / 靴子装备</div>
   </div>
 </div>
 

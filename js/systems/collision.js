@@ -90,7 +90,8 @@ function updatePlayer(dt){
     const wm = (weather && weather.id === 'snow') ? CONFIG.WEATHER_FX.SNOW_SLOW : 1;
     const sp = CONFIG.PLAYER.SPEED * (road ? CONFIG.BUILD.ROAD_MULT : 1) *
                (running ? CONFIG.PLAYER.RUN_MULT : 1) * wm *
-               (typeof foodBuffSpeedMult === 'function' ? foodBuffSpeedMult() : 1);
+               (typeof foodBuffSpeedMult === 'function' ? foodBuffSpeedMult() : 1) *
+               (typeof equipSpeedMult === 'function' ? equipSpeedMult() : 1);
     player.vx = ix * sp; player.vy = iy * sp;
     /* 朝向：两轴同按时以最后按下的轴为准 */
     if(ix !== 0 && iy !== 0) player.dir = lastAxis === 'x' ? (ix<0?1:2) : (iy<0?3:0);

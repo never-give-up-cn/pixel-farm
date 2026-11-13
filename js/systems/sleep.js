@@ -54,11 +54,13 @@ function rollToNextMorning(faint){
   festivalDayStart();          /* 第 17 轮：今天要是节日 → 立装饰 / 环境音 / 横幅 */
   if(faint){
     /* 惩罚方式选「体力」：次日体力上限扣 20%（不扣金币，避免误伤玩家资产） */
-    staminaMax = Math.round((CONFIG.STAMINA.MAX + staminaBonus) * (1 - CONFIG.SLEEP.FAINT_PENALTY));
+    staminaMax = Math.round((CONFIG.STAMINA.MAX + staminaBonus) * (1 - CONFIG.SLEEP.FAINT_PENALTY)) +
+                 (typeof equipStaminaBonus === 'function' ? equipStaminaBonus() : 0);
     toast('你昏睡过去了…… 次日体力上限 ' + staminaMax + '（-' +
           Math.round(CONFIG.SLEEP.FAINT_PENALTY * 100) + '%）');
   }else{
-    staminaMax = CONFIG.STAMINA.MAX + staminaBonus;
+    staminaMax = CONFIG.STAMINA.MAX + staminaBonus +
+                 (typeof equipStaminaBonus === 'function' ? equipStaminaBonus() : 0);
   }
   stamina = staminaMax;
   dayRolled = true;

@@ -458,12 +458,16 @@ function weaponDamage() {
       if (Math.random() < crit) dmg = Math.round(dmg * 1.8);
       if (typeof skillCombatDamageMult === 'function') dmg = Math.max(1, Math.round(dmg * skillCombatDamageMult()));
       if (typeof foodBuffAttackMult === 'function') dmg = Math.max(1, Math.round(dmg * foodBuffAttackMult()));
+      if (typeof equipAttackPct === 'function') dmg = Math.max(1, Math.round(dmg * (1 + equipAttackPct() / 100)));
+      dmg += (typeof equipAttackBonus === 'function' ? equipAttackBonus() : 0);
       return dmg;
     }
   }
   let base = 8 + Math.floor(Math.random() * 6);
   if (typeof skillCombatDamageMult === 'function') base = Math.max(1, Math.round(base * skillCombatDamageMult()));
   if (typeof foodBuffAttackMult === 'function') base = Math.max(1, Math.round(base * foodBuffAttackMult()));
+  if (typeof equipAttackPct === 'function') base = Math.max(1, Math.round(base * (1 + equipAttackPct() / 100)));
+  base += (typeof equipAttackBonus === 'function' ? equipAttackBonus() : 0);
   return base;
 }
 
@@ -497,7 +501,8 @@ function resolveAttack() {
     setTile(t.x, t.y, 'floor');
     mine.ores.delete(k);
     mine.ore += 1 + (typeof skillOreBonus === 'function' ? skillOreBonus() : 0) +
-      (typeof foodBuffMiningChance === 'function' && Math.random() < foodBuffMiningChance() ? 1 : 0);
+      (typeof foodBuffMiningChance === 'function' && Math.random() < foodBuffMiningChance() ? 1 : 0) +
+      (typeof equipMiningChance === 'function' && Math.random() < equipMiningChance() ? 1 : 0);
     burst(t.x, t.y, '#e0c060', 10);
     if (typeof skillAdd === 'function') skillAdd('mining', 8);
     dropItem('stone', 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0));
@@ -637,7 +642,9 @@ export function updateMine(dt) {
       m.cooldown = 1.3 + Math.random() * 0.6;
       const taken = Math.max(1, Math.round(m.dmg *
         (typeof skillDamageTakenMult === 'function' ? skillDamageTakenMult() : 1) *
-        (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1)));
+        (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1)) -
+        (typeof equipDefenseBonus === 'function' ? equipDefenseBonus() : 0) -
+        (typeof equipImmunityBonus === 'function' ? equipImmunityBonus() : 0));
       mine.hp -= taken;
       p.hurt = 0.2;
       burst(m.tx, m.ty, '#ff6070', 6);

@@ -59,7 +59,17 @@ function buildPackGrid(){
     cell.slotIndex = i;
     cell.innerHTML = '<span class="k">' + (i < CONFIG.INVENTORY.HOTBAR ? (i+1) : '') + '</span>' +
                      '<span class="ic"></span><span class="n"></span>';
-    cell.addEventListener('mousedown', e=>{ e.preventDefault(); packClick(i); });
+    cell.addEventListener('mousedown', e=>{ if(e.button !== 0) return; e.preventDefault(); packClick(i); });
+    cell.addEventListener('contextmenu', e=>{
+      e.preventDefault();
+      if(typeof equipFromInventory !== 'function' || held) return;
+      const s = inv[i];
+      const d = s ? itemDef(s.id) : null;
+      if(d && (d.kind === 'ring' || d.kind === 'boots')){
+        equipFromInventory(s.id);
+        refreshPackGrid();
+      }
+    });
     cell.addEventListener('mouseenter', e=>{ showPackTip(i, e); });
     cell.addEventListener('mousemove', e=>{ movePackTip(e); });
     cell.addEventListener('mouseleave', ()=>{ hidePackTip(); });
@@ -371,6 +381,7 @@ function showPackTip(i, e){
   else if(d.romance) lines.push('恋爱道具 · 在居民对话面板里使用');
   else if(d.kind === 'fertilizer') lines.push('对着作物左键使用 · 提高品质评分');
   else if(d.kind === 'tool') lines.push('拿在手上，对着目标按左键');
+  if(d.kind === 'ring' || d.kind === 'boots') lines.push('右键装备 · 最多 2 枚戒指 + 1 双靴子');
   else if(isSellable(d.id)) lines.push('去杂货店卖给老板娘');
   if(packTip){
     packTip.textContent = lines.join('\n');

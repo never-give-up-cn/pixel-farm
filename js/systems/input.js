@@ -41,6 +41,10 @@ window.addEventListener('keydown', e=>{
     if(k === 'escape' && !e.repeat) skillsClosePanel();
     return;
   }
+  if(window.equipmentOpen){
+    if(k === 'escape' && !e.repeat) equipClosePanel();
+    return;
+  }
   /* M：总音量开关（任何面板开着时都能按） */
   if(k === CONFIG.AUDIO.MUTE_KEY){
     if(!e.repeat) toggleMute();
@@ -89,6 +93,10 @@ window.addEventListener('keydown', e=>{
   /* K：技能面板 */
   if(k === 'k' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !roomOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !questOpen && !calOpen && !achOpen && !annualOpen && !frendOpen && !bigmapOpen && !ratingOpen && !endingOpen && !animalOpen && !fishingActive() && sleepFx.phase === 'none'){
     toggleSkillsPanel(); ensureAudio(); return;
+  }
+  /* L：装备面板 */
+  if(k === 'l' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !roomOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !questOpen && !calOpen && !achOpen && !annualOpen && !frendOpen && !bigmapOpen && !ratingOpen && !endingOpen && !animalOpen && !fishingActive() && sleepFx.phase === 'none'){
+    toggleEquipmentPanel(); ensureAudio(); return;
   }
   /* 装修模式：只允许 Esc 退出 */
   if(decorMode && k !== 'escape') return;
@@ -294,7 +302,7 @@ window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; h
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
-     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen || window.skillsOpen) return;
+     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen || window.skillsOpen || window.equipmentOpen) return;
   if(window.mineActive) return;
   if(window.farmhouseActive){
     if(window.indoorDecor){
@@ -396,7 +404,7 @@ function updateHoldUse(dt){
   if(window.mineActive){ mouseHeld = false; return; }
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen ||
-     buildMode || fishingActive() || window.skillsOpen){ mouseHeld = false; return; }
+     buildMode || fishingActive() || window.skillsOpen || window.equipmentOpen){ mouseHeld = false; return; }
 
   const slot = typeof selectedSlot === 'function' ? selectedSlot() : null;
   const item = slot && typeof itemDef === 'function' ? itemDef(slot.id) : null;

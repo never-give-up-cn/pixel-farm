@@ -94,6 +94,7 @@ function harvestFruit(tx, ty) {
     return false;
   }
   if (typeof addItem === 'function') addItem(id, 1);
+  if (typeof skillAdd === 'function') skillAdd('farming', 6);
   if (typeof questEmit === 'function') questEmit('crop', { id, n: 1 });
   if (typeof spawnTileFx === 'function') spawnTileFx('harvest', tx, ty, t.fruit);
   fruitReadyDay.set(ty * MAP_W + tx, clock.day + FRUIT_READY_DAYS);

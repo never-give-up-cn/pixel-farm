@@ -312,8 +312,8 @@ export function enterMine(startDepth) {
   }
   window.mineActive = true;
   mine.active = true;
-  mine.hp = 100;
-  mine.maxHp = 100;
+  mine.hp = 100 + (typeof skillMineHpBonus === 'function' ? skillMineHpBonus() : 0);
+  mine.maxHp = mine.hp;
   mine.ore = 0;
   mine.down = 0;
   mine.keys.clear();
@@ -391,10 +391,13 @@ function weaponDamage() {
       let dmg = lo + Math.floor(Math.random() * (hi - lo + 1));
       const crit = parseFloat(d.crit) || 0;
       if (Math.random() < crit) dmg = Math.round(dmg * 1.8);
+      if (typeof skillCombatDamageMult === 'function') dmg = Math.max(1, Math.round(dmg * skillCombatDamageMult()));
       return dmg;
     }
   }
-  return 8 + Math.floor(Math.random() * 6);
+  let base = 8 + Math.floor(Math.random() * 6);
+  if (typeof skillCombatDamageMult === 'function') base = Math.max(1, Math.round(base * skillCombatDamageMult()));
+  return base;
 }
 
 function dropEquipment(mon) {
@@ -417,6 +420,7 @@ function resolveAttack() {
     setTile(t.x, t.y, 'floor');
     mine.rocks.delete(k);
     burst(t.x, t.y, '#b8b0a0', 8);
+    if (typeof skillAdd === 'function') skillAdd('mining', 4);
     playSfx(150, 'square', 0.05, 0.4);
     return;
   }
@@ -425,9 +429,10 @@ function resolveAttack() {
     const id = mine.ores.get(k);
     setTile(t.x, t.y, 'floor');
     mine.ores.delete(k);
-    mine.ore++;
+    mine.ore += 1 + (typeof skillOreBonus === 'function' ? skillOreBonus() : 0);
     burst(t.x, t.y, '#e0c060', 10);
-    dropItem('stone', 2);
+    if (typeof skillAdd === 'function') skillAdd('mining', 8);
+    dropItem('stone', 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0));
     if (id === 'coal' || Math.random() < 0.35) dropItem('charcoal', 1);
     playSfx(700, 'square', 0.06, 0.5);
     return;
@@ -446,6 +451,7 @@ function resolveAttack() {
       const mi = MONSTERS.findIndex(m => m.id === mon.type);
       if (mi >= 0 && typeof dexUnlock === 'function') dexUnlock('monster', mi);
       mine.ore += 2;
+      if (typeof skillAdd === 'function') skillAdd('combat', 12);
       burst(t.x, t.y, '#ffe060', 16);
       dropItem('stone', 1);
       if (Math.random() < 0.4) dropItem('charcoal', 1);
@@ -561,7 +567,8 @@ export function updateMine(dt) {
 
     if (dist < 40 && m.cooldown <= 0) {
       m.cooldown = 1.3 + Math.random() * 0.6;
-      mine.hp -= m.dmg;
+      const taken = Math.max(1, Math.round(m.dmg * (typeof skillDamageTakenMult === 'function' ? skillDamageTakenMult() : 1)));
+      mine.hp -= taken;
       p.hurt = 0.2;
       burst(m.tx, m.ty, '#ff6070', 6);
       if (typeof playSfx === 'function') playSfx(160, 'sawtooth', 0.08, 0.4);

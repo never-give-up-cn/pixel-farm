@@ -113,13 +113,15 @@ function sellItem(id, n){
   }
   const mult = bonusN > 0 ? CONFIG.NPC.SHOP_BONUS.PRICE_MULT : 1;
   const festMult = festivalSellMult(id);   /* 第 17 轮：秋·丰收节作物 ×1.5 */
-  const total = Math.round((unit * (n - bonusN) + unit * bonusN * mult) * festMult);
+  const skillMult = (typeof skillSellMult === 'function') ? skillSellMult(d) : 1;
+  const total = Math.round((unit * (n - bonusN) + unit * bonusN * mult) * festMult * skillMult);
   removeItem(id, n);
   changeGold(total);
   statsSell();                              /* 第 18 轮：卖出次数统计 + 成就 */
   toast('卖出 ' + d.name + ' ×' + n + '（+' + total + ' 💰' +
         (bonusN > 0 ? '，老板娘加购 ' + bonusN + ' 件 ×' + mult : '') +
-        (festMult > 1 ? '，丰收节 ×' + festMult : '') + '）');
+        (festMult > 1 ? '，丰收节 ×' + festMult : '') +
+        (skillMult > 1.001 ? '，技能 ×' + skillMult.toFixed(2) : '') + '）');
   playSfx(1046, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   refreshPackGrid();
   renderShop();

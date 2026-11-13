@@ -352,7 +352,12 @@ function showPackTip(i, e){
     const cd = cropDef(d.crop);
     lines.push('种子 · ' + cropSeasons(cd).join('、') + '季 · ' + cd.days + '天');
   }else if(d.kind === 'tool'){
-    lines.push('工具 · 左键使用');
+    const tid = d.tool;
+    if(tid && window.toolLevels && (tid in window.toolLevels) && typeof toolLevel === 'function'){
+      lines.push('工具 · ' + toolLevelName(tid) + '级 · 蓄力范围 ' + toolAreaLabel(toolLevel(tid)));
+    }else{
+      lines.push('工具 · 左键使用');
+    }
   }else if(d.kind === 'currency'){
     lines.push('货币 · 通用金币');
   }else{

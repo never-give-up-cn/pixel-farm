@@ -189,6 +189,29 @@
   #minegateFloors .mbtn{min-width:94px;font-size:12px}
   #minegateFloors .mbtn.entry{border-color:#6b5a2a;color:#ffd76a}
   #minegateFoot{color:#8fa3bd;font-size:11px;margin-top:6px}
+  /* 技能面板 */
+  #skills{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
+  #skills.open{display:flex}
+  #skillsMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #skillsPanel{position:relative;width:600px;max-width:calc(100vw - 24px);max-height:88vh;display:flex;flex-direction:column}
+  #skillsHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+  #skillsHead span{color:#8fa3bd;font-size:12px}
+  #skillsList{overflow-y:auto;max-height:70vh;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+  .skrow{display:flex;gap:10px;border:1px solid #2c3a4e;border-radius:7px;padding:8px 10px;background:rgba(8,10,16,.55)}
+  .skicon{font-size:22px;line-height:1.4;width:30px;text-align:center;filter:drop-shadow(0 0 4px var(--sk))}
+  .skmain{flex:1;min-width:0}
+  .sktop{display:flex;align-items:baseline;gap:8px;color:#e8f0ff;font-size:13px}
+  .sktop span{margin-left:auto;color:var(--sk);font-size:12px}
+  .skbar{height:6px;border-radius:3px;background:#1c2430;margin:5px 0 3px;overflow:hidden}
+  .skbar i{display:block;height:100%;background:var(--sk);border-radius:3px;transition:width .25s ease}
+  .skmeta{color:#8fa3bd;font-size:11px}
+  .skdesc{color:#9fb0c4;font-size:11px;margin-top:2px}
+  .skprof{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;color:#ffd76a;font-size:11px}
+  .skpick{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .skpick em{font-style:normal;color:#ffb0a0;font-size:11px;width:100%}
+  .skpick .mbtn{font-size:12px;padding:4px 10px;text-align:left}
+  .skpick .mbtn small{display:block;color:#8fa3bd;font-size:10px;margin-top:2px}
+  #skillsFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
   /* 第 32 轮：社区中心收集包 */
   #bundle{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #bundle.open{display:flex}
@@ -890,6 +913,16 @@
   </div>
 </div>
 
+<!-- 技能面板 -->
+<div id="skills">
+  <div id="skillsMask"></div>
+  <div id="skillsPanel" class="panel">
+    <div id="skillsHead">技能 <span id="skillsTotal"></span></div>
+    <div id="skillsList"></div>
+    <div id="skillsFoot">K 关闭 · 收获 / 采集 / 钓鱼 / 采矿 / 战斗都会获得经验</div>
+  </div>
+</div>
+
 <!-- 社区中心收集包面板 -->
 <div id="bundle">
   <div id="bundleMask"></div>
@@ -976,6 +1009,8 @@
       <button class="mbtn" id="btnAch">🏆 成就墙</button>
       <!-- 第 28 轮：居民好感总览入口 -->
       <button class="mbtn" id="btnFrend">👥 居民好感</button>
+      <!-- 技能面板入口 -->
+      <button class="mbtn" id="btnSkills">⭐ 技能 / 职业</button>
       <!-- 第 21 轮：玩法速查表（键位 / 系统说明） -->
       <button class="mbtn" id="btnCheat">📖 玩法速查表</button>
       <!-- 游戏状态：原右上角常驻面板，收进菜单查看 -->

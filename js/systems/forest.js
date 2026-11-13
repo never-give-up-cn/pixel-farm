@@ -75,8 +75,10 @@ function updateForest(dt) {
         treeDamage.delete(i);
         setTile(i, T.GRASS);
         if (typeof forgetTree === 'function') forgetTree(tx, ty);
-        spawnDrop('wood', 2, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 150);
-        if (typeof questEmit === 'function') questEmit('material', { id: 'wood', n: 2 });
+        const woodN = (typeof skillWoodCount === 'function') ? skillWoodCount(2) : 2;
+        spawnDrop('wood', woodN, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 150);
+        if (typeof questEmit === 'function') questEmit('material', { id: 'wood', n: woodN });
+        if (typeof skillAdd === 'function') skillAdd('foraging', 15);
         if (typeof playSfx === 'function') playSfx(120, 'triangle', 0.14, CONFIG.AUDIO.VOLUME * 0.6);
       }
     }

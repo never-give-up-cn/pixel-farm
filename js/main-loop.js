@@ -32,6 +32,7 @@ function update(dt){
   if(startMenuOpen) return;           /* 标题界面：整个游戏冻结 */
   if(sysOpen) return;                 /* 系统菜单：整个游戏冻结 */
   if(window.mineGateOpen) return;     /* 矿井入口电梯：整体冻结 */
+  if(window.skillsOpen) return;       /* 技能面板：整体冻结 */
   if(paused) return;                 /* 暂停：时间/天气/角色/摄像机全部冻结 */
   if(npcOpen) return;                 /* NPC 对话：整个游戏冻结（时间停住） */
   if(packOpen) return;               /* 背包打开：同样整体冻结（时间停住） */

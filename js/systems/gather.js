@@ -31,10 +31,16 @@ function pickGather(tx, ty){
   const d = itemDef(item);
   if(!canFit(item, 1)){ toast('背包满了，装不下' + (d ? d.name : '采集物')); return false; }
   addItem(item, 1);
+  let gotN = 1;
   setTile(i, T.GRASS);
+  if(typeof skillAdd === 'function') skillAdd('foraging', 5);
+  if(typeof skillForageDoubleChance === 'function' && Math.random() < skillForageDoubleChance() && canFit(item, 1)){
+    addItem(item, 1);
+    gotN = 2;
+  }
   const idx = CONFIG.GATHER.TYPES.findIndex(t => t.item === item);
   dexUnlock('gather', idx);
-  toast('采到了 ' + (d ? d.name : item) + ' ×1');
+  toast('采到了 ' + (d ? d.name : item) + ' ×' + gotN + (gotN > 1 ? '（采集者加成）' : ''));
   playSfx(659, 'triangle', 0.12, CONFIG.AUDIO.VOLUME);
   return true;
 }

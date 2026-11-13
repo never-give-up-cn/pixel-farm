@@ -67,6 +67,7 @@ function startFishing(){
   fishing.state = 'wait'; fishing.t = 0; fishing.fish = null;
   const F = CONFIG.FISHING;
   fishing.need = F.WAIT_MIN_MS + Math.random() * Math.max(0, F.WAIT_MAX_MS - F.WAIT_MIN_MS);
+  if(typeof skillFishWaitMult === 'function') fishing.need *= skillFishWaitMult();
   toast('抛竿了，等鱼儿上钩…');
   playSfx(440, 'sine', 0.12, CONFIG.AUDIO.VOLUME);
   sysTipShow('fish');                        /* 第 21 轮：第一次抛竿 → 教学提示 */
@@ -95,6 +96,7 @@ function fishingStartReel(){
   if(!f) return false;
   const R = CONFIG.FISHING.REEL;
   fishing.zoneW = Math.max(R.ZONE_MIN, R.ZONE_BASE - (f.rarity - 1) * R.ZONE_STEP);
+  if(typeof skillFishZoneMult === 'function') fishing.zoneW = Math.min(0.92, fishing.zoneW * skillFishZoneMult());
   const half = fishing.zoneW / 2;
   fishing.zone = half + Math.random() * Math.max(0, 1 - fishing.zoneW);
   fishing.pointer = Math.random() < 0.5 ? 0 : 1;
@@ -116,6 +118,7 @@ function fishingResolveReel(){
     return false;
   }
   addItem(f.id, 1);
+  if(typeof skillAdd === 'function') skillAdd('fishing', 8 + (f.rarity - 1) * 2);
   questEmit('fish', {id:f.id, n:1});      /* 第 16 轮：委托总线（钓鱼产出） */
   festivalAddFish(f);                     /* 第 17 轮：夏·渔获赛积分 */
   const idx = CONFIG.FISHING.LIST.indexOf(f);

@@ -34,6 +34,11 @@ window.addEventListener('keydown', e=>{
     if(k === ' '){ if(!e.repeat) mineAttack(); return; }
     return;
   }
+  /* 技能面板：Esc 关闭，其余按键不穿透 */
+  if(window.skillsOpen){
+    if(k === 'escape' && !e.repeat) skillsClosePanel();
+    return;
+  }
   /* M：总音量开关（任何面板开着时都能按） */
   if(k === CONFIG.AUDIO.MUTE_KEY){
     if(!e.repeat) toggleMute();
@@ -78,6 +83,10 @@ window.addEventListener('keydown', e=>{
   /* H：装修模式（选中家具后左键放置 / 右键拆除） */
   if(k === 'h' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !fishingActive() && sleepFx.phase === 'none'){
     toggleDecor(); ensureAudio(); return;
+  }
+  /* K：技能面板 */
+  if(k === 'k' && !e.repeat && !startMenuOpen && !sysOpen && !packOpen && !bundleOpen && !wardrobeOpen && !roomOpen && !shopOpen && !chestOpen && !makerOpen && !npcOpen && !buildMode && !questOpen && !calOpen && !achOpen && !annualOpen && !frendOpen && !bigmapOpen && !ratingOpen && !endingOpen && !animalOpen && !fishingActive() && sleepFx.phase === 'none'){
+    toggleSkillsPanel(); ensureAudio(); return;
   }
   /* 装修模式：只允许 Esc 退出 */
   if(decorMode && k !== 'escape') return;
@@ -256,7 +265,9 @@ const hover = {tx:-1, ty:-1};
 /* 第 31 轮：长按左键连续使用工具（砍树 / 锄地 / 浇水…） */
 let mouseHeld = false;
 let holdCd = 0;
+let toolCharge = 0;
 const HOLD_INTERVAL = 0.32;
+const CHARGE_TIME = 0.6;          /* 按住多久后触发工具蓄力范围 */
 function actionBusy(){
   return typeof playerAnimBusy === 'function' && playerAnimBusy();
 }
@@ -275,11 +286,11 @@ canvas.addEventListener('mousemove', e=>{
 });
 canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1; hover.ty = -1; mouseHeld = false; });
 /* 松开左键：停止连续使用 */
-window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; holdCd = 0; } });
+window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; holdCd = 0; toolCharge = 0; } });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
-     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen) return;
+     achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen || window.skillsOpen) return;
   if(window.mineActive) return;
   if(window.farmhouseActive){
     if(window.indoorDecor){
@@ -366,6 +377,7 @@ canvas.addEventListener('mousedown', e=>{
   const act = (typeof playerActionForTile === 'function') ? playerActionForTile(tx, ty) : 'harvest';
   mouseHeld = true;               /* 按住不放 → 连续使用 */
   holdCd = HOLD_INTERVAL;
+  toolCharge = 0;
   if(typeof playerPerformAction === 'function'){
     playerPerformAction(act, () => useTool(tx, ty), { hitAt: 0.5 });
   } else {
@@ -380,7 +392,7 @@ function updateHoldUse(dt){
   if(window.mineActive){ mouseHeld = false; return; }
   if(pauseMenuOpen || packOpen || shopOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen ||
-     buildMode || fishingActive()){ mouseHeld = false; return; }
+     buildMode || fishingActive() || window.skillsOpen){ mouseHeld = false; return; }
 
   const slot = typeof selectedSlot === 'function' ? selectedSlot() : null;
   const item = slot && typeof itemDef === 'function' ? itemDef(slot.id) : null;
@@ -389,6 +401,7 @@ function updateHoldUse(dt){
   if(typeof player !== 'undefined' && player.moving) return;   /* 走路时不隔空挥工具 */
   if(hover.tx < 0 || hover.ty < 0) return;
 
+  toolCharge += dt;                 /* 按住时间 → 蓄力范围 */
   if(holdCd > 0) holdCd = Math.max(0, holdCd - dt);
   if(actionBusy()) return;
   if(holdCd > 0) return;
@@ -396,13 +409,18 @@ function updateHoldUse(dt){
   holdCd = HOLD_INTERVAL;
   if(typeof playerFaceTile === 'function') playerFaceTile(hover.tx, hover.ty);
   const act = (typeof playerActionForTile === 'function') ? playerActionForTile(hover.tx, hover.ty) : 'harvest';
+  const charged = toolCharge >= CHARGE_TIME && typeof toolLevel === 'function' && toolLevel(item.tool) > 0;
+  const runTool = charged && typeof useToolArea === 'function'
+    ? () => useToolArea(hover.tx, hover.ty)
+    : () => useTool(hover.tx, hover.ty);
+  if(charged) toolCharge = 0.25;   /* 范围用完后重新蓄力，避免每 0.32s 全屏锄地 */
   if(typeof playerPerformAction === 'function'){
     playerPerformAction(act, () => {
-      const ok = useTool(hover.tx, hover.ty);
+      const ok = runTool();
       if(ok === false) mouseHeld = false;      /* 用不了就停下，避免重复弹提示 */
     }, { hitAt: 0.5 });
   } else {
-    const ok = useTool(hover.tx, hover.ty);
+    const ok = runTool();
     if(ok === false) mouseHeld = false;
   }
 }

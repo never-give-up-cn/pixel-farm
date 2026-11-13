@@ -101,6 +101,8 @@ function serializeState(){
     sb: staminaBonus | 0,          /* 永久体力上限加成（古老雕像奖励） */
     mb: (typeof mineSave === 'function') ? mineSave() : 1,   /* 矿井最深纪录（电梯楼层解锁） */
     mc: (typeof mineClaimedSerialize === 'function') ? mineClaimedSerialize() : [],   /* 已领取的矿工宝箱层数 */
+    sk: (typeof skillSerialize === 'function') ? skillSerialize() : null,             /* 五项技能经验 / 职业 */
+    tl: (typeof toolLevelSerialize === 'function') ? toolLevelSerialize() : null,     /* 工具等级（铜 / 钢 / 金） */
     canWater: canWater,
     canLevel: canLevel,
     hotSel: hotSel,
@@ -261,6 +263,8 @@ function deserializeState(d){
     if(typeof d.sb === 'number') staminaBonus = clamp(d.sb|0, 0, 100);   /* 永久体力上限加成 */
     if(typeof mineLoad === 'function') mineLoad(d.mb);                    /* 矿井最深纪录 / 电梯楼层 */
     if(typeof mineClaimedDeserialize === 'function') mineClaimedDeserialize(d.mc);   /* 已领取宝箱层 */
+    if(typeof skillDeserialize === 'function') skillDeserialize(d.sk);              /* 技能经验 / 职业 */
+    if(typeof toolLevelDeserialize === 'function') toolLevelDeserialize(d.tl);      /* 工具等级 */
     if(typeof d.staminaMax === 'number')
       staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX + staminaBonus);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
@@ -554,6 +558,8 @@ function newGame(){
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;
   staminaBonus = 0;                          /* 新游戏：永久体力加成清零 */
   if(typeof mineReset === 'function') mineReset();   /* 新游戏：矿井最深纪录重置为 B1 */
+  if(typeof skillReset === 'function') skillReset(); /* 新游戏：技能与职业清空 */
+  if(typeof toolLevelReset === 'function') toolLevelReset();   /* 新游戏：工具等级归零 */
   canLevel = 0; canWater = CONFIG.WATER_CAN.CAPACITY;
   gold = CONFIG.INIT_GOLD; hotSel = 0;
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;

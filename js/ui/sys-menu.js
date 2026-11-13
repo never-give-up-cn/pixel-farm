@@ -9,6 +9,7 @@ const btnSave  = document.getElementById('btnSave');
 const btnLoad  = document.getElementById('btnLoad');
 const btnWipe  = document.getElementById('btnWipe');
 const btnAch   = document.getElementById('btnAch');   /* 第 18 轮：成就墙入口 */
+const btnSkills= document.getElementById('btnSkills'); /* 技能 / 职业入口 */
 const btnClose = document.getElementById('btnClose');
 window.sysOpen = false;          /* 系统菜单开着时游戏冻结 */
 window.sysWipeArmed = false;     /* 删除存档要连点两次，防误触 */
@@ -58,6 +59,7 @@ const CHEAT_TEXT =
 'G　　　　　　　　 农场评级 + 雇工面板（也可点右上角评分）\n' +
 'J　　　　　　　　 进入 / 离开矿井（WASD 移动，空格挥剑，走到梯子下一层）\n' +
 'H　　　　　　　　 装修模式：选中家具后左键摆放 / 右键拆回（H 或 Esc 退出）\n' +
+'K　　　　　　　　 技能面板（五项技能等级 / 经验 / 5、10 级职业选择）\n' +
 'P　　　　　　　　 暂停菜单（再按继续）\n' +
 'M　　　　　　　　 静音开关（任何面板开着时也能按）\n' +
 'Esc　　　　　　　 关闭当前面板；没有面板时打开本菜单；钓鱼中 = 收竿\n' +
@@ -65,6 +67,8 @@ const CHEAT_TEXT =
 '\n【系统】\n' +
 '🌱 种植：锄头开垦 → 播种 → 每天浇水才会生长；成熟后左键收获。\n' +
 '💧 水壶：站在水边右键补水；商店可升级容量，减少跑动。\n' +
+'⭐ 技能：收获 / 采集 / 钓鱼 / 采矿 / 战斗给经验；5、10 级各选一个职业。\n' +
+'⚒ 工具：拿着锄头 / 水壶 / 斧头 / 镐到铁匠铺铁砧按 E 升级；按住左键蓄力可范围使用。\n' +
 '🐔 动物：先造鸡舍 / 牛棚，再在商店买动物；好感 ≥50 每天早上产出。\n' +
 '🏆 成就：Esc 菜单 → 成就墙；' + CONFIG.ACHIEVEMENT.LIST.length + ' 项成就分四类。\n' +
 '📋 委托：委托板每天 3 条，最多同时接 2 条；完成加信誉、提高奖励。\n' +
@@ -135,11 +139,12 @@ if(btnSave)  btnSave .addEventListener('click', ()=>{ saveGame('手动保存'); 
 if(btnLoad)  btnLoad .addEventListener('click', ()=>{ loadGame(); });
 if(btnWipe)  btnWipe .addEventListener('click', ()=>{ sysWipe(); });
 if(btnAch)   btnAch  .addEventListener('click', ()=>{ achOpenPanel(); });
+if(btnSkills) btnSkills.addEventListener('click', ()=>{ toggleSys(false); if(typeof toggleSkillsPanel === 'function') toggleSkillsPanel(true); playClick(); });
 if(btnClose) btnClose.addEventListener('click', ()=>{ toggleSys(false); });
 if(sysMask)  sysMask .addEventListener('mousedown', e=>{ e.preventDefault(); toggleSys(false); });
 
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { sysEl, sysMask, sysInfo, btnSave, btnLoad, btnWipe, btnAch, btnClose, btnCheat, sysCheat, CHEAT_TEXT, btnStats, sysStats, toggleSys, sysCheatToggle, sysPanelWide, sysStatsRender, sysStatsToggle, sysWipe });
-export { sysEl, sysMask, sysInfo, btnSave, btnLoad, btnWipe, btnAch, btnClose, btnCheat, sysCheat, CHEAT_TEXT, btnStats, sysStats, toggleSys, sysCheatToggle, sysPanelWide, sysStatsRender, sysStatsToggle, sysWipe };
+Object.assign(window, { sysEl, sysMask, sysInfo, btnSave, btnLoad, btnWipe, btnAch, btnSkills, btnClose, btnCheat, sysCheat, CHEAT_TEXT, btnStats, sysStats, toggleSys, sysCheatToggle, sysPanelWide, sysStatsRender, sysStatsToggle, sysWipe });
+export { sysEl, sysMask, sysInfo, btnSave, btnLoad, btnWipe, btnAch, btnSkills, btnClose, btnCheat, sysCheat, CHEAT_TEXT, btnStats, sysStats, toggleSys, sysCheatToggle, sysPanelWide, sysStatsRender, sysStatsToggle, sysWipe };

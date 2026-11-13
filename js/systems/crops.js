@@ -90,6 +90,7 @@ function harvestCrop(tx,ty){
   }
   if(!payStamina(staminaCost('harvest'))) return false;   /* 收获消耗 1 点体力 */
   addItem(itemId, 1);
+  if(typeof skillAdd === 'function') skillAdd('farming', def.regrow > 0 ? 6 : 8);
   questEmit('crop', {id:c.type, n:1});    /* 第 16 轮：委托总线（作物产出，用基础作物 id） */
   statsHarvest(c.type);                   /* 第 18 轮：收获统计 + 作物种类 + 成就 */
   soilHarvest();                          /* 第 23 轮：收获消耗土壤肥力 */

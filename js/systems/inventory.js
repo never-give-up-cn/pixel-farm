@@ -15,10 +15,11 @@ window.canLevel = 0;                     /* 水壶扩容等级：容量 = 20 + �
 window.goldPulseAt = 0;                  /* 金币跳动动画起点（performance.now()） */
 window.goldDelta = 0;                    /* 最近一次金币变动（用于飘字） */
 
-/* 当前水壶容量（商店扩容后变大） */
+/* 当前水壶容量（商店扩容 / 铁匠铺升级都会变大） */
 function canCapacity(){
+  const tl = (typeof toolLevel === 'function') ? toolLevel('can') : 0;
   return Math.min(CONFIG.WATER_CAN.MAX_CAPACITY,
-                  CONFIG.WATER_CAN.CAPACITY + canLevel * CONFIG.WATER_CAN.UPGRADE_STEP);
+                  CONFIG.WATER_CAN.CAPACITY + (canLevel + tl) * CONFIG.WATER_CAN.UPGRADE_STEP);
 }
 
 function itemDef(id){ return CONFIG.ITEMS[id] || null; }

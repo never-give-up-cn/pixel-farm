@@ -52,6 +52,7 @@ function interactFixture(f){
   }
   if(f.type === 'jukebox' && typeof jukeboxPlay === 'function') return jukeboxPlay();
   if((f.type === 'medcab' || f.type === 'clinic_bed') && typeof clinicTreat === 'function') return clinicTreat();
+  if(f.type === 'anvil' && typeof upgradeToolAtAnvil === 'function') return upgradeToolAtAnvil();
   const txt = decorText(f.npc, f.type);
   toast(txt || '看起来没什么特别的');
   return true;

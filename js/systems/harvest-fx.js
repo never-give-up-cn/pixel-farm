@@ -103,13 +103,16 @@ function mineRock(i, tx, ty) {
     rockHit.delete(i);
     setTile(i, T.DIRT);
     burst(tx, ty, 'rockbreak');
-    spawnDrop('stone', 2, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 90);
+    const stoneN = 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0);
+    spawnDrop('stone', stoneN, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 90);
     /* 35% 概率额外掉一枚矿物，按价格加权 */
     if (Math.random() < 0.35) {
       const mineral = rollMineral();
-      spawnDrop(mineral.id, 1, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 78);
+      const gemN = (typeof skillGemDoubleChance === 'function' && Math.random() < skillGemDoubleChance()) ? 2 : 1;
+      spawnDrop(mineral.id, gemN, tx * TILE + TILE / 2, ty * TILE + TILE - 6, 78);
     }
-    if (typeof questEmit === 'function') questEmit('material', { id: 'stone', n: 2 });
+    if (typeof skillAdd === 'function') skillAdd('mining', 4);
+    if (typeof questEmit === 'function') questEmit('material', { id: 'stone', n: stoneN });
     if (typeof playSfx === 'function') playSfx(110, 'triangle', 0.1, CONFIG.AUDIO.VOLUME * 0.6);
   }
   return true;

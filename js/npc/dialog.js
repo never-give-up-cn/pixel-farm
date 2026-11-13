@@ -27,6 +27,10 @@ function npcOpenDialog(d){
   npcSyncUnlocks();
   npcDlg.id = d.id;
   let lines = npcPickLines(d);
+  if (typeof marriageDialogLine === 'function') {
+    const ml = marriageDialogLine(d.id);
+    if (ml) lines.unshift(ml);
+  }
   /* 第 23 轮：来访居民 → 评农场、发金币和种子（一天只发一次） */
   const vis = visitReward(d);
   if(vis){
@@ -114,11 +118,18 @@ function renderNpcDialog(){
   }
 }
   if(npcName)   npcName.textContent   = d.name + (d.job ? ' · ' + d.job : '');
-  if(npcTierEl) npcTierEl.textContent = tier.name;
+  let tierName = tier.name;
+  if(typeof marriageState !== 'undefined'){
+    if(marriageState.married === d.id) tierName = '配偶';
+    else if(marriageState.engaged === d.id) tierName = '未婚伴侣';
+    else if(marriageState.dating.indexOf(d.id) >= 0) tierName = '恋人';
+  }
+  if(npcTierEl) npcTierEl.textContent = tierName;
   if(npcAffEl)  npcAffEl.textContent  = '好感 ' + aff + '/' + CONFIG.NPC.AFF_MAX;
   if(npcBarFill) npcBarFill.style.width = (aff / CONFIG.NPC.AFF_MAX * 100).toFixed(1) + '%';
   /* 第 25 轮：状态提示行（「老板娘 · 好感 62 · 营业中（19:00 关店）」） */
-  const stat = npcStatusLine(d);
+  let stat = npcStatusLine(d);
+  if(typeof marriageSpouseId === 'function' && marriageSpouseId() === d.id && window.farmhouseActive) stat = '在家';
   if(npcStatEl){
     npcStatEl.textContent = stat;
     npcStatEl.classList.toggle('show', !!stat);
@@ -142,6 +153,15 @@ function renderNpcDialog(){
     npcGiftBtn.classList.toggle('off', !done || gifted);
     npcGiftBtn.disabled = !done || gifted;      /* 说完了才能送 */
   }
+  const rom = (typeof marriageActionInfo === 'function') ? marriageActionInfo(d.id) : null;
+  if(npcRomanceBtn){
+    npcRomanceBtn.style.display = rom ? '' : 'none';
+    if(rom){
+      npcRomanceBtn.textContent = rom.label;
+      npcRomanceBtn.classList.toggle('off', !rom.ok || !done);
+      npcRomanceBtn.disabled = !rom.ok || !done;
+    }
+  }
   if(npcFootEl){
     npcFootEl.textContent = done
       ? '说完了 · E / 空格 结束对话　·　可以送礼物提升好感（每人每天一次）'
@@ -151,6 +171,7 @@ function renderNpcDialog(){
 if(npcNextBtn) npcNextBtn.addEventListener('click', ()=>{ npcAdvance(); ensureAudio(); });
 if(npcByeBtn)  npcByeBtn .addEventListener('click', ()=>{ npcCloseDialog(); ensureAudio(); });
 if(npcGiftBtn) npcGiftBtn.addEventListener('click', ()=>{ npcStartGift(); ensureAudio(); });
+if(npcRomanceBtn) npcRomanceBtn.addEventListener('click', ()=>{ if(typeof marriageAction === 'function') marriageAction(npcDlg.id); renderNpcDialog(); ensureAudio(); });
 if(npcMask)   npcMask  .addEventListener('mousedown', e=>{ e.preventDefault(); npcCloseDialog(); });
 
 

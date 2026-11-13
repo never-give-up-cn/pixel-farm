@@ -70,6 +70,7 @@ function rollToNextMorning(faint){
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
   updateTut();                         /* 过了第 1 天就把新手引导收起来 */
   npcDayStart();                       /* 居民：新的天 → 今天谁过生日 */
+  if(typeof marriageDayStart === 'function') marriageDayStart();   /* 婚礼到期 → 配偶入住 */
   ratingCheck();                       /* 第 20 轮：每天早上重新评估农场星级 */
 }
 /* 睡觉流程推进（接管整个 update） */

@@ -10,6 +10,7 @@ import {
 } from '../anim/interior.js';
 import { drawFarmer } from '../anim/farmer.js';
 import { HAT_MAP, drawHatOnFarmer } from '../anim/hats.js';
+import { NPC_MAP, drawNpcWalk } from '../anim/npcs.js';
 
 const ROOM_W = 16;
 const ROOM_H = 11;
@@ -113,6 +114,12 @@ function farmhouseInteract() {
   if (nearRect(TABLE, 48)) {
     toast('桌上摊着一本没看完的书');
     return true;
+  }
+  if (typeof marriageSpouseId === 'function' && marriageSpouseId()) {
+    const sp = (typeof marriageSpousePos === 'function') ? marriageSpousePos() : { x: 11.5 * 32, y: 7.2 * 32 };
+    if (Math.hypot(player.x - sp.x, player.y - sp.y) <= 48) {
+      if (typeof spouseInteract === 'function') return spouseInteract();
+    }
   }
   return false;
 }
@@ -273,6 +280,21 @@ function drawFarmhouse(g) {
     }
   }
 
+  /* 配偶：婚后住在农舍里 */
+  if (typeof marriageSpouseId === 'function') {
+    const sid = marriageSpouseId();
+    const nd = sid && NPC_MAP[sid];
+    if (nd) {
+      const sp = (typeof marriageSpousePos === 'function') ? marriageSpousePos() : { x: 11.5 * 32, y: 7.2 * 32 };
+      const frame = Math.floor(((typeof animTime !== 'undefined' ? animTime : 0) * 1.5) % 4);
+      g.save();
+      g.imageSmoothingEnabled = false;
+      g.translate(Math.round(ROOM_OX + sp.x - 12), Math.round(ROOM_OY + sp.y - 32));
+      drawNpcWalk(g, nd, 0, frame);
+      g.restore();
+    }
+  }
+
   /* 室内装修预览 */
   if (window.indoorDecor && typeof mouse !== 'undefined' && mouse.inside && typeof decorItem === 'function') {
     const d = decorItem();
@@ -310,7 +332,7 @@ function drawFarmhouse(g) {
   g.fillStyle = '#e9c96f';
   g.font = '13px "Microsoft YaHei", monospace';
   g.textBaseline = 'middle';
-  g.fillText('农舍 · WASD 移动 · E 睡觉 / 看家具 · 门口 E 或 Esc 出去', 16, CONFIG.VIEW_H - 23);
+  g.fillText('农舍 · WASD 移动 · E 睡觉 / 看家具 / 和配偶说话 · 门口 E 或 Esc 出去', 16, CONFIG.VIEW_H - 23);
 }
 
 Object.assign(window, {

@@ -227,7 +227,9 @@ const CONFIG = {
       { id:'can_upgrade',  price:80 },   // 水壶扩容（+10 容量）
       { id:'feed',         price:8  },   // 饲料（第 15 轮，喂动物）
       { id:'chicken',      price:120, animal:'chicken' },  // 鸡（第 15 轮，需要先建鸡舍）
-      { id:'cow',          price:260, animal:'cow' }       // 牛（第 15 轮，需要先建牛棚）
+      { id:'cow',          price:260, animal:'cow' },       // 牛（第 15 轮，需要先建牛棚）
+      { id:'bouquet',      price:800, romance:'bouquet' },  // 花束：好感 80 后开始交往
+      { id:'pendant',      price:5000, romance:'pendant' }  // 美人鱼吊坠：交往 + 好感 100 后求婚
     ]
   },
 
@@ -2313,6 +2315,19 @@ CONFIG.TOWN_PLAN();
 
   PRODUCTS.forEach((it, i) => push(it.id, it.name, '🧺', 'animal', 60 + i * 15));
   MISC.forEach((it, i) => push(it.id, it.name, '📜', 'misc', 80 + (i % 10) * 10));
+})();
+
+
+/* 恋爱 / 结婚道具：花束开始交往，美人鱼吊坠求婚 */
+(function addRomanceItems(){
+  CONFIG.ITEMS.bouquet = {
+    id:'bouquet', name:'花束', icon:'💐', stack:false, max:1,
+    kind:'misc', price:800, romance:true
+  };
+  CONFIG.ITEMS.pendant = {
+    id:'pendant', name:'美人鱼吊坠', icon:'🧜', stack:false, max:1,
+    kind:'misc', price:5000, romance:true
+  };
 })();
 
 

@@ -27,6 +27,10 @@ function npcGiftPick(i){
     toast(idef.name + '还是自己留着用吧（工具不能送）');
     return false;
   }
+  if(idef && idef.romance){                /* 花束 / 吊坠要在对话里用恋爱按钮 */
+    toast(idef.name + '要在对话里用「交往 / 求婚」按钮使用，不能当普通礼物');
+    return false;
+  }
   let delta = CONFIG.NPC.GIFT.NORMAL, word = '收了';
   if(d.dislike.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.DISLIKE; word = '不太喜欢'; }
   else if(d.like.indexOf(id) >= 0){ delta = CONFIG.NPC.GIFT.LIKE; word = '很喜欢'; }

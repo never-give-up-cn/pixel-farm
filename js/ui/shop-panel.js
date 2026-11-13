@@ -107,6 +107,7 @@ function renderShopBuy(){
   }
   for(const entry of CONFIG.SHOP.BUY){
     const id = entry.id;
+    if(entry.romance && typeof marriageShopAvailable === 'function' && !marriageShopAvailable(id)) continue;
     /* 第 15 轮：动物（不是背包物品，按棚舍空位购买） */
     if(entry.animal){
       const t = animalType(entry.animal);

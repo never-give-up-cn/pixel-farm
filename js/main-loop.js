@@ -14,6 +14,7 @@ function update(dt){
   if(window.mineActive){ updateMine(dt); return; }   /* 矿井模式：接管更新，农场世界冻结 */
   if(window.farmhouseActive && sleepFx.phase === 'none'){
     animTime += dt;
+    if(npcOpen){ updateNpcDialog(dt); return; }   /* 室内对话：只推进打字机，不移动 */
     updateClock(dt);                 /* 室内时间照常走，灶台会推进 */
     updateFarmhouse(dt);
     return;

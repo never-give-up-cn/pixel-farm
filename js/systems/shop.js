@@ -57,6 +57,7 @@ function priceTrend(id){
 function isSellable(id){
   const d = itemDef(id);
   if(!d) return false;
+  if(d.romance) return false;              /* 花束 / 吊坠不能回收 */
   return d.kind === 'crop' || d.kind === 'material' || d.kind === 'fish' ||
          d.kind === 'gather' || d.kind === 'animal' || d.kind === 'food' || d.kind === 'mineral' ||
          d.kind === 'weapon' || d.kind === 'ring' || d.kind === 'boots' ||

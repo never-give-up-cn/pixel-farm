@@ -367,6 +367,7 @@ function showPackTip(i, e){
   if(d.kind === 'seed') lines.push('锄地后左键播种 · 每天浇水才长');
   else if(d.kind === 'food') lines.push('手持后在世界里右键吃 · 体力 +' + CONFIG.RECIPE.EAT_STAMINA +
     ' · 今日还可吃 ' + Math.max(0, CONFIG.RECIPE.EAT_PER_DAY - makerEatsToday()) + ' 份');
+  else if(d.romance) lines.push('恋爱道具 · 在居民对话面板里使用');
   else if(d.kind === 'tool') lines.push('拿在手上，对着目标按左键');
   else if(isSellable(d.id)) lines.push('去杂货店卖给老板娘');
   if(packTip){

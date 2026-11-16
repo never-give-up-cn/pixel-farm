@@ -162,6 +162,14 @@ function renderNpcDialog(){
       npcRomanceBtn.disabled = !rom.ok || !done;
     }
   }
+  if(npcQiBtn){
+    const showQi = (d.id === 'mr_qi');
+    npcQiBtn.style.display = showQi ? '' : 'none';
+    if(showQi){
+      npcQiBtn.classList.toggle('off', !done);
+      npcQiBtn.disabled = !done;
+    }
+  }
   if(npcFootEl){
     npcFootEl.textContent = done
       ? '说完了 · E / 空格 结束对话　·　可以送礼物提升好感（每人每天一次）'
@@ -172,6 +180,7 @@ if(npcNextBtn) npcNextBtn.addEventListener('click', ()=>{ npcAdvance(); ensureAu
 if(npcByeBtn)  npcByeBtn .addEventListener('click', ()=>{ npcCloseDialog(); ensureAudio(); });
 if(npcGiftBtn) npcGiftBtn.addEventListener('click', ()=>{ npcStartGift(); ensureAudio(); });
 if(npcRomanceBtn) npcRomanceBtn.addEventListener('click', ()=>{ if(typeof marriageAction === 'function') marriageAction(npcDlg.id); renderNpcDialog(); ensureAudio(); });
+if(npcQiBtn) npcQiBtn.addEventListener('click', ()=>{ if(typeof casinoQiTalk === 'function') casinoQiTalk(); ensureAudio(); });
 if(npcMask)   npcMask  .addEventListener('mousedown', e=>{ e.preventDefault(); npcCloseDialog(); });
 
 

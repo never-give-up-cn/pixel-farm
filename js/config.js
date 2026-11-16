@@ -103,6 +103,50 @@ const CONFIG = {
             'seed_starfruit', 'seed_sweet_gem_berry', 'cactus_fruit']
   },
 
+  /* 赌场：老虎机 / 轮盘 / 齐先生任务 / 齐币兑换 */
+  CASINO: {
+    BET_STEPS: [10, 50, 100],    // 下注档位（齐币）
+    SLOT: {
+      TWO_CHERRY: 1,             // 恰好两个樱桃：退回本金（×1）
+      SYMBOLS: [
+        { icon:'🍒', weight:40,  pay:4   },
+        { icon:'🔔', weight:30,  pay:8   },
+        { icon:'🍋', weight:20,  pay:12  },
+        { icon:'💎', weight:8,   pay:30  },
+        { icon:'7️⃣', weight:1.5, pay:100 },
+        { icon:'🌟', weight:0.5, pay:500 }
+      ]
+    },
+    ROULETTE: {
+      RED_PAY: 2, BLACK_PAY: 2, GREEN_PAY: 14   // 红 / 黑猜中 ×2，绿（0）猜中 ×14
+    },
+    /* 齐先生任务：need = 交付材料；coins = 齐币奖励；card = 是否给俱乐部卡；
+     * reward = 额外物品；wager = 需要累计下注额（赌场任务）；repeat = 可重复 */
+    QUEST: [
+      { id:'q1', name:'第一课 · 耐心', desc:'齐先生想看看你的诚意。',
+        need:[{id:'stone', n:20}], coins:15, card:true },
+      { id:'q2', name:'第二课 · 眼光', desc:'铜和煤，是矿工的直觉。',
+        need:[{id:'copper_ore', n:15}, {id:'coal', n:10}], coins:30 },
+      { id:'q3', name:'第三课 · 深入', desc:'再往下，才是真正的矿脉。',
+        need:[{id:'iron_ore', n:10}, {id:'gold_ore', n:5}], coins:50 },
+      { id:'q4', name:'第四课 · 胆量', desc:'在赌桌上累计下注 500 齐币。',
+        wager:500, coins:100, reward:{id:'diamond', n:5} },
+      { id:'q5', name:'无尽的试炼', desc:'铱矿换齐币，随时欢迎。',
+        need:[{id:'iridium_ore', n:5}], coins:30, repeat:true }
+    ],
+    /* 齐币兑换（价格是齐币，不是金币） */
+    SHOP: [
+      { id:'bomb',        n:5, coins:20  },
+      { id:'stair',       n:3, coins:20  },
+      { id:'coffee',      n:5, coins:12  },
+      { id:'diamond',     n:3, coins:40  },
+      { id:'iridium_ore', n:5, coins:30  },
+      { id:'seed_starfruit', n:3, coins:50 },
+      { id:'space_boots', n:1, coins:150 },
+      { id:'iridium_band', n:1, coins:250 }
+    ]
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 128,               // 地图宽（格）
@@ -902,6 +946,12 @@ const CONFIG = {
           { dx: 2, dy: 4, type: 'fish_tank', solid: 1 },
           { dx: 2, dy: 6, type: 'fish_tank', solid: 1 },
           { dx: 10, dy: 6, type: 'barrel', solid: 1 }
+        ],
+        home_casino: [
+          { dx: 2, dy: 4, type: 'casino_slots', solid: 1, interact: 'casino_slots' },
+          { dx: 4, dy: 4, type: 'casino_slots', solid: 1, interact: 'casino_slots' },
+          { dx: 2, dy: 6, type: 'casino_roulette', solid: 1, interact: 'casino_roulette' },
+          { dx: 4, dy: 6, type: 'casino_shop', solid: 1, interact: 'casino_shop' }
         ]
       };
       if(EXTRA[id]) for(const p of EXTRA[id]) b.props.push(p);

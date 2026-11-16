@@ -177,6 +177,58 @@
   }
   #shopTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
   #shopBody{max-height:330px;overflow-y:auto}
+  /* 赌场面板 */
+  #casino{position:fixed;inset:0;z-index:53;display:none;align-items:center;justify-content:center}
+  #casino.open{display:flex}
+  #casinoMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #casinoPanel{position:relative;width:520px;max-width:calc(100vw - 24px);max-height:88vh;display:flex;flex-direction:column}
+  #casinoHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;align-items:baseline;gap:10px}
+  #casinoHead span{margin-left:auto;color:#ffd76a;font-size:14px}
+  #casinoTabs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+  #casinoTabs .tab{
+    background:#1a2130;border:2px solid #2c3a4e;color:#8fa3bd;
+    font:13px/1 Consolas,"Microsoft YaHei",monospace;padding:6px 14px;cursor:pointer;
+  }
+  #casinoTabs .tab.on{background:#2a3550;border-color:#ffd76a;color:#ffd76a}
+  #casinoBody{max-height:60vh;overflow-y:auto;padding-right:3px}
+  #casinoFoot{color:#8fa3bd;font-size:11px;margin-top:7px}
+  .cgame{display:flex;flex-direction:column;gap:10px;align-items:center;padding:6px 0}
+  .cslot{display:flex;gap:10px}
+  .creel{width:74px;height:86px;background:#12101a;border:3px solid #e2c14a;border-radius:8px;
+         display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1}
+  .cresult{color:#cfe3ff;font-size:12px;min-height:18px;text-align:center}
+  .cbetrow{display:flex;gap:8px;align-items:center}
+  .clabel{color:#8fa3bd;font-size:12px}
+  .cbetrow .mbtn{min-width:52px}
+  .cbetrow .mbtn.on{border-color:#ffd76a;color:#ffd76a;background:#2a3550}
+  .ccolors{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .ccolors .mbtn{min-width:96px;font-size:13px}
+  .ccolors .mbtn.red{border-color:#a04040;color:#ff9a8a}
+  .ccolors .mbtn.black{border-color:#5a5a64;color:#cfe3ff}
+  .ccolors .mbtn.green{border-color:#3f8f4a;color:#8ee08a}
+  .cwheel{font-size:52px;line-height:1;filter:drop-shadow(0 0 10px rgba(226,193,74,.35))}
+  .cwheel.win{filter:drop-shadow(0 0 16px rgba(126,224,138,.9))}
+  .clocked{border:1px dashed #3a4256;border-radius:8px;padding:16px;color:#9fb0c4;
+           font-size:12px;line-height:1.9;text-align:center}
+  .clocked b{color:#ffd76a}
+  .cqhead{color:#9fb0c4;font-size:12px;line-height:1.7;margin-bottom:8px}
+  .cqlist{display:flex;flex-direction:column;gap:7px}
+  .cqrow{border:1px solid #2c3a4e;border-radius:7px;padding:8px 10px;background:rgba(8,10,16,.55);
+         display:flex;flex-direction:column;gap:3px}
+  .cqrow.done{opacity:.55}
+  .cqtop{display:flex;align-items:baseline;gap:8px;color:#e8f0ff;font-size:12px}
+  .cqtop b{color:#ffd76a;font-size:12px}
+  .cqtop span{margin-left:auto;color:#8ee08a;font-size:11px}
+  .cqdesc{color:#8fa3bd;font-size:11px}
+  .cqprog{color:#cfe3ff;font-size:11px}
+  .cqrow .mbtn{align-self:flex-end;font-size:11px;padding:3px 10px;margin-top:3px}
+  .cqstat{color:#8fa3bd;font-size:11px;margin-top:8px;text-align:right}
+  .csrow{display:flex;align-items:center;gap:10px;border:1px solid #2c3a4e;border-radius:7px;
+         padding:7px 10px;background:rgba(8,10,16,.55)}
+  .csicon{font-size:20px;width:26px;text-align:center}
+  .cqmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;color:#e8f0ff;font-size:12px}
+  .cqmain span{color:#8fa3bd;font-size:11px}
+  .csrow .mbtn{font-size:11px;padding:3px 12px}
   /* 矿井入口电梯 */
   #minegate{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #minegate.open{display:flex}
@@ -916,6 +968,22 @@
   </div>
 </div>
 
+<!-- 赌场面板：小镇赌场里的老虎机 / 轮盘 / 齐先生任务 / 齐币兑换 -->
+<div id="casino">
+  <div id="casinoMask"></div>
+  <div id="casinoPanel" class="panel">
+    <div id="casinoHead">🎲 星之赌场 <span id="casinoCoins">齐币 0</span></div>
+    <div id="casinoTabs">
+      <button class="tab" data-tab="slots">🎰 老虎机</button>
+      <button class="tab" data-tab="roulette">🎡 轮盘</button>
+      <button class="tab" data-tab="qi">🎩 齐先生</button>
+      <button class="tab" data-tab="shop">🎁 兑换</button>
+    </div>
+    <div id="casinoBody"></div>
+    <div id="casinoFoot">Esc 关闭 · 找齐先生拿俱乐部卡</div>
+  </div>
+</div>
+
 <!-- 矿井入口电梯 -->
 <div id="minegate">
   <div id="minegateMask"></div>
@@ -1113,6 +1181,7 @@
       <button class="mbtn" id="npcNext">继续（E / 空格）</button>
       <button class="mbtn" id="npcGift">送礼物</button>
       <button class="mbtn" id="npcRomance" style="display:none">💐 交往</button>
+      <button class="mbtn" id="npcQi" style="display:none">🎲 齐先生</button>
       <button class="mbtn" id="npcBye">告别</button>
     </div>
     <div id="npcFoot">E / 空格：没打完就整句显示，打完了就下一句 · Esc 结束对话</div>

@@ -42,6 +42,7 @@ function update(dt){
   if(wardrobeOpen) return;           /* 衣柜面板：整体冻结 */
   if(roomOpen) return;               /* 装修样板：整体冻结 */
   if(shopOpen) return;               /* 商店打开：同样整体冻结（时间停住） */
+  if(casinoOpen) return;             /* 赌场打开：同样整体冻结（时间停住） */
   if(chestOpen) return;              /* 木箱打开：同样整体冻结（时间停住） */
   if(makerOpen) return;              /* 加工台打开：同样整体冻结（时间停住，加工也不走） */
   if(animalOpen) return;             /* 动物面板打开：同样整体冻结（时间停住，动物也不走） */

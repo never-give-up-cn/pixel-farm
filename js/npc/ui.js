@@ -15,6 +15,7 @@ const npcTextEl  = document.getElementById('npcText');
 const npcNextBtn = document.getElementById('npcNext');
 const npcGiftBtn = document.getElementById('npcGift');
 const npcRomanceBtn = document.getElementById('npcRomance');
+const npcQiBtn   = document.getElementById('npcQi');
 const npcByeBtn  = document.getElementById('npcBye');
 const npcFootEl  = document.getElementById('npcFoot');
 window.npcOpen = false;              /* 对话是否打开（打开时世界时间冻结） */
@@ -26,5 +27,5 @@ window.npcLastText = '';             /* 打字机：上一次写进 DOM 的文�
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { npcEl, npcMask, npcIcon, npcName, npcTierEl, npcAffEl, npcBdayEl, npcStatEl, npcBarFill, npcTextEl, npcNextBtn, npcGiftBtn, npcRomanceBtn, npcByeBtn, npcFootEl, npcDlg });
-export { npcEl, npcMask, npcIcon, npcName, npcTierEl, npcAffEl, npcBdayEl, npcStatEl, npcBarFill, npcTextEl, npcNextBtn, npcGiftBtn, npcRomanceBtn, npcByeBtn, npcFootEl, npcDlg };
+Object.assign(window, { npcEl, npcMask, npcIcon, npcName, npcTierEl, npcAffEl, npcBdayEl, npcStatEl, npcBarFill, npcTextEl, npcNextBtn, npcGiftBtn, npcRomanceBtn, npcQiBtn, npcByeBtn, npcFootEl, npcDlg });
+export { npcEl, npcMask, npcIcon, npcName, npcTierEl, npcAffEl, npcBdayEl, npcStatEl, npcBarFill, npcTextEl, npcNextBtn, npcGiftBtn, npcRomanceBtn, npcQiBtn, npcByeBtn, npcFootEl, npcDlg };

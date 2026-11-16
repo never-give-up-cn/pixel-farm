@@ -113,6 +113,35 @@ function drawTownProp(g, p, px, py){
       g.fillStyle = '#e08a2a'; g.fillRect(px+10, py+14, 6, 3);
       g.fillStyle = '#9aa1a9'; g.fillRect(px+4, py+27, 24, 3);
       break;
+    case 'casino_slots':                /* 老虎机 */
+      g.fillStyle = '#2a2438'; g.fillRect(px+5, py+3, 22, 26);
+      g.fillStyle = '#e2c14a'; g.fillRect(px+4, py+2, 24, 3); g.fillRect(px+4, py+26, 24, 3);
+      g.fillStyle = '#12101a'; g.fillRect(px+7, py+6, 18, 12);
+      g.fillStyle = '#f4e6bc'; g.fillRect(px+8, py+7, 5, 10);
+      g.fillRect(px+14, py+7, 5, 10); g.fillRect(px+20, py+7, 4, 10);
+      g.fillStyle = '#d04a3a'; g.fillRect(px+9, py+9, 3, 5);
+      g.fillStyle = '#7ee08a'; g.fillRect(px+15, py+9, 3, 5);
+      g.fillStyle = '#ffd76a'; g.fillRect(px+21, py+9, 2, 5);
+      g.fillStyle = '#e2c14a'; g.fillRect(px+14, py+20, 4, 4);   /* 拉杆底座 */
+      g.fillStyle = '#c05a3a'; g.fillRect(px+18, py+17, 3, 8);   /* 拉杆 */
+      g.beginPath(); g.arc(px+19.5, py+16, 3, 0, Math.PI*2); g.fill();
+      break;
+    case 'casino_roulette':             /* 轮盘赌桌 */
+      g.fillStyle = '#3a2418'; g.fillRect(px+2, py+14, 28, 14);
+      g.fillStyle = '#2f6a46'; g.fillRect(px+4, py+12, 24, 11);
+      g.fillStyle = '#1e4a30'; g.fillRect(px+4, py+21, 24, 2);
+      g.fillStyle = '#12100e'; g.beginPath(); g.arc(px+16, py+17, 8, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#c8a24a'; g.beginPath(); g.arc(px+16, py+17, 6, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#8a2a2a'; g.beginPath(); g.arc(px+16, py+17, 3, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#f4e6bc'; g.fillRect(px+16, py+11, 1, 6);
+      break;
+    case 'casino_shop':                 /* 齐币兑换柜 */
+      g.fillStyle = '#4a3a6a'; g.fillRect(px+4, py+12, 24, 16);
+      g.fillStyle = 'rgba(150,220,240,.35)'; g.fillRect(px+6, py+6, 20, 14);
+      g.fillStyle = '#9ec4d8'; g.fillRect(px+7, py+8, 18, 10);
+      g.fillStyle = '#ffd76a'; g.fillRect(px+10, py+12, 4, 4); g.fillRect(px+17, py+12, 4, 4);
+      g.fillStyle = '#e2c14a'; g.fillRect(px+4, py+20, 24, 2);
+      break;
   }
 }
 /* 门（第 26 轮：单独拎出来 —— 屋顶层也要再画一次门，

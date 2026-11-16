@@ -108,6 +108,7 @@ function serializeState(){
     eq: (typeof equipSerialize === 'function') ? equipSerialize() : null,              /* 戒指 / 靴子装备 */
     joja: (typeof jojaSerialize === 'function') ? jojaSerialize() : null,              /* Joja 会员 */
     bus: (typeof travelSerialize === 'function') ? travelSerialize() : null,            /* 巴士修理状态 */
+    casino: (typeof casinoSerialize === 'function') ? casinoSerialize() : null,         /* 赌场：俱乐部卡 / 齐币 / 任务 */
     canWater: canWater,
     canLevel: canLevel,
     hotSel: hotSel,
@@ -283,6 +284,7 @@ function deserializeState(d){
     if(typeof equipDeserialize === 'function') equipDeserialize(d.eq);              /* 戒指 / 靴子 */
     if(typeof jojaDeserialize === 'function') jojaDeserialize(d.joja);              /* Joja 会员 */
     if(typeof travelDeserialize === 'function') travelDeserialize(d.bus);           /* 巴士修理状态 */
+    if(typeof casinoDeserialize === 'function') casinoDeserialize(d.casino);        /* 赌场状态 */
     if(typeof d.staminaMax === 'number')
       staminaMax = clamp(d.staminaMax, 1, CONFIG.STAMINA.MAX + staminaBonus);
     if(typeof d.stamina === 'number') stamina = clamp(d.stamina, 0, staminaMax);
@@ -582,6 +584,7 @@ function newGame(){
   if(typeof equipReset === 'function') equipReset();           /* 新游戏：装备清空 */
   if(typeof jojaReset === 'function') jojaReset();             /* 新游戏：Joja 会员清空 */
   if(typeof travelReset === 'function') travelReset();         /* 新游戏：巴士回到未修理状态 */
+  if(typeof casinoReset === 'function') casinoReset();         /* 新游戏：赌场 / 齐币清空 */
   canLevel = 0; canWater = CONFIG.WATER_CAN.CAPACITY;
   gold = CONFIG.INIT_GOLD; hotSel = 0;
   sleepFx.phase = 'none'; sleepFx.t = 0; sleepFx.faint = false; dayRolled = false;

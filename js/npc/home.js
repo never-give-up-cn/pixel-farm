@@ -46,6 +46,9 @@ function interactFixture(f){
     if(typeof toggleChest === 'function'){ toggleChest(true); return true; }
   }
   if(f.type === 'display' && typeof museumDonate === 'function') return museumDonate();
+  if(f.type === 'casino_slots' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('slots');
+  if(f.type === 'casino_roulette' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('roulette');
+  if(f.type === 'casino_shop' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('shop');
   if(f.type === 'crate'){
     if(typeof openJojaShop === 'function') return openJojaShop();
     if(typeof jojaInteract === 'function') return jojaInteract();

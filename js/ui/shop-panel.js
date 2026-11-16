@@ -56,15 +56,22 @@ function shopRow(icon, name, sub, priceHtml, buttons, iconId){
   }
   return row;
 }
-/* 当前面板的售价：旅行货车按加价后的固定价，其余按当日浮动价 */
+/* 当前面板的售价：旅行货车按加价后的固定价，沙漠商人按沙漠加价，其余按当日浮动价 */
+function desertPrice(id){
+  return Math.max(1, Math.round(priceOf(id) * CONFIG.DESERT.MARKUP));
+}
 function shopPrice(id){
   if(shopMode === 'cart' && typeof cartPrice === 'function') return cartPrice(id);
+  if(shopMode === 'desert') return desertPrice(id);
   return priceOf(id);
 }
 /* 价格文字 + 浮动标记 */
 function priceHtml(id){
   if(shopMode === 'cart'){
     return shopPrice(id) + ' 💰<span class="up">货车价 ×' + CONFIG.CART.MARKUP + '</span>';
+  }
+  if(shopMode === 'desert'){
+    return desertPrice(id) + ' 💰<span class="up">沙漠价 ×' + CONFIG.DESERT.MARKUP + '</span>';
   }
   const t = priceTrend(id);
   const cls = (t === '↑') ? 'up' : (t === '↓' ? 'dn' : '');
@@ -91,6 +98,20 @@ function renderShopBuy(){
       const price = shopPrice(id);
       const off = gold < price;
       const sub = d.kind === 'seed' ? '旅行商人的种子' : (d.kind === 'food' ? '路上带的干粮' : '旅行商人收来的货');
+      shopBody.appendChild(shopRow(d.icon, d.name, sub, priceHtml(id),
+        [{label:off ? '金币不够' : '购买', off:off, fn:()=>{ shopBuyClick(id, price); }}], id));
+    }
+    return;
+  }
+  if(shopMode === 'desert'){
+    for(const id of (CONFIG.DESERT.STOCK || [])){
+      const d = itemDef(id);
+      if(!d) continue;
+      const price = desertPrice(id);
+      const off = gold < price;
+      const sub = d.kind === 'seed' ? '沙漠商队带来的种子'
+        : (id === 'bomb' || id === 'stair') ? '下矿用的消耗品'
+        : (id === 'cactus_fruit' ? '沙漠特产' : '沙漠商队收来的货');
       shopBody.appendChild(shopRow(d.icon, d.name, sub, priceHtml(id),
         [{label:off ? '金币不够' : '购买', off:off, fn:()=>{ shopBuyClick(id, price); }}], id));
     }
@@ -195,11 +216,14 @@ function renderShop(){
   if(sf){
     sf.textContent = shopMode === 'cart'
       ? 'Esc 关闭 · 走到煤渣森林的旅行货车旁按 E 打开'
-      : (shopMode === 'joja' ? 'Esc 关闭 · 走到 Joja 货箱旁按 E 购买' : 'Esc 关闭 · 走到商店摊附近按 E 打开');
+      : (shopMode === 'desert'
+        ? 'Esc 关闭 · 走到卡利科沙漠的沙漠商人旁按 E 购买'
+        : (shopMode === 'joja' ? 'Esc 关闭 · 走到 Joja 货箱旁按 E 购买' : 'Esc 关闭 · 走到商店摊附近按 E 打开'));
   }
   const sh = document.getElementById('shopHead');
   if(sh && sh.firstChild){
-    sh.firstChild.textContent = (shopMode === 'joja' ? 'Joja 超市 ' : (shopMode === 'cart' ? '旅行货车 ' : '商店 '));
+    sh.firstChild.textContent = (shopMode === 'joja' ? 'Joja 超市 '
+      : (shopMode === 'cart' ? '旅行货车 ' : (shopMode === 'desert' ? '沙漠商人 ' : '商店 ')));
   }
   if(shopSeason){
     if(shopMode === 'joja'){
@@ -207,6 +231,8 @@ function renderShop(){
     } else if(shopMode === 'cart'){
       const nd = cartNextDay();
       shopSeason.textContent = '每 ' + CONFIG.CART.CYCLE + ' 天换一批货 · 第 ' + nd + ' 天补货 · 价格 ×' + CONFIG.CART.MARKUP;
+    } else if(shopMode === 'desert'){
+      shopSeason.textContent = '卡利科沙漠 · 商队价 ×' + CONFIG.DESERT.MARKUP + ' · 只收金币';
     } else {
       const bonus = npcShopBonusLeft();
       const sb = townShopBuilding();
@@ -224,8 +250,8 @@ function renderShop(){
       const tab = t.getAttribute && t.getAttribute('data-tab');
       const on = (tab === shopTab);
       t.className = 'tab' + (on ? ' on' : '');
-      /* 旅行货车只买不卖，隐藏出售页签 */
-      if(t.style) t.style.display = (shopMode === 'cart' && tab === 'sell') ? 'none' : '';
+      /* 旅行货车 / 沙漠商人只买不卖，隐藏出售页签 */
+      if(t.style) t.style.display = ((shopMode === 'cart' || shopMode === 'desert') && tab === 'sell') ? 'none' : '';
     }
   }
   if(!shopBody) return;
@@ -298,6 +324,19 @@ function openCartShop(){
   renderShop();
   setPanelOpen(shopEl, true);
   playSfx(620, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
+  return true;
+}
+/* 沙漠商人：只买不卖，价格按沙漠加价 */
+function openDesertShop(){
+  shopMode = 'desert';
+  shopTab = 'buy';
+  if(!shopOpen){
+    if(packOpen) togglePack(false);
+    shopOpen = true;
+  }
+  renderShop();
+  setPanelOpen(shopEl, true);
+  playSfx(740, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
   return true;
 }
 if(shopMask) shopMask.addEventListener('mousedown', e=>{ e.preventDefault(); toggleShop(false); });
@@ -559,6 +598,32 @@ function drawUI(g){
       g.fillText(hint, hx, hy);
     }
   }
+  /* 巴士 / 沙漠商人 / 沙漠骷髅洞穴 → 提示按 E */
+  if(!shopOpen && typeof worldLandmarkNear === 'function'){
+    const wl = worldLandmarkNear();
+    if(wl && (wl.action === 'bus' || wl.action === 'desertshop' || wl.action === 'skull')){
+      let hint = '';
+      if(wl.action === 'bus'){
+        hint = (typeof busPromptText === 'function') ? busPromptText()
+          : ((typeof busIsFixed === 'function' && busIsFixed()) ? '按 E 坐巴士' : '按 E 修理巴士');
+      }else if(wl.action === 'desertshop'){
+        hint = '按 E 和沙漠商人交易';
+      }else{
+        let best = 1;
+        if(typeof mineSave === 'function') best = mineSave() | 0;
+        else if(window.mineState) best = (mineState.best | 0);
+        hint = best >= 40 ? '按 E 进入骷髅洞穴' : '需要矿井 B40 的骷髅钥匙';
+      }
+      g.font = '13px ' + FONT_CJK;
+      const hw = g.measureText(hint).width;
+      const hx = player.x - cam.x - hw/2, hy = player.y - cam.y - 44;
+      g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+      g.strokeStyle = CONFIG.COLORS.hudBorder;
+      g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+      g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+      g.fillText(hint, hx, hy);
+    }
+  }
   /* 走到矿井入口 → 提示按 E 下矿 / 打开电梯 */
   if(!shopOpen && typeof worldLandmarkNear === 'function'){
     const wl = worldLandmarkNear();
@@ -721,5 +786,5 @@ function drawUI(g){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, drawText, drawUI });
-export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, drawText, drawUI };
+Object.assign(window, { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, desertPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, openDesertShop, drawText, drawUI });
+export { shopEl, shopMask, shopTabs, shopBody, shopGold, shopSeason, FONT, GLYPH_W, GLYPH_H, FONT_EMOJI, FONT_CJK, pulseShopGold, shopRow, shopPrice, desertPrice, priceHtml, renderShopBuy, renderShopSell, renderShop, shopBuyClick, toggleShop, openJojaShop, openCartShop, openDesertShop, drawText, drawUI };

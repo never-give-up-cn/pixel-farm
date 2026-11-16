@@ -94,6 +94,15 @@ const CONFIG = {
             'seed_starfruit', 'seed_sweet_gem_berry', 'coffee', 'bread', 'feed', 'wood']
   },
 
+  /* 沙漠：巴士修理 / 沙漠商人货架 */
+  DESERT: {
+    REPAIR_COST: 40000,          // 普通玩家修理巴士
+    REPAIR_COST_JOJA: 25000,     // Joja 会员折扣价
+    MARKUP: 1.2,                 // 沙漠商人加价 20%
+    STOCK: ['bomb', 'stair', 'coffee', 'diamond', 'iridium_ore', 'gold_ore',
+            'seed_starfruit', 'seed_sweet_gem_berry', 'cactus_fruit']
+  },
+
   /* 世界 */
   TILE: 32,                 // 每格像素
   MAP_W: 128,               // 地图宽（格）

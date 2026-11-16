@@ -1,8 +1,10 @@
-﻿/* js/world/multimap.js — 多地图：农场/小镇、煤渣森林、山地、鹈鹕海滩。
+﻿/* js/world/multimap.js — 多地图：农场/小镇、煤渣森林、秘密森林、山地、采石场、
+ * 鹈鹕海滩、巴士站、卡利科沙漠。
  *
  * 所有地图共用 128×104 的网格。切换地图时只替换 map / crops / roads /
  * buildings / buildIndex / baseMap 这些全局数组，原有玩法代码不用改。
  * 新地图是探索地图：可以走路、钓鱼、看地标，不开放开垦 / 建造。
+ * 巴士站 ⇄ 沙漠靠 systems/travel.js 的巴士交互切换，没有步行出口。
  */
 
 'use strict';
@@ -13,7 +15,9 @@ const MAP_DEFS = {
   mountain: { name: '山地' },
   beach:    { name: '鹈鹕海滩' },
   secret:   { name: '秘密森林' },
-  quarry:   { name: '采石场' }
+  quarry:   { name: '采石场' },
+  busstop:  { name: '巴士站' },
+  desert:   { name: '卡利科沙漠' }
 };
 
 /* 新地图里可进入的住宅室内：复用同一套房间模板，家具和住户不同 */
@@ -125,6 +129,7 @@ function worldRegisterValley(){
   st.exits = [
     { x: 64, y: 1,   w: 2, h: 1, to: 'mountain', tx: 64,  ty: 92, label: '北边 · 山地' },
     { x: 1,  y: 42,  w: 1, h: 1, to: 'forest',   tx: 112, ty: 42, label: '西边 · 森林' },
+    { x: 126, y: 42, w: 1, h: 1, to: 'busstop',  tx: 4,   ty: 52, label: '东边 · 巴士站' },
     { x: 64, y: 102, w: 2, h: 1, to: 'beach',    tx: 64,  ty: 8,  label: '南边 · 海滩' }
   ];
   MAP_WORLD.valley = st;
@@ -149,6 +154,10 @@ function fillMap(tile){ map.fill(tile); crops.fill(null); }
 function borderWater(){
   for(let x = 0; x < MAP_W; x++){ map[x] = T.WATER; map[(MAP_H-1)*MAP_W+x] = T.WATER; }
   for(let y = 0; y < MAP_H; y++){ map[y*MAP_W] = T.WATER; map[y*MAP_W+MAP_W-1] = T.WATER; }
+}
+function borderRock(){
+  for(let x = 0; x < MAP_W; x++){ map[x] = T.ROCK; map[(MAP_H-1)*MAP_W+x] = T.ROCK; }
+  for(let y = 0; y < MAP_H; y++){ map[y*MAP_W] = T.ROCK; map[y*MAP_W+MAP_W-1] = T.ROCK; }
 }
 function setRect(x, y, w, h, tile){
   for(let ty = y; ty < y+h; ty++)
@@ -352,6 +361,68 @@ function genBeach(){
   };
 }
 
+/* ---------- 巴士站 ---------- */
+function genBusstop(){
+  fillMap(T.GRASS);
+  borderWater();
+  /* 东西向公路 + 巴士停车带 */
+  setRect(1, 50, 126, 4, T.PATH);
+  setRect(42, 44, 36, 7, T.PATH);
+
+  const L = [
+    { type:'bus',  x:52,  y:47, w:8,  h:3,  label:'巴士', action:'bus' },
+    { type:'sign', x:112, y:46, w:3,  h:3,  label:'东边 · 小镇', solid:false }
+  ];
+  scatterWild(mulberry32(9302), 500, L, { tree:0.78 });
+  return {
+    landmarks: L,
+    exits: [{ x:126, y:51, w:1, h:1, to:'valley', tx:124, ty:42, label:'东边 · 小镇' }],
+    spawn: { x:4, y:52 }
+  };
+}
+
+/* ---------- 卡利科沙漠 ---------- */
+function genDesert(){
+  fillMap(T.BARE);
+  borderRock();
+  /* 零散的风化岩 */
+  const rng = mulberry32(9301);
+  for(let n = 0; n < 700; n++){
+    const tx = 3 + Math.floor(rng() * (MAP_W-6));
+    const ty = 3 + Math.floor(rng() * (MAP_H-6));
+    const i = ty*MAP_W + tx;
+    if(map[i] === T.BARE && rng() < 0.28) map[i] = T.ROCK;
+  }
+  /* 绿洲（可以钓鱼） */
+  pond(44, 56, 11, 7);
+  /* 巴士停车场 + 土路 */
+  setRect(18, 86, 34, 8, T.DIRT);
+  setRect(20, 86, 60, 4, T.DIRT);
+  setRect(74, 46, 4, 42, T.DIRT);
+  setRect(74, 44, 30, 4, T.DIRT);
+  setRect(100, 44, 4, 28, T.DIRT);
+  setRect(30, 90, 10, 4, T.DIRT);
+
+  const L = [
+    { type:'bus',        x:28,  y:83, w:8,  h:3,  label:'沙漠巴士', action:'bus' },
+    { type:'desertshop', x:72,  y:36, w:9,  h:7,  label:'沙漠商人', action:'desertshop' },
+    { type:'skull',      x:98,  y:64, w:10, h:7,  label:'骷髅洞穴', action:'skull' },
+    { type:'sign',       x:52,  y:94, w:3,  h:3,  label:'巴士 · 返回小镇', solid:false }
+  ];
+  /* 仙人掌（不可穿过，纯装饰） */
+  const cacti = [[10,30],[16,22],[26,38],[8,60],[18,70],[34,26],[56,22],[64,34],
+                 [90,24],[112,32],[118,60],[110,80],[60,68],[52,76],[24,50],
+                 [86,90],[116,92],[14,92]];
+  for(const p of cacti){
+    L.push({ type:'cactus', x:p[0], y:p[1], w:2, h:2, label:'仙人掌', solid:true });
+  }
+  return {
+    landmarks: L,
+    exits: [],
+    spawn: { x:34, y:91 }
+  };
+}
+
 /* ---------- 新地图住宅室内 ---------- */
 function genInterior(id){
   const I = INTERIORS[id];
@@ -418,6 +489,8 @@ function ensureWorld(id){
   else if(id === 'beach') result = genBeach();
   else if(id === 'secret') result = genSecret();
   else if(id === 'quarry') result = genQuarry();
+  else if(id === 'busstop') result = genBusstop();
+  else if(id === 'desert') result = genDesert();
   else if(INTERIORS[id]) result = genInterior(id);
   if(result){
     st.landmarks = result.landmarks || [];
@@ -602,6 +675,10 @@ function landmarkColor(type){
   if(type === 'bridge' || type === 'pier') return '#9a6b3c';
   if(type === 'quarryrock') return '#6f675c';
   if(type === 'statue') return '#8a9280';
+  if(type === 'bus') return '#d8a53c';
+  if(type === 'desertshop') return '#c98a4a';
+  if(type === 'skull') return '#6a5a7a';
+  if(type === 'cactus') return '#4a8a3a';
   return '#b07a4a';
 }
 
@@ -811,6 +888,132 @@ function drawWorldLandmark(g, l){
     g.fillStyle = '#4a3068';
     g.beginPath(); g.moveTo(x+w/2, y-8); g.lineTo(x+w*0.9, y+h*0.28); g.lineTo(x+w*0.1, y+h*0.28); g.closePath(); g.fill();
     g.fillStyle = '#ffe08a'; g.fillRect(x+w*0.38, y+h*0.48, w*0.24, h*0.14);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+
+  if(type === 'cactus'){
+    const cx = x + w/2;
+    g.fillStyle = 'rgba(0,0,0,.18)';
+    g.beginPath(); g.ellipse(cx, y+h*0.92, w*0.30, h*0.08, 0, 0, Math.PI*2); g.fill();
+    const green = '#4a8a3a', dark = '#2f6a28', light = '#6ab04a';
+    /* 主干 */
+    g.fillStyle = green;
+    g.fillRect(cx-w*0.12, y+h*0.18, w*0.24, h*0.70);
+    g.fillStyle = dark;
+    g.fillRect(cx+w*0.04, y+h*0.18, w*0.08, h*0.70);
+    g.fillStyle = light;
+    g.fillRect(cx-w*0.12, y+h*0.18, w*0.05, h*0.70);
+    /* 左右手臂 */
+    g.fillStyle = green;
+    g.fillRect(cx-w*0.36, y+h*0.40, w*0.24, h*0.12);
+    g.fillRect(cx-w*0.36, y+h*0.40, w*0.10, h*0.30);
+    g.fillRect(cx+w*0.12, y+h*0.50, w*0.24, h*0.12);
+    g.fillRect(cx+w*0.26, y+h*0.32, w*0.10, h*0.30);
+    /* 刺 */
+    g.fillStyle = '#e8e0b0';
+    for(let i = 0; i < 4; i++){
+      g.fillRect(cx-w*0.18, y+h*(0.32+i*0.12), 3, 2);
+      g.fillRect(cx+w*0.14, y+h*(0.36+i*0.12), 3, 2);
+    }
+    return;
+  }
+  if(type === 'bus'){
+    const cx = x + w/2;
+    g.fillStyle = 'rgba(0,0,0,.22)';
+    g.beginPath(); g.ellipse(cx, y+h*0.93, w*0.44, h*0.08, 0, 0, Math.PI*2); g.fill();
+    /* 车身 */
+    g.fillStyle = '#e0a82e';
+    g.fillRect(x+w*0.06, y+h*0.22, w*0.88, h*0.58);
+    g.fillStyle = '#f0c24a';
+    g.fillRect(x+w*0.06, y+h*0.22, w*0.88, h*0.10);
+    g.fillStyle = '#b07a18';
+    g.fillRect(x+w*0.06, y+h*0.72, w*0.88, h*0.08);
+    /* 车窗 */
+    g.fillStyle = '#8ecae6';
+    for(let i = 0; i < 5; i++){
+      g.fillRect(x+w*(0.12+i*0.16), y+h*0.36, w*0.11, h*0.20);
+    }
+    g.fillStyle = '#5b3a1d';
+    g.fillRect(x+w*0.48, y+h*0.60, w*0.10, h*0.14);   /* 车门 */
+    /* 车顶牌 */
+    g.fillStyle = '#3a2a18';
+    g.fillRect(x+w*0.34, y+h*0.12, w*0.32, h*0.08);
+    g.fillStyle = '#ffd76a';
+    g.fillRect(x+w*0.38, y+h*0.14, w*0.24, h*0.04);
+    /* 车轮 */
+    for(const wx of [0.24, 0.76]){
+      g.fillStyle = '#2a2a30';
+      g.beginPath(); g.arc(x+w*wx, y+h*0.82, w*0.09, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#8a8a96';
+      g.beginPath(); g.arc(x+w*wx, y+h*0.82, w*0.04, 0, Math.PI*2); g.fill();
+    }
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'desertshop'){
+    const wall = '#c9955a', roof = '#9a6234';
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(x+w*0.10, y+h*0.93, w*0.80, 5);
+    /* 平顶土房 */
+    g.fillStyle = wall;
+    g.fillRect(x+w*0.12, y+h*0.28, w*0.76, h*0.62);
+    g.fillStyle = '#e0b37a';
+    g.fillRect(x+w*0.12, y+h*0.28, w*0.76, 5);
+    g.fillStyle = roof;
+    g.fillRect(x+w*0.08, y+h*0.20, w*0.84, h*0.12);
+    /* 门洞 + 窗 */
+    g.fillStyle = '#4a2f18';
+    g.fillRect(x+w*0.44, y+h*0.56, w*0.14, h*0.34);
+    g.fillStyle = '#ffd76a';
+    g.fillRect(x+w*0.22, y+h*0.44, w*0.12, h*0.12);
+    g.fillRect(x+w*0.68, y+h*0.44, w*0.12, h*0.12);
+    /* 条纹遮阳棚 */
+    for(let i = 0; i < 6; i++){
+      g.fillStyle = i % 2 ? '#d8543a' : '#f0e0c0';
+      g.fillRect(x+w*(0.26+i*0.08), y+h*0.54, w*0.08, h*0.08);
+    }
+    /* 门口货箱 */
+    g.fillStyle = '#7a4f24';
+    g.fillRect(x+w*0.14, y+h*0.80, w*0.12, h*0.12);
+    g.fillRect(x+w*0.76, y+h*0.80, w*0.10, h*0.12);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'skull'){
+    const cx = x + w/2;
+    /* 岩壁 */
+    g.fillStyle = '#5a4a44';
+    g.beginPath();
+    g.moveTo(x+w*0.04, y+h);
+    g.lineTo(x+w*0.08, y+h*0.36);
+    g.lineTo(x+w*0.30, y+h*0.10);
+    g.lineTo(x+w*0.70, y+h*0.06);
+    g.lineTo(x+w*0.94, y+h*0.34);
+    g.lineTo(x+w*0.96, y+h);
+    g.closePath(); g.fill();
+    g.fillStyle = '#6f5c54';
+    g.fillRect(x+w*0.08, y+h*0.34, w*0.10, h*0.60);
+    g.fillRect(x+w*0.82, y+h*0.30, w*0.10, h*0.64);
+    /* 洞口 */
+    g.fillStyle = '#120e14';
+    g.beginPath();
+    g.moveTo(x+w*0.28, y+h);
+    g.lineTo(x+w*0.28, y+h*0.54);
+    g.quadraticCurveTo(cx, y+h*0.18, x+w*0.72, y+h*0.54);
+    g.lineTo(x+w*0.72, y+h);
+    g.closePath(); g.fill();
+    /* 骷髅标记 */
+    g.fillStyle = '#ddd6c0';
+    g.beginPath(); g.arc(cx, y+h*0.44, w*0.09, 0, Math.PI*2); g.fill();
+    g.fillRect(cx-w*0.07, y+h*0.46, w*0.14, h*0.10);
+    g.fillStyle = '#241a1a';
+    g.fillRect(cx-w*0.05, y+h*0.42, w*0.03, h*0.04);
+    g.fillRect(cx+w*0.02, y+h*0.42, w*0.03, h*0.04);
+    g.fillRect(cx-w*0.02, y+h*0.52, w*0.04, h*0.03);
+    /* 骨头 */
+    g.fillStyle = '#cfc6ae';
+    g.fillRect(x+w*0.18, y+h*0.88, w*0.10, 3);
+    g.fillRect(x+w*0.72, y+h*0.90, w*0.12, 3);
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }

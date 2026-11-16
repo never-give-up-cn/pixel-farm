@@ -202,6 +202,21 @@ window.addEventListener('keydown', e=>{
           ensureAudio();
           return;
         }
+        if(l && l.action === 'bus' && typeof busInteract === 'function'){
+          busInteract();
+          ensureAudio();
+          return;
+        }
+        if(l && l.action === 'desertshop' && typeof desertShopInteract === 'function'){
+          desertShopInteract();
+          ensureAudio();
+          return;
+        }
+        if(l && l.action === 'skull' && typeof desertSkullInteract === 'function'){
+          desertSkullInteract();
+          ensureAudio();
+          return;
+        }
         if(l && l.home && typeof worldEnterLandmark === 'function' && worldEnterLandmark(l)){
           ensureAudio();
           return;

@@ -179,7 +179,36 @@ const CONFIG = {
     DIRT_PATCHES: 7,        // 泥土斑块数量
     TREE_CHANCE: 0.075,     // 草地长树概率
     ROCK_CHANCE: 0.05,      // 草地出石概率
-    FLOWER_CHANCE: 0.06     // 草地开花概率
+    FLOWER_CHANCE: 0.06,    // 草地开花概率
+    /* 第 37 轮：农场类型（开局在标题界面选择；旧存档默认标准农场）
+     * 每种类型只改变「农场空地」内部与野外植被密度，农舍 / 出生点 / 去镇上的主路永远保通。
+     * tree/rock/flower = 野外（农场外）地面的生成概率覆盖值，不填则用上面的默认值。 */
+    FARM_DEFAULT: 'standard',
+    FARM_TYPES: {
+      ORDER: ['standard', 'river', 'forest', 'hilltop'],
+      LIST: {
+        standard: {
+          name:'标准农场', icon:'🌾',
+          desc:'平整开阔，最适合大面积种植；河塘与树林都在农场外围。',
+          tree:0.075, rock:0.05, flower:0.06
+        },
+        river: {
+          name:'河流农场', icon:'🌊',
+          desc:'一条河从农场中间穿过，可耕地被切成两半；河上留了一座桥。',
+          river:true, tree:0.09, rock:0.04, flower:0.07
+        },
+        forest: {
+          name:'森林农场', icon:'🌳',
+          desc:'农场里长满树木，木材和采集物更丰富，但开垦前要先清树。',
+          farmTree:0.24, farmRock:0.05, tree:0.16, rock:0.02, flower:0.08
+        },
+        hilltop: {
+          name:'山顶农场', icon:'⛰️',
+          desc:'地势多岩，农场里散布矿石与一小片水塘；石材多、平地少。',
+          farmRock:0.24, farmTree:0.04, pond:true, tree:0.03, rock:0.11, flower:0.05
+        }
+      }
+    }
   },
 
   /* 玩家 */

@@ -93,6 +93,7 @@ function serializeState(){
     v: CONFIG.SAVE.VERSION,
     at: Date.now(),
     seed: CONFIG.SEED,
+    farm: farmType,                 /* 第 37 轮：农场类型（旧存档没有 → 标准农场） */
     world: { map: _worldMap, player: { x: player.x, y: player.y } },
     player: (window.farmhouseActive && typeof farmhouseSavePos === 'function' && farmhouseSavePos())
       ? farmhouseSavePos() : {x: player.x, y: player.y},
@@ -178,9 +179,10 @@ function deserializeState(d){
   try{
     if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
       worldUseArrays('valley');
-    /* 地图：按存档里的种子重新生成底图，再叠加 diff */
+    /* 地图：按存档里的种子 + 农场类型重新生成底图，再叠加 diff */
     const seed = (typeof d.seed === 'number') ? d.seed : CONFIG.SEED;
-    genMap(seed);
+    const ft = (typeof d.farm === 'string' && CONFIG.GEN.FARM_TYPES.LIST[d.farm]) ? d.farm : CONFIG.GEN.FARM_DEFAULT;
+    genMap(seed, ft);
     snapshotBaseMap();
     applyMapDiff(d.map);
     /* 作物 */
@@ -559,12 +561,12 @@ function wipeSave(){
   deleteSave();
   toast('槽' + (curSlot + 1) + ' 存档已删除');
 }
-/* 全新一局：删掉旧档、从头开始 */
-function newGame(){
+/* 全新一局：删掉旧档、从头开始（farmId 为农场类型，不传 = 标准农场） */
+function newGame(farmId){
   deleteSave();
   if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
     worldUseArrays('valley');
-  genMap(CONFIG.SEED);
+  genMap(CONFIG.SEED, farmId || CONFIG.GEN.FARM_DEFAULT);
   snapshotBaseMap();
   initInventory();
   buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);

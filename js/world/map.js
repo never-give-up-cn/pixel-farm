@@ -193,7 +193,9 @@ function renderBigmap(){
   const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
   g.fillStyle = CONFIG.MINIMAP.PLAYER;
   g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
-  if(bigmapSubEl) bigmapSubEl.textContent = (typeof mapDisplayName !== 'undefined' ? mapDisplayName + ' · ' : '') + '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
+  if(bigmapSubEl) bigmapSubEl.textContent = (typeof mapDisplayName !== 'undefined' ? mapDisplayName + ' · ' : '') +
+    ((typeof currentMap !== 'undefined' && currentMap === 'valley') ? (farmTypeDef(farmType).name + ' · ') : '') +
+    '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
 }
 function bigmapOpenPanel(){
   if(bigmapOpen) return false;
@@ -229,6 +231,21 @@ const SHOP_POS  = {x:TOWN_SHOP.x, y:(TOWN_SHOP.row || CONFIG.TOWN.ROOM_ROW), w:T
 /* 委托板（第 16 轮）：放在商店西侧 3 格，离商店的交互半径不重叠 */
 const QUEST_BOARD = {x:SHOP_POS.x - 3, y:SHOP_POS.y, w:1, h:1};
 const SPAWN = {x:FARM.x + Math.floor(FARM.w/2), y:FARM.y + Math.floor(FARM.h/2) + 2};
+
+/* 第 37 轮：农场类型（开局选择；旧存档默认标准农场）
+ * 类型只影响农场空地内部的地形和野外植被密度，不改变农舍 / 出生点 / 去镇上的主路。 */
+let farmType = CONFIG.GEN.FARM_DEFAULT || 'standard';
+window.farmType = farmType;              /* 兼容其它模块用全局名读取（Object.assign 会固化 getter，这里直接维护） */
+function farmTypeDef(id){
+  const L = CONFIG.GEN.FARM_TYPES.LIST;
+  return L[id] || L[CONFIG.GEN.FARM_DEFAULT] || L.standard;
+}
+function setFarmType(id){
+  const L = CONFIG.GEN.FARM_TYPES.LIST;
+  farmType = (typeof id === 'string' && L[id]) ? id : CONFIG.GEN.FARM_DEFAULT;
+  window.farmType = farmType;
+  return farmType;
+}
 
 const inFarm = (x,y)=> x>=FARM.x && x<FARM.x+FARM.w && y>=FARM.y && y<FARM.y+FARM.h;
 const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
@@ -289,8 +306,60 @@ function genTown(){
   }
 }
 
+/* --- 第 37 轮：农场类型的地形装饰 ---
+ * 在「中央空地已清成草地」之后、盖农舍之前调用。
+ * 只改农场空地内部；后续 openFarmCorridors() 会把主路重新打通。 */
+function genFarmFeatures(rnd, ft){
+  const x0 = FARM.x, y0 = FARM.y;
+  /* 河流农场：一条 2 格宽的河从北向南穿过农场东半边 */
+  if(ft.river){
+    for(let y=y0; y<y0+FARM.h; y++){
+      const off = Math.round(Math.sin((y - y0) * 0.8) * 1.1);
+      const cx = x0 + 8 + off;
+      for(let k=0; k<2; k++){
+        const x = cx + k;
+        if(x <= x0 || x >= x0 + FARM.w) continue;
+        map[y*MAP_W + x] = T.WATER;
+      }
+    }
+  }
+  /* 山顶农场：东北角一小片水塘 */
+  if(ft.pond){
+    for(let y=y0+4; y<=y0+5; y++)
+      for(let x=x0+9; x<=x0+10; x++) map[y*MAP_W + x] = T.WATER;
+  }
+  /* 森林 / 山顶：在农场草地上撒树和石头（出生点与主路之后会重新清开） */
+  const tree = ft.farmTree || 0, rock = ft.farmRock || 0;
+  if(tree > 0 || rock > 0){
+    for(let y=y0; y<y0+FARM.h; y++)
+      for(let x=x0; x<x0+FARM.w; x++){
+        const i = y*MAP_W + x;
+        if(map[i] !== T.GRASS) continue;
+        const r = rnd();
+        if(r < tree) map[i] = T.TREE;
+        else if(r < tree + rock) map[i] = T.ROCK;
+      }
+  }
+}
+/* 无论选哪种农场，农舍门口、出生点和去镇上的路必须连成一片 */
+function openFarmCorridors(){
+  const yMid = FARM.y + Math.floor(FARM.h * 0.75);      /* 农场内的横向主路 */
+  for(let x=FARM.x; x<FARM.x+FARM.w; x++) map[yMid*MAP_W + x] = T.GRASS;
+  const fx = HOUSE_POS.x + 1;                            /* 农舍大门正下方 */
+  for(let y=FARM.y+2; y<=yMid; y++) map[y*MAP_W + fx] = T.GRASS;
+  const ex = (CONFIG.TOWN.CONNECTOR_X == null) ? FARM.x + 10 : CONFIG.TOWN.CONNECTOR_X;
+  for(let y=yMid; y<CONFIG.TOWN.ROW; y++){                /* 农场 → 镇上的南北主路 */
+    map[y*MAP_W + ex] = T.GRASS;
+    map[y*MAP_W + ex + 1] = T.GRASS;
+  }
+  for(let y=SPAWN.y-1; y<=SPAWN.y+1; y++)                 /* 出生点 3×3 */
+    for(let x=SPAWN.x-1; x<=SPAWN.x+1; x++) map[y*MAP_W + x] = T.GRASS;
+}
+
 /* --- 地图生成 --- */
-function genMap(seed){
+function genMap(seed, typeId){
+  if(typeId !== undefined) setFarmType(typeId);
+  const ft = farmTypeDef(farmType);
   const rnd = mulberry32(seed);
   map.fill(T.GRASS);
   crops.fill(null);
@@ -319,16 +388,24 @@ function genMap(seed){
   for(let y=FARM.y;y<FARM.y+FARM.h;y++)
     for(let x=FARM.x;x<FARM.x+FARM.w;x++) map[y*MAP_W+x] = T.GRASS;
 
-  /* 5) 树 / 岩石 / 野花（只在草地上，且避开空地） */
+  /* 5) 树 / 岩石 / 野花（只在草地上，且避开空地；密度按农场类型微调） */
+  const treeChance = (typeof ft.tree === 'number') ? ft.tree : CONFIG.GEN.TREE_CHANCE;
+  const rockChance = (typeof ft.rock === 'number') ? ft.rock : CONFIG.GEN.ROCK_CHANCE;
+  const flowerChance = (typeof ft.flower === 'number') ? ft.flower : CONFIG.GEN.FLOWER_CHANCE;
   for(let y=1;y<MAP_H-1;y++) for(let x=1;x<MAP_W-1;x++){
     if(inFarm(x,y)) continue;
     const i = y*MAP_W+x;
     if(map[i] !== T.GRASS) continue;
     const r = rnd();
-    if(r < CONFIG.GEN.TREE_CHANCE) map[i] = T.TREE;
-    else if(r < CONFIG.GEN.TREE_CHANCE + CONFIG.GEN.ROCK_CHANCE) map[i] = T.ROCK;
-    else if(r < CONFIG.GEN.TREE_CHANCE + CONFIG.GEN.ROCK_CHANCE + CONFIG.GEN.FLOWER_CHANCE) map[i] = T.FLOWER;
+    if(r < treeChance) map[i] = T.TREE;
+    else if(r < treeChance + rockChance) map[i] = T.ROCK;
+    else if(r < treeChance + rockChance + flowerChance) map[i] = T.FLOWER;
   }
+
+  /* 5b) 第 37 轮：农场类型地形（河流 / 树林 / 矿脉 / 水塘） */
+  genFarmFeatures(rnd, ft);
+  /* 5c) 农舍门口 → 出生点 → 镇上的主路永远保通 */
+  openFarmCorridors();
 
   /* 6) 建筑（小屋 1 间，在空地内上缘） */
   for(let y=HOUSE_POS.y;y<HOUSE_POS.y+HOUSE_POS.h;y++)
@@ -347,7 +424,7 @@ function genMap(seed){
     const t = map[y*MAP_W+x];
     if(t===T.TREE||t===T.ROCK||t===T.FLOWER) farmWild++;
   }
-  dlog('[map] seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
+  dlog('[map] type=' + farmType + ' seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
     ' water=' + cnt[T.WATER] + ' tree=' + cnt[T.TREE] + ' rock=' + cnt[T.ROCK] +
     ' flower=' + cnt[T.FLOWER] + ' house=' + cnt[T.HOUSE] + ' shop=' + cnt[T.SHOP] +
     ' | farm ' + FARM.w + 'x' + FARM.h + ' wild-in-farm=' + farmWild);
@@ -357,5 +434,5 @@ function genMap(seed){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap });
-export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap };
+Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap, farmTypeDef, setFarmType, genFarmFeatures, openFarmCorridors });
+export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap, farmType, farmTypeDef, setFarmType, genFarmFeatures, openFarmCorridors };

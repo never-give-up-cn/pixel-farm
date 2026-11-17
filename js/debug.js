@@ -87,6 +87,9 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   get miniReady(){ return miniReady; },
   rebuildMinimap, drawMinimap, minimapTileColor, minimapNpcColor,
   SHOP_POS, FARM,
+  /* 第 37 轮：农场类型 */
+  farmType: () => window.farmType, farmTypeDef, setFarmType, genFarmFeatures, openFarmCorridors,
+  FARM_TYPES: CONFIG.GEN.FARM_TYPES,
   /* 第 24 轮：城镇（建筑是容器 / NPC 位置是时间的纯函数 / 扑空可解释） */
   genTown, townBuilding, townShopBuilding, townHomeBuilding, townBuildingAt,
   townRoomAt, playerRoom, townDoorAt, townDoorCheck, townEnter,

@@ -1226,7 +1226,39 @@ const CONFIG = {
       {id:'winter', name:'雪夜灯会', icon:'🏮', effect:'夜里广场亮灯 · 送礼好感 ×3', amb:[330, 440]}
     ],
     /* 冬夜灯会 NPC 特殊台词（{name} 会替换成居民名字） */
-    WINTER_TALK: '{name}：灯会把雪地都照亮了，今晚别急着走呀。'
+    WINTER_TALK: '{name}：灯会把雪地都照亮了，今晚别急着走呀。',
+    /* 第 36 轮：节日小游戏摊位（每季第 5 天在广场开放，按 E 进入）
+     * stars = 三档分数线（1★ / 2★ / 3★）；gold = 1★ 基础奖金，每多 1★ 再 +100
+     * 玩法：春抢种 / 夏甩竿 / 秋接南瓜 / 冬点灯记忆 */
+    GAME: {
+      RANGE: 2.0,              // 广场中心多远内可以按 E 打开摊位
+      MODES: {
+        spring: {
+          name:'抢种大赛', icon:'🌱',
+          rule:'嫩芽冒头时点它抢收（+10 分）；点空地会扣 5 分。25 秒内拿高分。',
+          duration:25, stars:[80,160,240],
+          reward:{id:'seed_tomato', n:2, gold:200}
+        },
+        summer: {
+          name:'甩竿大赛', icon:'🎣',
+          rule:'浮标来回移动时点「收线」，停在亮色区拿最高分。共 5 竿，成绩计入渔获赛。',
+          duration:45, casts:5, stars:[80,140,190],
+          reward:{id:'fish_koi', n:1, gold:200}, contest:2
+        },
+        autumn: {
+          name:'接南瓜', icon:'🎃',
+          rule:'用 ← → / A D 移动篮子，接住落下的南瓜（金南瓜 +30）。30 秒内比谁接得多。',
+          duration:30, stars:[90,180,300],
+          reward:{id:'pumpkin', n:2, gold:250}
+        },
+        winter: {
+          name:'点灯记忆', icon:'🏮',
+          rule:'记住四盏灯亮起的顺序，再按同样顺序点亮。灯序会越来越长，错 3 次结束。',
+          lives:3, maxRound:6, stars:[120,300,480],
+          reward:{id:'mushroom_soup', n:1, gold:250}
+        }
+      }
+    }
   },
 
   /* 成就（第 18 轮）：>=20 个，分 种植 / 经济 / 社交 / 探索 四类

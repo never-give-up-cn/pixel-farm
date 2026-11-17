@@ -253,6 +253,68 @@
   #minecartBody{display:flex;flex-direction:column;gap:8px}
   #minecartBody .mbtn{text-align:left;padding:8px 12px;font-size:13px}
   #minecartBody .mbtn.here{opacity:.55;border-color:#3a4256;color:#8fa3bd}
+  /* 节日小游戏摊位 */
+  #festGame{position:fixed;inset:0;z-index:55;display:none;align-items:center;justify-content:center}
+  #festGame.open{display:flex}
+  #festGameMask{position:absolute;inset:0;background:rgba(4,6,10,.64)}
+  #festGamePanel{position:relative;width:560px;max-width:calc(100vw - 24px);max-height:90vh;
+                 display:flex;flex-direction:column}
+  #festGameHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;align-items:baseline;gap:10px}
+  #festGameScore{margin-left:auto;color:#ffd76a;font-size:13px}
+  #festGameHint{color:#9fb0c4;font-size:12px;line-height:1.7;margin-bottom:8px}
+  #festGameBody{flex:1;min-height:190px;overflow-y:auto;padding-right:3px}
+  #festGameFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
+  .fg-hero{display:flex;gap:12px;align-items:center;border:1px solid #2c3a4e;border-radius:8px;
+           padding:10px 12px;background:rgba(8,10,16,.55);margin-bottom:8px}
+  .fg-hero-icon{font-size:38px;line-height:1}
+  .fg-hero-main{display:flex;flex-direction:column;gap:4px}
+  .fg-hero-main b{color:#ffd76a;font-size:15px}
+  .fg-hero-main span{color:#9fb0c4;font-size:12px;line-height:1.6}
+  .fg-info{display:flex;gap:14px;flex-wrap:wrap;color:#8fa3bd;font-size:11.5px;margin-bottom:8px}
+  .fg-btnrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .fg-btnrow .mbtn{padding:7px 16px;font-size:13px}
+  .fg-time{color:#ffd76a;font-size:12px;text-align:right;margin-bottom:5px}
+  .fg-status{color:#9fb0c4;font-size:12px;margin-top:7px;line-height:1.6}
+  .fg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .fg-cell{height:62px;border:1px solid #2c3a4e;border-radius:7px;background:#141a26;
+           font-size:26px;line-height:1;cursor:pointer;transition:background .12s,border-color .12s,transform .08s}
+  .fg-cell:hover{border-color:#4a5a76}
+  .fg-cell.sprout{background:#23402a;border-color:#7fd05a;animation:fgPulse .55s infinite alternate}
+  .fg-cell.good{background:#3f8f4a;transform:scale(.94)}
+  .fg-cell.miss{background:#5b2323;border-color:#c05a5a}
+  @keyframes fgPulse{from{box-shadow:0 0 0 rgba(127,208,90,0)}to{box-shadow:0 0 12px rgba(127,208,90,.55)}}
+  .fg-track{position:relative;height:34px;border:1px solid #33425a;border-radius:8px;
+            background:linear-gradient(90deg,#10151f,#1b2433);overflow:hidden;margin-top:4px}
+  .fg-zone{position:absolute;top:0;bottom:0;background:rgba(255,215,106,.24);
+           border-left:2px solid #ffd76a;border-right:2px solid #ffd76a;box-sizing:border-box}
+  .fg-marker{position:absolute;top:2px;bottom:2px;width:6px;margin-left:-3px;border-radius:3px;
+             background:#fff2c8;box-shadow:0 0 10px #ffd76a}
+  .fg-cast{width:100%;margin-top:10px;padding:8px 12px}
+  .fg-catch{position:relative;height:260px;border:1px solid #33425a;border-radius:9px;
+            background:linear-gradient(180deg,#1b2740 0%,#3a2a3e 62%,#4a3524 100%);
+            overflow:hidden;margin-top:4px}
+  .fg-drop{position:absolute;transform:translateX(-50%);font-size:26px;line-height:1}
+  .fg-drop.gold{filter:drop-shadow(0 0 8px #ffd76a)}
+  .fg-cart{position:absolute;bottom:4px;transform:translateX(-50%);font-size:30px;line-height:1;
+           transition:left .08s linear;filter:drop-shadow(0 2px 2px rgba(0,0,0,.55))}
+  .fg-controls{display:flex;gap:8px;margin-top:8px}
+  .fg-controls .mbtn{flex:1;padding:7px 10px;font-size:12px}
+  .fg-wrow{display:flex;align-items:center;font-size:13px;color:#ffd76a;margin-bottom:6px}
+  .fg-lives{letter-spacing:3px}
+  .fg-round{margin-left:auto;color:#9fb0c4;font-size:12px}
+  .fg-lamps{display:flex;gap:9px}
+  .fg-lamp{flex:1;height:82px;border:1px solid #33425a;border-radius:9px;background:#141a26;
+           font-size:30px;cursor:pointer;transition:background .12s,border-color .12s,box-shadow .12s,transform .08s}
+  .fg-lamp:hover{border-color:#4a5a76}
+  .fg-lamp.lamp0{border-color:#8a4a4a}.fg-lamp.lamp1{border-color:#7a6a34}
+  .fg-lamp.lamp2{border-color:#3f6a7a}.fg-lamp.lamp3{border-color:#4a5a8a}
+  .fg-lamp.lit{background:#ffe08a;border-color:#fff2c8;box-shadow:0 0 18px rgba(255,215,106,.7);transform:scale(1.04)}
+  .fg-result{text-align:center;padding:10px 0 4px;border:1px solid #2c3a4e;border-radius:8px;
+             background:rgba(8,10,16,.55)}
+  .fg-stars{font-size:34px;color:#ffd76a;letter-spacing:5px;line-height:1.2}
+  .fg-big{font-size:30px;color:#e8f0ff;font-weight:700;margin:3px 0}
+  .fg-best{color:#8fa3bd;font-size:11.5px;margin-bottom:5px}
+  .fg-reward{color:#8ee08a;font-size:12px;line-height:1.7;padding:0 10px}
   /* 矿井入口电梯 */
   #minegate{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #minegate.open{display:flex}
@@ -1026,6 +1088,17 @@
     <div id="minecartHead">🛤 矿车 <span id="minecartWhere">山地 · 矿井</span></div>
     <div id="minecartBody"></div>
     <div id="minecartFoot">Esc 关闭 · 矿车连通山地矿井 / 巴士站 / 采石场</div>
+  </div>
+</div>
+
+<!-- 节日小游戏：每季第 5 天广场上的游戏摊位 -->
+<div id="festGame">
+  <div id="festGameMask"></div>
+  <div id="festGamePanel" class="panel">
+    <div id="festGameHead"><span id="festGameTitle">🎪 节日小游戏</span><span id="festGameScore">0 分</span></div>
+    <div id="festGameHint"></div>
+    <div id="festGameBody"></div>
+    <div id="festGameFoot">Esc 关闭 · 每天首次达标可领奖励</div>
   </div>
 </div>
 

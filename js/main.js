@@ -85,6 +85,7 @@ import './systems/room.js';
 import './systems/farmhouse.js';
 import './systems/quests.js';
 import './systems/festival.js';
+import './systems/festival-game.js';
 import './systems/stats.js';
 import './systems/maker.js';
 import './systems/endgame.js';

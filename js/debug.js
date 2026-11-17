@@ -180,6 +180,9 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   festivalOnSow, festivalGrowInc, festivalSellMult, festivalGiftAff, festivalAddFish,
   festivalNpcSpot, festivalDialogLines, festivalRivalScores,
   festivalSerialize, festivalDeserialize, festivalResetState,
+  festGameState, festivalGameNear, festivalGameInteract,
+  festGameOpenPanel, festGameClosePanel, festGameStart, festGameFinish, festGameKey,
+  festGameSerialize, festGameDeserialize, festGameResetState,
   showFestivalBanner, hideFestivalBanner,
   calDayInfo, renderCalendar, calOpenPanel, calClosePanel, toggleCalendar, hitHudDate,
   /* 第 28 轮：天气预报 / 音量 / 状态图标 / 全屏地图 / 好感总览 / 多存档槽 / 物品提示 */

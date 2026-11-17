@@ -14,6 +14,12 @@ window.addEventListener('keydown', e=>{
   keys[k] = true;
   if(k==='a'||k==='arrowleft'||k==='d'||k==='arrowright') lastAxis = 'x';
   else if(k==='w'||k==='arrowup'||k==='s'||k==='arrowdown') lastAxis = 'y';
+  /* 节日小游戏：方向键 / A D 交给小游戏，其它键不穿透世界 */
+  if(window.festGameOpen){
+    if(k === 'escape'){ if(!e.repeat) festGameClosePanel(); return; }
+    festGameKey(k);
+    return;
+  }
   /* 农舍室内：只处理 Esc / E，移动由 updateFarmhouse 读 keys */
   if(window.farmhouseActive){
     if(k === 'h'){ if(!e.repeat) toggleIndoorDecor(); return; }
@@ -257,6 +263,7 @@ window.addEventListener('keydown', e=>{
       }
       else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
       else if(fb) farmBuildingInteract(fb);      /* 温室 / 筒仓 / 水井 / 发货箱 / 鱼塘 / 磨坊 */
+      else if(typeof festivalGameNear === 'function' && festivalGameNear()) festivalGameInteract();  /* 节日小游戏摊位 */
       else if(typeof bundleCenterNear === 'function' && bundleCenterNear()) toggleBundlePanel();  /* 第 32 轮：社区中心 */
       else if(typeof wardrobeNear === 'function' && wardrobeNear()) toggleWardrobe();             /* 第 32 轮：衣柜 */
       else if(typeof roomPlannerNear === 'function' && roomPlannerNear()) toggleRoom();          /* 第 32 轮：装修样板 */
@@ -328,6 +335,7 @@ window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; h
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
   if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || window.jojaDevOpen || window.minecartOpen ||
+     window.festGameOpen ||
      chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen || window.skillsOpen || window.equipmentOpen) return;
   if(window.mineActive) return;
@@ -430,6 +438,7 @@ function updateHoldUse(dt){
   if(!mouseHeld) return;
   if(window.mineActive){ mouseHeld = false; return; }
   if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || window.jojaDevOpen || window.minecartOpen ||
+     window.festGameOpen ||
      chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen ||
      buildMode || fishingActive() || window.skillsOpen || window.equipmentOpen){ mouseHeld = false; return; }

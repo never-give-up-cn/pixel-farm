@@ -37,13 +37,13 @@ function festivalNight(){
 function festivalDecorList(f){
   const P = CONFIG.FESTIVAL.PLAZA, out = [];
   for(let i=0;i<4;i++) out.push({x:P.x + i*2, y:P.y, t:T.FEST_BANNER});
-  if(f.id === 'autumn'){
-    for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 1, t:T.FEST_STALL});
-  }else if(f.id === 'winter'){
-    for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 1, t:T.FEST_LANTERN});
-  }else if(f.id === 'summer'){
+  /* 每场节日都有三座集市摊位；小游戏摊位就在广场中央（按 E 打开） */
+  for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 1, t:T.FEST_STALL});
+  if(f.id === 'summer'){
     out.push({x:P.x + 1, y:P.y + 2, t:T.FEST_LANTERN});
     out.push({x:P.x + 5, y:P.y + 2, t:T.FEST_LANTERN});
+  }else if(f.id === 'winter'){
+    for(let i=0;i<3;i++) out.push({x:P.x + 1 + i*2, y:P.y + 2, t:T.FEST_LANTERN});
   }
   return out;
 }
@@ -230,7 +230,8 @@ function festivalDialogLines(d, lines){
 /* --- 存档 --- */
 function festivalSerialize(){
   return {p: festivalState.points | 0, d: festivalState.day | 0,
-          c: festivalState.claimed | 0, b: festivalState.banner | 0};
+          c: festivalState.claimed | 0, b: festivalState.banner | 0,
+          g: (typeof festGameSerialize === 'function') ? festGameSerialize() : null};
 }
 function festivalDeserialize(o){
   festivalState = {points:0, day:0, claimed:0, banner:0};
@@ -240,6 +241,7 @@ function festivalDeserialize(o){
     festivalState.claimed = Math.max(0, o.c | 0);
     festivalState.banner  = Math.max(0, o.b | 0);
   }
+  if(typeof festGameDeserialize === 'function') festGameDeserialize(o && o.g);
   /* 读档时若正在节日当天：装饰 / 环境音 / 余下效果直接续上 */
   festivalDayStart();
   return true;
@@ -248,6 +250,7 @@ function festivalResetState(){
   festivalState = {points:0, day:0, claimed:0, banner:0};
   hideFestivalBanner();
   festivalStopAmbience();
+  if(typeof festGameResetState === 'function') festGameResetState();
 }
 
 /* --- 日历面板 --- */

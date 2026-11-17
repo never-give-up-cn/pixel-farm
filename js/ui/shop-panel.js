@@ -655,6 +655,20 @@ function drawUI(g){
     g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
     g.fillText(hint, hx, hy);
   }
+  /* 走到节日广场 → 提示按 E 玩小游戏（第 36 轮） */
+  if(!shopOpen && !window.festGameOpen && !npcNear() && typeof festivalGameNear === 'function' && festivalGameNear()){
+    const f = festivalToday();
+    const gc = f && CONFIG.FESTIVAL.GAME && CONFIG.FESTIVAL.GAME.MODES ? CONFIG.FESTIVAL.GAME.MODES[f.id] : null;
+    const hint = gc ? ('按 E 玩「' + gc.name + '」') : '按 E 玩节日小游戏';
+    g.font = '13px ' + FONT_CJK;
+    const hw = g.measureText(hint).width;
+    const hx = player.x - cam.x - hw/2, hy = player.y - cam.y - 44;
+    g.fillStyle = 'rgba(8,10,16,0.80)'; g.fillRect(hx - 6, hy - 3, hw + 12, 20);
+    g.strokeStyle = CONFIG.COLORS.hudBorder;
+    g.strokeRect(hx - 6, hy - 3, hw + 12, 20);
+    g.fillStyle = CONFIG.COLORS.hudAccent; g.textAlign = 'left';
+    g.fillText(hint, hx, hy);
+  }
   /* 走到居民身边 → 提示按 E 交谈（对话打开时不再提示） */
   const nn = npcNear();
   if(nn && !npcOpen && !shopOpen){

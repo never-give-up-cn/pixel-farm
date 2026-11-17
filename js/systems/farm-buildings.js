@@ -26,9 +26,11 @@ function farmBuildingCount(type){ return farmBuildingList(type).length; }
 /* 温室范围：以温室所在格为中心的一个方形区域 */
 function cropInGreenhouse(tx, ty){
   if (typeof buildings === 'undefined' || !Array.isArray(buildings)) return false;
+  const radius = GREENHOUSE_RADIUS +
+    ((typeof jojaDevHas === 'function' && jojaDevHas('greenhouse')) ? 4 : 0);
   for (const b of buildings) {
     if (!b || b.type !== 'greenhouse') continue;
-    if (Math.abs(tx - b.tx) <= GREENHOUSE_RADIUS && Math.abs(ty - b.ty) <= GREENHOUSE_RADIUS) return true;
+    if (Math.abs(tx - b.tx) <= radius && Math.abs(ty - b.ty) <= radius) return true;
   }
   return false;
 }

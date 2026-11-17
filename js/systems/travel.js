@@ -10,6 +10,13 @@ const travelState = { busFixed: false, quote: false };
 window.travelState = travelState;
 
 function busIsFixed(){ return !!travelState.busFixed; }
+/* Joja 社区发展买断：直接修好巴士，不重复扣钱 */
+function busRepairNow(){
+  if(travelState.busFixed) return false;
+  travelState.busFixed = true;
+  travelState.quote = false;
+  return true;
+}
 function busRepairCost(){
   return (typeof isJojaMember === 'function' && isJojaMember())
     ? CONFIG.DESERT.REPAIR_COST_JOJA
@@ -97,12 +104,12 @@ function travelReset(){
 }
 
 Object.assign(window, {
-  travelState, busIsFixed, busRepairCost, busInteract,
+  travelState, busIsFixed, busRepairNow, busRepairCost, busInteract,
   desertShopInteract, desertSkullInteract, busPromptText,
   travelSerialize, travelDeserialize, travelReset
 });
 export {
-  travelState, busIsFixed, busRepairCost, busInteract,
+  travelState, busIsFixed, busRepairNow, busRepairCost, busInteract,
   desertShopInteract, desertSkullInteract, busPromptText,
   travelSerialize, travelDeserialize, travelReset
 };

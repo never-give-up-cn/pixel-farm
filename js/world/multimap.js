@@ -279,6 +279,7 @@ function genMountain(){
     { type:'carpenter', x:30, y:70, w:18, h:11, label:'罗宾木匠店', home:'in_robin' },
     { type:'tent',      x:55, y:40, w:7,  h:5,  label:'莱纳斯的帐篷' },
     { type:'bridge',    x:104,y:28, w:13, h:3,  label:'采石场', action:'quarry' },
+    { type:'minecart',  x:60, y:82, w:3,  h:3,  label:'矿车', action:'minecart', solid:true },
     { type:'sign',      x:61, y:94, w:3,  h:3,  label:'南边 · 小镇', solid:false }
   ];
   scatterWild(mulberry32(9102), 1300, L, { tree:0.62 });
@@ -322,6 +323,7 @@ function genQuarry(){
     L.push({ type:'quarryrock', x:p[0], y:p[1], w:3, h:3,
              label:k[1], action:'quarryrock', ore:k[0], solid:true });
   });
+  L.push({ type:'minecart', x:68, y:94, w:3, h:3, label:'矿车', action:'minecart', solid:true });
   L.push({ type:'sign', x:61, y:94, w:3, h:3, label:'南边 · 山地', solid:false });
 
   return {
@@ -371,6 +373,7 @@ function genBusstop(){
 
   const L = [
     { type:'bus',  x:52,  y:47, w:8,  h:3,  label:'巴士', action:'bus' },
+    { type:'minecart', x:62, y:47, w:3, h:3, label:'矿车', action:'minecart', solid:true },
     { type:'sign', x:112, y:46, w:3,  h:3,  label:'东边 · 小镇', solid:false }
   ];
   scatterWild(mulberry32(9302), 500, L, { tree:0.78 });
@@ -609,9 +612,11 @@ function worldMineRock(l){
   if(!l || l.action !== 'quarryrock') return false;
   if(l.cutDay === clock.day){ toast('这块矿脉今天已经采过了'); return false; }
   const drops = QUARRY_YIELD[l.ore] || [['stone', 2]];
+  const bonus = (typeof jojaDevHas === 'function' && jojaDevHas('quarry')) ? 1 : 0;
   l.cutDay = clock.day;
   const names = [];
-  for(const [id, n] of drops){
+  for(const [id, baseN] of drops){
+    const n = baseN + bonus;
     if(typeof addItem === 'function') addItem(id, n);
     const d = (typeof itemDef === 'function') ? itemDef(id) : null;
     names.push((d ? d.name : id) + ' ×' + n);
@@ -676,6 +681,7 @@ function landmarkColor(type){
   if(type === 'quarryrock') return '#6f675c';
   if(type === 'statue') return '#8a9280';
   if(type === 'bus') return '#d8a53c';
+  if(type === 'minecart') return '#8a5a3a';
   if(type === 'desertshop') return '#c98a4a';
   if(type === 'skull') return '#6a5a7a';
   if(type === 'cactus') return '#4a8a3a';
@@ -707,6 +713,32 @@ function drawWorldLandmark(g, l){
     for(let yy = y; yy < y+h; yy += 10) g.fillRect(x, yy, w, 4);
     g.fillStyle = '#5b3a1d';
     g.fillRect(x, y, 3, h); g.fillRect(x+w-3, y, 3, h);
+    drawLandmarkLabel(g, l, x, y, w, h);
+    return;
+  }
+  if(type === 'minecart'){
+    const on = (typeof jojaDevHas === 'function' && jojaDevHas('minecart'));
+    /* 铁轨 */
+    g.fillStyle = '#4a4038';
+    g.fillRect(x+2, y+h*0.62, w-4, 3);
+    g.fillRect(x+2, y+h*0.78, w-4, 3);
+    g.fillStyle = '#7a6a58';
+    for(let tx = x+4; tx < x+w-3; tx += 6) g.fillRect(tx, y+h*0.60, 2, h*0.22);
+    /* 矿车 */
+    g.fillStyle = on ? '#b8563a' : '#5e5248';
+    g.fillRect(x+5, y+h*0.36, w-10, h*0.28);
+    g.fillStyle = on ? '#d8764a' : '#77685a';
+    g.fillRect(x+6, y+h*0.32, w-12, h*0.07);
+    g.fillStyle = on ? '#3a2a22' : '#2e2822';
+    g.fillRect(x+7, y+h*0.37, w-14, h*0.05);
+    g.fillStyle = '#2a2a30';
+    g.beginPath(); g.arc(x+w*0.34, y+h*0.70, 3, 0, Math.PI*2); g.fill();
+    g.beginPath(); g.arc(x+w*0.66, y+h*0.70, 3, 0, Math.PI*2); g.fill();
+    if(on){
+      g.fillStyle = '#bfe0ff';
+      g.fillRect(x+w*0.40, y+h*0.26, 2, 2);
+      g.fillRect(x+w*0.58, y+h*0.28, 2, 2);
+    }
     drawLandmarkLabel(g, l, x, y, w, h);
     return;
   }

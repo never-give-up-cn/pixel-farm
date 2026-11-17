@@ -601,11 +601,13 @@ function drawUI(g){
   /* 巴士 / 沙漠商人 / 沙漠骷髅洞穴 → 提示按 E */
   if(!shopOpen && typeof worldLandmarkNear === 'function'){
     const wl = worldLandmarkNear();
-    if(wl && (wl.action === 'bus' || wl.action === 'desertshop' || wl.action === 'skull')){
+    if(wl && (wl.action === 'bus' || wl.action === 'desertshop' || wl.action === 'skull' || wl.action === 'minecart')){
       let hint = '';
       if(wl.action === 'bus'){
         hint = (typeof busPromptText === 'function') ? busPromptText()
           : ((typeof busIsFixed === 'function' && busIsFixed()) ? '按 E 坐巴士' : '按 E 修理巴士');
+      }else if(wl.action === 'minecart'){
+        hint = (typeof jojaDevHas === 'function' && jojaDevHas('minecart')) ? '按 E 乘坐矿车' : '矿车锈死了（Joja 社区发展可修复）';
       }else if(wl.action === 'desertshop'){
         hint = '按 E 和沙漠商人交易';
       }else{

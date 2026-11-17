@@ -126,6 +126,8 @@ window.addEventListener('keydown', e=>{
     if(chestOpen){ toggleChest(false); return; }
     if(makerOpen){ makerClosePanel(); return; }
     if(casinoOpen){ casinoClosePanel(); return; }
+    if(window.jojaDevOpen){ jojaDevClosePanel(); return; }
+    if(window.minecartOpen){ minecartClosePanel(); return; }
     if(shopOpen){ toggleShop(false); return; }
     if(packOpen){ togglePack(false); if(packMode === 'gift'){ packMode = 'normal'; giftTarget = null; refreshPackGrid(); } return; }
     if(npcOpen){ npcCloseDialog(); return; }
@@ -140,6 +142,8 @@ window.addEventListener('keydown', e=>{
   if(sysOpen) return;               /* 系统菜单：其它按键一律忽略 */
   if(shopOpen) return;              /* 商店打开时其它按键一律忽略 */
   if(casinoOpen) return;            /* 赌场打开时其它按键一律忽略 */
+  if(window.jojaDevOpen) return;    /* Joja 社区发展面板打开时忽略其它按键 */
+  if(window.minecartOpen) return;   /* 矿车面板打开时忽略其它按键 */
   if(packOpen) return;              /* 背包打开时其它按键一律忽略 */
   if(bundleOpen) return;            /* 收集包面板：其它按键一律忽略 */
   if(wardrobeOpen) return;          /* 衣柜面板：其它按键一律忽略 */
@@ -216,6 +220,11 @@ window.addEventListener('keydown', e=>{
         }
         if(l && l.action === 'skull' && typeof desertSkullInteract === 'function'){
           desertSkullInteract();
+          ensureAudio();
+          return;
+        }
+        if(l && l.action === 'minecart' && typeof minecartInteract === 'function'){
+          minecartInteract();
           ensureAudio();
           return;
         }
@@ -318,7 +327,8 @@ canvas.addEventListener('mouseleave', ()=>{ mouse.inside = false; hover.tx = -1;
 window.addEventListener('mouseup', e=>{ if(e.button === 0){ mouseHeld = false; holdCd = 0; toolCharge = 0; } });
 /* 左键 = 使用当前选中物品（这次点击同时作为音频解锁的用户交互）；右键 = 站在水边给水壶补水 */
 canvas.addEventListener('mousedown', e=>{
-  if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
+  if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || window.jojaDevOpen || window.minecartOpen ||
+     chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen || bundleOpen || wardrobeOpen || roomOpen || window.skillsOpen || window.equipmentOpen) return;
   if(window.mineActive) return;
   if(window.farmhouseActive){
@@ -419,7 +429,8 @@ canvas.addEventListener('contextmenu', e=> e.preventDefault());
 function updateHoldUse(dt){
   if(!mouseHeld) return;
   if(window.mineActive){ mouseHeld = false; return; }
-  if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
+  if(pauseMenuOpen || packOpen || shopOpen || casinoOpen || window.jojaDevOpen || window.minecartOpen ||
+     chestOpen || npcOpen || animalOpen || questOpen || calOpen ||
      achOpen || annualOpen || makerOpen || ratingOpen || endingOpen || frendOpen || bigmapOpen ||
      buildMode || fishingActive() || window.skillsOpen || window.equipmentOpen){ mouseHeld = false; return; }
 

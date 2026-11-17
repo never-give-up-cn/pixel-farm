@@ -49,6 +49,7 @@ function interactFixture(f){
   if(f.type === 'casino_slots' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('slots');
   if(f.type === 'casino_roulette' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('roulette');
   if(f.type === 'casino_shop' && typeof casinoFixtureInteract === 'function') return casinoFixtureInteract('shop');
+  if(f.type === 'joja_form' && typeof jojaFormInteract === 'function') return jojaFormInteract();
   if(f.type === 'crate'){
     if(typeof openJojaShop === 'function') return openJojaShop();
     if(typeof jojaInteract === 'function') return jojaInteract();

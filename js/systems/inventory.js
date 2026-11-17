@@ -18,8 +18,9 @@ window.goldDelta = 0;                    /* 最近一次金币变动（用于飘
 /* 当前水壶容量（商店扩容 / 铁匠铺升级都会变大） */
 function canCapacity(){
   const tl = (typeof toolLevel === 'function') ? toolLevel('can') : 0;
+  const dev = (typeof jojaDevHas === 'function' && jojaDevHas('well')) ? 10 : 0;
   return Math.min(CONFIG.WATER_CAN.MAX_CAPACITY,
-                  CONFIG.WATER_CAN.CAPACITY + (canLevel + tl) * CONFIG.WATER_CAN.UPGRADE_STEP);
+                  CONFIG.WATER_CAN.CAPACITY + (canLevel + tl) * CONFIG.WATER_CAN.UPGRADE_STEP + dev);
 }
 
 function itemDef(id){ return CONFIG.ITEMS[id] || null; }

@@ -63,6 +63,11 @@ function rollToNextMorning(faint){
                  (typeof equipStaminaBonus === 'function' ? equipStaminaBonus() : 0);
   }
   stamina = staminaMax;
+  /* Joja 社区水井：每天早上自动把水壶补满 */
+  if(typeof jojaDevHas === 'function' && jojaDevHas('well') &&
+     typeof canCapacity === 'function'){
+    canWater = canCapacity();
+  }
   dayRolled = true;
   sleepFx.day = clock.day;
   dlog('[sleep] 第 ' + clock.day + ' 天 06:00 · 体力 ' + stamina + '/' + staminaMax +

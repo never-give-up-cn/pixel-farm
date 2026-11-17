@@ -85,6 +85,15 @@ function drawTownProp(g, p, px, py){
       g.fillStyle = '#e8dcc0'; g.fillRect(px+10, py+11, 12, 5);
       g.fillStyle = '#4f6d8a'; g.fillRect(px+7, py+15, 18, 2);
       break;
+    case 'joja_form':                   /* Joja 社区发展表单 */
+      g.fillStyle = '#4a3a22'; g.fillRect(px+8, py+4, 16, 24);
+      g.fillStyle = '#e8e2c8'; g.fillRect(px+10, py+6, 12, 20);
+      g.fillStyle = '#2a4a8a'; g.fillRect(px+10, py+6, 12, 4);
+      g.fillStyle = '#7a9ab0';
+      g.fillRect(px+12, py+12, 8, 2);
+      g.fillRect(px+12, py+16, 8, 2);
+      g.fillRect(px+12, py+20, 6, 2);
+      break;
     case 'jukebox':                     /* 酒馆点唱机 */
       g.fillStyle = '#5b3a1d'; g.fillRect(px+6, py+4, 20, 25);
       g.fillStyle = '#b3443c'; g.fillRect(px+8, py+6, 16, 17);

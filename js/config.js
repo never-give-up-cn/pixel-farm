@@ -82,7 +82,20 @@ const CONFIG = {
 
   /* Joja 超市的货架（价格仍按当日波动） */
   JOJA: {
-    STOCK: ['coffee', 'bread', 'seed_starfruit', 'seed_pumpkin', 'feed', 'coal', 'wood', 'stone']
+    STOCK: ['coffee', 'bread', 'seed_starfruit', 'seed_pumpkin', 'feed', 'coal', 'wood', 'stone'],
+    /* 社区发展买断线：会员才能购买；非巴士项目会员 9 折 */
+    DEV: [
+      { id:'bus',        name:'巴士修理',   icon:'🚌', price:40000,
+        desc:'修好巴士，在巴士站与卡利科沙漠之间往返。' },
+      { id:'minecart',   name:'矿车修复',   icon:'🛤', price:15000,
+        desc:'在山地矿井、巴士站、采石场之间快速移动。' },
+      { id:'quarry',     name:'采石场扩建', icon:'⛏', price:25000,
+        desc:'采石场矿脉每次开采多产 1 份。' },
+      { id:'greenhouse', name:'温室翻新',   icon:'🌱', price:35000,
+        desc:'温室覆盖范围从 ±8 格扩大到 ±12 格。' },
+      { id:'well',       name:'社区水井',   icon:'💧', price:20000,
+        desc:'每天早上自动补满水壶，水壶容量 +10。' }
+    ]
   },
 
   /* 旅行货车：每 3 天换一批货，价格比商店贵 30% */
@@ -925,7 +938,8 @@ const CONFIG = {
         home_morris: [
           { dx: 2, dy: 4, type: 'crate', solid: 1 },
           { dx: 4, dy: 4, type: 'crate', solid: 1 },
-          { dx: 2, dy: 6, type: 'crate', solid: 1 }
+          { dx: 2, dy: 6, type: 'crate', solid: 1 },
+          { dx: 6, dy: 6, type: 'joja_form', solid: 1, interact: 'joja_form' }
         ],
         home_gus: [
           { dx: 2, dy: 4, type: 'jukebox', solid: 1 },

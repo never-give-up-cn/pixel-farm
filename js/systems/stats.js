@@ -196,7 +196,8 @@ function layoutAchCard(){
 }
 window.addEventListener('resize', layoutAchCard);
 function achWorldFrozen(){
-  return !!(startMenuOpen || sysOpen || paused || npcOpen || packOpen || shopOpen || casinoOpen || chestOpen ||
+  return !!(startMenuOpen || sysOpen || paused || npcOpen || packOpen || shopOpen || casinoOpen ||
+            window.jojaDevOpen || window.minecartOpen || chestOpen ||
             animalOpen || questOpen || calOpen || achOpen || annualOpen || ratingOpen ||
             endingOpen || sleepFx.phase !== 'none');
 }

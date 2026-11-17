@@ -229,6 +229,30 @@
   .cqmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;color:#e8f0ff;font-size:12px}
   .cqmain span{color:#8fa3bd;font-size:11px}
   .csrow .mbtn{font-size:11px;padding:3px 12px}
+  /* Joja 社区发展 / 矿车面板 */
+  #jojaDev, #minecart{position:fixed;inset:0;z-index:54;display:none;align-items:center;justify-content:center}
+  #jojaDev.open, #minecart.open{display:flex}
+  #jojaDevMask, #minecartMask{position:absolute;inset:0;background:rgba(4,6,10,.62)}
+  #jojaDevPanel{position:relative;width:520px;max-width:calc(100vw - 24px);max-height:88vh;
+                display:flex;flex-direction:column}
+  #jojaDevHead, #minecartHead{font-size:14px;color:#ffd76a;margin-bottom:8px;display:flex;align-items:baseline;gap:10px}
+  #jojaDevHead span, #minecartHead span{margin-left:auto;color:#ffd76a;font-size:13px}
+  #jojaDevHint{color:#9fb0c4;font-size:12px;line-height:1.7;margin-bottom:8px}
+  #jojaDevBody{max-height:60vh;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding-right:3px}
+  #jojaDevFoot, #minecartFoot{color:#8fa3bd;font-size:11px;margin-top:8px}
+  .jdrow{display:flex;align-items:center;gap:10px;border:1px solid #2c3a4e;border-radius:7px;
+         padding:8px 10px;background:rgba(8,10,16,.55)}
+  .jdrow.done{opacity:.6}
+  .jdicon{font-size:22px;width:28px;text-align:center}
+  .jdmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;color:#e8f0ff;font-size:12px}
+  .jdmain b{color:#ffd76a;font-size:12px}
+  .jdmain span{color:#8fa3bd;font-size:11px}
+  .jdprice{color:#ffd76a;font-size:12px;white-space:nowrap}
+  .jdrow .mbtn{font-size:11px;padding:3px 12px;white-space:nowrap}
+  #minecartPanel{position:relative;width:390px;max-width:calc(100vw - 24px)}
+  #minecartBody{display:flex;flex-direction:column;gap:8px}
+  #minecartBody .mbtn{text-align:left;padding:8px 12px;font-size:13px}
+  #minecartBody .mbtn.here{opacity:.55;border-color:#3a4256;color:#8fa3bd}
   /* 矿井入口电梯 */
   #minegate{position:fixed;inset:0;z-index:52;display:none;align-items:center;justify-content:center}
   #minegate.open{display:flex}
@@ -981,6 +1005,27 @@
     </div>
     <div id="casinoBody"></div>
     <div id="casinoFoot">Esc 关闭 · 找齐先生拿俱乐部卡</div>
+  </div>
+</div>
+
+<!-- Joja 社区发展表单：Joja 超市墙上的项目清单 -->
+<div id="jojaDev">
+  <div id="jojaDevMask"></div>
+  <div id="jojaDevPanel" class="panel">
+    <div id="jojaDevHead">🏢 Joja 社区发展 <span id="jojaDevGold">金币 0</span></div>
+    <div id="jojaDevHint">莫里斯：签下项目，Joja 会替小镇把事办好。会员购买非巴士项目 9 折。</div>
+    <div id="jojaDevBody"></div>
+    <div id="jojaDevFoot">Esc 关闭 · 点一次报价，再点一次确认</div>
+  </div>
+</div>
+
+<!-- 矿车：Joja 社区发展「矿车修复」后用它在三处地点间快速移动 -->
+<div id="minecart">
+  <div id="minecartMask"></div>
+  <div id="minecartPanel" class="panel">
+    <div id="minecartHead">🛤 矿车 <span id="minecartWhere">山地 · 矿井</span></div>
+    <div id="minecartBody"></div>
+    <div id="minecartFoot">Esc 关闭 · 矿车连通山地矿井 / 巴士站 / 采石场</div>
   </div>
 </div>
 

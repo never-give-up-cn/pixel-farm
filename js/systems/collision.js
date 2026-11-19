@@ -122,8 +122,11 @@ function updatePlayer(dt){
     player.animT = 0;
   }
   if(player.warpCd > 0) player.warpCd = Math.max(0, player.warpCd - dt);
-  /* 地图出口：农场北 → 山地，小镇西 → 森林，小镇南 → 海滩 */
+  /* 地图出口：农场北 → 山地，小镇西 → 森林，小镇南 → 海滩（踩到出口格自动切图） */
   if(typeof worldExitCheck === 'function' && worldExitCheck()) return;
+  /* 第 39 轮：独立地图的建筑门口 / 农舍门口也改成走到就进，不再按 E */
+  if(typeof worldDoorCheck === 'function' && worldDoorCheck(prevTx, prevTy)) return;
+  if(typeof farmhouseDoorCheck === 'function' && farmhouseDoorCheck(prevTx, prevTy)) return;
   /* 第 24 轮：踩到门就进去（建筑是地图的容器，不是场景 → 没有「当前场景」状态）
    * 第 26 轮：墙只有 1 格厚 → 进门 / 出门靠「上一格在哪」分方向
    * 第 38 轮：门格可以直接走过，不再瞬移；只有刚踏上门格时播一次提示 */

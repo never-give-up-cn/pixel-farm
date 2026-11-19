@@ -33,6 +33,8 @@ function inside(x, y, r) {
 }
 
 function solidAt(tx, ty) {
+  /* 第 39 轮：农舍最里面的门格改成可走，走到门上就自动出门 */
+  if (tx === DOOR.x && ty === DOOR.y) return false;
   if (tx < 1 || tx >= ROOM_W - 1 || ty < 3 || ty >= ROOM_H - 1) return true;
   if (inside(tx, ty, BED) || inside(tx, ty, STOVE) || inside(tx, ty, TABLE)) return true;
   if (typeof roomFurnitureAt === 'function' && roomFurnitureAt(tx, ty)) return true;
@@ -47,16 +49,33 @@ function boxBlocked(x, y) {
   return false;
 }
 
+/* 第 39 轮：农舍门口也是「走到就进」，不再必须按 E */
+function farmhouseDoorstep(){
+  return { x: HOUSE_POS.x + 1, y: HOUSE_POS.y + HOUSE_POS.h };
+}
+function farmhouseDoorCheck(prevTx, prevTy){
+  if(window.farmhouseActive) return false;
+  if(typeof prevTx !== 'number' || typeof prevTy !== 'number') return false;
+  const d = farmhouseDoorstep();
+  const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
+  if(tx !== d.x || ty !== d.y) return false;
+  if(tx === prevTx && ty === prevTy) return false;       /* 已经站在门口 */
+  return enterFarmhouse();
+}
+
 function enterFarmhouse() {
   if (window.farmhouseActive) return false;
-  outside = { x: player.x, y: player.y, dir: player.dir };
+  /* 无论从门口走进来还是按 E 进来，出门都统一回到门口地垫 */
+  const step = farmhouseDoorstep();
+  outside = { x: (step.x + 0.5) * 32, y: (step.y + 0.5) * 32, dir: 0 };
   window.farmhouseActive = true;
   player.x = 8.5 * 32;
   player.y = 8.5 * 32;
   player.dir = 3;
   player.moving = false;
   player.vx = player.vy = 0;
-  toast('进入农舍 · 走到床边按 E 睡觉 · 门口按 E 出去');
+  if (typeof clearWalkKeys === 'function') clearWalkKeys();
+  toast('进入农舍 · 走到床边按 E 睡觉 · 走到门口自动出去');
   playSfx(420, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.6);
   return true;
 }
@@ -64,14 +83,15 @@ function enterFarmhouse() {
 function exitFarmhouse() {
   if (!window.farmhouseActive) return false;
   window.farmhouseActive = false;
-  if (outside) {
-    player.x = outside.x;
-    player.y = outside.y;
-    player.dir = outside.dir;
-  }
+  const step = farmhouseDoorstep();
+  const out = outside || { x: (step.x + 0.5) * 32, y: (step.y + 0.5) * 32, dir: 0 };
+  player.x = out.x;
+  player.y = out.y;
+  player.dir = out.dir;
   outside = null;
   player.moving = false;
   player.vx = player.vy = 0;
+  if (typeof clearWalkKeys === 'function') clearWalkKeys();
   toast('回到农场');
   return true;
 }
@@ -195,6 +215,11 @@ function updateFarmhouse(dt) {
     else player.dir = iy < 0 ? 3 : 0;
   } else {
     player.moving = false;
+  }
+  /* 走到室内最里面的门格 → 自动回到农场 */
+  if (Math.floor(player.x / 32) === DOOR.x && Math.floor(player.y / 32) === DOOR.y) {
+    exitFarmhouse();
+    return;
   }
   if (typeof updatePlayerAnim === 'function') updatePlayerAnim(dt);
 }
@@ -332,18 +357,18 @@ function drawFarmhouse(g) {
   g.fillStyle = '#e9c96f';
   g.font = '13px "Microsoft YaHei", monospace';
   g.textBaseline = 'middle';
-  g.fillText('农舍 · WASD 移动 · E 睡觉 / 看家具 / 和配偶说话 · 门口 E 或 Esc 出去', 16, CONFIG.VIEW_H - 23);
+  g.fillText('农舍 · WASD 移动 · E 睡觉 / 看家具 / 和配偶说话 · 走到门口自动出去', 16, CONFIG.VIEW_H - 23);
 }
 
 Object.assign(window, {
   farmhouseActive, enterFarmhouse, exitFarmhouse, updateFarmhouse,
   drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit,
   farmhouseTileAt, indoorTileFree, toggleIndoorDecor,
-  farmhouseIndoorPlace, farmhouseIndoorRemove
+  farmhouseIndoorPlace, farmhouseIndoorRemove, farmhouseDoorCheck, farmhouseDoorstep
 });
 export {
   enterFarmhouse, exitFarmhouse, updateFarmhouse,
   drawFarmhouse, farmhouseInteract, farmhouseSavePos, farmhouseForceExit,
   farmhouseTileAt, indoorTileFree, toggleIndoorDecor,
-  farmhouseIndoorPlace, farmhouseIndoorRemove
+  farmhouseIndoorPlace, farmhouseIndoorRemove, farmhouseDoorCheck, farmhouseDoorstep
 };

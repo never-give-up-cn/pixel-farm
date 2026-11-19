@@ -558,10 +558,10 @@ function drawUI(g){
 
   /* ===== 交互按键提示（可在 Esc 菜单关闭；关闭后整块不绘制） ===== */
   if(interactHintsOn){
-  /* 走到小屋附近 → 提示按 E 睡觉 */
+  /* 走到小屋附近 → 提示走进门口自动进屋（E 仍可作快捷方式） */
   if(!shopOpen && sleepFx.phase === 'none' && nearHouse()){
     const hx = HOUSE_POS.x*TILE - cam.x, hy = HOUSE_POS.y*TILE - cam.y;
-    const hint = '按 E 睡觉';
+    const hint = '走到门口自动进屋';
     g.font = '13px ' + FONT_CJK;
     const hw = g.measureText(hint).width;
     const px2 = hx + HOUSE_POS.w*TILE/2 - hw/2, py2 = hy + HOUSE_POS.h*TILE + 6;

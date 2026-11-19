@@ -94,6 +94,7 @@ function playerRoom(){ return townRoomAt(Math.floor(player.x/TILE), Math.floor(p
  * 人在屋里（门的南边）踩上去 = 出门。
  * 第 38 轮：正常行走时不再使用 to 瞬移；to 只用于读档时把卡在门格上的玩家挪到另一侧。 */
 function townDoorAt(tx, ty, prevTy){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return null;   /* 城镇门只在山谷地图 */
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
     const row = b.row || C.ROOM_ROW;

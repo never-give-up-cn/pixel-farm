@@ -57,6 +57,10 @@ if(bootSave){
   sessionActive = true;
   spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */
   updateTut();                   /* 新玩家：第 1 天早晨弹出新手引导 */
+  /* 第 39 轮：无存档直接开局时也要登记世界出口 / 城镇家具，
+   * 否则第一次走到地图边缘时还没有出口数据。 */
+  if(typeof stampTownFixtures === 'function') stampTownFixtures();
+  if(typeof worldRegisterValley === 'function') worldRegisterValley();
 }
 requestAnimationFrame(loop);
 

@@ -502,6 +502,14 @@ function ensureWorld(id){
     st.spawn = result.spawn || { x: 64, y: 52 };
     st.stove = result.stove || null;
     st.chest = result.chest || null;
+    /* 第 39 轮：可进入建筑的外景门口铺成石板路，保证能走到、也看得见入口 */
+    for(const iid in INTERIORS){
+      const I = INTERIORS[iid];
+      if(!I || I.outMap !== id) continue;
+      const dx = I.outX | 0, dy = I.outY | 0;
+      if(dx > 0 && dy > 0 && dx < MAP_W - 1 && dy < MAP_H - 1 && map[dy*MAP_W+dx] !== T.WATER)
+        map[dy*MAP_W+dx] = T.PATH;
+    }
     st.baseMap.set(map);
   }
   useWorldArrays(old);
@@ -553,6 +561,36 @@ function worldEnterLandmark(l){
   if(!l || !l.home) return false;
   const st = ensureWorld(l.home);
   return !!worldActivate(l.home, st.spawn.x, st.spawn.y, false);
+}
+
+/* 第 39 轮：独立地图建筑门也改成「走到门口自动进屋」。
+ * 每栋可进入建筑在外景的出门点 (outX,outY) 就是门口地垫：
+ * 玩家从别的格子踏上去 → 自动切到对应室内，不再需要按 E。
+ * 室内出门仍由 worldExitCheck 的门格自动切回外景。 */
+function worldInteriorDoorAt(tx, ty){
+  if(currentMap === 'valley' || String(currentMap).indexOf('in_') === 0) return null;
+  for(const id in INTERIORS){
+    const I = INTERIORS[id];
+    if(!I || I.outMap !== currentMap) continue;
+    if(tx === (I.outX | 0) && ty === (I.outY | 0)) return id;
+  }
+  return null;
+}
+function clearWalkKeys(){
+  if(typeof keys === 'undefined') return;
+  for(const k of ['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright']) keys[k] = false;
+}
+function worldDoorCheck(prevTx, prevTy){
+  if(currentMap === 'valley' || String(currentMap).indexOf('in_') === 0) return false;
+  if(typeof prevTx !== 'number' || typeof prevTy !== 'number') return false;
+  const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
+  if(tx === prevTx && ty === prevTy) return false;       /* 上一帧已经在门口 */
+  const id = worldInteriorDoorAt(tx, ty);
+  if(!id) return false;
+  const st = ensureWorld(id);
+  const ok = worldActivate(id, st.spawn.x, st.spawn.y, false);
+  if(ok){ clearWalkKeys(); player.vx = 0; player.vy = 0; }  /* 进屋后先站稳，避免按住方向键又立刻走出去 */
+  return !!ok;
 }
 
 /* 秘密森林的古老雕像：用宝石甜莓换永久体力上限 */
@@ -1092,6 +1130,7 @@ function worldLandmarkColor(type){ return landmarkColor(type); }
 
 Object.assign(window, {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldDoorCheck, worldInteriorDoorAt, clearWalkKeys,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
   worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,
   worldSecretSerialize, worldSecretDeserialize, worldSecretReset,
@@ -1099,6 +1138,7 @@ Object.assign(window, {
 });
 export {
   MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  worldDoorCheck, worldInteriorDoorAt, clearWalkKeys,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
   worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,
   worldSecretSerialize, worldSecretDeserialize, worldSecretReset,

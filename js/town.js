@@ -91,7 +91,8 @@ function townRoomAt(tx,ty){
 function playerRoom(){ return townRoomAt(Math.floor(player.x/TILE), Math.floor(player.y/TILE)); }
 /* 门 → 目的地（第 26 轮：墙只有 1 格厚 → 门就在后墙那一行）
  * 进 / 出 靠「上一格在哪」分：人在街上（门的北边）踩上去 = 进屋；
- * 人在屋里（门的南边）踩上去 = 出门。位移只有 1 格 → 不用黑屏闪一下。 */
+ * 人在屋里（门的南边）踩上去 = 出门。
+ * 第 38 轮：正常行走时不再使用 to 瞬移；to 只用于读档时把卡在门格上的玩家挪到另一侧。 */
 function townDoorAt(tx, ty, prevTy){
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
@@ -106,17 +107,15 @@ function townDoorAt(tx, ty, prevTy){
   }
   return null;
 }
-/* 踩到门就进去：没有「当前场景」，只是把人挪到门另一头（只挪 1 格） */
-function townDoorCheck(prevTy){
+/* 踩到门：只负责提示「进入 / 离开」，不再挪动玩家坐标。
+ * 门格本身是普通可走格，玩家会像正常走路一样穿过它进入室内地板 / 回到街上；
+ * prevTx / prevTy 用来判断这一帧是不是「刚踏上门格」，避免站在门上时每帧重复提示。 */
+function townDoorCheck(prevTy, prevTx){
+  if(typeof prevTx !== 'number' || typeof prevTy !== 'number') return false;
   const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
+  if(tx === prevTx && ty === prevTy) return false;        /* 上一帧已经在同一格 */
   const d = townDoorAt(tx, ty, prevTy);
   if(!d) return false;
-  player.x = (d.to.x + 0.5)*TILE;
-  player.y = (d.to.y + 0.5)*TILE;
-  player.vx = 0; player.vy = 0;
-  cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
-  cam.y = clamp(player.y - VIEW_H/2, 0, MAP_H*TILE - VIEW_H);
-  /* 第 26 轮：只挪 1 格（32px）→ 不再需要黑屏闪一下 */
   townEnter(d);
   return true;
 }

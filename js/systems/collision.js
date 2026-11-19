@@ -76,6 +76,7 @@ function updatePlayer(dt){
   const moving = (ix !== 0 || iy !== 0);
   player.moving = moving;
   let prevTy = undefined;                  /* 第 26 轮：移动前站在哪一格（进门 / 出门靠它分方向） */
+  let prevTx = undefined;
   if(moving){
     /* 对角线归一化：斜向速度与直线一致，不加速 */
     const len = Math.hypot(ix, iy) || 1;
@@ -98,6 +99,7 @@ function updatePlayer(dt){
     else if(ix !== 0) player.dir = ix<0 ? 1 : 2;
     else player.dir = iy<0 ? 3 : 0;
     /* 第 26 轮：记下移动前站在哪一格 —— 进门 / 出门靠它分方向 */
+    prevTx = Math.floor(player.x/TILE);
     prevTy = Math.floor(player.y/TILE);
     movePlayer(player.vx * dt, player.vy * dt);
     /* 脚步声：按固定间隔触发，每次音高随机；跑动时更快更响 */
@@ -123,8 +125,10 @@ function updatePlayer(dt){
   /* 地图出口：农场北 → 山地，小镇西 → 森林，小镇南 → 海滩 */
   if(typeof worldExitCheck === 'function' && worldExitCheck()) return;
   /* 第 24 轮：踩到门就进去（建筑是地图的容器，不是场景 → 没有「当前场景」状态）
-   * 第 26 轮：墙只有 1 格厚 → 进门 / 出门靠「上一格在哪」分方向 */
-  townDoorCheck(typeof prevTy === 'number' ? prevTy : undefined);
+   * 第 26 轮：墙只有 1 格厚 → 进门 / 出门靠「上一格在哪」分方向
+   * 第 38 轮：门格可以直接走过，不再瞬移；只有刚踏上门格时播一次提示 */
+  townDoorCheck(typeof prevTy === 'number' ? prevTy : undefined,
+                typeof prevTx === 'number' ? prevTx : undefined);
 }
 
 

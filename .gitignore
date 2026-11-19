@@ -1,5 +1,6 @@
 # 比对工具的临时产物
 node_modules/
+bot/learned-policy.json
 __pycache__/
 _cmp/nm/
 _cmp/out/.chrome*/

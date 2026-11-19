@@ -17,12 +17,32 @@ const URL_BASE = process.env.FARM_URL || 'http://127.0.0.1:8123/index.html';
 const CHROME = process.env.CHROME_PATH ||
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const HEADLESS = process.argv.includes('--headless');
+const LEARN_KEY = 'farm_bot_v1';
+const LEARN_FILE = path.join(ROOT, 'bot', 'learned-policy.json');
 
 let server = null;
 let browser = null;
+let syncFn = null;
 
 function log(msg) {
   console.log('[autoplay] ' + msg);
+}
+function readLearnFile() {
+  try {
+    const raw = fs.readFileSync(LEARN_FILE, 'utf8');
+    JSON.parse(raw);
+    return raw;
+  } catch (e) {
+    return '';
+  }
+}
+function writeLearnFile(raw) {
+  try {
+    fs.writeFileSync(LEARN_FILE, raw, 'utf8');
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 async function ping(url, timeoutMs = 1200) {
@@ -84,8 +104,40 @@ async function main() {
     if (m.type() === 'error') log('控制台错误：' + m.text());
   });
 
+  /* 学习进度落盘：Playwright 默认是临时浏览器配置，关掉窗口 localStorage 会丢。
+   * 启动时把 bot/learned-policy.json 注入 localStorage，运行中定时回写。 */
+  const savedLearn = HEADLESS ? '' : readLearnFile();
+  if (savedLearn) {
+    await context.addInitScript(({ key, raw }) => {
+      try {
+        if (!localStorage.getItem(key)) localStorage.setItem(key, raw);
+      } catch (e) {}
+    }, { key: LEARN_KEY, raw: savedLearn });
+    log('已载入历史学习：' + path.basename(LEARN_FILE));
+  }
+
+  let lastLearn = savedLearn;
+  let learnTimer = null;
+  let syncLearn = async () => {
+    if (HEADLESS) return;
+    try {
+      const raw = await page.evaluate((key) => localStorage.getItem(key), LEARN_KEY);
+      if (raw && raw !== lastLearn) {
+        lastLearn = raw;
+        if (writeLearnFile(raw)) {
+          try {
+            const d = JSON.parse(raw);
+            log('学习进度已保存：第 ' + ((d.history || []).length + 1) + ' 次策略，最佳 +' + Math.round(d.bestReward || 0) + 'g');
+          } catch (e) { log('学习进度已保存'); }
+        }
+      }
+    } catch (e) {}
+  };
+  syncFn = syncLearn;
+
   const botUrl = URL_BASE + (URL_BASE.indexOf('?') >= 0 ? '&' : '?') + 'bot=1';
   await page.goto(botUrl, { waitUntil: 'load' });
+  learnTimer = setInterval(syncLearn, 4000);
   log('已打开：' + botUrl);
   log('机器人按正常游戏速度行动；右下角面板可以暂停 / 重置学习 / 停止。');
   log('关闭浏览器窗口即可结束。');
@@ -111,10 +163,13 @@ async function main() {
     }
   });
 
+  if (learnTimer) clearInterval(learnTimer);
+  if (syncFn) await syncFn();
   if (browser) await browser.close().catch(() => {});
 }
 
 process.on('SIGINT', async () => {
+  try { if (syncFn) await syncFn(); } catch (e) {}
   try { if (browser) await browser.close(); } catch (e) {}
   if (server) server.kill();
   process.exit(0);

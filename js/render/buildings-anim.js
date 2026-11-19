@@ -1,12 +1,12 @@
 /* js/render/buildings-anim.js — 用 anim 图鉴的 72×64 建筑美术绘制游戏建筑。
- * 游戏里每座建筑仍只占 1 格；建筑本体在 72×64 格内居中，按原尺寸绘制，
- * 底边对齐地块底部，和原来的 32×30 鸡舍 / 牛棚大小接近。
+ * 1 格小建筑沿用原尺寸居中绘制；第 38 轮起，温室 / 牛棚等按建筑占地
+ * (w×h 格) 等比缩放并铺满占地矩形，底边对齐占地下沿。
  */
 
 'use strict';
 
 import {
-  BUILDING_MAP, BUILDING_W, BUILDING_BASE,
+  BUILDING_MAP, BUILDING_W, BUILDING_H, BUILDING_BASE,
   drawBuilding as drawAnimBuilding
 } from '../anim/buildings.js';
 
@@ -52,20 +52,31 @@ function hasAnimBuilding(type) {
   return !!animBuildingOf(type);
 }
 
-/** 以地块底边中点为锚点绘制。x/y 是屏幕坐标。 */
-function drawAnimStructure(g, type, x, y) {
+/** 以占地矩形左上角 (x,y) 为锚点绘制（屏幕坐标）。bw/bh 为占地格数，默认 1×1。
+ *  1×1 保持原来的尺寸（72px 宽、底边对齐地块底部）；多格建筑等比缩放到整块占地。 */
+function drawAnimStructure(g, type, x, y, bw, bh) {
   const def = animBuildingOf(type);
   if (!def) return false;
 
-  const w = BUILDING_W * SCALE;
-  const base = BUILDING_BASE * SCALE;
-  const tx = Math.round(x + TILE / 2 - w / 2);
-  const ty = Math.round(y + TILE - base);
+  const W = Math.max(1, bw | 0 || 1);
+  const H = Math.max(1, bh | 0 || 1);
+  let scale = SCALE, tx, ty;
+  if (W === 1 && H === 1) {
+    const w = BUILDING_W * SCALE;
+    scale = SCALE;
+    tx = Math.round(x + TILE / 2 - w / 2);
+    ty = Math.round(y + TILE - BUILDING_BASE * SCALE);
+  } else {
+    scale = Math.min((W * TILE) / BUILDING_W, (H * TILE) / BUILDING_H);
+    const w = BUILDING_W * scale, h = BUILDING_H * scale;
+    tx = Math.round(x + (W * TILE - w) / 2);
+    ty = Math.round(y + H * TILE - h);
+  }
 
   g.save();
   g.imageSmoothingEnabled = false;
   g.translate(tx, ty);
-  g.scale(SCALE, SCALE);
+  g.scale(scale, scale);
   drawAnimBuilding(g, def, typeof animTime !== 'undefined' ? animTime * 0.4 : 0.25);
   g.restore();
   return true;

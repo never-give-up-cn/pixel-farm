@@ -35,11 +35,13 @@ function drawEntities(g, x0, y0, x1, y1){
     list.push({y:(row - 2)*TILE + TILE, f:()=>drawTownSign(g, b, sx, sy)});
   }
   for(const b of buildings){
+    const fw = (typeof footW === 'function') ? footW(b) : 1;
+    const fh = (typeof footH === 'function') ? footH(b) : 1;
     const bx = b.tx*TILE - cam.x, by = b.ty*TILE - cam.y;
-    if(bx < -TILE || bx > VIEW_W || by < -TILE || by > VIEW_H) continue;
+    if(bx > VIEW_W || bx + fw*TILE < 0 || by > VIEW_H || by + fh*TILE < 0) continue;
     if(b.preset && b.flat) continue;      /* 地毯已经画在地面层了 */
     /* 柜台比别的家具矮一点（老板娘站在后面） */
-    const sy = (b.preset && b.type === 'counter') ? b.ty*TILE + 4 : b.ty*TILE + TILE;
+    const sy = (b.preset && b.type === 'counter') ? b.ty*TILE + 4 : (b.ty + fh)*TILE;
     list.push({y:sy, f:()=>drawBuilding(g,b,bx,by)});
   }
   /* 第 25 轮：门口挂牌三态（画在大门正上方一格） */

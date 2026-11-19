@@ -121,6 +121,9 @@ function serializeState(){
     buildings: buildings.filter(b => !b.preset).map(b => {     /* 第 25 轮：镇上的家具是静态配置，不存档 */
       const o = {type:b.type, x:b.tx, y:b.ty,
         slots: b.slots ? b.slots.map(s => s ? {id:s.id, n:s.n} : null) : null};
+      const fw = (typeof footW === 'function') ? footW(b) : 1;
+      const fh = (typeof footH === 'function') ? footH(b) : 1;
+      if(fw > 1 || fh > 1){ o.w = fw; o.h = fh; }   /* 第 38 轮：保存多格占地 */
       if(b.type === 'maker' || b.type === 'stove' || (typeof isMachineType === 'function' && isMachineType(b.type))){                 /* 加工设备：剩余时间 + 产出槽 */
         if(b.job) o.j = {r:b.job.rid, t:Math.max(0, Math.round(b.job.left))};
         if(b.out && b.out.length) o.o = b.out.map(s => ({id:s.id, n:s.n}));
@@ -211,7 +214,21 @@ function deserializeState(d){
         if(!b || (!buildRecipe(b.type) && b.type.indexOf('furn_') !== 0)) continue;
         const x = b.x|0, y = b.y|0;
         if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
-        const nb = {type:b.type, tx:x, ty:y};
+        const r = buildRecipe(b.type);
+        /* 第 38 轮：新档直接读占地；旧档按配方默认占地扩张，
+         * 扩不开（周边有树 / 作物 / 别的建筑）就退回 1×1，保证旧档一定能读。 */
+        let fw = 1, fh = 1;
+        if(b.type.indexOf('furn_') !== 0 && r){
+          const def = (typeof recipeFootprint === 'function') ? recipeFootprint(r) : [1,1];
+          const wantW = (b.w|0) > 0 ? Math.min(6, b.w|0) : def[0];
+          const wantH = (b.h|0) > 0 ? Math.min(6, b.h|0) : def[1];
+          if(wantW > 1 || wantH > 1){
+            const ok = (typeof buildFootprintOK === 'function') &&
+                       !buildFootprintOK(x, y, wantW, wantH, r);
+            if(ok){ fw = wantW; fh = wantH; }
+          }
+        }
+        const nb = {type:b.type, tx:x, ty:y, w:fw, h:fh};
         if(b.type === 'chest' || b.type === 'autobox'){   /* 第 20 轮：自动采集箱复用同一套格子 */
           const cap = (b.type === 'autobox') ? CONFIG.ENDGAME.AUTOBOX.SLOTS : CONFIG.BUILD.CHEST_SLOTS;
           nb.slots = new Array(cap).fill(null);
@@ -246,8 +263,10 @@ function deserializeState(d){
           nb.mill = { ready: Math.max(0, b.m.r | 0), out: b.m.o };
         }
         buildings.push(nb);
-        if(nb.type.indexOf('furn_') !== 0) buildIndex[y*MAP_W+x] = buildings.length - 1;
+        if(typeof indexOneBuilding === 'function') indexOneBuilding(nb, buildings.length - 1);
+        else if(nb.type.indexOf('furn_') !== 0) buildIndex[y*MAP_W+x] = buildings.length - 1;
       }
+    if(typeof rebuildBuildIndex === 'function') rebuildBuildIndex();   /* 第 38 轮：整块占地重建索引 */
     /* 第 25 轮：镇上的家具（preset）不存档 —— 读档后按 BUILDING_DEFS 重新盖一遍 */
     stampTownFixtures();
     if(typeof worldRegisterValley === 'function') worldRegisterValley();

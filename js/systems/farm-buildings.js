@@ -23,14 +23,17 @@ function farmBuildingList(type){
 }
 function farmBuildingCount(type){ return farmBuildingList(type).length; }
 
-/* 温室范围：以温室所在格为中心的一个方形区域 */
+/* 温室范围：以温室占地中心为中心的方形区域 */
 function cropInGreenhouse(tx, ty){
   if (typeof buildings === 'undefined' || !Array.isArray(buildings)) return false;
   const radius = GREENHOUSE_RADIUS +
     ((typeof jojaDevHas === 'function' && jojaDevHas('greenhouse')) ? 4 : 0);
   for (const b of buildings) {
     if (!b || b.type !== 'greenhouse') continue;
-    if (Math.abs(tx - b.tx) <= radius && Math.abs(ty - b.ty) <= radius) return true;
+    const w = (typeof footW === 'function') ? footW(b) : 1;
+    const h = (typeof footH === 'function') ? footH(b) : 1;
+    const cx = b.tx + w / 2, cy = b.ty + h / 2;
+    if (Math.abs(tx + 0.5 - cx) <= radius && Math.abs(ty + 0.5 - cy) <= radius) return true;
   }
   return false;
 }
@@ -51,8 +54,13 @@ function farmBuildingNear(){
   let best = null, bd = 2.2;
   for (const b of buildings) {
     if (!b || !FUNCTIONAL[b.type]) continue;
-    const cx = (b.tx + 0.5) * TILE, cy = (b.ty + 0.5) * TILE;
-    const d = Math.hypot(player.x - cx, player.y - cy) / TILE;
+    /* 第 38 轮：按整块占地的矩形算最近距离（大建筑贴边站着也能交互） */
+    const w = (typeof footW === 'function') ? footW(b) : 1;
+    const h = (typeof footH === 'function') ? footH(b) : 1;
+    const px = player.x / TILE, py = player.y / TILE;
+    const nx = Math.max(b.tx, Math.min(b.tx + w, px));
+    const ny = Math.max(b.ty, Math.min(b.ty + h, py));
+    const d = Math.hypot(px - nx, py - ny);
     if (d <= bd) { bd = d; best = b; }
   }
   return best;

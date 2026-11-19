@@ -10,9 +10,20 @@ function drawBuildPreview(g){
   const tx = hover.tx, ty = hover.ty;
   const x = tx*TILE - cam.x, y = ty*TILE - cam.y;
   const p = buildPreview(tx,ty,r);
-  g.globalAlpha = 0.40;
-  g.fillStyle = p.ok ? 'rgba(90,230,120,0.75)' : 'rgba(240,90,80,0.75)';
-  g.fillRect(x+1, y+1, TILE-2, TILE-2);
+  const f = (typeof recipeFootprint === 'function') ? recipeFootprint(r) : [1,1];
+  const bw = f[0], bh = f[1];
+  /* 第 38 轮：多格占地逐格标色（能放的格绿、被占 / 挡住的格红） */
+  for(let dy=0; dy<bh; dy++)
+    for(let dx=0; dx<bw; dx++){
+      let cellOK = true;
+      if(!r.overlay && typeof buildTileOK === 'function')
+        cellOK = !buildTileOK(tx+dx, ty+dy, r);
+      g.globalAlpha = 0.40;
+      g.fillStyle = cellOK
+        ? (p.ok ? 'rgba(90,230,120,0.75)' : 'rgba(90,230,120,0.42)')
+        : 'rgba(240,90,80,0.75)';
+      g.fillRect(x+dx*TILE+1, y+dy*TILE+1, TILE-2, TILE-2);
+    }
   g.globalAlpha = 0.62;
   /* 单个配方的预览图坏了也不能拖垮整帧渲染 */
   try {
@@ -23,20 +34,20 @@ function drawBuildPreview(g){
     else if(r.id === 'stove')     drawStove(g,x,y);
     else if(r.id === 'wardrobe')  drawWardrobe(g,x,y);
     else if(r.id === 'room_planner') drawRoomPlanner(g,x,y);
-    else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
+    else if(r.id === 'coop' || r.id === 'barn'){ if(!drawAnimStructure(g, r.id, x, y, bw, bh)) { r.id === 'coop' ? drawCoop(g,x,y) : drawBarn(g,x,y); } }
     else if(r.id === 'maker')     drawMaker(g,x,y,null);
     else if(r.id === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
     else if(r.id === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
     else if(r.id === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
     else if(typeof isMachineType === 'function' && isMachineType(r.id)) drawMachine(g, r.id, x, y, null);
-    else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y);
+    else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(r.id)) drawAnimStructure(g, r.id, x, y, bw, bh);
   } catch(err) {
     if(typeof console !== 'undefined') console.warn('[build] 配方预览绘制失败：' + (r && r.id), err);
   }
   g.globalAlpha = 1;
   g.strokeStyle = p.ok ? 'rgba(120,255,150,0.95)' : 'rgba(255,110,100,0.95)';
   g.lineWidth = 2;
-  g.strokeRect(x+1, y+1, TILE-2, TILE-2);
+  g.strokeRect(x+1, y+1, bw*TILE-2, bh*TILE-2);
 }
 /* 建造面板里的 14×14 小图标 */
 function drawBuildIcon(g,id,x,y){

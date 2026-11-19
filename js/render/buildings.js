@@ -264,6 +264,8 @@ function drawMachine(g,type,x,y,b){
 }
 
 function drawBuilding(g,b,x,y){
+  const fw = (typeof footW === 'function') ? footW(b) : 1;
+  const fh = (typeof footH === 'function') ? footH(b) : 1;
   if(b.preset) drawTownProp(g, b, x, y);        /* 第 25 轮：镇上的家具复用同一套绘制 */
   else if(b.type.indexOf('furn_') === 0) drawPlacedFurniture(g, b.type.slice(5), x, y);
   else if(b.type === 'fence')     drawFence(g,x,y);
@@ -272,15 +274,15 @@ function drawBuilding(g,b,x,y){
   else if(b.type === 'stove') drawStove(g,x,y);
   else if(b.type === 'wardrobe') drawWardrobe(g,x,y);
   else if(b.type === 'room_planner') drawRoomPlanner(g,x,y);
-  else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y)) drawCoop(g,x,y); }
-  else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y)) drawBarn(g,x,y); }
+  else if(b.type === 'coop') { if(!drawAnimStructure(g,b.type,x,y,fw,fh)) drawCoop(g,x,y); }
+  else if(b.type === 'barn') { if(!drawAnimStructure(g,b.type,x,y,fw,fh)) drawBarn(g,x,y); }
   else if(b.type === 'maker') drawMaker(g,x,y,b);
   else if(typeof isMachineType === 'function' && isMachineType(b.type)) drawMachine(g,b.type,x,y,b);
   else if(b.type === 'irrigator') drawIrrigator(g,x,y, animTime);   /* 第 20 轮 */
   else if(b.type === 'scarecrow') drawScarecrow(g,x,y);             /* 第 20 轮 */
   else if(b.type === 'autobox')   drawAutobox(g,x,y, animTime);     /* 第 20 轮 */
   else if(typeof hasAnimBuilding === 'function' && hasAnimBuilding(b.type))
-    drawAnimStructure(g, b.type, x, y);
+    drawAnimStructure(g, b.type, x, y, fw, fh);
 }
 /* 石板路：半透明地铺在地面上（底下是耕地也照样能看见犁沟） */
 function drawRoadTile(g,x,y){

@@ -342,6 +342,29 @@ const CONFIG = {
     ROAD_MULT: 1.3,           // 石板路上的移动速度倍率
     CHEST_SLOTS: 8,           // 木箱储物格数
     SPRINKLER_RANGE: 1,       // 洒水器覆盖半径（格）→ 3×3
+    /* 第 38 轮：大型建筑多格占地（左上角 tx/ty 为锚点，向右 / 向下扩展）
+     * 数值按本作 12×12 的小农场缩小过，比星露谷原版更紧凑；
+     * 没列在这里的配方（栅栏 / 木箱 / 洒水器 / 加工设备 / 家具…）仍然占 1 格。 */
+    FOOTPRINT: {
+      coop:            [2, 2],   // 鸡舍
+      barn:            [3, 2],   // 牛棚
+      greenhouse:      [3, 3],   // 温室
+      silo:            [2, 2],   // 筒仓
+      cabin:           [2, 2],   // 小屋
+      well:            [2, 2],   // 水井
+      mill:            [2, 2],   // 磨坊
+      fish_pond:       [3, 2],   // 鱼塘
+      shed:            [3, 2],   // 棚屋
+      stable:          [3, 2],   // 马厩
+      slime_hutch:     [3, 2],   // 史莱姆屋
+      junimo_hut:      [2, 2],   // 祝尼魔屋
+      community_center:[3, 2],   // 社区中心
+      gold_clock:      [2, 2],   // 黄金时钟
+      earth_obelisk:   [2, 2],   // 大地图腾
+      water_obelisk:   [2, 2],   // 水之图腾
+      desert_obelisk:  [2, 2],   // 沙漠图腾
+      island_obelisk:  [2, 2]    // 岛屿图腾
+    },
     RECIPES: [                 // 建造配方表（建造面板按这个顺序显示）
       { id:'fence',     name:'木栅栏', cost:{wood:3},           solid:true  },  // 挡住去路
       { id:'chest',     name:'木箱',   cost:{wood:8},           solid:true  },  // 8 格储物
@@ -1724,7 +1747,8 @@ CONFIG.TOWN_PLAN();
 
 
 /* 第 32 轮：把 anim 建筑图鉴的其余建筑接进建造配方。
- * 建筑本体仍占 1 格；鸡舍 / 牛棚继续使用原有功能，只替换外观。 */
+ * 鸡舍 / 牛棚继续使用原有功能，只替换外观。
+ * 第 38 轮：温室 / 牛棚等大型建筑按 CONFIG.BUILD.FOOTPRINT 占多格。 */
 (function addAnimBuildingRecipes(){
   const EXTRA = [
     ['greenhouse',      '温室',     { wood:30, stone:20 }, 800],

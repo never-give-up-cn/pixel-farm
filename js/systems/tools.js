@@ -107,6 +107,13 @@ function useTool(tx,ty,opts){
   const item = slot ? itemDef(slot.id) : null;
   const tool = item ? CONFIG.TOOLS.find(x => x.id === item.id) : null;
 
+  /* 第 38 轮：建造物占用的任何一格都不能再用工具（多格建筑整块都挡住） */
+  if(typeof buildIndex !== 'undefined' && buildIndex[i] >= 0){
+    say('这里有建造物，先拆掉再用工具');
+    sfx(120, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
+    return false;
+  }
+
   /* 0. 肥料：对着作物使用，提高品质 */
   if(item && item.kind === 'fertilizer') return useFertilizer(tx, ty, item);
 

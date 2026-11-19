@@ -63,8 +63,9 @@ function removeDecor(tx, ty) {
   if (!b) return false;
   const id = decorIdOf(b);
   buildings = buildings.filter(x => x !== b);
-  /* 重建建造索引，避免后面的建筑索引错位 */
-  if (typeof buildIndex !== 'undefined') {
+  /* 重建建造索引，避免后面的建筑索引错位（第 38 轮：大建筑整块占地一起重建） */
+  if (typeof rebuildBuildIndex === 'function') rebuildBuildIndex();
+  else if (typeof buildIndex !== 'undefined') {
     buildIndex.fill(-1);
     for (let k = 0; k < buildings.length; k++) {
       const bb = buildings[k];

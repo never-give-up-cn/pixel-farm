@@ -45,8 +45,13 @@ function bundleCenterNear() {
   let best = null, bd = Infinity;
   for (const b of buildings) {
     if (b.type !== 'community_center') continue;
-    const cx = (b.tx + 0.5) * TILE, cy = (b.ty + 0.5) * TILE;
-    const d = Math.hypot(player.x - cx, player.y - cy);
+    /* 第 38 轮：社区中心占 3×2，按整块矩形算距离 */
+    const w = (typeof footW === 'function') ? footW(b) : 1;
+    const h = (typeof footH === 'function') ? footH(b) : 1;
+    const px = player.x / TILE, py = player.y / TILE;
+    const nx = Math.max(b.tx, Math.min(b.tx + w, px));
+    const ny = Math.max(b.ty, Math.min(b.ty + h, py));
+    const d = Math.hypot(px - nx, py - ny) * TILE;
     if (d <= 2.5 * TILE && d < bd) { bd = d; best = b; }
   }
   return best;

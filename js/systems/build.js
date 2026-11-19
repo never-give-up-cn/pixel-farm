@@ -18,6 +18,53 @@ window.dropFx = [];                                       /* 洒水器水滴粒�
 function buildRecipes(){ return CONFIG.BUILD.RECIPES; }
 function buildRecipe(id){ return CONFIG.BUILD.RECIPES.find(r => r.id === id) || null; }
 function curRecipe(){ return CONFIG.BUILD.RECIPES[buildSel] || CONFIG.BUILD.RECIPES[0]; }
+
+/* --- 第 38 轮：建筑占地（多格） ---
+ * 建筑用左上角 (tx,ty) 作为锚点，向右 / 向下占 w×h 格；
+ * buildIndex 会把整块矩形都指向同一个建筑，碰撞 / 交互 / 拆除都按整块识别。 */
+function recipeFootprint(r){
+  const f = r && CONFIG.BUILD.FOOTPRINT && CONFIG.BUILD.FOOTPRINT[r.id];
+  return f ? [Math.max(1, f[0]|0), Math.max(1, f[1]|0)] : [1, 1];
+}
+function footW(b){
+  if(!b || b.preset) return 1;
+  const w = b.w | 0;
+  if(w > 0) return Math.min(6, w);
+  return recipeFootprint(buildRecipe(b.type))[0];
+}
+function footH(b){
+  if(!b || b.preset) return 1;
+  const h = b.h | 0;
+  if(h > 0) return Math.min(6, h);
+  return recipeFootprint(buildRecipe(b.type))[1];
+}
+function footprintLabel(r){
+  const f = recipeFootprint(r);
+  return f[0] + '×' + f[1];
+}
+/* 建筑中心（像素；1 格建筑就是格中心，和旧行为一致） */
+function buildingCenterPx(b){
+  return { x: (b.tx + footW(b) / 2) * TILE,
+           y: (b.ty + footH(b) / 2) * TILE };
+}
+/* 把一栋建筑的整块占地写进索引；家具（furn_）不进索引 */
+function indexOneBuilding(b, k){
+  if(!b || (b.type || '').indexOf('furn_') === 0) return;
+  const w = footW(b), h = footH(b);
+  for(let y=b.ty; y<b.ty+h; y++){
+    if(y < 0 || y >= MAP_H) continue;
+    for(let x=b.tx; x<b.tx+w; x++){
+      if(x < 0 || x >= MAP_W) continue;
+      buildIndex[y*MAP_W+x] = k;
+    }
+  }
+}
+/* 整张索引重建（拆建筑 / 读档 / 收家具后调用，避免下标错位） */
+function rebuildBuildIndex(){
+  buildIndex.fill(-1);
+  for(let k=0; k<buildings.length; k++) indexOneBuilding(buildings[k], k);
+}
+
 /* 材料够不够 */
 function canAfford(r){
   if(!r) return false;
@@ -34,8 +81,8 @@ function missingMat(r){
   if(r.gold && gold < r.gold) return 'gold';    /* 第 20 轮 */
   return null;
 }
-/* 这个格子能不能放这个建造物（返回空串 = 可以） */
-function buildGroundOK(tx,ty,r){
+/* 单个格子能不能放这个建造物（返回空串 = 可以） */
+function buildTileOK(tx,ty,r){
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return '超出地图';
   if(tx === QUEST_BOARD.x && ty === QUEST_BOARD.y) return '这里是委托板';   /* 第 16 轮 */
   const i = ty*MAP_W + tx, t = map[i];
@@ -54,8 +101,29 @@ function buildGroundOK(tx,ty,r){
   if(buildIndex[i] >= 0) return '这里已经有东西了';
   return '';
 }
-/* 够不够得着（建造距离） */
-function buildRangeOK(tx,ty){ return tileCenterDist(tx,ty) <= CONFIG.BUILD.RANGE; }
+/* 整块占地逐格检查（w×h，锚点为左上角） */
+function buildFootprintOK(tx,ty,w,h,r){
+  for(let y=ty; y<ty+h; y++)
+    for(let x=tx; x<tx+w; x++){
+      const g = buildTileOK(x,y,r);
+      if(g) return g;
+    }
+  return '';
+}
+/* 这个格子能不能放这个建造物（按配方默认占地；返回空串 = 可以） */
+function buildGroundOK(tx,ty,r){
+  const f = recipeFootprint(r);
+  return buildFootprintOK(tx,ty,f[0],f[1],r);
+}
+/* 够不够得着（建造距离）：占地里任意一格在范围内即可 */
+function buildRangeOK(tx,ty,r){
+  r = r || curRecipe();
+  const f = recipeFootprint(r);
+  for(let y=ty; y<ty+f[1]; y++)
+    for(let x=tx; x<tx+f[0]; x++)
+      if(tileCenterDist(x,y) <= CONFIG.BUILD.RANGE) return true;
+  return false;
+}
 /* 预览：能不能放（ok=false 时 reason 说明原因） */
 function buildPreview(tx,ty,r){
   r = r || curRecipe();
@@ -83,16 +151,17 @@ function placeBuilding(tx,ty){
   if(r.overlay){
     roads[ty*MAP_W+tx] = 1;
   }else{
-    const b = {type:r.id, tx:tx, ty:ty};
+    const fp = recipeFootprint(r);
+    const b = {type:r.id, tx:tx, ty:ty, w:fp[0], h:fp[1]};
     if(r.id === 'chest') b.slots = new Array(CONFIG.BUILD.CHEST_SLOTS).fill(null);
     if(r.id === 'autobox') b.slots = new Array(CONFIG.ENDGAME.AUTOBOX.SLOTS).fill(null);  /* 第 20 轮 */
     if(r.id === 'maker'){ b.job = null; b.out = []; }   /* 第 19 轮：加工台自己的活儿与产出槽 */
     buildings.push(b);
-    buildIndex[ty*MAP_W+tx] = buildings.length - 1;
+    indexOneBuilding(b, buildings.length - 1);           /* 第 38 轮：整块占地都指向这栋建筑 */
   }
   ratingCheck();                              /* 第 20 轮：建筑数变化 → 重新评估星级 */
   statsBuild();                               /* 第 18 轮：建造统计 + 成就 */
-  toast('造好了' + r.name);
+  toast('造好了' + r.name + (r.overlay ? '' : '（占 ' + footprintLabel(r) + ' 格）'));
   playSfx(660, 'square', 0.12, CONFIG.AUDIO.VOLUME);
   return true;
 }
@@ -120,11 +189,7 @@ function demolishAt(tx,ty){
   if(b.type.indexOf('furn_') === 0){
     const id = b.type.slice(5);
     buildings.splice(bi, 1);
-    buildIndex.fill(-1);
-    for(let k=0;k<buildings.length;k++){
-      const bb = buildings[k];
-      buildIndex[bb.ty*MAP_W+bb.tx] = k;
-    }
+    rebuildBuildIndex();
     if(id) addItem(id, 1);
     toast('收起了家具');
     playSfx(320, 'triangle', 0.08, CONFIG.AUDIO.VOLUME * 0.7);
@@ -164,8 +229,7 @@ function demolishAt(tx,ty){
     if(gy > 0){ changeGold(gy); back += '金币×' + gy + ' '; }
   }
   buildings.splice(bi, 1);
-  buildIndex.fill(-1);                     /* 重建索引（下标会整体前移） */
-  for(let k=0; k<buildings.length; k++) buildIndex[buildings[k].ty*MAP_W + buildings[k].tx] = k;
+  rebuildBuildIndex();                     /* 第 38 轮：重建整块占地索引（下标会整体前移） */
   ratingCheck();                           /* 第 20 轮：建筑数变化 → 重新评估星级 */
   toast('拆掉了' + r.name + (back ? '（返还 ' + back.trim() + '）' : ''));
   playSfx(220, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
@@ -200,7 +264,7 @@ function cycleBuild(dir){
   if(!n) return;
   buildSel = (buildSel + (dir >= 0 ? 1 : -1) + n) % n;
   const r = curRecipe();
-  toast('选中：' + r.name + '（' + costText(r) + '）');
+  toast('选中：' + r.name + '（' + costText(r) + '）' + (r.overlay ? '' : ' · 占地 ' + footprintLabel(r)));
 }
 /* 配方的材料文字：木材×3 石材×5（第 20 轮：金币造价也写进去） */
 function costText(r){
@@ -221,5 +285,5 @@ function roadUnderPlayer(){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { buildRecipes, buildRecipe, curRecipe, canAfford, missingMat, buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt, buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer });
-export { buildRecipes, buildRecipe, curRecipe, canAfford, missingMat, buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt, buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer };
+Object.assign(window, { buildRecipes, buildRecipe, curRecipe, canAfford, missingMat, buildTileOK, buildFootprintOK, buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt, buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer, recipeFootprint, footW, footH, footprintLabel, buildingCenterPx, indexOneBuilding, rebuildBuildIndex });
+export { buildRecipes, buildRecipe, curRecipe, canAfford, missingMat, buildTileOK, buildFootprintOK, buildGroundOK, buildRangeOK, buildPreview, placeBuilding, demolishAt, buildingAt, toggleBuild, cycleBuild, costText, roadUnderPlayer, recipeFootprint, footW, footH, footprintLabel, buildingCenterPx, indexOneBuilding, rebuildBuildIndex };

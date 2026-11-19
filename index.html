@@ -1508,6 +1508,18 @@
 
 
   <script type="module" src="js/main.js"></script>
+  <!-- 可视化自动农场机器人：只在 ?bot=1 时加载，不影响正常游戏 -->
+  <script>
+    (function () {
+      try {
+        if (new URLSearchParams(location.search).get('bot') !== '1') return;
+        var s = document.createElement('script');
+        s.src = 'bot/farm-bot.js';
+        s.defer = true;
+        document.body.appendChild(s);
+      } catch (e) {}
+    })();
+  </script>
 
 
 </body>

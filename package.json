@@ -1,0 +1,13 @@
+{
+  "name": "pixel-farm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "像素农场：浏览器本地运行的星露谷风格农场游戏 + 可视化自动农场机器人",
+  "scripts": {
+    "start": "node serve.js",
+    "bot": "node tools/autoplay.js"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}

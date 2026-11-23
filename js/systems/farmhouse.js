@@ -55,6 +55,7 @@ function farmhouseDoorstep(){
 }
 function farmhouseDoorCheck(prevTx, prevTy){
   if(window.farmhouseActive) return false;
+  if(typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) return false;
   if(typeof prevTx !== 'number' || typeof prevTy !== 'number') return false;
   const d = farmhouseDoorstep();
   const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
@@ -65,6 +66,7 @@ function farmhouseDoorCheck(prevTx, prevTy){
 
 function enterFarmhouse() {
   if (window.farmhouseActive) return false;
+  if (typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) return false;
   /* 无论从门口走进来还是按 E 进来，出门都统一回到门口地垫 */
   const step = farmhouseDoorstep();
   outside = { x: (step.x + 0.5) * 32, y: (step.y + 0.5) * 32, dir: 0 };

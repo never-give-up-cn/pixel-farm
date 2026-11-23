@@ -274,6 +274,7 @@ function animalStep(a, dt){ animalThink(a, dt); animalMove(a, dt); }
 /* 玩家脚边最近的动物 */
 function animalDist(a){ return Math.hypot(a.x - player.x, a.y - player.y) / TILE; }
 function animalNear(){
+  if(typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) return null;
   let best = null, bd = CONFIG.ANIMALS.RANGE;
   for(const a of animals){
     const d = animalDist(a);

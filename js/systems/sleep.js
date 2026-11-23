@@ -8,6 +8,8 @@ window.dayRolled = false;
 
 /* 到小屋的距离（格） */
 function houseDist(){
+  if(typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm'))
+    return Infinity;
   let best = Infinity;
   for(let ty=HOUSE_POS.y; ty<HOUSE_POS.y + HOUSE_POS.h; ty++)
     for(let tx=HOUSE_POS.x; tx<HOUSE_POS.x + HOUSE_POS.w; tx++){

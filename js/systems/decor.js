@@ -32,8 +32,8 @@ function decorTileFree(tx, ty) {
 
 function toggleDecor(v) {
   const want = (v === undefined) ? !window.decorMode : !!v;
-  if (want && typeof currentMap !== 'undefined' && currentMap !== 'valley') {
-    toast('只能在农场 / 小镇摆放家具');
+  if (want && typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) {
+    toast('只能在农场摆放家具');
     return false;
   }
   if (want && !decorItem()) {
@@ -62,7 +62,8 @@ function removeDecor(tx, ty) {
   const b = decorAt(tx, ty);
   if (!b) return false;
   const id = decorIdOf(b);
-  buildings = buildings.filter(x => x !== b);
+  const idx = buildings.indexOf(b);
+  if (idx >= 0) buildings.splice(idx, 1);
   /* 重建建造索引，避免后面的建筑索引错位（第 38 轮：大建筑整块占地一起重建） */
   if (typeof rebuildBuildIndex === 'function') rebuildBuildIndex();
   else if (typeof buildIndex !== 'undefined') {

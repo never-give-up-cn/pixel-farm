@@ -70,6 +70,7 @@ function festGameEnsure(){
 /* --- 摊位定位 / 交互入口 --- */
 function festivalGameNear(){
   if(typeof festivalToday !== 'function' || !festivalToday()) return false;
+  if(typeof currentMap !== 'undefined' && !(typeof isTownMap === 'function' ? isTownMap(currentMap) : currentMap === 'valley')) return false;
   const P = CONFIG.FESTIVAL.PLAZA;
   const g = festGameCfg();
   const px = player.x / TILE, py = player.y / TILE;

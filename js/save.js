@@ -40,8 +40,8 @@ function mapDiff(){
   for(let i=0;i<map.length;i++){
     if(map[i] === baseMap[i]) continue;
     const y = (i / MAP_W) | 0;
-    /* 第 24 轮：镇子是固定结构（外墙 / 门 / 地板），不进存档 → 老档也不会把墙凿穿 */
-    if(y >= C.ROW && y <= C.END_ROW) continue;
+    /* 第 24 轮：小镇是静态结构，不进存档；第 40 轮起只有当前地图是小镇时才跳过城镇带 */
+    if(typeof currentMap !== 'undefined' && currentMap === 'valley' && y >= C.ROW && y <= C.END_ROW) continue;
     d[(i % MAP_W) + ',' + y] = map[i];
   }
   return d;
@@ -55,7 +55,7 @@ function applyMapDiff(diff){
     const p = k.split(',');
     const x = +p[0], y = +p[1];
     if(!(x >= 0 && y >= 0 && x < MAP_W && y < MAP_H)) continue;
-    if(y >= C.ROW && y <= C.END_ROW) continue;    /* 城镇带：只认新地图的结构 */
+    if(typeof currentMap !== 'undefined' && currentMap === 'valley' && y >= C.ROW && y <= C.END_ROW) continue;    /* 城镇带：只认静态结构 */
     setTile(y*MAP_W+x, diff[k] | 0);
     n++;
   }
@@ -72,8 +72,8 @@ function stowHeld(){
 /* 生成一份存档数据（纯 JSON 对象） */
 function serializeState(){
   stowHeld();
-  const _worldMap = (typeof currentMap !== 'undefined') ? currentMap : 'valley';
-  if(_worldMap !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays('valley');
+  const _worldMap = (typeof currentMap !== 'undefined') ? currentMap : 'farm';
+  if(_worldMap !== 'farm' && typeof worldUseArrays === 'function') worldUseArrays('farm');
   const cs = [];
   for(let i=0;i<crops.length;i++){
     const c = crops[i];
@@ -94,6 +94,7 @@ function serializeState(){
     at: Date.now(),
     seed: CONFIG.SEED,
     farm: farmType,                 /* 第 37 轮：农场类型（旧存档没有 → 标准农场） */
+    split: 1,                       /* 第 40 轮：农场 / 小镇已经是两张独立地图 */
     world: { map: _worldMap, player: { x: player.x, y: player.y } },
     player: (window.farmhouseActive && typeof farmhouseSavePos === 'function' && farmhouseSavePos())
       ? farmhouseSavePos() : {x: player.x, y: player.y},
@@ -180,14 +181,40 @@ function serializeState(){
 function deserializeState(d){
   if(!d || typeof d !== 'object') return false;
   try{
-    if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
-      worldUseArrays('valley');
-    /* 地图：按存档里的种子 + 农场类型重新生成底图，再叠加 diff */
+    if(typeof currentMap !== 'undefined' && currentMap !== 'farm' && window.MAP_WORLD && MAP_WORLD.farm)
+      worldUseArrays('farm');
+    /* 地图：按存档里的种子 + 农场类型重新生成农场底图，再叠加 diff */
     const seed = (typeof d.seed === 'number') ? d.seed : CONFIG.SEED;
     const ft = (typeof d.farm === 'string' && CONFIG.GEN.FARM_TYPES.LIST[d.farm]) ? d.farm : CONFIG.GEN.FARM_DEFAULT;
+    const oldCombined = d.split !== 1;
+    let savedMap = (d.world && d.world.map) ? d.world.map : 'farm';
+    if(oldCombined){
+      /* 旧档：农场 + 小镇在同一张 valley 地图。只有存档确实停在 valley 时，
+       * 才按玩家位置判断是新农场还是小镇；其它探索地图尊重原地图 id。 */
+      if(!d.world || !d.world.map || d.world.map === 'valley'){
+        const py = d.player ? d.player.y : 0;
+        savedMap = (py >= CONFIG.TOWN.ROW * TILE) ? 'valley' : 'farm';
+      }
+    }
+    if(window.MAP_WORLD){
+      delete MAP_WORLD.farm;
+      delete MAP_WORLD.valley;
+    }
+    const farmCell = (x, y) => !oldCombined || y < CONFIG.TOWN.ROW;
     genMap(seed, ft);
+    currentMap = 'farm';
+    mapDisplayName = MAP_DEFS.farm ? MAP_DEFS.farm.name : '农场';
     snapshotBaseMap();
-    applyMapDiff(d.map);
+    let mapDiffData = d.map;
+    if(oldCombined && mapDiffData && typeof mapDiffData === 'object'){
+      const f = {};
+      for(const k in mapDiffData){
+        const y = +String(k).split(',')[1];
+        if(y >= 0 && y < CONFIG.TOWN.ROW) f[k] = mapDiffData[k];
+      }
+      mapDiffData = f;
+    }
+    applyMapDiff(mapDiffData);
     /* 作物 */
     crops.fill(null);
     if(Array.isArray(d.crops))
@@ -195,6 +222,7 @@ function deserializeState(d){
         if(!c) continue;
         const x = c.x|0, y = c.y|0;
         if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
+        if(!farmCell(x, y)) continue;
         if(!cropDef(c.type)) continue;
         const nc = {type:c.type, stage:c.stage|0, grown:c.grown|0,
                             watered:!!c.watered, mature:!!c.mature, dead:!!c.dead};
@@ -214,6 +242,7 @@ function deserializeState(d){
         if(!b || (!buildRecipe(b.type) && b.type.indexOf('furn_') !== 0)) continue;
         const x = b.x|0, y = b.y|0;
         if(x < 0 || y < 0 || x >= MAP_W || y >= MAP_H) continue;
+        if(!farmCell(x, y)) continue;
         const r = buildRecipe(b.type);
         /* 第 38 轮：新档直接读占地；旧档按配方默认占地扩张，
          * 扩不开（周边有树 / 作物 / 别的建筑）就退回 1×1，保证旧档一定能读。 */
@@ -267,15 +296,28 @@ function deserializeState(d){
         else if(nb.type.indexOf('furn_') !== 0) buildIndex[y*MAP_W+x] = buildings.length - 1;
       }
     if(typeof rebuildBuildIndex === 'function') rebuildBuildIndex();   /* 第 38 轮：整块占地重建索引 */
-    /* 第 25 轮：镇上的家具（preset）不存档 —— 读档后按 BUILDING_DEFS 重新盖一遍 */
-    stampTownFixtures();
-    if(typeof worldRegisterValley === 'function') worldRegisterValley();
+    /* 第 40 轮：先登记农场状态，再单独生成小镇（镇上的家具是静态配置，不进存档） */
+    if(typeof worldRegisterFarmState === 'function') worldRegisterFarmState();
+    if(typeof worldCreateTownState === 'function') worldCreateTownState(seed);
     if(Array.isArray(d.roads))
       for(const k of d.roads){
         const p = String(k).split(',');
         const x = +p[0], y = +p[1];
-        if(x >= 0 && y >= 0 && x < MAP_W && y < MAP_H) roads[y*MAP_W+x] = 1;
+        if(x >= 0 && y >= 0 && x < MAP_W && y < MAP_H && farmCell(x, y)) roads[y*MAP_W+x] = 1;
       }
+    /* 切到存档所在的地图（农场 / 小镇 / 其它探索地图） */
+    if(savedMap === 'valley'){
+      worldUseArrays('valley');
+      currentMap = 'valley';
+      mapDisplayName = MAP_DEFS.valley.name;
+    }else if(savedMap === 'farm' || !MAP_WORLD[savedMap]){
+      worldUseArrays('farm');
+      currentMap = 'farm';
+      mapDisplayName = MAP_DEFS.farm.name;
+    }else{
+      const wp = (d.world && d.world.player) || d.player || { x: SPAWN.x*TILE, y: SPAWN.y*TILE };
+      worldActivate(savedMap, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
+    }
     /* 玩家 / 背包 / 时间 / 天气 */
     if(d.player){ player.x = d.player.x; player.y = d.player.y; }
     if(typeof farmhouseForceExit === 'function') farmhouseForceExit();
@@ -286,7 +328,7 @@ function deserializeState(d){
       if(dr){ player.x = (dr.to.x + 0.5)*TILE; player.y = (dr.to.y + 0.5)*TILE; }
     }
     /* 第 26 轮：城镇的墙变薄了 → 老存档里玩家可能正好停在新墙里 → 挪到街上 */
-    {
+    if(typeof currentMap !== 'undefined' && currentMap === 'valley'){
       const ptx = Math.floor(player.x/TILE), pty = Math.floor(player.y/TILE);
       const mt = map[pty*MAP_W+ptx];
       if(mt === T.WALL_FRONT || mt === T.WALL_BACK){
@@ -423,11 +465,7 @@ function deserializeState(d){
       const sd = ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1;
       if(sd % Math.max(1, CONFIG.GATHER.EVERY_DAYS) === 1) spawnGather(true);
     }
-    /* 收尾：摄像机贴人、天色跟着时间、天气粒子重来一遍 */
-    if(d.world && d.world.map && d.world.map !== 'valley' && typeof worldActivate === 'function'){
-      const wp = d.world.player || d.player || { x: player.x, y: player.y };
-      worldActivate(d.world.map, Math.floor(wp.x / TILE), Math.floor(wp.y / TILE), true);
-    }
+    /* 地图已经在上面切好；这里只同步摄像机 / 天色 / 天气 */
     if(typeof worldDailyDeserialize === 'function') worldDailyDeserialize(d.hm);   /* 树桩 / 采石场矿脉当天采集记录 */
     if(typeof worldSecretDeserialize === 'function') worldSecretDeserialize(d.sec);
     cam.x = clamp(player.x - VIEW_W/2, 0, MAP_W*TILE - VIEW_W);
@@ -440,7 +478,13 @@ function deserializeState(d){
     updateTut();
     npcRuntimeClear();                     /* 第 27 轮：清空物理坐标缓存（强制 NPC 在下一次 tick 时
                                              直接出现在床上或街上 —— 防止从地图左上角跑过来） */
-    ratingCheck();                             /* 第 20 轮：读档后重新评估星级 */
+    /* 评级用农场数据算，读档时玩家可能正好在小镇 */
+    {
+      const _cm = currentMap;
+      if(_cm !== 'farm' && typeof worldUseArrays === 'function' && MAP_WORLD.farm) worldUseArrays('farm');
+      ratingCheck();                             /* 第 20 轮：读档后重新评估星级 */
+      if(_cm !== 'farm' && typeof worldUseArrays === 'function' && MAP_WORLD[_cm]) worldUseArrays(_cm);
+    }
     return true;
   }catch(e){
     console.warn('[save] 读档失败：', e);
@@ -583,19 +627,19 @@ function wipeSave(){
 /* 全新一局：删掉旧档、从头开始（farmId 为农场类型，不传 = 标准农场） */
 function newGame(farmId){
   deleteSave();
-  if(typeof currentMap !== 'undefined' && currentMap !== 'valley' && window.MAP_WORLD && MAP_WORLD.valley)
-    worldUseArrays('valley');
+  if(typeof currentMap !== 'undefined' && currentMap !== 'farm' && window.MAP_WORLD && MAP_WORLD.farm)
+    worldUseArrays('farm');
   genMap(CONFIG.SEED, farmId || CONFIG.GEN.FARM_DEFAULT);
   snapshotBaseMap();
   initInventory();
   buildings = []; buildIndex.fill(-1); roads = new Uint8Array(MAP_W*MAP_H);
-  stampTownFixtures();                        /* 第 25 轮：镇上的家具重新盖一遍（静态配置，不存档） */
-  /* 新游戏：清掉上一局探索过的地图缓存（树桩 / 室内箱子等状态），只保留新农场 */
+  /* 新游戏：清掉上一局探索过的地图缓存（树桩 / 室内箱子等状态），重新登记农场和城镇 */
   if(window.MAP_WORLD && typeof MAP_WORLD === 'object'){
-    for(const k in MAP_WORLD) if(k !== 'valley') delete MAP_WORLD[k];
+    for(const k in MAP_WORLD) delete MAP_WORLD[k];
   }
   if(typeof worldSecretReset === 'function') worldSecretReset();
-  if(typeof worldRegisterValley === 'function') worldRegisterValley();
+  if(typeof worldRegisterFarmState === 'function') worldRegisterFarmState();
+  if(typeof worldCreateTownState === 'function') worldCreateTownState(CONFIG.SEED);
   dropFx = [];
   clock.day = 1; clock.min = 0; clock.hold = 0;
   staminaMax = CONFIG.STAMINA.MAX; stamina = CONFIG.STAMINA.MAX;

@@ -195,7 +195,7 @@ function npcWhere(d){
   const fs = festivalNpcSpot(d);         /* 第 17 轮：秋·丰收节村民都去广场赶集 */
   if(fs) return {x:fs.x, y:fs.y, map:'valley', at:'festival', label:'广场', from:fs.from, to:fs.to, type:'festival'};
   const vs = visitSpot(d);               /* 第 23 轮：今天来访的居民下午站到农场里 */
-  if(vs) return {x:vs.x, y:vs.y, map:'valley', at:'visit', label:'农场', from:vs.from, to:vs.to, type:'visit'};
+  if(vs) return {x:vs.x, y:vs.y, map:'farm', at:'visit', label:'农场', from:vs.from, to:vs.to, type:'visit'};
   const st = npcCurrentState(d, clock.day, h);
   if(!st || st.x === null || st.x === undefined) return null;
   return {x:st.x, y:st.y, map:st.map || 'valley', at:st.at, label:st.label, from:st.from, to:st.to, type:st.type};

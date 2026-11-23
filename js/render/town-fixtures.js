@@ -168,6 +168,7 @@ function drawDoorTile(g,x,y){
  * 屋顶只在渲染时盖一层：玩家在屋外 → 盖住，屋里看不见；
  * 玩家进了这栋房子 → 屋顶掀开（CONFIG.TOWN.ROOF.ALPHA_INSIDE），屋里一览无余。 */
 function drawRoofs(g){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return;   /* 小镇专属渲染层 */
   const C = CONFIG.TOWN, R = C.ROOF, K = C.COLORS;
   const room = playerRoomWide();            /* 玩家在哪栋房子里（含墙格和门格） */
   for(const b of C.LIST){

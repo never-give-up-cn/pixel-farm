@@ -50,6 +50,7 @@ function stampTownFixtures(){
 }
 /* 玩家在「哪一栋房子的范围内」（含墙和门格 —— 剖切判定用这个，宽一圈） */
 function playerRoomWide(){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return null;
   const tx = Math.floor(player.x/TILE), ty = Math.floor(player.y/TILE);
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
@@ -60,6 +61,7 @@ function playerRoomWide(){
 }
 /* 某一格是不是某栋房子的「前墙」（南边那排墙） */
 function townFrontWallBuilding(tx,ty){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return null;
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
     const row = b.row || C.ROOM_ROW;
@@ -72,6 +74,7 @@ function townFrontWallBuilding(tx,ty){
 function insideHouse(){ return playerRoomWide() !== null; }
 /* 某个格子是不是某栋房子的外框（第 26 轮：房子的范围 = 后墙那一行到前墙那一行） */
 function townBuildingAt(tx,ty){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return null;
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
     const row = b.row || C.ROOM_ROW;
@@ -81,6 +84,7 @@ function townBuildingAt(tx,ty){
 }
 /* 室内区域：站在哪一间屋子里（null = 在室外） */
 function townRoomAt(tx,ty){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return null;
   const C = CONFIG.TOWN;
   for(const b of CONFIG.TOWN.LIST){
     const row = b.row || C.ROOM_ROW;

@@ -176,7 +176,7 @@ window.addEventListener('keydown', e=>{
   /* E：上下文交互 —— 小屋旁睡觉，木箱旁开箱，商店摊旁交易，NPC 旁说话 */
   if(k === 'e'){
     if(!e.repeat){
-      if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+      if(typeof currentMap !== 'undefined' && !(typeof isHomesteadMap === 'function' ? isHomesteadMap(currentMap) : (currentMap === 'farm' || currentMap === 'valley'))){
         const l = (typeof worldLandmarkNear === 'function') ? worldLandmarkNear() : null;
         if(l && l.action === 'mine' && typeof toggleMine === 'function'){
           if(typeof mineEntranceInteract === 'function') mineEntranceInteract();
@@ -263,12 +263,12 @@ window.addEventListener('keydown', e=>{
       }
       else if(mk) makerOpenPanel(mk);            /* 第 19 轮：加工台 */
       else if(fb) farmBuildingInteract(fb);      /* 温室 / 筒仓 / 水井 / 发货箱 / 鱼塘 / 磨坊 */
-      else if(typeof festivalGameNear === 'function' && festivalGameNear()) festivalGameInteract();  /* 节日小游戏摊位 */
+      else if(typeof festivalGameNear === 'function' && typeof isTownMap === 'function' && isTownMap(currentMap) && festivalGameNear()) festivalGameInteract();  /* 节日小游戏摊位（小镇广场） */
       else if(typeof bundleCenterNear === 'function' && bundleCenterNear()) toggleBundlePanel();  /* 第 32 轮：社区中心 */
       else if(typeof wardrobeNear === 'function' && wardrobeNear()) toggleWardrobe();             /* 第 32 轮：衣柜 */
       else if(typeof roomPlannerNear === 'function' && roomPlannerNear()) toggleRoom();          /* 第 32 轮：装修样板 */
       else if(fixtureNear()) interactFixture(fixtureNear());   /* 第 25 轮：看装饰 / 睡 bed */
-      else if(questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板 */
+      else if(typeof isTownMap === 'function' && isTownMap(currentMap) && questBoardNear()) toggleQuestPanel();          /* 第 16 轮：委托板（小镇） */
       else if(animalNear()) animalOpenPanel(animalNear());   /* 第 15 轮：脚边动物 → 摸头 / 喂食 */
       else if(typeof petBowlNear === 'function' && petBowlNear()) petCycle();   /* 第 32 轮：宠物碗换品种 */
       else if(typeof petNear === 'function' && petNear()) petInteract();        /* 第 32 轮：摸宠物 */

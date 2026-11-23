@@ -10,7 +10,8 @@
 'use strict';
 
 const MAP_DEFS = {
-  valley:   { name: '农场与小镇' },
+  valley:   { name: '鹈鹕镇' },
+  farm:     { name: '农场' },
   forest:   { name: '煤渣森林' },
   mountain: { name: '山地' },
   beach:    { name: '鹈鹕海滩' },
@@ -82,8 +83,8 @@ const INTERIORS = {
 for(const id in INTERIORS) MAP_DEFS[id] = { name: INTERIORS[id].name };
 
 window.MAP_WORLD = {};
-window.currentMap = 'valley';
-window.mapDisplayName = MAP_DEFS.valley.name;
+window.currentMap = 'farm';
+window.mapDisplayName = MAP_DEFS.farm.name;
 
 function blankWorldState(name, townList){
   const n = MAP_W * MAP_H;
@@ -114,39 +115,53 @@ function useWorldArrays(st){
   if(typeof invalidateGround === 'function') invalidateGround();
 }
 
-/* 新游戏 / 读档后，把当前（农场+小镇）地图登记成 valley */
-function worldRegisterValley(){
-  const C = CONFIG.TOWN;
-  const st = blankWorldState(MAP_DEFS.valley.name, CONFIG.TOWN.LIST);
+/* 第 40 轮：农场 / 鹈鹕镇拆成两张独立地图。
+ * 内部 id 继续用 valley 表示小镇（NPC 日程、城镇门、商店都按这个 id 写），
+ * farm 表示农场；两张地图各自有 map / crops / roads / buildings / buildIndex。 */
+const TOWN_LIST = CONFIG.TOWN.LIST;
+
+function worldRegisterFarmState(){
+  const st = blankWorldState(MAP_DEFS.farm.name, TOWN_LIST);
   st.map = map;
   st.crops = crops;
   st.roads = roads;
   st.buildings = buildings;
   st.buildIndex = buildIndex;
   st.baseMap = baseMap;
-  st.townList = CONFIG.TOWN.LIST;
-  st.landmarks = [];
+  st.townList = TOWN_LIST;
   st.exits = [
-    { x: 64, y: 1,   w: 2, h: 1, to: 'mountain', tx: 64,  ty: 92, label: '北边 · 山地' },
-    { x: 1,  y: 42,  w: 1, h: 1, to: 'forest',   tx: 112, ty: 42, label: '西边 · 森林' },
-    { x: 126, y: 42, w: 1, h: 1, to: 'busstop',  tx: 4,   ty: 52, label: '东边 · 巴士站' },
-    { x: 64, y: 102, w: 2, h: 1, to: 'beach',    tx: 64,  ty: 8,  label: '南边 · 海滩' }
+    { x: CONFIG.TOWN.CONNECTOR_X, y: 1,   w: 2, h: 1, to: 'mountain', tx: 64, ty: 92, label: '北边 · 山地' },
+    { x: CONFIG.TOWN.CONNECTOR_X, y: 102, w: 2, h: 1, to: 'valley',   tx: CONFIG.TOWN.CONNECTOR_X, ty: 2, label: '南边 · 鹈鹕镇' }
   ];
-  MAP_WORLD.valley = st;
-  currentMap = 'valley';
-  mapDisplayName = st.name;
-  if(typeof player !== 'undefined') player.warpCd = 0;
+  st.spawn = { x: SPAWN.x, y: SPAWN.y };
+  MAP_WORLD.farm = st;
+  return st;
+}
 
-  /* 把出口接到路网（同时写进 baseMap，避免变成存档 diff） */
-  const carve = (tx, ty) => {
-    if(tx < 1 || ty < 1 || tx >= MAP_W-1 || ty >= MAP_H-1) return;
-    const i = ty * MAP_W + tx;
-    map[i] = T.PATH;
-    baseMap[i] = T.PATH;
-  };
-  for(let y = 1; y <= FARM.y; y++){ carve(64, y); carve(65, y); }
-  for(let x = 1; x <= 4; x++) carve(x, 42);
-  for(let y = C.END_ROW + 1; y < MAP_H - 2; y++){ carve(64, y); carve(65, y); }
+function worldCreateTownState(seed){
+  if(!MAP_WORLD.farm) worldRegisterFarmState();
+  let town = MAP_WORLD.valley;
+  if(!town){
+    town = ensureWorld('valley', seed);
+    useWorldArrays(town);
+    stampTownFixtures();                 /* 镇上的家具是静态配置，不进存档 */
+  }
+  useWorldArrays(MAP_WORLD.farm);
+  if(typeof recountTilled === 'function') recountTilled();
+  currentMap = 'farm';
+  mapDisplayName = MAP_DEFS.farm.name;
+  return town;
+}
+
+/* 兼容旧调用：确保农场 + 小镇都已登记；
+ * 返回小镇状态（原来返回 valley，语义保持不变）。 */
+function worldRegisterValley(seed){
+  if(!MAP_WORLD.farm) worldRegisterFarmState();
+  if(!MAP_WORLD.valley) worldCreateTownState(seed || CONFIG.SEED);
+  useWorldArrays(MAP_WORLD.farm);
+  currentMap = 'farm';
+  mapDisplayName = MAP_DEFS.farm.name;
+  return MAP_WORLD.valley;
 }
 
 /* ---------- 生成辅助 ---------- */
@@ -225,7 +240,7 @@ function genForest(){
   scatterWild(mulberry32(9101), 1800, L, { tree:0.80 });
   return {
     landmarks: L,
-    exits: [{ x:127, y:42, w:1, h:1, to:'valley', tx:4, ty:42, label:'东边 · 小镇' }],
+    exits: [{ x:126, y:42, w:1, h:1, to:'valley', tx:4, ty:42, label:'东边 · 鹈鹕镇' }],
     spawn: { x:112, y:42 }
   };
 }
@@ -285,7 +300,7 @@ function genMountain(){
   scatterWild(mulberry32(9102), 1300, L, { tree:0.62 });
   return {
     landmarks: L,
-    exits: [{ x:64, y:102, w:2, h:1, to:'valley', tx:64, ty:3, label:'南边 · 小镇' }],
+    exits: [{ x:64, y:102, w:2, h:1, to:'farm', tx:CONFIG.TOWN.CONNECTOR_X, ty:100, label:'南边 · 农场' }],
     spawn: { x:64, y:92 }
   };
 }
@@ -358,7 +373,7 @@ function genBeach(){
   scatterWild(mulberry32(9103), 240, L, { tree:0.25 });
   return {
     landmarks: L,
-    exits: [{ x:64, y:1, w:2, h:1, to:'valley', tx:64, ty:99, label:'北边 · 小镇' }],
+    exits: [{ x:64, y:1, w:2, h:1, to:'valley', tx:CONFIG.TOWN.CONNECTOR_X, ty:99, label:'北边 · 鹈鹕镇' }],
     spawn: { x:64, y:8 }
   };
 }
@@ -477,16 +492,34 @@ function genInterior(id){
 }
 
 
-function ensureWorld(id){
+function ensureWorld(id, seed){
+  seed = (typeof seed === 'number') ? seed : CONFIG.SEED;
   if(MAP_WORLD[id]) return MAP_WORLD[id];
   const old = MAP_WORLD[currentMap] || {
     map: window.map, crops: window.crops, roads: window.roads,
     buildings: window.buildings, buildIndex: window.buildIndex,
     baseMap: window.baseMap, townList: CONFIG.TOWN.LIST
   };
-  const st = blankWorldState(MAP_DEFS[id] ? MAP_DEFS[id].name : id, []);
+  const st = blankWorldState(MAP_DEFS[id] ? MAP_DEFS[id].name : id,
+    (id === 'valley' || id === 'farm') ? TOWN_LIST : []);
   useWorldArrays(st);
   let result = null;
+  if(id === 'farm'){
+    genMap(seed, farmType);
+    result = { landmarks: [], exits: [
+      { x: CONFIG.TOWN.CONNECTOR_X, y: 1,   w: 2, h: 1, to: 'mountain', tx: 64, ty: 92, label: '北边 · 山地' },
+      { x: CONFIG.TOWN.CONNECTOR_X, y: 102, w: 2, h: 1, to: 'valley',   tx: CONFIG.TOWN.CONNECTOR_X, ty: 2, label: '南边 · 鹈鹕镇' }
+    ], spawn: { x: SPAWN.x, y: SPAWN.y } };
+  }
+  if(id === 'valley'){
+    genTownMap(seed);
+    result = { landmarks: [], exits: [
+      { x: CONFIG.TOWN.CONNECTOR_X, y: 1,   w: 2, h: 1, to: 'farm',    tx: CONFIG.TOWN.CONNECTOR_X, ty: 100, label: '北边 · 农场' },
+      { x: 1,   y: 42, w: 1, h: 1, to: 'forest',  tx: 112, ty: 42, label: '西边 · 煤渣森林' },
+      { x: 126, y: 42, w: 1, h: 1, to: 'busstop', tx: 4,   ty: 52, label: '东边 · 巴士站' },
+      { x: CONFIG.TOWN.CONNECTOR_X, y: 102, w: 2, h: 1, to: 'beach', tx: 64, ty: 8, label: '南边 · 鹈鹕海滩' }
+    ], spawn: { x: CONFIG.TOWN.CONNECTOR_X, y: 2 } };
+  }
   if(id === 'forest') result = genForest();
   else if(id === 'mountain') result = genMountain();
   else if(id === 'beach') result = genBeach();
@@ -1129,7 +1162,7 @@ function worldLandmarkSolid(tx, ty){
 function worldLandmarkColor(type){ return landmarkColor(type); }
 
 Object.assign(window, {
-  MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  MAP_DEFS, INTERIORS, worldRegisterValley, worldRegisterFarmState, worldCreateTownState, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
   worldDoorCheck, worldInteriorDoorAt, clearWalkKeys,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
   worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,
@@ -1137,7 +1170,7 @@ Object.assign(window, {
   drawWorldLandmark, worldLandmarkColor, ensureWorld
 });
 export {
-  MAP_DEFS, INTERIORS, worldRegisterValley, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
+  MAP_DEFS, INTERIORS, worldRegisterValley, worldRegisterFarmState, worldCreateTownState, worldUseArrays, worldActivate, worldSwitch, worldExitCheck,
   worldDoorCheck, worldInteriorDoorAt, clearWalkKeys,
   worldLandmarks, worldLandmarkSolid, worldLandmarkNear, worldEnterLandmark, worldCutStump, worldMineRock,
   worldDailySerialize, worldDailyDeserialize, secretState, worldStatueInteract,

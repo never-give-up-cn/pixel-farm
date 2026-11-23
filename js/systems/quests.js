@@ -309,7 +309,10 @@ function questBoardDist(){
   const dy = (QUEST_BOARD.y + 0.5) * TILE - player.y;
   return Math.hypot(dx, dy) / TILE;
 }
-function questBoardNear(){ return questBoardDist() <= CONFIG.QUEST.RANGE; }
+function questBoardNear(){
+  if(typeof currentMap !== 'undefined' && currentMap !== 'valley') return false;
+  return questBoardDist() <= CONFIG.QUEST.RANGE;
+}
 function drawQuestBoard(g, x, y){
   const C = CONFIG.TILE_COLORS;
   g.fillStyle = C.fencePostDark; g.fillRect(x + 7, y + 17, 4, 15);

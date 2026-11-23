@@ -84,7 +84,7 @@ function missingMat(r){
 /* 单个格子能不能放这个建造物（返回空串 = 可以） */
 function buildTileOK(tx,ty,r){
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return '超出地图';
-  if(tx === QUEST_BOARD.x && ty === QUEST_BOARD.y) return '这里是委托板';   /* 第 16 轮 */
+  if(typeof currentMap !== 'undefined' && currentMap === 'valley' && tx === QUEST_BOARD.x && ty === QUEST_BOARD.y) return '这里是委托板';   /* 第 16 轮 */
   const i = ty*MAP_W + tx, t = map[i];
   if(t === T.WATER) return '水里不能建';
   if(t === T.TREE || t === T.ROCK || t === T.HOUSE || t === T.SHOP) return '这里已经有东西了';
@@ -245,8 +245,8 @@ function buildingAt(tx,ty){
 function toggleBuild(on){
   const want = (on === undefined) ? !buildMode : !!on;
   if(want === buildMode) return;
-  if(want && typeof currentMap !== 'undefined' && currentMap !== 'valley'){
-    toast('只能在农场 / 小镇建造');
+  if(want && typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')){
+    toast('只能在农场建造');
     return;
   }
   buildMode = want;

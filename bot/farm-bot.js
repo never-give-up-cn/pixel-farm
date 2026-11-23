@@ -210,9 +210,11 @@
 
   async function moveToPoint(px, py, maxMs = 4200) {
     const t0 = now();
+    const startMap = currentMap;
     let lastX = player.x, lastY = player.y, still = 0;
     while (S.running && now() - t0 < maxMs) {
       await waitIfPaused();
+      if (currentMap !== startMap) { keyOff(); return true; }
       if (Math.hypot(px - player.x, py - player.y) < 5) break;
       keyOff();
       const dx = px - player.x, dy = py - player.y;
@@ -231,6 +233,7 @@
   }
 
   async function walkToTile(tx, ty) {
+    const startMap = currentMap;
     for (let attempt = 0; attempt < 4 && S.running; attempt++) {
       const t = tileOf();
       if (t.x === tx && t.y === ty) return true;
@@ -244,10 +247,38 @@
         const ok = await moveToPoint((p.x + 0.5) * TILE, (p.y + 0.5) * TILE);
         if (!ok) break;
         moved = true;
+        if (currentMap !== startMap) return true;   /* 踩到出口换图了 */
       }
       const nt = tileOf();
       if (nt.x === tx && nt.y === ty) return true;
       if (!moved) return false;
+    }
+    return false;
+  }
+
+  /* 第 40 轮：农场 / 小镇拆图后，机器人需要先走到地图出口再换图 */
+  async function goToMap(target) {
+    let guard = 0;
+    while (S.running && currentMap !== target && guard++ < 6) {
+      const st = (typeof MAP_WORLD !== 'undefined') ? MAP_WORLD[currentMap] : null;
+      const ex = st && st.exits && st.exits.find(e => e.to === target);
+      if (!ex) break;
+      setTask('前往 ' + ((typeof MAP_DEFS !== 'undefined' && MAP_DEFS[target]) ? MAP_DEFS[target].name : target));
+      const startMap = currentMap;
+      const exX = ex.x + Math.floor((ex.w || 1) / 2);
+      const exY = ex.y;
+      await walkToTile(exX, exY);
+      const t0 = now();
+      while (S.running && currentMap === startMap && now() - t0 < 3000) {
+        keyOff();
+        await sleep(80);
+      }
+      await waitIfPaused();
+    }
+    if (currentMap === target) {
+      keyOff();
+      await sleep(120);
+      return true;
     }
     return false;
   }
@@ -372,17 +403,23 @@
     }
     return out.slice(0, limit);
   }
+  function farmCropArray(){
+    const st = (typeof MAP_WORLD !== 'undefined') ? MAP_WORLD.farm : null;
+    return (st && st.crops) ? st.crops : crops;
+  }
   function plantedInPlot() {
     let n = 0;
+    const arr = farmCropArray();
     for (const p of plotCells(BOUNDS.targetTiles[1])) {
-      if (crops[p.y * MAP_W + p.x]) n++;
+      if (arr[p.y * MAP_W + p.x]) n++;
     }
     return n;
   }
   function maturePlanInPlot() {
     let n = 0;
+    const arr = farmCropArray();
     for (const p of plotCells(BOUNDS.targetTiles[1])) {
-      const c = crops[p.y * MAP_W + p.x];
+      const c = arr[p.y * MAP_W + p.x];
       if (!c || c.dead) continue;
       const d = cropDef(c.type);
       if (c.mature && d && !(d.regrow > 0)) n++;
@@ -415,6 +452,7 @@
   }
 
   async function farmWork() {
+    if (currentMap !== 'farm') { if (!(await goToMap('farm'))) return; }
     let plan = targetSeed();
     if (!plan) { log('没有当季种子，先去商店看看'); return; }
     const target = S.candidate.targetTiles | 0;
@@ -547,6 +585,7 @@
     if (!S.running) return false;
     setTask('去镇上商店');
     log('出发去商店');
+    if (!(await goToMap('valley'))) { log('没能走到镇上'); return false; }
     const ok = await standNear(c.x, c.y);
     if (!ok || !nearShop()) {
       log('没能走到商店柜台');
@@ -561,12 +600,15 @@
   /* ---------------- 回家睡觉 / 日循环 ---------------- */
   async function goHomeAndSleep() {
     setTask('回家睡觉');
+    if (currentMap !== 'farm' && !(await goToMap('farm'))) { log('找不到回农场的路'); }
     const doorX = HOUSE_POS.x + 1;
     const doorY = HOUSE_POS.y + HOUSE_POS.h;
     let ok = false;
+    /* 站在门口下面一格，避免走进农舍后又被困在室内 */
     for (let i = 0; i < 3 && S.running; i++) {
-      if (await walkToTile(doorX, doorY)) { ok = true; break; }
+      if (await walkToTile(doorX, doorY + 1)) { ok = true; break; }
     }
+    if (window.farmhouseActive && typeof exitFarmhouse === 'function') exitFarmhouse();
     if (!ok && typeof nearHouse === 'function' && !nearHouse()) {
       log('找不到回家的路，仍在门口强行休息');
     }
@@ -589,6 +631,7 @@
   async function runDay() {
     await waitIdle(3000);
     while (sleepFx && sleepFx.phase !== 'none' && S.running) await sleep(200);
+    if (window.farmhouseActive && typeof exitFarmhouse === 'function') exitFarmhouse();
     log('第 ' + clock.day + ' 天开始');
     const start = equity();
     S.dayStartEquity = start;

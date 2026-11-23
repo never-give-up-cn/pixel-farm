@@ -222,7 +222,7 @@ function ratingParts(force){
   const rows = [
     {key:'crop',     name:'作物种类', value:achPopcount(statsState.cv | 0), target:R.CROP_TARGET,   weight:R.WEIGHTS.crop,     unit:'种'},
     {key:'animal',   name:'动物数量', value:animals.length,                  target:R.ANIMAL_TARGET, weight:R.WEIGHTS.animal,   unit:'只'},
-    {key:'building', name:'建筑数量', value:buildings.filter(b=>!b.preset).length, target:R.BUILD_TARGET, weight:R.WEIGHTS.building, unit:'座'},
+    {key:'building', name:'建筑数量', value:((typeof MAP_WORLD !== 'undefined' && MAP_WORLD.farm && MAP_WORLD.farm.buildings) ? MAP_WORLD.farm.buildings : buildings).filter(b=>!b.preset).length, target:R.BUILD_TARGET, weight:R.WEIGHTS.building, unit:'座'},
     {key:'ach',      name:'成就数量', value:achCount(),                      target:R.ACH_TARGET,    weight:R.WEIGHTS.ach,      unit:'项'},
     {key:'expand',   name:'扩建期数', value:Math.floor(tilled / R.EXPAND_PLOTS), target:R.EXPAND_TARGET, weight:R.WEIGHTS.expand, unit:'期'}
   ];

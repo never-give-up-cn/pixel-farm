@@ -3,9 +3,12 @@
 
 import { EQUIPMENT } from './anim/equipment.js';
 
-genMap(CONFIG.SEED);
+genMap(CONFIG.SEED, CONFIG.GEN.FARM_DEFAULT);
 snapshotBaseMap();                    /* 记下"底图"，存档时只存与它不同的格子 */
 initInventory();                       /* 初始背包 / 快捷栏 */
+/* 第 40 轮：农场 / 小镇拆成两张地图；先登记农场，再生成小镇，最后回到农场出生 */
+if(typeof worldRegisterFarmState === 'function') worldRegisterFarmState();
+if(typeof worldCreateTownState === 'function') worldCreateTownState(CONFIG.SEED);
 /* 初始装备也计入图鉴（静默，不弹提示） */
 if (typeof dexState !== 'undefined') {
   for (const s of inv) {
@@ -57,10 +60,6 @@ if(bootSave){
   sessionActive = true;
   spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */
   updateTut();                   /* 新玩家：第 1 天早晨弹出新手引导 */
-  /* 第 39 轮：无存档直接开局时也要登记世界出口 / 城镇家具，
-   * 否则第一次走到地图边缘时还没有出口数据。 */
-  if(typeof stampTownFixtures === 'function') stampTownFixtures();
-  if(typeof worldRegisterValley === 'function') worldRegisterValley();
 }
 requestAnimationFrame(loop);
 

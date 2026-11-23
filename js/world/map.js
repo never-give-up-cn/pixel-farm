@@ -159,17 +159,19 @@ function renderBigmap(){
       }
     }
   }
-  /* 城镇建筑：按每栋自己的 row 画矩形（不再从城镇带顶部拉到底部） */
+  /* 城镇建筑：按每栋自己的 row 画矩形（只有小镇地图） */
   const C = CONFIG.TOWN;
-  for(const b of (C.LIST || [])){
-    const row = b.row || C.ROOM_ROW;
-    g.fillStyle = (b.kind === 'shop') ? CONFIG.MINIMAP.SHOP : '#b08968';
-    g.fillRect(PX + b.x * K, PY + row * K, b.w * K, C.ROOM_H * K);
-    g.fillStyle = '#f4d35e';
-    g.fillRect(PX + (b.x + C.DOOR_DX) * K, PY + row * K, Math.max(1, K), Math.max(1, K));
+  if(typeof currentMap !== 'undefined' && currentMap === 'valley'){
+    for(const b of (C.LIST || [])){
+      const row = b.row || C.ROOM_ROW;
+      g.fillStyle = (b.kind === 'shop') ? CONFIG.MINIMAP.SHOP : '#b08968';
+      g.fillRect(PX + b.x * K, PY + row * K, b.w * K, C.ROOM_H * K);
+      g.fillStyle = '#f4d35e';
+      g.fillRect(PX + (b.x + C.DOOR_DX) * K, PY + row * K, Math.max(1, K), Math.max(1, K));
+    }
   }
-  /* 农舍 / 农场里的杂货店摊位（只有 valley 有） */
-  if(typeof currentMap === 'undefined' || currentMap === 'valley'){
+  /* 农舍（农场地图） */
+  if(typeof currentMap === 'undefined' || currentMap === 'farm'){
     g.fillStyle = CONFIG.MINIMAP.HOUSE;
     g.fillRect(PX + HOUSE_POS.x * K, PY + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
   }
@@ -194,7 +196,7 @@ function renderBigmap(){
   g.fillStyle = CONFIG.MINIMAP.PLAYER;
   g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
   if(bigmapSubEl) bigmapSubEl.textContent = (typeof mapDisplayName !== 'undefined' ? mapDisplayName + ' · ' : '') +
-    ((typeof currentMap !== 'undefined' && currentMap === 'valley') ? (farmTypeDef(farmType).name + ' · ') : '') +
+    ((typeof currentMap !== 'undefined' && currentMap === 'farm') ? (farmTypeDef(farmType).name + ' · ') : '') +
     '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
 }
 function bigmapOpenPanel(){
@@ -246,6 +248,10 @@ function setFarmType(id){
   window.farmType = farmType;
   return farmType;
 }
+/* 第 40 轮：地图归属 */
+function isFarmMap(id){ id = id || (typeof currentMap !== 'undefined' ? currentMap : 'farm'); return id === 'farm'; }
+function isTownMap(id){ id = id || (typeof currentMap !== 'undefined' ? currentMap : 'valley'); return id === 'valley'; }
+function isHomesteadMap(id){ return isFarmMap(id) || isTownMap(id); }
 
 const inFarm = (x,y)=> x>=FARM.x && x<FARM.x+FARM.w && y>=FARM.y && y<FARM.y+FARM.h;
 const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
@@ -294,10 +300,9 @@ function genTown(){
     for(let x=1;x<MAP_W-1;x++) map[y*MAP_W+x] = T.GRASS;
   for(const street of (C.STREET_ROWS || [C.STREET_ROW]))
     for(let x=1;x<MAP_W-1;x++) map[street*MAP_W+x] = T.PATH;
-  const cx = C.CONNECTOR_X == null ? FARM.x + 10 : C.CONNECTOR_X;
+  const cx = C.CONNECTOR_X == null ? 64 : C.CONNECTOR_X;
   for(let x=cx;x<=cx+1;x++){
-    for(let y=FARM.y+FARM.h;y<C.ROW;y++) map[y*MAP_W+x] = T.PATH;   /* 农场 → 镇上 */
-    for(let y=C.ROW;y<=C.END_ROW;y++) map[y*MAP_W+x] = T.PATH;
+    for(let y=1;y<=C.END_ROW;y++) map[y*MAP_W+x] = T.PATH;   /* 北入口 → 四排住宅 */
   }
 
   /* 2) 住宅 / 商店：每栋按自己的 row 盖墙、地板、门 */
@@ -314,8 +319,8 @@ function genFarmFeatures(rnd, ft){
   /* 河流农场：一条 2 格宽的河从北向南穿过农场东半边 */
   if(ft.river){
     for(let y=y0; y<y0+FARM.h; y++){
-      const off = Math.round(Math.sin((y - y0) * 0.8) * 1.1);
-      const cx = x0 + 8 + off;
+      const off = Math.round(Math.sin((y - y0) * 0.7) * 1.1);
+      const cx = x0 + Math.floor(FARM.w * 0.64) + off;
       for(let k=0; k<2; k++){
         const x = cx + k;
         if(x <= x0 || x >= x0 + FARM.w) continue;
@@ -323,16 +328,24 @@ function genFarmFeatures(rnd, ft){
       }
     }
   }
-  /* 山顶农场：东北角一小片水塘 */
+  /* 水塘：标准 / 森林农场西南角，山顶农场东北角 */
   if(ft.pond){
-    for(let y=y0+4; y<=y0+5; y++)
-      for(let x=x0+9; x<=x0+10; x++) map[y*MAP_W + x] = T.WATER;
+    const px = x0 + FARM.w - 7, py = y0 + 3;
+    for(let y=py; y<=py+2; y++)
+      for(let x=px; x<=px+3; x++) map[y*MAP_W + x] = T.WATER;
+  }else if(!ft.river){
+    const px = x0 + 2, py = y0 + FARM.h - 5;
+    for(let y=py; y<=py+2; y++)
+      for(let x=px; x<=px+3; x++) map[y*MAP_W + x] = T.WATER;
   }
-  /* 森林 / 山顶：在农场草地上撒树和石头（出生点与主路之后会重新清开） */
-  const tree = ft.farmTree || 0, rock = ft.farmRock || 0;
+  /* 农场里也保留一些可砍的树 / 可敲的石头（森林 / 山顶更多） */
+  const tree = (typeof ft.farmTree === 'number') ? ft.farmTree : 0.035;
+  const rock = (typeof ft.farmRock === 'number') ? ft.farmRock : 0.02;
   if(tree > 0 || rock > 0){
     for(let y=y0; y<y0+FARM.h; y++)
       for(let x=x0; x<x0+FARM.w; x++){
+        /* 中央 24×14 留作可耕地 / 出生点，树石只长在农场边缘 */
+        if(x >= x0+3 && x < x0+FARM.w-3 && y >= y0+3 && y < y0+FARM.h-5) continue;
         const i = y*MAP_W + x;
         if(map[i] !== T.GRASS) continue;
         const r = rnd();
@@ -342,16 +355,21 @@ function genFarmFeatures(rnd, ft){
   }
 }
 /* 无论选哪种农场，农舍门口、出生点和去镇上的路必须连成一片 */
-function openFarmCorridors(){
-  const yMid = FARM.y + Math.floor(FARM.h * 0.75);      /* 农场内的横向主路 */
-  for(let x=FARM.x; x<FARM.x+FARM.w; x++) map[yMid*MAP_W + x] = T.GRASS;
-  const fx = HOUSE_POS.x + 1;                            /* 农舍大门正下方 */
-  for(let y=FARM.y+2; y<=yMid; y++) map[y*MAP_W + fx] = T.GRASS;
-  const ex = (CONFIG.TOWN.CONNECTOR_X == null) ? FARM.x + 10 : CONFIG.TOWN.CONNECTOR_X;
-  for(let y=yMid; y<CONFIG.TOWN.ROW; y++){                /* 农场 → 镇上的南北主路 */
-    map[y*MAP_W + ex] = T.GRASS;
-    map[y*MAP_W + ex + 1] = T.GRASS;
+function openFarmCorridors(ft){
+  const ex = (CONFIG.TOWN.CONNECTOR_X == null) ? 64 : CONFIG.TOWN.CONNECTOR_X;
+  /* 南北主路：北边山地出口 → 农场 → 南边小镇出口 */
+  for(let y=1; y<MAP_H-1; y++){
+    map[y*MAP_W + ex] = T.PATH;
+    map[y*MAP_W + ex + 1] = T.PATH;
   }
+  /* 河流农场：在出生点高度横铺一条桥，别让河把农场切成两半 */
+  if(ft && ft.river){
+    for(let x=FARM.x; x<FARM.x+FARM.w; x++) map[SPAWN.y*MAP_W + x] = T.PATH;
+  }
+  const fx = HOUSE_POS.x + 1;                            /* 农舍大门正下方 */
+  const hy = FARM.y + FARM.h + 1;
+  for(let y=HOUSE_POS.y+HOUSE_POS.h; y<=hy; y++) map[y*MAP_W + fx] = T.PATH;   /* 农舍 → 横向小路 */
+  for(let x=fx; x<=ex+1; x++) map[hy*MAP_W + x] = T.PATH;                     /* 横向小路 → 主路 */
   for(let y=SPAWN.y-1; y<=SPAWN.y+1; y++)                 /* 出生点 3×3 */
     for(let x=SPAWN.x-1; x<=SPAWN.x+1; x++) map[y*MAP_W + x] = T.GRASS;
 }
@@ -405,14 +423,14 @@ function genMap(seed, typeId){
   /* 5b) 第 37 轮：农场类型地形（河流 / 树林 / 矿脉 / 水塘） */
   genFarmFeatures(rnd, ft);
   /* 5c) 农舍门口 → 出生点 → 镇上的主路永远保通 */
-  openFarmCorridors();
+  openFarmCorridors(ft);
 
   /* 6) 建筑（小屋 1 间，在空地内上缘） */
   for(let y=HOUSE_POS.y;y<HOUSE_POS.y+HOUSE_POS.h;y++)
     for(let x=HOUSE_POS.x;x<HOUSE_POS.x+HOUSE_POS.w;x++) map[y*MAP_W+x] = T.HOUSE;
 
-  /* 7) 第 24 轮：盖镇子（商店 + 三户人家的房子 + 各自的卧室） */
-  genTown();
+  /* 第 40 轮：农场和小镇拆成两张独立地图；genMap 只生成农场。
+   * 小镇由 genTownMap() 单独生成。 */
 
   /* 整张地图重画了 → 离屏画布里的烘焙结果全部作废 */
   invalidateGround();
@@ -424,15 +442,52 @@ function genMap(seed, typeId){
     const t = map[y*MAP_W+x];
     if(t===T.TREE||t===T.ROCK||t===T.FLOWER) farmWild++;
   }
-  dlog('[map] type=' + farmType + ' seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
+  dlog('[map] farm type=' + farmType + ' seed=' + seed + ' | grass=' + cnt[T.GRASS] + ' dirt=' + cnt[T.DIRT] +
     ' water=' + cnt[T.WATER] + ' tree=' + cnt[T.TREE] + ' rock=' + cnt[T.ROCK] +
-    ' flower=' + cnt[T.FLOWER] + ' house=' + cnt[T.HOUSE] + ' shop=' + cnt[T.SHOP] +
+    ' flower=' + cnt[T.FLOWER] + ' house=' + cnt[T.HOUSE] +
     ' | farm ' + FARM.w + 'x' + FARM.h + ' wild-in-farm=' + farmWild);
   return cnt;
+}
+
+/* --- 第 40 轮：鹈鹕镇独立地图 ---
+ * 沿用原来的四排住宅坐标（row 42~96），北边留出草地 / 树林和通往农场的路。 */
+function genTownMap(seed){
+  const C = CONFIG.TOWN;
+  const rnd = mulberry32(seed ^ 0x5bd1e995);
+  map.fill(T.GRASS);
+  crops.fill(null);
+  roads.fill(0);
+  buildings.length = 0; buildIndex.fill(-1);
+  /* 外围水边界 */
+  for(let x=0;x<MAP_W;x++){ map[x] = T.WATER; map[(MAP_H-1)*MAP_W+x] = T.WATER; }
+  for(let y=0;y<MAP_H;y++){ map[y*MAP_W] = T.WATER; map[y*MAP_W+MAP_W-1] = T.WATER; }
+  /* 北边草地：少量水塘 / 泥土 / 树，避开主路 */
+  for(let y=2;y<C.ROW-2;y++) for(let x=2;x<MAP_W-2;x++){
+    if(Math.abs(x - C.CONNECTOR_X) <= 3) continue;
+    const i = y*MAP_W+x;
+    if(fbm(x,y,seed+7) > 0.78) map[i] = T.WATER;
+    else if(rnd() < 0.16) map[i] = T.TREE;
+    else if(rnd() < 0.05) map[i] = T.FLOWER;
+  }
+  /* 南边海岸前的草地 */
+  for(let y=C.END_ROW+1;y<MAP_H-1;y++) for(let x=2;x<MAP_W-2;x++){
+    if(Math.abs(x - C.CONNECTOR_X) <= 3) continue;
+    const r = rnd();
+    if(r < 0.10) map[y*MAP_W+x] = T.TREE;
+    else if(r < 0.14) map[y*MAP_W+x] = T.FLOWER;
+  }
+  genTown();                    /* 街道 / 住宅 / 商店 / 主路 */
+  /* 南边出口：从最后一排街道一直铺到地图下边缘 */
+  for(let y=C.END_ROW;y<MAP_H-1;y++){
+    map[y*MAP_W+C.CONNECTOR_X] = T.PATH;
+    map[y*MAP_W+C.CONNECTOR_X+1] = T.PATH;
+  }
+  invalidateGround();
+  return true;
 }
 
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap, farmTypeDef, setFarmType, genFarmFeatures, openFarmCorridors });
-export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genMap, farmType, farmTypeDef, setFarmType, genFarmFeatures, openFarmCorridors };
+Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors });
+export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmType, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors };

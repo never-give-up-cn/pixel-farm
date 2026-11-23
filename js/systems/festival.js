@@ -32,6 +32,13 @@ function festivalNight(){
   const h = skyHour();
   return h >= 18 || h < 5;
 }
+/* 第 40 轮：节日装饰永远写在“鹈鹕镇”地图上，不要求玩家当时站在镇上 */
+function onTownMap(fn){
+  const old = (typeof currentMap !== 'undefined') ? currentMap : 'farm';
+  if(old !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays('valley');
+  try { return fn(); }
+  finally { if(old !== 'valley' && typeof worldUseArrays === 'function') worldUseArrays(old); }
+}
 
 /* --- 广场装饰：只占「没被玩家改动过」的原始地面，恢复时直接回 baseMap --- */
 function festivalDecorList(f){
@@ -143,9 +150,9 @@ function hideFestivalBanner(){
 /* --- 每日开始 / 结束 --- */
 function festivalDayStart(){
   const f = festivalToday();
-  festivalClearDecor();                  /* 先清掉昨天的（防止读档残留） */
+  onTownMap(()=>festivalClearDecor());    /* 先清掉昨天的（防止读档残留） */
   if(!f){ festivalStopAmbience(); return null; }
-  festivalPlaceDecor(f);
+  onTownMap(()=>festivalPlaceDecor(f));
   festivalStartAmbience(f);
   if(festivalIs('summer') && festivalState.day !== clock.day){
     festivalState.day = clock.day;
@@ -187,7 +194,7 @@ function festivalDayEnd(endedDay){
       toast('渔获赛结束：你 ' + mine + ' 分，排第 ' + rank + ' 名');
     }
   }
-  festivalClearDecor();
+  onTownMap(()=>festivalClearDecor());
   festivalStopAmbience();
 }
 

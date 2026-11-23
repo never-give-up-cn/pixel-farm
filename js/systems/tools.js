@@ -92,10 +92,6 @@ function useTool(tx,ty,opts){
   const sfx = quiet ? function(){} : playSfx;
 
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
-  if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
-    say('这里只能探索、钓鱼和看地标；开垦和建造请回农场');
-    return false;
-  }
   if(tileCenterDist(tx,ty) > CONFIG.INTERACT.RANGE_TILES){
     say('太远了，走近一点再试试');
     sfx(110, 'sawtooth', 0.10, CONFIG.AUDIO.VOLUME * 0.6);
@@ -106,6 +102,18 @@ function useTool(tx,ty,opts){
   const slot = selectedSlot();
   const item = slot ? itemDef(slot.id) : null;
   const tool = item ? CONFIG.TOOLS.find(x => x.id === item.id) : null;
+
+  /* 第 40 轮：农场是主要生产区；森林 / 山地 / 海滩 / 采石场也允许斧头 / 镐 / 镰刀，
+   * 方便像星露谷一样在野外砍树、敲石头、割草。开垦 / 播种 / 浇水仍只限农场。 */
+  if(typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')){
+    const wild = (currentMap === 'forest' || currentMap === 'mountain' ||
+                  currentMap === 'secret' || currentMap === 'quarry' || currentMap === 'beach');
+    const wildTool = tool && (tool.id === 'axe' || tool.id === 'pick' || tool.id === 'sickle');
+    if(!(wild && wildTool && (t === T.TREE || t === T.ROCK || t === T.GRASS || t === T.FLOWER))){
+      say('这里只能探索、钓鱼、砍树 / 敲石头；开垦和种植请回农场');
+      return false;
+    }
+  }
 
   /* 第 38 轮：建造物占用的任何一格都不能再用工具（多格建筑整块都挡住） */
   if(typeof buildIndex !== 'undefined' && buildIndex[i] >= 0){

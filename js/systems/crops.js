@@ -125,7 +125,7 @@ function clearDeadCrop(tx,ty){
 
 function useFertilizer(tx, ty, item){
   if(tx < 0 || ty < 0 || tx >= MAP_W || ty >= MAP_H) return false;
-  if(typeof currentMap !== 'undefined' && currentMap !== 'valley'){
+  if(typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')){
     toast('这里只能探索，回农场再施肥');
     return false;
   }

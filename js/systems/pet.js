@@ -93,6 +93,7 @@ function updatePet(dt) {
 }
 
 function petNear() {
+  if (typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) return null;
   if (!pet) return null;
   if (typeof player === 'undefined') return null;
   const d = Math.hypot(player.x - pet.x, player.y - pet.y);
@@ -115,6 +116,7 @@ function petInteract() {
 /* ---------- 宠物碗：切换品种 ---------- */
 
 function petBowlNear() {
+  if (typeof currentMap !== 'undefined' && !(typeof isFarmMap === 'function' ? isFarmMap(currentMap) : currentMap === 'farm')) return null;
   if (typeof buildings === 'undefined') return null;
   if (typeof player === 'undefined') return null;
   let best = null, bd = Infinity;

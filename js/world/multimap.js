@@ -300,7 +300,7 @@ function genMountain(){
   scatterWild(mulberry32(9102), 1300, L, { tree:0.62 });
   return {
     landmarks: L,
-    exits: [{ x:64, y:102, w:2, h:1, to:'farm', tx:CONFIG.TOWN.CONNECTOR_X, ty:100, label:'南边 · 农场' }],
+    exits: [{ x:64, y:102, w:2, h:1, to:'farm', tx:CONFIG.TOWN.CONNECTOR_X, ty:3, label:'南边 · 农场' }],
     spawn: { x:64, y:92 }
   };
 }
@@ -389,12 +389,12 @@ function genBusstop(){
   const L = [
     { type:'bus',  x:52,  y:47, w:8,  h:3,  label:'巴士', action:'bus' },
     { type:'minecart', x:62, y:47, w:3, h:3, label:'矿车', action:'minecart', solid:true },
-    { type:'sign', x:112, y:46, w:3,  h:3,  label:'东边 · 小镇', solid:false }
+    { type:'sign', x:4, y:46, w:3,  h:3,  label:'西边 · 鹈鹕镇', solid:false }
   ];
   scatterWild(mulberry32(9302), 500, L, { tree:0.78 });
   return {
     landmarks: L,
-    exits: [{ x:126, y:51, w:1, h:1, to:'valley', tx:124, ty:42, label:'东边 · 小镇' }],
+    exits: [{ x:1, y:51, w:1, h:1, to:'valley', tx:124, ty:42, label:'西边 · 鹈鹕镇' }],
     spawn: { x:4, y:52 }
   };
 }

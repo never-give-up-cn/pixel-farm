@@ -2539,6 +2539,67 @@ CONFIG.TOWN_PLAN();
 })();
 
 
+/* 第 41 轮：按星露谷鹈鹕镇的感觉重排城镇建筑：
+ * 北侧是广场 + 杂货店 / 诊所 / 博物馆，住宅分散到中间两排，
+ * 酒馆 / 铁匠 / Joja 放在南侧；不再是整齐的 8×4 方阵。 */
+(function stardewTownLayout(){
+  const POS = {
+    /* 第一排：广场北侧商业带 */
+    shop:          [4, 43],
+    home_harvey:   [20, 43],
+    home_gunther:  [36, 43],
+    home_pierre:   [60, 43],
+    home_jodi:     [76, 43],
+    home_robin:    [92, 43],
+    home_emily:    [108, 43],
+    /* 第二排：住宅 */
+    home_aunt:     [8, 57],
+    home_carpenter:[24, 57],
+    home_girl:     [40, 57],
+    home_evelyn:   [56, 57],
+    home_pam:      [72, 57],
+    home_leah:     [88, 57],
+    home_elliott:  [104, 57],
+    /* 第三排：酒馆 / 铁匠 / Joja / 住宅 */
+    home_marnie:   [4, 71],
+    home_clint:    [22, 71],
+    home_gus:      [40, 71],
+    home_lewis:    [58, 71],
+    home_sandy:    [76, 71],
+    home_willy:    [94, 71],
+    home_morris:   [112, 71],
+    /* 第四排：南侧住宅 / 公会 / 赌场 / 海滩小屋 */
+    home_linus:    [4, 85],
+    home_wizard:   [18, 85],
+    home_dwarf:    [32, 85],
+    home_krobus:   [46, 85],
+    home_leo:      [60, 85],
+    home_guild:    [74, 85],
+    home_casino:   [88, 85],
+    home_beach:    [102, 85]
+  };
+  for(const id in POS){
+    const b = CONFIG.TOWN.LIST.find(x => x.id === id);
+    if(b){ b.x = POS[id][0]; b.row = POS[id][1]; }
+  }
+  /* 中央广场：北侧商业带和 Pierre 家之间 */
+  CONFIG.FESTIVAL.PLAZA = { x: 48, y: 39, w: 9, h: 3 };
+  /* 三位固定作息 NPC 的瞎逛区域跟着新位置走 */
+  const AREAS = {
+    aunt:     { x: 4,  y: 42, w: 20, h: 1, label: '杂货店门口' },
+    carpenter:{ x: 20, y: 56, w: 16, h: 1, label: '木匠家门口' },
+    girl:     { x: 36, y: 56, w: 16, h: 1, label: '花摊附近' }
+  };
+  for(const id in AREAS){
+    const S = CONFIG.NPC_SCHED.LIST[id];
+    if(!S) continue;
+    for(const slot of S.sched){
+      if(slot.type === 'wander') slot.area = Object.assign({}, AREAS[id]);
+    }
+  }
+})();
+
+
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
 Object.assign(window, { T, CONFIG });
 export { T, CONFIG };

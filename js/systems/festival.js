@@ -60,7 +60,7 @@ function festivalDecorFits(i){
   if(crops[i]) return false;
   if(roads && roads[i]) return false;
   if(typeof buildIndex !== 'undefined' && buildIndex[i] >= 0) return false;
-  if(t !== T.GRASS && t !== T.BARE && t !== T.FLOWER) return false;
+  if(t !== T.GRASS && t !== T.BARE && t !== T.FLOWER && t !== T.PATH) return false;   /* 中央广场铺了石板也能摆摊位 */
   return map[i] === baseMap[i];          /* 玩家锄过 / 铺过路的地不抢 */
 }
 function festivalPlaceDecor(f){

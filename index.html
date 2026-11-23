@@ -970,13 +970,21 @@
   }
   #bigmap.open{display:flex}
   #bigmapMask{position:absolute;inset:0;background:rgba(4,6,10,.55)}
-  #bigmapPanel{position:relative;width:560px;max-width:94vw;padding:12px 14px 10px}
+  #bigmapPanel{position:relative;width:560px;max-width:94vw;max-height:94vh;overflow:auto;padding:12px 14px 10px}
   #bigmapHead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
   #bigmapIcon{font:22px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
   #bigmapTitle{font-size:15px;color:#ffd76a}
   #bigmapSub{font-size:11px;color:#8fa3bd;border:1px solid #3d4a63;border-radius:6px;padding:1px 6px;margin-left:auto}
+  #bigmapNav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;max-height:70px;overflow:auto}
+  .mapchip{background:#1a2130;border:1px solid #3d4a63;color:#9fb0c4;font:11px/1.2 Consolas,"Microsoft YaHei",monospace;
+    padding:4px 7px;cursor:pointer;border-radius:4px}
+  .mapchip:hover{border-color:#ffd76a;color:#ffd76a}
+  .mapchip.on{border-color:#ffd76a;color:#ffd76a;background:#2a3550}
   #bigmapCv{display:block;margin:0 auto;border:1px solid #3d4a63;background:#0c1018;image-rendering:pixelated}
   #bigmapLegend{margin-top:8px;font-size:11px;color:#8fa3bd;text-align:center}
+  #bigmapNpc{margin-top:5px;max-height:72px;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:1px 10px;
+    font-size:11px;color:#cfe3ff;line-height:1.55}
+  #bigmapNpc .npc-off{color:#6f8098}
   #bigmapFoot{margin-top:6px;font-size:11px;color:#7f92ad;text-align:center}
   #bigmap.open #bigmapPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #bigmap.closing #bigmapPanel{animation:panelOut .2s ease-in forwards}
@@ -1500,8 +1508,10 @@
       <span id="bigmapTitle">全屏地图</span>
       <span id="bigmapSub"></span>
     </div>
+    <div id="bigmapNav"></div>
     <canvas id="bigmapCv" width="528" height="528"></canvas>
-    <div id="bigmapLegend">白=你 · 黄=营业中 · 橙=瞎逛 · 蓝=在家 · 棕=农舍 · 青=杂货店</div>
+    <div id="bigmapLegend">点击地图切换场景 · 白=你 · 黄=营业中 · 橙=瞎逛 · 蓝=在家 · 棕=农舍 · 青=杂货店</div>
+    <div id="bigmapNpc"></div>
     <div id="bigmapFoot">再点小地图或按 Esc 关闭</div>
   </div>
 </div>

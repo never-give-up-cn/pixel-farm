@@ -131,15 +131,49 @@ function hitHudMini(p){
   return p.x >= hudMiniRect.x - 2 && p.x <= hudMiniRect.x + hudMiniRect.w + 2 &&
          p.y >= hudMiniRect.y - 2 && p.y <= hudMiniRect.y + hudMiniRect.h + 2;
 }
-/* --- 第 28 轮：全屏地图（整个 64×64 世界 + 居民状态色点 + 玩家） --- */
+/* --- 第 28 轮：全屏地图（整个 64×64 世界 + 居民状态色点 + 玩家）
+ * 第 41 轮：可以切换查看所有地图场景，并列出所有 NPC 当前所在的地图。 --- */
 window.bigmapOpen = false;
 const bigmapEl = document.getElementById('bigmap');
 const bigmapMaskEl = document.getElementById('bigmapMask');
 const bigmapCvEl = document.getElementById('bigmapCv');
 const bigmapSubEl = document.getElementById('bigmapSub');
+const bigmapNavEl = document.getElementById('bigmapNav');
+const bigmapNpcEl = document.getElementById('bigmapNpc');
+window.bigmapSelected = 'farm';
+
+function bigmapOrder(){
+  const base = ['farm', 'valley', 'forest', 'mountain', 'beach', 'busstop', 'desert', 'secret', 'quarry'];
+  const out = base.filter(id => MAP_DEFS[id]);
+  for(const id in MAP_DEFS) if(out.indexOf(id) < 0) out.push(id);
+  return out;
+}
+function bigmapMapName(id){
+  return (MAP_DEFS[id] && MAP_DEFS[id].name) || id;
+}
+function renderBigmapNav(){
+  if(!bigmapNavEl) return;
+  bigmapNavEl.innerHTML = '';
+  for(const id of bigmapOrder()){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mapchip' + (id === bigmapSelected ? ' on' : '');
+    b.textContent = bigmapMapName(id);
+    b.dataset.map = id;
+    b.addEventListener('click', () => {
+      bigmapSelected = id;
+      renderBigmap();
+      if(typeof playClick === 'function') playClick();
+    });
+    bigmapNavEl.appendChild(b);
+  }
+}
 function renderBigmap(){
   const cv = bigmapCvEl;
   if(!cv || !cv.getContext) return;
+  const id = (MAP_DEFS[bigmapSelected] ? bigmapSelected : (currentMap || 'farm'));
+  const st = (typeof ensureWorld === 'function') ? ensureWorld(id) : null;
+  if(!st) return;
   const g = cv.getContext('2d');
   const PAD = 8;
   const K = Math.max(1, Math.floor(Math.min((cv.width - PAD*2) / MAP_W, (cv.height - PAD*2) / MAP_H)));
@@ -151,18 +185,19 @@ function renderBigmap(){
   for(let y = 0; y < MAP_H; y++){
     for(let x = 0; x < MAP_W; x++){
       const i = y * MAP_W + x;
-      g.fillStyle = minimapTileColor(map[i]);
+      g.fillStyle = minimapTileColor(st.map[i]);
       g.fillRect(PX + x * K, PY + y * K, K, K);
-      if(roads[i]){
+      if(st.roads && st.roads[i]){
         g.fillStyle = CONFIG.TILE_COLORS.roadStone;
         g.fillRect(PX + x * K, PY + y * K, K, K);
       }
     }
   }
-  /* 城镇建筑：按每栋自己的 row 画矩形（只有小镇地图） */
-  const C = CONFIG.TOWN;
-  if(typeof currentMap !== 'undefined' && currentMap === 'valley'){
-    for(const b of (C.LIST || [])){
+  /* 城镇建筑 */
+  if(id === 'valley'){
+    const C = CONFIG.TOWN;
+    const list = st.townList || C.LIST || [];
+    for(const b of list){
       const row = b.row || C.ROOM_ROW;
       g.fillStyle = (b.kind === 'shop') ? CONFIG.MINIMAP.SHOP : '#b08968';
       g.fillRect(PX + b.x * K, PY + row * K, b.w * K, C.ROOM_H * K);
@@ -170,38 +205,70 @@ function renderBigmap(){
       g.fillRect(PX + (b.x + C.DOOR_DX) * K, PY + row * K, Math.max(1, K), Math.max(1, K));
     }
   }
-  /* 农舍（农场地图） */
-  if(typeof currentMap === 'undefined' || currentMap === 'farm'){
+  /* 农舍 */
+  if(id === 'farm'){
     g.fillStyle = CONFIG.MINIMAP.HOUSE;
     g.fillRect(PX + HOUSE_POS.x * K, PY + HOUSE_POS.y * K, HOUSE_POS.w * K, HOUSE_POS.h * K);
   }
   /* 新地图地标 */
-  if(typeof worldLandmarks === 'function'){
-    for(const l of worldLandmarks()){
+  if(Array.isArray(st.landmarks)){
+    for(const l of st.landmarks){
       g.fillStyle = (typeof worldLandmarkColor === 'function') ? worldLandmarkColor(l.type) : '#b08968';
       g.fillRect(PX + l.x * K, PY + l.y * K, l.w * K, l.h * K);
     }
   }
-  /* 居民（按当前状态着色：营业黄 / 瞎逛橙 / 在家蓝；睡觉外出不画） */
+  /* 居民：只画在这张地图上的 */
   for(const d of CONFIG.NPC.LIST){
     const p = npcPos(d);
-    if(!p || p.map !== currentMap) continue;
+    if(!p || p.map !== id) continue;
     const col = minimapNpcColor(npcWhere(d));
     if(!col) continue;
     g.fillStyle = col;
     g.fillRect(PX + p.tx * K + (K >> 1) - 2, PY + p.ty * K + (K >> 1) - 2, 4, 4);
   }
-  /* 玩家（白点） */
-  const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
-  g.fillStyle = CONFIG.MINIMAP.PLAYER;
-  g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
-  if(bigmapSubEl) bigmapSubEl.textContent = (typeof mapDisplayName !== 'undefined' ? mapDisplayName + ' · ' : '') +
-    ((typeof currentMap !== 'undefined' && currentMap === 'farm') ? (farmTypeDef(farmType).name + ' · ') : '') +
+  /* 玩家（仅当前所在地图） */
+  if(currentMap === id){
+    const px = Math.floor(player.x / TILE), py = Math.floor(player.y / TILE);
+    g.fillStyle = CONFIG.MINIMAP.PLAYER;
+    g.fillRect(PX + px * K + (K >> 1) - 2, PY + py * K + (K >> 1) - 2, 5, 5);
+  }
+  bigmapSelected = id;
+  const title = document.getElementById('bigmapTitle');
+  if(title) title.textContent = '全屏地图 · ' + bigmapMapName(id);
+  if(bigmapSubEl) bigmapSubEl.textContent =
+    ((id === 'farm') ? (farmTypeDef(farmType).name + ' · ') : '') +
     '第 ' + clock.day + ' 天 · ' + weather.icon + ' ' + weather.name;
+  renderBigmapNav();
+  renderBigmapNpcList(id);
+}
+/* 所有 NPC 现在在哪张地图 / 在做什么 */
+function renderBigmapNpcList(selectedId){
+  if(!bigmapNpcEl) return;
+  bigmapNpcEl.innerHTML = '';
+  const rows = [];
+  for(const d of CONFIG.NPC.LIST){
+    const p = npcPos(d);
+    let mapId = p ? p.map : null;
+    let label = p ? (p.label || p.at || '') : '外出';
+    rows.push({ d, mapId, label });
+  }
+  rows.sort((a,b) => {
+    const ai = bigmapOrder().indexOf(a.mapId), bi = bigmapOrder().indexOf(b.mapId);
+    return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi) || a.d.name.localeCompare(b.d.name, 'zh');
+  });
+  for(const r of rows){
+    const el = document.createElement('div');
+    el.className = 'npc-' + (r.mapId ? 'on' : 'off');
+    if(r.mapId === selectedId) el.style.color = '#ffd76a';
+    el.textContent = (r.mapId ? '[' + bigmapMapName(r.mapId) + '] ' : '[外出] ') +
+      r.d.name + (r.label ? ' · ' + r.label : '');
+    bigmapNpcEl.appendChild(el);
+  }
 }
 function bigmapOpenPanel(){
   if(bigmapOpen) return false;
   bigmapOpen = true;
+  bigmapSelected = currentMap || 'farm';
   renderBigmap();
   setPanelOpen(bigmapEl, true);
   playSfx(700, 'triangle', 0.10, CONFIG.AUDIO.VOLUME);
@@ -477,6 +544,14 @@ function genTownMap(seed){
     else if(r < 0.14) map[y*MAP_W+x] = T.FLOWER;
   }
   genTown();                    /* 街道 / 住宅 / 商店 / 主路 */
+  /* 中央广场：铺成石板地，边缘留花圃，节日时再摆摊位 */
+  {
+    const P = CONFIG.FESTIVAL.PLAZA;
+    for(let y=P.y-1; y<=P.y+P.h; y++)
+      for(let x=P.x-1; x<=P.x+P.w; x++) map[y*MAP_W+x] = T.PATH;
+    for(const [fx,fy] of [[P.x-1,P.y-1],[P.x+P.w,P.y-1],[P.x-1,P.y+P.h],[P.x+P.w,P.y+P.h]])
+      if(map[fy*MAP_W+fx] === T.PATH) map[fy*MAP_W+fx] = T.FLOWER;
+  }
   /* 南边出口：从最后一排街道一直铺到地图下边缘 */
   for(let y=C.END_ROW;y<MAP_H-1;y++){
     map[y*MAP_W+C.CONNECTOR_X] = T.PATH;
@@ -489,5 +564,5 @@ function genTownMap(seed){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors });
-export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmType, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors };
+Object.assign(window, { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, bigmapNavEl, bigmapNpcEl, bigmapOrder, bigmapMapName, renderBigmapNav, renderBigmapNpcList, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors });
+export { groundCv, groundCtx, groundBaked, groundDirty, miniCv, miniCtx, bigmapEl, bigmapMaskEl, bigmapCvEl, bigmapSubEl, bigmapNavEl, bigmapNpcEl, bigmapOrder, bigmapMapName, renderBigmapNav, renderBigmapNpcList, FARM, HOUSE_POS, TOWN_SHOP, SHOP_POS, QUEST_BOARD, SPAWN, inFarm, clamp, lerp, markGroundDirty, invalidateGround, setTile, minimapTileColor, minimapNpcColor, rebuildMinimap, drawMinimap, hitHudMini, renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, mulberry32, hashSeed, hash2, valueNoise, fbm, genTown, genTownMap, genMap, farmType, farmTypeDef, setFarmType, isFarmMap, isTownMap, isHomesteadMap, genFarmFeatures, openFarmCorridors };

@@ -338,6 +338,28 @@ function deserializeState(d){
         player.y = ((bb ? ((bb.row || CONFIG.TOWN.ROOM_ROW) - 1) : CONFIG.TOWN.STREET_ROW) + 0.5)*TILE;
       }
     }
+    /* 第 42 轮：旧档 / 异常存档的玩家坐标可能落在水里 / 墙里 / 地图外
+     * （例如农场扩建后原来的某个边缘点变成了水塘）。这种情况直接回到农舍门口。 */
+    {
+      const ptx = Math.floor(player.x / TILE), pty = Math.floor(player.y / TILE);
+      const bad = ptx < 0 || pty < 0 || ptx >= MAP_W || pty >= MAP_H || isSolid(ptx, pty);
+      if(bad){
+        let sx = SPAWN.x, sy = SPAWN.y;
+        if(currentMap === 'farm'){
+          sx = HOUSE_POS.x + 1;
+          sy = HOUSE_POS.y + HOUSE_POS.h;       /* 农舍门口地垫 */
+        }else{
+          const st = (window.MAP_WORLD && MAP_WORLD[currentMap]) || null;
+          if(st && st.spawn){ sx = st.spawn.x; sy = st.spawn.y; }
+        }
+        /* 门口也被堵住时退回农场中央出生点 */
+        if(isSolid(sx, sy)){ sx = SPAWN.x; sy = SPAWN.y; }
+        player.x = (sx + 0.5) * TILE;
+        player.y = (sy + 0.5) * TILE;
+        player.vx = player.vy = 0;
+        if(typeof toast === 'function') toast('存档位置无法站立，已回到农舍门口');
+      }
+    }
     if(typeof d.gold === 'number') gold = d.gold;
     if(typeof d.sb === 'number') staminaBonus = clamp(d.sb|0, 0, 100);   /* 永久体力上限加成 */
     if(typeof mineLoad === 'function') mineLoad(d.mb);                    /* 矿井最深纪录 / 电梯楼层 */

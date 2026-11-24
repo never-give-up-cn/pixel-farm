@@ -647,11 +647,11 @@ export function updateMine(dt) {
       }
     }
 
-    if (dist < 40 && m.cooldown <= 0) {
+    if (dist < TILE * 1.2 && m.cooldown <= 0) {
       m.cooldown = 1.3 + Math.random() * 0.6;
-      const taken = Math.max(1, Math.round(m.dmg *
+      const taken = Math.max(1, Math.max(1, Math.round(m.dmg *
         (typeof skillDamageTakenMult === 'function' ? skillDamageTakenMult() : 1) *
-        (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1)) -
+        (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1))) -
         (typeof equipDefenseBonus === 'function' ? equipDefenseBonus() : 0) -
         (typeof equipImmunityBonus === 'function' ? equipImmunityBonus() : 0));
       mine.hp -= taken;
@@ -822,7 +822,13 @@ export function drawMine(ctx) {
   }
   ctx.globalAlpha = 1;
 
-  /* HUD */
+  /* 被怪物打到时整屏泛红，让攻击有明确反馈 */
+  if (p.hurt > 0) {
+    ctx.fillStyle = 'rgba(190, 30, 40, ' + (0.10 + 0.22 * (p.hurt / 0.2)) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* HUD：生命条只在矿井 / 骷髅洞穴里画，地面场景没有血条 */
   ctx.fillStyle = 'rgba(10, 12, 16, 0.86)';
   ctx.fillRect(0, 0, W, 52);
   ctx.textBaseline = 'middle';
@@ -830,13 +836,27 @@ export function drawMine(ctx) {
   ctx.font = '15px "Microsoft YaHei", monospace';
   ctx.fillText((mine.mode === 'skull' ? '骷髅洞穴 B' : '矿井 B') + mine.depth, 18, 26);
 
-  ctx.fillStyle = '#2a2a32';
-  ctx.fillRect(130, 18, 180, 9);
-  ctx.fillStyle = mine.hp / mine.maxHp > 0.3 ? '#5aa04a' : '#d04a3a';
-  ctx.fillRect(130, 18, 180 * Math.max(0, mine.hp / mine.maxHp), 9);
-  ctx.fillStyle = '#c8d0d8';
+  const hpRatio = Math.max(0, Math.min(1, mine.hp / mine.maxHp));
+  /* 像素心图标 */
+  const hx = 108, hy = 15;
+  R(ctx, hx + 2, hy, 4, 2, '#e05050');
+  R(ctx, hx + 8, hy, 4, 2, '#e05050');
+  R(ctx, hx, hy + 2, 14, 4, '#e05050');
+  R(ctx, hx + 2, hy + 6, 10, 3, '#e05050');
+  R(ctx, hx + 4, hy + 9, 6, 2, '#e05050');
+  R(ctx, hx + 6, hy + 11, 2, 2, '#e05050');
+  /* 生命条：12px 高 + 边框，掉到 50% / 25% 以下换黄 / 红 */
+  const barX = 130, barY = 16, barW = 196, barH = 12;
+  R(ctx, barX - 2, barY - 2, barW + 4, barH + 4, '#0b0e13');
+  R(ctx, barX, barY, barW, barH, '#2a2a32');
+  const hpColor = hpRatio > 0.5 ? '#63b04a' : hpRatio > 0.25 ? '#d8a83a' : '#d04a3a';
+  if (hpRatio > 0) {
+    R(ctx, barX, barY, Math.max(1, Math.round(barW * hpRatio)), barH, hpColor);
+    R(ctx, barX, barY, Math.max(1, Math.round(barW * hpRatio)), 3, 'rgba(255,255,255,0.28)');
+  }
+  ctx.fillStyle = '#dbe4ee';
   ctx.font = '11px monospace';
-  ctx.fillText(`HP ${Math.max(0, Math.round(mine.hp))}/${mine.maxHp}`, 130, 38);
+  ctx.fillText(`HP ${Math.max(0, Math.round(mine.hp))} / ${mine.maxHp}`, barX, barY + barH + 9);
 
   ctx.fillStyle = '#e0c060';
   ctx.fillText(`矿石 ${mine.ore}`, 340, 26);

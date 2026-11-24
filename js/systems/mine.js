@@ -5,7 +5,7 @@
 'use strict';
 
 import { drawFarmer } from '../anim/farmer.js';
-import { MONSTERS, drawMonster } from '../anim/monsters.js';
+import { MONSTERS, MONSTER_MAP, drawMonster } from '../anim/monsters.js';
 import { RES_MAP, drawResourceIcon } from '../anim/resources.js';
 import { DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_UP, mulberry32, ellipse, R } from '../anim/pixel.js';
 
@@ -62,6 +62,25 @@ export function mineTheme(depth) {
 const MINE_MONSTERS = MONSTERS.filter(m => m.loc === 'mine' || m.loc === 'skull');
 const SKULL_MONSTERS = MONSTERS.filter(m => m.loc === 'skull');
 
+/* 怪物走路速度（像素 / 秒）：和 NPC 一样按格目标平滑插值，而不是瞬间跳格 */
+const MONSTER_SPEED = {
+  slime: 30, bigslime: 24, bat: 62, bug: 34, fly: 64, grub: 24, crab: 30,
+  ghost: 46, skeleton: 42, shadow: 54, mummy: 26, serpent: 74, rex: 46,
+  skull: 68, squid: 42, golem: 38, sentry: 34, duggy: 32, sprite: 58,
+  spiker: 0, spider: 58, stick: 46, metalhead: 26
+};
+
+/* 远程怪：保持距离、有视线就放弹幕。
+ * range 射程、keep 想维持的距离、cd 冷却、speed 弹速、kind 弹种外观 */
+const RANGED = {
+  squid_kid:     { range: 240, keep: 120, cd: 2.3, speed: 130, cast: 0.55, color: '#f0b0ff', kind: 'orb' },
+  blue_squid:    { range: 280, keep: 140, cd: 2.0, speed: 150, cast: 0.5,  color: '#a0d0f0', kind: 'orb' },
+  shadow_shaman: { range: 300, keep: 140, cd: 2.6, speed: 145, cast: 0.6,  color: '#c080e0', kind: 'orb' },
+  shadow_sniper: { range: 360, keep: 170, cd: 2.4, speed: 245, cast: 0.45, color: '#e0a040', kind: 'arrow' },
+  haunted_skull: { range: 260, keep: 110, cd: 2.8, speed: 120, cast: 0.65, color: '#d04a3a', kind: 'skull' },
+  skeleton_mage: { range: 300, keep: 140, cd: 2.4, speed: 135, cast: 0.6,  color: '#b0a0f0', kind: 'orb' }
+};
+
 window.mineActive = false;
 
 const mine = {
@@ -82,6 +101,9 @@ const mine = {
   },
   monsters: [],
   dying: [],
+  projectiles: [],
+  floats: [],
+  shake: 0,
   map: [],
   rocks: new Map(),
   ores: new Map(),
@@ -128,6 +150,9 @@ function generate(depth) {
   mine.dying = [];
   mine.map = [];
   mine.sparkles = [];
+  mine.projectiles = [];
+  mine.floats = [];
+  mine.shake = 0;
   mine.floorMsg = 1.4;
 
   for (let y = 0; y < ROWS; y++) {
@@ -181,6 +206,9 @@ function generate(depth) {
     mine.chest = { x: cx, y: cy };
   }
 
+  /* 挖通所有被随机岩石封死的区域，保证出生点 ↔ 梯子 ↔ 怪物都连通 */
+  ensureMineConnected(1, 5);
+
   const p = tileCenter(1, 5);
   mine.player.tx = 1;
   mine.player.ty = 5;
@@ -203,13 +231,21 @@ function generate(depth) {
     if (tileAt(x, y) !== 'floor') continue;
     if (Math.abs(x - 1) + Math.abs(y - 5) < 4) continue;
     const def = pool[Math.floor(rnd() * pool.length)];
+    const meta = MONSTER_MAP[def.id] || {};
+    const shape = meta.shape || 'slime';
+    const ranged = RANGED[def.id] || null;
     const scale = mine.mode === 'skull' ? 1.45 : 1;
     const hp = Math.max(6, Math.round((def.hp / 7 + depth * 1.4) * scale));
     const c = tileCenter(x, y);
     mine.monsters.push({
-      type: def.id, tx: x, ty: y, px: c.x, py: c.y,
+      type: def.id, shape, ranged,
+      speed: ranged ? (ranged.speed * 0.26 + 12) : (MONSTER_SPEED[shape] || 34),
+      tx: x, ty: y, px: c.x, py: c.y,
+      dir: DIR_DOWN, moving: false, animT: rnd() * 6.28,
       hp, maxHp: hp, dmg: Math.max(1, Math.round((def.dmg / 3 + depth * 0.2) * scale)),
-      cooldown: 0.6 + rnd() * 1.4, moveTimer: 0.4 + rnd() * 0.8,
+      cooldown: 0.8 + rnd() * 1.4, shotCd: 1.2 + rnd() * 1.6, think: rnd() * 0.5,
+      attack: 0, attackDur: ranged ? ranged.cast : 0.42, attackHit: false,
+      lungeX: 0, lungeY: 0,
       phase: rnd() * 6.28, hurt: 0
     });
     count++;
@@ -243,7 +279,11 @@ function tryMove(dir) {
   const ny = p.ty + d.dy;
   const t = tileAt(nx, ny);
   if (t === 'wall' || t === 'rock' || t === 'ore') return;
-  if (mine.monsters.some(m => m.tx === nx && m.ty === ny)) return;
+  /* 怪物所在的格 / 正在走向的格都不能踩进去 */
+  if (mine.monsters.some(m => {
+    if (m.tx === nx && m.ty === ny) return true;
+    return Math.floor((m.px - OX) / TILE) === nx && Math.floor((m.py - OY) / TILE) === ny;
+  })) return;
   p.tx = nx;
   p.ty = ny;
   const c = tileCenter(nx, ny);
@@ -264,11 +304,15 @@ function dropItem(id, n) {
 
 function burst(tx, ty, color, n) {
   const c = tileCenter(tx, ty);
+  burstAt(c.x, c.y, color, n);
+}
+/* 像素坐标版本：弹幕命中 / 飘字用 */
+function burstAt(x, y, color, n) {
   for (let i = 0; i < n; i++) {
     const a = Math.random() * Math.PI * 2;
     const sp = 24 + Math.random() * 70;
     mine.sparkles.push({
-      x: c.x, y: c.y,
+      x, y,
       vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 18,
       life: 0.38, color
     });
@@ -423,6 +467,8 @@ export function mineUseBomb() {
     if (Math.hypot(m.tx - p.tx, m.ty - p.ty) > 2.5) continue;
     m.hp -= 45;
     m.hurt = 0.22;
+    m.attack = 0;
+    m.attackHit = false;
     hurtMon++;
   }
   const dead = mine.monsters.filter(m => m.hp <= 0);
@@ -525,6 +571,10 @@ function resolveAttack() {
     const dmg = weaponDamage();
     mon.hp -= dmg;
     mon.hurt = 0.22;
+    mon.attack = 0;                 /* 被打断抬手 */
+    mon.attackHit = false;
+    mine.floats.push({ x: mon.px, y: mon.py - 44, text: '-' + dmg, color: '#ffe08a', life: 0.8 });
+    mine.shake = Math.max(mine.shake, 0.07);
     burst(t.x, t.y, '#ff8060', 10);
     playSfx(220, 'square', 0.05, 0.5);
     if (mon.hp <= 0) {
@@ -545,6 +595,173 @@ function resolveAttack() {
   }
 
   burst(t.x, t.y, '#d8e0e8', 4);
+}
+
+/* ---------- 怪物移动 / 攻击辅助 ---------- */
+
+/* 怪物能站的格子：地面 / 梯子，不能压住玩家或另一只怪的目标格 */
+function monsterCanStand(m, x, y) {
+  if (x < 0 || y < 0 || x >= COLS || y >= ROWS) return false;
+  const t = tileAt(x, y);
+  if (t !== 'floor' && t !== 'ladder') return false;
+  const p = mine.player;
+  if (x === p.tx && y === p.ty) return false;
+  return !mine.monsters.some(o => o !== m && o.tx === x && o.ty === y);
+}
+
+/* 以玩家格为起点做一次 BFS，得到每格到玩家的步数。
+ * 怪物按这个距离场选下一格，就会像 NPC 的 A* 一样绕开岩石 / 墙，而不是一头撞在障碍上。 */
+function buildMineDistField(sx, sy) {
+  const field = new Int16Array(COLS * ROWS).fill(-1);
+  if (sx < 0 || sy < 0 || sx >= COLS || sy >= ROWS) return field;
+  const q = [sy * COLS + sx];
+  field[sy * COLS + sx] = 0;
+  for (let qi = 0; qi < q.length; qi++) {
+    const cur = q[qi];
+    const cx = cur % COLS, cy = (cur / COLS) | 0;
+    const nd = field[cur] + 1;
+    for (const d of DIRS) {
+      const nx = cx + d.dx, ny = cy + d.dy;
+      if (nx < 0 || ny < 0 || nx >= COLS || ny >= ROWS) continue;
+      const t = tileAt(nx, ny);
+      if (t !== 'floor' && t !== 'ladder' && t !== 'chest') continue;
+      const ni = ny * COLS + nx;
+      if (field[ni] !== -1) continue;
+      field[ni] = nd;
+      q.push(ni);
+    }
+  }
+  return field;
+}
+
+/* 随机岩石可能把出生点周围的区域封死（玩家出不去，怪物也过不来）。
+ * 这里从出生点作 BFS，遇到不可达的地板就朝出生点挖一条直线，清掉挡路的岩石 / 矿石。 */
+function ensureMineConnected(sx, sy) {
+  for (let pass = 0; pass < 40; pass++) {
+    const field = buildMineDistField(sx, sy);
+    let target = null;
+    for (let y = 1; y < ROWS - 1 && !target; y++) {
+      for (let x = 1; x < COLS - 1; x++) {
+        const t = tileAt(x, y);
+        if (t !== 'floor' && t !== 'ladder') continue;
+        if (field[y * COLS + x] < 0) { target = { x, y }; break; }
+      }
+    }
+    if (!target) return;
+    let x = target.x, y = target.y;
+    const clear = (cx, cy) => {
+      const t = tileAt(cx, cy);
+      if (t === 'rock' || t === 'ore') {
+        setTile(cx, cy, 'floor');
+        mine.rocks.delete(keyOf(cx, cy));
+        mine.ores.delete(keyOf(cx, cy));
+      }
+    };
+    while (x !== sx) { x += Math.sign(sx - x); clear(x, y); }
+    while (y !== sy) { y += Math.sign(sy - y); clear(x, y); }
+  }
+}
+
+/* 选下一格；远程怪会保持距离（太近后撤、太远靠近、刚好就站定放弹） */
+function monsterStartStep(m, distNow, field) {
+  const p = mine.player;
+  const opts = [];
+  for (const d of DIRS) {
+    const nx = m.tx + d.dx, ny = m.ty + d.dy;
+    if (!monsterCanStand(m, nx, ny)) continue;
+    const c = tileCenter(nx, ny);
+    opts.push({
+      nx, ny,
+      path: field ? field[ny * COLS + nx] : -1,
+      dist: Math.hypot(c.x - p.px, c.y - p.py)
+    });
+  }
+  if (!opts.length) return false;
+  const reach = opts.filter(o => o.path >= 0);
+  const use = reach.length ? reach : opts;
+  const nearest = use.reduce((a, b) => {
+    if (b.path < 0) return a;
+    if (a.path < 0 || b.path < a.path) return b;
+    return a;
+  });
+  const farthest = use.reduce((a, b) => (b.path > a.path ? b : a));
+  const here = field ? field[m.ty * COLS + m.tx] : -1;
+  let pick = nearest;
+  if (!m.ranged) {
+    /* 已经在离玩家最近的格子上就别再走开（否则会贴脸又后退来回抖） */
+    if (here >= 0 && nearest.path >= here) return false;
+  } else {
+    if (distNow < m.ranged.keep * 0.8) pick = farthest;
+    else if (distNow > m.ranged.range * 0.9) pick = nearest;
+    else if (Math.random() < 0.3) {
+      const mid = use.filter(o => Math.abs(o.dist - distNow) < TILE * 1.1);
+      pick = (mid.length ? mid : use)[Math.floor(Math.random() * (mid.length || use.length))];
+    } else return false;
+  }
+  m.tx = pick.nx;
+  m.ty = pick.ny;
+  m.moving = true;
+  return true;
+}
+
+/* 视线：中间不能隔墙 / 岩石 / 矿石 / 宝箱 */
+function monsterHasLOS(m) {
+  const p = mine.player;
+  const dx = p.px - m.px, dy = p.py - m.py;
+  const d = Math.hypot(dx, dy);
+  if (d < 1) return true;
+  const steps = Math.max(1, Math.ceil(d / (TILE * 0.4)));
+  for (let i = 1; i < steps; i++) {
+    const x = m.px + dx * i / steps;
+    const y = m.py + dy * i / steps;
+    const t = tileAt(Math.floor((x - OX) / TILE), Math.floor((y - OY) / TILE));
+    if (t === 'wall' || t === 'rock' || t === 'ore' || t === 'chest') return false;
+  }
+  return true;
+}
+
+/* 远程弹幕 */
+function fireProjectile(m) {
+  const p = mine.player;
+  const ox = m.px, oy = m.py - 8;
+  let dx = p.px - ox, dy = (p.py - 8) - oy;
+  const d = Math.hypot(dx, dy) || 1;
+  dx /= d; dy /= d;
+  const spread = (Math.random() - 0.5) * 0.10;
+  const cs = Math.cos(spread), sn = Math.sin(spread);
+  const vx = dx * cs - dy * sn, vy = dx * sn + dy * cs;
+  const rd = m.ranged || RANGED.shadow_shaman;
+  mine.projectiles.push({
+    x: ox, y: oy,
+    vx: vx * rd.speed, vy: vy * rd.speed,
+    dmg: m.dmg, color: rd.color, kind: rd.kind,
+    life: 2.6, spin: 0, trail: []
+  });
+  burstAt(ox, oy, rd.color, 5);
+  if (typeof playSfx === 'function') playSfx(520, 'triangle', 0.06, 0.35);
+}
+
+/* 玩家受伤（近战 / 弹幕共用） */
+function hurtPlayer(raw, fromMon) {
+  if (mine.down > 0) return;
+  const p = mine.player;
+  const taken = Math.max(1, Math.max(1, Math.round(raw *
+    (typeof skillDamageTakenMult === 'function' ? skillDamageTakenMult() : 1) *
+    (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1))) -
+    (typeof equipDefenseBonus === 'function' ? equipDefenseBonus() : 0) -
+    (typeof equipImmunityBonus === 'function' ? equipImmunityBonus() : 0));
+  mine.hp -= taken;
+  p.hurt = 0.2;
+  mine.shake = 0.2;
+  mine.floats.push({ x: p.px, y: p.py - 46, text: '-' + taken, color: '#ff7070', life: 0.9 });
+  burstAt(p.px, p.py - 10, '#ff6070', 6);
+  if (typeof playSfx === 'function') playSfx(160, 'sawtooth', 0.08, 0.4);
+  if (mine.hp <= 0) {
+    mine.hp = 0;
+    mine.down = 1.6;
+    mine.projectiles = [];
+    if (typeof toast === 'function') toast('你倒下了…被送回农场');
+  }
 }
 
 /* ---------- 更新 ---------- */
@@ -610,65 +827,111 @@ export function updateMine(dt) {
   }
   p.hurt = Math.max(0, p.hurt - dt);
   mine.floorMsg = Math.max(0, mine.floorMsg - dt);
+  const field = buildMineDistField(p.tx, p.ty);
 
   for (const m of mine.monsters) {
-    m.phase += dt;
+    m.animT += dt;
     m.cooldown -= dt;
-    m.moveTimer -= dt;
+    m.shotCd -= dt;
+    m.think -= dt;
     m.hurt = Math.max(0, m.hurt - dt);
 
     const dx = p.px - m.px;
     const dy = p.py - m.py;
     const dist = Math.hypot(dx, dy);
 
-    if (m.moveTimer <= 0) {
-      m.moveTimer = 0.7 + Math.random() * 0.8;
-      const dirs = DIRS.filter(d => {
-        const nx = m.tx + d.dx;
-        const ny = m.ty + d.dy;
-        const t = tileAt(nx, ny);
-        if (t !== 'floor' && t !== 'ladder') return false;
-        if (nx === p.tx && ny === p.ty) return false;
-        return !mine.monsters.some(o => o !== m && o.tx === nx && o.ty === ny);
-      });
-      if (dirs.length) {
-        let best = dirs[0];
-        let bd = Infinity;
-        for (const d of dirs) {
-          const c = tileCenter(m.tx + d.dx, m.ty + d.dy);
-          const dd = Math.hypot(c.x - p.px, c.y - p.py);
-          if (dd < bd) { bd = dd; best = d; }
-        }
-        m.tx += best.dx;
-        m.ty += best.dy;
-        const c = tileCenter(m.tx, m.ty);
-        m.px = c.x;
-        m.py = c.y;
+    /* 攻击动作：前摇 → 命中帧 → 收招 */
+    if (m.attack > 0) {
+      m.attack += dt;
+      m.moving = false;
+      if (!m.attackHit && m.attack >= m.attackDur * 0.52) {
+        m.attackHit = true;
+        if (m.ranged) fireProjectile(m);
+        else if (Math.hypot(p.px - m.px, p.py - m.py) < TILE * 1.35) hurtPlayer(m.dmg, m);
       }
+      if (m.attack >= m.attackDur) {
+        m.attack = 0;
+        m.attackHit = false;
+        if (m.ranged) m.shotCd = m.ranged.cd + Math.random() * 0.7;
+        else m.cooldown = 1.2 + Math.random() * 0.6;
+      }
+      continue;
     }
 
-    if (dist < TILE * 1.2 && m.cooldown <= 0) {
-      m.cooldown = 1.3 + Math.random() * 0.6;
-      const taken = Math.max(1, Math.max(1, Math.round(m.dmg *
-        (typeof skillDamageTakenMult === 'function' ? skillDamageTakenMult() : 1) *
-        (typeof foodBuffDamageTakenMult === 'function' ? foodBuffDamageTakenMult() : 1))) -
-        (typeof equipDefenseBonus === 'function' ? equipDefenseBonus() : 0) -
-        (typeof equipImmunityBonus === 'function' ? equipImmunityBonus() : 0));
-      mine.hp -= taken;
-      p.hurt = 0.2;
-      burst(m.tx, m.ty, '#ff6070', 6);
-      if (typeof playSfx === 'function') playSfx(160, 'sawtooth', 0.08, 0.4);
-      if (mine.hp <= 0) {
-        mine.hp = 0;
-        mine.down = 1.6;
-        if (typeof toast === 'function') toast('你倒下了…被送回农场');
-      }
-    } else {
+    /* 被玩家打中：不打断正在走的这一格，只暂停抬手 */
+    const stunned = m.hurt > 0;
+
+    /* 平滑走格子：先选目标格，再按 speed 插值过去（和 NPC 走法一致） */
+    if (m.moving) {
       const c = tileCenter(m.tx, m.ty);
-      m.px = c.x;
-      m.py = c.y;
+      const mx = c.x - m.px, my = c.y - m.py;
+      const md = Math.hypot(mx, my);
+      const step = m.speed * dt;
+      if (md <= step || md < 0.5) {
+        m.px = c.x;
+        m.py = c.y;
+        m.moving = false;
+      } else {
+        m.px += mx / md * step;
+        m.py += my / md * step;
+        m.dir = Math.abs(mx) > Math.abs(my) ? (mx > 0 ? DIR_RIGHT : DIR_LEFT)
+                                           : (my > 0 ? DIR_DOWN : DIR_UP);
+        m.animT += dt * 1.6;
+      }
+    } else if (m.think <= 0 && m.speed > 0) {
+      m.think = (m.ranged ? 0.35 : 0.16) + Math.random() * 0.22;
+      monsterStartStep(m, dist, field);
+    }
+
+    if (!stunned && !m.ranged) {
+      /* 近战：走完这一格、贴到相邻格再抬手（避免在半路上冻结） */
+      if (!m.moving && dist < TILE * 1.25 && m.cooldown <= 0) {
+        if (dist > 0.001) { m.lungeX = dx / dist; m.lungeY = dy / dist; }
+        m.attack = 0.001;
+        m.attackHit = false;
+        m.attackDur = 0.42;
+      }
+    } else if (!stunned && m.ranged && m.shotCd <= 0 && dist < m.ranged.range &&
+               dist > TILE * 1.1 && monsterHasLOS(m)) {
+      /* 远程：有视线、在射程内就吟唱 */
+      if (dist > 0.001) { m.lungeX = dx / dist; m.lungeY = dy / dist; }
+      m.attack = 0.001;
+      m.attackHit = false;
+      m.attackDur = m.ranged.cast;
     }
   }
+
+  /* 弹幕：直线飞行，撞墙消失，命中玩家结算伤害 */
+  for (const pr of mine.projectiles) {
+    pr.life -= dt;
+    pr.spin += dt * 8;
+    pr.x += pr.vx * dt;
+    pr.y += pr.vy * dt;
+    pr.trail.unshift({ x: pr.x, y: pr.y });
+    if (pr.trail.length > 6) pr.trail.pop();
+
+    const tx = Math.floor((pr.x - OX) / TILE);
+    const ty = Math.floor((pr.y - OY) / TILE);
+    const tt = tileAt(tx, ty);
+    if (tt === 'wall' || tt === 'rock' || tt === 'ore' || tt === 'chest') {
+      burstAt(pr.x, pr.y, pr.color, 5);
+      pr.life = 0;
+      continue;
+    }
+    if (mine.down <= 0 && Math.hypot(pr.x - mine.player.px, pr.y - (mine.player.py - 8)) < 13) {
+      hurtPlayer(pr.dmg, null);
+      pr.life = 0;
+    }
+  }
+  mine.projectiles = mine.projectiles.filter(pr => pr.life > 0);
+
+  /* 飘字 + 镜头震动 */
+  for (const f of mine.floats) {
+    f.life -= dt;
+    f.y -= 28 * dt;
+  }
+  mine.floats = mine.floats.filter(f => f.life > 0);
+  mine.shake = Math.max(0, mine.shake - dt);
 
   for (const s of mine.sparkles) {
     s.life -= dt;
@@ -704,6 +967,13 @@ export function drawMine(ctx) {
       ctx.fillStyle = (x + y) % 3 ? theme.ceil1 : theme.ceil2;
       ctx.fillRect(x, y, 46, 22);
     }
+  }
+
+  /* 受击时镜头轻震：只抖世界，不抖 HUD */
+  ctx.save();
+  if (mine.shake > 0) {
+    const sk = mine.shake / 0.2;
+    ctx.translate(Math.round((Math.random() - 0.5) * 4 * sk), Math.round((Math.random() - 0.5) * 3 * sk));
   }
 
   for (let y = 0; y < ROWS; y++) {
@@ -780,19 +1050,96 @@ export function drawMine(ctx) {
   }
 
   for (const m of mine.monsters) {
-    const near = Math.hypot(mine.player.px - m.px, mine.player.py - m.py) < 52;
-    const winding = near && m.cooldown < 0.3;
-    const state = m.hurt > 0 ? 'hurt' : (winding ? 'attack' : 'idle');
-    const t = m.hurt > 0 ? 1 - m.hurt / 0.22 : (winding ? 1 - m.cooldown / 0.3 : 0);
+    const attacking = m.attack > 0;
+    const at = attacking ? Math.min(1, m.attack / Math.max(0.01, m.attackDur)) : 0;
+    const state = m.hurt > 0 ? 'hurt' : (attacking ? 'attack' : 'idle');
+    const t = m.hurt > 0 ? 1 - m.hurt / 0.22 : at;
+    /* 抬手时朝玩家前冲一点，命中帧最明显 */
+    let ox = 0, oy = 0;
+    if (attacking) {
+      const thrust = Math.sin(at * Math.PI) * (m.ranged ? 2 : 6);
+      ox = m.lungeX * thrust;
+      oy = m.lungeY * thrust;
+    }
     ctx.save();
-    ctx.translate(m.px - 20, m.py - 32);
-    drawMonster(ctx, m.type, mine.time * 0.5 + m.phase, { state, t });
+    ctx.translate(m.px - 20 + ox, m.py - 32 + oy);
+    drawMonster(ctx, m.type, m.animT, { state, t });
     ctx.restore();
+
+    /* 近战抬手预警：脚下红圈由小变大，缩圈满时命中 */
+    if (attacking && !m.ranged) {
+      const k = Math.min(1, at / 0.52);
+      ctx.globalAlpha = 0.22 + 0.38 * k;
+      ctx.strokeStyle = '#ff5a4a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(m.px, m.py - 6, 9 + 17 * k, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+    /* 远程吟唱：手里聚一个法球 */
+    if (attacking && m.ranged) {
+      const k = Math.min(1, at / 0.52);
+      const rd = m.ranged;
+      ctx.globalAlpha = 0.35 + 0.5 * k;
+      ctx.fillStyle = rd.color;
+      ctx.beginPath();
+      ctx.arc(m.px + m.lungeX * 14, m.py - 12 + m.lungeY * 10, 3 + 5 * k, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    /* 远程怪头顶小光点，和近战区分 */
+    if (m.ranged) {
+      ctx.globalAlpha = 0.35 + Math.sin(m.animT * 3) * 0.25;
+      ctx.fillStyle = m.ranged.color;
+      ctx.fillRect(m.px - 1, m.py - 44, 3, 3);
+      ctx.globalAlpha = 1;
+    }
 
     const bw = 30;
     R(ctx, m.px - bw / 2, m.py - 40, bw, 3, '#1a1a20');
     R(ctx, m.px - bw / 2, m.py - 40, Math.max(0, bw * (m.hp / m.maxHp)), 3, '#d04a3a');
   }
+
+  /* 远程弹幕 */
+  for (const pr of mine.projectiles) {
+    for (let i = pr.trail.length - 1; i >= 0; i--) {
+      const tp = pr.trail[i];
+      ctx.globalAlpha = 0.26 * (1 - i / pr.trail.length);
+      ctx.fillStyle = pr.color;
+      ctx.fillRect(tp.x - 2, tp.y - 2, 4, 4);
+    }
+    ctx.globalAlpha = 1;
+    if (pr.kind === 'arrow') {
+      const a = Math.atan2(pr.vy, pr.vx);
+      ctx.save();
+      ctx.translate(pr.x, pr.y);
+      ctx.rotate(a);
+      R(ctx, -6, -1, 12, 2, '#e8d0a0');
+      R(ctx, 5, -2, 3, 4, pr.color);
+      ctx.restore();
+    } else if (pr.kind === 'skull') {
+      ctx.fillStyle = '#e8e0d0';
+      ctx.beginPath();
+      ctx.arc(pr.x, pr.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = pr.color;
+      ctx.fillRect(pr.x - 2, pr.y - 1, 1, 2);
+      ctx.fillRect(pr.x + 1, pr.y - 1, 1, 2);
+    } else {
+      ctx.globalAlpha = 0.32;
+      ctx.fillStyle = pr.color;
+      ctx.beginPath();
+      ctx.arc(pr.x, pr.y, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(pr.x, pr.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
 
   const p = mine.player;
   ctx.save();
@@ -815,12 +1162,52 @@ export function drawMine(ctx) {
   drawFarmer(ctx, action, p.dir, phase);
   ctx.restore();
 
+  /* 挥剑弧光：朝面朝方向扫出一道白色剑光 */
+  if (p.attack > 0 && mine.down <= 0) {
+    const prog = Math.min(1, p.attack / 0.28);
+    const base = p.dir === DIR_RIGHT ? 0 : p.dir === DIR_LEFT ? Math.PI
+               : p.dir === DIR_DOWN ? Math.PI / 2 : -Math.PI / 2;
+    const sweep = 1.9;
+    const a0 = base - sweep / 2;
+    const a1 = a0 + sweep * Math.min(1, prog * 1.7);
+    ctx.save();
+    ctx.globalAlpha = 0.85 * (1 - prog * 0.75);
+    ctx.strokeStyle = '#eaf4ff';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(p.px, p.py - 18, 25, a0, a1);
+    ctx.stroke();
+    ctx.globalAlpha = 0.5 * (1 - prog * 0.75);
+    ctx.strokeStyle = '#8cc4ff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(p.px, p.py - 18, 31, a0 + 0.12, a1);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   for (const s of mine.sparkles) {
     ctx.globalAlpha = Math.max(0, s.life / 0.38);
     ctx.fillStyle = s.color;
     ctx.fillRect(Math.round(s.x), Math.round(s.y), 2, 2);
   }
   ctx.globalAlpha = 1;
+
+  /* 伤害飘字 */
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 13px "Microsoft YaHei", monospace';
+  for (const f of mine.floats) {
+    ctx.globalAlpha = Math.max(0, Math.min(1, f.life / 0.45));
+    ctx.fillStyle = '#000000';
+    ctx.fillText(f.text, f.x + 1, f.y + 1);
+    ctx.fillStyle = f.color;
+    ctx.fillText(f.text, f.x, f.y);
+  }
+  ctx.globalAlpha = 1;
+  ctx.textAlign = 'left';
+
+  ctx.restore();          /* 结束镜头震动 */
 
   /* 被怪物打到时整屏泛红，让攻击有明确反馈 */
   if (p.hurt > 0) {

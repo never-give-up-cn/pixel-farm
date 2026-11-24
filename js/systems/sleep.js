@@ -1,10 +1,126 @@
 /* js/systems/sleep.js —— 由 index.html 拆分，原行 5175–5269 */
 'use strict';
 
-/* --- 睡觉 / 昏睡：淡出 → 推进一天 → 淡入 → 「第 N 天」 --- */
-const sleepFx = {phase:'none', t:0, faint:false, day:0};
+/* --- 睡觉 / 昏睡：淡出 → 当日总结 → 确认 → 推进一天 → 淡入 → 「第 N 天」 --- */
+const sleepFx = {phase:'none', t:0, faint:false, day:0, summaryShown:false};
 /* 这一次 2:00 有没有已经翻过天（时钟自己翻 / 睡觉流程翻，二选一，别翻两次） */
 window.dayRolled = false;
+
+/* --- 跨夜总结页 --- */
+const daySumEl    = document.getElementById('daySum');
+const daySumMask  = document.getElementById('daySumMask');
+const daySumTitle = document.getElementById('daySumTitle');
+const daySumSub   = document.getElementById('daySumSub');
+const daySumBody  = document.getElementById('daySumBody');
+const daySumFoot  = document.getElementById('daySumFoot');
+const btnDaySumOk = document.getElementById('daySumOk');
+window.daySumOpen = false;
+window.dayBase = null;        /* 当天开始时的金币 / 统计基线，用来算“今天赚了多少” */
+
+/* 记录当天基线。新游戏 / 读档 / 每天早上各记一次。 */
+function dayBaseCapture(){
+  const st = (typeof statsState !== 'undefined' && statsState) ? statsState : null;
+  window.dayBase = {
+    day: clock.day,
+    gold: (typeof gold === 'number' ? gold : 0),
+    hv: st ? st.hv : 0,
+    fs: st ? st.fs : 0,
+    gc: st ? st.gc : 0,
+    ach: (typeof achCount === 'function' ? achCount() : 0)
+  };
+  return window.dayBase;
+}
+function dayBaseGet(){
+  return window.dayBase || dayBaseCapture();
+}
+/* 汇总刚过完的这一天 */
+function buildDaySummary(){
+  const base = dayBaseGet();
+  const st = (typeof statsState !== 'undefined' && statsState) ? statsState : null;
+  const info = (typeof ratingParts === 'function') ? ratingParts(true) : null;
+  const w = weather || null;
+  return {
+    day: clock.day,
+    season: (typeof seasonName === 'function' ? seasonName() : '春'),
+    date: ((clock.day - 1) % CONFIG.DAYS_PER_SEASON) + 1,
+    weather: (w && w.name) ? w.name : '晴',
+    gold: (typeof gold === 'number' ? gold : 0),
+    goldDelta: (typeof gold === 'number' ? gold : 0) - (base.gold | 0),
+    income: (typeof statsDailyIncome === 'function' ? statsDailyIncome() : 0),
+    harvest: st ? Math.max(0, st.hv - base.hv) : 0,
+    fish: st ? Math.max(0, st.fs - base.fs) : 0,
+    gifts: st ? Math.max(0, st.gc - base.gc) : 0,
+    ach: Math.max(0, (typeof achCount === 'function' ? achCount() : 0) - base.ach),
+    stamina: Math.ceil(typeof stamina === 'number' ? stamina : 0),
+    staminaMax: typeof staminaMax === 'number' ? staminaMax : 0,
+    stars: info ? info.stars : 0,
+    starsMax: info ? info.starsMax : (CONFIG.ENDGAME.RATING.STARS | 0)
+  };
+}
+function daySumRender(d){
+  if(daySumTitle) daySumTitle.textContent = '第 ' + d.day + ' 天 · ' + d.season + ' ' + d.date + ' 日';
+  if(daySumSub) daySumSub.textContent = d.weather + ' · 金币 ' + d.gold + ' · 明天进入第 ' + (d.day + 1) + ' 天';
+  if(daySumBody){
+    daySumBody.innerHTML = '';
+    const sd = (d.goldDelta >= 0 ? '+' : '') + d.goldDelta;
+    const rows = [
+      ['💰 今日收入', '+' + d.income + ' 金'],
+      ['💵 金币变化', sd + ' 金（现有 ' + d.gold + '）'],
+      ['🌾 收获 · 🎣 钓鱼', d.harvest + ' 个 · ' + d.fish + ' 条'],
+      ['🎁 送礼 · 🏆 新成就', d.gifts + ' 次 · ' + d.ach + ' 个'],
+      ['⭐ 农场评级', (typeof ratingStarsText === 'function' ? ratingStarsText(d.stars) : String(d.stars))],
+      ['⚡ 体力', d.stamina + '/' + d.staminaMax + ' → 明天回满']
+    ];
+    for(const r of rows){
+      const line = document.createElement('div');
+      line.className = 'arline';
+      const k = document.createElement('span'); k.textContent = r[0];
+      const v = document.createElement('span'); v.className = 'arv'; v.textContent = r[1];
+      line.appendChild(k); line.appendChild(v);
+      daySumBody.appendChild(line);
+    }
+  }
+  if(daySumFoot) daySumFoot.textContent =
+    (sleepFx.faint ? '你昏睡过去了：明天体力上限 -20% · ' : '') +
+    '确认后自动存档，进入第 ' + (d.day + 1) + ' 天';
+}
+function daySumOpenPanel(data){
+  if(daySumOpen || !daySumEl) return false;
+  daySumOpen = true;
+  daySumRender(data || buildDaySummary());
+  if(typeof setPanelOpen === 'function') setPanelOpen(daySumEl, true);
+  else daySumEl.classList.add('open');
+  if(typeof playSfx === 'function') playSfx(660, 'triangle', 0.12, 0.5);
+  return true;
+}
+function daySumClosePanel(){
+  if(!daySumOpen) return false;
+  daySumOpen = false;
+  if(typeof setPanelOpen === 'function') setPanelOpen(daySumEl, false);
+  else daySumEl.classList.remove('open');
+  return true;
+}
+/* 玩家点「确认」：关掉总结 → 真正翻到第二天 → 淡入 */
+function daySummaryConfirm(){
+  if(!daySumOpen) return false;
+  daySumClosePanel();
+  if(!dayRolled) rollToNextMorning(sleepFx.faint);
+  sleepFx.phase = 'in';
+  sleepFx.t = 0;
+  sleepFx.summaryShown = true;
+  if(typeof playSleepSfx === 'function') playSleepSfx('out');
+  if(typeof playClick === 'function') playClick();
+  return true;
+}
+if(btnDaySumOk) btnDaySumOk.addEventListener('click', ()=>daySummaryConfirm());
+/* Enter / 空格 / Esc 都能确认（睡眠期间 input.js 会忽略其它按键） */
+window.addEventListener('keydown', e=>{
+  if(!daySumOpen) return;
+  if(e.code === 'Enter' || e.code === 'Space' || e.code === 'Escape' || e.code === 'NumpadEnter'){
+    e.preventDefault();
+    daySummaryConfirm();
+  }
+});
 
 /* 到小屋的距离（格） */
 function houseDist(){
@@ -24,8 +140,11 @@ function nearHouse(){ return houseDist() <= CONFIG.SLEEP.RANGE; }
 function startSleep(faint){
   if(sleepFx.phase !== 'none') return false;
   cancelFishing(true);               /* 钓鱼中跑去睡觉 → 静默收竿 */
+  if(daySumOpen) daySumClosePanel();
   sleepFx.phase = 'out'; sleepFx.t = 0; sleepFx.faint = !!faint;
+  sleepFx.summaryShown = false;
   dayRolled = false;                 /* 本次睡觉要自己翻天（上一轮的标记不能继承） */
+  dayBaseGet();                      /* 确保有当日基线，总结才有“今天变化” */
   statsSleep();                      /* 第 18 轮：睡觉次数统计 + 成就 */
   toast(faint ? '你撑不住了，眼前一黑…' : '晚安…');
   tutSlept();                        /* 新手引导：完成"睡觉"这一步 */
@@ -76,6 +195,7 @@ function rollToNextMorning(faint){
               (faint ? '（强制昏睡）' : '（正常睡觉）'));
   /* 新的一天开始 → 自动存档（玩家睡着时保存最安全） */
   gatherDayStart();                    /* 第 14 轮：每 3 天刷新草地采集物（季内 1/4/7/…/28 天，写进 map diff） */
+  dayBaseCapture();                    /* 新的一天：重置“今天赚了多少”的基线 */
   if(CONFIG.SAVE.AUTO_NEW_DAY && sessionActive) saveGame('新的一天');
   updateTut();                         /* 过了第 1 天就把新手引导收起来 */
   npcDayStart();                       /* 居民：新的天 → 今天谁过生日 */
@@ -88,10 +208,18 @@ function updateSleepFx(dt){
   const S = CONFIG.SLEEP;
   sleepFx.t += dt;
   if(sleepFx.phase === 'out'){
-    if(sleepFx.t >= S.FADE_OUT){ sleepFx.phase = 'hold'; sleepFx.t = 0; }
+    if(sleepFx.t >= S.FADE_OUT){
+      sleepFx.phase = 'hold';
+      sleepFx.t = 0;
+      if(!sleepFx.summaryShown){
+        sleepFx.summaryShown = true;
+        daySumOpenPanel(buildDaySummary());   /* 黑屏里弹出当日总结，等玩家确认 */
+      }
+    }
   }else if(sleepFx.phase === 'hold'){
-    if(!dayRolled) rollToNextMorning(sleepFx.faint);   /* 全黑时翻到次日 6:00 */
-    if(sleepFx.t >= S.HOLD){ sleepFx.phase = 'in'; sleepFx.t = 0; playSleepSfx('out'); }
+    if(daySumOpen){ sleepFx.t = 0; return; }  /* 总结页没确认前不翻日 */
+    if(!dayRolled) rollToNextMorning(sleepFx.faint);   /* 面板被意外关掉时的兜底 */
+    if(sleepFx.t >= 0.12){ sleepFx.phase = 'in'; sleepFx.t = 0; playSleepSfx('out'); }
   }else if(sleepFx.phase === 'in'){
     if(sleepFx.t >= S.FADE_IN){ sleepFx.phase = 'title'; sleepFx.t = 0; }
   }else if(sleepFx.phase === 'title'){
@@ -110,5 +238,5 @@ function sleepAlpha(){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { sleepFx, houseDist, nearHouse, startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha });
-export { sleepFx, houseDist, nearHouse, startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha };
+Object.assign(window, { sleepFx, houseDist, nearHouse, startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha, dayBaseCapture, dayBaseGet, buildDaySummary, daySumOpenPanel, daySumClosePanel, daySummaryConfirm });
+export { sleepFx, houseDist, nearHouse, startSleep, triggerFaint, rollToNextMorning, updateSleepFx, sleepAlpha, dayBaseCapture, dayBaseGet, buildDaySummary, daySumOpenPanel, daySumClosePanel, daySummaryConfirm };

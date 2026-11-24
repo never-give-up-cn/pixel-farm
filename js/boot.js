@@ -32,6 +32,7 @@ festivalDayStart();                    /* 第 17 轮：开局若正撞上节日�
 const sky0 = skyAt(skyHour());
 sky.cur = {r:sky0.r, g:sky0.g, b:sky0.b, a:sky0.a, v:sky0.v};
 updateStats();
+if(typeof dayBaseCapture === 'function') dayBaseCapture();   /* 当日摘要基线 */
 layoutToasts();
 layoutSysTip();
 

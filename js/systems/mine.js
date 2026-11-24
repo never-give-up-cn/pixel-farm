@@ -114,6 +114,8 @@ const mine = {
   rocks: new Map(),
   ores: new Map(),
   ladder: { x: COLS - 2, y: 5 },
+  ladderHidden: true,
+  infested: false,
   chest: null,
   claimed: new Set(),
   sparkles: [],
@@ -144,6 +146,57 @@ function tileCenter(x, y) {
   return { x: OX + x * TILE + TILE / 2, y: OY + y * TILE + TILE / 2 };
 }
 
+/* 按深度 / 层主题挑矿石：浅层铜多，深层铁 / 金 / 稀有矿比例上升，煤炭全层都有。
+ * 参考星露谷：石头占绝大多数，矿脉只是少量点缀。 */
+function pickOre(depth, theme, rnd) {
+  const table = [];
+  const add = (id, w) => { if (w > 0) table.push([id, w]); };
+  if (theme.id === 'ice') {
+    add('iron_ore', 34);
+    add('gold_ore', 8 + depth * 0.25);
+    add('coal', 18);
+    add('frozen_tear', 14);
+    add('quartz', 10);
+  } else if (theme.id === 'lava') {
+    add('gold_ore', 26);
+    add('coal', 16);
+    add('fire_quartz', 18);
+    add('earth_crystal', 14);
+    add('copper_ore', 6);
+  } else {
+    add('copper_ore', Math.max(6, 40 - depth));
+    add('iron_ore', depth >= 10 ? 8 + Math.min(20, (depth - 10) * 0.5) : 0);
+    add('gold_ore', depth >= 25 ? 4 + Math.min(15, (depth - 25) * 0.4) : 0);
+    add('coal', 14);
+    add('quartz', depth >= 5 ? 10 : 0);
+    add('earth_crystal', depth >= 20 ? 4 : 0);
+  }
+  const total = table.reduce((s, it) => s + it[1], 0);
+  if (!total) return theme.ores[0];
+  let r = rnd() * total;
+  for (const [id, w] of table) {
+    r -= w;
+    if (r <= 0) return id;
+  }
+  return table[table.length - 1][0];
+}
+
+/* 收集本层可以放宝箱 / 梯子的地板格：用出生点距离场过滤，保证走得到 */
+function mineFloorCandidates(minDist, exclude) {
+  const field = buildMineDistField(1, 5, false);
+  const out = [];
+  for (let y = 1; y < ROWS - 1; y++) {
+    for (let x = 1; x < COLS - 1; x++) {
+      if (tileAt(x, y) !== 'floor') continue;
+      const d = field[y * COLS + x];
+      if (d < minDist) continue;
+      if (exclude && exclude.some(e => e.x === x && e.y === y)) continue;
+      out.push({ x, y });
+    }
+  }
+  return out;
+}
+
 function generate(depth) {
   const rnd = mulberry32(7200 + depth * 197);
   const theme = (mine.mode === 'skull') ? MINE_THEMES[2] : mineTheme(depth);
@@ -169,51 +222,67 @@ function generate(depth) {
     mine.map.push(row);
   }
 
-  let placed = 0;
-  let guard = 0;
-  while (placed < 46 && guard++ < 600) {
-    const x = 1 + Math.floor(rnd() * (COLS - 2));
-    const y = 1 + Math.floor(rnd() * (ROWS - 2));
-    if (x === 1 && y === 5) continue;
-    if (x === COLS - 2 && y === 5) continue;
-    if (tileAt(x, y) !== 'floor') continue;
-    if (rnd() < 0.3) {
-      setTile(x, y, 'ore');
-      mine.ores.set(keyOf(x, y), theme.ores[Math.floor(rnd() * theme.ores.length)]);
-    } else {
-      setTile(x, y, 'rock');
-      mine.rocks.set(keyOf(x, y), 1);
+  /* --- 星露谷式矿层：先撒若干岩石团，再把一部分石头替换成矿脉 --- */
+  const oreChance = Math.min(0.30, 0.10 + depth * 0.0022) + (mine.mode === 'skull' ? 0.05 : 0);
+  const clusters = 6 + Math.floor(rnd() * 4) + (mine.mode === 'skull' ? 2 : 0);
+  for (let i = 0; i < clusters; i++) {
+    const ccx = 2 + Math.floor(rnd() * (COLS - 4));
+    const ccy = 1 + Math.floor(rnd() * (ROWS - 2));
+    const rad = 1 + (rnd() < 0.55 ? 1 : 0);
+    for (let dy = -rad; dy <= rad; dy++) {
+      for (let dx = -rad; dx <= rad; dx++) {
+        const x = ccx + dx, y = ccy + dy;
+        if (x < 1 || y < 1 || x >= COLS - 1 || y >= ROWS - 1) continue;
+        if (Math.abs(x - 1) + Math.abs(y - 5) <= 2) continue;   /* 出生点附近留空 */
+        if (tileAt(x, y) !== 'floor') continue;
+        if (Math.abs(dx) === rad && Math.abs(dy) === rad && rnd() < 0.7) continue;
+        if (rnd() > 0.86) continue;                             /* 岩石团里留些空隙 */
+        if (rnd() < oreChance) {
+          setTile(x, y, 'ore');
+          mine.ores.set(keyOf(x, y), pickOre(depth, theme, rnd));
+        } else {
+          setTile(x, y, 'rock');
+          mine.rocks.set(keyOf(x, y), 1);
+        }
+      }
     }
-    placed++;
   }
 
-  mine.ladder = { x: COLS - 2, y: 5 };
-  setTile(mine.ladder.x, mine.ladder.y, 'ladder');
+  /* 保证出生点能走到房间各处；被封死的区域会被挖开 */
+  ensureMineConnected(1, 5);
 
-  /* 每 5 层：首次到达时放一个矿工宝箱 */
+  /* 矿工宝箱：每 10 层首次到达生成一个，位置随机，不压住梯子 */
   mine.chest = null;
   const chestStep = Math.max(1, CONFIG.MINE.CHEST_STEP | 0);
   if (depth % chestStep === 0 && !mine.claimed.has(depth)) {
-    const cx = COLS - 4;
-    const cy = ROWS - 3;
-    setTile(cx, cy, 'chest');
-    mine.rocks.delete(keyOf(cx, cy));
-    mine.ores.delete(keyOf(cx, cy));
-    /* 清掉宝箱四邻的矿石 / 岩石，避免随机生成把宝箱围死 */
-    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-      const nx = cx + dx, ny = cy + dy;
-      const t = tileAt(nx, ny);
-      if (t === 'rock' || t === 'ore') {
-        setTile(nx, ny, 'floor');
-        mine.rocks.delete(keyOf(nx, ny));
-        mine.ores.delete(keyOf(nx, ny));
+    const cands = mineFloorCandidates(6);
+    if (cands.length) {
+      const c = cands[Math.floor(rnd() * cands.length)];
+      setTile(c.x, c.y, 'chest');
+      mine.rocks.delete(keyOf(c.x, c.y));
+      mine.ores.delete(keyOf(c.x, c.y));
+      /* 清掉宝箱四邻，避免被岩石围死 */
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = c.x + dx, ny = c.y + dy;
+        const t = tileAt(nx, ny);
+        if (t === 'rock' || t === 'ore') {
+          setTile(nx, ny, 'floor');
+          mine.rocks.delete(keyOf(nx, ny));
+          mine.ores.delete(keyOf(nx, ny));
+        }
       }
+      mine.chest = { x: c.x, y: c.y };
     }
-    mine.chest = { x: cx, y: cy };
   }
 
-  /* 挖通所有被随机岩石封死的区域，保证出生点 ↔ 梯子 ↔ 怪物都连通 */
-  ensureMineConnected(1, 5);
+  /* 下一层梯子：随机藏在某个地板格，清光怪物或敲石头才会露出来 */
+  mine.ladderHidden = true;
+  {
+    const cands = mineFloorCandidates(6, mine.chest ? [mine.chest] : null);
+    const c = cands.length ? cands[Math.floor(rnd() * cands.length)] : { x: COLS - 2, y: 5 };
+    setTile(c.x, c.y, 'floor');
+    mine.ladder = { x: c.x, y: c.y };
+  }
 
   const p = tileCenter(1, 5);
   mine.player.tx = 1;
@@ -229,27 +298,49 @@ function generate(depth) {
   mine.player.dir = DIR_RIGHT;
 
   let count = 0;
-  guard = 0;
+  let guard = 0;
   const pool = (mine.mode === 'skull' && SKULL_MONSTERS.length) ? SKULL_MONSTERS : MINE_MONSTERS;
   const flyPool = pool.filter(d => FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
   const groundPool = pool.filter(d => !FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
+
+  /* 怪物数量随深度增加；偶尔出现「怪物横行」层，怪更多、更凶 */
+  const infested = depth % 13 === 0 || rnd() < 0.10;
+  mine.infested = infested;
+  const targetHp = 24 + depth * 9;
+  const eligible = pool.filter(d => d.hp <= 40 + depth * 14);
+  const weights = eligible.map(d => 1 / (1 + Math.abs(d.hp - targetHp) / Math.max(20, targetHp)));
+  const pickMonsterDef = () => {
+    if (!eligible.length) return pool[Math.floor(rnd() * pool.length)];
+    const total = weights.reduce((a, b) => a + b, 0);
+    let r = rnd() * total;
+    for (let i = 0; i < eligible.length; i++) {
+      r -= weights[i];
+      if (r <= 0) return eligible[i];
+    }
+    return eligible[eligible.length - 1];
+  };
+
   /* 一层里要么没有飞行怪，要么来 1–2 只，不会整层都是蝙蝠 */
   const flyersThisFloor = (flyPool.length && groundPool.length && rnd() < FLYING_CHANCE)
     ? (1 + (rnd() < 0.5 ? 1 : 0)) : 0;
-  while (count < 5 && guard++ < 300) {
-    const x = 4 + Math.floor(rnd() * (COLS - 6));
+  const monsterCount = Math.min(9, 3 + Math.floor(depth / 12)) +
+    (infested ? 3 + Math.floor(rnd() * 3) : 0);
+  while (count < monsterCount && guard++ < 400) {
+    const x = 3 + Math.floor(rnd() * (COLS - 5));
     const y = 1 + Math.floor(rnd() * (ROWS - 2));
     if (tileAt(x, y) !== 'floor') continue;
-    if (Math.abs(x - 1) + Math.abs(y - 5) < 4) continue;
+    if (Math.abs(x - 1) + Math.abs(y - 5) < 5) continue;
     const usePool = (count < flyersThisFloor)
       ? flyPool
       : (groundPool.length ? groundPool : pool);
-    const def = usePool[Math.floor(rnd() * usePool.length)];
+    const def = (count < flyersThisFloor)
+      ? usePool[Math.floor(rnd() * usePool.length)]
+      : pickMonsterDef();
     const meta = MONSTER_MAP[def.id] || {};
     const shape = meta.shape || 'slime';
     const fly = FLYING_SHAPES.has(shape);
     const ranged = RANGED[def.id] || null;
-    const scale = mine.mode === 'skull' ? 1.45 : 1;
+    const scale = (mine.mode === 'skull' ? 1.45 : 1) * (infested ? 1.12 : 1);
     const hp = Math.max(6, Math.round((def.hp / 7 + depth * 1.4) * scale));
     const c = tileCenter(x, y);
     mine.monsters.push({
@@ -265,6 +356,8 @@ function generate(depth) {
     });
     count++;
   }
+  /* 极端情况：本层没有怪物 → 梯子直接出现 */
+  checkLadderAfterKill();
 }
 
 /* ---------- 输入 ---------- */
@@ -364,6 +457,36 @@ function openMineChest() {
   return true;
 }
 
+/* ---------- 梯子：藏在随机地板格，清怪 / 敲石头后出现 ---------- */
+
+function revealLadder(x, y, why) {
+  if (!mine.ladderHidden) return false;
+  setTile(x, y, 'ladder');
+  mine.rocks.delete(keyOf(x, y));
+  mine.ores.delete(keyOf(x, y));
+  mine.ladder = { x, y };
+  mine.ladderHidden = false;
+  burst(x, y, '#ffd76a', 16);
+  if (typeof playSfx === 'function') playSfx(760, 'triangle', 0.12, 0.55);
+  if (typeof toast === 'function') toast(why || '梯子出现了！');
+  return true;
+}
+
+/* 敲开岩石 / 矿石时：小概率直接露出梯子；矿层快挖空时保底出现 */
+function maybeRevealLadder(tx, ty, chance) {
+  if (!mine.ladderHidden) return false;
+  if (Math.random() < chance) return revealLadder(tx, ty, '⚡ 岩石下露出了梯子！');
+  if (mine.rocks.size + mine.ores.size <= 4)
+    return revealLadder(mine.ladder.x, mine.ladder.y, '⛏ 矿层快挖空了，梯子出现了');
+  return false;
+}
+
+/* 清光这一层的怪物 → 梯子出现（星露谷的规则之一） */
+function checkLadderAfterKill() {
+  if (mine.ladderHidden && mine.monsters.length === 0)
+    revealLadder(mine.ladder.x, mine.ladder.y, '👾 怪物清空，梯子出现了！');
+}
+
 /* ---------- 对外：进出 / 攻击 ---------- */
 
 export function enterMine(startDepth, mode) {
@@ -457,7 +580,7 @@ export function mineUseBomb() {
   }
   if (typeof removeItem === 'function') removeItem('bomb', 1);
   const p = mine.player;
-  let cleared = 0, hurtMon = 0;
+  let cleared = 0, hurtMon = 0, broke = null;
   for (let dy = -2; dy <= 2; dy++) {
     for (let dx = -2; dx <= 2; dx++) {
       if (Math.hypot(dx, dy) > 2.5) continue;
@@ -467,6 +590,7 @@ export function mineUseBomb() {
         setTile(x, y, 'floor');
         mine.rocks.delete(keyOf(x, y));
         if (typeof dropItem === 'function') dropItem('stone', 1);
+        if (!broke) broke = { x, y };
         cleared++;
       } else if (t === 'ore') {
         const id = mine.ores.get(keyOf(x, y));
@@ -474,6 +598,7 @@ export function mineUseBomb() {
         mine.ores.delete(keyOf(x, y));
         mine.ore++;
         if (typeof addItem === 'function' && id) addItem(id, 1);
+        if (!broke) broke = { x, y };
         cleared++;
       }
     }
@@ -496,6 +621,8 @@ export function mineUseBomb() {
   }
   burst(p.tx, p.ty, '#ff9040', 26);
   if (typeof playSfx === 'function') playSfx(90, 'sawtooth', 0.22, 0.7);
+  if (broke) maybeRevealLadder(broke.x, broke.y, 0.2);
+  checkLadderAfterKill();
   if (typeof toast === 'function') toast('💣 炸弹！清理 ' + cleared + ' 处矿岩，炸伤 ' + hurtMon + ' 只怪物');
   return true;
 }
@@ -582,6 +709,7 @@ function resolveAttack() {
       if (typeof addGold === 'function') addGold(3 + Math.floor(Math.random() * 6));
       dropEquipment(mon);
       playSfx(880, 'triangle', 0.09, 0.5);
+      checkLadderAfterKill();
     }
     return;
   }
@@ -592,6 +720,7 @@ function resolveAttack() {
     burst(t.x, t.y, '#b8b0a0', 8);
     if (typeof skillAdd === 'function') skillAdd('mining', 4);
     playSfx(150, 'square', 0.05, 0.4);
+    maybeRevealLadder(t.x, t.y, 0.12);
     return;
   }
 
@@ -607,6 +736,7 @@ function resolveAttack() {
     dropItem('stone', 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0));
     if (id === 'coal' || Math.random() < 0.35) dropItem('charcoal', 1);
     playSfx(700, 'square', 0.06, 0.5);
+    maybeRevealLadder(t.x, t.y, 0.10);
     return;
   }
 
@@ -1292,6 +1422,11 @@ export function drawMine(ctx) {
     ctx.fillStyle = theme.accent;
     ctx.font = '13px "Microsoft YaHei", monospace';
     ctx.fillText(mine.mode === 'skull' ? '骷髅洞穴' : theme.name, W / 2, OY + 74);
+    if (mine.infested) {
+      ctx.fillStyle = '#ff8a70';
+      ctx.font = 'bold 12px "Microsoft YaHei", monospace';
+      ctx.fillText('⚠ 怪物横行', W / 2, OY + 94);
+    }
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }
@@ -1303,7 +1438,9 @@ export function drawMine(ctx) {
   ctx.fillText('WASD / 方向键移动 · 空格攻击 · Q 炸弹 · R 楼梯 · 走到梯子下一层 · Esc 返回农场', 18, H - 26);
   ctx.fillStyle = '#6a7a8a';
   ctx.font = '11px monospace';
-  ctx.fillText('矿石 +1 并掉落石材 · 击杀怪物 +2 矿石 / 石材 / 金币 · 每 5 层首次到达有矿工宝箱', 18, H - 9);
+  ctx.fillText(mine.ladderHidden
+    ? '梯子还没出现：清光本层怪物，或继续敲岩石 / 矿石（有小概率直接露出梯子）'
+    : '梯子已出现：走到梯子下一层 · 击杀怪物 +2 矿石 / 石材 / 金币', 18, H - 9);
 
   if (mine.down > 0) {
     ctx.fillStyle = 'rgba(0,0,0,0.55)';

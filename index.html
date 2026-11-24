@@ -751,6 +751,26 @@
   .arline .arv{color:#ffd76a}
   #annualBtns{display:flex;justify-content:flex-end}
   #annualFoot{margin-top:8px;font-size:11px;color:#7f92ad}
+  /* ---------- 跨夜总结：睡觉后弹出，确认才到第二天 ---------- */
+  #daySum{
+    position:fixed;inset:0;z-index:56;display:none;
+    align-items:center;justify-content:center;
+    font:13px/1.7 Consolas,"Microsoft YaHei","PingFang SC",monospace;color:#cfe3ff;
+  }
+  #daySum.open{display:flex}
+  #daySum.open #daySumPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
+  #daySum.closing #daySumPanel{animation:panelOut .2s ease-in forwards}
+  #daySum.closing{display:flex}
+  #daySumMask{position:absolute;inset:0;background:rgba(4,6,10,.82)}
+  #daySumPanel{position:relative;width:440px;max-width:92vw;padding:16px 18px 12px}
+  #daySumHead{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  #daySumIcon{font:24px/1 "Segoe UI Emoji","Apple Color Emoji",sans-serif}
+  #daySumTitle{font-size:17px;color:#ffd76a}
+  #daySumSub{font-size:11px;color:#8fa3bd;margin-bottom:10px}
+  #daySumBody{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+  #daySumBody .arline{padding:6px 10px}
+  #daySumBtns{display:flex;justify-content:flex-end}
+  #daySumFoot{margin-top:8px;font-size:11px;color:#7f92ad}
   /* ---------- 第 19 轮：加工台面板（复用 .panel 视觉，只追加不改旧规则） ---------- */
   #maker.open #makerPanel{animation:panelIn .2s cubic-bezier(.2,.9,.3,1.15)}
   #maker.closing #makerPanel{animation:panelOut .2s ease-in forwards}
@@ -1452,6 +1472,23 @@
       <button class="mbtn" id="annualClose">开启新的一年（Esc）</button>
     </div>
     <div id="annualFoot">年度总结只在这一天弹出一次</div>
+  </div>
+</div>
+
+<!-- 跨夜总结：睡觉后弹出，确认后进入第二天 -->
+<div id="daySum">
+  <div id="daySumMask"></div>
+  <div id="daySumPanel" class="panel">
+    <div id="daySumHead">
+      <span id="daySumIcon">🌙</span>
+      <span id="daySumTitle">今日总结</span>
+    </div>
+    <div id="daySumSub"></div>
+    <div id="daySumBody"></div>
+    <div id="daySumBtns">
+      <button class="mbtn" id="daySumOk">确认，开始新的一天（Enter）</button>
+    </div>
+    <div id="daySumFoot">确认后自动保存并进入第二天</div>
   </div>
 </div>
 

@@ -507,6 +507,8 @@ function deserializeState(d){
       ratingCheck();                             /* 第 20 轮：读档后重新评估星级 */
       if(_cm !== 'farm' && typeof worldUseArrays === 'function' && MAP_WORLD[_cm]) worldUseArrays(_cm);
     }
+    if(typeof dayBaseCapture === 'function') dayBaseCapture();   /* 读档后重置当日摘要基线 */
+    if(typeof daySumClosePanel === 'function') daySumClosePanel();
     return true;
   }catch(e){
     console.warn('[save] 读档失败：', e);
@@ -746,6 +748,8 @@ function newGame(farmId){
   refreshPackGrid();
   updateStats();
   updateTut();
+  if(typeof dayBaseCapture === 'function') dayBaseCapture();   /* 新游戏：摘要基线 */
+  if(typeof daySumClosePanel === 'function') daySumClosePanel();
 }
 
 

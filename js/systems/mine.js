@@ -81,6 +81,12 @@ const RANGED = {
   skeleton_mage: { range: 300, keep: 140, cd: 2.4, speed: 135, cast: 0.6,  color: '#b0a0f0', kind: 'orb' }
 };
 
+/* 飞行怪物：蝙蝠 / 苍蝇 / 幽灵 / 蛇 / 闹鬼骷髅 等。
+ * 出现时可以直接飞过岩石和矿石，不再被地面障碍挡住。
+ * FLYING_CHANCE 是“这一层是否出现飞行怪”的概率，出现时会有 1–2 只。 */
+const FLYING_SHAPES = new Set(['bat', 'fly', 'ghost', 'serpent', 'skull', 'sprite']);
+const FLYING_CHANCE = 0.5;
+
 window.mineActive = false;
 
 const mine = {
@@ -225,20 +231,29 @@ function generate(depth) {
   let count = 0;
   guard = 0;
   const pool = (mine.mode === 'skull' && SKULL_MONSTERS.length) ? SKULL_MONSTERS : MINE_MONSTERS;
+  const flyPool = pool.filter(d => FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
+  const groundPool = pool.filter(d => !FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
+  /* 一层里要么没有飞行怪，要么来 1–2 只，不会整层都是蝙蝠 */
+  const flyersThisFloor = (flyPool.length && groundPool.length && rnd() < FLYING_CHANCE)
+    ? (1 + (rnd() < 0.5 ? 1 : 0)) : 0;
   while (count < 5 && guard++ < 300) {
     const x = 4 + Math.floor(rnd() * (COLS - 6));
     const y = 1 + Math.floor(rnd() * (ROWS - 2));
     if (tileAt(x, y) !== 'floor') continue;
     if (Math.abs(x - 1) + Math.abs(y - 5) < 4) continue;
-    const def = pool[Math.floor(rnd() * pool.length)];
+    const usePool = (count < flyersThisFloor)
+      ? flyPool
+      : (groundPool.length ? groundPool : pool);
+    const def = usePool[Math.floor(rnd() * usePool.length)];
     const meta = MONSTER_MAP[def.id] || {};
     const shape = meta.shape || 'slime';
+    const fly = FLYING_SHAPES.has(shape);
     const ranged = RANGED[def.id] || null;
     const scale = mine.mode === 'skull' ? 1.45 : 1;
     const hp = Math.max(6, Math.round((def.hp / 7 + depth * 1.4) * scale));
     const c = tileCenter(x, y);
     mine.monsters.push({
-      type: def.id, shape, ranged,
+      type: def.id, shape, fly, ranged,
       speed: ranged ? (ranged.speed * 0.26 + 12) : (MONSTER_SPEED[shape] || 34),
       tx: x, ty: y, px: c.x, py: c.y,
       dir: DIR_DOWN, moving: false, animT: rnd() * 6.28,
@@ -542,30 +557,7 @@ function resolveAttack() {
   const k = keyOf(t.x, t.y);
   const tile = tileAt(t.x, t.y);
 
-  if (tile === 'rock') {
-    setTile(t.x, t.y, 'floor');
-    mine.rocks.delete(k);
-    burst(t.x, t.y, '#b8b0a0', 8);
-    if (typeof skillAdd === 'function') skillAdd('mining', 4);
-    playSfx(150, 'square', 0.05, 0.4);
-    return;
-  }
-
-  if (tile === 'ore') {
-    const id = mine.ores.get(k);
-    setTile(t.x, t.y, 'floor');
-    mine.ores.delete(k);
-    mine.ore += 1 + (typeof skillOreBonus === 'function' ? skillOreBonus() : 0) +
-      (typeof foodBuffMiningChance === 'function' && Math.random() < foodBuffMiningChance() ? 1 : 0) +
-      (typeof equipMiningChance === 'function' && Math.random() < equipMiningChance() ? 1 : 0);
-    burst(t.x, t.y, '#e0c060', 10);
-    if (typeof skillAdd === 'function') skillAdd('mining', 8);
-    dropItem('stone', 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0));
-    if (id === 'coal' || Math.random() < 0.35) dropItem('charcoal', 1);
-    playSfx(700, 'square', 0.06, 0.5);
-    return;
-  }
-
+  /* 飞行怪可能悬在岩石上方，先判怪物再判矿岩 */
   const mon = mine.monsters.find(m => m.tx === t.x && m.ty === t.y);
   if (mon) {
     const dmg = weaponDamage();
@@ -594,6 +586,30 @@ function resolveAttack() {
     return;
   }
 
+  if (tile === 'rock') {
+    setTile(t.x, t.y, 'floor');
+    mine.rocks.delete(k);
+    burst(t.x, t.y, '#b8b0a0', 8);
+    if (typeof skillAdd === 'function') skillAdd('mining', 4);
+    playSfx(150, 'square', 0.05, 0.4);
+    return;
+  }
+
+  if (tile === 'ore') {
+    const id = mine.ores.get(k);
+    setTile(t.x, t.y, 'floor');
+    mine.ores.delete(k);
+    mine.ore += 1 + (typeof skillOreBonus === 'function' ? skillOreBonus() : 0) +
+      (typeof foodBuffMiningChance === 'function' && Math.random() < foodBuffMiningChance() ? 1 : 0) +
+      (typeof equipMiningChance === 'function' && Math.random() < equipMiningChance() ? 1 : 0);
+    burst(t.x, t.y, '#e0c060', 10);
+    if (typeof skillAdd === 'function') skillAdd('mining', 8);
+    dropItem('stone', 2 + (typeof skillExtraStone === 'function' ? skillExtraStone() : 0));
+    if (id === 'coal' || Math.random() < 0.35) dropItem('charcoal', 1);
+    playSfx(700, 'square', 0.06, 0.5);
+    return;
+  }
+
   burst(t.x, t.y, '#d8e0e8', 4);
 }
 
@@ -603,15 +619,18 @@ function resolveAttack() {
 function monsterCanStand(m, x, y) {
   if (x < 0 || y < 0 || x >= COLS || y >= ROWS) return false;
   const t = tileAt(x, y);
-  if (t !== 'floor' && t !== 'ladder') return false;
+  if (m.fly) {
+    if (t === 'wall') return false;          /* 飞行怪能过岩石 / 矿石，但不能穿出房间外墙 */
+  } else if (t !== 'floor' && t !== 'ladder') return false;
   const p = mine.player;
   if (x === p.tx && y === p.ty) return false;
   return !mine.monsters.some(o => o !== m && o.tx === x && o.ty === y);
 }
 
 /* 以玩家格为起点做一次 BFS，得到每格到玩家的步数。
- * 怪物按这个距离场选下一格，就会像 NPC 的 A* 一样绕开岩石 / 墙，而不是一头撞在障碍上。 */
-function buildMineDistField(sx, sy) {
+ * 怪物按这个距离场选下一格，就会像 NPC 的 A* 一样绕开岩石 / 墙，而不是一头撞在障碍上。
+ * air=true 用于飞行怪：除了外墙，岩石 / 矿石 / 宝箱都当作可通过。 */
+function buildMineDistField(sx, sy, air) {
   const field = new Int16Array(COLS * ROWS).fill(-1);
   if (sx < 0 || sy < 0 || sx >= COLS || sy >= ROWS) return field;
   const q = [sy * COLS + sx];
@@ -624,7 +643,8 @@ function buildMineDistField(sx, sy) {
       const nx = cx + d.dx, ny = cy + d.dy;
       if (nx < 0 || ny < 0 || nx >= COLS || ny >= ROWS) continue;
       const t = tileAt(nx, ny);
-      if (t !== 'floor' && t !== 'ladder' && t !== 'chest') continue;
+      if (air) { if (t === 'wall') continue; }
+      else if (t !== 'floor' && t !== 'ladder' && t !== 'chest') continue;
       const ni = ny * COLS + nx;
       if (field[ni] !== -1) continue;
       field[ni] = nd;
@@ -827,7 +847,8 @@ export function updateMine(dt) {
   }
   p.hurt = Math.max(0, p.hurt - dt);
   mine.floorMsg = Math.max(0, mine.floorMsg - dt);
-  const field = buildMineDistField(p.tx, p.ty);
+  const field = buildMineDistField(p.tx, p.ty, false);
+  const fieldAir = buildMineDistField(p.tx, p.ty, true);
 
   for (const m of mine.monsters) {
     m.animT += dt;
@@ -880,7 +901,7 @@ export function updateMine(dt) {
       }
     } else if (m.think <= 0 && m.speed > 0) {
       m.think = (m.ranged ? 0.35 : 0.16) + Math.random() * 0.22;
-      monsterStartStep(m, dist, field);
+      monsterStartStep(m, dist, m.fly ? fieldAir : field);
     }
 
     if (!stunned && !m.ranged) {
@@ -1061,8 +1082,15 @@ export function drawMine(ctx) {
       ox = m.lungeX * thrust;
       oy = m.lungeY * thrust;
     }
+    /* 飞行怪：脚下留一圈淡影，本体上下浮动 */
+    const hover = m.fly ? -4 + Math.sin(m.animT * 3 + m.phase) * 2 : 0;
+    if (m.fly) {
+      ctx.globalAlpha = 0.22;
+      ellipse(ctx, m.px + ox * 0.3, m.py - 1, 10, 3.5, '#000000');
+      ctx.globalAlpha = 1;
+    }
     ctx.save();
-    ctx.translate(m.px - 20 + ox, m.py - 32 + oy);
+    ctx.translate(m.px - 20 + ox, m.py - 32 + oy + hover);
     drawMonster(ctx, m.type, m.animT, { state, t });
     ctx.restore();
 

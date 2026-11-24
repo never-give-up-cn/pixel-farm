@@ -1,7 +1,8 @@
-/* js/ui/start-menu.js —— 由 index.html 拆分，原行 6755–6881 */
+/* js/ui/start-menu.js —— 由 index.html 拆分，原行 6755–6881
+ * 第 42 轮：存档不再固定 3 个；标题界面「读取存档」会列出本地全部存档，
+ * 可以任意读取 / 删除；新建游戏会自动占用下一个空存档号，不覆盖旧档。 */
 'use strict';
 
-/* --- 启动菜单（本地有存档时：继续 / 新游戏） --- */
 const startEl      = document.getElementById('start');
 const startInfo    = document.getElementById('startInfo');
 const startWarn    = document.getElementById('startWarn');
@@ -12,7 +13,10 @@ const btnContinue  = document.getElementById('btnContinue');
 const btnNew       = document.getElementById('btnNew');
 const btnNewYes    = document.getElementById('btnNewYes');
 const btnNewNo     = document.getElementById('btnNewNo');
-/* 第 37 轮：农场类型选择 */
+const startLoadEl  = document.getElementById('startLoad');
+const startLoadListEl = document.getElementById('startLoadList');
+const startLoadCountEl = document.getElementById('startLoadCount');
+const btnLoadBack  = document.getElementById('btnLoadBack');
 const farmPickListEl = document.getElementById('farmPickList');
 const farmPickDescEl = document.getElementById('farmPickDesc');
 window.pendingFarmType = CONFIG.GEN.FARM_DEFAULT || 'standard';
@@ -45,71 +49,106 @@ function saveSummary(d){
          ' · 作物 ' + nc + ' 株 · 建造物 ' + nb + ' 个\n' +
          '地图改动 ' + nd + ' 格 · 保存于 ' + fmtStamp(d.at) + upg;
 }
+function latestSave(){
+  const list = (typeof listSaves === 'function') ? listSaves() : [];
+  return list.length ? list[0] : null;
+}
+function showStartMain(){
+  if(startLoadEl) startLoadEl.classList.remove('open');
+  if(startBtns) startBtns.style.display = 'flex';
+  if(startConfirm) startConfirm.classList.remove('open');
+}
 /* 打开标题界面 */
 function openStartMenu(d){
-  pendingSave = d;
+  const latest = latestSave();
+  pendingSave = d || (latest ? latest.data : null);
+  if(latest && d === undefined) curSlot = latest.slot;
   startMenuOpen = true;
   renderStartSlots();
   updateStartInfo();
-  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
-  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
+  showStartMain();
   setPanelOpen(startEl, true);
 }
-/* 第 28 轮：标题界面槽位行 + 存档摘要（点槽位切换后复用） */
+/* 全部存档列表 */
 function renderStartSlots(){
-  const box = document.getElementById('startSlots');
-  if(!box) return;
-  box.innerHTML = '';
-  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
-    const b = document.createElement('button');
-    b.className = 'mbtn slot' + (i === curSlot ? ' on' : '');
-    const d = readSave(i);
-    b.textContent = '槽' + (i + 1) + (d ? (' · 第' + saveDay(d) + '天') : ' · 空');
-    b.addEventListener('click', ()=>{
-      curSlot = i;
-      pendingSave = readSave(i);
-      renderStartSlots();
-      updateStartInfo();
-      playClick();
-    });
-    box.appendChild(b);
+  if(!startLoadListEl) return;
+  const list = (typeof listSaves === 'function') ? listSaves() : [];
+  startLoadListEl.innerHTML = '';
+  if(startLoadCountEl) startLoadCountEl.textContent = '（' + list.length + ' 个）';
+  if(!list.length){
+    const empty = document.createElement('div');
+    empty.className = 'saveRow';
+    empty.textContent = '还没有存档。点「新游戏」选择农场类型后创建。';
+    startLoadListEl.appendChild(empty);
+    return;
+  }
+  for(const rec of list){
+    const row = document.createElement('div');
+    row.className = 'saveRow';
+    const meta = document.createElement('div');
+    meta.className = 'saveMeta';
+    const title = document.createElement('div');
+    title.className = 'saveTitle';
+    title.textContent = (typeof saveDisplayName === 'function') ? saveDisplayName(rec.slot, rec.data) : ('存档 ' + (rec.slot + 1));
+    const sub = document.createElement('div');
+    sub.className = 'saveSub';
+    sub.textContent = (typeof saveRowSummary === 'function') ? saveRowSummary(rec.data) : saveSummary(rec.data);
+    meta.appendChild(title); meta.appendChild(sub);
+    const btns = document.createElement('div');
+    btns.className = 'saveBtns';
+    const load = document.createElement('button');
+    load.type = 'button'; load.textContent = '读取';
+    load.addEventListener('click', ()=>loadSaveFromSlot(rec.slot));
+    const del = document.createElement('button');
+    del.type = 'button'; del.className = 'danger'; del.textContent = '删除';
+    del.addEventListener('click', ()=>deleteSaveFromList(rec.slot));
+    btns.appendChild(load); btns.appendChild(del);
+    row.appendChild(meta); row.appendChild(btns);
+    startLoadListEl.appendChild(row);
   }
 }
 function updateStartInfo(){
-  const d = pendingSave;
-  const tag = '槽' + (curSlot + 1) + ' · ';
-  if(startInfo) startInfo.textContent = d ? (tag + saveSummary(d)) : (tag + '空槽位 —— 点「新游戏」在这里开局');
-  if(!d){
-    if(startWarn) startWarn.textContent = '';
-    if(btnContinue) btnContinue.textContent = '继续游戏';
-    if(btnNew) btnNew.textContent = '新游戏';
+  const list = (typeof listSaves === 'function') ? listSaves() : [];
+  if(startWarn) startWarn.textContent = '';
+  if(!list.length){
+    if(startInfo) startInfo.textContent = '本地还没有存档。\n点「新游戏」选择农场类型，创建第一个存档。';
     return;
   }
-  const vOK = saveVersionOK(d);
-  if(startWarn) startWarn.textContent = vOK ? '' :
-    ('存档版本 v' + (d.v === undefined ? '?' : d.v) + ' 比当前版本 v' + CONFIG.SAVE.VERSION +
-     ' 还新，读取可能不完整。仍要继续吗？');
-  if(btnContinue) btnContinue.textContent = vOK ? '继续游戏' : '仍然尝试读取';
-  if(btnNew) btnNew.textContent = vOK ? '新游戏' : '删除旧存档并重开';
+  const latest = list[0];
+  const name = (typeof saveDisplayName === 'function') ? saveDisplayName(latest.slot, latest.data) : '存档';
+  if(startInfo) startInfo.textContent =
+    '本地共有 ' + list.length + ' 个存档，存档数量不限。\n' +
+    '最近：' + name + ' · 第 ' + saveDay(latest.data) + ' 天\n' +
+    '点「读取存档」打开完整列表，可任意读取或删除。';
+}
+function openSaveList(){
+  renderStartSlots();
+  updateStartInfo();
+  if(startBtns) startBtns.style.display = 'none';
+  if(startConfirm) startConfirm.classList.remove('open');
+  if(startLoadEl) startLoadEl.classList.add('open');
+  playClick();
+}
+function closeSaveList(){
+  showStartMain();
+  playClick();
 }
 /* 关闭标题界面 */
 function closeStartMenu(){
   startMenuOpen = false;
   setPanelOpen(startEl, false);
 }
-/* 标题界面：二次确认（防误删存档） */
-function askNewGame(empty){
-  if(confirmText) confirmText.textContent = empty
-    ? ('槽' + (curSlot + 1) + ' 是空槽位 —— 选好农场类型就开局。')
-    : ('确定要删除槽' + (curSlot + 1) + ' 的存档，从头开始吗？\n（删掉就找不回来了）');
-  if(btnNewYes) btnNewYes.textContent = empty ? '开始新游戏' : '确定删除并重开';
-  if(startBtns && startBtns.style) startBtns.style.display = 'none';
-  if(startConfirm && startConfirm.classList) startConfirm.classList.add('open');
+/* 新游戏：只选择农场类型，不删除任何旧存档 */
+function askNewGame(){
+  if(confirmText) confirmText.textContent = '选择农场类型，创建新存档。\n（存档数量不限，旧存档不会被覆盖）';
+  if(btnNewYes) btnNewYes.textContent = '创建新存档';
+  if(startBtns) startBtns.style.display = 'none';
+  if(startLoadEl) startLoadEl.classList.remove('open');
+  if(startConfirm) startConfirm.classList.add('open');
   renderFarmPick();
 }
 function cancelNewGame(){
-  if(startBtns && startBtns.style) startBtns.style.display = 'flex';
-  if(startConfirm && startConfirm.classList) startConfirm.classList.remove('open');
+  showStartMain();
 }
 /* 第 37 轮：农场类型选项卡（开局前选择） */
 function renderFarmPick(){
@@ -141,36 +180,63 @@ function renderFarmPick(){
     farmPickDescEl.textContent = d ? d.desc : '';
   }
 }
-/* 标题界面：真的重开一局 */
+/* 标题界面：创建新存档 */
 function doNewGame(farmId){
   const id = (typeof farmId === 'string') ? farmId : pendingFarmType;
+  const slot = (typeof nextSaveSlot === 'function') ? nextSaveSlot() : 0;
+  if(slot < 0){ toast('存档数量已满，请先删除一些存档'); return; }
+  curSlot = slot;
+  pendingSave = null;
   newGame(id);
   closeStartMenu();
   sessionActive = true;
+  /* 机器人只玩不写档；正常玩家创建后立刻落一份，列表里马上能看到 */
+  if(!window.__farmBotLoaded) saveGame('新游戏', true);
   const def = farmTypeDef(id);
-  toast('新的一局开始了 · ' + (def ? def.name : '标准农场'));
+  toast('新存档：' + (def ? def.name : '标准农场') + ' · 存档 ' + (slot + 1));
 }
-/* 标题界面：继续读档 */
+/* 标题界面：读取指定存档 */
+function loadSaveFromSlot(slot){
+  const d = readSave(slot);
+  if(!d){ toast('这个存档已经不存在了'); renderStartSlots(); return; }
+  curSlot = slot;
+  pendingSave = d;
+  doContinue();
+}
+/* 删除存档（标题界面列表） */
+function deleteSaveFromList(slot){
+  const d = readSave(slot);
+  if(!d) return;
+  const name = (typeof saveDisplayName === 'function') ? saveDisplayName(slot, d) : ('存档 ' + (slot + 1));
+  if(typeof window.confirm === 'function' &&
+     !window.confirm('确定删除「' + name + ' · 第 ' + saveDay(d) + ' 天」吗？\n删掉就找不回来了。')) return;
+  deleteSave(slot);
+  if(curSlot === slot) pendingSave = null;
+  renderStartSlots();
+  updateStartInfo();
+  toast(name + ' 已删除');
+}
+/* 标题界面：读取当前选中的存档 */
 function doContinue(){
-  const raw = pendingSave;
-  /* 第 37 轮：空槽位 → 打开农场类型选择，而不是直接进一个标准农场 */
-  if(!raw){ askNewGame(true); return; }
+  const raw = pendingSave || readSave();
+  if(!raw){ toast('没有可读取的存档'); openSaveList(); return; }
   closeStartMenu();
   sessionActive = true;
   const r = migrateSave(raw);           /* v1 旧档在这里升级（进度无损） */
   const ok = deserializeState(r.save);
   if(r.degraded){ toast('存档升级失败，已按旧版本读取（居民数据可能缺失）'); return; }
-  if(ok) toast('欢迎回来 · 槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天');
-  else{ newGame(); toast('存档读取失败，开了一局新的'); }
+  if(ok) toast('欢迎回来 · ' + saveDisplayName(curSlot, readSave()) + ' · 第 ' + clock.day + ' 天');
+  else { toast('存档读取失败，请选择其他存档'); openStartMenu(null); }
 }
-if(btnContinue) btnContinue.addEventListener('click', ()=>{ doContinue(); });
-if(btnNew) btnNew.addEventListener('click', ()=>{ askNewGame(!pendingSave); });
+if(btnContinue) btnContinue.addEventListener('click', ()=>{ openSaveList(); });
+if(btnNew) btnNew.addEventListener('click', ()=>{ askNewGame(); });
 if(btnNewYes) btnNewYes.addEventListener('click', ()=>{ doNewGame(); });
 if(btnNewNo)  btnNewNo .addEventListener('click', ()=>{ cancelNewGame(); });
+if(btnLoadBack) btnLoadBack.addEventListener('click', ()=>{ closeSaveList(); });
 renderFarmPick();
 
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { startEl, startInfo, startWarn, startBtns, startConfirm, confirmText, btnContinue, btnNew, btnNewYes, btnNewNo, fmtStamp, saveSummary, openStartMenu, renderStartSlots, updateStartInfo, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue, farmPickListEl, farmPickDescEl, renderFarmPick });
-export { startEl, startInfo, startWarn, startBtns, startConfirm, confirmText, btnContinue, btnNew, btnNewYes, btnNewNo, fmtStamp, saveSummary, openStartMenu, renderStartSlots, updateStartInfo, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue, farmPickListEl, farmPickDescEl, renderFarmPick };
+Object.assign(window, { startEl, startInfo, startWarn, startBtns, startConfirm, confirmText, btnContinue, btnNew, btnNewYes, btnNewNo, fmtStamp, saveSummary, openStartMenu, renderStartSlots, updateStartInfo, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue, loadSaveFromSlot, deleteSaveFromList, openSaveList, closeSaveList, farmPickListEl, farmPickDescEl, renderFarmPick, startLoadEl, startLoadListEl, startLoadCountEl, btnLoadBack });
+export { startEl, startInfo, startWarn, startBtns, startConfirm, confirmText, btnContinue, btnNew, btnNewYes, btnNewNo, fmtStamp, saveSummary, openStartMenu, renderStartSlots, updateStartInfo, closeStartMenu, askNewGame, cancelNewGame, doNewGame, doContinue, loadSaveFromSlot, deleteSaveFromList, openSaveList, closeSaveList, farmPickListEl, farmPickDescEl, renderFarmPick, startLoadEl, startLoadListEl, startLoadCountEl, btnLoadBack };

@@ -44,18 +44,18 @@ window.addEventListener('beforeunload', ()=>{
  * 第 28 轮：三个槽位里挑「保存时间最近」的那个作为默认槽 */
 window.bootSave = null;
 {
+  /* 第 42 轮：存档不限个数；找保存时间最近的一个作为默认 */
   let best = -1, bestAt = -1;
-  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
-    const d = readSave(i);
-    /* 时间戳是毫秒级大数，不能用 |0（会折成负数导致永远选不中） */
-    const at = (d && typeof d.at === 'number' && isFinite(d.at)) ? d.at : 0;
-    if(d && at >= bestAt){ bestAt = at; best = i; }
+  const saves = (typeof listSaves === 'function') ? listSaves() : [];
+  for(const rec of saves){
+    const at = (rec.data && typeof rec.data.at === 'number' && isFinite(rec.data.at)) ? rec.data.at : 0;
+    if(at >= bestAt){ bestAt = at; best = rec.slot; }
   }
   if(best >= 0){ curSlot = best; bootSave = readSave(best); }
 }
 if(bootSave){
   openStartMenu(bootSave);
-  dlog('[save] 发现存档 v' + bootSave.v + '（槽' + (curSlot + 1) + '），等待玩家选择');
+  dlog('[save] 发现存档 v' + bootSave.v + '（' + saveDisplayName(curSlot, bootSave) + '），等待玩家选择');
 }else{
   sessionActive = true;
   spawnGather(true);             /* 第 14 轮：新开局先刷一季的采集物（第一天就有花可采） */

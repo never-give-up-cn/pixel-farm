@@ -690,14 +690,11 @@
     loadLearning();
     S.candidate = mutate(S.best);
 
-    /* 找一个空存档槽，绝不覆盖已有存档 */
-    let slot = -1;
-    for (let i = 0; i < CONFIG.SAVE.SLOTS; i++) {
-      if (!readSave(i)) { slot = i; break; }
-    }
+    /* 找一个空存档号，绝不覆盖已有存档 */
+    let slot = (typeof nextSaveSlot === 'function') ? nextSaveSlot() : -1;
     if (slot < 0) {
-      S.task = '没有空存档槽';
-      S.logLines.push('三个存档槽都有存档。请先删掉一个，再刷新页面。');
+      S.task = '没有空存档位';
+      S.logLines.push('本地存档位已满。请先在标题界面删除一些存档，再刷新页面。');
       renderPanel();
       return;
     }

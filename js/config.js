@@ -389,7 +389,8 @@ const CONFIG = {
   SAVE: {
     KEY: 'farm_save_v1',      // localStorage 键名（多槽位时槽 1 仍用这个键，不能改名）
     VERSION: 17,              // 存档版本号（第 36 轮 +1：博物馆捐赠）
-    SLOTS: 3,                 // 存档槽位数量（槽 1 = KEY，槽 2/3 = KEY + '_s2' / '_s3'）
+    SLOTS: 3,                 // 兼容旧接口：默认展示的旧槽位数量
+    MAX_SAVES: 999,           // 存档列表扫描上限（实际受 localStorage 容量限制，基本等于不限）
     AUTO_NEW_DAY: true,       /* 每天开始时自动存档 */
     AUTO_UNLOAD: true,        /* 关闭 / 刷新页面前自动存档 */
     MAX_BYTES: 100 * 1024     /* 存档体积上限（超出会在提示里说明） */

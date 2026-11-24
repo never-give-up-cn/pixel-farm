@@ -29,10 +29,10 @@ function toggleSys(on){
       try{ raw = window.localStorage.getItem(slotKey(curSlot)) || ''; }catch(e){ raw = ''; }
       const d = readSave();
       sysInfo.textContent = d
-        ? ('槽' + (curSlot + 1) + ' · 上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(d) + ' 天')
-        : ('槽' + (curSlot + 1) + '：本地还没有存档');
+        ? (saveDisplayName(curSlot, d) + ' · 上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(d) + ' 天')
+        : ('存档 ' + (curSlot + 1) + '：本地还没有存档');
     }
-    renderSysSlots();                   /* 第 28 轮：槽位切换行 */
+    renderSysSlots();                   /* 当前存档信息 */
     if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
     if(sysCheatOpen) sysCheatToggle(false);   /* 每次打开菜单都从收起状态开始 */
     if(sysStatsOpen) sysStatsToggle(false);
@@ -97,7 +97,7 @@ const CHEAT_TEXT =
 '🌾 农场类型：开局在标题界面选标准 / 河流 / 森林 / 山顶；只改农场地形，主路永远保通。\n' +
 '⛏ 矿井：按 J 进入；打碎矿石掉石材 / 木炭，击杀怪物掉石材与金币，走到梯子下一层。\n' +
 '💬 交互提示：本菜单可关闭头顶的「按 E …」按键提示（关掉后交互照常可用）。\n' +
-'💾 存档：每天开始自动保存；本菜单可手动保存 / 读档。';
+'💾 存档：每天开始自动保存；本菜单可手动保存 / 读档；标题界面「读取存档」查看全部存档。';
 function sysCheatToggle(v){
   const want = (v === undefined) ? !sysCheatOpen : !!v;
   if(want === sysCheatOpen) return false;
@@ -151,6 +151,7 @@ function sysWipe(){
   wipeSave();
   if(btnWipe) btnWipe.textContent = '删除存档（再点一次确认）';
   if(sysInfo) sysInfo.textContent = '本地还没有存档';
+  renderSysSlots();
   return true;
 }
 if(btnSave)  btnSave .addEventListener('click', ()=>{ saveGame('手动保存'); });

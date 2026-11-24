@@ -199,7 +199,7 @@ if(CONFIG.DEBUG_HOOK) window.__game = {player, cam, map, keys, CONFIG, T, useToo
   renderBigmap, bigmapOpenPanel, bigmapClosePanel, toggleBigmap, hitHudMini,
   get hudMiniRect(){ return hudMiniRect; },
   get curSlot(){ return curSlot; }, set curSlot(v){ curSlot = v | 0; },
-  slotKey, renderStartSlots, updateStartInfo, renderSysSlots,
+  slotKey, listSaves, nextSaveSlot, saveDisplayName, saveRowSummary, renderStartSlots, updateStartInfo, renderSysSlots, loadSaveFromSlot, deleteSaveFromList, openSaveList, closeSaveList,
   showPackTip, hidePackTip,
   drawFestBanner, drawFestStall, drawFestLantern,
   /* 第 18 轮：统计 / 成就 / 年度总结 */

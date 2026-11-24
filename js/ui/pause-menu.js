@@ -16,7 +16,9 @@ const importFile   = document.getElementById('importFile');
 window.pauseMenuOpen = false;
 
 function pauseInfoText(){
-  return '槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ' + seasonName() + '季\n' +
+  const d = (typeof readSave === 'function') ? readSave() : null;
+  const nm = (typeof saveDisplayName === 'function') ? saveDisplayName(curSlot, d) : ('存档 ' + (curSlot + 1));
+  return nm + ' · 第 ' + clock.day + ' 天 · ' + clockHM().s + ' · ' + seasonName() + '季\n' +
          '金币 ' + gold + ' · 体力 ' + Math.ceil(stamina) + '/' + staminaMax;
 }
 /* P 键 / 暂停按钮：世界冻结 + 中央暂停菜单（与调试用的 setPaused 分开，不互相抢状态） */
@@ -59,11 +61,8 @@ function returnToTitle(silent){
   closeAllPanelsForTitle();
   if(!saveGame(null, true)){ toast('保存失败，已取消返回标题'); return false; }
   sessionActive = false;              /* 标题界面不再自动存档，避免写脏用户刚点选的其它槽 */
-  pendingSave = readSave();
-  renderStartSlots();
-  updateStartInfo();
-  startMenuOpen = true;
-  setPanelOpen(startEl, true);
+  /* 回到标题并默认显示主菜单；「读取存档」里能看到全部存档 */
+  openStartMenu(readSave());
   if(!silent) toast('已自动保存 · 回到标题');
   return true;
 }
@@ -80,12 +79,12 @@ function exportSave(){
       const blob = new Blob([txt], {type:'application/json'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = CONFIG.SAVE.KEY + '_slot' + (curSlot + 1) + '.json';
+      a.download = CONFIG.SAVE.KEY + '_s' + (curSlot + 1) + '.json';
       if(document.body && document.body.appendChild) document.body.appendChild(a);
       if(a.click) a.click();
       if(document.body && document.body.removeChild) document.body.removeChild(a);
       setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} }, 0);
-      toast('已导出槽' + (curSlot + 1) + ' 存档');
+      toast('已导出「' + saveDisplayName(curSlot, d) + '」');
       return true;
     }
   }catch(e){}
@@ -106,7 +105,7 @@ function importSaveText(text){
   const okWrite = writeSave(r.save);
   const okLoad = deserializeState(r.save);
   if(okWrite && okLoad){
-    toast('已导入槽' + (curSlot + 1) + ' · 第 ' + clock.day + ' 天');
+    toast('已导入「' + saveDisplayName(curSlot, r.save) + '」 · 第 ' + clock.day + ' 天');
     return true;
   }
   toast('导入失败：存档写入被拒绝');
@@ -133,17 +132,20 @@ if(importFile)    importFile   .addEventListener('change', ()=>{
 window.addEventListener('storage', e=>{
   try{
     if(!e || !e.key) return;
-    for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
-      if(e.key === slotKey(i)){
-        if(e.newValue){
-          const d = JSON.parse(e.newValue);
-          if(d && typeof d.at === 'number') lastSeenAt[i] = d.at;
-        }
-        if(sessionActive && !startMenuOpen && i === curSlot)
-          toast('槽' + (i + 1) + ' 已被另一个标签页更新（本页未覆盖）');
-        break;
-      }
+    if(e.key !== CONFIG.SAVE.KEY && e.key.indexOf(CONFIG.SAVE.KEY + '_s') !== 0) return;
+    let idx = -1;
+    if(e.key === CONFIG.SAVE.KEY) idx = 0;
+    else {
+      const n = parseInt(e.key.slice((CONFIG.SAVE.KEY + '_s').length), 10);
+      if(n >= 2) idx = n - 1;
     }
+    if(idx < 0) return;
+    if(e.newValue){
+      const d = JSON.parse(e.newValue);
+      if(d && typeof d.at === 'number') lastSeenAt[idx] = d.at;
+    }
+    if(sessionActive && !startMenuOpen && idx === curSlot)
+      toast(saveDisplayName(idx, readSave(idx)) + ' 已被另一个标签页更新（本页未覆盖）');
   }catch(err){}
 });
 

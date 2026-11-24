@@ -557,35 +557,59 @@ function writeSave(d, slot, force){
   }
 }
 function deleteSave(slot){
-  try{ window.localStorage.removeItem(slotKey(slot === undefined ? curSlot : slot)); }catch(e){}
+  try{
+    const key = slotKey(slot === undefined ? curSlot : slot);
+    window.localStorage.removeItem(key);
+    window.localStorage.removeItem(key + '_bak');
+  }catch(e){}
 }
 /* 有没有存档 */
 function hasSave(slot){ return !!readSave(slot); }
-/* 第 28 轮：系统菜单里的槽位切换行（保存 / 读档 / 删档都作用于当前槽） */
+/* 第 42 轮：存档不再固定 3 个，扫描 localStorage 列出全部存档 */
+function listSaves(){
+  const out = [];
+  const max = CONFIG.SAVE.MAX_SAVES || 999;
+  for(let i=0;i<max;i++){
+    const d = readSave(i);
+    if(d) out.push({slot:i, data:d});
+  }
+  out.sort((a,b)=>(b.data.at||0)-(a.data.at||0));
+  return out;
+}
+/* 下一个空存档编号（删除中间存档后会复用空号） */
+function nextSaveSlot(){
+  const max = CONFIG.SAVE.MAX_SAVES || 999;
+  for(let i=0;i<max;i++) if(!readSave(i)) return i;
+  return -1;
+}
+/* 存档显示名 */
+function saveDisplayName(slot, d){
+  if(!d) d = readSave(slot);
+  if(!d) return '存档 ' + ((slot|0)+1);
+  const ft = (CONFIG.GEN.FARM_TYPES.LIST[d.farm] || CONFIG.GEN.FARM_TYPES.LIST[CONFIG.GEN.FARM_DEFAULT]);
+  return '存档 ' + ((slot|0)+1) + (ft ? ' · ' + ft.name : '');
+}
+/* 存档列表单行摘要 */
+function saveRowSummary(d){
+  if(!d) return '';
+  const days = (d.time && d.time.day) ? d.time.day : 1;
+  const season = CONFIG.SEASONS[Math.floor((days-1) / CONFIG.DAYS_PER_SEASON) % CONFIG.SEASONS.length];
+  const ft = (CONFIG.GEN.FARM_TYPES.LIST[d.farm] || CONFIG.GEN.FARM_TYPES.LIST[CONFIG.GEN.FARM_DEFAULT]);
+  return '第 ' + days + ' 天 · ' + season + '季 · ' + (ft ? ft.name : '标准农场') +
+         ' · 金币 ' + (d.gold||0) + ' · ' + fmtStamp(d.at);
+}
+/* 第 42 轮：系统菜单只显示当前存档；完整列表在标题界面「读取存档」里 */
 function renderSysSlots(){
   const box = document.getElementById('sysSlots');
   if(!box) return;
   box.innerHTML = '';
-  for(let i = 0; i < CONFIG.SAVE.SLOTS; i++){
-    const b = document.createElement('button');
-    b.className = 'mbtn slot' + (i === curSlot ? ' on' : '');
-    const d = readSave(i);
-    b.textContent = '槽' + (i + 1) + (d ? (' · ' + saveDay(d) + '天') : ' · 空');
-    b.addEventListener('click', ()=>{
-      curSlot = i;
-      renderSysSlots();
-      if(sysInfo){
-        let raw = '';
-        try{ raw = window.localStorage.getItem(slotKey(curSlot)) || ''; }catch(e){ raw = ''; }
-        const dd = readSave();
-        sysInfo.textContent = dd
-          ? ('槽' + (curSlot + 1) + ' · 上次保存 ' + (raw.length/1024).toFixed(1) + ' KB · 第 ' + saveDay(dd) + ' 天')
-          : ('槽' + (curSlot + 1) + '：本地还没有存档');
-      }
-      playClick();
-    });
-    box.appendChild(b);
-  }
+  const d = readSave();
+  const el = document.createElement('div');
+  el.className = 'slot on';
+  el.textContent = d
+    ? (saveDisplayName(curSlot, d) + ' · 第 ' + saveDay(d) + ' 天')
+    : '当前还没有存档';
+  box.appendChild(el);
 }
 /* 存档版本对不对得上：旧版本会先 migrate() 升级，所以 ≤ 当前版本都算 OK；只有"更新版本"才不兼容 */
 function saveVersionOK(d){ return !!d && (d.v|0) <= CONFIG.SAVE.VERSION; }
@@ -599,9 +623,9 @@ function saveGame(reason, silent){
   lastSaveBytes = raw.length;
   if(writeSave(data)){
     dlog('[save] 已保存：第 ' + data.time.day + ' 天 · ' + (lastSaveBytes/1024).toFixed(1) + ' KB');
-    if(reason && !silent) toast('已保存（槽' + (curSlot + 1) + ' · ' + reason + '）');
+    if(reason && !silent) toast('已保存（' + saveDisplayName(curSlot, data) + ' · ' + reason + '）');
     if(lastWriteConflict && !silent)
-      toast('另一个标签页的存档较新，已备份为槽' + (curSlot + 1) + ' 备份后写入');
+      toast('另一个标签页的存档较新，已备份为「' + saveDisplayName(curSlot, data) + '」备份后写入');
     return true;
   }
   if(!silent) toast(lastWriteError === 'size'
@@ -612,7 +636,7 @@ function saveGame(reason, silent){
 /* 读档 */
 function loadGame(){
   const raw = readSave();
-  if(!raw){ toast('槽' + (curSlot + 1) + ' 没有存档'); return false; }
+  if(!raw){ toast(saveDisplayName(curSlot, null) + ' 没有存档'); return false; }
   const r = migrateSave(raw);           /* 旧版本先迁移；迁移失败只降级，不清空进度 */
   const ok = deserializeState(r.save);
   if(r.degraded) toast('存档升级失败，已按旧版本读取（居民数据可能缺失）');
@@ -621,12 +645,13 @@ function loadGame(){
 }
 /* 删档 */
 function wipeSave(){
+  const name = saveDisplayName(curSlot, readSave());
   deleteSave();
-  toast('槽' + (curSlot + 1) + ' 存档已删除');
+  toast(name + ' 已删除');
 }
-/* 全新一局：删掉旧档、从头开始（farmId 为农场类型，不传 = 标准农场） */
+/* 全新一局：不删除旧存档，由标题界面分配一个空存档编号；farmId 为农场类型 */
 function newGame(farmId){
-  deleteSave();
+  /* 第 42 轮：新游戏不再覆盖旧存档；curSlot 由标题界面选一个空存档编号。 */
   if(typeof currentMap !== 'undefined' && currentMap !== 'farm' && window.MAP_WORLD && MAP_WORLD.farm)
     worldUseArrays('farm');
   genMap(CONFIG.SEED, farmId || CONFIG.GEN.FARM_DEFAULT);
@@ -704,5 +729,5 @@ function newGame(farmId){
 
 
 /* --- 过渡期模块桥：其他文件仍可用这些全局名；以后可逐步改成 import --- */
-Object.assign(window, { lastSeenAt, snapshotBaseMap, mapDiff, applyMapDiff, stowHeld, serializeState, deserializeState, slotKey, readSave, utf8Bytes, writeSave, deleteSave, hasSave, renderSysSlots, saveVersionOK, saveDay, saveGame, loadGame, wipeSave, newGame });
-export { lastSeenAt, snapshotBaseMap, mapDiff, applyMapDiff, stowHeld, serializeState, deserializeState, slotKey, readSave, utf8Bytes, writeSave, deleteSave, hasSave, renderSysSlots, saveVersionOK, saveDay, saveGame, loadGame, wipeSave, newGame };
+Object.assign(window, { lastSeenAt, snapshotBaseMap, mapDiff, applyMapDiff, stowHeld, serializeState, deserializeState, slotKey, readSave, utf8Bytes, writeSave, deleteSave, hasSave, listSaves, nextSaveSlot, saveDisplayName, saveRowSummary, renderSysSlots, saveVersionOK, saveDay, saveGame, loadGame, wipeSave, newGame });
+export { lastSeenAt, snapshotBaseMap, mapDiff, applyMapDiff, stowHeld, serializeState, deserializeState, slotKey, readSave, utf8Bytes, writeSave, deleteSave, hasSave, listSaves, nextSaveSlot, saveDisplayName, saveRowSummary, renderSysSlots, saveVersionOK, saveDay, saveGame, loadGame, wipeSave, newGame };

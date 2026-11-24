@@ -116,6 +116,7 @@ const mine = {
   ladder: { x: COLS - 2, y: 5 },
   ladderHidden: true,
   infested: false,
+  floorKind: 'normal',
   chest: null,
   claimed: new Set(),
   sparkles: [],
@@ -214,6 +215,12 @@ function generate(depth) {
   mine.shake = 0;
   mine.floorMsg = 1.4;
 
+  /* 怪物层：参考星露谷的“怪物层”，整层没有岩石 / 矿石，只有怪物；
+   * 必须清光怪物，梯子才会出现。 */
+  const monsterFloor = depth % 13 === 0 || rnd() < 0.14;
+  mine.floorKind = monsterFloor ? 'monster' : 'normal';
+  mine.infested = monsterFloor;
+
   for (let y = 0; y < ROWS; y++) {
     const row = [];
     for (let x = 0; x < COLS; x++) {
@@ -223,38 +230,40 @@ function generate(depth) {
   }
 
   /* --- 星露谷式矿层：先撒若干岩石团，再把一部分石头替换成矿脉 --- */
-  const oreChance = Math.min(0.30, 0.10 + depth * 0.0022) + (mine.mode === 'skull' ? 0.05 : 0);
-  const clusters = 6 + Math.floor(rnd() * 4) + (mine.mode === 'skull' ? 2 : 0);
-  for (let i = 0; i < clusters; i++) {
-    const ccx = 2 + Math.floor(rnd() * (COLS - 4));
-    const ccy = 1 + Math.floor(rnd() * (ROWS - 2));
-    const rad = 1 + (rnd() < 0.55 ? 1 : 0);
-    for (let dy = -rad; dy <= rad; dy++) {
-      for (let dx = -rad; dx <= rad; dx++) {
-        const x = ccx + dx, y = ccy + dy;
-        if (x < 1 || y < 1 || x >= COLS - 1 || y >= ROWS - 1) continue;
-        if (Math.abs(x - 1) + Math.abs(y - 5) <= 2) continue;   /* 出生点附近留空 */
-        if (tileAt(x, y) !== 'floor') continue;
-        if (Math.abs(dx) === rad && Math.abs(dy) === rad && rnd() < 0.7) continue;
-        if (rnd() > 0.86) continue;                             /* 岩石团里留些空隙 */
-        if (rnd() < oreChance) {
-          setTile(x, y, 'ore');
-          mine.ores.set(keyOf(x, y), pickOre(depth, theme, rnd));
-        } else {
-          setTile(x, y, 'rock');
-          mine.rocks.set(keyOf(x, y), 1);
+  if (!monsterFloor) {
+    const oreChance = Math.min(0.30, 0.10 + depth * 0.0022) + (mine.mode === 'skull' ? 0.05 : 0);
+    const clusters = 6 + Math.floor(rnd() * 4) + (mine.mode === 'skull' ? 2 : 0);
+    for (let i = 0; i < clusters; i++) {
+      const ccx = 2 + Math.floor(rnd() * (COLS - 4));
+      const ccy = 1 + Math.floor(rnd() * (ROWS - 2));
+      const rad = 1 + (rnd() < 0.55 ? 1 : 0);
+      for (let dy = -rad; dy <= rad; dy++) {
+        for (let dx = -rad; dx <= rad; dx++) {
+          const x = ccx + dx, y = ccy + dy;
+          if (x < 1 || y < 1 || x >= COLS - 1 || y >= ROWS - 1) continue;
+          if (Math.abs(x - 1) + Math.abs(y - 5) <= 2) continue;   /* 出生点附近留空 */
+          if (tileAt(x, y) !== 'floor') continue;
+          if (Math.abs(dx) === rad && Math.abs(dy) === rad && rnd() < 0.7) continue;
+          if (rnd() > 0.86) continue;                             /* 岩石团里留些空隙 */
+          if (rnd() < oreChance) {
+            setTile(x, y, 'ore');
+            mine.ores.set(keyOf(x, y), pickOre(depth, theme, rnd));
+          } else {
+            setTile(x, y, 'rock');
+            mine.rocks.set(keyOf(x, y), 1);
+          }
         }
       }
     }
+
+    /* 保证出生点能走到房间各处；被封死的区域会被挖开 */
+    ensureMineConnected(1, 5);
   }
 
-  /* 保证出生点能走到房间各处；被封死的区域会被挖开 */
-  ensureMineConnected(1, 5);
-
-  /* 矿工宝箱：每 10 层首次到达生成一个，位置随机，不压住梯子 */
+  /* 矿工宝箱：每 10 层首次到达生成一个，位置随机，不压住梯子；怪物层不放宝箱 */
   mine.chest = null;
   const chestStep = Math.max(1, CONFIG.MINE.CHEST_STEP | 0);
-  if (depth % chestStep === 0 && !mine.claimed.has(depth)) {
+  if (!monsterFloor && depth % chestStep === 0 && !mine.claimed.has(depth)) {
     const cands = mineFloorCandidates(6);
     if (cands.length) {
       const c = cands[Math.floor(rnd() * cands.length)];
@@ -303,9 +312,8 @@ function generate(depth) {
   const flyPool = pool.filter(d => FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
   const groundPool = pool.filter(d => !FLYING_SHAPES.has((MONSTER_MAP[d.id] || {}).shape));
 
-  /* 怪物数量随深度增加；偶尔出现「怪物横行」层，怪更多、更凶 */
-  const infested = depth % 13 === 0 || rnd() < 0.10;
-  mine.infested = infested;
+  /* 怪物数量随深度增加；怪物层只有怪，数量更多、更凶 */
+  const infested = monsterFloor;
   const targetHp = 24 + depth * 9;
   const eligible = pool.filter(d => d.hp <= 40 + depth * 14);
   const weights = eligible.map(d => 1 / (1 + Math.abs(d.hp - targetHp) / Math.max(20, targetHp)));
@@ -323,8 +331,9 @@ function generate(depth) {
   /* 一层里要么没有飞行怪，要么来 1–2 只，不会整层都是蝙蝠 */
   const flyersThisFloor = (flyPool.length && groundPool.length && rnd() < FLYING_CHANCE)
     ? (1 + (rnd() < 0.5 ? 1 : 0)) : 0;
-  const monsterCount = Math.min(9, 3 + Math.floor(depth / 12)) +
-    (infested ? 3 + Math.floor(rnd() * 3) : 0);
+  const monsterCount = monsterFloor
+    ? 8 + Math.floor(rnd() * 4) + (depth >= 80 ? 1 : 0)
+    : Math.min(9, 3 + Math.floor(depth / 12));
   while (count < monsterCount && guard++ < 400) {
     const x = 3 + Math.floor(rnd() * (COLS - 5));
     const y = 1 + Math.floor(rnd() * (ROWS - 2));
@@ -508,9 +517,10 @@ export function enterMine(startDepth, mode) {
   mine.time = 0;
   generate(depth);
   const theme = mineTheme(depth);
+  const floorNote = mine.floorKind === 'monster' ? ' · 怪物层：清光怪物才会出现梯子' : '';
   if (typeof toast === 'function') toast(isSkull
-    ? `进入骷髅洞穴 B${depth} · 更强的怪物 / 更好的掉落 · Esc 返回`
-    : `进入矿井 B${depth} · ${theme.name} · WASD 移动 / 空格攻击 / Esc 返回地面`);
+    ? `进入骷髅洞穴 B${depth} · 更强的怪物 / 更好的掉落${floorNote} · Esc 返回`
+    : `进入矿井 B${depth} · ${theme.name}${floorNote} · WASD 移动 / 空格攻击 / Esc 返回地面`);
   if (typeof playSfx === 'function') playSfx(300, 'square', 0.09, 0.5);
   if (typeof dlog === 'function') dlog(`[mine] 进入矿井 B${depth}`);
 }
@@ -637,7 +647,8 @@ export function mineUseStair() {
   if (typeof removeItem === 'function') removeItem('stair', 1);
   mine.hp = Math.min(mine.maxHp, mine.hp + 12);
   generate(mine.depth + 1);
-  if (typeof toast === 'function') toast('🪜 使用楼梯，下到 B' + mine.depth);
+  if (typeof toast === 'function') toast('🪜 使用楼梯，下到 B' + mine.depth +
+    (mine.floorKind === 'monster' ? ' · 怪物层，清光怪物才会出现梯子' : ''));
   if (typeof playSfx === 'function') playSfx(520, 'triangle', 0.10, 0.5);
   return true;
 }
@@ -955,9 +966,10 @@ export function updateMine(dt) {
         generate(mine.depth + 1);
         const nextTheme = mineTheme(mine.depth);
         if (typeof toast === 'function') {
+          const note = mine.floorKind === 'monster' ? ' · 怪物层' : '';
           toast(prevTheme.id !== nextTheme.id
-            ? `矿井 B${mine.depth} · 进入${nextTheme.name}`
-            : `矿井 B${mine.depth} · ${nextTheme.name}`);
+            ? `矿井 B${mine.depth} · 进入${nextTheme.name}${note}`
+            : `矿井 B${mine.depth} · ${nextTheme.name}${note}`);
         }
         if (typeof playSfx === 'function') playSfx(520, 'triangle', 0.08, 0.45);
       }
@@ -1422,10 +1434,10 @@ export function drawMine(ctx) {
     ctx.fillStyle = theme.accent;
     ctx.font = '13px "Microsoft YaHei", monospace';
     ctx.fillText(mine.mode === 'skull' ? '骷髅洞穴' : theme.name, W / 2, OY + 74);
-    if (mine.infested) {
+    if (mine.floorKind === 'monster') {
       ctx.fillStyle = '#ff8a70';
       ctx.font = 'bold 12px "Microsoft YaHei", monospace';
-      ctx.fillText('⚠ 怪物横行', W / 2, OY + 94);
+      ctx.fillText('⚠ 怪物层 · 清光怪物后出现梯子', W / 2, OY + 94);
     }
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
@@ -1438,9 +1450,11 @@ export function drawMine(ctx) {
   ctx.fillText('WASD / 方向键移动 · 空格攻击 · Q 炸弹 · R 楼梯 · 走到梯子下一层 · Esc 返回农场', 18, H - 26);
   ctx.fillStyle = '#6a7a8a';
   ctx.font = '11px monospace';
-  ctx.fillText(mine.ladderHidden
-    ? '梯子还没出现：清光本层怪物，或继续敲岩石 / 矿石（有小概率直接露出梯子）'
-    : '梯子已出现：走到梯子下一层 · 击杀怪物 +2 矿石 / 石材 / 金币', 18, H - 9);
+  ctx.fillText(mine.floorKind === 'monster' && mine.ladderHidden
+    ? '怪物层：没有矿石，清光本层所有怪物后才会出现梯子'
+    : mine.ladderHidden
+      ? '梯子还没出现：清光本层怪物，或继续敲岩石 / 矿石（有小概率直接露出梯子）'
+      : '梯子已出现：走到梯子下一层 · 击杀怪物 +2 矿石 / 石材 / 金币', 18, H - 9);
 
   if (mine.down > 0) {
     ctx.fillStyle = 'rgba(0,0,0,0.55)';
